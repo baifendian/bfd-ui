@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="chart" style="width: 500px;"></div>
+  <script src="../node_modules/d3/d3.min.js"></script>
+  <script src="../build/app.js"></script>
+  <script>
+  new bfdUI.LineChart({
+    container: document.getElementById('chart'),
+    colors: ['rgb(124, 181, 236)', 'rgb(67, 67, 72)', 'rgb(247, 163, 92)'],
+    category: 'date',
+    cols: {
+      x: 'x数',
+      y: 'y数',
+      z: 'z数'
+    },
+    tooltip: {},
+    yAxis: {
+      format: null
+    },
+    data: [{
+      date: '2014',
+      x: 1,
+      y: 7,
+      z: 3
+    }, {
+      date: '2015',
+      x: 10,
+      y: 30,
+      z: 45
+    }, {
+      date: '2016',
+      x: 40,
+      y: 20,
+      z: 115
+    }, {
+      date: '2017',
+      x: 21,
+      y: 37,
+      z: 65
+    }, {
+      date: '2018',
+      x: 99,
+      y: 46,
+      z: 55
+    }, {
+      date: '2019',
+      x: 21,
+      y: 37,
+      z: 5
+    }, {
+      date: '2020',
+      x: 99,
+      y: 46,
+      z: 8
+    }]
+  })
+  </script>
+</body>
+</html>

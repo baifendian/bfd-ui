@@ -1,0 +1,34 @@
+@import './tooltip.css';
+
+.tick line,
+path.domain {
+  fill: none;
+  stroke: rgb(192, 208, 224);
+  shape-rendering: crispEdges;
+}
+.axis-y path.domain {
+  stroke: none;
+}
+.legend {
+  left: 30px;
+  top: 0;
+}
+.legend > div {
+  display: inline-block;
+  margin-right: 10px;
+}
+.legend .disabled {
+  color: #ccc;
+}
+.legend .label {
+  margin-right: 3px;
+}
+.legend .disabled .label {
+  background-color: #ccc!important;
+}
+.legend .label:before {
+  content: '';
+  display: inline-block;
+  width: 1.5em;
+  height: 1em;
+}
