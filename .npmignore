@@ -1,2 +1,4 @@
 docs/
 src/
+bin/
+webpack.config.js

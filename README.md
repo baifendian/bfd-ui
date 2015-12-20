@@ -24,5 +24,5 @@ $ npm install
 # 文档及Demo服务
 $ npm run server
 
-# npm run dev
+$ npm run dev
 ```

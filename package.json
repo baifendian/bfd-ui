@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel --presets es2015 src -d lib",
+    "build": "node bin/copy.js && babel --presets es2015 lib -d lib",
     "server": "node bin/server.js",
     "dev": "webpack --watch"
   },
