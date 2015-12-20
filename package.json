@@ -5,19 +5,30 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel --presets es2015 src -d lib",
+    "server": "node bin/server.js",
     "dev": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "d3": "^3.5.11"
+    "d3": "^3.5.11",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3"
   },
   "devDependencies": {
+    "babel-cli": "^6.3.17",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "compression": "^1.6.0",
     "css-loader": "^0.23.0",
     "eslint": "^1.10.3",
     "eslint-loader": "^1.1.1",
+    "express": "^4.13.3",
+    "history": "^1.17.0",
+    "react-router": "^1.0.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.9"
   }

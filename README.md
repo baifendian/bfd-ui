@@ -3,20 +3,10 @@
 ### 安装
 
 ```sh
-npm install --save bfd-ui
+$ npm install --save bfd-ui
 ```
 
 ### 使用
-
-#### 全局加载
-
-```javascript
-import {LineChart} from 'bfd-ui'
-
-new LineChart(config)
-```
-
-#### 按需使用
 
 ```javascript
 import LineChart from 'bfd-ui/src/lineChart'
@@ -24,9 +14,15 @@ import LineChart from 'bfd-ui/src/lineChart'
 new LineChart(config)
 ```
 
-### 开发者
+### 开发者说明
 
 ```sh
-# 开启热部署
-npm run dev
+$ git clone http://git.baifendian.com/front-end/bfd-ui.git
+
+$ npm install
+
+# 文档及Demo服务
+$ npm run server
+
+# npm run dev
 ```

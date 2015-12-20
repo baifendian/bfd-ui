@@ -1,6 +1,8 @@
 {
   "ecmaFeatures": {
-    "modules": true
+    "blockBindings": true,
+    "modules": true,
+    "jsx": true
   },
   "rules": {
     "indent": [
