@@ -10,7 +10,7 @@ $ npm install --save bfd-ui
 
 ```javascript
 import { render } from 'react-dom'
-import LineChart from 'bfd-ui/src/lineChart'
+import LineChart from 'bfd-ui/lib/lineChart'
 
 render(<LineChart config={config}/>, mountNode)
 ```
