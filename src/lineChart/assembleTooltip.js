@@ -9,7 +9,7 @@ export default env => {
   const tooltip = d3.select(env.container)
     .append('div')
     .style({
-      position: 'absolute',
+      position: 'fixed',
       opacity: 0,
       'pointer-events': 'none'
     })

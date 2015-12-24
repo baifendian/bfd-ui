@@ -1,7 +1,10 @@
 import d3 from 'd3'
 import setYAxisDomain from './setYAxisDomain'
+import defaultColors from '../colors'
 
 export default env => {
+
+  const colors = env.config.colors || defaultColors
  
   d3.select(env.container)
     .append('div')
@@ -44,7 +47,7 @@ export default env => {
       
       node.append('span')
         .attr('class', 'label')
-        .style('background-color', env.config.colors[i])
+        .style('background-color', colors[i])
 
       node.append('span').text(d.name)
     })

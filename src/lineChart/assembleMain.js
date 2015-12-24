@@ -1,4 +1,8 @@
+import defaultColors from '../colors'
+
 export default env => {
+
+  const colors = env.config.colors || defaultColors
 
   let group = env.svg.append('g').attr('clip-path', 'url(#rectClip)')
 
@@ -7,7 +11,7 @@ export default env => {
   env.series.forEach((serie, i) => {
 
     let serieGroup = group.append('g').attr('class', 'serie-group serie-group-' + i)
-    let color = config.colors[i]
+    let color = colors[i]
 
     // Lines
     serieGroup.append('path')

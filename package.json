@@ -5,31 +5,33 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node bin/copy.js && babel --presets es2015 lib -d lib",
-    "server": "node bin/server.js",
-    "dev": "webpack --watch"
+    "build": "node bin/copy.js && babel lib -d lib",
+    "start": "node-dev site/server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "d3": "^3.5.11",
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3"
+    "react": "^0.14.3"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
     "compression": "^1.6.0",
     "css-loader": "^0.23.0",
     "eslint": "^1.10.3",
     "eslint-loader": "^1.1.1",
     "express": "^4.13.3",
     "history": "^1.17.0",
+    "jade": "^1.11.0",
+    "marked": "^0.3.5",
+    "react-addons-css-transition-group": "^0.14.3",
+    "react-dom": "^0.14.3",
     "react-router": "^1.0.2",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.9"
+    "webpack": "^1.12.9",
+    "webpack-dev-middleware": "^1.4.0"
   }
 }
