@@ -29,7 +29,10 @@ app.use(webpackDevMiddleware(webpack(WebpackConfig), {
 }))
 
 app.get('/getComponents', function(req, res, next) {
-  res.send(marked(fs.readFileSync(path.join(__dirname, 'post/' + req.query.component + '.md'), 'utf-8')))
+  try {
+    var markdown = fs.readFileSync(__dirname + '/post/' + req.query.component + '.md', 'utf-8')
+  } catch(e) {}
+  res.send(markdown ? marked(markdown) : '')
 })
 
 app.get('*', function(req, res) {

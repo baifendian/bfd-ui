@@ -1,8 +1,6 @@
-import '../styles/components.css'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom'
 import LineChart from 'c/lineChart'
-
 
 export default React.createClass({
 
@@ -33,7 +31,7 @@ export default React.createClass({
         })
       })()
     }
-    ReactDOM.render(<LineChart config={config} />, document.getElementById('demo'))
+    render(<LineChart config={config} />, document.getElementById('demo'))
   },
 
   render() {

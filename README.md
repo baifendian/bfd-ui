@@ -23,10 +23,6 @@ render(<LineChart config={config}/>, mountNode)
 $ git clone http://git.baifendian.com/front-end/bfd-ui.git
 
 $ npm install
-
-# 站点本地服务(文档、Demo的开发环境)
-$ npm start
-
 ```
 #### 如何添加新组件？
 
@@ -35,4 +31,10 @@ $ npm start
 注意：`index.js` 为组件的入口
 
 
-#### 如何测试、查看效果？=> [站点说明](site/README.md)
+#### 如何测试、查看效果？
+
+```sh
+$ npm start
+```
+
+[查看详细说明](site/README.md)

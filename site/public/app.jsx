@@ -5,9 +5,7 @@ import { Router, Route, RouteContext, Link, IndexLink, IndexRoute } from 'react-
 // import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { createHistory } from 'history'
 import Home from './home.jsx'
-// import Components from './Components.jsx'
 import model from './model'
-import demos from './demos'
 
 const App = React.createClass({
   
@@ -49,10 +47,12 @@ const routeConfig = [{
     path: 'components/:name',
     getComponent: function(location, callback) {
       let component = location.pathname.split('/').pop()
-      model.fetch('/getComponents', {component: component})
+      model.fetch('/getComponents', { component })
         .then((res) => {
           window.post = res
-          callback(null, demos[component])
+          require.ensure([], function (require) {
+            callback(null, require('./demos/' + component + '.jsx').default)
+          })
         })
     }
   }]

@@ -1,11 +1,14 @@
 var path = require('path')
+var webpack = require('webpack')
 var config = {
   entry: {
-    app: path.resolve(__dirname, 'public/app.jsx')
+    app: __dirname + '/public/app.jsx'
   },
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
-    filename: '[name].js'
+    path: __dirname + '/public/dist',
+    filename: '[name].js',
+    chunkFilename: 'demos.js',
+    publicPath: '/dist/'
   },
   module: {
     loaders: [{
@@ -33,6 +36,8 @@ var config = {
   // eslint: {
   //   configFile: path.resolve(__dirname, 'config/.eslintrc'),
   // },
-  plugins: []
+  plugins: [
+    // new webpack.optimize.UglifyJsPlugin({minimize: true})
+  ]
 }
 module.exports = config
