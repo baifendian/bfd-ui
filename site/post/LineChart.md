@@ -1,6 +1,5 @@
 # 折线图
 
-
 ## usage
 
 ```js
@@ -15,12 +14,15 @@ export default React.createClass({
 })
 ```
 
-## [表格生成器](http://www.tablesgenerator.com/markdown_tables)
+## 表格
 
-| dsad  | dsad |
-|-------|------|
-| sdasd | sad  |
+| dsad | dsad | dasdas |
+|-
+| sdasd | sad | dsadsa |
+| sdasd | saddsadsa | dsadsa |
 
 ## 演示
 
-<div id="demo" style="width:500px"></div>
+<div class="row">
+  <div id="demo" class="col-md-8"></div>
+</div>

@@ -16,11 +16,14 @@ var config = {
       loader: 'babel',
       exclude: /node_modules/,
       query: {
-        presets: ['es2015', 'react']
+        presets: ['es2015', 'stage-0', 'react']
       }
     }, {
       test: /\.css$/,
       loader: 'style!css'
+    }, {
+      test: /\.(eot|woff|woff2|ttf|svg)$/,
+      loader: 'file-loader?name=files/[hash].[ext]'
     }]
     // preLoaders: [{
     //   test: /\.jsx?$/,
@@ -30,6 +33,7 @@ var config = {
   },
   resolve: {
     alias: {
+      bootstrap: 'bootstrap/dist/css/bootstrap.min.css',
       c: path.resolve(__dirname, '../src')
     }
   },

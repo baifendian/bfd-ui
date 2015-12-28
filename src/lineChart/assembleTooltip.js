@@ -9,7 +9,9 @@ export default env => {
   const tooltip = d3.select(env.container)
     .append('div')
     .style({
-      position: 'fixed',
+      position: 'absolute',
+      left: 0,
+      top: 0,
       opacity: 0,
       'pointer-events': 'none'
     })
@@ -34,8 +36,8 @@ export default env => {
     .attr('height', env.height)
     .on('mouseover', () => {
       tooltip.style({
-        left: (d3.event.pageX) + 'px',
-        top: (d3.event.pageY) + 'px',
+        left: (d3.event.offsetX) + 'px',
+        top: (d3.event.offsetY) + 'px',
         opacity: 1
       })
     })
@@ -61,10 +63,10 @@ export default env => {
 
         tooltip
           .transition()
-          .duration(150)
+          .duration(120)
           .style({
-            left: (d3.event.pageX) + 'px',
-            top: (d3.event.pageY) + 'px',
+            left: (d3.event.offsetX) + 'px',
+            top: (d3.event.offsetY) + 'px',
             opacity: 1
           })
 

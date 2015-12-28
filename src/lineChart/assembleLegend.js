@@ -46,7 +46,7 @@ export default env => {
       let node = d3.select(this)
       
       node.append('span')
-        .attr('class', 'label')
+        .attr('class', 'legend-rect')
         .style('background-color', colors[i])
 
       node.append('span').text(d.name)

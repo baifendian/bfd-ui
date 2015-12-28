@@ -20,13 +20,13 @@ path.domain {
 .legend .disabled {
   color: #ccc;
 }
-.legend .label {
+.legend .legend-rect {
   margin-right: 3px;
 }
-.legend .disabled .label {
+.legend .disabled .legend-rect {
   background-color: #ccc!important;
 }
-.legend .label:before {
+.legend .legend-rect:before {
   content: '';
   display: inline-block;
   width: 1.5em;

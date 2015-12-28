@@ -1,4 +1,5 @@
 import './styles/app.css'
+import 'bootstrap'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, RouteContext, Link, IndexLink, IndexRoute } from 'react-router'
@@ -17,8 +18,8 @@ const App = React.createClass({
   
   render() {
     return (
-      <div>
-        <ul className="sidebar">
+      <div className="row">
+        <ul className="sidebar col-md-2 col-sm-3">
           <li><IndexLink to='/' activeClassName="active">首页</IndexLink></li>
           <li>
             <span>组件</span>
@@ -29,7 +30,7 @@ const App = React.createClass({
             </ul>
           </li>
         </ul>
-        <div className="content">
+        <div className="content col-md-10 col-sm-9">
           {this.props.children}
         </div>
       </div>
@@ -51,7 +52,7 @@ const routeConfig = [{
         .then((res) => {
           window.post = res
           require.ensure([], function (require) {
-            callback(null, require('./demos/' + component + '.jsx').default)
+            callback(null, require('./components/' + component + '.jsx').default)
           })
         })
     }
