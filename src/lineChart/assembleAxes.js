@@ -4,8 +4,10 @@ export default env => {
 
   const xAxis = d3.svg.axis().scale(env.xScale)
     .orient('bottom')
-    // .tickValues(xScale.domain().filter((d, i) => !(i % 2))
     .tickSize(6, 0)
+
+  const interval = Math.ceil(env.categories.join('').length / (env.width / 10))
+  interval > 1 && xAxis.tickValues(env.xScale.domain().filter((d, i) => !(i % interval)))
 
   const yAxisConfig = env.config.yAxis || {}
 

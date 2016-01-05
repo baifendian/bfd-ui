@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import LineChart from 'c/lineChart'
+import LineChart from 'c/lineChart/index.jsx'
 
 export default React.createClass({
 
@@ -14,12 +14,12 @@ export default React.createClass({
     var config = {
       category: 'date',
       cols: {
-        x: 'x数',
+        x: 'x数s',
         y: 'y数',
         z: 'z数'
       },
       data: (() => {
-        const len = 10
+        const len = 50
         const year = new Date().getFullYear() - len
         return Array.apply(null, Array(len)).map((v, i) => {
           return {

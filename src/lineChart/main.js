@@ -2,8 +2,6 @@
  * Line chart based on d3.js
  */
 import './main.css'
-import '../object.assign'
-import '../array.fill'
 import d3 from 'd3'
 import dataConverter from './dataConverter'
 import getSeriesDomainManager from './getSeriesDomainManager'
@@ -67,7 +65,7 @@ export default class {
 
     assembleMain(env)
 
-    env.actives = new Array(env.series.length).fill(true)
+    env.actives = Array(env.series.length + 1).join(1).split('')
 
     if (!config.tooltip || config.tooltip.enabled !== false) {
       assembleTooltip(env)
