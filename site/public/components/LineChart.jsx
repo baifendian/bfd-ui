@@ -14,22 +14,30 @@ export default React.createClass({
     var config = {
       category: 'date',
       cols: {
-        x: 'x数s',
-        y: 'y数',
-        z: 'z数'
+        x: 'x数',
+        y: 'y数'
       },
-      data: (() => {
-        const len = 50
-        const year = new Date().getFullYear() - len
-        return Array.apply(null, Array(len)).map((v, i) => {
-          return {
-            date: year + i,
-            x: Math.ceil(Math.random() * 300),
-            y: Math.ceil(Math.random() * 100),
-            z: Math.ceil(Math.random() * 50)
-          }
-        })
-      })()
+      data: [{
+        x: 234,
+        y: 55,
+        date: '01-01'
+      }, {
+        x: 499,
+        y: 122,
+        date: '01-02'
+      }, {
+        x: 1067,
+        y: 500,
+        date: '01-03'
+      }, {
+        x: 500,
+        y: 800,
+        date: '01-04'
+      }, {
+        x: 340,
+        y: 201,
+        date: '01-05'
+      }]
     }
     render(<LineChart config={config} />, document.getElementById('demo'))
   },

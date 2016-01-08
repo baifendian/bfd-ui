@@ -16,17 +16,20 @@ export default env => {
       'pointer-events': 'none'
     })
     .attr('class', 'bcharts-tooltip')
+  const duration = 400 / env.categories.length
+
+  const markers = env.svg.selectAll('circle.marker')
 
   let lastMarkers, lastIndex
 
-  const resetLastMarkers = () => {
+  function resetLastMarkers() {
     lastMarkers
-      .attr('r', 3)
+      // .transition()
+      .attr('r', 4)
+      .attr('fill', '#fff')
       .attr('stroke-width', 2)
       .attr('stroke-opacity', 1)
   }
-
-  const markers = env.svg.selectAll('circle.marker')
 
   // Tooltip trigger area.
   env.svg.append('rect')
@@ -52,30 +55,32 @@ export default env => {
       // Change tooltip position when index change.
       if (lastIndex !== index) {
 
-        lastMarkers && resetLastMarkers()
-
-        lastIndex = index
-
-        lastMarkers = markers.filter('.marker-' + index)
-          .attr('r', 5)
-          .attr('stroke-width', 5)
-          .attr('stroke-opacity', .5)
-
         tooltip
-          .transition()
-          .duration(120)
+          // .transition()
+          // .duration(duration)
           .style({
-            left: (d3.event.offsetX) + 'px',
-            top: (d3.event.offsetY) + 'px',
+            left: d3.event.offsetX + 'px',
+            top: d3.event.offsetY + 'px',
             opacity: 1
           })
-
         let html = env.categories[index] + '<br>'
         env.series.forEach((serie, i) => {
           if (!env.actives[i]) return
-          html += serie.name + '：<b>' + serie.data[index] + '</b></br>'
+          html += serie.name + '：' + serie.data[index] + '</br>'
         })
         tooltip.html(html)
+
+        lastMarkers && resetLastMarkers()
+        lastIndex = index
+        lastMarkers = markers.filter('.marker-' + index)
+        lastMarkers
+          // .transition()
+          .attr('r', 4)
+          .attr('fill', function() {
+            return d3.select(this).attr('stroke')
+          })
+          .attr('stroke-width', 6)
+          .attr('stroke-opacity', .5)
       }
     })
     .on('mouseout', () => {

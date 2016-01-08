@@ -29,7 +29,7 @@ export default class {
     env.container.style.position = 'relative'
 
     env.width = env.container.clientWidth - padding[3] - padding[1]
-    env.height = (env.container.clientHeight || env.width * .6) - padding[0] - padding[2]
+    env.height = (env.container.clientHeight || env.width * .5) - padding[0] - padding[2]
 
     env.xAxisPaddingScale = 0.2
 

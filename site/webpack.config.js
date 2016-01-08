@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var config = {
   entry: {
     app: __dirname + '/public/app.jsx'
+    // app: __dirname + '/public/components/LineChart.jsx'
   },
   output: {
     path: __dirname + '/public/dist',
@@ -30,7 +31,6 @@ var config = {
   },
   resolve: {
     alias: {
-      bootstrap: 'bootstrap/dist/css/bootstrap.min.css',
       c: path.resolve(__dirname, '../src')
     }
   },

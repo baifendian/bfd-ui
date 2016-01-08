@@ -1,5 +1,5 @@
 import './styles/app.css'
-import 'bootstrap'
+import 'bfd-bootstrap'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, RouteContext, Link, IndexLink, IndexRoute } from 'react-router'
@@ -21,11 +21,16 @@ const App = React.createClass({
       <div className="row">
         <ul className="sidebar col-md-2 col-sm-3">
           <li><IndexLink to='/' activeClassName="active">首页</IndexLink></li>
+          <li><Link to='/bootstrap' activeClassName="active">Bootstrap</Link></li>
           <li>
             <span>组件</span>
             <ul>
               {this.state.components.map((item) => {
-                return <li key={item.name}><Link to={'/components/' + item.name} activeClassName="active">{item.cn}</Link></li>
+                return (
+                  <li key={item.name}>
+                    <Link to={'/components/' + item.name} activeClassName="active">{item.cn}</Link>
+                  </li>
+                )
               })}
             </ul>
           </li>

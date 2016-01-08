@@ -1,17 +1,23 @@
 @import './tooltip.css';
 
+.tick {
+  fill: #93979a;
+  font-size: 12px;
+}
 .tick line,
 path.domain {
   fill: none;
-  stroke: rgb(192, 208, 224);
+  stroke: #f5f5f5;
   shape-rendering: crispEdges;
 }
 .axis-y path.domain {
   stroke: none;
 }
 .legend {
-  left: 30px;
+  right: 0;
   top: 0;
+  color: #555;
+  font-size: 12px;
 }
 .legend > div {
   display: inline-block;
@@ -22,13 +28,10 @@ path.domain {
 }
 .legend .legend-rect {
   margin-right: 3px;
+  display: inline-block;
+  width: 1em;
+  height: .6em;
 }
 .legend .disabled .legend-rect {
   background-color: #ccc!important;
-}
-.legend .legend-rect:before {
-  content: '';
-  display: inline-block;
-  width: 1.5em;
-  height: 1em;
 }
