@@ -1,4 +1,8 @@
 [{
   "name": "LineChart",
   "cn": "折线图"
+},
+{
+  "name": "PieChart",
+  "cn": "饼图"
 }]

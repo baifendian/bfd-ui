@@ -24,7 +24,7 @@ export default class {
     const env = {
       config
     }
-
+    console.log(env)
     env.container = config.container
     env.container.style.position = 'relative'
 

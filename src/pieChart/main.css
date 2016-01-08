@@ -1,0 +1,52 @@
+@import './tooltip.css';
+
+.tick line,
+path.domain {
+  fill: none;
+  stroke: rgb(192, 208, 224);
+  shape-rendering: crispEdges;
+}
+.axis-y path.domain {
+  stroke: none;
+}
+.legend {
+  left: 30px;
+  top: 0;
+}
+.legend > div {
+  display: inline-block;
+  margin-right: 10px;
+}
+.legend .disabled {
+  color: #ccc;
+}
+.legend .legend-rect {
+  margin-right: 3px;
+}
+.legend .disabled .legend-rect {
+  background-color: #ccc!important;
+}
+.legend .legend-rect:before {
+  content: '';
+  display: inline-block;
+  width: 1.5em;
+  height: 1em;
+}
+
+path {   
+    cursor: pointer;
+    -webkit-transition: stroke-width 250ms, fill 250ms;
+    transition: stroke-width 250ms, fill 250ms;
+}
+
+text {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+polyline {
+    fill: none;
+    stroke: #000;
+    stroke-width: 2px;
+    /*stroke-dasharray: 2px;*/
+}
