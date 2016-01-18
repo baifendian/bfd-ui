@@ -1,7 +1,7 @@
 import d3 from 'd3'
 
 export default env => {
-  
+
   const _config = {      
       radius:{     //设置饼图的半径比例大小。
         inner:0.45,
@@ -131,9 +131,9 @@ export default env => {
     .delay(function(d, i) {
       return arcAnimLineText + (i * 250);
     })
-    .attr('points', function(d) {
+    .attr('points', function(d) {           
       var pos = outerArc.centroid(d);
-      pos[0] = radius * 0.8 * (midAngle(d) < Math.PI ? 1 : -1);     
+      pos[0] = radius * 0.75 * (midAngle(d) < Math.PI ? 1 : -1);  
       return [arc.centroid(d), outerArc.centroid(d), pos];
     })
     .style('opacity', 0.4);

@@ -30,11 +30,11 @@ export default env => {
       tooltip.style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY + 20) + 'px');
       let node = d3.select(this);
-      node.style('opacity', 0.75);
+      node.style('fill',env.config.hoverColor || '#000');
     })
     .on('mouseout', function(d) {
       tooltip.style('opacity', 0.0);
       let node = d3.select(this);
-      node.style('opacity', 1.0);
+      node.style('fill', '');
     });
 }

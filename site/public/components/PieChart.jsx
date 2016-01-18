@@ -25,6 +25,7 @@ export default React.createClass({
       //   pie:2500,    //加载饼图圆的时间。
       //   lineText:500 //加载线和标签文字的时间。
       // },
+      hoverColor:'#9D9D9D', //设置hover时的颜色。 默认是黑色。
       data:[    //初始化数据。
                 {value:335, name:'直接访问'},
                 {value:310, name:'邮件营销'},
