@@ -1,11 +1,28 @@
 import d3 from 'd3'
 
 export default env => {
-   
+  
+  const _config = {      
+      radius:{     //设置饼图的半径比例大小。
+        inner:0.45,
+        outer:0.6
+      },  
+      lineLabel:{  //设置label和line的位置。
+        inner:0.5,
+        outer:0.75
+      },    
+      animation:{    //设置动画时间。
+        pie:2500,    //加载饼图圆的时间。
+        lineText:500 //加载线和标签文字的时间。
+      }
+    };
+
+  Object.assign(_config, env.config);
+
   const initialAnimDelay = 100;
   const arcAnimDelay = 120;
-  const arcAnimDur = env.config.animation.pie;
-  const arcAnimLineText = env.config.animation.lineText;
+  const arcAnimDur = _config.animation.pie;
+  const arcAnimLineText = _config.animation.lineText;
   const width = env.width;
   const height = env.height;
   const minOfWH = Math.min(width, height) / 2;
@@ -21,13 +38,13 @@ export default env => {
 
   // for drawing slices
   var arc = d3.svg.arc()
-    .outerRadius(env.config.radius.outer*radius)
-    .innerRadius(env.config.radius.inner*radius);
+    .outerRadius(_config.radius.outer*radius)
+    .innerRadius(_config.radius.inner*radius);
 
   // for labels and polylines
   var outerArc = d3.svg.arc()
-    .innerRadius(env.config.lineLabel.inner*radius)
-    .outerRadius(env.config.lineLabel.outer*radius);
+    .innerRadius(_config.lineLabel.inner*radius)
+    .outerRadius(_config.lineLabel.outer*radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -39,7 +56,7 @@ export default env => {
    */
   // define slice 绑定数据
   var slice = env.svg.select('.slices')
-    .datum(env.config.data)
+    .datum(_config.data)
     .selectAll('path')
     .data(pie);
   slice
@@ -65,7 +82,7 @@ export default env => {
 
   //设置text 
   var text = env.svg.select('.labels').selectAll('text')
-    .data(pie(env.config.data));
+    .data(pie(_config.data));
   text.enter()
     .append('text')
     .attr('dy', '0.35em')
@@ -99,7 +116,7 @@ export default env => {
 
   //设置线条
   var polyline = env.svg.select('.lines').selectAll('polyline')
-    .data(pie(env.config.data));
+    .data(pie(_config.data));
   polyline.enter()
     .append('polyline')
     .style('opacity', 0)
