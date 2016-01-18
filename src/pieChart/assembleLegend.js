@@ -37,9 +37,9 @@ export default env => {
         })();
 
       //clear pie
-      env.svg.select(".slices").selectAll('path').remove();
-      env.svg.select(".labels").selectAll('text').remove();
-      env.svg.select(".lines").selectAll('polyline').remove();
+      env.svg.select('.slices').selectAll('path').remove();
+      env.svg.select('.labels').selectAll('text').remove();
+      env.svg.select('.lines').selectAll('polyline').remove();
       //draw pie repeat
       drawPie(env);
       //add tooltip

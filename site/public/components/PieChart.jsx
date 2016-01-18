@@ -12,7 +12,19 @@ export default React.createClass({
   },  
   componentDidMount() {   
     var config = {
-      name:'访问来源',        
+      name:'访问来源',
+      radius:{     //设置饼图的半径比例大小。
+        inner:0.45,
+        outer:0.6
+      },  
+      lineLabel:{  //设置label和line的位置。
+        inner:0.5,
+        outer:0.75
+      },    
+      animation:{    //设置动画时间。
+        pie:2500,    //加载饼图圆的时间。
+        lineText:500 //加载线和标签文字的时间。
+      },
       data:[    //初始化数据。
                 {value:335, name:'直接访问'},
                 {value:310, name:'邮件营销'},
