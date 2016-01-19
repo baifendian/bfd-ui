@@ -2,20 +2,20 @@ import d3 from 'd3'
 
 export default env => {
 
-  const _config = {      
-      radius:{     //设置饼图的半径比例大小。
-        inner:0.45,
-        outer:0.6
-      },  
-      lineLabel:{  //设置label和line的位置。
-        inner:0.5,
-        outer:0.85
-      },    
-      animation:{    //设置动画时间。
-        pie:2500,    //加载饼图圆的时间。
-        lineText:500 //加载线和标签文字的时间。
-      }
-    };
+  const _config = {
+    radius: { //设置饼图的半径比例大小。
+      inner: 0.45,
+      outer: 0.6
+    },
+    lineLabel: { //设置label和line的位置。
+      inner: 0.5,
+      outer: 0.85
+    },
+    animation: { //设置动画时间。
+      pie: 2500, //加载饼图圆的时间。
+      lineText: 500 //加载线和标签文字的时间。
+    }
+  };
 
   Object.assign(_config, env.config);
 
@@ -26,25 +26,24 @@ export default env => {
   const width = env.width;
   const height = env.height;
   const minOfWH = Math.min(width, height) / 2;
-
   var radius;
-
   // calculate minimum of width and height to set chart radius
-  if (minOfWH > 200) {
-    radius = 200;
-  } else {
-    radius = minOfWH;
-  }
-
+  // if (minOfWH > 200) {
+  //   radius = 200;
+  // } else {
+  //   radius = minOfWH;
+  // }
+  radius = minOfWH;
+  
   // for drawing slices
   var arc = d3.svg.arc()
-    .outerRadius(_config.radius.outer*radius)
-    .innerRadius(_config.radius.inner*radius);
+    .outerRadius(_config.radius.outer * radius)
+    .innerRadius(_config.radius.inner * radius);
 
   // for labels and polylines
   var outerArc = d3.svg.arc()
-    .innerRadius(_config.lineLabel.inner*radius)
-    .outerRadius(_config.lineLabel.outer*radius);
+    .innerRadius(_config.lineLabel.inner * radius)
+    .outerRadius(_config.lineLabel.outer * radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -96,10 +95,9 @@ export default env => {
     .attr('transform', function(d) {
       // calculate outerArc centroid for 'this' slice
       var pos = outerArc.centroid(d);
-      
       // define left and right alignment of text labels      
-      pos[0] += (midAngle(d) < Math.PI ? 20: -20);        
-      pos[1] -= 12;
+      pos[0] += (midAngle(d) < Math.PI ? 20 : -20);
+      pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
       return 'translate(' + pos + ')';
     })
     .style('text-anchor', function(d) {
@@ -133,10 +131,9 @@ export default env => {
     .delay(function(d, i) {
       return arcAnimLineText + (i * 250);
     })
-    .attr('points', function(d) {           
+    .attr('points', function(d) {
       var pos = outerArc.centroid(d);
-      //pos[0] = radius * 0.9 * (midAngle(d) < Math.PI ? 1 : -1);  
-      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);  
+      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
       return [arc.centroid(d), outerArc.centroid(d), pos];
     })
     .style('opacity', 0.4);
