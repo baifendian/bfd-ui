@@ -22,6 +22,9 @@ var config = {
     }, {
       test: /\.(eot|woff|woff2|ttf|svg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
+    }, {
+      test: /\.json$/,
+      loader: 'json-loader'
     }]
     // preLoaders: [{
     //   test: /\.jsx?$/,

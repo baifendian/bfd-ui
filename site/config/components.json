@@ -1,8 +1,13 @@
 [{
   "name": "LineChart",
   "cn": "折线图"
-},
-{
+}, {
   "name": "PieChart",
   "cn": "饼图"
+}, {
+  "name": "BubbleChart",
+  "cn": "气泡图"
+}, {
+  "name": "ChinaMap",
+  "cn": "中国地图"
 }]

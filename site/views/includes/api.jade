@@ -1,0 +1,7 @@
+mixin api(item)
+  li
+    span.name= item.name
+    span(class=item.type)
+    p= item.desc
+    if block
+      block

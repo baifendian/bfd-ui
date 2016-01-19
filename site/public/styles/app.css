@@ -1,7 +1,23 @@
-.content {
-  overflow: hidden;
+#header {
+  background-color: #2196f3;
+  height: 50px;
+  padding: 0 20px;
 }
-.content > * {
+#header h2 {
+  color: #fff;
+  margin: 0;
+  line-height: 50px;
+}
+
+#body > .sidebar {
+  width: 200px;
+  float: left;
+}
+#body > .content {
+  overflow: hidden;
+  padding: 0 20px;
+}
+#body > .content > * {
   -webkit-animation: in .5s;
 }
 @-webkit-keyframes in {
@@ -16,5 +32,66 @@
 }
 
 pre {
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  color: #666;
+  border: 0;
+  font-size: 12px;
+  white-space: pre-wrap;
+  padding: 1rem;
   max-width: 600px;
+}
+pre .kwd {
+  color: #8959a8;
+}
+pre .tag,
+pre .attr {
+  color: #c82829;
+}
+pre .str {
+  color: #718c00;
+}
+pre .num,
+pre .kc {
+  color: #3498db;
+}
+pre .com {
+  color: #969896;
+}
+
+.markdown .demo {
+  width: 600px;
+  border: 1px solid #ececec;
+  border-radius: 3px;
+}
+.markdown ul {
+  padding: 0;
+  list-style: none;
+}
+.markdown ul li {
+  margin-top: 30px;
+}
+.markdown ul li span.name {
+  color: #c82829;
+  font-weight: 500;
+}
+.markdown .string,
+.markdown .function,
+.markdown .object,
+.markdown .array {
+  color: #ababab;
+  margin-left: 5px;
+  /*font-style: italic;*/
+}
+.markdown .string:before {
+  content: 'String';
+}
+.markdown .function:before {
+  content: 'Function';
+}
+.markdown .object:before {
+  content: 'Object';
+}
+.markdown .array:before {
+  content: 'Array';
 }

@@ -1,13 +1,13 @@
 .bcharts-tooltip {
   white-space: nowrap;
   min-width: 80px;
-  background-color: #5c5c5c;
+  background-color: #65a6ff;
   color: #fff;
   border-radius: 2px;
   padding: 8px 10px;
   font-size: 12px;
 }
-.bcharts-tooltip:before {
+/*.bcharts-tooltip:before {
   content: '';
   position: absolute;
   left: -5px;
@@ -17,4 +17,4 @@
   border-width: 5px 5px 5px 0;
   border-style: solid;
   border-color: transparent #5c5c5c transparent transparent;
-}
+}*/

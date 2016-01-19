@@ -38,7 +38,7 @@ export default env => {
         let el = d3.select(this).transition().duration(500)
         el.select('path.line').attr('d', env.pathBuilder('line', i))
         el.select('path.area').attr('d', env.pathBuilder('area', i))
-        el.selectAll('circle.marker')
+        el.selectAll('.marker circle')
           .attr('cy', d => env.yScale(d[env.series[i].key]))
       })
     })
