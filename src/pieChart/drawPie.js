@@ -1,32 +1,49 @@
 import d3 from 'd3'
 
 export default env => {
-   
+
+  const _config = {
+    radius: { //设置饼图的半径比例大小。
+      inner: 0.45,
+      outer: 0.6
+    },
+    lineLabel: { //设置label和line的位置。
+      inner: 0.5,
+      outer: 0.85
+    },
+    animation: { //设置动画时间。
+      pie: 2500, //加载饼图圆的时间。
+      lineText: 500 //加载线和标签文字的时间。
+    }
+  };
+
+  Object.assign(_config, env.config);
+
   const initialAnimDelay = 100;
-  const arcAnimDelay = 200;
-  const arcAnimDur = 2500;
+  const arcAnimDelay = 120;
+  const arcAnimDur = _config.animation.pie;
+  const arcAnimLineText = _config.animation.lineText;
   const width = env.width;
   const height = env.height;
   const minOfWH = Math.min(width, height) / 2;
-
   var radius;
-
   // calculate minimum of width and height to set chart radius
-  if (minOfWH > 200) {
-    radius = 200;
-  } else {
-    radius = minOfWH;
-  }
-
+  // if (minOfWH > 200) {
+  //   radius = 200;
+  // } else {
+  //   radius = minOfWH;
+  // }
+  radius = minOfWH;
+  
   // for drawing slices
   var arc = d3.svg.arc()
-    .outerRadius(radius * 0.6)
-    .innerRadius(radius * 0.45);
+    .outerRadius(_config.radius.outer * radius)
+    .innerRadius(_config.radius.inner * radius);
 
   // for labels and polylines
   var outerArc = d3.svg.arc()
-    .innerRadius(radius * 0.85)
-    .outerRadius(radius * 0.85);
+    .innerRadius(_config.lineLabel.inner * radius)
+    .outerRadius(_config.lineLabel.outer * radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -38,15 +55,15 @@ export default env => {
    */
   // define slice 绑定数据
   var slice = env.svg.select('.slices')
-    .datum(env.config.data)
+    .datum(_config.data)
     .selectAll('path')
     .data(pie);
   slice
     .enter().append('path')
-    .attr("fill", function(d, i) {
+    .attr('fill', function(d, i) {
       return d.data.color;
     })
-    .attr("d", function(d) {
+    .attr('d', function(d) {
       return arc(d);
     })
     .attr('transform', function(d, i) {
@@ -63,12 +80,12 @@ export default env => {
     .attr('transform', 'rotate(0,0,0)');
 
   //设置text 
-  var text = env.svg.select(".labels").selectAll("text")
-    .data(pie(env.config.data));
+  var text = env.svg.select('.labels').selectAll('text')
+    .data(pie(_config.data));
   text.enter()
     .append('text')
     .attr('dy', '0.35em')
-    .style("opacity", 0)
+    .style('opacity', 0)
     .style('fill', function(d, i) {
       return d.data.color;
     })
@@ -78,16 +95,17 @@ export default env => {
     .attr('transform', function(d) {
       // calculate outerArc centroid for 'this' slice
       var pos = outerArc.centroid(d);
-      // define left and right alignment of text labels               
-      pos[0] = radius * (midAngle(d) < Math.PI ? 1 : -1) * 0.8;
-      return "translate(" + pos + ")";
+      // define left and right alignment of text labels      
+      pos[0] += (midAngle(d) < Math.PI ? 20 : -20);
+      pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
+      return 'translate(' + pos + ')';
     })
     .style('text-anchor', function(d) {
-      return midAngle(d) < Math.PI ? "start" : "end";
+      return midAngle(d) < Math.PI ? 'start' : 'end';
     })
     .transition()
     .delay(function(d, i) {
-      return arcAnimDur + (i * 250);
+      return arcAnimLineText + (i * 250);
     })
     .duration(1000)
     .style('opacity', 1);
@@ -97,11 +115,11 @@ export default env => {
   }
 
   //设置线条
-  var polyline = env.svg.select(".lines").selectAll("polyline")
-    .data(pie(env.config.data));
+  var polyline = env.svg.select('.lines').selectAll('polyline')
+    .data(pie(_config.data));
   polyline.enter()
-    .append("polyline")
-    .style("opacity", 0)
+    .append('polyline')
+    .style('opacity', 0)
     .attr('points', function(d) {
       return [arc.centroid(d), arc.centroid(d), arc.centroid(d)];
     })
@@ -111,11 +129,11 @@ export default env => {
     })
     .duration(1000)
     .delay(function(d, i) {
-      return arcAnimDur + (i * 250);
+      return arcAnimLineText + (i * 250);
     })
     .attr('points', function(d) {
       var pos = outerArc.centroid(d);
-      pos[0] = radius * 0.8 * (midAngle(d) < Math.PI ? 1 : -1);     
+      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
       return [arc.centroid(d), outerArc.centroid(d), pos];
     })
     .style('opacity', 0.4);

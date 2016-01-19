@@ -37,8 +37,12 @@ path {
     cursor: pointer;
     -webkit-transition: stroke-width 250ms, fill 250ms;
     transition: stroke-width 250ms, fill 250ms;
+    stroke: #fff;
+    stroke-width: 2px;
 }
-
+path:hover {
+    stroke-width: 6px;    
+}
 text {
     font-size: 0.8em;
     text-transform: uppercase;

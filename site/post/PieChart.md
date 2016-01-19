@@ -23,4 +23,4 @@ export default React.createClass({
 
 ## 演示
 
-<div id="demo" style="width:600px;"></div>
+<div id="demo" style="width:500px;"></div>

@@ -12,7 +12,8 @@ export default React.createClass({
   },  
   componentDidMount() {   
     var config = {
-      name:'访问来源',        
+      name:'访问来源',     
+      hoverColor:'#9D9D9D', //设置hover时的颜色。 默认是黑色。
       data:[    //初始化数据。
                 {value:335, name:'直接访问'},
                 {value:310, name:'邮件营销'},

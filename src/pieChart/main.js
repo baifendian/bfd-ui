@@ -35,20 +35,20 @@ export default class {
     assembleLegend(env);
 
     env.svg = d3.select(env.container)
-      .append("svg")
-      .attr("width", env.width)
-      .attr("height", env.height)
+      .append('svg')
+      .attr('width', env.width)
+      .attr('height', env.height)
       .append('g');
 
-    env.svg.attr("transform", "translate(" + (env.width / 2) + "," + (env.width / 2) + ")");
+    env.svg.attr('transform', 'translate(' + (env.width / 2) + ',' + (env.width / 2) + ')');
 
     //添加3个g标签，分别是 lines slices labels。
-    env.svg.append("g")
-      .attr("class", "lines");
-    env.svg.append("g")
-      .attr("class", "slices");
-    env.svg.append("g")
-      .attr("class", "labels");
+    env.svg.append('g')
+      .attr('class', 'lines');
+    env.svg.append('g')
+      .attr('class', 'slices');
+    env.svg.append('g')
+      .attr('class', 'labels');
 
     //init pie
     drawPie(env);
