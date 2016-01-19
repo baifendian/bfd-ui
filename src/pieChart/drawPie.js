@@ -9,7 +9,7 @@ export default env => {
       },  
       lineLabel:{  //设置label和line的位置。
         inner:0.5,
-        outer:0.75
+        outer:0.85
       },    
       animation:{    //设置动画时间。
         pie:2500,    //加载饼图圆的时间。
@@ -96,8 +96,10 @@ export default env => {
     .attr('transform', function(d) {
       // calculate outerArc centroid for 'this' slice
       var pos = outerArc.centroid(d);
-      // define left and right alignment of text labels               
-      pos[0] = radius * (midAngle(d) < Math.PI ? 1 : -1) * 0.8;
+      
+      // define left and right alignment of text labels      
+      pos[0] += (midAngle(d) < Math.PI ? 20: -20);        
+      pos[1] -= 12;
       return 'translate(' + pos + ')';
     })
     .style('text-anchor', function(d) {
@@ -133,7 +135,8 @@ export default env => {
     })
     .attr('points', function(d) {           
       var pos = outerArc.centroid(d);
-      pos[0] = radius * 0.75 * (midAngle(d) < Math.PI ? 1 : -1);  
+      //pos[0] = radius * 0.9 * (midAngle(d) < Math.PI ? 1 : -1);  
+      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);  
       return [arc.centroid(d), outerArc.centroid(d), pos];
     })
     .style('opacity', 0.4);
