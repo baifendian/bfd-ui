@@ -63,7 +63,7 @@ export default React.createClass({
 		  ]
 		]
     };
-    render(<RadarChart config={config} />, document.getElementById('demo'))
+    render(<RadarChart config={config}  style="width:600px;"/>, document.getElementById('demo'))
   },
 
   render() {

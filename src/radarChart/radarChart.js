@@ -1,5 +1,4 @@
 import d3 from 'd3'
-import './main.css'
 export default {
   draw: function(id, d, options){
   var cfg = {
@@ -26,6 +25,7 @@ export default {
   		}
 	  }
 	}
+  console.log(cfg);
 	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
 	var allAxis = (d[0].map(function(i, j){return i.axis}));
 	var total = allAxis.length;
@@ -37,10 +37,10 @@ export default {
 
 	var g = d3.select(id)
 			.append("svg")
-			.attr("width", cfg.w+cfg.ExtraWidthX)
-			.attr("height", cfg.h+cfg.ExtraWidthY)
+			.attr("width", cfg.w-cfg.ExtraWidthX)
+			.attr("height", cfg.h-cfg.ExtraWidthY)
 			.append("g")
-			.attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+			.attr("transform", "translate(" + 0 + "," + cfg.TranslateY + ")");
 			;
 
 	var tooltip;
@@ -89,8 +89,8 @@ export default {
 			.attr("class", "axis");
 
 	axis.append("line")
-		.attr("x1", cfg.w/2)
-		.attr("y1", cfg.h/2)
+		.attr("x1", (cfg.w-cfg.ExtraWidthX)/2)
+		.attr("y1", (cfg.h-cfg.ExtraWidthX)/2)
 		.attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
 		.attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
 		.attr("class", "line")

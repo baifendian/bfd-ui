@@ -15,7 +15,6 @@ export default class {
       h:0,
       maxValue:0.6,
       levels:6,
-      ExtraWidthX:300
     };
 
     const env = {
@@ -28,7 +27,7 @@ export default class {
     mycfg.h = env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];
 
     if (!env.config.data) return;
-
+    console.log(mycfg);
     //get color of category20
     const colorscale = d3.scale.category20();
     radarChart.draw(env.container, env.config.data, mycfg);
