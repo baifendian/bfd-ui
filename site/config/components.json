@@ -5,4 +5,8 @@
 {
   "name": "PieChart",
   "cn": "饼图"
+},
+{
+  "name":"RadarChart",
+  "cn":"雷达图"
 }]
