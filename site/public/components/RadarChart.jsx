@@ -13,7 +13,6 @@ export default React.createClass({
   componentDidMount() {
     var config = {
       titles:['Smartphone','Tablet'],
-      hoverColor:'#9D9D9D', //设置hover时的颜色。 默认是黑色。
       data:[
 		  [
 			{axis:"Email",value:0.59},

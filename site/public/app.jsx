@@ -13,7 +13,7 @@ import Bootstrap from './bootstrap.jsx'
 import model from './model'
 
 const App = React.createClass({
-  
+
   getInitialState() {
     return {
       components: window.components
@@ -94,8 +94,6 @@ const routeConfig = [{
   }]
 }]
 
-<<<<<<< HEAD
-render(<Router history={createHistory()} routes={routeConfig} />, document.getElementById('app'))
 
 // render((
 //   <Router history={createHistory()}>
@@ -105,6 +103,4 @@ render(<Router history={createHistory()} routes={routeConfig} />, document.getEl
 //     </Route>
 //   </Router>
 // ), document.getElementById('app'))
-=======
 render(<Router history={createHistory()} routes={routeConfig} />, document.getElementById('app'))
->>>>>>> c21740eb25dcf818ae98f6ba8ba0f918410b2e41

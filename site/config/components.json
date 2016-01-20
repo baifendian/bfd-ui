@@ -4,18 +4,15 @@
 }, {
   "name": "PieChart",
   "cn": "饼图"
-<<<<<<< HEAD
 },
 {
   "name":"RadarChart",
   "cn":"雷达图"
-}]
-=======
-}, {
+},
+{
   "name": "BubbleChart",
   "cn": "气泡图"
 }, {
   "name": "ChinaMap",
   "cn": "中国地图"
 }]
->>>>>>> c21740eb25dcf818ae98f6ba8ba0f918410b2e41

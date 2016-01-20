@@ -1,0 +1,13 @@
+include ../includes/api.jade
+
+h1 雷达图
+
+pre
+  :highlight(lang='js')
+    import RadarChart from 'bfd-ui/src/radarChart'
+
+    ReactDom.render(<RadarChart config={config}></RadarChart>, mountNode)
+
+#demo.demo
+
+h2 属性
