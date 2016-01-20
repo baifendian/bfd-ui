@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import PieChart from 'c/pieChart/index.jsx'
+import RadarChart from 'c/pieChart/index.jsx'
 
 
 export default React.createClass({
@@ -9,10 +9,10 @@ export default React.createClass({
     return {
       post: window.post
     }
-  },  
-  componentDidMount() {   
+  },
+  componentDidMount() {
     var config = {
-      name:'访问来源',     
+      name:'访问来源',
       hoverColor:'#9D9D9D', //设置hover时的颜色。 默认是黑色。
       data:[    //初始化数据。
                 {value:335, name:'直接访问'},
@@ -23,7 +23,7 @@ export default React.createClass({
                 {value:348,name:'百分点'}
             ]
     };
-    render(<PieChart config={config} />, document.getElementById('demo'))
+    render(<RadarChart config={config} />, document.getElementById('demo'))
   },
 
   render() {

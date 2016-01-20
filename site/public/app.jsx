@@ -12,10 +12,10 @@ const App = React.createClass({
   
   getInitialState() {
     return {
-      components: window.components   
+      components: window.components
     }
   },
-  
+
   render() {
     return (
       <div className="row">
