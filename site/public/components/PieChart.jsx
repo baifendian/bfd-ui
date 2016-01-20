@@ -27,6 +27,6 @@ export default React.createClass({
   },
 
   render() {
-    return <div dangerouslySetInnerHTML={{__html: this.state.post}}></div>
+    return <div className="markdown"  dangerouslySetInnerHTML={{__html: this.state.post}}></div>
   }
 })

@@ -17,9 +17,7 @@ export default class {
   
     env.container.style.position = 'relative';
     env.width = env.container.clientWidth - padding[3] - padding[1];
-    env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];
-
-    console.log(env)
+    env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];    
     
     if (!env.config.data) return;
 
