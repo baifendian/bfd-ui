@@ -9,7 +9,8 @@ export default env => {
     .append('div')
     .attr('class', 'legend')
     .style('position', 'absolute')
-    .style('left','80%')    
+    .style('right','10px')   
+    .style('top','10px') 
     .selectAll('div')
     .data(env.config.data)
     .enter()
@@ -37,9 +38,9 @@ export default env => {
         })();
 
       //clear pie
-      env.svg.select('.slices').selectAll('path').remove();
-      env.svg.select('.labels').selectAll('text').remove();
-      env.svg.select('.lines').selectAll('polyline').remove();
+      env.svg.select('.pie-slices').selectAll('path').remove();
+      env.svg.select('.pie-labels').selectAll('text').remove();
+      env.svg.select('.pie-lines').selectAll('polyline').remove();
       //draw pie repeat
       drawPie(env);
       //add tooltip

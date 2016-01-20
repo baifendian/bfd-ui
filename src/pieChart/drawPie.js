@@ -3,17 +3,12 @@ import d3 from 'd3'
 export default env => {
 
   const _config = {
-    radius: { //设置饼图的半径比例大小。
-      inner: 0.45,
-      outer: 0.6
+    radius: {
+      inner: 0.75
     },
-    lineLabel: { //设置label和line的位置。
-      inner: 0.5,
-      outer: 0.85
-    },
-    animation: { //设置动画时间。
-      pie: 2500, //加载饼图圆的时间。
-      lineText: 500 //加载线和标签文字的时间。
+    animation: {
+      pie: 2500,
+      lineText: 500
     }
   };
 
@@ -25,25 +20,18 @@ export default env => {
   const arcAnimLineText = _config.animation.lineText;
   const width = env.width;
   const height = env.height;
-  const minOfWH = Math.min(width, height) / 2;
-  var radius;
-  // calculate minimum of width and height to set chart radius
-  // if (minOfWH > 200) {
-  //   radius = 200;
-  // } else {
-  //   radius = minOfWH;
-  // }
-  radius = minOfWH;
-  
+  const radius = Math.min(width, height) / 2;
+
+
   // for drawing slices
   var arc = d3.svg.arc()
-    .outerRadius(_config.radius.outer * radius)
-    .innerRadius(_config.radius.inner * radius);
+    .outerRadius(0.6 * radius)
+    .innerRadius(0.6 * _config.radius.inner * radius);
 
-  // for labels and polylines
+  // for labels and polylines  设置label和line的位置。
   var outerArc = d3.svg.arc()
-    .innerRadius(_config.lineLabel.inner * radius)
-    .outerRadius(_config.lineLabel.outer * radius);
+    .innerRadius(0.5 * radius)
+    .outerRadius(0.85 * radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -54,7 +42,7 @@ export default env => {
    *填充颜色并画圆弧，并设置动画效果。
    */
   // define slice 绑定数据
-  var slice = env.svg.select('.slices')
+  var slice = env.svg.select('.pie-slices')
     .datum(_config.data)
     .selectAll('path')
     .data(pie);
@@ -80,7 +68,7 @@ export default env => {
     .attr('transform', 'rotate(0,0,0)');
 
   //设置text 
-  var text = env.svg.select('.labels').selectAll('text')
+  var text = env.svg.select('.pie-labels').selectAll('text')
     .data(pie(_config.data));
   text.enter()
     .append('text')
@@ -115,7 +103,7 @@ export default env => {
   }
 
   //设置线条
-  var polyline = env.svg.select('.lines').selectAll('polyline')
+  var polyline = env.svg.select('.pie-lines').selectAll('polyline')
     .data(pie(_config.data));
   polyline.enter()
     .append('polyline')
