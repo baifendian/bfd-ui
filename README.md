@@ -22,13 +22,15 @@ render(<LineChart config={config}/>, mountNode)
 ```sh
 $ git clone http://git.baifendian.com/front-end/bfd-ui.git
 
+$ cd bfd-ui
+
 $ npm install
 ```
 #### 如何添加新组件？
 
 `src/yourComponent`
 
-注意：`index.js` 为组件的入口
+注意：`index.jsx` 为组件的入口
 
 
 #### 如何测试、查看效果？

@@ -2,20 +2,15 @@ import d3 from 'd3'
 
 export default env => {
 
-  const _config = {      
-      radius:{     //设置饼图的半径比例大小。
-        inner:0.45,
-        outer:0.6
-      },  
-      lineLabel:{  //设置label和line的位置。
-        inner:0.5,
-        outer:0.85
-      },    
-      animation:{    //设置动画时间。
-        pie:2500,    //加载饼图圆的时间。
-        lineText:500 //加载线和标签文字的时间。
-      }
-    };
+  const _config = {
+    radius: {
+      inner: 0.75
+    },
+    animation: {
+      pie: 2500,
+      lineText: 500
+    }
+  };
 
   Object.assign(_config, env.config);
 
@@ -25,26 +20,18 @@ export default env => {
   const arcAnimLineText = _config.animation.lineText;
   const width = env.width;
   const height = env.height;
-  const minOfWH = Math.min(width, height) / 2;
+  const radius = Math.min(width, height) / 2;
 
-  var radius;
-
-  // calculate minimum of width and height to set chart radius
-  if (minOfWH > 200) {
-    radius = 200;
-  } else {
-    radius = minOfWH;
-  }
 
   // for drawing slices
   var arc = d3.svg.arc()
-    .outerRadius(_config.radius.outer*radius)
-    .innerRadius(_config.radius.inner*radius);
+    .outerRadius(0.6 * radius)
+    .innerRadius(0.6 * _config.radius.inner * radius);
 
-  // for labels and polylines
+  // for labels and polylines  设置label和line的位置。
   var outerArc = d3.svg.arc()
-    .innerRadius(_config.lineLabel.inner*radius)
-    .outerRadius(_config.lineLabel.outer*radius);
+    .innerRadius(0.5 * radius)
+    .outerRadius(0.85 * radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -55,7 +42,7 @@ export default env => {
    *填充颜色并画圆弧，并设置动画效果。
    */
   // define slice 绑定数据
-  var slice = env.svg.select('.slices')
+  var slice = env.svg.select('.pie-slices')
     .datum(_config.data)
     .selectAll('path')
     .data(pie);
@@ -81,7 +68,7 @@ export default env => {
     .attr('transform', 'rotate(0,0,0)');
 
   //设置text 
-  var text = env.svg.select('.labels').selectAll('text')
+  var text = env.svg.select('.pie-labels').selectAll('text')
     .data(pie(_config.data));
   text.enter()
     .append('text')
@@ -96,10 +83,9 @@ export default env => {
     .attr('transform', function(d) {
       // calculate outerArc centroid for 'this' slice
       var pos = outerArc.centroid(d);
-      
       // define left and right alignment of text labels      
-      pos[0] += (midAngle(d) < Math.PI ? 20: -20);        
-      pos[1] -= 12;
+      pos[0] += (midAngle(d) < Math.PI ? 20 : -20);
+      pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
       return 'translate(' + pos + ')';
     })
     .style('text-anchor', function(d) {
@@ -117,7 +103,7 @@ export default env => {
   }
 
   //设置线条
-  var polyline = env.svg.select('.lines').selectAll('polyline')
+  var polyline = env.svg.select('.pie-lines').selectAll('polyline')
     .data(pie(_config.data));
   polyline.enter()
     .append('polyline')
@@ -133,10 +119,9 @@ export default env => {
     .delay(function(d, i) {
       return arcAnimLineText + (i * 250);
     })
-    .attr('points', function(d) {           
+    .attr('points', function(d) {
       var pos = outerArc.centroid(d);
-      //pos[0] = radius * 0.9 * (midAngle(d) < Math.PI ? 1 : -1);  
-      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);  
+      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
       return [arc.centroid(d), outerArc.centroid(d), pos];
     })
     .style('opacity', 0.4);

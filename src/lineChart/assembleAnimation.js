@@ -1,6 +1,6 @@
 export default env => {
   env.svg.append('clipPath')
-    .attr('id', 'rectClip')
+    .attr('id', 'rectClip-' + env.id)
     .append('rect')
     .attr('width', 0)
     .attr('height', env.height + 10)

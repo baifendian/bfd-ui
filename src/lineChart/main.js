@@ -15,21 +15,24 @@ import assembleLegend from './assembleLegend'
 
 export default class {
 
-  constructor(config = {}) {
+  constructor(config) {
 
-    if (typeof config.cols !== 'object') throw new Error('config.cols is required as object.')
+    const {container, category, cols, data, yAixs, tooltip} = config
+
+    if (typeof cols !== 'object') throw new Error('cols is required as object.')
 
     const padding = [20, 20, 30, 40]
 
     const env = {
-      config
+      // Create id to prevent naming conflicts
+      id: Math.random().toString(16).slice(2),
+      config: config,
+      container
     }
-    console.log(env)
-    env.container = config.container
     env.container.style.position = 'relative'
 
     env.width = env.container.clientWidth - padding[3] - padding[1]
-    env.height = (env.container.clientHeight || env.width * .6) - padding[0] - padding[2]
+    env.height = (env.container.clientHeight || env.width * .5) - padding[0] - padding[2]
 
     env.xAxisPaddingScale = 0.2
 
@@ -42,7 +45,7 @@ export default class {
       .append('g')
       .attr('transform', 'translate(' + padding[3] + ', ' + padding[0] + ')')
 
-    if (!env.config.data) return
+    if (!data) return
 
     Object.assign(env, dataConverter(env.config))
 
@@ -67,7 +70,7 @@ export default class {
 
     env.actives = Array(env.series.length + 1).join(1).split('')
 
-    if (!config.tooltip || config.tooltip.enabled !== false) {
+    if (!tooltip || tooltip.enabled !== false) {
       assembleTooltip(env)
     }
 

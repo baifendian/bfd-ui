@@ -9,23 +9,22 @@ import assembleLegend from './assembleLegend'
 
 export default class {
 
-  constructor(config = {}) {
+  constructor(config) {   
 
     const padding = [20, 20, 30, 40];
-
-    const env = {
-      config
-    };
-
-    env.container = config.container;
+    
+    const env = config;
+  
     env.container.style.position = 'relative';
     env.width = env.container.clientWidth - padding[3] - padding[1];
     env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];
 
+    console.log(env)
+    
     if (!env.config.data) return;
 
-    //get color of category20
-    const colors = d3.scale.category20();
+    //get color of category10
+    const colors = d3.scale.category10();
 
     //init color
     for (var i = 0; i < env.config.data.length; i++)
@@ -42,19 +41,18 @@ export default class {
 
     env.svg.attr('transform', 'translate(' + (env.width / 2) + ',' + (env.width / 2) + ')');
 
-    //添加3个g标签，分别是 lines slices labels。
+    //添加3个g标签，分别是 pie-lines pie-slices pie-labels
     env.svg.append('g')
-      .attr('class', 'lines');
+      .attr('class', 'pie-lines');
     env.svg.append('g')
-      .attr('class', 'slices');
+      .attr('class', 'pie-slices');
     env.svg.append('g')
-      .attr('class', 'labels');
+      .attr('class', 'pie-labels');
 
     //init pie
-    drawPie(env);
-
+    drawPie(env);    
     //init tooltip
-    if (!config.tooltip || config.tooltip.enabled !== false) {
+    if (!env.config.tooltip || env.config.tooltip.enabled !== false) {
       assembleTooltip(env);
     }
 

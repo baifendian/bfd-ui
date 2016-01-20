@@ -1,0 +1,57 @@
+include ../includes/api.jade
+
+h1 气泡图
+
+pre
+  :highlight(lang='js')
+    import BubbleChart from 'bfd-ui/src/bubbleChart'
+
+    const data = [{
+      users: 100,
+      name: 'test'
+    }]
+
+    ReactDom.render(<BubbleChart radiusMaker="users" content={d => d.name} color="#dce775" data={data} />, mountNode)
+
+#demo.demo
+
+h2 属性
+
+ul
+  +api({
+    name: 'radiusMaker',
+    type: 'string',
+    isRequired: true,
+    desc: '决定气泡大小的数据纬度'
+  })
+    pre
+      :highlight(lang='js')
+        var a = 1
+
+  +api({
+    name: 'content',
+    type: 'string',
+    desc: '气泡文字内容'
+  })
+
+  +api({
+    name: 'color',
+    type: 'string',
+    desc: '颜色值'
+  })
+
+  +api({
+    name: 'data',
+    type: 'array',
+    desc: '二维格式数据'
+  })
+  pre
+    :highlight(lang='js')
+      [{
+        users: 234,
+        name: 'A',
+      }, {
+        users: 499,
+        name: 'B'
+      }]
+  

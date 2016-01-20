@@ -1,1 +1,1 @@
-export default ['rgb(124, 181, 236)', 'rgb(67, 67, 72)', 'rgb(247, 163, 92)']
+export default ['#e74c3c', '#3498db', '#aed581', '#e57373']

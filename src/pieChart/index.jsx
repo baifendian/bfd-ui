@@ -3,18 +3,18 @@ import PieChart from './main'
 
 export default React.createClass({
   
-  renderChart(config) {   
-    config.container = this.refs.container
+  renderChart() {    
+    const config = {container: this.refs.container, ...this.props}    
     new PieChart(config)
   },
 
-  componentDidMount() {    
-    this.renderChart(this.props.config)
+  componentDidMount() {
+    this.renderChart()
   },
 
-  shouldComponentUpdate(nextProps) {    
-    if (this.props.config !== nextProps.config) {
-      this.renderChart(nextProps.config)
+  shouldComponentUpdate(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.renderChart()
     }
     return true
   },

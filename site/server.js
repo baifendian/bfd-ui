@@ -3,17 +3,18 @@ var http = require('http')
 var path = require('path')
 var compression = require('compression')
 var fs = require('fs')
-var marked = require('marked')
-// var beautify = require('js-beautify')
+var jade = require('jade')
+var beautify = require('code-beautify')
+
+var filters = jade.filters
+filters.highlight = function(source, option) {
+  return beautify(source, option.lang)
+}
+
+
 var webpack = require('webpack')
 var webpackDevMiddleware = require('webpack-dev-middleware')
 var WebpackConfig = require('./webpack.config')
-
-// marked.setOptions({
-//   highlight: function (code, lang, callback) {
-//     return beautify(code, { indent_size: 2 })
-//   }
-// })
 
 var app = express()
 app.use(compression())
@@ -30,9 +31,9 @@ app.use(webpackDevMiddleware(webpack(WebpackConfig), {
 
 app.get('/getComponents', function(req, res, next) {
   try {
-    var markdown = fs.readFileSync(__dirname + '/post/' + req.query.component + '.md', 'utf-8')
+    var fn = jade.compileFile(__dirname + '/views/components/' + req.query.component + '.jade')
   } catch(e) {}
-  res.send(markdown ? marked(markdown) : '')
+  res.send(fn())
 })
 
 app.get('*', function(req, res) {
