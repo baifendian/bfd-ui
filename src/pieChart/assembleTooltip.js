@@ -11,7 +11,7 @@ export default env => {
       'pointer-events': 'none'
     }).attr('class', 'bcharts-tooltip');
 
-  env.svg.select('.slices').selectAll('path').on('mouseover', function(d) {   
+  env.svg.select('.pie-slices').selectAll('path').on('mouseover', function(d) {   
 
       //计算份额的百分比
       let percent = Number(d.value) / d3.sum(env.config.data, function(d) {

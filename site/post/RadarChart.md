@@ -1,16 +1,16 @@
-# 饼图
+# 雷达图
 
 
 ## usage
 
 ```js
 import React from 'react'
-import PieChart from 'bfd-ui/src/PieChart'
+import RadarChart from 'bfd-ui/src/RadarChart'
 
 export default React.createClass({
 
   render() {
-    return <PieChart config={config}></PieChart>
+    return <RadarChart config={config}></RadarChart>
   }
 })
 ```
@@ -23,4 +23,4 @@ export default React.createClass({
 
 ## 演示
 
-<div id="demo" style="width:500px;"></div>
+<div id="demo" style="width:600px;"></div>
