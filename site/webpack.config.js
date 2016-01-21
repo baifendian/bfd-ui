@@ -1,15 +1,19 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var config = {
   entry: {
-    app: __dirname + '/public/app.jsx'
+    app: __dirname + '/public/app.js'
     // app: __dirname + '/public/components/LineChart.jsx'
   },
   output: {
     path: __dirname + '/public/dist',
     filename: '[name].js',
-    chunkFilename: 'demos.js',
+    chunkFilename: '[id].js',
     publicPath: '/dist/'
+  },
+  externals: {
+    // 'bfd-bootstrap': false
   },
   module: {
     loaders: [{
@@ -18,7 +22,7 @@ var config = {
       exclude: /node_modules/
     }, {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: ExtractTextPlugin.extract("style-loader", "css-loader")
     }, {
       test: /\.(eot|woff|woff2|ttf|svg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
@@ -41,6 +45,7 @@ var config = {
   //   configFile: path.resolve(__dirname, 'config/.eslintrc'),
   // },
   plugins: [
+    new ExtractTextPlugin("[name].css")
     // new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 }

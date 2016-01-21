@@ -29,17 +29,15 @@ app.use(webpackDevMiddleware(webpack(WebpackConfig), {
   }
 }))
 
-app.get('/getComponents', function(req, res, next) {
+app.get('/getTemplate', function(req, res, next) {
   try {
-    var fn = jade.compileFile(__dirname + '/views/components/' + req.query.component + '.jade')
+    var fn = jade.compileFile(__dirname + '/views' + req.query.path + '.jade')
   } catch(e) {}
   res.send(fn())
 })
 
 app.get('*', function(req, res) {
-  res.render('index', {
-    components: fs.readFileSync(path.join(__dirname, 'config/components.json'), 'utf-8')
-  })
+  res.render('layout')
 })
 
 app.listen(4001, function() {

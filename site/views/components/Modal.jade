@@ -1,0 +1,45 @@
+include ../includes/api.jade
+
+h1 模态框
+
+pre
+  :highlight(lang='js')
+    import Modal from 'bfd-ui/src/modal'
+    import ModalHeader from 'bfd-ui/src/modalHeader'
+
+    const App = React.createClass({
+
+      getInitialState() {
+        return {
+          isOpen: false        
+        }
+      },
+
+      handleClick() {
+        this.setState({isOpen: true})
+      },
+
+      handleClose() {
+        this.setState({isOpen: false})
+      },
+
+      render() {
+        return (
+          <div>
+            <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
+            <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
+              <ModalHeader onClose={this.handleClose}>
+                <h1 className="modal-title">test</h1>
+              </ModalHeader>
+              <div className="modal-body">
+                content
+              </div>
+            </Modal>
+          </div>
+        )
+      }
+    })
+
+    ReactDom.render(<App/>, document.getElementById('demo'))
+
+#demo.demo

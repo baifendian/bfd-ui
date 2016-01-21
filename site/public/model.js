@@ -39,7 +39,7 @@ class Fetch {
   }
 
   then(callback) {
-    this.callbacks.push(callback)
+    callback && this.callbacks.push(callback)
     return this
   }
 

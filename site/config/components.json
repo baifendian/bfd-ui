@@ -10,4 +10,7 @@
 }, {
   "name": "ChinaMap",
   "cn": "中国地图"
+}, {
+  "name": "Modal",
+  "cn": "模态框"
 }]

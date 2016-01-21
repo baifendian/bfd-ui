@@ -39,7 +39,7 @@ pre {
   font-size: 12px;
   white-space: pre-wrap;
   padding: 1rem;
-  max-width: 600px;
+  max-width: 700px;
 }
 pre .kwd {
   color: #8959a8;
@@ -59,39 +59,39 @@ pre .com {
   color: #969896;
 }
 
-.markdown .demo {
-  width: 600px;
+.demo {
+  width: 700px;
   border: 1px solid #ececec;
   border-radius: 3px;
 }
-.markdown ul {
+ul.api {
   padding: 0;
   list-style: none;
 }
-.markdown ul li {
+ul.api li {
   margin-top: 30px;
 }
-.markdown ul li span.name {
+ul.api li span.name {
   color: #c82829;
   font-weight: 500;
 }
-.markdown .string,
-.markdown .function,
-.markdown .object,
-.markdown .array {
+ul.api .string,
+ul.api .function,
+ul.api .object,
+ul.api .array {
   color: #ababab;
   margin-left: 5px;
   /*font-style: italic;*/
 }
-.markdown .string:before {
+ul.api .string:before {
   content: 'String';
 }
-.markdown .function:before {
+ul.api .function:before {
   content: 'Function';
 }
-.markdown .object:before {
+ul.api .object:before {
   content: 'Object';
 }
-.markdown .array:before {
+ul.api .array:before {
   content: 'Array';
 }
