@@ -9,7 +9,7 @@ import assembleLegend from './assembleLegend'
 
 export default class {
 
-  constructor(config) {   
+  constructor(config) {  
 
     const padding = [20, 20, 30, 40];
     
@@ -20,6 +20,9 @@ export default class {
     env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];    
     
     if (!env.config.data) return;
+
+    env.config.dataLegend = [];
+    for (var k in env.config.data) env.config.dataLegend.push(env.config.data[k]);
 
     //get color of category10
     const colors = d3.scale.category10();
@@ -48,7 +51,7 @@ export default class {
       .attr('class', 'pie-labels');
 
     //init pie
-    drawPie(env);    
+    drawPie(env,true);    
     //init tooltip
     if (!env.config.tooltip || env.config.tooltip.enabled !== false) {
       assembleTooltip(env);

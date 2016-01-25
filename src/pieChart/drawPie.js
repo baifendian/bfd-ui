@@ -1,6 +1,6 @@
 import d3 from 'd3'
 
-export default env => {
+export default (env,flag) => {
 
   const _config = {
     radius: {
@@ -43,7 +43,7 @@ export default env => {
    */
   // define slice 绑定数据
   var slice = env.svg.select('.pie-slices')
-    .datum(_config.data)
+    .datum(flag ? _config.data : _config.dataLegend)
     .selectAll('path')
     .data(pie);
   slice
@@ -69,7 +69,7 @@ export default env => {
 
   //设置text 
   var text = env.svg.select('.pie-labels').selectAll('text')
-    .data(pie(_config.data));
+    .data(pie(flag ? _config.data : _config.dataLegend));
   text.enter()
     .append('text')
     .attr('dy', '0.35em')
@@ -104,7 +104,7 @@ export default env => {
 
   //设置线条
   var polyline = env.svg.select('.pie-lines').selectAll('polyline')
-    .data(pie(_config.data));
+    .data(pie(flag ? _config.data : _config.dataLegend));
   polyline.enter()
     .append('polyline')
     .style('opacity', 0)
