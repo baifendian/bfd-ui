@@ -25,7 +25,7 @@ const App = React.createClass({
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
         <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
           <ModalHeader onClose={this.handleClose}>
-            <h1 className="modal-title">test</h1>
+            <h4 className="modal-title">test</h4>
           </ModalHeader>
           <div className="modal-body">
             dadasd
