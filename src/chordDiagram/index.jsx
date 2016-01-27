@@ -1,11 +1,11 @@
 import React from 'react'
-import PieChart from './main'
+import ChordDiagram from './main'
 
 export default React.createClass({
   
-  renderChart() {    
-    const config = {container: this.refs.container, ...this.props}    
-    new PieChart(config)
+  renderChart() {
+    const config = {container: this.refs.container, ...this.props}
+    new ChordDiagram(config)
   },
 
   componentDidMount() {
@@ -20,8 +20,6 @@ export default React.createClass({
   },
 
   render() {
-    return <div ref="container" style={{width:'600px'}}></div>
+    return <div ref="container"></div>
   }
 })
-
-

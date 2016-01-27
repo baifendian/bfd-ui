@@ -26,6 +26,17 @@ $ cd bfd-ui
 
 $ npm install
 ```
+
+#### 同步到最新版本
+
+```sh
+$ cd bfd-ui
+
+$ git pull
+
+$ npm install
+```
+
 #### 如何添加新组件？
 
 `src/yourComponent`

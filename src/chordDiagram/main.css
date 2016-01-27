@@ -1,0 +1,12 @@
+.chordDiagram .chord path {
+  fill-opacity: .67;
+  stroke: #000;
+  stroke-width: .5px;
+}
+.chordDiagram .tick {
+  fill: #93979a;
+  font-size: 12px;
+}
+.chordDiagram .chord-label {
+  font-size: 14px;
+}
