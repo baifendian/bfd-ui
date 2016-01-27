@@ -3,10 +3,11 @@ import './styles/app.css'
 import React from 'react'
 import { render } from 'react-dom'
 import Nav from 'c/nav/index.jsx'
-import NavItem from 'c/navItem/index.jsx'
 import Router from 'c/router'
 import model from './model'
+import Link from 'c/link/index.jsx'
 
+// import router from 'react-router'
 
 const Sidebar = React.createClass({
 
@@ -19,15 +20,15 @@ const Sidebar = React.createClass({
   render() {
     return (
       <Nav>
-        <NavItem href="/" icon="home" title="首页"/>
-        <NavItem href="/bootstrap" icon="bold" title="Bootstrap"/>
-        <NavItem href="/components" icon="th" title="组件">
+        <Nav.Item href="/" icon="home" title="首页"/>
+        <Nav.Item href="/bootstrap" icon="bold" title="Bootstrap"/>
+        <Nav.Item href="/components" icon="th" title="组件">
           <Nav>
             {this.state.components.map(component => {
-              return <NavItem key={component.name} href={'/components/' + component.name} title={component.cn}></NavItem>
+              return <Nav.Item key={component.name} href={'/components/' + component.name} title={component.cn}/>
             })}
           </Nav>
-        </NavItem>
+        </Nav.Item>
       </Nav>
     )
   }
@@ -44,7 +45,6 @@ const renderContent = (path, callback) => {
     content.innerHTML = res
   }).then(callback)
 }
-
 
 Router.on('/', url => {
   renderContent(url)

@@ -1,4 +1,4 @@
-const onMatch = function(url) {
+const match = function(url) {
 
   Router.onMatchCallBacks.forEach(callback => {
     callback(url)
@@ -79,17 +79,17 @@ const Router = {
     history.pushState({
       url
     }, '', url)
-    onMatch(url)
+    match(url)
   }
 }
 
 window.onpopstate = function(e) {
-  onMatch(e.state.url)
+  match(e.state.url)
 }
 
 // Match rules when page ready
 document.addEventListener('DOMContentLoaded', event => {
-  onMatch(location.pathname + location.search)
+  match(location.pathname + location.search)
 })
 
 export default Router
