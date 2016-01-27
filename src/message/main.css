@@ -1,0 +1,7 @@
+.alert-message{
+	width: 100%;
+	position: fixed;
+	top:10px;
+	padding:0 15px;
+	text-align: center;
+}
