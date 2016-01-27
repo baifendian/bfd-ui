@@ -24,13 +24,12 @@ export default env => {
         .style('opacity', 1.0);
 
     })
-    .on('mousemove', function(d) {
-      
+    .on('mousemove', function(d) {      
       /* left 和 top 来改变提示框的位置 */
       tooltip.style('left', (d3.event.pageX) + 'px')
         .style('top', (d3.event.pageY + 20) + 'px');
       let node = d3.select(this);
-      node.style('fill',env.config.hoverColor || '#000');
+      node.style('fill',env.config.hoverColor || '#9D9D9D');
     })
     .on('mouseout', function(d) {
       tooltip.style('opacity', 0.0);

@@ -20,6 +20,8 @@ export default React.createClass({
   },
 
   render() {
-    return <div ref="container"></div>
+    return <div ref="container" style={{width:'600px'}}></div>
   }
 })
+
+

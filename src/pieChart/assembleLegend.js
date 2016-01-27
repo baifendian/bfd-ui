@@ -23,26 +23,26 @@ export default env => {
 
       let isDisabled = node.classed('disabled');
 
-      node.classed('disabled', !isDisabled);
+      node.classed('disabled', !isDisabled);    
 
       //update env.config.data
-      isDisabled ? env.config.data.push(d) :
-        env.config.data = (function() {
+      isDisabled ? env.config.dataLegend.push(d) :
+        env.config.dataLegend = (function() {
           var arr = [];
-          (env.config.data).map((_d, _i) => {
+          (env.config.dataLegend).map((_d, _i) => {
             if (_d.name !== d.name && _d.value !== d.value) {
               arr.push(_d);
             }
-          });
+          });         
           return arr;
         })();
-
+     
       //clear pie
       env.svg.select('.pie-slices').selectAll('path').remove();
       env.svg.select('.pie-labels').selectAll('text').remove();
       env.svg.select('.pie-lines').selectAll('polyline').remove();
       //draw pie repeat
-      drawPie(env);
+      drawPie(env,false);
       //add tooltip
       assembleTooltip(env);
 
