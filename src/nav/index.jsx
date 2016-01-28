@@ -1,8 +1,7 @@
 import 'bfd-bootstrap'
 import React, {PropTypes} from 'react'
+import { Link } from 'react-router'
 import classNames from 'classnames'
-import Router from '../router'
-import Link from '../link/index.jsx'
 
 const Nav = React.createClass({
   
@@ -15,9 +14,13 @@ const Nav = React.createClass({
 
 Nav.Item = React.createClass({
 
+  contextTypes: {
+    history: PropTypes.object.isRequired
+  },
+
   getInitialState() {
     return {
-      path: location.pathname,
+      // Todo: condition of isOpen
       isOpen: !!this.props.children
     }
   },
@@ -27,23 +30,16 @@ Nav.Item = React.createClass({
     e.preventDefault()
   },
 
-  isActive() {
-    if (this.props.href === '/') {
-      return this.state.path === this.props.href
-    }
-    return this.state.path.indexOf(this.props.href) === 0
-  },
-
-  componentWillMount() {
-    Router.onMatch(url => {
-      this.setState({path: url})
-    })  
+  isActive(indexOnly) {
+    return this.context.history.isActive(this.props.href, this.props.query, indexOnly)
   },
   
   render() {
+
     let Toggle
     let Icon
     let Item
+
     if (this.props.children) {
       Toggle = <span className="glyphicon glyphicon-menu-right"></span> 
     }
@@ -51,12 +47,15 @@ Nav.Item = React.createClass({
       Icon = <span className={'glyphicon glyphicon-' + this.props.icon}></span>
     }
     if (this.props.children) {
-      Item = <a href="" onClick={this.toggle}>{Icon}{this.props.title}{Toggle}</a>
+      Item = <a href={this.props.href} onClick={this.toggle}>{Icon}{this.props.title}{Toggle}</a>
     } else {
-      Item = <Link href={this.props.href}>{Icon}{this.props.title}{Toggle}</Link>
+      Item = <Link to={this.props.href} query={this.props.query}>{Icon}{this.props.title}{Toggle}</Link>
     }
+
+    const indexOnly = this.props.href === '/'
+
     return (
-      <li className={classNames({open: this.state.isOpen, active: this.isActive()})}>
+      <li className={classNames({open: this.state.isOpen, active: this.isActive(indexOnly)})}>
         {Item}
         {this.props.children}
       </li>

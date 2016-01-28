@@ -17,7 +17,7 @@
   overflow: hidden;
   padding: 0 20px;
 }
-#body > .content > * {
+#body > .content > div > * {
   -webkit-animation: in .5s;
 }
 @-webkit-keyframes in {
@@ -57,45 +57,4 @@ pre .kc {
 }
 pre .com {
   color: #969896;
-}
-
-.demo {
-  width: 700px;
-  border: 1px solid #ececec;
-  border-radius: 3px;
-}
-ul.api {
-  padding: 0;
-  list-style: none;
-}
-ul.api li {
-  margin-top: 30px;
-}
-ul.api li span.name {
-  color: #c82829;
-  font-weight: 500;
-}
-ul.api .string,
-ul.api .boolean,
-ul.api .function,
-ul.api .object,
-ul.api .array {
-  color: #ababab;
-  margin-left: 5px;
-  /*font-style: italic;*/
-}
-ul.api .string:before {
-  content: 'String';
-}
-ul.api .boolean:before {
-  content: 'Boolean';
-}
-ul.api .function:before {
-  content: 'Function';
-}
-ul.api .object:before {
-  content: 'Object';
-}
-ul.api .array:before {
-  content: 'Array';
 }

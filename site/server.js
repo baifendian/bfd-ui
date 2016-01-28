@@ -37,7 +37,7 @@ app.get('/getTemplate', function(req, res, next) {
 })
 
 app.get('*', function(req, res) {
-  res.render('layout')
+  res.render('app')
 })
 
 app.listen(4001, function() {
