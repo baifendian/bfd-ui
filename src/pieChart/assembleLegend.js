@@ -7,10 +7,8 @@ export default env => {
 
   d3.select(env.container)
     .append('div')
-    .attr('class', 'legend')
-    .style('position', 'absolute')
-    .style('right','10px')   
-    .style('top','10px') 
+    .attr('class', 'legend pie-legend')
+    .style('float', 'right')
     .selectAll('div')
     .data(env.config.data)
     .enter()
@@ -30,21 +28,22 @@ export default env => {
         env.config.dataLegend = (function() {
           var arr = [];
           (env.config.dataLegend).map((_d, _i) => {
-            if (_d.name !== d.name && _d.value !== d.value) {
+            if (_d.id !== d.id) {              
               arr.push(_d);
             }
           });         
           return arr;
         })();
      
-      //clear pie
+      //clear pie/tooltip
       env.svg.select('.pie-slices').selectAll('path').remove();
       env.svg.select('.pie-labels').selectAll('text').remove();
-      env.svg.select('.pie-lines').selectAll('polyline').remove();
+      env.svg.select('.pie-lines').selectAll('polyline').remove();   
+      
       //draw pie repeat
       drawPie(env,false);
       //add tooltip
-      assembleTooltip(env);
+      assembleTooltip(env,false);     
 
     })
     .each(function(d, i) {
