@@ -29,6 +29,9 @@ var config = {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    }, {
+      test: /\.pre$/,
+      loader: 'raw-loader'
     }]
     // preLoaders: [{
     //   test: /\.jsx?$/,
