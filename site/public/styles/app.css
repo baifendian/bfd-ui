@@ -76,6 +76,7 @@ ul.api li span.name {
   font-weight: 500;
 }
 ul.api .string,
+ul.api .boolean,
 ul.api .function,
 ul.api .object,
 ul.api .array {
@@ -85,6 +86,9 @@ ul.api .array {
 }
 ul.api .string:before {
   content: 'String';
+}
+ul.api .boolean:before {
+  content: 'Boolean';
 }
 ul.api .function:before {
   content: 'Function';

@@ -3,15 +3,15 @@ import './main.css'
 import React, {PropTypes} from 'react'
 import classNames from 'classnames'
 
-export default React.createClass({
+
+/**
+ * Modal
+ */
+const Modal = React.createClass({
 
   propTypes: {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired
-  },
-
-  componentDidMount() {
-
   },
   
   handleClick(e) {
@@ -33,3 +33,41 @@ export default React.createClass({
     )
   }
 })
+
+
+/**
+ * ModalHeader
+ */
+Modal.Header = React.createClass({
+
+  propTypes: {
+    onClose: PropTypes.func.isRequired
+  },
+
+  render() {
+    return (
+      <div className="modal-header">
+        <button type="button" className="close" onClick={this.props.onClose}>
+          <span>&times;</span>
+        </button>
+        {this.props.children}
+      </div>
+    )
+  }
+})
+
+/**
+ * ModalBody
+ */
+Modal.Body = React.createClass({
+
+  render() {
+    return (
+      <div className="modal-body">
+        {this.props.children}
+      </div>
+    )
+  }
+})
+
+export default Modal
