@@ -9,7 +9,11 @@ const config = {
                 {value:310, name:'邮件营销'},
                 {value:234, name:'联盟广告'},
                 {value:135, name:'视频广告'},
-                {value:848,name:'搜索引擎'},
+                {value:848,name:'搜索引擎'},               
+                // {value:35, name:'测试1'},
+                // {value:35, name:'测试2'},
+                // {value:2, name:'测试3'},               
+                // {value:8,name:'测试4'},
                 {value:348,name:'百分点'}
             ]
     }
