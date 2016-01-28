@@ -11,7 +11,7 @@ export default class {
 
   constructor(config) {  
 
-    const padding = [20, 10, 30, 10];
+    const padding = [20, 100, 30, 10];
     
     const env = config;
   
@@ -40,9 +40,10 @@ export default class {
       .append('svg')
       .attr('width', env.width)
       .attr('height', env.height)
+      .style('margin-top','20px')
       .append('g');
 
-    env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2) + ')');
+    env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2 +10) + ')');
 
     //添加3个g标签，分别是 pie-lines pie-slices pie-labels
     env.svg.append('g')

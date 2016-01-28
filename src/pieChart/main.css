@@ -3,4 +3,4 @@
 .pie-slices>path:hover{stroke-width:6px;}
 .pie-labels>text{font-size:0.8em;text-transform:uppercase;letter-spacing:0.5px;}
 .pie-lines>polyline{fill:none;stroke:#000;stroke-width:2px;}
-.demo{width: 500px;}
+.demo{width: 600px;}

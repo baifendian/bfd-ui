@@ -6,39 +6,6 @@ html(lang="en")
     #header
       h2 BFD UI
     #body
-<<<<<<< HEAD
-      .sidebar
-        ul#nav.nav.nav-pills.nav-stacked
-          li
-            a(href="/") 首页
-          li
-            a(href="/bootstrap") Bootstrap
-          li 组件
-            ul.nav.nav-pills.nav-stacked
-              -
-                var components = [{
-                    "name": "LineChart",
-                    "cn": "折线图"
-                  }, {
-                    "name": "PieChart",
-                    "cn": "饼图"
-                  }, {
-                    "name": "BubbleChart",
-                    "cn": "气泡图"
-                  }, {
-                    "name": "ChinaMap",
-                    "cn": "中国地图"
-                  }, {
-                    "name": "Modal",
-                    "cn": "模态框"
-                  }, {
-                    "name": "Message",
-                    "cn": "提示信息"
-                  }]
-              - each component in components
-                li
-                  a(href="/components/#{component.name}")= component.cn
-=======
       .sidebar#sidebar
         script.
           window.components = [{
@@ -90,6 +57,6 @@ html(lang="en")
         //      each component in components
         //        li
         //          a(href="/components/#{component.name}")= component.cn
->>>>>>> fecfd7a9f9306a72fe8f04fa90b549407cde2fd1
+
       .content#content
     script(src="/dist/app.js")
