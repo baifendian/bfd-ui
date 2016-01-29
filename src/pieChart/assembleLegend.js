@@ -8,7 +8,7 @@ export default env => {
   d3.select(env.container)
     .append('div')
     .attr('class', 'legend pie-legend')
-    .style('float', 'right')
+    .style('position', 'absolute')
     .selectAll('div')
     .data(env.config.data)
     .enter()
