@@ -2,17 +2,6 @@ include ../includes/api.jade
 
 h1 气泡图
 
-pre
-  :highlight(lang='js')
-    import BubbleChart from 'bfd-ui/src/bubbleChart'
-
-    const data = [{
-      users: 100,
-      name: 'test'
-    }]
-
-    ReactDom.render(<BubbleChart radiusMaker="users" content={d => d.name} color="#dce775" data={data} />, mountNode)
-
 #demo.demo
 
 h2 属性
