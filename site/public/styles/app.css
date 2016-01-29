@@ -17,7 +17,7 @@
   overflow: hidden;
   padding: 0 20px;
 }
-#body > .content > div > * {
+#body > .content > div {
   -webkit-animation: in .5s;
 }
 @-webkit-keyframes in {

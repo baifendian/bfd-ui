@@ -22,17 +22,20 @@ var config = {
       exclude: /node_modules/
     }, {
       test: /\.css$/,
-      loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+      loader: 'style-loader!css-loader'
     }, {
       test: /\.(eot|woff|woff2|ttf|svg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,
       loader: 'json-loader'
-    }, {
-      test: /\.pre$/,
-      loader: 'raw-loader'
-    }]
+    }
+    // , {
+    //   test: /\.pre$/,
+    //   loader: 'raw-loader'
+    // }
+    ]
     // preLoaders: [{
     //   test: /\.jsx?$/,
     //   loader: "eslint-loader",
@@ -48,7 +51,7 @@ var config = {
   //   configFile: path.resolve(__dirname, 'config/.eslintrc'),
   // },
   plugins: [
-    new ExtractTextPlugin("[name].css")
+    // new ExtractTextPlugin("[name].css")
     // new webpack.optimize.UglifyJsPlugin({minimize: true})
   ]
 }

@@ -81,7 +81,7 @@ const Components = React.createClass({
 
 const Pre = React.createClass({
   render() {
-    return <pre>{this.props.code}</pre>
+    return <pre>{this.props.children}</pre>
   }
 })
 
@@ -91,7 +91,7 @@ const Home = React.createClass({
     return (
       <div className="home">
         <h1>BFD UI</h1>
-        <Pre code={require('./aa.pre')} lang="js"></Pre>
+        <Pre lang="js">{`$ npm install --save bfd-ui`}</Pre>
         <Link className="btn btn-primary" to="/bootstrap">开始</Link>
       </div>
     )
