@@ -19,7 +19,11 @@ var config = {
     loaders: [{
       test: /\.jsx?$/,
       loader: 'babel',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      query: {
+        presets: ["es2015", "stage-0", "react"],
+        plugins: ['transform-runtime']
+      }
     }, {
       test: /\.css$/,
       // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
