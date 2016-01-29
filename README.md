@@ -19,6 +19,8 @@ render(<LineChart config={config}/>, mountNode)
 
 #### 开发环境安装
 
+> 要求 npm 3+
+
 ```sh
 $ git clone http://git.baifendian.com/front-end/bfd-ui.git
 

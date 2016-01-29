@@ -30,6 +30,7 @@ const App = React.createClass({
             <Nav>
               <Nav.Item href="/" icon="home" title="首页"/>
               <Nav.Item href="/bootstrap" icon="bold" title="Bootstrap"/>
+              <Nav.Item href="/plan" icon="calendar" title="计划"/>
               <Nav.Item href="/components" icon="th" title="组件">
                 <Nav>
                   {this.state.components.map(component => {
@@ -112,11 +113,32 @@ const Bootstrap = React.createClass({
   }
 })
 
+const Plan = React.createClass({
+  render() {
+    return (
+      <div className="plan">
+        <h1>3月15号前</h1>
+        <p>完成折线图、柱状图、饼图、雷达图、气泡图、散点图、中国地图、弦图、模态框、导航、全局提示、环比图、dataTable、分页、datePicker、tree、表单验证等18个组件的开发</p>
+
+        <h1>3月16至3月25</h1>
+        <p>完成内部测试</p>
+
+        <h1>3月26至3月31</h1>
+        <p>进行BFD-UI的推广、培训，包括前端开发整体解决方案的普及</p>
+
+        <h1>4月1号</h1>
+        <p>正式发布1.0版本</p>
+      </div>
+    )
+  }
+})
+
 render((
   <Router history={createHistory()}>
     <Route path="/" component={App}>
       <IndexRoute component={Home}/>
       <Route path="/bootstrap" component={Bootstrap}/>
+      <Route path="/plan" component={Plan}/>
       <Route path="components">
         <Route path=":component" component={Components}></Route>
       </Route>

@@ -11,11 +11,6 @@ filters.highlight = function(source, option) {
   return beautify(source, option.lang)
 }
 
-
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var WebpackConfig = require('./webpack.config')
-
 var app = express()
 app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
@@ -24,6 +19,9 @@ app.set('view engine', 'jade')
 
 
 if (app.get('env') !== 'production') {
+  var webpack = require('webpack')
+  var webpackDevMiddleware = require('webpack-dev-middleware')
+  var WebpackConfig = require('./webpack.config')
   app.use(webpackDevMiddleware(webpack(WebpackConfig), {
     publicPath: '/dist/',
     stats: {
