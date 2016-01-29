@@ -22,12 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
-app.use(webpackDevMiddleware(webpack(WebpackConfig), {
-  publicPath: '/dist/',
-  stats: {
-    colors: true
-  }
-}))
+
+if (app.get('env') !== 'production') {
+  app.use(webpackDevMiddleware(webpack(WebpackConfig), {
+    publicPath: '/dist/',
+    stats: {
+      colors: true
+    }
+  }))
+}
 
 app.get('/getTemplate', function(req, res, next) {
   try {
