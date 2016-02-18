@@ -34,12 +34,10 @@ var config = {
     }, {
       test: /\.json$/,
       loader: 'json-loader'
-    }
-    // , {
-    //   test: /\.pre$/,
-    //   loader: 'raw-loader'
-    // }
-    ]
+    }, {
+      test: /\.less$/,
+      loader: 'style!css!less'
+    }]
     // preLoaders: [{
     //   test: /\.jsx?$/,
     //   loader: "eslint-loader",
