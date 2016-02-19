@@ -23,7 +23,8 @@ export default (env, flag) => {
       tooltip.html(env.config.name + '<br/>' + d.data.name + ':' + d.data.value + '(' + percent.toFixed(0) + '%)')
         .style('left', (d3.event.offsetX) + 'px')
         .style('top', (d3.event.offsetY + 50) + 'px')
-        .style('opacity', 1.0);
+        .style('opacity', 1.0);  
+      d3.select(env.container).selectAll("path[fill='"+d.data.color+"']").style('display','block');
     })
     .on('mousemove', function(d) {
       /* left 和 top 来改变提示框的位置 */
@@ -32,5 +33,6 @@ export default (env, flag) => {
     })
     .on('mouseout', function(d) {
       tooltip.style('opacity', 0.0);
+      d3.select(env.container).selectAll('.pie-flag').style('display','none');
     });
 }

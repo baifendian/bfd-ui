@@ -3,10 +3,7 @@ import { render } from 'react-dom'
 import PieChart from 'c/pieChart/index.jsx'
 
 const config = {
-      name:'访问来源', 
-      // legend:{
-      //   position:'top'
-      // },   
+      name:'访问来源',        
       data:[    //初始化数据。
                 {value:335, name:'直接访问'},
                 {value:310, name:'邮件营销'},
