@@ -1,0 +1,37 @@
+.axis path,
+.axis line{
+    fill: none;
+    stroke: 0;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+.domain{
+	fill:#f6f6f6;
+}
+div.barTooltip {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    padding: 10px;
+    color: #fff;
+    font: 12px sans-serif;
+    text-align: left;
+    background-color: #65a6ff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+}
+
+
+.inner_line path, .inner_line line { fill: none; stroke:#E7E7E7; shape-rendering: crispEdges; }
+.component .noborder{
+    border: none !important;
+}

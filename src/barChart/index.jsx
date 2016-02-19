@@ -1,11 +1,12 @@
+import './main.css'
 import React from 'react'
-import BarChart from './main'
+import BubbleChart from './main'
 
 export default React.createClass({
   
   renderChart() {
     const config = {container: this.refs.container, ...this.props}
-    new BarChart(config)
+    new BubbleChart(config)
   },
 
   componentDidMount() {

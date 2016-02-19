@@ -1,0 +1,56 @@
+include ../includes/api.jade
+
+h1 柱状图
+#demo.demo.noborder
+
+
+h2 属性
+
+ul.api
+  +api({
+    name: 'title',
+    type: 'string',
+    isRequired: true,
+    desc: '标题'
+  })
+
+  +api({
+    name: 'titleSub',
+    type: 'string',
+    desc: '自标题'
+  })
+
+  +api({
+    name: 'data',
+    type: 'array',
+    desc: '二维格式数据'
+  })
+  pre
+    :highlight(lang='js')
+      [{
+        name: '2014/01/01',
+        value: 10,
+      }, {
+        name: '2014/01/02',
+        value: 20,
+      }, {
+        name: '2014/01/03',
+        value: 20,
+      }, {
+        name: '2014/01/04',
+        value: 20,
+      }, {
+        name: '2014/01/05',
+        value: 20,
+      }, {
+        name: '2014/01/06',
+        value: 20,
+      }, {
+        name: '2014/01/07',
+        value: 20,
+      }, {
+        name: '2014/01/08',
+        value: 20,
+      },]
+
+

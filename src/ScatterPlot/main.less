@@ -1,0 +1,30 @@
+.scatter-plot {
+  
+  .tick {
+    fill: #93979a;
+    font-size: 12px;
+  }
+  
+  .tick line,
+  path.domain {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-dasharray: 5 2;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis-y path.domain {
+    stroke: none;
+  }
+
+  .tooltip {
+    white-space: nowrap;
+    min-width: 80px;
+    background-color: #65a6ff;
+    color: #fff;
+    border-radius: 2px;
+    padding: 8px 10px;
+    font-size: 12px;
+    // transition: all .2s;
+  }
+}
