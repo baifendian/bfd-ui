@@ -76,4 +76,5 @@ export default class {
 
     assembleLegend(env)
   }
+
 }

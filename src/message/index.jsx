@@ -1,63 +1,45 @@
 import 'bfd-bootstrap'
 import './main.css'
 import React from 'react'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import Notification from 'rc-notification';
 
-let defaultDuration = 1.5;
-let top;
-let messageInstance;
-let key = 1;
+const defaultDuration = 2;
 
-function getMessageInstance() {
-  messageInstance = messageInstance || Notification.newInstance({
-    prefixCls: 'alert-message',
-    transitionName: 'move-up',
-    style: {
-      top: top
-    }  // 覆盖原来的样式
-  });
-  return messageInstance;
+function buildDom(infoClass,content){
+  const fDiv = document.createElement('div');
+  const cDiv = document.createElement('div');
+  fDiv.className = 'alert-message';
+  cDiv.className = 'alert alert-'+infoClass+'';
+  cDiv.innerHTML = content;
+  fDiv.appendChild(cDiv);
+  document.body.appendChild(fDiv);
 }
 
-function notice(content, duration = defaultDuration, type, onClose) {
-  let iconClass = ({
-    'info': 'alert-info',
-    'success': 'alert-success',
-    'error': 'alert-danger',
-    'warn': 'alert-warning',
-  })[type];
+function closeDom(){
+  var div = document.getElementsByClassName('alert-message')[0];
+  document.body.removeChild(div);
+}
 
- 
-
-  let instance = getMessageInstance();
-  instance.notice({
-    key: key,
-    duration: duration,
-    style: {},
-    content: <div className={'alert ' + iconClass}>
-      <span>{content}</span>
-    </div>,
-    onClose: onClose
-  });
+function notice(content,duration,infoClass){
+  if(duration === undefined){
+    duration = defaultDuration
+  }
+  buildDom(infoClass,content);
+  setTimeout(closeDom, duration*1000)
 }
 
 export default {
-  info(content, duration, onClose) {
-    return notice(content, duration, 'info', onClose);
+  info(content, duration) {
+    return notice(content, duration, 'info' );
   },
-  success(content, duration, onClose) {
-    return notice(content, duration, 'success', onClose);
+  success(content, duration) {
+    return notice(content, duration, 'success');
   },
-  error(content, duration, onClose) {
-    return notice(content, duration, 'error', onClose);
+  danger(content, duration) {
+    return notice(content, duration, 'danger');
   },
-  warn(content, duration, onClose) {
-    return notice(content, duration, 'warn', onClose);
-  },
-  config(options) {
-    if (options.top) {
-      top = options.top;
-    }
+  warning(content, duration) {
+    return notice(content, duration, 'warning');
   }
-};
+}
