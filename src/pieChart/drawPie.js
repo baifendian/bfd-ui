@@ -1,6 +1,6 @@
 import d3 from 'd3'
 
-export default (env,flag) => {
+export default (env, flag) => {
 
   const _config = {
     radius: {
@@ -31,7 +31,7 @@ export default (env,flag) => {
   // for labels and polylines  设置label和line的位置。
   var outerArc = d3.svg.arc()
     .innerRadius(0.5 * radius)
-    .outerRadius(0.85 * radius);
+    .outerRadius(0.9 * radius);
 
   var pie = d3.layout.pie()
     .value(function(d) {
@@ -64,10 +64,13 @@ export default (env,flag) => {
     })
     .duration(arcAnimDur)
     .ease('elastic')
-    .style('opacity', 1)
+    .style('opacity', 1.0)
     .attr('transform', 'rotate(0,0,0)');
 
+
   //设置text 
+  var countText = 0;
+  var posText;
   var text = env.svg.select('.pie-labels').selectAll('text')
     .data(pie(flag ? _config.data : _config.dataLegend));
   text.enter()
@@ -78,15 +81,26 @@ export default (env,flag) => {
       return d.data.color;
     })
     .text(function(d, i) {
-      return d.data.name;
+      let percent = Number(d.value) / d3.sum(flag ? _config.data : _config.dataLegend, function(d) {
+        return d.value;
+      }) * 100;
+      return d.data.name + ':' + percent.toFixed(0) + '%';
     })
     .attr('transform', function(d) {
-      // calculate outerArc centroid for 'this' slice
-      var pos = outerArc.centroid(d);
-      // define left and right alignment of text labels      
-      pos[0] += (midAngle(d) < Math.PI ? 20 : -20);
-      pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
-      return 'translate(' + pos + ')';
+      let percent = Number(d.value) / d3.sum(flag ? _config.data : _config.dataLegend, function(d) {
+        return d.value;
+      }) * 100;
+      if (percent < 4) {
+        if (countText == 0) posText = outerArc.centroid(d);
+        posText[1] -= (midAngle(d) < Math.PI ? -20 : 20);
+        countText++;
+        return 'translate(' + posText + ')';
+      } else {
+        var pos = outerArc.centroid(d);
+        pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
+        return 'translate(' + pos + ')';
+      }
+
     })
     .style('text-anchor', function(d) {
       return midAngle(d) < Math.PI ? 'start' : 'end';
@@ -96,13 +110,11 @@ export default (env,flag) => {
       return arcAnimLineText + (i * 250);
     })
     .duration(1000)
-    .style('opacity', 1);
-
-  function midAngle(d) {
-    return d.startAngle + (d.endAngle - d.startAngle) / 2;
-  }
+    .style('opacity', 0.8);
 
   //设置线条
+  var countLine = 0;
+  var posLine;
   var polyline = env.svg.select('.pie-lines').selectAll('polyline')
     .data(pie(flag ? _config.data : _config.dataLegend));
   polyline.enter()
@@ -120,10 +132,28 @@ export default (env,flag) => {
       return arcAnimLineText + (i * 250);
     })
     .attr('points', function(d) {
-      var pos = outerArc.centroid(d);
-      pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
-      return [arc.centroid(d), outerArc.centroid(d), pos];
+      let percent = Number(d.value) / d3.sum(flag ? _config.data : _config.dataLegend, function(d) {
+        return d.value;
+      }) * 100;
+      if (percent < 4) {
+        if (countLine == 0) posLine = outerArc.centroid(d);
+        posLine[0] -= (midAngle(d) < Math.PI ? 8 : -8);
+        posLine[1] -= (midAngle(d) < Math.PI ? -20 : 20);
+        countLine++;
+        return [arc.centroid(d), posLine, [midAngle(d) < Math.PI ? posLine[0] + 6 * countLine : posLine[0] - 6 * countLine, posLine[1]]];
+      } else {
+        var pos = outerArc.centroid(d);
+        pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
+        return [arc.centroid(d), outerArc.centroid(d), pos];
+      }
     })
-    .style('opacity', 0.4);
+    .style('stroke', function(d) {
+      return d.data.color;
+    })
+    .style('opacity', 1.0);
 
+
+  function midAngle(d) {
+    return d.startAngle + (d.endAngle - d.startAngle) / 2;
+  }
 }

@@ -11,23 +11,24 @@ filters.highlight = function(source, option) {
   return beautify(source, option.lang)
 }
 
-
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
-var WebpackConfig = require('./webpack.config')
-
 var app = express()
 app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
-app.use(webpackDevMiddleware(webpack(WebpackConfig), {
-  publicPath: '/dist/',
-  stats: {
-    colors: true
-  }
-}))
+
+if (app.get('env') !== 'production') {
+  var webpack = require('webpack')
+  var webpackDevMiddleware = require('webpack-dev-middleware')
+  var WebpackConfig = require('./webpack.config')
+  app.use(webpackDevMiddleware(webpack(WebpackConfig), {
+    publicPath: '/dist/',
+    stats: {
+      colors: true
+    }
+  }))
+}
 
 app.get('/getTemplate', function(req, res, next) {
   try {
@@ -37,7 +38,7 @@ app.get('/getTemplate', function(req, res, next) {
 })
 
 app.get('*', function(req, res) {
-  res.render('layout')
+  res.render('app')
 })
 
 app.listen(4001, function() {

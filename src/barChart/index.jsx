@@ -1,11 +1,12 @@
+import './main.css'
 import React from 'react'
-import PieChart from './main'
+import BubbleChart from './main'
 
 export default React.createClass({
   
-  renderChart() {    
-    const config = {container: this.refs.container, ...this.props}    
-    new PieChart(config)
+  renderChart() {
+    const config = {container: this.refs.container, ...this.props}
+    new BubbleChart(config)
   },
 
   componentDidMount() {
@@ -23,5 +24,3 @@ export default React.createClass({
     return <div ref="container"></div>
   }
 })
-
-

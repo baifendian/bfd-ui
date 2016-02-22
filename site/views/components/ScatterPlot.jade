@@ -1,0 +1,75 @@
+include ../includes/api.jade
+
+h1 散点图
+
+pre
+  :highlight(lang='js')
+    import ScatterPlot from 'bfd-ui/lib/scatterPlot'
+
+    ReactDom.render(<ScatterPlot cols={cols} data={data}></ScatterPlot>, mountNode)
+
+#demo.demo
+
+h2 属性
+
+ul.api
+  +api({
+    name: 'cols',
+    type: 'object',
+    isRequired: true,
+    desc: 'y轴字段配置（x轴字段单独指定），数据字段：中文名'
+  })
+    pre
+      :highlight(lang='js')
+        {
+          users: '用户数',
+          sales: '销量'
+        }
+
+  +api({
+    name: 'category',
+    type: 'string',
+    isRequired: true,
+    desc: 'x轴字段名'
+  })
+
+  +api({
+    name: 'data',
+    type: 'array',
+    desc: '二维格式数据'
+  })
+    pre
+      :highlight(lang='js')
+        [{
+          users: 234,
+          sales: 55,
+          date: '01-01'
+        }, {
+          users: 499,
+          sales: 122,
+          date: '01-02'
+        }]
+
+  +api({
+    name: 'yAxis',
+    type: 'object',
+    desc: 'y轴相关配置'
+  })
+    pre
+      :highlight(lang='js')
+        { 
+          // 格式化方式
+          format: '%'
+        }
+
+  +api({
+    name: 'tooltip',
+    type: 'object',
+    desc: '悬浮提示框配置'
+  })
+    pre
+      :highlight(lang='js')
+        { 
+          // 禁用提示框，默认启用
+          enabled: false
+        }
