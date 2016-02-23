@@ -13,8 +13,8 @@ export default class {
 
     const padding = [20, 100, 30, 10];
     
-    const env = config;
-  
+    const env = config;   
+
     env.container.style.position = 'relative';
     env.width = env.container.clientWidth - padding[3] - padding[1];
     env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];    

@@ -1,0 +1,58 @@
+	.u-content .select{			
+		margin:0 auto;
+		font-family: "Microsoft Yahei";
+		font-size: 16px;
+		background-color: #fff;
+		border: 1px solid #ddd;
+		position: relative;		
+	}
+	.u-content .select:after{
+		content: '';
+		display: block;
+		width: 10px;
+		height: 10px;
+		border-left: 1px #ccc solid;
+		border-bottom: 1px #ccc solid;
+		position: absolute;
+		top:11px;
+		right: 12px;
+		transform:rotate(-45deg);
+		transition:transform .3s ease-out, top .3s ease-out;
+	}
+	.u-content .select p{
+		padding:0 15px;
+		height: 30px;
+		line-height: 30px;
+		cursor: pointer;
+	}
+	.u-content .select ul{	
+		display: none;	
+		list-style-type: none;
+		background-color: #fff;
+		padding: 0;
+		overflow-y:auto;
+		max-height: 120px;		
+	}
+	.u-content .select ul li{
+		padding: 0 15px;
+		line-height: 40px;
+		cursor: pointer;
+		height: 40px;
+		border-top: 1px solid #F7ECDC;
+	}
+	.u-content .select ul li:hover{
+		background-color: #41A78F;
+		color: #fff;
+	}
+	.u-content .select ul li.selected{
+		background-color: #41A78F;
+		color: #fff;
+	}
+	.u-content .open:after{
+		transform:rotate(-225deg);
+		top: 18px;
+		transition:all .3s ease-in;
+	}
+	.u-content .open ul{
+		display: block;
+	}
