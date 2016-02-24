@@ -2,52 +2,42 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Form from 'c/form/index.jsx'
-import Select from 'c/form/select.jsx'
-import CheckBox from 'c/form/checkBoxComponent.jsx'
+import Input from 'c/input/index.jsx'
+import Button from 'c/button/index.jsx'
 
-const FormItem = Form.Item
+const FormItem = Form.Item;
 
-const err = {
-    textAlign: 'left',
-    backgroundColor: '#FBDECF',
-    height: '34px',
-    margin: '0 16px',
-    color: '#B94B45'
-}
+let Demo = React.createClass({
+  handleSubmit(e) {
+    e.preventDefault();
+    console.log('收到表单值：', this.props.form.getFieldsValue());
+  },
 
-const selectList = [{opt:'test',value:'/user/local/spark/crossSelling/Imedcalsell test'},
-                    {opt:'test2',value:'/user/local/spark/crossSelling/Imedcalsell test2'}];
+  render() {
+    const { getFieldProps } = this.props.form;
+    return (
+      <Form inline onSubmit={this.handleSubmit}>
+        <FormItem
+          label="账户：">
+          <Input placeholder="请输入账户名"
+            {...getFieldProps('userName')} />
+        </FormItem>
+        <FormItem
+          label="密码：">
+          <Input type="password" placeholder="请输入密码"
+            {...getFieldProps('password')} />
+        </FormItem>
 
-export default () => {
+        <Button type="primary" htmlType="submit">登录</Button>
+      </Form>
+    );
+  }
+});
+
+Demo = Form.create()(Demo);
+
+export default () => { 
 	render(         
-		<Form>
-			<FormItem label="任务名称:" reqire="*">				
-        <div className="col-sm-4">
-          <input type="text" className="form-control"/>
-        </div>
-        <div className="col-sm-4 control-label" style={err}>
-          1-5个字符，中英文，数字
-        </div>
-			</FormItem>
-
-      <FormItem label="任务描述:">       
-        <div className="col-sm-4">
-          <textarea className="form-control"/>
-        </div>        
-      </FormItem>
-
-      <FormItem label="训练数据:" reqire="*">       
-        <Select list={selectList} cname="col-sm-4" placeholder="--请选择数据所在的路径--"></Select>        
-      </FormItem>
-
-      <FormItem label="字段设置:">       
-        <div className="col-sm-4">
-            <CheckBox></CheckBox>
-        </div>        
-      </FormItem>
-
-
-
-      </Form>,document.getElementById('demoForm')
+		<Demo />,document.getElementById('demoForm')
 		)
 }
