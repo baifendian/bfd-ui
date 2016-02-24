@@ -2,32 +2,6 @@ import React from 'react'
 import { render } from 'react-dom'
 import LineChart from 'c/lineChart/index.jsx'
 
-const cols = {
-  x: 'x数',
-  y: 'y数'
-}
-const data = [{
-  x: 234,
-  y: 55,
-  date: '01-01'
-}, {
-  x: 499,
-  y: 122,
-  date: '01-02'
-}, {
-  x: 1067,
-  y: 500,
-  date: '01-03'
-}, {
-  x: 500,
-  y: 800,
-  date: '01-04'
-}, {
-  x: 340,
-  y: 201,
-  date: '01-05'
-}]
-
 export default () => {
-  render(<LineChart category="date" cols={cols} data={data} />, document.getElementById('demo'))
+  render(<LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json" />, document.getElementById('demo'))
 }
