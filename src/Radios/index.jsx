@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import './main.less'
 
 const Radios = React.createClass({
 
