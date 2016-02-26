@@ -1,7 +1,6 @@
 /**
  * Line chart based on d3.js
  */
-import './main.less'
 import d3 from 'd3'
 
 export default class {
