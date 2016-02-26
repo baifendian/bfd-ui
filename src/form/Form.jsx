@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 class Form extends React.Component {
-  getChildContext() {
+  getChildContext() {    
     return {
       form: this.props.form,
     };
@@ -15,7 +15,7 @@ class Form extends React.Component {
       [`${prefixCls}-horizontal`]: this.props.horizontal,
       [`${prefixCls}-inline`]: this.props.inline,
     });
-
+    
     return (
       <form {...this.props} className={formClassName}>
         {this.props.children}
@@ -34,7 +34,7 @@ Form.propTypes = {
 };
 
 Form.defaultProps = {
-  prefixCls: 'ant-form',
+  prefixCls: 'form',
 };
 
 Form.childContextTypes = {
