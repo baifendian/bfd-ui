@@ -1,0 +1,81 @@
+h1 AJAX加载管理
+
+p 动态请求数据渲染界面的场景非常多，渲染时也需要向用户反馈数据加载的状态，如加载中、加载失败、无数据等，使用本组件会自动帮您管理这些需求。
+
+p bfd-ui 各个动态渲染的组件已内部集成，无需单独调用。
+
+pre
+  :highlight(lang="js")
+    import Loading from 'bfd-ui/lib/Loading'
+
+    const App = React.createClass({
+
+      getInitialState() {
+        return {
+          url: '/data/loading.json',
+          data: []
+        }
+      },
+
+      handleChange(e) {
+        this.setState({url: '/data/loading.json?type=' + e.target.value})
+      },
+
+      handleSuccess(data) {
+        this.setState({data})
+      },
+
+      render() {
+        return (
+          <div className="panel panel-default">
+            <div className="panel-heading">
+              <select onChange={this.handleChange}>
+                <option value="0">昨天</option>
+                <option value="1">最近7天</option>
+                <option value="2">最近30天</option>
+              </select>
+            </div>
+            <div className="panel-body">
+              <Loading url={this.state.url} onSuccess={this.handleSuccess}>
+                <div>
+                  {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+                </div>
+              </Loading>
+            </div>
+          </div>
+        )
+      }
+    })
+
+    render(<App/>, mountNode)
+
+#demo
+
+include ../includes/api.jade
+
+
+h2 属性
+
+ul.api
+  +api({
+    name: 'url',
+    type: 'string',
+    isRequired: true,
+    desc: '请求地址'
+  })
+    p 请求地址改变时，会重新请求
+    p 返回的数据格式要求
+    pre
+      :highlight(lang="js")
+        {
+          "code": 200,
+          "message": "", // code 不是200时，给出错误信息
+          "data": []
+        }
+
+  +api({
+    name: 'onSuccess',
+    type: 'function',
+    isRequired: true,
+    desc: '获取数据后的回调'
+  })

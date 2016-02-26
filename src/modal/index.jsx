@@ -1,6 +1,6 @@
 import 'bfd-bootstrap'
-import './main.css'
-import React, {PropTypes} from 'react'
+import './main.less'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
 
@@ -9,21 +9,42 @@ import classNames from 'classnames'
  */
 const Modal = React.createClass({
 
-  propTypes: {
-    isOpen: PropTypes.bool.isRequired,
-    onClose: PropTypes.func.isRequired
+  getInitialState() {
+    return {
+      isOpen: false     
+    }
+  },
+
+  childContextTypes: {
+    onClose: PropTypes.func
+  },
+
+  getChildContext() {
+    return {
+      onClose: () => {
+        this.setState({isOpen: false})
+      }
+    }
   },
   
   handleClick(e) {
     if (e.target.className.indexOf('modal-backdrop') !== -1) {
-      this.props.onClose()
+      this.setState({isOpen: false})
     }
+  },
+
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.isOpen !== this.state.isOpen) {
+      this.setState({isOpen: nextProps.isOpen})
+      return false
+    }
+    return true
   },
 
   render() {
     return (
-      <div className={classNames('modal fade', {'in': this.props.isOpen}, this.props.className)}>
-        <div className={classNames('modal-backdrop fade', {'in': this.props.isOpen})} onClick={this.handleClick}></div>
+      <div className={classNames('modal fade', {'in': this.state.isOpen}, this.props.className)}>
+        <div className={classNames('modal-backdrop fade', {'in': this.state.isOpen})} onClick={this.handleClick}></div>
         <div className="modal-dialog">
           <div className="modal-content">
             {this.props.children}
@@ -38,16 +59,16 @@ const Modal = React.createClass({
 /**
  * ModalHeader
  */
-Modal.Header = React.createClass({
+const ModalHeader = React.createClass({
 
-  propTypes: {
-    onClose: PropTypes.func.isRequired
+  contextTypes: {
+    onClose: PropTypes.func,
   },
 
   render() {
     return (
       <div className="modal-header">
-        <button type="button" className="close" onClick={this.props.onClose}>
+        <button type="button" className="close" onClick={this.context.onClose}>
           <span>&times;</span>
         </button>
         {this.props.children}
@@ -59,15 +80,13 @@ Modal.Header = React.createClass({
 /**
  * ModalBody
  */
-Modal.Body = React.createClass({
+const ModalBody = React.createClass({
 
   render() {
     return (
-      <div className="modal-body">
-        {this.props.children}
-      </div>
+      <div className="modal-body">{this.props.children}</div>
     )
   }
 })
 
-export default Modal
+export { Modal, ModalHeader, ModalBody }
