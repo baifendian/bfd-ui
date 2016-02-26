@@ -1,23 +1,25 @@
-import 'bfd-bootstrap'
-import React from 'react'
+import Form from './Form.jsx';
+import FormItem from './FormItem.jsx';
+import ValueMixin from './ValueMixin.jsx';
+import Input from '../input/index.jsx';
+import createDOMForm from 'rc-form/lib/createDOMForm.js';
 
-const Form = React.createClass({  
-  render() {
-    return (
-      <form className="form-horizontal">{this.props.children}</form>
-    )
-  }
-})
+Form.create = (o = {}) => {
+  const options = {
+    ...o,
+    fieldNameProp: 'id',
+    fieldMetaProp: '__meta',
+  };
 
-Form.Item = React.createClass({ 
-  render() {
-    return (
-      <div className="form-group">
-      <label className="col-sm-2 control-label"><i style={{color:'red',padding:'0px 4px'}}>{this.props.reqire}</i>{this.props.label}</label>       
-          {this.props.children}      
-      </div>
-    )
-  }
-})
+  return createDOMForm(options);
+};
+Form.Item = FormItem;
 
-export default Form
+
+Form.ValueMixin = ValueMixin;
+
+
+Form.Form = Form;
+Form.Input = Input;
+
+export default Form;
