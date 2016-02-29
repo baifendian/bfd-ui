@@ -1,42 +1,21 @@
 import React from 'react';
 import classNames from 'classnames';
 
-class FormGroup extends React.Component { 
-
-  getId() {
-    return this.props.children.props && this.props.children.props.id;
-  }
-
-  getMeta() {
-    return this.props.children.props && this.props.children.props.__meta;
-  }
-
-  isRequired() {
-    if (this.context.form) {
-      const meta = this.getMeta() || {};
-      const validate = (meta.validate || []);
-
-      return validate.filter((item) => !!item.rules).some((item) => {
-        return item.rules.some((rule) => rule.required);
-      });
-    }
-    return false;
-  }
+class FormGroup extends React.Component {
 
   renderLabel() {
+
     const props = this.props;
     const labelCol = props.labelCol;
-    const required = props.required === undefined ?
-      this.isRequired() :
-      props.required;
+    const required = props.required === undefined ? false : true;
 
     const className = classNames({
       [labelCol]: true,
-      [`${props.prefixCls}-group-required`]: required,
+      [`bfd-${props.prefixCls}-group-required`]: required,
     });
 
     return props.label ? (
-      <label htmlFor={props.id || this.getId()} className={className} key="label">
+      <label className={className} key="label">
         {props.label}
       </label>
     ) : null;
@@ -45,10 +24,6 @@ class FormGroup extends React.Component {
   renderChildren() {
     const props = this.props;
     const children = React.Children.map(props.children, (child) => {
-      if (typeof child.type === 'function' && !child.props.size) {
-        return React.cloneElement(child, { size: 'large' });
-      }
-
       return child;
     });
     return [
@@ -87,10 +62,6 @@ FormGroup.propTypes = {
 
 FormGroup.defaultProps = {  
   prefixCls: 'form'
-};
-
-FormGroup.contextTypes = {
-  form: React.PropTypes.object,
 };
 
 module.exports = FormGroup;
