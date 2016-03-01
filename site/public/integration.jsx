@@ -35,9 +35,18 @@ $ yo bfd myapp`}</Pre>
 
 $ npm start`}</Pre>
 
+        <p>开发阶段前后端分离，AJAX 请求可能涉及到跨域问题，后台接口请做修改来允许跨域请求</p>
+
+        <Pre lang="shell">{
+`$ cd myapp
+
+$ npm start`}</Pre>
+
         <p>终于可以运行了，戳 <a href="http://localhost:9000" target="_blabk">http://localhost:9000</a></p>
 
         <h1>3、部署测试/上线</h1>
+
+        <h3>3.1、生成线上代码</h3>
 
         <Pre lang="shell">{
 `$ cd myapp
@@ -46,7 +55,22 @@ $ npm start`}</Pre>
 $ npm run build-mac
 # windows 系统
 $ npm run build-win`}</Pre>
+        
+        <h3>3.2、修改服务器配置</h3>
+        <p>如果是 Java web 项目</p>
+        <ol>
+          <li>修改 index.html 为 index.jsp（以 jsp 为例，其他模版相同）</li>
+          <li>修改
+            <Pre lang="shell">{
+`$ cd myapp
 
+# OS X 系统
+$ npm run build-mac
+# windows 系统
+$ npm run build-win`}</Pre>
+          </li>
+        </ol>
+        <p>如果是 Django 项目</p>
       </div>
     )
   }

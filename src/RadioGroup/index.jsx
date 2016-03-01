@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
+import './main.less'
 
-const Radios = React.createClass({
+const RadioGroup = React.createClass({
 
   childContextTypes: {
     getValue: PropTypes.func,
@@ -30,12 +31,13 @@ const Radio = React.createClass({
 
   render() {
     return (
-      <label className="radio-inline">
+      <label className="bfd-radio radio-inline">
         <input type="radio" onChange={this.context.setValue} checked={this.props.value === this.context.getValue()} value={this.props.value}/>
+        <span className="status"></span>
         {this.props.children}
       </label>
     )
   }
 })
 
-export { Radios, Radio }
+export { RadioGroup, Radio }

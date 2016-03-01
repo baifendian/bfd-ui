@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Radios, Radio } from 'c/Radios/index.jsx'
+import { RadioGroup, Radio } from 'c/RadioGroup/index.jsx'
 
 const App = React.createClass({
 
@@ -16,10 +16,10 @@ const App = React.createClass({
 
   render() {
     return (
-      <Radios value={this.state.value} onChange={this.handleChange}>
+      <RadioGroup value={this.state.value} onChange={this.handleChange}>
         <Radio value="apple">苹果</Radio>
         <Radio value="mi">小米</Radio>
-      </Radios>
+      </RadioGroup>
     )
   }
 })

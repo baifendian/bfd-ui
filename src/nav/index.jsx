@@ -12,7 +12,7 @@ const Nav = React.createClass({
   }
 })
 
-Nav.Item = React.createClass({
+const NavItem = React.createClass({
 
   contextTypes: {
     history: PropTypes.object.isRequired
@@ -63,4 +63,4 @@ Nav.Item = React.createClass({
   }
 })
 
-export default Nav
+export { Nav, NavItem }

@@ -4,7 +4,7 @@ h1 模态框
 
 pre
   :highlight(lang='js')
-    import Modal from 'bfd-ui/src/modal'
+    import { Modal, ModalHeader, ModalBody } from 'c/modal/index.jsx'
 
     const App = React.createClass({
 
@@ -18,21 +18,17 @@ pre
         this.setState({isOpen: true})
       },
 
-      handleClose() {
-        this.setState({isOpen: false})
-      },
-
       render() {
         return (
           <div>
             <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-            <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
-              <Modal.Header onClose={this.handleClose}>
+            <Modal isOpen={this.state.isOpen}>
+              <ModalHeader>
                 <h4 className="modal-title">test</h4>
-              </Modal.Header>
-              <Modal.Body>
-                content
-              </Modal.Body>
+              </ModalHeader>
+              <ModalBody>
+                dadasd
+              </ModalBody>
             </Modal>
           </div>
         )
@@ -43,7 +39,7 @@ pre
 
 #demo.demo
 
-h2 属性
+h2 Modal 属性
 
 ul.api
   +api({
@@ -60,7 +56,7 @@ ul.api
     desc: '关闭事件的回调函数'
   })
 
-h3 Modal.Header
+h2 ModalHeader 属性
 
 p 模态框头部
 
@@ -72,6 +68,6 @@ ul.api
     desc: '同上'
   })
 
-h3 Modal.Body
+h2 ModalBody 属性
 
 p 模态框主体

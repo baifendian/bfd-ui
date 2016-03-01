@@ -9,6 +9,9 @@ export default React.createClass({
   },
 
   handleSuccess(res) {
+    if (!('containerHeight' in this)) {
+      this.refs.container.style.height = this.containerHeight = this.getParentContentHeight() + 'px'
+    }
     this.renderChart(res)
   },
 
@@ -17,6 +20,16 @@ export default React.createClass({
       // 非虚拟DOM手动清除
       this.refs.container.innerHTML = null
     }
+  },
+
+  getParentContentHeight() {
+    const style = window.getComputedStyle(this.refs.container.parentNode)
+    let extra = 0
+
+    if (style.boxSizing === 'border-box') {
+        extra = parseInt(style.paddingTop, 10) + parseInt(style.paddingBottom, 10) + parseInt(style.borderTopWidth, 10) + parseInt(style.borderBottomWidth, 10)
+    }
+    return parseInt(style.height, 10) - extra
   },
 
   render() {

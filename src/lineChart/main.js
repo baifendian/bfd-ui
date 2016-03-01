@@ -35,9 +35,8 @@ export default class {
 
     // 实例唯一ID
     const id = Math.random().toString(16).slice(2)
-
-    const width = container.parentNode.clientWidth - padding[3] - padding[1]
-    const height = (container.parentNode.clientHeight || width * .5) - padding[0] - padding[2]
+    const width = container.clientWidth - padding[3] - padding[1]
+    const height = (container.clientHeight || width * .5) - padding[0] - padding[2]
 
     // x轴两边边距大小
     const xAxisPaddingScale = 0.2

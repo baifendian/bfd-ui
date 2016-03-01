@@ -1,7 +1,9 @@
+.component #demo,
 .component .demo {
   width: 700px;
-  border: 1px solid #ececec;
-  border-radius: 3px;
+  margin: 20px 0;
+  /*border: 1px solid #ddd;*/
+  /*border-radius: 4px;*/
 }
 .component ul.api {
   padding: 0;
