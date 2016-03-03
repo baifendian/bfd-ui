@@ -15,7 +15,7 @@
 }
 #body > .content {
   overflow: hidden;
-  padding: 0 20px;
+  padding: 20px;
   width: 740px;
 }
 #body > .content > div {
