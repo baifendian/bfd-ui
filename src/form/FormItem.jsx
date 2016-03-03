@@ -45,13 +45,8 @@ class FormItem extends React.Component {
     if(props.validate){
       const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-2';
       let error;
-      console.log(props.validate.validateVal)
-      if (props.validate.validateVal) {        
-        error = props.validate.handle();
-        error == 'success' ? validate = true : validate = false;
-      } else if (!props.validate.validateVal && props.validate.required) {
-        error = props.validate.required;
-      }
+      error = props.validate.handle();
+      error == 'success' ? validate = true : validate = false;      
       props.handleValidate(validate);
       if (validate) return;
       return (

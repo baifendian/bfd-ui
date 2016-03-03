@@ -21,8 +21,8 @@ let Demo = React.createClass({
     }
   },
 
-  handleSubmit(e) {   
-    const _validate = this.handleValidate(validateDemo);
+  handleSubmit(e) {       
+    const _validate = this.getValidate(validateDemo);
     if(_validate){
       alert('表单验证通过');
       alert('收到表单值：' + JSON.stringify(this.state)); 
@@ -36,7 +36,7 @@ let Demo = React.createClass({
     validateDemo.push(o);    
   },
 
-  handleValidate(arr){
+  getValidate(arr){
     let flag = true;
     arr.map(function(item,i){     
       if(!item) flag = false;
@@ -44,18 +44,33 @@ let Demo = React.createClass({
     return flag;
   },
 
-  render() {
-    
+  render() {    
     const validates = [{
       validateVal: this.state.task,
       required: '请填写任务名称',
       handle: function() {
-        return this.validateVal.length > 10 ? '字符长度不能超过10个' : 'success';
+        let s;
+        if (!this.validateVal && this.required) {
+          s = this.required;
+        } else if (this.validateVal.length > 10) {
+          s = '字符长度不能超过10个';
+        } else {
+          s = 'success'
+        }
+        return s;
       }
     }, {
       validateVal: this.state.desc,
       handle: function() {
-        return this.validateVal.length > 20 ? '字符长度不能超过20个' : 'success';
+        let s;
+        if(!this.validateVal&&this.required){
+          s = this.required;
+        } else if(this.validateVal.length > 20 ) {
+          s = '字符长度不能超过20个';
+        }else{
+          s = 'success'
+        }
+        return s;
       }
     }, {
       validateVal: {
@@ -65,11 +80,18 @@ let Demo = React.createClass({
       },
       required: '请设置字段',
       handle: function() {
-        let count = 0;
+        let count = 0,s;
         for (var k in this.validateVal) {
           if (this.validateVal[k]) count++;
         }
-        return count < 2 ? '字段设置必须要设置2个或2个以上' : 'success';
+        if(count == 0){
+          s = this.required;
+        }else if(count<2){
+          s = '字段设置必须要设置2个或2个以上'
+        }else{
+          s = 'success';
+        }
+        return s;
       }
     }];
     validateDemo=[];
@@ -77,7 +99,7 @@ let Demo = React.createClass({
     return (
       <Form horizontal onSubmit={this.handleSubmit}>
 
-        <FormItem label="任务名称：" labelCol={{ span: 2 }} wrapperCol={{ span: 4 }} required  validate={validates[0]} handleValidate={this.isValidate}>          
+        <FormItem label="任务名称：" labelCol={{ span: 2 }} wrapperCol={{ span: 4 }} validate={validates[0]} handleValidate={this.isValidate} required>          
             <input type="text" className="form-control" valueLink={this.linkState('task')}/>         
         </FormItem>  
 
@@ -93,7 +115,7 @@ let Demo = React.createClass({
             </select>        
         </FormItem> 
 
-        <FormItem label="字段设置：" wrapperCol={{ span: 4 }} required  validate={validates[2]} handleValidate={this.isValidate}>         
+        <FormItem label="字段设置：" wrapperCol={{ span: 4 }}  validate={validates[2]} handleValidate={this.isValidate} required>         
             <Checkbox checkedLink={this.linkState('apple')}>苹果</Checkbox>   
             <Checkbox checkedLink={this.linkState('orange')}>橙子</Checkbox> 
             <Checkbox checkedLink={this.linkState('pear')}>梨</Checkbox>                     
