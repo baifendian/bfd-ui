@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import {LinkedStateMixin} from 'react-addons'
 import Form from 'c/form/index.jsx'
-import Checkbox from 'c/Checkbox/index.jsx'
+import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
 
 const FormItem = Form.Item;
 let validateDemo;
@@ -15,9 +15,7 @@ let Demo = React.createClass({
       task: '',
       desc: '',
       train: '1',
-      apple:true,
-      orange:true,
-      pear:false
+      fields:['apple','mi']
     }
   },
 
@@ -43,10 +41,13 @@ let Demo = React.createClass({
     });
     return flag;
   },
-
+  fieldsChange(selects){
+    this.setState({selects});
+  },
   render() {    
     const validates = [{
       validateVal: this.state.task,
+      span:4,
       required: '请填写任务名称',
       handle: function() {
         let s;
@@ -61,6 +62,7 @@ let Demo = React.createClass({
       }
     }, {
       validateVal: this.state.desc,
+      span:4,
       handle: function() {
         let s;
         if(!this.validateVal&&this.required){
@@ -72,22 +74,14 @@ let Demo = React.createClass({
         }
         return s;
       }
-    }, {
-      validateVal: {
-        apple: this.state.apple,
-        orange: this.state.orange,
-        pear: this.state.pear
-      },
-      required: '请设置字段',
+    },{
+      validateVal: this.state.fields,
+      required:'请设置字段',
+      span:4,
       handle: function() {
-        let count = 0,s;
-        for (var k in this.validateVal) {
-          if (this.validateVal[k]) count++;
-        }
-        if(count == 0){
-          s = this.required;
-        }else if(count<2){
-          s = '字段设置必须要设置2个或2个以上'
+        let s;
+        if(this.validateVal.length == 0){
+          s=this.required;
         }else{
           s = 'success';
         }
@@ -99,27 +93,31 @@ let Demo = React.createClass({
     return (
       <Form horizontal onSubmit={this.handleSubmit}>
 
-        <FormItem label="任务名称：" labelCol={{ span: 2 }} wrapperCol={{ span: 4 }} validate={validates[0]} handleValidate={this.isValidate} required>          
+        <FormItem label="任务名称：" labelCol={{ span: 2 }} wrapperCol={{ span: 6 }} validate={validates[0]} handleValidate={this.isValidate} required>          
             <input type="text" className="form-control" valueLink={this.linkState('task')}/>         
         </FormItem>  
 
-        <FormItem label="任务描述：" wrapperCol={{ span: 4 }} validate={validates[1]} handleValidate={this.isValidate}>          
+        <FormItem label="任务描述：" wrapperCol={{ span: 6 }} validate={validates[1]} handleValidate={this.isValidate}>          
             <textarea  rows="4" className="form-control" valueLink={this.linkState('desc')}/>          
         </FormItem> 
 
-        <FormItem label="训练数据：" wrapperCol={{ span: 4 }} required>          
+        <FormItem label="训练数据：" wrapperCol={{ span: 6 }} required>          
             <select className="form-control"  valueLink={this.linkState('train')}>
               <option value="0">--请选择数据所在路径--</option>
               <option value="1">test1</option>
               <option value="2">test2</option>
             </select>        
-        </FormItem> 
+        </FormItem>         
 
-        <FormItem label="字段设置：" wrapperCol={{ span: 4 }}  validate={validates[2]} handleValidate={this.isValidate} required>         
-            <Checkbox checkedLink={this.linkState('apple')}>苹果</Checkbox>   
-            <Checkbox checkedLink={this.linkState('orange')}>橙子</Checkbox> 
-            <Checkbox checkedLink={this.linkState('pear')}>梨</Checkbox>                     
+        <FormItem label="训练数据：" wrapperCol={{ span: 6 }} validate={validates[2]} handleValidate={this.isValidate} required>          
+          <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
+            <Checkbox value="apple">苹果</Checkbox>
+            <Checkbox value="mi">小米</Checkbox>
+            <Checkbox value="samsung">三星</Checkbox>
+            <Checkbox value="huawei">华为</Checkbox>
+          </CheckboxGroup>
         </FormItem> 
+      
 
         <FormItem wrapperCol={{offset:2 }}>         
             <button type="submit" className="btn btn-default">登录</button>         
