@@ -64,6 +64,7 @@ const Components = React.createClass({
       this.refs.container.innerHTML = res
     }).then(() => {
       require.ensure([], require => {
+
         // try {
           require(`.${pathname}.jsx`).default()
         // } catch(e) {}
