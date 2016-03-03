@@ -1,7 +1,16 @@
 .alert-message{
-	width: 100%;
+	width: 30%;
 	position: fixed;
 	top:10px;
-	padding:0 15px;
+	left:35%;
+	right: 0;
+	padding:0 10px;
 	text-align: center;
+	animation:message .5s;
+	animation-iteration-count:1
+}
+@keyframes message
+{
+from {top:0px;}
+to {top:10px;}
 }

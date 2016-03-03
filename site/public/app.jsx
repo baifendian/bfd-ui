@@ -8,6 +8,8 @@ import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import Nav from 'c/nav/index.jsx'
 import model from './model'
+import Pre from './pre.jsx'
+import Integration from './integration.jsx'
 
 const App = React.createClass({
 
@@ -31,6 +33,7 @@ const App = React.createClass({
               <Nav.Item href="/" icon="home" title="首页"/>
               <Nav.Item href="/bootstrap" icon="bold" title="Bootstrap"/>
               <Nav.Item href="/plan" icon="calendar" title="计划"/>
+              <Nav.Item href="/integration" icon="hand-right" title="完整项目实例"/>
               <Nav.Item href="/components" icon="th" title="组件">
                 <Nav>
                   {this.state.components.map(component => {
@@ -60,9 +63,9 @@ const Components = React.createClass({
       this.refs.container.innerHTML = res
     }).then(() => {
       require.ensure([], require => {
-        try {
+        //try {
           require(`.${pathname}.jsx`).default()
-        } catch(e) {}
+       // } catch(e) {}
       })
     })
   },
@@ -77,12 +80,6 @@ const Components = React.createClass({
 
   render() {
     return <div className="component" ref="container"></div>
-  }
-})
-
-const Pre = React.createClass({
-  render() {
-    return <pre>{this.props.children}</pre>
   }
 })
 
@@ -106,7 +103,6 @@ const Bootstrap = React.createClass({
       this.refs.container.innerHTML = res
     })
   },
-
 
   render() {
     return <div className="bootstrap" ref="container"></div>
@@ -139,6 +135,7 @@ render((
       <IndexRoute component={Home}/>
       <Route path="/bootstrap" component={Bootstrap}/>
       <Route path="/plan" component={Plan}/>
+      <Route path="/integration" component={Integration}/>
       <Route path="components">
         <Route path=":component" component={Components}></Route>
       </Route>

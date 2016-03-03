@@ -21,12 +21,18 @@ export default (env, flag) => {
   const width = env.width;
   const height = env.height;
   const radius = Math.min(width, height) / 2;
-
+  var arcs = [];
 
   // for drawing slices
-  var arc = d3.svg.arc()
+  const arc = d3.svg.arc()
     .outerRadius(0.6 * radius)
     .innerRadius(0.6 * _config.radius.inner * radius);
+    arcs.push(arc);
+
+  const arc2 = d3.svg.arc()
+    .outerRadius(0.6 * _config.radius.inner * radius-4)
+    .innerRadius(0.6 * _config.radius.inner * radius-8);
+    arcs.push(arc2);
 
   // for labels and polylines  设置label和line的位置。
   var outerArc = d3.svg.arc()
@@ -46,27 +52,36 @@ export default (env, flag) => {
     .datum(flag ? _config.data : _config.dataLegend)
     .selectAll('path')
     .data(pie);
-  slice
-    .enter().append('path')
-    .attr('fill', function(d, i) {
-      return d.data.color;
-    })
-    .attr('d', function(d) {
-      return arc(d);
-    })
-    .attr('transform', function(d, i) {
-      return 'rotate(-180, 0, 0)';
-    })
-    .style('opacity', 0)
-    .transition()
-    .delay(function(d, i) {
-      return (i * arcAnimDelay) + initialAnimDelay;
-    })
-    .duration(arcAnimDur)
-    .ease('elastic')
-    .style('opacity', 1.0)
-    .attr('transform', 'rotate(0,0,0)');
 
+  for (var i=0;i<arcs.length;i++) {
+
+    slice
+      .enter().append('path')
+      .attr('fill', function(d, i) {
+        return d.data.color;
+      })
+      .attr('d', function(d) {        
+        return arcs[i](d);
+      })
+      .attr('transform', function(d, i) {
+        return 'rotate(-180, 0, 0)';
+      })
+      .style('opacity', 0)
+      .transition()
+      .delay(function(d, i) {
+        return (i * arcAnimDelay) + initialAnimDelay;
+      })
+      .duration(arcAnimDur)
+      .ease('elastic')
+      .style('opacity', 1.0)
+      .attr('transform', 'rotate(0,0,0)');
+
+      if (i === 1) {
+        slice.style('display', 'none')
+              //添加一个class来标记arc2的圆弧。
+              .attr('class','pie-flag');
+      }
+  }
 
   //设置text 
   var countText = 0;

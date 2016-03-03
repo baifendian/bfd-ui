@@ -1,26 +1,106 @@
+include ../includes/api.jade
 h1 DataTable&分页
 pre
     :highlight(lang='js')
+        import React from 'react'
+        import { render } from 'react-dom'
         import DataTable from 'c/dataTable/datatable.jsx'
-        import Paging from 'c/paging/paging.jsx'
 
-        var items = {totalList:[
-        { name: '张三', age: 27, height:'175cm',weight:'66kg' ,country:'中国'},
-        { name: '王伟', age: 15 ,height:'185cm',weight:'69kg',country:'日本'},
-        { name: '李明伟', age:34,height:'160cm',weight:'88kg',country:'香港'},
-        { name: '赵四', age: 27, height:'166cm',weight:'66kg' ,country:'台湾'},
-        { name: '王五', age: 15 ,height:'190cm',weight:'69kg',country:'安徽'},
-        { name: '徐锦江', age:34,height:'168cm',weight:'88kg',country:'河南'},
-        { name: '张楠', age: 27, height:'165cm',weight:'66kg' ,country:'福建'},
-        { name: '王小可', age: 15 ,height:'177cm',weight:'69kg',country:'广东'},
-        { name: '李建国', age:34,height:'161cm',weight:'88kg',country:'四川'}
-        ],
-        totalNum:500,
-        currentPage:1
-        };
-        var columns = {key:{name:'姓名',age:'年龄',height:'身高',weight:'体重',country:'国家/地区'}}
+        var column = [
+          {
+            title: '姓名' ,
+            render( text , i ){
 
-        render(<DataTable items={items} columns={columns} />, document.getElementById('demo'))
-        render(<Paging rowsPage="10" totalNum={items.totalNum} currentPage={items.currentPage} />,document.getElementById('paging'))
-#demo.demo.noborder
+              return <a href="#" onClick={function(){
+
+            }} >{text}</a>} ,
+            key: 'name' } ,
+          {
+            title: '年龄' ,
+            key: 'age' } ,
+          {
+            title: '身高' , key: 'height' , render( text ){
+            return <a href="#">{text}</a>
+          }
+          } ,
+          { title: '体重' ,
+            key: 'weight' } ,
+          { title: '国家/地区' , key: 'country' } ,
+          {
+            title: '操作' ,
+            /**
+             *
+             * @param columns  数据对象
+             * @param obj      react 对象
+             * @returns {XML}  返回dom对象
+              */
+            render(columns,obj){
+            return (<div className="icon">
+              <span className="glyphicon glyphicon-search" onClick={
+              function (){
+              //todo
+                //刷新列表
+                obj.refresh()
+              }
+              }></span>
+              <span className="glyphicon glyphicon-trash" onClick = {
+              function(){
+              //todo
+                //刷新列表
+                obj.refresh()
+              }
+              }></span>
+              <span className="glyphicon glyphicon-edit" onClick={
+                function(){
+                //todo
+                //刷新列表
+                obj.refresh()
+                }
+
+              }></span>
+            </div>)
+          } , key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+          }
+        ]
+
+        render(<DataTable url="/data/table.json" column={column}  showRow={10} />, document.getElementById('demo'))
+#demo
 #paging
+h2 属性
+ul.api
+    +api({
+        name: 'operation',
+        type: 'object',
+        isRequired: true,
+        desc: '注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致'
+    })
+
+h2 属性
+ul.api
+    +api({
+        name: 'column',
+        type: 'object',
+        isRequired: true,
+        desc: '数据字段列配置，render 需要渲染的特定列'
+    })
+    pre
+        :highlight(lang='js')
+            {title:'操作',render(){
+                    return (<div className="icon">
+                             <span className="glyphicon glyphicon-search" ></span>
+                             <span className="glyphicon glyphicon-trash"></span>
+                             <span className="glyphicon glyphicon-edit"></span>
+                            </div>)
+                }
+    +api({
+        name: 'showRow',
+        type: 'Integer',
+        isRequired: true,
+        desc: '每页需要显示的条数'
+    })
+    +api({
+        name: 'url',
+        type: 'string',
+        isRequired: true,
+        desc: '要请求数据的服务端地址'
+    })
