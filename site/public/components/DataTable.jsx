@@ -81,7 +81,6 @@ export default () =>{
   render(<DataTable url="/data/table.json" pageSize={8}
                     column={column}/>,document.getElementById('demo'))
 
-  render(<Paging currentPage={1} totalPageNum={20} pageSize={10}
-                 onChange={this.onChange}/>,document.getElementById('paging'))
+  
 }
 
