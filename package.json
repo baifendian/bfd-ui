@@ -1,6 +1,6 @@
 {
   "name": "bfd-ui",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "jade": "^1.11.0",
-    "node-dev": "^2.7.1",      
+    "node-dev": "^2.7.1",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.4.0"
   }
