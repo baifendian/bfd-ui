@@ -6,21 +6,31 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      xhr: 'loading',
+      xhr: null,
       msg: null
     }
   },
 
   fetch() {
-    this.setState({xhr: 'loading'})
+    this.lazyLoading()
     this.props.onLoading && this.props.onLoading()
     setTimeout(() => {
       xhr({
         url: this.props.url,
+        complete: () => {
+          clearTimeout(this.loadingTimer)
+        },
         success: this.handleSuccess,
         error: this.handleError
       })
     }, this.props.delay || 0)
+  },
+
+  // 加载快的情况下，不展示loading
+  lazyLoading() {
+    this.loadingTimer = setTimeout(() => {
+      this.setState({xhr: 'loading'})
+    }, 150)
   },
 
   handleSuccess(res) {
@@ -54,16 +64,20 @@ export default React.createClass({
   },
   
   componentDidMount() {
+    const style = this.refs.container.parentNode.style
+    if (style.position !== 'absolute') {
+      style.position = 'relative'
+    }
     this.fetch()
   },
 
   render() {
     let dom
     if (this.state.xhr === 'success') {
-      dom = this.props.children
+      dom = null
     } else {
       dom = (
-        <div className="loading-mask">
+        <div className="loading-mask" ref="container">
           {(() => {
             switch(this.state.xhr) {
               case 'loading': return '加载中...'

@@ -30,11 +30,8 @@ const App = React.createClass({
           </select>
         </div>
         <div className="panel-body">
-          <Loading url={this.state.url} onSuccess={this.handleSuccess} delay={1000}>
-            <div>
-              {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
-            </div>
-          </Loading>
+          <Loading url={this.state.url} onSuccess={this.handleSuccess} delay={1000}></Loading>
+          {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
         </div>
       </div>
     )

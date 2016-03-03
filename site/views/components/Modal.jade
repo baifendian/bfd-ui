@@ -18,11 +18,15 @@ pre
         this.setState({isOpen: true})
       },
 
+      handleClose() {
+        this.setState({isOpen: false})
+      },
+
       render() {
         return (
           <div>
             <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-            <Modal isOpen={this.state.isOpen}>
+            <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
               <ModalHeader>
                 <h4 className="modal-title">test</h4>
               </ModalHeader>

@@ -57,6 +57,7 @@ const Components = React.createClass({
   },
 
   renderComponent() {
+    scroll(0, 0)
     let { component } = this.props.params
     let { pathname } = this.props.location
     model.fetch(`/getTemplate?path=${pathname}`).then((res) => {

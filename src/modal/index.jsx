@@ -4,6 +4,19 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 
 
+const scrollbarWidth = (() => {
+  const scrollDiv = document.createElement('div')
+  const body = document.body
+
+  scrollDiv.className = 'modal-scrollbar-measure'
+  body.appendChild(scrollDiv)
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+  body.removeChild(scrollDiv)
+  
+  return scrollbarWidth
+})()
+
+
 /**
  * Modal
  */
@@ -11,7 +24,8 @@ const Modal = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false     
+      show: false,
+      fadeIn: false
     }
   },
 
@@ -21,30 +35,58 @@ const Modal = React.createClass({
 
   getChildContext() {
     return {
-      onClose: () => {
-        this.setState({isOpen: false})
-      }
+      onClose: this.props.onClose
     }
   },
   
   handleClick(e) {
     if (e.target.className.indexOf('modal-backdrop') !== -1) {
-      this.setState({isOpen: false})
+      this.props.onClose()
     }
   },
 
-  shouldComponentUpdate(nextProps) {
-    if (nextProps.isOpen !== this.state.isOpen) {
-      this.setState({isOpen: nextProps.isOpen})
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.isOpen && !nextState.show) {
+      this.setState({show: true})
+      setTimeout(() => {
+        this.setState({fadeIn: true})
+      }, 10)
       return false
     }
+
+    if (!nextProps.isOpen && nextState.fadeIn) {
+      this.setState({fadeIn: false})
+      setTimeout(() => {
+        this.setState({show: false})
+      }, 300)
+      return false
+    }
+
+    const body = document.body
+    if (nextState.show) {
+      body.className = this.bodyClassName + ' modal-open'
+      body.style.paddingRight = this.bodyPaddingRight + scrollbarWidth + 'px'
+    } else {
+      body.className = this.bodyClassName
+      if (this.bodyPaddingRight) {
+        body.style.paddingRight = this.bodyPaddingRight + 'px'
+      } else {
+        body.style.paddingRight = ''
+      }
+    }
+
     return true
+  },
+
+  componentDidMount() {
+    this.bodyClassName = document.body.className
+    this.bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
   },
 
   render() {
     return (
-      <div className={classNames('modal fade', {'in': this.state.isOpen}, this.props.className)}>
-        <div className={classNames('modal-backdrop fade', {'in': this.state.isOpen})} onClick={this.handleClick}></div>
+      <div ref="modal" style={{display: this.state.show ? 'block' : 'none'}} className={classNames('modal fade', {'in': this.state.fadeIn}, this.props.className)}>
+        <div className={classNames('modal-backdrop fade', {'in': this.state.fadeIn})} onClick={this.handleClick}></div>
         <div className="modal-dialog">
           <div className="modal-content">
             {this.props.children}
