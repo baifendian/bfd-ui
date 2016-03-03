@@ -2,65 +2,78 @@ include ../includes/api.jade
 h1 DataTable&分页
 pre
     :highlight(lang='js')
-        import React from 'react'
-        import { render } from 'react-dom'
-        import DataTable from 'c/dataTable/datatable.jsx'
+        import DataTable from 'bfd-ui/lib/DataTable'
 
-        var column = [
-          {
-            title: '姓名' ,
-            render( text , i ){
+        const column = [{
+          title: '姓名',
+          order: true,
+          render(text,i){
+            return <a href="#" onClick={function(){
 
-              return <a href="#" onClick={function(){
-
-            }} >{text}</a>} ,
-            key: 'name' } ,
-          {
-            title: '年龄' ,
-            key: 'age' } ,
-          {
-            title: '身高' , key: 'height' , render( text ){
+          }}>{text}</a>
+          },
+          key: 'name'
+        }, {
+          title: '年龄',
+          key: 'age',
+          order: true
+        }, {
+          title: '身高',
+          key: 'height',
+          order: true,
+          render(text){
             return <a href="#">{text}</a>
           }
-          } ,
-          { title: '体重' ,
-            key: 'weight' } ,
-          { title: '国家/地区' , key: 'country' } ,
-          {
-            title: '操作' ,
-            /**
-             *
-             * @param columns  数据对象
-             * @param obj      react 对象
-             * @returns {XML}  返回dom对象
-              */
-            render(columns,obj){
+        }, {
+          title: '体重',
+          key: 'weight',
+          order: true
+        }, {
+          title: '国家/地区',
+          key: 'country'
+        }, {
+          title: '学校',
+          key: 'school'
+        }, {
+          title: '生日',
+          key: 'birthday',
+          order: true
+        }, {
+          title: '操作',
+          /**
+           *
+           * @param columns  数据对象
+           * @param obj      react 对象
+           * @returns {XML}  返回dom对象
+           */
+          render(columns,obj){
             return (<div className="icon">
-              <span className="glyphicon glyphicon-search" onClick={
-              function (){
-              //todo
-                //刷新列表
-                obj.refresh()
-              }
-              }></span>
-              <span className="glyphicon glyphicon-trash" onClick = {
-              function(){
-              //todo
-                //刷新列表
-                obj.refresh()
-              }
-              }></span>
-              <span className="glyphicon glyphicon-edit" onClick={
-                function(){
-                //todo
-                //刷新列表
-                obj.refresh()
-                }
-
-              }></span>
-            </div>)
-          } , key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+          <span className="glyphicon glyphicon-search" onClick={
+          function (){
+          //todo
+            //刷新列表
+            obj.refresh()
           }
+          }></span>
+          <span className="glyphicon glyphicon-trash" onClick={
+          function(){
+          //todo
+            //刷新列表
+            obj.refresh()
+          }
+          }></span>
+          <span className="glyphicon glyphicon-edit" onClick={
+            function(){
+            //todo
+            //刷新列表
+            obj.refresh()
+            }
+
+          }></span>
+            </div>)
+          },
+          key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+        }
         ]
 
         render(<DataTable url="/data/table.json" column={column}  showRow={10} />, document.getElementById('demo'))
@@ -74,7 +87,14 @@ ul.api
         isRequired: true,
         desc: '注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致'
     })
-
+h2 属性
+ul.api
+    +api({
+        name: 'order',
+        type: 'boolean',
+        isRequired: false,
+        desc: '注：是否显示排序，true为显示排序。false为不显示排序'
+    })
 h2 属性
 ul.api
     +api({
@@ -92,12 +112,16 @@ ul.api
                              <span className="glyphicon glyphicon-edit"></span>
                             </div>)
                 }
+h2 属性
+ul.api
     +api({
         name: 'showRow',
         type: 'Integer',
         isRequired: true,
         desc: '每页需要显示的条数'
     })
+h2 属性
+ul.api
     +api({
         name: 'url',
         type: 'string',

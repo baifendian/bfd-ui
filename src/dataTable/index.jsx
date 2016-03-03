@@ -1,15 +1,16 @@
 /**
  * Created by BFD_270 on 2016-02-19.
  */
-import './main.css'
+import './main.less'
 import 'bfd-bootstrap'
 import React, {PropTypes} from 'react'
 import Loading from '../Loading'
 import classNames from 'classnames'
-import Paging from '../paging/paging.jsx'
+import Paging from '../Paging/index.jsx'
 export default React.createClass( {
    getInitialState: function () {
       return {
+         order:'',
          url:this.props.url,
          items: {
             totalList: [] ,
@@ -27,34 +28,34 @@ export default React.createClass( {
       }else{
          url_+="?"+params
       }
-      console.log(url_)
      this.setState({url:url_});
    } ,
    orderClick:function(column,i){
       if(column.order){
+
          if(this.refs[i].getAttribute('order')==null){
             this.refs[i].className = "sorting_asc"
             this.refs[i].setAttribute('order','asc')
-
+            this.setState({order:"&key="+column['key']+"&sort=asc"})
             return
          }
          if(this.refs[i].getAttribute('order')=='asc'){
             this.refs[i].className = "sorting_desc"
             this.refs[i].setAttribute('order','desc')
+            this.setState({order:"&key="+column['key']+"&sort=desc"})
             return
          }
          if(this.refs[i].getAttribute('order')=='desc'){
             this.refs[i].className = "sorting_asc"
             this.refs[i].setAttribute('order','asc')
-         return
+            this.setState({order:"&key="+column['key']+"&sort=asc"})
+            return
          }
-         let key = column['key']
 
       }
 
    },
    handleSuccess: function ( data ) {
-      console.log(data)
       this.setState( { items: data } )
    } ,
    refresh: function () {
@@ -68,16 +69,14 @@ export default React.createClass( {
       let totalPageNum = this.state.items.totalPageNum ,
         currentPage = this.state.items.currentPage,
         _this = this
-      let url = this.state.url//?pageSize=13&currentPage=1
-      if(url.indexOf('?')<0){
-         if(url.indexOf('pageSize')<0){
+      let url = this.state.url
+      if(url.indexOf('?')<0 && url.indexOf('pageSize')<0){
+
             url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.items.currentPage
-         }
-
       }else{
-         url+="&pageSize="+this.props.pageSize+"&currentPage="+this.state.items.currentPage
-      }
 
+      }
+      url+=this.state.order
       return (
            <div>
               <Loading url={url} onSuccess={this.handleSuccess}></Loading>
