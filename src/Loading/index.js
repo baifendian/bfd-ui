@@ -36,12 +36,7 @@ export default React.createClass({
   handleSuccess(res) {
     if ('code' in res && 'data' in res) {
       if (res.code === 200) {
-        if (res.data && res.data.length) {
-          this.setState({xhr: 'success'})
-          this.props.onSuccess(res.data)
-        } else {
-          this.setState({xhr: 'noData'})    
-        }
+        this.props.onSuccess(res.data)
       } else {
         this.handleError(res.message)
       }
@@ -82,7 +77,6 @@ export default React.createClass({
             switch(this.state.xhr) {
               case 'loading': return '加载中...'
               case 'error':   return this.state.msg
-              case 'noData':  return '无数据'
             }
           })()}
         </div>
