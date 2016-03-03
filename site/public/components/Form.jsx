@@ -109,7 +109,7 @@ let Demo = React.createClass({
             </select>        
         </FormItem>         
 
-        <FormItem label="训练数据：" wrapperCol={{ span: 6 }} validate={validates[2]} handleValidate={this.isValidate} required>          
+        <FormItem label="字段设置：" wrapperCol={{ span: 6 }} validate={validates[2]} handleValidate={this.isValidate} required>          
           <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
             <Checkbox value="apple">苹果</Checkbox>
             <Checkbox value="mi">小米</Checkbox>
