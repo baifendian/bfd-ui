@@ -13,13 +13,13 @@ export default React.createClass({
     },
     handleClick(i, e ) {
         this.setState({currentIndex: i})
-        this.props.onChange("currentPage="+i+"&pageSize="+this.props.pageSize)
+        this.props.onChange("currentPage="+i+"&pageSize="+this.props.pageSize,i)
 
 
     },
     handleLaquoClick(){
         if(this.state.currentIndex>1){
-            this.props.onChange("currentPage="+(this.state.currentIndex-1)+"&pageSize="+this.props.pageSize)
+            this.props.onChange("currentPage="+(this.state.currentIndex-1)+"&pageSize="+this.props.pageSize,this.state.currentIndex-1)
             this.setState({currentIndex:this.state.currentIndex-1})
 
         }
@@ -28,7 +28,7 @@ export default React.createClass({
     handleRaquoClick(){
         let pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
         if(this.state.currentIndex < pageNum){
-            this.props.onChange("currentPage="+(this.state.currentIndex+1)+"&pageSize="+this.props.pageSize)
+            this.props.onChange("currentPage="+(this.state.currentIndex+1)+"&pageSize="+this.props.pageSize,this.state.currentIndex+1)
             this.setState({currentIndex:this.state.currentIndex+1})
 
         }

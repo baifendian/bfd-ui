@@ -78,48 +78,7 @@ pre
 
         render(<DataTable url="/data/table.json" column={column}  showRow={10} />, document.getElementById('demo'))
 #demo
-#paging
-h2 属性
-ul.api
-    +api({
-        name: 'operation',
-        type: 'object',
-        isRequired: true,
-        desc: '注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致'
-    })
-h2 属性
-ul.api
-    +api({
-        name: 'order',
-        type: 'boolean',
-        isRequired: false,
-        desc: '注：是否显示排序，true为显示排序。false为不显示排序'
-    })
-h2 属性
-ul.api
-    +api({
-        name: 'column',
-        type: 'object',
-        isRequired: true,
-        desc: '数据字段列配置，render 需要渲染的特定列'
-    })
-    pre
-        :highlight(lang='js')
-            {title:'操作',render(){
-                    return (<div className="icon">
-                             <span className="glyphicon glyphicon-search" ></span>
-                             <span className="glyphicon glyphicon-trash"></span>
-                             <span className="glyphicon glyphicon-edit"></span>
-                            </div>)
-                }
-h2 属性
-ul.api
-    +api({
-        name: 'showRow',
-        type: 'Integer',
-        isRequired: true,
-        desc: '每页需要显示的条数'
-    })
+
 h2 属性
 ul.api
     +api({
@@ -128,3 +87,40 @@ ul.api
         isRequired: true,
         desc: '要请求数据的服务端地址'
     })
+h2 属性
+ul.api
+    +api({
+        name: 'showRow',
+        type: 'Integer',
+        isRequired: true,
+        desc: '每页需要显示的条数'
+    })
+
+
+    pre
+        :highlight(lang='js')
+            {
+            title:'操作',render(){
+                    return (<div className="icon">
+                             <span className="glyphicon glyphicon-search" ></span>
+                             <span className="glyphicon glyphicon-trash"></span>
+                             <span className="glyphicon glyphicon-edit"></span>
+                            </div>)
+            }
+            //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
+
+              {
+              title: '体重',//列表标题
+               key: 'weight',//数据库字段名
+               order: true //是否排序 true为显示排序，false为不显示排序
+              }
+              //非数据操作字段
+              {
+              title:'操作',
+              key:'operation'
+              }
+              //operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+
+
+
+

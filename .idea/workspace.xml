@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2471e-2098-4ca2-8ce8-d38ffadec216" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/dataTable/main.less" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/dataTable/main.css" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/DataTable.jsx" afterPath="$PROJECT_DIR$/site/public/components/DataTable.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/data/table.json" afterPath="$PROJECT_DIR$/site/public/data/table.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/views/components/DataTable.jade" afterPath="$PROJECT_DIR$/site/views/components/DataTable.jade" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dataTable/datatable.jsx" afterPath="$PROJECT_DIR$/src/dataTable/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/paging/paging.jsx" afterPath="$PROJECT_DIR$/src/paging/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/views/components/LineChart.jade" afterPath="$PROJECT_DIR$/site/views/components/LineChart.jade" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dataTable/index.jsx" afterPath="$PROJECT_DIR$/src/dataTable/index.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/paging/index.jsx" afterPath="$PROJECT_DIR$/src/paging/index.jsx" />
     </list>
     <ignored path="bfd-ui.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,21 +29,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DataTable.jsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DataTable.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/site/public/components/DataTable.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataTable.jade" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/site/views/components/DataTable.jade">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.3529413">
-              <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.61538464">
+              <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -52,8 +42,8 @@
       <file leaf-file-name="LineChart.jade" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/site/views/components/LineChart.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.0">
-              <caret line="6" column="48" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="48" />
+            <state vertical-scroll-proportion="-9.1">
+              <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -73,20 +63,10 @@
         <entry file="file://$PROJECT_DIR$/src/Paging/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+              <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="table.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/site/public/data/table.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.31034482">
-              <caret line="277" column="1" selection-start-line="277" selection-start-column="1" selection-end-line="277" selection-end-column="1" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -94,8 +74,8 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DataTable/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+            <state vertical-scroll-proportion="-29.533333">
+              <caret line="109" column="78" selection-start-line="109" selection-start-column="78" selection-end-line="109" selection-end-column="78" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -103,21 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Chart.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Chart.js">
+      <file leaf-file-name="DataTable.jade" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/site/views/components/DataTable.jade">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="79" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="79" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.6666665">
-              <caret line="10" column="3" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
+            <state vertical-scroll-proportion="-80.666664">
+              <caret line="121" column="61" selection-start-line="121" selection-start-column="61" selection-end-line="121" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -154,14 +124,16 @@
         <option value="$PROJECT_DIR$/site/public/data/lineChart.json" />
         <option value="$PROJECT_DIR$/src/dataTable/test.js" />
         <option value="$PROJECT_DIR$/src/dataTable/main.css" />
-        <option value="$PROJECT_DIR$/site/public/data/table.json" />
         <option value="$PROJECT_DIR$/src/paging/paging.jsx" />
         <option value="$PROJECT_DIR$/site/public/app.jsx" />
         <option value="$PROJECT_DIR$/src/Loading/index.js" />
         <option value="$PROJECT_DIR$/src/dataTable/datatable.jsx" />
+        <option value="$PROJECT_DIR$/site/public/data/table.json" />
+        <option value="$PROJECT_DIR$/site/views/components/LineChart.jade" />
+        <option value="$PROJECT_DIR$/site/views/components/DataTable.jade" />
+        <option value="$PROJECT_DIR$/src/Paging/index.jsx" />
         <option value="$PROJECT_DIR$/src/DataTable/index.jsx" />
         <option value="$PROJECT_DIR$/site/public/components/DataTable.jsx" />
-        <option value="$PROJECT_DIR$/site/views/components/DataTable.jade" />
       </list>
     </option>
   </component>
@@ -361,7 +333,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
+              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -372,7 +344,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="D:/dev_soft/node_js/npm.cmd" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../joint" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
@@ -802,14 +774,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/site/public/data/table.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31034482">
-          <caret line="277" column="1" selection-start-line="277" selection-start-column="1" selection-end-line="277" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.6666665">
@@ -845,15 +809,31 @@
     <entry file="file://$PROJECT_DIR$/src/Chart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="79" selection-start-line="32" selection-start-column="7" selection-end-line="32" selection-end-column="79" />
+          <caret line="21" column="79" selection-start-line="21" selection-start-column="79" selection-end-line="21" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/site/public/data/table.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-33.344826">
+          <caret line="79" column="1" selection-start-line="79" selection-start-column="1" selection-end-line="79" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/site/views/components/DataTable.jade">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-80.666664">
+          <caret line="121" column="61" selection-start-line="121" selection-start-column="61" selection-end-line="121" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/site/views/components/LineChart.jade">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.0">
-          <caret line="6" column="48" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="48" />
+        <state vertical-scroll-proportion="-9.1">
+          <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -866,20 +846,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataTable/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Paging/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+          <caret line="15" column="80" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Paging/index.jsx">
+    <entry file="file://$PROJECT_DIR$/src/DataTable/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state vertical-scroll-proportion="-29.533333">
+          <caret line="109" column="78" selection-start-line="109" selection-start-column="78" selection-end-line="109" selection-end-column="78" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -888,16 +868,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/site/public/components/DataTable.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/site/views/components/DataTable.jade">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.3529413">
-          <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.61538464">
+          <caret line="80" column="54" selection-start-line="80" selection-start-column="54" selection-end-line="80" selection-end-column="54" />
           <folding />
         </state>
       </provider>

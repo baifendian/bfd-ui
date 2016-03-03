@@ -12,7 +12,7 @@ export default class {
   constructor(config) {   
 
     const padding = [20, 100, 30, 10];
-    console.log(config)
+    
     const {
       container, data, name, animation, radius, tooltip
     } = config
