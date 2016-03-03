@@ -1,7 +1,7 @@
 import './main.less'
 import Form from './Form.jsx';
-import FormGroup from './FormGroup.jsx';
+import FormItem from './FormItem.jsx';
 
-Form.Group = FormGroup;
+Form.Item = FormItem;
 Form.Form = Form;
 export default Form;
