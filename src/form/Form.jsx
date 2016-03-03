@@ -31,8 +31,4 @@ Form.defaultProps = {
   prefixCls: 'form',
 };
 
-Form.childContextTypes = {
-  form: React.PropTypes.object,
-};
-
 module.exports = Form;
