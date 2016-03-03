@@ -36,6 +36,7 @@ export default React.createClass({
   handleSuccess(res) {
     if ('code' in res && 'data' in res) {
       if (res.code === 200) {
+        this.setState({xhr: 'success'})
         this.props.onSuccess(res.data)
       } else {
         this.handleError(res.message)
