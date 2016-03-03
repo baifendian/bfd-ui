@@ -6,7 +6,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
-import Nav from 'c/nav/index.jsx'
+import { Nav, NavItem } from 'c/nav/index.jsx'
 import model from './model'
 import Pre from './pre.jsx'
 import Integration from './integration.jsx'
@@ -30,17 +30,17 @@ const App = React.createClass({
         <div id="body">
           <div className="sidebar" id="sidebar">
             <Nav>
-              <Nav.Item href="/" icon="home" title="首页"/>
-              <Nav.Item href="/bootstrap" icon="bold" title="Bootstrap"/>
-              <Nav.Item href="/plan" icon="calendar" title="计划"/>
-              <Nav.Item href="/integration" icon="hand-right" title="完整项目实例"/>
-              <Nav.Item href="/components" icon="th" title="组件">
+              <NavItem href="/" icon="home" title="首页"/>
+              <NavItem href="/bootstrap" icon="bold" title="Bootstrap"/>
+              <NavItem href="/plan" icon="calendar" title="计划"/>
+              <NavItem href="/integration" icon="hand-right" title="完整项目实例"/>
+              <NavItem href="/components" icon="th" title="组件">
                 <Nav>
                   {this.state.components.map(component => {
-                    return <Nav.Item key={component.name} href={'/components/' + component.name} title={component.cn}/>
+                    return <NavItem key={component.name} href={'/components/' + component.name} title={component.cn}/>
                   })}
                 </Nav>
-              </Nav.Item>
+              </NavItem>
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
@@ -57,6 +57,7 @@ const Components = React.createClass({
   },
 
   renderComponent() {
+    scroll(0, 0)
     let { component } = this.props.params
     let { pathname } = this.props.location
     model.fetch(`/getTemplate?path=${pathname}`).then((res) => {

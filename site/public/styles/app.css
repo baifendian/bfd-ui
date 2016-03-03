@@ -15,7 +15,8 @@
 }
 #body > .content {
   overflow: hidden;
-  padding: 0 20px;
+  padding: 20px;
+  width: 740px;
 }
 #body > .content > div {
   -webkit-animation: in .5s;
@@ -39,7 +40,6 @@ pre {
   font-size: 12px;
   white-space: pre-wrap;
   padding: 1rem;
-  max-width: 700px;
 }
 pre .kwd {
   color: #8959a8;

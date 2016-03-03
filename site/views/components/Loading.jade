@@ -36,11 +36,8 @@ pre
               </select>
             </div>
             <div className="panel-body">
-              <Loading url={this.state.url} onSuccess={this.handleSuccess}>
-                <div>
-                  {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
-                </div>
-              </Loading>
+              <Loading url={this.state.url} onSuccess={this.handleSuccess}></Loading>
+              {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
             </div>
           </div>
         )

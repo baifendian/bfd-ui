@@ -4,7 +4,7 @@ import Loading from './Loading'
 export default React.createClass({
 
   renderChart(data) {
-    this.config = {container: this.refs.container, ...this.props, data}
+    this.config = {container: this.refs.chart, ...this.props, data}
     new this.props.type(this.config)
   },
 
@@ -12,18 +12,16 @@ export default React.createClass({
     this.renderChart(res)
   },
 
-  handleLoading() {
-    if (this.refs.container) {
-      // 非虚拟DOM手动清除
-      this.refs.container.innerHTML = null
-    }
+  componentDidMount() {
+    this.refs.container.style.height = this.refs.chart.style.height = '100%'
   },
 
   render() {
     return (
-      <Loading url={this.props.url} onSuccess={this.handleSuccess} onLoading={this.handleLoading}>
-        <div ref="container" className={this.props.className}></div>
-      </Loading>
+      <div ref="container">
+        <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading>
+        <div ref="chart" className={this.props.className}></div>
+      </div>
     )
   }
 })

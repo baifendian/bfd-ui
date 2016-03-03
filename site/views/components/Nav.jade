@@ -8,7 +8,7 @@ pre
   :highlight(lang='js')
     import { Router, Route, IndexRoute } from 'react-router'
     import { createHistory } from 'history'
-    import Nav from 'bfd-ui/lib/nav'
+    import { Nav, NavItem } from 'bfd-ui/lib/nav'
 
     const App = React.createClass({
 
@@ -16,13 +16,13 @@ pre
         return (
           <div>
             <Nav>
-              <Nav.Item href="/" icon="home" title="首页"/>
-              <Nav.Item href="/applications" icon="bold" title="应用">
+              <NavItem href="/" icon="home" title="首页"/>
+              <NavItem href="/applications" icon="bold" title="应用">
                 <Nav>
-                  <Nav.Item href="/applications/oa" title="办公OA"/>
-                  <Nav.Item href="/applications/email" title="邮箱"/>
+                  <NavItem href="/applications/oa" title="办公OA"/>
+                  <NavItem href="/applications/email" title="邮箱"/>
                 </Nav>
-              </Nav.Item>
+              </NavItem>
             </Nav>
             <div className="content">{this.props.children}</div>
           </div>
