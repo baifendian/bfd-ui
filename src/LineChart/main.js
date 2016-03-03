@@ -205,7 +205,7 @@ export default class {
 
     const tooltipElement = d3.select(container)
       .append('div')
-      .attr('class', 'bcharts-tooltip')
+      .attr('class', 'tooltip')
       .style({
         position: 'absolute',
         left: 0,
