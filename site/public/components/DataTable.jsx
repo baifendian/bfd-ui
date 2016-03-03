@@ -81,6 +81,6 @@ export default () =>{
   render(<DataTable url="/data/table.json" pageSize={8}
                     column={column}/>,document.getElementById('demo'))
 
-  
+
 }
 
