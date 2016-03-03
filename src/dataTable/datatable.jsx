@@ -79,8 +79,8 @@ export default React.createClass( {
       }
 
       return (
-        <Loading url={url} onSuccess={this.handleSuccess} onLoading={this.handleLoading}>
            <div>
+              <Loading url={url} onSuccess={this.handleSuccess}></Loading>
               <div className="demo noborder">
                  <table className="table">
                     <thead>
@@ -122,7 +122,6 @@ export default React.createClass( {
 
               </div>
            </div>
-        </Loading>
       )
    }
 } )

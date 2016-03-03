@@ -15,6 +15,7 @@ export default option => {
       } else {
         option.error && option.error(xhr.statusText)
       }
+      option.complete && option.complete()
     }
   }
 

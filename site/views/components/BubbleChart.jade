@@ -2,45 +2,58 @@ include ../includes/api.jade
 
 h1 气泡图
 
-#demo.demo
+pre
+  :highlight(lang='js')
+    import BubbleChart from 'bfd-ui/src/bubbleChart'
+
+    ReactDom.render(<BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />, mountNode)
+
+#demo.demo(style="height:300px")
 
 h2 属性
 
 ul.api
+  
+  +api({
+    name: 'url',
+    type: 'string',
+    isRequired: true,
+    desc: '数据源，返回格式参考：'
+  })
+    pre
+      :highlight(lang='js')
+        {
+          "code": 200,
+          "data": [{
+            "x": 234,
+            "name": "苹果"
+          }, {
+            "x": 499,
+            "name": "华为"
+          }]
+        }
+
   +api({
     name: 'radiusMaker',
     type: 'string',
     isRequired: true,
-    desc: '决定气泡大小的数据纬度'
+    desc: '决定气泡大小的数据字段名'
+  })
+
+  +api({
+    name: 'name',
+    type: 'string',
+    desc: '名称字段名，文字第一行'
+  })
+
+  +api({
+    name: 'value',
+    type: 'object',
+    desc: '值配置，文字第二行'
   })
     pre
       :highlight(lang='js')
-        var a = 1
-
-  +api({
-    name: 'content',
-    type: 'string',
-    desc: '气泡文字内容'
-  })
-
-  +api({
-    name: 'color',
-    type: 'string',
-    desc: '颜色值'
-  })
-
-  +api({
-    name: 'data',
-    type: 'array',
-    desc: '二维格式数据'
-  })
-  pre
-    :highlight(lang='js')
-      [{
-        users: 234,
-        name: 'A',
-      }, {
-        users: 499,
-        name: 'B'
-      }]
-  
+        {
+          key: 'x', // 必填，值字段名
+          format: '.2%' // 可选，格式化配置
+        }

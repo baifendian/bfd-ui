@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Modal from 'c/modal/index.jsx'
+import { Modal, ModalHeader, ModalBody } from 'c/modal/index.jsx'
 
 const App = React.createClass({
 
@@ -23,12 +23,12 @@ const App = React.createClass({
       <div>
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
         <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
-          <Modal.Header onClose={this.handleClose}>
+          <ModalHeader>
             <h4 className="modal-title">test</h4>
-          </Modal.Header>
-          <Modal.Body>
+          </ModalHeader>
+          <ModalBody>
             dadasd
-          </Modal.Body>
+          </ModalBody>
         </Modal>
       </div>
     )

@@ -1,5 +1,5 @@
 import d3 from 'd3'
-import drawPie from './drawPie'
+import repeatPie from './pie'
 import assembleTooltip from './assembleTooltip'
 
 
@@ -41,7 +41,7 @@ export default env => {
       env.svg.select('.pie-lines').selectAll('polyline').remove();   
       
       //draw pie repeat
-      drawPie(env,false);
+      repeatPie(env,false);
       //add tooltip
       assembleTooltip(env,false);     
 
