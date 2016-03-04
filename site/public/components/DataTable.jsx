@@ -3,6 +3,9 @@ import { render } from 'react-dom'
 import DataTable from 'c/DataTable/index.jsx'
 import Paging from 'c/Paging/index.jsx'
 const column = [{
+  title:'序号',
+  key:'sequence'
+  },{
   title: '姓名',
   order: true,
   render(text,i){
@@ -75,6 +78,9 @@ const column = [{
 ]
 export default () =>{
   //加载数据列表
-  render(<DataTable url="http://localhost:8081/getStudentList" pageSize={6}
+  render(<DataTable url="/data/table.json" pageSize={8}
                     column={column}/>,document.getElementById('demo'))
+
+
 }
+

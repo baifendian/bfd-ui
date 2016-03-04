@@ -15,12 +15,14 @@ export default React.createClass( {
          items: {
             totalList: [] ,
             totalPageNum: 0 ,
-            currentPage: 1,
-            refresh: false
-         }
+            refresh: false,
+
+         },
+         currentPage: 1
+
       }
    } ,
-   onChange: function (params) {
+   onChange: function (params,currentPage) {
       let url_ = this.props.url
 
       if(url_.indexOf('?')>-1){
@@ -28,7 +30,8 @@ export default React.createClass( {
       }else{
          url_+="?"+params
       }
-     this.setState({url:url_});
+      this.setState({currentPage:currentPage})
+      this.setState({url:url_});
    } ,
    orderClick:function(column,i){
       if(column.order){
@@ -67,12 +70,13 @@ export default React.createClass( {
       let column = this.props.column
       let items = this.state.items.totalList;
       let totalPageNum = this.state.items.totalPageNum ,
-        currentPage = this.state.items.currentPage,
-        _this = this
-      let url = this.state.url
+        currentPage = this.state.currentPage,
+        _this = this,
+        url = this.state.url,
+        pageSize = parseInt(this.props.pageSize);
       if(url.indexOf('?')<0 && url.indexOf('pageSize')<0){
 
-            url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.items.currentPage
+            url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.currentPage
       }else{
 
       }
@@ -80,7 +84,6 @@ export default React.createClass( {
       return (
            <div>
               <Loading url={url} onSuccess={this.handleSuccess}></Loading>
-              <div className="demo noborder">
                  <table className="table">
                     <thead>
                     <tr>{
@@ -95,6 +98,10 @@ export default React.createClass( {
                         return (<tr key={j}>{
                           column.map(function(columns,i){
                             for(let col in columns){
+                              if(columns[col] === 'sequence'){
+                                return <td key={String(i)+j}>{((currentPage-1)*pageSize)+(j+1)}</td>
+                                }
+
                               if(columns[col]=='operation'){
                                 return <td key={String(i)+j}>{columns['render'](item,_this)}</td>
                                 }else{
@@ -114,11 +121,9 @@ export default React.createClass( {
                       }
                     </tbody>
                  </table>
-              </div>
               <div id="paging">
                  <Paging currentPage={currentPage} totalPageNum={totalPageNum} pageSize={this.props.pageSize}
                          onChange={this.onChange}></Paging>
-
               </div>
            </div>
       )
