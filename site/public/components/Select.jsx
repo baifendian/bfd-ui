@@ -4,7 +4,6 @@ import { render } from 'react-dom'
 import { Select ,Option} from 'c/select/index.jsx'
 
 
-
 const App = React.createClass({
 
   getInitialState() {
@@ -19,7 +18,6 @@ const App = React.createClass({
         selected: select
       });
     },
-
   render() {
     return (
       <div className="row">
@@ -34,7 +32,7 @@ const App = React.createClass({
       </div>
     )
   }
-
+  
 });
 
 

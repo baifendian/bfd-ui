@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import {LinkedStateMixin} from 'react-addons'
 import Form from 'c/form/index.jsx'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
+import { Select ,Option} from 'c/select/index.jsx'
 
 const FormItem = Form.Item;
 let validateDemo;
@@ -45,6 +46,9 @@ let Demo = React.createClass({
     this.setState({
       selects
     });
+  },
+  trainChange(selected,text){
+    this.setState({ train:selected });
   },
   render() {    
     validateDemo = [];
@@ -103,11 +107,12 @@ let Demo = React.createClass({
           </FormItem>
 
           <FormItem label="训练数据：" required>
-            <select className="form-control"  valueLink={this.linkState('train')}>
-              <option value="0">--请选择数据所在路径--</option>
-              <option value="1">test1</option>
-              <option value="2">test2</option>
-            </select>
+            <Select selected={this.state.train} onChange={this.trainChange}>
+              <Option value="0">aaa</Option>
+              <Option value="1">bbb</Option>
+              <Option value="2">ccc</Option>
+              <Option value="3">ddd</Option>
+            </Select>
           </FormItem>
 
           <FormItem label="字段设置：" validate={validates[2]} handle={this.handleValidate} required>

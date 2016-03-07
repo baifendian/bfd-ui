@@ -5,42 +5,41 @@ import classNames from 'classnames';
 
 const Select = React.createClass({ 
 
+	childContextTypes: {
+		getSelected: PropTypes.func,
+		setSelected: PropTypes.func
+	},
+
 	getInitialState() {
-			return {
-				ishide: {
-					display: 'none'
-				}
+		return {
+			ishide: {display: 'none'},
+			flag:false
+		}
+	},	
+
+	getChildContext() {
+		return {
+			getSelected: () => this.props.selected,
+			setSelected: (value, text) => {
+				this.props.onChange(value, text);
 			}
-		},
+		}
+	},
 
-		childContextTypes: {
-			getSelected: PropTypes.func,
-			setSelected: PropTypes.func
-		},
+	componentDidMount() {
+		window.addEventListener('click', this.windowClick);
+	},
+	
+	windowClick(e) {			
+		if (!this.state.flag && this.state.ishide.display == 'block') this.setState({ ishide: { display: 'none' } });			
+		this.setState({	flag: false	});
+	},
 
-		getChildContext() {
-			return {
-				getSelected: () => this.props.selected,
-				setSelected: (value, text) => {
-					this.props.onChange(value, text);
-				}
-			}
-		},
-
-		handleClick() {
-			const o = this.state.ishide;
-			o.display == 'none' ?
-				this.setState({
-					ishide: {
-						display: 'block'
-					}
-				}) :
-				this.setState({
-					ishide: {
-						display: 'none'
-					}
-				});
-		},
+	handleClick(e) {
+		const o = this.state.ishide;
+		o.display == 'none' ? this.setState({ ishide: { display: 'block' }}) : this.setState({ishide: {display: 'none'}});	
+		this.setState({flag:true});		
+	},
 
 	render() {	
 
@@ -51,7 +50,7 @@ const Select = React.createClass({
 				sText = item.props.children;
 			}
 		});
-		
+
 		return (
 			<div className="bfd-dropdown dropdown" onClick={this.handleClick}>
 			  <div>
@@ -65,8 +64,7 @@ const Select = React.createClass({
 		);
 	}  
 
-})
-
+});
 
 const Option = React.createClass({ 
 
