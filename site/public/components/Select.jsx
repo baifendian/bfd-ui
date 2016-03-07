@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Select ,Option} from 'c/select/index.jsx'
+import { Select ,Option} from 'c/Select/index.jsx'
 
 
 const App = React.createClass({
@@ -18,7 +18,7 @@ const App = React.createClass({
         selected: select
       });
     },
-    
+
   render() {
     return (
       <div className="row">

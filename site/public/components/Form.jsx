@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import {LinkedStateMixin} from 'react-addons'
-import Form from 'c/form/index.jsx'
+import Form from 'c/Form/index.jsx'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
-import { Select ,Option} from 'c/select/index.jsx'
+import { Select ,Option} from 'c/Select/index.jsx'
 
 const FormItem = Form.Item;
 let validateDemo;
