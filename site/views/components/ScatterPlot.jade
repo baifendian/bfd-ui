@@ -6,7 +6,7 @@ pre
   :highlight(lang='js')
     import ScatterPlot from 'bfd-ui/lib/scatterPlot'
 
-    ReactDom.render(<ScatterPlot cols={cols} data={data}></ScatterPlot>, mountNode)
+    ReactDom.render(<ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />, mountNode)
 
 #demo.demo
 
@@ -32,23 +32,6 @@ ul.api
     isRequired: true,
     desc: 'x轴字段名'
   })
-
-  +api({
-    name: 'data',
-    type: 'array',
-    desc: '二维格式数据'
-  })
-    pre
-      :highlight(lang='js')
-        [{
-          users: 234,
-          sales: 55,
-          date: '01-01'
-        }, {
-          users: 499,
-          sales: 122,
-          date: '01-02'
-        }]
 
   +api({
     name: 'yAxis',
