@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node bin/copy.js && babel lib -d lib",
-    "start": "node-dev site/server.js"
+    "start": "node-dev site/server.js",
+    "online": "cd site && webpack && node server.js -p&"
   },
   "author": "",
   "license": "ISC",
