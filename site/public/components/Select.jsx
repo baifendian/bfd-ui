@@ -7,8 +7,8 @@ import { Select ,Option} from 'c/select/index.jsx'
 const App = React.createClass({
 
   getInitialState() {
-      return {
-        selected: 3
+    return {
+      selected: 3
       }
     },
 
@@ -18,6 +18,7 @@ const App = React.createClass({
         selected: select
       });
     },
+    
   render() {
     return (
       <div className="row">
@@ -34,7 +35,6 @@ const App = React.createClass({
   }
   
 });
-
 
 export default () => {
   render (
