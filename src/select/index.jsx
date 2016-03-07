@@ -5,7 +5,6 @@ import classNames from 'classnames';
 
 const Select = React.createClass({ 
 
-
 	childContextTypes: {
 		getSelected: PropTypes.func,
 		setSelected: PropTypes.func
@@ -27,11 +26,11 @@ const Select = React.createClass({
 		}
 	},
 
-	componentDidMount: function() {
+	componentDidMount() {
 		window.addEventListener('click', this.windowClick);
 	},
 	
-	windowClick: function(e) {			
+	windowClick(e) {			
 		if (!this.state.flag && this.state.ishide.display == 'block') this.setState({ ishide: { display: 'none' } });			
 		this.setState({	flag: false	});
 	},
