@@ -5,6 +5,6 @@ import './main.less'
 
 export default React.createClass({
   render() {
-    return <Chart type={LineChart} className="line-chart" {...this.props}/>
+    return <Chart type={LineChart} className="bfd-line-chart" {...this.props}/>
   }
 })

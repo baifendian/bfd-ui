@@ -49,6 +49,11 @@ $ npm start`}</Pre>
 
         <p>到此为止，前端环境配置完成，戳 <a href="http://localhost:9000" target="_blabk">http://localhost:9000</a></p>
 
+        <p>如果有多个项目或者 9000 端口已经被使用，可指定端口，如 4001</p>
+
+        <Pre lang="shell">{
+`$ npm start -p 4001`}</Pre>
+
         <p><b>开发阶段注意事项：</b></p>
 
         <p>1、不直接修改 index.html，请在 index.tpl 中修改，以便生成不同服务器环境下的模板文件</p>

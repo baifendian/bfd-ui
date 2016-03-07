@@ -38,9 +38,6 @@ export default class {
     const width = container.clientWidth - padding[3] - padding[1]
     const height = (container.clientHeight || width * .5) - padding[0] - padding[2]
 
-    // x轴两边边距大小
-    const xAxisPaddingScale = 0.2
-
     const svg = d3.select(container)
       .html('')
       .append('svg')
@@ -72,13 +69,13 @@ export default class {
     /**
      * 绘制坐标轴
      */
+    const xAxisPaddingScale = 20 / (width / categories.length)
     const xScale = d3.scale.ordinal()
       .rangePoints([0, width], xAxisPaddingScale)
       .domain(categories)
 
     const yScale = d3.scale.linear()
       .range([height, 0])
-      .nice()
       .domain(this.getDomain(series))
 
     const xAxis = d3.svg.axis().scale(xScale)
@@ -205,7 +202,7 @@ export default class {
 
     const tooltipElement = d3.select(container)
       .append('div')
-      .attr('class', 'bcharts-tooltip')
+      .attr('class', 'tooltip')
       .style({
         position: 'absolute',
         left: 0,

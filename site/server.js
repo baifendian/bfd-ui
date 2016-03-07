@@ -17,8 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
+var isProduction = process.argv.slice(2)[0] === '-p'
 
-if (app.get('env') !== 'production') {
+if (!isProduction) {
   var webpack = require('webpack')
   var webpackDevMiddleware = require('webpack-dev-middleware')
   var WebpackConfig = require('./webpack.config')
