@@ -47,6 +47,7 @@ let Demo = React.createClass({
     });
   },
   render() {    
+    validateDemo = [];
     const validates = [{
       validateVal: this.state.task,
       required: '请填写任务名称',
@@ -87,7 +88,7 @@ let Demo = React.createClass({
         return s;
       }
     }];
-    validateDemo = [];
+   
 
     return (
       

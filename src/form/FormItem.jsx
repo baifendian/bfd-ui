@@ -43,7 +43,7 @@ class FormItem extends React.Component {
       if (validate) return;
       return (
         <div className={cname} key="error">
-          <span className="form-control bfd-error">{error}</span>
+          <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
     }
