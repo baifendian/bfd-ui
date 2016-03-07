@@ -12,8 +12,8 @@ export default React.createClass({
         
         <p>构建器基于 <a href="http://yeoman.io/" target="_blabk">yeoman</a> 平台，如果本地没有全局安装，请先安装</p>
         
-        <Pre lang="shell">{
-`# 安装yoeman构建平台
+        <Pre lang="sh">{
+`# 安装yeoman构建平台
 $ npm install -g yo
 
 # 安装百分点项目构建器
@@ -26,11 +26,18 @@ $ npm install -g generator-bfd`}</Pre>
 
 $ yo bfd myapp`}</Pre>
 
+        <p>如果不定义项目名，则在当前文件夹下生成</p>
+        
+        <Pre>{
+`$ cd myapp
+
+$ yo bfd`}</Pre>
+
         <p>注意：生成后会自动安装 npm 依赖</p>
 
         <p>文件结构介绍：</p>
 
-        <Pre>{
+        <pre>{
 `myapp
   |-- components/        各个页面组件
   |-- data/              模拟数据，接口 URL 定义为 /data/xxx.json  
@@ -38,11 +45,11 @@ $ yo bfd myapp`}</Pre>
   |-- app.jsx            入口文件，包含 App 组件及前端路由的定义
   |-- index.tpl          HTML 入口，采用模版形式的原因是可以动态生成不同后端语言下的模版
   |-- server.js          开发阶段服务环境，并处理 webpack 编译服务</Pre>
-  |-- webpack.config.js  编译、打包配置`}</Pre>
+  |-- webpack.config.js  编译、打包配置`}</pre>
 
         <h1>2、开发</h1>
 
-        <Pre lang="shell">{
+        <Pre lang="sh">{
 `$ cd myapp
 
 $ npm start`}</Pre>
@@ -51,7 +58,7 @@ $ npm start`}</Pre>
 
         <p>如果有多个项目或者 9000 端口已经被使用，可指定端口，如 4001</p>
 
-        <Pre lang="shell">{
+        <Pre lang="sh">{
 `$ npm start -p 4001`}</Pre>
 
         <p><b>开发阶段注意事项：</b></p>
@@ -64,7 +71,7 @@ $ npm start`}</Pre>
 
         <h3>3.1、生成线上代码</h3>
 
-        <Pre lang="shell">{
+        <Pre lang="sh">{
 `$ cd myapp
 
 $ npm run build`}</Pre>
@@ -90,7 +97,7 @@ $ npm run build`}</Pre>
   <url-pattern>正则，用于拦截数据接口请求，eg：*.do</url-pattern> 
 </servlet-mapping>`}</Pre>
         <h5>3.2.2、配置单页面功能，除数据接口外，所有 URL 均渲染 index.jsp。修改 web.xml，增加 servlet 节点并新增 DispatcherServlet</h5>
-        <Pre lang="java">{
+        <Pre lang="markup">{
 `<servlet> 
   <servlet-name>webDispatcher</servlet-name> 
   <servlet-class>com.bfd.servlet.DispatcherServlet</servlet-class> 
