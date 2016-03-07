@@ -4,15 +4,10 @@ import classNames from 'classnames';
 class FormItem extends React.Component {
  
   renderLabel() {
-    const props = this.props;
-    let _offset = '';
-    const required = props.required === undefined ? false : true;
-    const labelSpan = props.labelCol && props.labelCol.span ? `col-md-${props.labelCol.span}` : 'col-md-2';
-    if (props.labelCol && props.labelCol.offset) _offset = `col-md-offset-${props.labelCol.offset}`;
-    const className = classNames({
-      [labelSpan]: true,
-      [`control-label`]: true,
-      [_offset]:props.labelCol && props.labelCol.offset,
+    const props = this.props;    
+    const required = props.required === undefined ? false : true;     
+    const className = classNames({      
+      [`col-md-3 control-label`]: true,    
       [`bfd-${props.prefixCls}-group-required`]: required,
     });
     return props.label ? (
@@ -23,13 +18,10 @@ class FormItem extends React.Component {
   }
 
   renderWrapper(children){
-    const props = this.props;
-    let _offset = '';
-    const wrapperSpan = props.wrapperCol && props.wrapperCol.span ? `col-md-${props.wrapperCol.span}` : 'col-md-10';
-    if (props.wrapperCol && props.wrapperCol.offset) _offset = `col-md-offset-${props.wrapperCol.offset}`;
+    const props = this.props;    
     const className = classNames({
-      [wrapperSpan]: true,
-      [_offset]:props.wrapperCol && props.wrapperCol.offset
+      ['col-md-5']: true,
+      [`col-md-offset-3`]:!!props.submit
     });
     return (
       <div className={className} key="wrapper">
@@ -43,15 +35,15 @@ class FormItem extends React.Component {
     const props = this.props;       
     props.required ? validate = false : validate = true;
     if(props.validate){
-      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-2';
+      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
       let error;
       error = props.validate.handle();
       error == 'success' ? validate = true : validate = false;      
-      props.handleValidate(validate);
+      props.handle(validate);
       if (validate) return;
       return (
         <div className={cname} key="error">
-          <span className="form-control bfd-error">{error}</span>
+          <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
     }

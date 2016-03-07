@@ -7,7 +7,7 @@ pre
         const column = [{
           title:'序号',
           key:'sequence'
-        },{
+        }, {
           title: '姓名',
           order: true,
           render(text, i) {
@@ -77,19 +77,24 @@ ul.api
     pre
         :highlight(lang='js')
             {
-            title:'操作',render(){
-                    return (<div className="icon">
-                             <span className="glyphicon glyphicon-search" ></span>
-                             <span className="glyphicon glyphicon-trash"></span>
-                             <span className="glyphicon glyphicon-edit"></span>
-                            </div>)
-            }
-            //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
+              title:'操作',
+              render(){
+                return (<div className="icon">
+                         <span className="glyphicon glyphicon-search" ></span>
+                         <span className="glyphicon glyphicon-trash"></span>
+                         <span className="glyphicon glyphicon-edit"></span>
+                        </div>)
+              }
+              //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
 
               {
               title: '体重',//列表标题
                key: 'weight',//数据库字段名
                order: true //是否排序 true为显示排序，false为不显示排序
+              }
+              {
+              title:'序号',
+              key:'sequence'//用于标记显示序号
               }
               //非数据操作字段
               {

@@ -84,7 +84,6 @@ export default React.createClass( {
       return (
            <div>
               <Loading url={url} onSuccess={this.handleSuccess}></Loading>
-              <div className="demo noborder">
                  <table className="table">
                     <thead>
                     <tr>{
@@ -122,11 +121,9 @@ export default React.createClass( {
                       }
                     </tbody>
                  </table>
-              </div>
               <div id="paging">
                  <Paging currentPage={currentPage} totalPageNum={totalPageNum} pageSize={this.props.pageSize}
                          onChange={this.onChange}></Paging>
-
               </div>
            </div>
       )

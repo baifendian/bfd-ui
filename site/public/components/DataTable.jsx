@@ -53,6 +53,7 @@ const column = [{
 }]
 export default () =>{
   //加载数据列表
-  render(<DataTable url="/data/table.json" pageSize={8} column={column}/>, document.getElementById('demo'))
+  render(<DataTable url="/data/table.json" pageSize={8}
+                    column={column}/>,document.getElementById('demo'))
 }
 
