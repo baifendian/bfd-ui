@@ -19,7 +19,7 @@ pre
       render() {
         return (
           <div className="col-md-6">
-            <Select selected={this.state.selected} onChange={this.handleChange}>
+            <Select selected={this.state.selected} onChange={this.handleChange} multiple>
                <Option value="0">aaa</Option>
                <Option value="1">bbb</Option>
                <Option value="2">ccc</Option>
@@ -51,6 +51,12 @@ ul.api
     name: 'onChange',
     type: 'function',
     desc: '选择后的回调'
+  })
+
+  +api({
+    name: 'multiple',
+    type: 'boolean',
+    desc: 'true表示可以多选，flase表示单选。默认为单选。'
   })
 
 h2 Option 属性

@@ -13,17 +13,46 @@ const Select = React.createClass({
 	getInitialState() {
 		return {
 			ishide: {display: 'none'},
-			flag:false
+			flag:false,
+			arr:this.props.selected
 		}
 	},	
 
 	getChildContext() {
-		return {
-			getSelected: () => this.props.selected,
-			setSelected: (value, text) => {
-				this.props.onChange(value, text);
+			return {
+				getSelected: () => this.props.selected,
+				setSelected: (value, text) => {
+					if (this.props.multiple) {
+						let _arr = this.state.arr;						
+						this.isInArray(value, _arr) ? _arr = this.removeObjInArr(value,_arr) :  _arr.push(value);
+						this.setState({	arr: _arr });
+						this.props.onChange(_arr);
+					} else {
+						this.props.onChange(value);
+					}
+				}
 			}
+		},
+
+	isInArray(obj, arr) {
+		var flag = false;
+		arr.map(function(item, i) {
+			if (item == obj) {
+				flag = true;
+			}
+		})
+		return flag;
+	},
+
+	removeObjInArr(obj,arr){
+		let _arr=[];
+		for(var k in arr){
+			if(obj == arr[k]){
+				continue;
+			}
+			_arr.push(arr[k]);
 		}
+		return _arr;
 	},
 
 	componentDidMount() {
@@ -43,18 +72,24 @@ const Select = React.createClass({
 
 	render() {	
 
-		let sText;
-		const { children,selected} = this.props;
-		children.map(function(item,i){			
-			if(selected == item.props.value){
-				sText = item.props.children;
-			}
-		});
+		let sText = [];
+		const { children,selected} = this.props;		
+		this.props.multiple ?
+			children.map(function(item, i) {
+				selected.map(function(_item, _i) {
+					if (item.props.value == _item) sText.push(item.props.children);
+				})
+			}) :
+			children.map(function(item, i) {
+				if (selected == item.props.value) {
+					sText.push(item.props.children);
+				}
+			});
 
 		return (
 			<div className="bfd-dropdown dropdown" onClick={this.handleClick}>
 			  <div>
-			     {sText}
+			     {sText.join(',')}
 			    <span className="caret bfd-caret"></span>
 			  </div>
 			  <ul className="dropdown-menu bfd-menu" style={this.state.ishide}>
@@ -73,11 +108,24 @@ const Option = React.createClass({
 		setSelected: PropTypes.func
 	},
 
-	render(){		
-
-		const {	children, value, ...other } = this.props;
-		const className = classNames({
-			'active': this.context.getSelected() == value
+	render(){	
+		
+		let className;
+		const {	children, value, ...other } = this.props;    	
+    	const selected = this.context.getSelected();
+		
+		(this.context.getSelected() instanceof Array) ?
+		className = classNames({
+			'active': (function() {
+				let f = false;
+				selected.map(function(item) {
+					if (item == value) f = true;
+				})
+				return f;
+			})()
+		}):
+		className = classNames({
+			'active': selected == value
 		});
 
 		other.onClick = e => {
