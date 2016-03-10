@@ -18,11 +18,13 @@ class FormItem extends React.Component {
   }
 
   renderWrapper(children){
+
     const props = this.props;    
     const className = classNames({
       ['col-md-5']: true,
       [`col-md-offset-3`]:!!props.submit
     });
+
     return (
       <div className={className} key="wrapper">
         {children}
@@ -31,21 +33,28 @@ class FormItem extends React.Component {
   }
 
   renderError(){
+
     let validate;
-    const props = this.props;       
+    const props = this.props;   
+
     props.required ? validate = false : validate = true;
+
     if(props.validate){
+
       const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
       let error;
       error = props.validate.handle();
-      error == 'success' ? validate = true : validate = false;      
-      props.handle(validate);
-      if (validate) return;
+      error == 'success' ? validate = true : validate = false;       
+      this.context.setValidate(validate);     
+
+      if (validate || !this.context.submitStatu()) return;
+      
       return (
-        <div className={cname} key="error">
+        <div className={cname} key="error" ref="bfdErr">
           <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
+
     }
   }
 
@@ -86,6 +95,11 @@ FormItem.propTypes = {
   label: React.PropTypes.string,
   labelCol: React.PropTypes.object, 
   className: React.PropTypes.string
+};
+
+FormItem.contextTypes = {
+  setValidate: React.PropTypes.func,
+  submitStatu: React.PropTypes.func
 };
 
 FormItem.defaultProps = {  

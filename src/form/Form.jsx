@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { PropTypes } from 'react'
 import classNames from 'classnames';
 
-class Form extends React.Component {  
+class Form extends React.Component { 
+
+  getChildContext() {
+    return {   
+      submitStatu: () => {
+        
+        return this.props.sibmitStatus
+      },  
+      setValidate: (flag) => {         
+       this.props.isSuccess(flag);      
+      }
+    }
+  }  
 
   render() {
+
     const { prefixCls, className } = this.props;
     const formClassName = classNames({
       [className]: !!className,
@@ -17,6 +30,7 @@ class Form extends React.Component {
       </form>
     );
   }
+  
 }
 
 Form.propTypes = {
@@ -25,6 +39,11 @@ Form.propTypes = {
   inline: React.PropTypes.bool, 
   children: React.PropTypes.any,
   onSubmit: React.PropTypes.func,
+};
+
+Form.childContextTypes = {  
+  setValidate: React.PropTypes.func,
+  submitStatu: React.PropTypes.func
 };
 
 Form.defaultProps = {
