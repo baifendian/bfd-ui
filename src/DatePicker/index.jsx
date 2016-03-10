@@ -3,10 +3,11 @@ import React, { PropTypes } from 'react'
 import DatePicker from './datePicker.jsx'
 import classnames from 'classnames'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
+import BodyClickMixin from '../BodyClickMixin'
 
 export default React.createClass({
 
-  mixins: [PureRenderMixin],
+  mixins: [PureRenderMixin, BodyClickMixin],
 
   propTypes: {
     date: PropTypes.string
@@ -23,22 +24,12 @@ export default React.createClass({
   },
 
   handleBodyClick() {
-    console.log('click')
+    this.setState({isOpen: false})
   },
-
-  componentDidMount() {
-    // console.log('bind')
-    window.addEventListener('click', this.handleBodyClick)  
-  },
-
-  // componentWillUnmount() {
-  //   console.log('unbind')
-  //   document.body.removeEventListener('click', this.handleBodyClick)
-  // },
 
   render() {
     return (
-      <div>
+      <div onClick={e => {e.stopPropagation()}}>
         <div className={classnames('dropdown', {open: this.state.isOpen})}>
           <div className="form-group">
             <input type="text" className="form-control input-sm" onClick={this.handleFocus} value={this.props.date} readOnly/>
