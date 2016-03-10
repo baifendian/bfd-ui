@@ -1,3 +1,9 @@
-import { AA, BB } from 'aa'
+import React from 'react'
 
-console.log(AA, BB)
+class AA extends React.Component {
+  render() {
+    return <div></div>
+  }
+}
+
+export default AA

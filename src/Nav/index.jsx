@@ -1,9 +1,27 @@
 import 'bfd-bootstrap'
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 const Nav = React.createClass({
+
+  childContextTypes: {
+    handleClick: PropTypes.func
+  },
+
+  contextTypes: {
+    handleClick: PropTypes.func
+  },
+
+  getChildContext() {
+    return {
+      handleClick: () => {
+        this.props.onClick && this.props.onClick()
+        this.context.handleClick && this.context.handleClick()
+      }
+    }
+  },
   
   render() {
     return (
@@ -14,8 +32,11 @@ const Nav = React.createClass({
 
 const NavItem = React.createClass({
 
+  mixins: [PureRenderMixin],
+
   contextTypes: {
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    handleClick: PropTypes.func
   },
 
   getInitialState() {
@@ -49,7 +70,7 @@ const NavItem = React.createClass({
     if (this.props.children) {
       Item = <a href={this.props.href} onClick={this.toggle}>{Icon}{this.props.title}{Toggle}</a>
     } else {
-      Item = <Link to={this.props.href} query={this.props.query}>{Icon}{this.props.title}{Toggle}</Link>
+      Item = <Link onClick={this.context.handleClick} to={this.props.href} query={this.props.query}>{Icon}{this.props.title}{Toggle}</Link>
     }
 
     const indexOnly = this.props.href === '/'
@@ -57,7 +78,7 @@ const NavItem = React.createClass({
     return (
       <li className={classNames({open: this.state.isOpen, active: this.isActive(indexOnly)})}>
         {Item}
-        {this.props.children}
+        { this.props.children ? <Nav>{this.props.children}</Nav> : null }
       </li>
     )
   }

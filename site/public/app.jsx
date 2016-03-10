@@ -1,22 +1,32 @@
 import 'bfd-bootstrap'
-import './styles/app.css'
-import './styles/home.css'
-import './styles/component.css'
+import './less/app.less'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/nav/index.jsx'
-import model from './model'
-import Pre from './pre.jsx'
+import Pre from './Pre.jsx'
 import Integration from './integration.jsx'
+import classnames from 'classnames'
+import fastclick from 'fastclick'
+
+fastclick.attach(document.body)
 
 const App = React.createClass({
 
   getInitialState() {
     return {
-      components: window.components        
+      components: window.components,
+      isOpen: false      
     }
+  },
+
+  handleToggle() {
+    this.setState({isOpen: true})
+  },
+
+  handleClick() {
+    this.setState({isOpen: false})
   },
 
   render() {
@@ -28,18 +38,21 @@ const App = React.createClass({
           </Link>
         </div>
         <div id="body">
-          <div className="sidebar" id="sidebar">
-            <Nav>
+          {this.state.isOpen ? null : (
+            <button className="toggle btn btn-default" type="button" onClick={this.handleToggle}>
+              <span className="glyphicon glyphicon-align-justify"></span>
+            </button>
+          )}
+          <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
+            <Nav onClick={this.handleClick}>
               <NavItem href="/" icon="home" title="首页"/>
               <NavItem href="/bootstrap" icon="bold" title="Bootstrap"/>
               <NavItem href="/plan" icon="calendar" title="计划"/>
               <NavItem href="/integration" icon="hand-right" title="完整项目实例"/>
               <NavItem href="/components" icon="th" title="组件">
-                <Nav>
-                  {this.state.components.map(component => {
-                    return <NavItem key={component.name} href={'/components/' + component.name} title={component.cn}/>
-                  })}
-                </Nav>
+                {this.state.components.map(component => {
+                  return <NavItem key={component.name} href={'/components/' + component.name} title={component.cn}/>
+                })}
               </NavItem>
             </Nav>
           </div>
@@ -50,64 +63,10 @@ const App = React.createClass({
   }
 })
 
-const Components = React.createClass({
-
-  contextTypes: {
-    history: React.PropTypes.object
-  },
-
-  renderComponent() {
-    scroll(0, 0)
-    let { component } = this.props.params
-    let { pathname } = this.props.location
-    model.fetch(`/getTemplate?path=${pathname}`).then((res) => {
-      this.refs.container.innerHTML = res
-    }).then(() => {
-      require.ensure([], require => {
-
-        // try {
-          require(`.${pathname}.jsx`).default()
-        // } catch(e) {}
-      })
-    })
-  },
-
-  componentDidMount() {
-    this.renderComponent()
-  },
-
-  componentDidUpdate() {
-    this.renderComponent()
-  },
-
-  render() {
-    return <div className="component" ref="container"></div>
-  }
-})
-
-const Home = React.createClass({
-
-  render() {
-    return (
-      <div className="home">
-        <h1>BFD UI</h1>
-        <Pre lang="sh">{`$ npm install --save bfd-ui`}</Pre>
-        <Link className="btn btn-primary" to="/bootstrap">开始</Link>
-      </div>
-    )
-  }
-})
-
 const Bootstrap = React.createClass({
 
-  componentDidMount() {
-    model.fetch('/getTemplate?path=/bootstrap').then(res => {
-      this.refs.container.innerHTML = res
-    })
-  },
-
   render() {
-    return <div className="bootstrap" ref="container"></div>
+    return <div className="bootstrap" ref="container">Bootstrap</div>
   }
 })
 
@@ -134,12 +93,20 @@ const Plan = React.createClass({
 render((
   <Router history={createHistory()}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home}/>
-      <Route path="/bootstrap" component={Bootstrap}/>
-      <Route path="/plan" component={Plan}/>
-      <Route path="/integration" component={Integration}/>
+      <IndexRoute getComponent={(location, cb) => {
+        require.ensure([], (require) => {
+          cb(null, require('./Home.jsx').default)
+        })
+      }}/>
+      <Route path="bootstrap" component={Bootstrap}/>
+      <Route path="plan" component={Plan}/>
+      <Route path="integration" component={Integration}/>
       <Route path="components">
-        <Route path=":component" component={Components}></Route>
+        <Route path=":component" getComponent={(location, cb) => {
+          require.ensure([], (require) => {
+            cb(null, require('.' + location.pathname + '.jsx').default)
+          })
+        }}></Route>
       </Route>
     </Route>
   </Router>
