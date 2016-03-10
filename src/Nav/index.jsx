@@ -2,7 +2,6 @@ import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classNames from 'classnames'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 const Nav = React.createClass({
 
@@ -31,8 +30,6 @@ const Nav = React.createClass({
 })
 
 const NavItem = React.createClass({
-
-  mixins: [PureRenderMixin],
 
   contextTypes: {
     history: PropTypes.object.isRequired,
