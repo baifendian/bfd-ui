@@ -1,16 +1,17 @@
 import React from 'react'
-import Pre from './pre.jsx'
+import Pre from './Pre.jsx'
 
 export default React.createClass({
 
   render() {
     return (
       <div className="guide">
+        <p>主要介绍一个项目从零到上线的工作流，也是 bfd-ui 的最佳使用环境。</p>
         <h1>1、项目构建</h1>
 
         <p>项目生成器有助于快速产生一个项目的脚手架，同时避免的不同项目间结构的混乱。</p>
         
-        <p>构建器基于 <a href="http://yeoman.io/" target="_blabk">yeoman</a> 平台，如果本地没有全局安装，请先安装</p>
+        <p>构建器基于 <a href="http://yeoman.io/" target="_blank">yeoman</a> 平台，如果本地没有全局安装，请先安装</p>
         
         <Pre lang="sh">{
 `# 安装yeoman构建平台

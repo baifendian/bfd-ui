@@ -3,17 +3,13 @@ var webpack = require('webpack')
 var ExtractTextPlugin = require("extract-text-webpack-plugin")
 var config = {
   entry: {
-    app: __dirname + '/public/app.jsx'
-    // app: __dirname + '/public/components/LineChart.jsx'
+    app: __dirname + '/public/App.jsx'
   },
   output: {
     path: __dirname + '/public/dist',
     filename: '[name].js',
     chunkFilename: '[id].js',
     publicPath: '/dist/'
-  },
-  externals: {
-    // 'bfd-bootstrap': false
   },
   module: {
     loaders: [{

@@ -26,6 +26,10 @@
     }
   }
   > .status {
+    pointer-events: none;
+    + span {
+      pointer-events: none;
+    }
     &:before {
       content: '';
       position: absolute;
