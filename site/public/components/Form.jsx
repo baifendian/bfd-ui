@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import {LinkedStateMixin} from 'react-addons'
-import Form from 'c/form/index.jsx'
+import Form from 'c/Form/index.jsx'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
-import { Select ,Option} from 'c/select/index.jsx'
+import { Select ,Option} from 'c/Select/index.jsx'
 
 const FormItem = Form.Item;
 let validateDemo;
@@ -15,7 +15,7 @@ let Demo = React.createClass({
     return {
       task: '',
       desc: '',
-      train: '1',
+      train: ['apple','huawei'],
       fields: ['apple', 'mi']
     }
   },
@@ -107,11 +107,11 @@ let Demo = React.createClass({
           </FormItem>
 
           <FormItem label="训练数据：" required>
-            <Select selected={this.state.train} onChange={this.trainChange}>
-              <Option value="0">aaa</Option>
-              <Option value="1">bbb</Option>
-              <Option value="2">ccc</Option>
-              <Option value="3">ddd</Option>
+            <Select selected={this.state.train} onChange={this.trainChange} multiple>
+              <Option value="apple">苹果</Option>
+              <Option value="mi">小米</Option>
+              <Option value="samsung">三星</Option>
+              <Option value="huawei">华为</Option>
             </Select>
           </FormItem>
 
