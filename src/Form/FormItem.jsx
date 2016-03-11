@@ -57,6 +57,7 @@ class FormItem extends React.Component {
   renderError(){
 
     let validate;
+    
     const props = this.props;   
 
     props.required ? validate = false : validate = true;
@@ -64,10 +65,13 @@ class FormItem extends React.Component {
     if(props.validate){
 
       let error;
+
       const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
       
       error = props.validate.handle();
-      error == 'success' ? validate = true : validate = false;       
+
+      error == 'success' ? validate = true : validate = false; 
+
       this.context.setValidate(validate);     
 
       if (validate || !this.context.submitStatu()) return;

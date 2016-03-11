@@ -7,7 +7,7 @@ import { Props, Prop } from '../Props.jsx'
 
 const FormItem = Form.Item;
 let isSuccess;
-let Demo = React.createClass({ 
+const Demo = React.createClass({ 
 
   //初始化表单数据。
   getInitialState() {
