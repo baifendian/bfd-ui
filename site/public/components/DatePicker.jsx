@@ -19,6 +19,7 @@ const App = React.createClass({
         </Pre>
 
         <DatePicker date="2016-01-01"/>
+        <DatePicker date="2016-01-01"/>
         
         <Props>
           <Prop name="cols" type="Object" desc="y轴字段配置（x轴字段单独指定），数据字段：中文名">
