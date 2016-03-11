@@ -1,18 +1,17 @@
 import React from 'react'
 import { render } from 'react-dom'
-import {LinkedStateMixin} from 'react-addons'
 import Form from 'c/Form/index.jsx'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
 import { Select ,Option} from 'c/Select/index.jsx'
 
 const FormItem = Form.Item;
-let validateDemo;
-let Demo = React.createClass({
- 
-  mixins: [LinkedStateMixin],
+let isSuccess;
+let Demo = React.createClass({ 
 
+  //初始化表单数据。
   getInitialState() {
-    return {
+    return { 
+      isSubmit:false,    
       task: '',
       desc: '',
       train: ['apple','huawei'],
@@ -20,38 +19,48 @@ let Demo = React.createClass({
     }
   },
 
-  handleSubmit(e) {
-    const _validate = this.getValidate(validateDemo);
-    if (_validate) {
-      alert('表单验证通过');
-      alert('收到表单值：' + JSON.stringify(this.state));
-    } else {
-      alert('表单验证失败');
-    }
+  //submit按钮提交操作
+  handleSubmit(e) {    
+    this.setState({isSubmit:true}); 
+    let o = this.state;
+    delete o.isSubmit;
+    this.ValidateStatus(isSuccess) ? alert('表单验证通过：'+JSON.stringify(o)):alert('表单验证失败');     
     e.preventDefault();
   },
 
-  handleValidate(o) {
-    validateDemo.push(o);
+  //获取验证是否通过状态，并存放到isSuccess数组中。
+  isSuccess(flag){   
+    isSuccess.push(flag);
   },
 
-  getValidate(arr) {
+  //验证isSuccess数组中是否全部通过验证。
+  ValidateStatus(arr) {
     let flag = true;
     arr.map(function(item, i) {
       if (!item) flag = false;
     });
     return flag;
   },
+
+  /*
+   *设置表单字段值。
+   */
+  taskChange(e){
+    this.setState({task:e.target.value})
+  },
+  descCahnge(e){
+     this.setState({desc:e.target.value})
+  },
   fieldsChange(selects) {
-    this.setState({
-      selects
-    });
+    this.setState({ selects });
   },
   trainChange(selected,text){
     this.setState({ train:selected });
   },
-  render() {    
-    validateDemo = [];
+
+  render() {   
+
+    isSuccess = [];  
     const validates = [{
       validateVal: this.state.task,
       required: '请填写任务名称',
@@ -96,17 +105,17 @@ let Demo = React.createClass({
 
     return (
       
-        <Form horizontal onSubmit={this.handleSubmit}>
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
 
-          <FormItem label="任务名称：" validate={validates[0]} handle={this.handleValidate} required>
-            <input type="text" className="form-control" valueLink={this.linkState('task')}/>        
+          <FormItem label="任务名称：" validate={validates[0]} required>
+            <input type="text" className="form-control" onChange={this.taskChange}/>        
           </FormItem>
 
-          <FormItem label="任务描述："  validate={validates[1]} handle={this.handleValidate}>
-            <textarea  rows="4" className="form-control" valueLink={this.linkState('desc')}/>        
+          <FormItem label="任务描述："  validate={validates[1]}>
+            <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
           </FormItem>
 
-          <FormItem label="训练数据：" required>
+          <FormItem label="训练数据：">
             <Select selected={this.state.train} onChange={this.trainChange} multiple>
               <Option value="apple">苹果</Option>
               <Option value="mi">小米</Option>
@@ -115,7 +124,7 @@ let Demo = React.createClass({
             </Select>
           </FormItem>
 
-          <FormItem label="字段设置：" validate={validates[2]} handle={this.handleValidate} required>
+          <FormItem label="字段设置：" validate={validates[2]} required>
             <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
               <Checkbox value="apple">苹果</Checkbox>
               <Checkbox value="mi">小米</Checkbox>
