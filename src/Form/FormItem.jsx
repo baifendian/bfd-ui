@@ -2,8 +2,28 @@ import React from 'react';
 import classNames from 'classnames';
 
 class FormItem extends React.Component {
+
+   constructor(props){
+        super(props);    
+        this.state = {
+          style:{border:''}
+        }
+    }
+
+  componentWillReceiveProps(nextProps){  
+    if (nextProps.validate && nextProps.validate.handle() !== 'success' && this.context.submitStatu()) {
+      this.setState({
+        style: { border: '1px solid red' }
+      })
+    } else {
+      this.setState({
+        style: { border: '' }
+      })
+    }
+  }
  
   renderLabel() {
+
     const props = this.props;    
     const required = props.required === undefined ? false : true;     
     const className = classNames({      
@@ -17,17 +37,19 @@ class FormItem extends React.Component {
     ) : null;
   }
 
-  renderWrapper(children){
-
+  renderWrapper(children){   
     const props = this.props;    
     const className = classNames({
-      ['col-md-5']: true,
+      ['col-md-6']: true,
       [`col-md-offset-3`]:!!props.submit
     });
 
     return (
-      <div className={className} key="wrapper">
-        {children}
+      <div className={className} key="wrapper" >
+        <div style={this.state.style}>
+          {children}
+        </div>
+        
       </div>
     );
   }
@@ -41,8 +63,9 @@ class FormItem extends React.Component {
 
     if(props.validate){
 
-      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
       let error;
+      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
+      
       error = props.validate.handle();
       error == 'success' ? validate = true : validate = false;       
       this.context.setValidate(validate);     

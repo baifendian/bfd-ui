@@ -1,8 +1,9 @@
 import React from 'react'
-import { render } from 'react-dom'
 import Form from 'c/Form/index.jsx'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
 import { Select ,Option} from 'c/Select/index.jsx'
+import Pre from '../Pre.jsx'
+import { Props, Prop } from '../Props.jsx'
 
 const FormItem = Form.Item;
 let isSuccess;
@@ -24,7 +25,7 @@ let Demo = React.createClass({
     this.setState({isSubmit:true}); 
     let o = this.state;
     delete o.isSubmit;
-    this.ValidateStatus(isSuccess) ? alert('表单验证通过：'+JSON.stringify(o)):alert('表单验证失败');     
+    this.ValidateStatus(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
     e.preventDefault();
   },
 
@@ -143,6 +144,13 @@ let Demo = React.createClass({
 
 });
 
-export default () => {
-  render( <Demo/> , document.getElementById('demoForm'))
-} 
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>表单</h1>
+        <Demo/>          
+      </div>
+    )
+  }
+})
