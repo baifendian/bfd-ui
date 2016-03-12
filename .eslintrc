@@ -8,7 +8,7 @@
     "jsx": true
   },
   "rules": {
-    "no-unused-vars": [2, { "vars": "local", "args": "after-used" }],
+    "no-unused-vars": [1],
     "indent": [
       2,
       2
