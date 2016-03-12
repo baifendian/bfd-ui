@@ -1,8 +1,8 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Form from 'c/Form/index.jsx'
-import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
-import { Select ,Option} from 'c/Select/index.jsx'
+import Form from 'c/Form'
+import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
+import { Select ,Option} from 'c/Select'
 
 const FormItem = Form.Item;
 let isSuccess;

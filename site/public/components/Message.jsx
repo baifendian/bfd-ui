@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Message from 'c/message/index.jsx'
-import Button from 'c/message/button.jsx'
+import Message from 'c/message'
+import Button from 'c/message/button'
 
 const info = function () {
   Message.info('这是一条普通的提醒');

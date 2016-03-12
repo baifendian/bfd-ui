@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Modal, ModalHeader, ModalBody } from 'c/modal/index.jsx'
+import { Modal, ModalHeader, ModalBody } from 'c/modal'
 
 const App = React.createClass({
 

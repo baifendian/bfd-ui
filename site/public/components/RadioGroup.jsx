@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { RadioGroup, Radio } from 'c/RadioGroup/index.jsx'
+import { RadioGroup, Radio } from 'c/RadioGroup'
 
 const App = React.createClass({
 

@@ -13,7 +13,7 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\.jsx?$/,
+      test: /\jsx?$/,
       loader: 'babel',
       exclude: /node_modules/,
       query: {
@@ -33,21 +33,19 @@ var config = {
     }, {
       test: /\.less$/,
       loader: 'style!css!less'
+    }],
+    preLoaders: [{
+      test: /\jsx?$/,
+      loader: "eslint-loader",
+      exclude: /node_modules/
     }]
-    // preLoaders: [{
-    //   test: /\.jsx?$/,
-    //   loader: "eslint-loader",
-    //   exclude: /node_modules/
-    // }]
   },
   resolve: {
+    extensions: ['', '.js', '.jsx'],
     alias: {
       c: path.resolve(__dirname, '../src')
     }
   },
-  // eslint: {
-  //   configFile: path.resolve(__dirname, 'config/.eslintrc'),
-  // },
   plugins: [
     // new ExtractTextPlugin("[name].css")
     // new webpack.optimize.UglifyJsPlugin({minimize: true})

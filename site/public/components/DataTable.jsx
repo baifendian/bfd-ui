@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import DataTable from 'c/DataTable/index.jsx'
-import Paging from 'c/Paging/index.jsx'
+import DataTable from 'c/DataTable'
+import Paging from 'c/Paging'
 
 const column = [{
   title:'序号',

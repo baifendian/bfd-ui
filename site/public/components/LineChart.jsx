@@ -1,7 +1,7 @@
 import React from 'react'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import LineChart from 'c/LineChart/index.jsx'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
+import LineChart from 'c/LineChart'
 
 export default React.createClass({
   render() {

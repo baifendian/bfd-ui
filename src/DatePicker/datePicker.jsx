@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './datePicker.less'
 
 export default React.createClass({
 
   propTypes: {
-    date: PropTypes.string
+    date: PropTypes.number,
+    onSelect: PropTypes.func.isRequired
   },
 
   getInitialState() {
@@ -24,7 +24,7 @@ export default React.createClass({
     const d = date ? new Date(date) : new Date()
     return {
       year: d.getFullYear(),
-      month: d.getMonth() + 1,
+      month: d.getMonth(),
       day: d.getDate()
     }
   },
@@ -43,7 +43,7 @@ export default React.createClass({
   },
 
   handleToggle(change, type) {
-    const d = new Date(this.state.currentYear, this.state.currentMonth - 1)
+    const d = new Date(this.state.currentYear, this.state.currentMonth)
     if (type === 'year') {
       d.setFullYear(d.getFullYear() + change)
       this.setState({currentYear: d.getFullYear()})
@@ -51,25 +51,23 @@ export default React.createClass({
       d.setMonth(d.getMonth() + change)
       this.setState({
         currentYear: d.getFullYear(),
-        currentMonth: d.getMonth() + 1
+        currentMonth: d.getMonth()
       })
     }
   },
 
   handleDaySelect(target) {
-    const { year, month, day } = target
-    this.setState({ year, month, day })
+    this.setState(target)
+    this.props.onSelect(new Date(target.year, target.month, target.day).getTime())
   },
-
+  
   render() {
-
-    console.log('render')
 
     let d
     const days = []
     
     // 上月
-    d = new Date(this.state.currentYear, this.state.currentMonth - 1, 1)
+    d = new Date(this.state.currentYear, this.state.currentMonth, 1)
     let dayInWeek = d.getDay()
     if (dayInWeek) {
       d.setDate(0)
@@ -77,7 +75,7 @@ export default React.createClass({
       for (let i = dayInWeek; i--; ) {
         days.push({
           year: d.getFullYear(),
-          month: d.getMonth() + 1,
+          month: d.getMonth(),
           day: lastMonthDaysCount - i,
           notThisMonth: true
         })
@@ -85,35 +83,35 @@ export default React.createClass({
     }
 
     // 本月
-    d = new Date(this.state.currentYear, this.state.currentMonth, 0)
+    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 0)
     const thisMonthDaysCount = d.getDate()
     for (let i = 0; i < thisMonthDaysCount; i++) {
       days.push({
         year: d.getFullYear(),
-        month: d.getMonth() + 1,
+        month: d.getMonth(),
         day: i + 1
       })
     }
 
     // 下月
-    d = new Date(this.state.currentYear, this.state.currentMonth, 1)
+    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
     for (let i = 0, len = 42 - days.length; i < len; i++) {
       days.push({
         year: d.getFullYear(),
-        month: d.getMonth() + 1,
+        month: d.getMonth(),
         day: i + 1,
         notThisMonth: true
       })
     }
 
     return (
-      <div className="bfd-datepicker">
+      <div className="datepicker">
         <div className="datepicker-header">
           <div className="pull-left">
             <span className="toggle" onClick={this.handleToggle.bind(this, -1, 'year')}>«</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, -1)}>‹</span>
           </div>
-          <span className="result">{this.state.currentYear}年 {this.state.currentMonth}月</span>
+          <span className="result">{this.state.currentYear}年 {this.state.currentMonth + 1}月</span>
           <div className="pull-right">
             <span className="toggle" onClick={this.handleToggle.bind(this, 1)}>›</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, 1, 'year')}>»</span>

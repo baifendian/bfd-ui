@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import ChordDiagram from 'c/chordDiagram/index.jsx'
+import ChordDiagram from 'c/chordDiagram'
 
 const data = [{
   name: 'gid',

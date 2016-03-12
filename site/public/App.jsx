@@ -4,9 +4,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
-import { Nav, NavItem } from 'c/Nav/index.jsx'
-import Pre from './Pre.jsx'
-import Integration from './Integration.jsx'
+import { Nav, NavItem } from 'c/Nav'
+import Pre from './Pre'
+import Integration from './Integration'
 import classnames from 'classnames'
 import fastclick from 'fastclick'
 
@@ -95,7 +95,7 @@ render((
     <Route path="/" component={App}>
       <IndexRoute getComponent={(location, cb) => {
         require.ensure([], (require) => {
-          cb(null, require('./Home.jsx').default)
+          cb(null, require('./Home').default)
         })
       }}/>
       <Route path="bootstrap" component={Bootstrap}/>
@@ -104,7 +104,7 @@ render((
       <Route path="components">
         <Route path=":component" getComponent={(location, cb) => {
           require.ensure([], (require) => {
-            cb(null, require('.' + location.pathname + '.jsx').default)
+            cb(null, require('.' + location.pathname + '').default)
           })
         }}></Route>
       </Route>

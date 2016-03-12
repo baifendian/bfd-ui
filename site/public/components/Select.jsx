@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import { Select ,Option} from 'c/Select/index.jsx'
+import { Select ,Option} from 'c/Select'
 
 
 const App = React.createClass({

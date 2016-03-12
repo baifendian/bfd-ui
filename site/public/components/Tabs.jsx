@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Tabs, TabList, Tab, TabPanel } from 'c/Tabs/index.jsx'
+import { Tabs, TabList, Tab, TabPanel } from 'c/Tabs'
 
 export default () => {
   render((

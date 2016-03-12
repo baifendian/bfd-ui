@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import RadarChart from 'c/radarChart/index.jsx'
+import RadarChart from 'c/radarChart'
 
 
 export default React.createClass({

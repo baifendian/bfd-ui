@@ -6,7 +6,8 @@ import 'bfd-bootstrap'
 import React, {PropTypes} from 'react'
 import Loading from '../Loading'
 import classNames from 'classnames'
-import Paging from '../Paging/index.jsx'
+import Paging from '../Paging'
+
 export default React.createClass( {
    getInitialState: function () {
       return {

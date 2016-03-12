@@ -1,7 +1,7 @@
 import React from 'react'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import DatePicker from 'c/DatePicker/index.jsx'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
+import DatePicker from 'c/DatePicker'
 
 export default React.createClass({
   render() {
@@ -9,35 +9,20 @@ export default React.createClass({
       <div>
         <h1>日期选择</h1>
         <Pre>
-{`import LineChart from 'bfd-ui/lib/LineChart'
+{`import DatePicker from 'bfd-ui/lib/DatePicker'
 
 const App = React.createClass({
   render() {
-    return <LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+    return <DatePicker/>
   }
 })`}
         </Pre>
 
-        <DatePicker date="2016-01-01"/>
-        <DatePicker date="2016-01-01"/>
+        <DatePicker/>
         
         <Props>
-          <Prop name="cols" type="Object" desc="y轴字段配置（x轴字段单独指定），数据字段：中文名">
-            <Pre>
-{`{
-  users: '用户数',
-  sales: '销量'
-}`}
-            </Pre>
-          </Prop>
-          <Prop name="category" type="String" desc="x轴字段名"></Prop>
-          <Prop name="yAxis" type="Object" desc="y轴相关配置">
-            <Pre>
-{`{ 
-  format: '%' // 格式化方式
-}`}
-            </Pre>
-          </Prop>
+          <Prop name="date" type="Number" desc="时间戳，精确到毫秒，默认为客户端当前日期"></Prop>
+          <Prop name="onSelect" type="Function" desc="选择后的回调，参数为选中日期的时间戳"></Prop>
         </Props>
       </div>
     )

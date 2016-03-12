@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import PieChart from 'c/PieChart/index.jsx'
+import PieChart from 'c/PieChart'
 
 
 export default () => {

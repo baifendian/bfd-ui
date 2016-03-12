@@ -1,0 +1,55 @@
+.bfd-datepicker {
+  display: inline-block;
+  .datepicker {
+    padding: 0 5px;
+    > .datepicker-header {
+      color: #666;
+      text-align: center;
+      .result {
+        font-weight: bold;
+      }
+      .toggle {
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        display: inline-block;
+        font-size: 18px;
+        font-family: arial;
+        cursor: pointer;
+        &:hover {
+          color: #208fe7;
+        }
+      }
+    }
+    > table {
+      margin-top: 10px;
+      th {
+        text-align: center;
+        padding: 3px;
+      }
+      td {
+        text-align: center;
+        > span {
+          display: block;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          margin: 3px;
+          border-radius: 2px;
+          cursor: default;
+          &.exclude {
+            color: #999;
+          }
+          &.active {
+            background-color: #208fe7;
+            color: #fff;
+          }
+          &:hover {
+            background-color: #42a5f5;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

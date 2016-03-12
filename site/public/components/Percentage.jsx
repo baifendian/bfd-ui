@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import Percentage from 'c/percentage/index.jsx'
+import Percentage from 'c/percentage'
 
 const config = { 
       data : 80,

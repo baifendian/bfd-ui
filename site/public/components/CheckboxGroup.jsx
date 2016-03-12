@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
+import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
 
 
 const App = React.createClass({

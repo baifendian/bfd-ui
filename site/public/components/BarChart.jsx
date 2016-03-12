@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import BubbleChart from 'c/barChart/index.jsx'
+import BubbleChart from 'c/barChart'
 
 const data = [
 {
