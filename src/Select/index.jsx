@@ -76,7 +76,7 @@ const Select = React.createClass({
 
 		return (
 			<div onClick={this.stopPropagation} className={classNames('bfd-dropdown dropdown', {open: this.state.isOpen})}>
-			  <div onClick={this.handleToggle}>
+			  <div onClick={this.handleToggle} style={{height:'100%'}}>
 			     {sText.join(',')}
 			    <span className="caret bfd-caret"></span>
 			   {
