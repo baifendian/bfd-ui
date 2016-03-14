@@ -1,63 +1,41 @@
 import React from 'react'
 import { render } from 'react-dom'
+import PieChart from 'c/PieChart/index.jsx'
 import Pre from '../Pre.jsx'
 import { Props, Prop } from '../Props.jsx'
-import PieChart from 'c/PieChart/index.jsx'
-
-
-// export default () => {
-//   render(
-//     <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />, 
-//         document.getElementById('demo')
-//     )
-// }
-
 
 export default React.createClass({
   render() {
     return (
       <div>
-      	<h1>饼图</h1>
-        <Pre>
-{`import PieChart from 'bfd-ui/lib/PieChart'
+        <h1>饼图</h1>
+			<Pre>
+{`import PineChart from 'bfd-ui/lib/LineChart'
 
 const App = React.createClass({
   render() {
-    return <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+    return  <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
   }
 })`}
-        </Pre>
+			</Pre>
 
-        <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+         <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+        
         <Props>
-          <Prop name="data" type="Object" desc="二维数据格式">
-            <Pre>
-{`{
-  code: 200,           
-  data:[        
-    {value:335, name:'直接访问'},
-    {value:310, name:'邮件营销'},
-    {value:234, name:'联盟广告'},
-    {value:135, name:'视频广告'},
-    {value:848, name:'搜索引擎'},
-    {value:348, name:'百分点'}
-  ]
-}`}
-            </Pre>
-          </Prop>
           <Prop name="name" type="String" desc="tooltip标题"></Prop>
           <Prop name="radius" type="Object" desc="饼图的内圆半径比例">
             <Pre>
 {`{
-  inner:0.75
+    inner:0.75
 }`}
             </Pre>
           </Prop>
           <Prop name="animation" type="Object" desc="饼图的动画时间参数">
             <Pre>
 {`{
-  pie:2500,
-  lineText:500
+    pie:2500,
+    lineText:500
+>>>>>>> 5280957574961e4beaa08ebe0f3a3dcc1715f3db
 }`}
             </Pre>
           </Prop>

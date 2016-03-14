@@ -114,7 +114,7 @@ const Option = React.createClass({
 		const {	children, value, ...other } = this.props;    	
     	const selected = this.context.getSelected();
 		
-		(this.context.getSelected() instanceof Array) ?
+		(selected instanceof Array) ?
 		className = classNames({
 			'active': (function() {
 				let f = false;
