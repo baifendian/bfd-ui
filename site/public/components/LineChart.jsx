@@ -7,6 +7,7 @@ export default React.createClass({
   render() {
     return (
       <div>
+        <h1>折线图</h1>
         <Pre>
 {`import LineChart from 'bfd-ui/lib/LineChart'
 

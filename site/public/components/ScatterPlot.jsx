@@ -1,7 +1,57 @@
 import React from 'react'
 import { render } from 'react-dom'
+import Pre from '../Pre.jsx'
+import { Props, Prop } from '../Props.jsx'
 import ScatterPlot from 'c/ScatterPlot/index.jsx'
 
-export default () => {
-  render(<ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />, document.getElementById('demo'))
-}
+// export default () => {
+//   render(<ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />, document.getElementById('demo'))
+// }
+
+export default React.createClass({
+  render() {
+    return (
+      <div>
+      	<h1>散点图</h1>
+        <Pre>
+{`import ScatterPlot from 'bfd-ui/lib/scatterPlot'
+
+const App = React.createClass({
+  render() {
+    return <ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />
+})`}
+        </Pre>
+
+        <ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />
+        
+        <Props>
+          <Prop name="cols" type="Object" desc="y轴字段配置（x轴字段单独指定），数据字段：中文名">
+            <Pre>
+{`{
+  users: '用户数',
+  sales: '销量'
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="category" type="String" desc="x轴字段名"></Prop>
+          <Prop name="yAxis" type="Object" desc="y轴相关配置">
+            <Pre>
+{`{ 
+  // 格式化方式
+  format: '%'
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="tooltip" type="Object" desc="悬浮提示框配置">
+            <Pre>
+{`{ 
+  // 禁用提示框，默认启用
+  enabled: false
+}`}
+            </Pre>
+          </Prop>
+        </Props>
+      </div>
+    )
+  }
+})

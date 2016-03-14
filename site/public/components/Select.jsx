@@ -1,6 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-
+import Pre from '../Pre.jsx'
+import { Props, Prop } from '../Props.jsx'
 import { Select ,Option} from 'c/Select/index.jsx'
 
 
