@@ -27,12 +27,12 @@ export default (env, flag) => {
   const arc = d3.svg.arc()
     .outerRadius(0.6 * radius)
     .innerRadius(0.6 * _config.radius.inner * radius);
-    arcs.push(arc);
+  arcs.push(arc);
 
   const arc2 = d3.svg.arc()
-    .outerRadius(0.6 * _config.radius.inner * radius-4)
-    .innerRadius(0.6 * _config.radius.inner * radius-8);
-    arcs.push(arc2);
+    .outerRadius(0.6 * _config.radius.inner * radius - 1)
+    .innerRadius(0.6 * _config.radius.inner * radius - 5);
+  arcs.push(arc2);
 
   // for labels and polylines  设置label和line的位置。
   var outerArc = d3.svg.arc()
@@ -53,14 +53,14 @@ export default (env, flag) => {
     .selectAll('path')
     .data(pie);
 
-  for (var i=0;i<arcs.length;i++) {
+  for (var i = 0; i < arcs.length; i++) {
 
     slice
       .enter().append('path')
       .attr('fill', function(d, i) {
         return d.data.color;
       })
-      .attr('d', function(d) {        
+      .attr('d', function(d) {
         return arcs[i](d);
       })
       .attr('transform', function(d, i) {
@@ -76,17 +76,20 @@ export default (env, flag) => {
       .style('opacity', 1.0)
       .attr('transform', 'rotate(0,0,0)');
 
-      if (i === 1) {
-        slice.style('display', 'none')
-              //添加一个class来标记arc2的圆弧。
-              .attr('class','pie-flag');
-      }
+    if (i === 1) {
+      slice.style('display', 'none')
+        //添加一个class来标记arc2的圆弧。
+        .attr('class', 'pie-flag');
+    }
   }
 
+  //如果饼图的宽度太小就不显示text和line。
+  if (env.width < 500) return;
+
   //设置text 
-  var countText = 0;
-  var posText;
-  var text = env.svg.select('.pie-labels').selectAll('text')
+  let totalCount = 0;
+  let countText = 0;
+  const text = env.svg.select('.pie-labels').selectAll('text')
     .data(pie(flag ? _config.data : _config.dataLegend));
   text.enter()
     .append('text')
@@ -99,6 +102,7 @@ export default (env, flag) => {
       let percent = Number(d.value) / d3.sum(flag ? _config.data : _config.dataLegend, function(d) {
         return d.value;
       }) * 100;
+      if (percent < 4) totalCount++;
       return d.data.name + ':' + percent.toFixed(0) + '%';
     })
     .attr('transform', function(d) {
@@ -106,10 +110,19 @@ export default (env, flag) => {
         return d.value;
       }) * 100;
       if (percent < 4) {
-        if (countText == 0) posText = outerArc.centroid(d);
-        posText[1] -= (midAngle(d) < Math.PI ? -20 : 20);
+        const midCount = Math.floor(totalCount / 2);
         countText++;
-        return 'translate(' + posText + ')';
+        if (countText <= midCount) {
+          let posText = outerArc.centroid(d);
+          posText[1] -= (midAngle(d) < Math.PI ? -20 * countText : 20 * countText);
+          return 'translate(' + posText + ')';
+        } else {
+          const num = countText - midCount;
+          let posText = outerArc.centroid(d);
+          posText[0] += 80;
+          posText[1] -= (midAngle(d) < Math.PI ? -20 * num : 20 * num);
+          return 'translate(' + posText + ')';
+        }
       } else {
         var pos = outerArc.centroid(d);
         pos[1] -= (midAngle(d) < Math.PI ? -12 : 12);
@@ -128,9 +141,8 @@ export default (env, flag) => {
     .style('opacity', 0.8);
 
   //设置线条
-  var countLine = 0;
-  var posLine;
-  var polyline = env.svg.select('.pie-lines').selectAll('polyline')
+  let countLine = 0;
+  const polyline = env.svg.select('.pie-lines').selectAll('polyline')
     .data(pie(flag ? _config.data : _config.dataLegend));
   polyline.enter()
     .append('polyline')
@@ -151,11 +163,20 @@ export default (env, flag) => {
         return d.value;
       }) * 100;
       if (percent < 4) {
-        if (countLine == 0) posLine = outerArc.centroid(d);
-        posLine[0] -= (midAngle(d) < Math.PI ? 8 : -8);
-        posLine[1] -= (midAngle(d) < Math.PI ? -20 : 20);
+        const midCount = Math.floor(totalCount / 2);
         countLine++;
-        return [arc.centroid(d), posLine, [midAngle(d) < Math.PI ? posLine[0] + 6 * countLine : posLine[0] - 6 * countLine, posLine[1]]];
+        if (countLine <= midCount) {
+          let posLine = outerArc.centroid(d);
+          posLine[0] -= (midAngle(d) < Math.PI ? 8 : -8);
+          posLine[1] -= (midAngle(d) < Math.PI ? -20 * countLine : 20 * countLine);
+          return [arc.centroid(d), posLine, [midAngle(d) < Math.PI ? posLine[0] + 6 : posLine[0] - 6, posLine[1]]];
+        } else {
+          const num = countLine - midCount;
+          let posLine = outerArc.centroid(d);
+          posLine[0] -= (midAngle(d) < Math.PI ? 8 : -8);
+          posLine[1] -= (midAngle(d) < Math.PI ? -20 * num : 20 * num);
+          return [arc.centroid(d), posLine, [midAngle(d) < Math.PI ? posLine[0] - 6 : posLine[0] + 6, posLine[1]]];
+        }
       } else {
         var pos = outerArc.centroid(d);
         pos[0] += (midAngle(d) < Math.PI ? 60 : -60);
