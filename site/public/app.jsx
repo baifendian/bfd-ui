@@ -103,7 +103,6 @@ render((
       <Route path="integration" component={Integration}/>
       <Route path="components">
         <Route path=":component" getComponent={(location, cb) => {
-          debugger
           require.ensure([], (require) => {
             cb(null, require('./components/' + location.pathname.split('/').pop()).default)
           })
