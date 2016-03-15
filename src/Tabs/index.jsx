@@ -35,7 +35,7 @@ const Tabs = React.createClass({
   },
 
   render() {
-    return <div className="tabs">{this.props.children}</div>
+    return <div className="bfd-tabs">{this.props.children}</div>
   }
 })
 

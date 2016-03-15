@@ -1,53 +1,69 @@
 import React from 'react'
-import { render } from 'react-dom'
-import {LinkedStateMixin} from 'react-addons'
-import Form from 'c/form/index.jsx'
-import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
+import Form from 'c/Form'
+import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
+import { Select, Option} from 'c/Select'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const FormItem = Form.Item;
-let validateDemo;
-let Demo = React.createClass({
- 
-  mixins: [LinkedStateMixin],
+let isSuccess;
+const Demo = React.createClass({ 
 
+  //初始化表单数据。
   getInitialState() {
-    return {     
+    return { 
+      isSubmit:false,    
       task: '',
       desc: '',
-      train: '1',
-      fields:['apple','mi']
+      train: ['apple','huawei'],
+      fields: ['apple', 'mi']
     }
   },
 
-  handleSubmit(e) {       
-    const _validate = this.getValidate(validateDemo);
-    if(_validate){
-      alert('表单验证通过');
-      alert('收到表单值：' + JSON.stringify(this.state)); 
-    }else{
-       alert('表单验证失败');
-    }
+  //submit按钮提交操作
+  handleSubmit(e) {    
+    this.setState({isSubmit:true}); 
+    let o = this.state;
+    delete o.isSubmit;
+    this.ValidateStatus(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
     e.preventDefault();
   },
 
-  isValidate(o){
-    validateDemo.push(o);    
+  //获取验证是否通过状态，并存放到isSuccess数组中。
+  isSuccess(flag){   
+    isSuccess.push(flag);
   },
 
-  getValidate(arr){
+  //验证isSuccess数组中是否全部通过验证。
+  ValidateStatus(arr) {
     let flag = true;
-    arr.map(function(item,i){     
-      if(!item) flag = false;
+    arr.map(function(item, i) {
+      if (!item) flag = false;
     });
     return flag;
   },
-  fieldsChange(selects){
-    this.setState({selects});
+
+  /*
+   *设置表单字段值。
+   */
+  taskChange(e){
+    this.setState({task:e.target.value})
   },
-  render() {    
+  descCahnge(e){
+     this.setState({desc:e.target.value})
+  },
+  fieldsChange(selects) {
+    this.setState({ selects });
+  },
+  trainChange(selected,text){
+    this.setState({ train:selected });
+  },
+
+  render() {   
+
+    isSuccess = [];  
     const validates = [{
       validateVal: this.state.task,
-      span:4,
       required: '请填写任务名称',
       handle: function() {
         let s;
@@ -62,73 +78,79 @@ let Demo = React.createClass({
       }
     }, {
       validateVal: this.state.desc,
-      span:4,
       handle: function() {
         let s;
-        if(!this.validateVal&&this.required){
+        if (!this.validateVal && this.required) {
           s = this.required;
-        } else if(this.validateVal.length > 20 ) {
+        } else if (this.validateVal.length > 20) {
           s = '字符长度不能超过20个';
-        }else{
+        } else {
           s = 'success'
         }
         return s;
       }
-    },{
+    }, {
       validateVal: this.state.fields,
-      required:'请设置字段',
-      span:4,
+      required: '请设置字段',
       handle: function() {
         let s;
-        if(this.validateVal.length == 0){
-          s=this.required;
-        }else{
+        if (this.validateVal.length == 0) {
+          s = this.required;
+        } else {
           s = 'success';
         }
         return s;
       }
     }];
-    validateDemo=[];
+   
 
     return (
-      <Form horizontal onSubmit={this.handleSubmit}>
-
-        <FormItem label="任务名称：" labelCol={{ span: 2 }} wrapperCol={{ span: 6 }} validate={validates[0]} handleValidate={this.isValidate} required>          
-            <input type="text" className="form-control" valueLink={this.linkState('task')}/>         
-        </FormItem>  
-
-        <FormItem label="任务描述：" wrapperCol={{ span: 6 }} validate={validates[1]} handleValidate={this.isValidate}>          
-            <textarea  rows="4" className="form-control" valueLink={this.linkState('desc')}/>          
-        </FormItem> 
-
-        <FormItem label="训练数据：" wrapperCol={{ span: 6 }} required>          
-            <select className="form-control"  valueLink={this.linkState('train')}>
-              <option value="0">--请选择数据所在路径--</option>
-              <option value="1">test1</option>
-              <option value="2">test2</option>
-            </select>        
-        </FormItem>         
-
-        <FormItem label="字段设置：" wrapperCol={{ span: 6 }} validate={validates[2]} handleValidate={this.isValidate} required>          
-          <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
-            <Checkbox value="apple">苹果</Checkbox>
-            <Checkbox value="mi">小米</Checkbox>
-            <Checkbox value="samsung">三星</Checkbox>
-            <Checkbox value="huawei">华为</Checkbox>
-          </CheckboxGroup>
-        </FormItem> 
       
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
 
-        <FormItem wrapperCol={{offset:2 }}>         
-            <button type="submit" className="btn btn-default">登录</button>         
-        </FormItem>        
+          <FormItem label="任务名称：" validate={validates[0]} required>
+            <input type="text" className="form-control" onChange={this.taskChange}/>        
+          </FormItem>
 
-      </Form>
+          <FormItem label="任务描述："  validate={validates[1]}>
+            <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
+          </FormItem>
+
+          <FormItem label="训练数据：">
+            <Select selected={this.state.train} onChange={this.trainChange} multiple>
+              <Option value="apple">苹果</Option>
+              <Option value="mi">小米</Option>
+              <Option value="samsung">三星</Option>
+              <Option value="huawei">华为</Option>
+            </Select>
+          </FormItem>
+
+          <FormItem label="字段设置：" validate={validates[2]} required>
+            <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
+              <Checkbox value="apple">苹果</Checkbox>
+              <Checkbox value="mi">小米</Checkbox>
+              <Checkbox value="samsung">三星</Checkbox>
+              <Checkbox value="huawei">华为</Checkbox>
+            </CheckboxGroup>
+          </FormItem>
+
+          <FormItem submit>
+            <button type="submit" className="btn btn-default">登录</button>
+          </FormItem>
+
+        </Form>
     );
   }
 
 });
 
-export default () => {
-  render( <Demo/> , document.getElementById('demoForm'))
-} 
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>表单</h1>
+        <Demo/>          
+      </div>
+    )
+  }
+})
