@@ -14,15 +14,13 @@ export default React.createClass( {
          order:'',
          url:this.props.url,
          items: {
-            totalList: [] ,
-            totalPageNum: 0 ,
-            refresh: false,
-
+            totalList: [],
+            totalPageNum: 0,
+            refresh: false
          },
          currentPage: 1
-
       }
-   } ,
+   },
    onChange: function (params,currentPage) {
       let url_ = this.props.url
 

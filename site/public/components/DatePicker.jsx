@@ -14,7 +14,7 @@ export default React.createClass({
 
 const App = React.createClass({
   render() {
-    return <DatePicker/>
+    return <DatePicker date="2016-02-03"/>
   }
 })`}
         </Pre>
@@ -22,10 +22,21 @@ const App = React.createClass({
         <DatePicker date="2016-02-03"/>
         
         <Props>
-          <Prop name="date" type="Number | String" value="时间戳（毫秒）或者日期字符串" default="今天" desc="当前日期"></Prop>
-          <Prop name="min" type="Number | String" value="时间戳（毫秒）或者日期字符串" default="不限制" desc="最小日期"></Prop>
-          <Prop name="max" type="Number | String" value="时间戳（毫秒）或者日期字符串" default="不限制" desc="最大日期"></Prop>
-          <Prop name="onSelect" type="Function" value="回调参数为选中日期的时间戳" desc="选择后的回调"></Prop>
+          <Prop name="date" type="Number | String">
+            <p>当前日期，时间戳（毫秒）或者日期字符串（下同）</p>
+            <p>默认今天</p>
+          </Prop>
+          <Prop name="min" type="Number | String">
+            <p>最小日期</p>
+            <p>默认不限制</p>
+          </Prop>
+          <Prop name="max" type="Number | String">
+            <p>最大日期</p>
+            <p>默认不限制</p>
+          </Prop>
+          <Prop name="onSelect" type="Function">
+            <p>选择后的回调，回调参数为选中日期的时间戳</p>
+          </Prop>
         </Props>
 
         <h2>日期段选择 DateRange</h2>
@@ -44,11 +55,25 @@ const App = React.createClass({
         <DateRange start="2016-03-10"/>
         
         <Props>
-          <Prop name="start" type="Number | String" value="时间戳（毫秒）或者日期字符串" desc="开始日期" default="今天"/>
-          <Prop name="end" type="Number | String" value="时间戳（毫秒）或者日期字符串" desc="结束日期" default="今天"/>
-          <Prop name="min" type="Number | String" value="时间戳（毫秒）或者日期字符串" default="不限制" desc="最小日期"/>
-          <Prop name="min" type="Number | String" value="时间戳（毫秒）或者日期字符串" default="不限制" desc="最大日期"/>
-          <Prop name="onSelect" type="Function" value="回调参数为选中日期的时间戳" desc="选择后的回调"/>
+          <Prop name="start" type="Number | String">
+            <p>开始日期，时间戳（毫秒）或者日期字符串（下同）</p>
+            <p>默认今天</p>
+          </Prop>
+          <Prop name="start" type="Number | String">
+            <p>结束日期，时间戳（毫秒）或者日期字符串（下同）</p>
+            <p>默认今天</p>
+          </Prop>
+          <Prop name="min" type="Number | String">
+            <p>最小日期</p>
+            <p>默认不限制</p>
+          </Prop>
+          <Prop name="max" type="Number | String">
+            <p>最大日期</p>
+            <p>默认不限制</p>
+          </Prop>
+          <Prop name="onSelect" type="Function">
+            <p>选择后的回调，回调参数为选中日期的时间戳</p>
+          </Prop>
         </Props>
       </div>
     )
