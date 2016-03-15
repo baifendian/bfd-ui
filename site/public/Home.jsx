@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import Pre from './Pre.jsx'
+import Pre from './Pre'
 
 export default React.createClass({
   render() {

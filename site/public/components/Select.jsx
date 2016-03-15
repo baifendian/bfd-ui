@@ -1,8 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { Select ,Option} from 'c/Select/index.jsx'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
+import { Select, Option} from 'c/Select'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const App = React.createClass({
 

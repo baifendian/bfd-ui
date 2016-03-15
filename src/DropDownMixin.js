@@ -1,5 +1,3 @@
-import ReactDom from 'react-dom'
-
 export default {
 
   // 存储所有的组件实例，当前打开后，其他关闭

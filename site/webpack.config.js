@@ -1,9 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+
+var isProduction = process.argv.slice(2)[0] === '-p'
+
 var config = {
   entry: {
-    app: __dirname + '/public/App.jsx'
+    app: __dirname + '/public/app.jsx'
   },
   output: {
     path: __dirname + '/public/dist',
@@ -13,7 +15,7 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\.jsx?$/,
+      test: /\jsx?$/,
       loader: 'babel',
       exclude: /node_modules/,
       query: {
@@ -22,7 +24,6 @@ var config = {
       }
     }, {
       test: /\.css$/,
-      // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       loader: 'style-loader!css-loader'
     }, {
       test: /\.(eot|woff|woff2|ttf|svg)$/,
@@ -33,24 +34,26 @@ var config = {
     }, {
       test: /\.less$/,
       loader: 'style!css!less'
-    }]
+    }],
+    noParse: []
+    // ,
     // preLoaders: [{
-    //   test: /\.jsx?$/,
+    //   test: /\jsx?$/,
     //   loader: "eslint-loader",
     //   exclude: /node_modules/
     // }]
   },
   resolve: {
+    extensions: ['', '.js', '.jsx'],
     alias: {
       c: path.resolve(__dirname, '../src')
     }
   },
-  // eslint: {
-  //   configFile: path.resolve(__dirname, 'config/.eslintrc'),
-  // },
-  plugins: [
-    // new ExtractTextPlugin("[name].css")
-    // new webpack.optimize.UglifyJsPlugin({minimize: true})
-  ]
+  plugins: []
 }
+
+if (isProduction) {
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+}
+
 module.exports = config

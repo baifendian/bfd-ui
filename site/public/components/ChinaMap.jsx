@@ -1,12 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import ChinaMap from 'c/chinaMap/index.jsx'
-
-// export default () => {
-//   render(<ChinaMap/>, document.getElementById('demo'))
-// }
+import ChinaMap from 'c/ChinaMap'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 export default React.createClass({
   render() {
@@ -14,7 +9,7 @@ export default React.createClass({
       <div>
       	<h1>中国地图</h1>
         <Pre>
-{`import ChinaMap from 'bfd-ui/lib/chinaMap'
+{`import ChinaMap from 'bfd-ui/lib/ChinaMap'
 
 const App = React.createClass({
   render() {

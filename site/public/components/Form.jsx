@@ -1,9 +1,9 @@
 import React from 'react'
-import Form from 'c/Form/index.jsx'
-import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup/index.jsx'
-import { Select ,Option} from 'c/Select/index.jsx'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
+import Form from 'c/Form'
+import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
+import { Select, Option} from 'c/Select'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const FormItem = Form.Item;
 let isSuccess;

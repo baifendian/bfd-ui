@@ -1,12 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import BubbleChart from 'c/bubbleChart/index.jsx'
-    
-// export default () => {
-//   render(<BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />, document.getElementById('demo'))
-// }
+import BubbleChart from 'c/BubbleChart'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 export default React.createClass({
   render() {

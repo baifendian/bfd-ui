@@ -36,12 +36,15 @@
     }
   }
   > .content {
-    overflow: hidden;
     padding: 20px;
     min-height: 600px;
+    overflow: hidden;
     max-width: 700px;
     > div {
       -webkit-animation: in .5s;
+    }
+    @media (max-width: 700px) {
+      margin-left: 0;
     }
   }
 } 

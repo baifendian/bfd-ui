@@ -1,8 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import ChordDiagram from 'c/chordDiagram/index.jsx'
+import ChordDiagram from 'c/ChordDiagram'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const data = [{
   name: 'gid',
@@ -22,10 +21,6 @@ const data = [{
   name: 'imei',
   total: 200
 }]
-
-// export default () => {
-//   render(<ChordDiagram data={data}/>, document.getElementById('demo'))
-// }
 
 export default React.createClass({
   render() {
@@ -60,7 +55,6 @@ const App = React.createClass({
         </Pre>
 
         <ChordDiagram data={data}/>
-        
       
       </div>
     )

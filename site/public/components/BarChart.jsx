@@ -1,8 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import BubbleChart from 'c/barChart/index.jsx'
+import BarChart from 'c/BarChart'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const data = [
 {
@@ -26,18 +25,25 @@ const data = [
 },{
   name:'2015/01/07',
   value:20
-},
-]
-    
-// export default () => {
-//   render(<BubbleChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />, document.getElementById('demo'))
-// }
+}]
 
 export default React.createClass({
   render() {
     return (
       <div>
         <h1>柱状图</h1>
+        <Pre>
+{`import BarChart from 'bfd-ui/lib/BarChart'
+
+const App = React.createClass({
+  render() {
+    return <BarChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
+  }
+})`}
+        </Pre>
+        
+        <BarChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
+
         <Props>
           <Prop name="title" type="String" desc="标题"></Prop>
           <Prop name="titleSub" type="String" desc="自标题"></Prop>

@@ -1,21 +1,17 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import Percentage from 'c/percentage/index.jsx'
+import Percentage from 'c/Percentage'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const config = { 
-      data : 80,
-      outterColor : '#b3e5fc',
-      innerColor : '#fff',
-      textColor : '#fff'
-    }
-
-// export default () => {
-//   render(<Percentage config={config} />, document.getElementById('demo'))
-// }
+  data : 80,
+  outterColor : '#b3e5fc',
+  innerColor : '#fff',
+  textColor : '#fff'
+}
 
 export default React.createClass({
+  
   render() {
     return (
       <div>

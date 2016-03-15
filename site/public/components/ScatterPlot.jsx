@@ -1,12 +1,7 @@
 import React from 'react'
-import { render } from 'react-dom'
-import Pre from '../Pre.jsx'
-import { Props, Prop } from '../Props.jsx'
-import ScatterPlot from 'c/ScatterPlot/index.jsx'
-
-// export default () => {
-//   render(<ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />, document.getElementById('demo'))
-// }
+import ScatterPlot from 'c/ScatterPlot'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 export default React.createClass({
   render() {
