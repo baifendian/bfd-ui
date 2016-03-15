@@ -37,12 +37,12 @@ export default React.createClass({
 
 const App = React.createClass({
   render() {
-    return <BubbleChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
+    return <BarChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
   }
 })`}
         </Pre>
         
-        <BubbleChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
+        <BarChart title="数据标签量趋势及日环比（近90天）" titleSub="2015.11.11 - 2016.01.11" data={data} />
 
         <Props>
           <Prop name="title" type="String" desc="标题"></Prop>

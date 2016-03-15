@@ -3,14 +3,14 @@ import Percentage from 'c/percentage'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-export default React.createClass({
+const config = { 
+  data : 80,
+  outterColor : '#b3e5fc',
+  innerColor : '#fff',
+  textColor : '#fff'
+}
 
-  const config = { 
-    data : 80,
-    outterColor : '#b3e5fc',
-    innerColor : '#fff',
-    textColor : '#fff'
-  }
+export default React.createClass({
   
   render() {
     return (

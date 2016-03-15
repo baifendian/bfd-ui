@@ -8,17 +8,17 @@ export default React.createClass({
     return (
       <div>
         <h1>饼图</h1>
-			<Pre>
-{`import PineChart from 'bfd-ui/lib/LineChart'
+        <Pre>
+{`import PieChart from 'bfd-ui/lib/PieChart'
 
 const App = React.createClass({
   render() {
-    return  <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+    return <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
   }
 })`}
-			</Pre>
+        </Pre>
 
-         <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+        <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
         
         <Props>
           <Prop name="name" type="String" desc="tooltip标题"></Prop>

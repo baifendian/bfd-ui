@@ -34,12 +34,12 @@ var config = {
       test: /\.less$/,
       loader: 'style!css!less'
     }]
-    // ,
-    // preLoaders: [{
-    //   test: /\jsx?$/,
-    //   loader: "eslint-loader",
-    //   exclude: /node_modules/
-    // }]
+    ,
+    preLoaders: [{
+      test: /\jsx?$/,
+      loader: "eslint-loader",
+      exclude: /node_modules/
+    }]
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
