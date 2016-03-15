@@ -1,12 +1,13 @@
 import React from 'react'
-import { render } from 'react-dom'
 import Form from 'c/Form'
 import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
-import { Select ,Option} from 'c/Select'
+import { Select, Option} from 'c/Select'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
 const FormItem = Form.Item;
 let isSuccess;
-let Demo = React.createClass({ 
+const Demo = React.createClass({ 
 
   //初始化表单数据。
   getInitialState() {
@@ -24,7 +25,7 @@ let Demo = React.createClass({
     this.setState({isSubmit:true}); 
     let o = this.state;
     delete o.isSubmit;
-    this.ValidateStatus(isSuccess) ? alert('表单验证通过：'+JSON.stringify(o)):alert('表单验证失败');     
+    this.ValidateStatus(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
     e.preventDefault();
   },
 
@@ -143,6 +144,13 @@ let Demo = React.createClass({
 
 });
 
-export default () => {
-  render( <Demo/> , document.getElementById('demoForm'))
-} 
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>表单</h1>
+        <Demo/>          
+      </div>
+    )
+  }
+})

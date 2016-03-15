@@ -1,9 +1,13 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
+import PureRenderMixin from 'react-addons-pure-render-mixin'
+import DropDownMixin from '../DropDownMixin'
 
 
 const Select = React.createClass({ 
+
+	mixins: [PureRenderMixin, DropDownMixin],
 
 	childContextTypes: {
 		getSelected: PropTypes.func,
@@ -11,9 +15,7 @@ const Select = React.createClass({
 	},
 
 	getInitialState() {
-		return {
-			ishide: {display: 'none'},
-			flag:false,
+		return {			
 			arr:this.props.selected
 		}
 	},	
@@ -55,21 +57,6 @@ const Select = React.createClass({
 		return _arr;
 	},
 
-	componentDidMount() {
-		window.addEventListener('click', this.windowClick);
-	},
-	
-	windowClick(e) {			
-		if (!this.state.flag && this.state.ishide.display == 'block') this.setState({ ishide: { display: 'none' } });			
-		this.setState({	flag: false	});
-	},
-
-	handleClick(e) {
-		const o = this.state.ishide;
-		o.display == 'none' ? this.setState({ ishide: { display: 'block' }}) : this.setState({ishide: {display: 'none'}});	
-		this.setState({flag:true});		
-	},
-
 	render() {	
 
 		let sText = [];
@@ -86,15 +73,19 @@ const Select = React.createClass({
 				}
 			});
 
+
 		return (
-			<div className="bfd-dropdown dropdown" onClick={this.handleClick}>
-			  <div>
+			<div onClick={this.stopPropagation} className={classNames('bfd-dropdown dropdown', {open: this.state.isOpen})}>
+			  <div onClick={this.handleToggle} style={{height:'100%'}}>
 			     {sText.join(',')}
 			    <span className="caret bfd-caret"></span>
+			   {
+          		this.state.isOpen ? (
+			        <ul className="dropdown-menu bfd-menu">
+				   		{children}
+				 	</ul> ) : null
+			    }
 			  </div>
-			  <ul className="dropdown-menu bfd-menu" style={this.state.ishide}>
-			   		{children}
-			  </ul>
 			</div>
 		);
 	}  

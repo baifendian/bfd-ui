@@ -1,3 +1,4 @@
+
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
 
@@ -19,6 +20,7 @@ class Form extends React.Component {
 
     const { prefixCls, className } = this.props;
     const formClassName = classNames({
+      'bfd-form':true,
       [className]: !!className,
       [`${prefixCls}-horizontal`]: this.props.horizontal,
       [`${prefixCls}-inline`]: this.props.inline,
