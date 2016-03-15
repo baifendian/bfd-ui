@@ -46,7 +46,6 @@ export default React.createClass({
    render() {
 	 
     //分页逻辑代码
-	 
      let pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
  
       let liArr = [] , showPage = this.state.showPage
