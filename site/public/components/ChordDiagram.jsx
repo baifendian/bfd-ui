@@ -1,5 +1,5 @@
 import React from 'react'
-import ChordDiagram from 'c/chordDiagram'
+import ChordDiagram from 'c/ChordDiagram'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 

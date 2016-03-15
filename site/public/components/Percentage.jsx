@@ -1,5 +1,5 @@
 import React from 'react'
-import Percentage from 'c/percentage'
+import Percentage from 'c/Percentage'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 

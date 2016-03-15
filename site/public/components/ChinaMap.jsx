@@ -1,5 +1,5 @@
 import React from 'react'
-import ChinaMap from 'c/chinaMap'
+import ChinaMap from 'c/ChinaMap'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
