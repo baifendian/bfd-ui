@@ -29,7 +29,7 @@ var config = {
       // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
       loader: 'style-loader!css-loader'
     }, {
-      test: /\.(eot|woff|woff2|ttf|svg)$/,
+      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,

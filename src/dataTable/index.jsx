@@ -64,8 +64,6 @@ export default React.createClass( {
    refresh: function () {
       this.setState( { refresh: true } )
    } ,
-   handleLoading: function () {
-   } ,
    render: function () {
       let column = this.props.column
       let items = this.state.items.totalList;
