@@ -1,0 +1,79 @@
+.bfd-calendar {
+  color: #666;
+  padding: 5px;
+  background-color: #fafafa;
+  border-radius: 2px;
+
+  > .calendar-header {
+    text-align: center;
+    .result {
+      font-weight: bold;
+    }
+    .toggle {
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      display: inline-block;
+      font-size: 18px;
+      font-family: arial;
+      cursor: pointer;
+      &:hover {
+        color: #208fe7;
+      }
+    }
+  }
+  > table {
+    margin-top: 10px;
+    th {
+      text-align: center;
+      padding: 3px;
+    }
+    td {
+      text-align: center;
+      > button {
+        display: block;
+        width: 26px;
+        height: 26px;
+        text-align: center;
+        line-height: 1;
+        margin: 3px 0;
+        border: 0;
+        background-color: transparent;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          text-decoration: none;
+          background-color: #efefef;
+        }
+        &[disabled] {
+          color: #eaeaea!important;
+          background-color: #fafafa;
+          cursor: default;
+        }
+        &.today {
+          background-color: #e0e0e0;
+        }
+        &.exclude {
+          color: #999;
+        }
+        &.active {
+          background-color: #208fe7;
+          color: #fff;
+          &.start {
+            border-radius: 4px 0 0 4px;
+            &.end {
+              border-radius: 4px;
+            }
+          }
+          &.end {
+            border-radius: 0 4px 4px 0;
+          }
+        }
+        &.inside {
+          background-color: #ebf4f8;
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}

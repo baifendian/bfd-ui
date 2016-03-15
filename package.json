@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib",
-    "publish": "npm version patch && npm publish",
     "start": "node-dev site/server.js",
     "online": "cd site && webpack && node server.js -p&"
   },
