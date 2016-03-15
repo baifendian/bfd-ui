@@ -2,149 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2471e-2098-4ca2-8ce8-d38ffadec216" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/Bootstrap.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/Home.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/Pre.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/Props.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/components/DatePicker.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/components/Nav.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/components/Select.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/data/scatterPlot.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/less/app.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/site/public/less/props.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/Calendar.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/DatePicker.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/DateRange.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/GetTimestrapMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/datePicker.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/index.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/less/calendar.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/less/datePicker.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DatePicker/less/dateRange.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/DropDownMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Form/index.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Form/main.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/LineChart/tooltip.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Paging/index.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Select/index.jsx" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Select/main.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/bfd-ui.iml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/bfd_ui_node_modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/bin/copy.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/public/model.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/public/pre.jsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/public/styles/app.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/public/styles/component.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/public/styles/home.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/app.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/bootstrap.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/BarChart.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/BubbleChart.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/CheckboxGroup.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/ChinaMap.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/ChordDiagram.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/DataTable.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Form.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/LineChart.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Loading.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Message.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Modal.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Nav.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Percentage.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/PieChart.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/RadarChart.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/RadioGroup.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/ScatterPlot.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/components/Tabs.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/home.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/includes/api.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/site/views/layout.jade" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/LineChart/tooltip.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/form/index.jsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/form/main.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lineChart/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lineChart/main.less" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/lineChart/tooltip.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/nav/index.jsx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/paging/index.jsx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.eslintrc" afterPath="$PROJECT_DIR$/.eslintrc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/README.md" afterPath="$PROJECT_DIR$/site/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/app.jsx" afterPath="$PROJECT_DIR$/site/public/app.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/BarChart.jsx" afterPath="$PROJECT_DIR$/site/public/components/BarChart.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/BubbleChart.jsx" afterPath="$PROJECT_DIR$/site/public/components/BubbleChart.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/CheckboxGroup.jsx" afterPath="$PROJECT_DIR$/site/public/components/CheckboxGroup.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/ChinaMap.jsx" afterPath="$PROJECT_DIR$/site/public/components/ChinaMap.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/ChordDiagram.jsx" afterPath="$PROJECT_DIR$/site/public/components/ChordDiagram.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/DataTable.jsx" afterPath="$PROJECT_DIR$/site/public/components/DataTable.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Form.jsx" afterPath="$PROJECT_DIR$/site/public/components/Form.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/LineChart.jsx" afterPath="$PROJECT_DIR$/site/public/components/LineChart.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Loading.jsx" afterPath="$PROJECT_DIR$/site/public/components/Loading.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Message.jsx" afterPath="$PROJECT_DIR$/site/public/components/Message.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Modal.jsx" afterPath="$PROJECT_DIR$/site/public/components/Modal.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Percentage.jsx" afterPath="$PROJECT_DIR$/site/public/components/Percentage.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/PieChart.jsx" afterPath="$PROJECT_DIR$/site/public/components/PieChart.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/RadarChart.jsx" afterPath="$PROJECT_DIR$/site/public/components/RadarChart.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/RadioGroup.jsx" afterPath="$PROJECT_DIR$/site/public/components/RadioGroup.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/ScatterPlot.jsx" afterPath="$PROJECT_DIR$/site/public/components/ScatterPlot.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/components/Tabs.jsx" afterPath="$PROJECT_DIR$/site/public/components/Tabs.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/public/data/lineChart.json" afterPath="$PROJECT_DIR$/site/public/data/lineChart.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/server.js" afterPath="$PROJECT_DIR$/site/server.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/site/webpack.config.js" afterPath="$PROJECT_DIR$/site/webpack.config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CheckboxGroup/main.less" afterPath="$PROJECT_DIR$/src/CheckboxGroup/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LineChart/index.jsx" afterPath="$PROJECT_DIR$/src/LineChart/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LineChart/main.js" afterPath="$PROJECT_DIR$/src/LineChart/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LineChart/main.less" afterPath="$PROJECT_DIR$/src/LineChart/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Nav/index.jsx" afterPath="$PROJECT_DIR$/src/Nav/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScatterPlot/main.js" afterPath="$PROJECT_DIR$/src/ScatterPlot/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScatterPlot/main.less" afterPath="$PROJECT_DIR$/src/ScatterPlot/main.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Tabs/index.jsx" afterPath="$PROJECT_DIR$/src/Tabs/index.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Tabs/main.less" afterPath="$PROJECT_DIR$/src/Tabs/main.less" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/site/public/integration.jsx" afterPath="$PROJECT_DIR$/site/public/Integration.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Chart.js" afterPath="$PROJECT_DIR$/src/Chart.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/Loading/index.js" afterPath="$PROJECT_DIR$/src/Loading/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/barChart/index.jsx" afterPath="$PROJECT_DIR$/src/BarChart/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/barChart/main.css" afterPath="$PROJECT_DIR$/src/BarChart/main.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/barChart/main.js" afterPath="$PROJECT_DIR$/src/BarChart/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/bubbleChart/index.jsx" afterPath="$PROJECT_DIR$/src/BubbleChart/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/bubbleChart/main.js" afterPath="$PROJECT_DIR$/src/BubbleChart/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chinaMap/china.geo.json" afterPath="$PROJECT_DIR$/src/ChinaMap/china.geo.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chinaMap/index.jsx" afterPath="$PROJECT_DIR$/src/ChinaMap/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chinaMap/main.js" afterPath="$PROJECT_DIR$/src/ChinaMap/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chordDiagram/index.jsx" afterPath="$PROJECT_DIR$/src/ChordDiagram/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chordDiagram/main.css" afterPath="$PROJECT_DIR$/src/ChordDiagram/main.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/chordDiagram/main.js" afterPath="$PROJECT_DIR$/src/ChordDiagram/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dataTable/index.jsx" afterPath="$PROJECT_DIR$/src/DataTable/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dataTable/main.less" afterPath="$PROJECT_DIR$/src/DataTable/main.less" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/form/Form.jsx" afterPath="$PROJECT_DIR$/src/Form/Form.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/form/FormItem.jsx" afterPath="$PROJECT_DIR$/src/Form/FormItem.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/lineChart/index.jsx" afterPath="$PROJECT_DIR$/src/ScatterPlot/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/modal/index.jsx" afterPath="$PROJECT_DIR$/src/Modal/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/modal/main.less" afterPath="$PROJECT_DIR$/src/Modal/main.less" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/percentage/index.jsx" afterPath="$PROJECT_DIR$/src/Percentage/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/percentage/main.css" afterPath="$PROJECT_DIR$/src/Percentage/main.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/percentage/main.js" afterPath="$PROJECT_DIR$/src/Percentage/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/assembleLegend.js" afterPath="$PROJECT_DIR$/src/PieChart/assembleLegend.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/assembleTooltip.js" afterPath="$PROJECT_DIR$/src/PieChart/assembleTooltip.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/index.jsx" afterPath="$PROJECT_DIR$/src/PieChart/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/main.js" afterPath="$PROJECT_DIR$/src/PieChart/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/main.less" afterPath="$PROJECT_DIR$/src/PieChart/main.less" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/pieChart/pie.js" afterPath="$PROJECT_DIR$/src/PieChart/pie.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/radarChart/index.jsx" afterPath="$PROJECT_DIR$/src/RadarChart/index.jsx" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/radarChart/main.css" afterPath="$PROJECT_DIR$/src/RadarChart/main.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/radarChart/main.js" afterPath="$PROJECT_DIR$/src/RadarChart/main.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/radarChart/radarChart.js" afterPath="$PROJECT_DIR$/src/RadarChart/radarChart.js" />
     </list>
     <ignored path="bfd-ui.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -308,6 +166,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bfd-ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bfd-ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DataTable" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -436,9 +312,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26602086" sideWeight="0.48157248" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26602086" sideWeight="0.48157248" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3294893" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2306425" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
