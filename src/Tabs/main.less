@@ -1,0 +1,34 @@
+.bfd-tabs {
+  .tab-panel {
+    padding-top: 10px;
+    display: none;
+    &.active {
+      display: block;
+    }
+  }
+}
+
+.nav-tabs {
+  border-bottom: 1px solid #e3ebf3;
+  > li {
+    margin-bottom: 0;
+    &.active {
+      > a {
+        color: #fff;
+        background-color: #42a5f5;
+        border: 0;
+        &:focus,
+        &:hover {
+          color: #fff;
+          background-color: #42a5f5;
+          border: 0;
+        }
+      }
+    }
+    > a {
+      border-radius: 2px 2px 0 0;
+      color: #999;
+      border: 0;
+    }
+  }
+}

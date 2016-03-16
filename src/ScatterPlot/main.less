@@ -1,0 +1,41 @@
+.bfd-scatter-plot {
+  > svg {
+    display: block;
+  }
+  
+  .tick {
+    fill: #93979a;
+    font-size: 12px;
+  }
+  
+  .tick line,
+  path.domain {
+    fill: none;
+    stroke: #e6e6e6;
+    stroke-dasharray: 5 2;
+    shape-rendering: crispEdges;
+  }
+  
+  .axis-y path.domain {
+    stroke: none;
+  }
+
+  // circle {
+  //   &.hover {
+  //     stroke-width: 3;
+  //     // stroke: 
+  //   }
+  // }
+
+  .tooltip {
+    white-space: nowrap;
+    min-width: 80px;
+    background-color: #65a6ff;
+    color: #fff;
+    border-radius: 2px;
+    padding: 8px 10px;
+    font-size: 12px;
+    z-index: 9999;
+    // transition: all .2s;
+  }
+}

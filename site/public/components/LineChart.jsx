@@ -1,33 +1,61 @@
 import React from 'react'
-import { render } from 'react-dom'
-import LineChart from 'c/lineChart/index.jsx'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
+import LineChart from 'c/LineChart'
 
-const cols = {
-  x: 'x数',
-  y: 'y数'
-}
-const data = [{
-  x: 234,
-  y: 55,
-  date: '01-01'
-}, {
-  x: 499,
-  y: 122,
-  date: '01-02'
-}, {
-  x: 1067,
-  y: 500,
-  date: '01-03'
-}, {
-  x: 500,
-  y: 800,
-  date: '01-04'
-}, {
-  x: 340,
-  y: 201,
-  date: '01-05'
-}]
+const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
-export default () => {
-  render(<LineChart category="date" cols={cols} data={data} />, document.getElementById('demo'))
-}
+const App = React.createClass({
+  render() {
+    return <LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+  }
+})`
+
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>折线图</h1>
+        <Pre>{code}</Pre>
+
+        <LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+        
+        <Props>
+          <Prop name="cols" type="Object" required>
+            <p>y轴字段配置，比如：</p>
+            <Pre>
+{`{
+  user: '用户数', 
+  sales: '销量'
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="category" type="String" required>
+            <p>x轴字段名，比如 'date'</p>
+          </Prop>
+          <Prop name="yAxis" type="Object">
+            <p>y轴相关配置</p>
+            <Pre>
+{`{
+  format: '%', // Y字段值格式，默认千分符 's' 
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="url" type="String" required>
+            <p>数据源URL，返回格式要求：</p>
+            <Pre>
+{`{
+  "code": 200,
+  "data": [{
+    user: 100,
+    sales: 3432,
+    date: '2016-01-01'
+  }]
+}`}
+            </Pre>
+          </Prop>
+        </Props>
+      </div>
+    )
+  }
+})

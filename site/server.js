@@ -3,13 +3,6 @@ var http = require('http')
 var path = require('path')
 var compression = require('compression')
 var fs = require('fs')
-var jade = require('jade')
-var beautify = require('code-beautify')
-
-var filters = jade.filters
-filters.highlight = function(source, option) {
-  return beautify(source, option.lang)
-}
 
 var app = express()
 app.use(compression())
@@ -17,8 +10,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'jade')
 
+var isProduction = process.argv.slice(2)[0] === '-p'
 
-if (app.get('env') !== 'production') {
+if (!isProduction) {
   var webpack = require('webpack')
   var webpackDevMiddleware = require('webpack-dev-middleware')
   var WebpackConfig = require('./webpack.config')
@@ -30,15 +24,8 @@ if (app.get('env') !== 'production') {
   }))
 }
 
-app.get('/getTemplate', function(req, res, next) {
-  try {
-    var fn = jade.compileFile(__dirname + '/views' + req.query.path + '.jade')
-  } catch(e) {}
-  res.send(fn())
-})
-
 app.get('*', function(req, res) {
-  res.render('app')
+  res.sendFile(path.join(__dirname, 'index.html'))
 })
 
 app.listen(4001, function() {

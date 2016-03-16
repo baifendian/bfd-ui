@@ -1,0 +1,80 @@
+{
+  "code" : 200,
+  "data" : {
+    "totalList" : [ {
+      "id" : "1",
+      "name" : "张三",
+      "age" : "11",
+      "country" : "中国",
+      "height" : "185cm",
+      "weight" : "65kg",
+      "school" : "六安一中",
+      "birthday" : "1990-03-16"
+    }, {
+      "id" : "10",
+      "name" : "张柏仁",
+      "age" : "23",
+      "country" : "美国",
+      "height" : "170cm",
+      "weight" : "60kg",
+      "school" : "斯坦福大学",
+      "birthday" : "2016-03-02"
+    }, {
+      "id" : "11",
+      "name" : "黄冬冬",
+      "age" : "25",
+      "country" : "英国",
+      "height" : "168cm",
+      "weight" : "64kg",
+      "school" : "剑桥大学",
+      "birthday" : "2016-03-07"
+    }, {
+      "id" : "12",
+      "name" : "张博谦",
+      "age" : "45",
+      "country" : "中国",
+      "height" : "181cm",
+      "weight" : "80kg",
+      "school" : "西安交大",
+      "birthday" : "2016-04-08"
+    }, {
+      "id" : "13",
+      "name" : "张伯苓",
+      "age" : "66",
+      "country" : "中国",
+      "height" : "188",
+      "weight" : "80kg",
+      "school" : "天津南开大学",
+      "birthday" : "2016-03-13"
+    }, {
+      "id" : "14",
+      "name" : "溧阳路",
+      "age" : "30",
+      "country" : "南京",
+      "height" : "188cm",
+      "weight" : "83kg",
+      "school" : "南京邮电",
+      "birthday" : "1989-06-01"
+    }, {
+      "id" : "15",
+      "name" : "张雪生",
+      "age" : "19",
+      "country" : "杭州",
+      "height" : "155cm",
+      "weight" : "55kg",
+      "school" : "合肥科技大学",
+      "birthday" : "2016-03-02"
+    }, {
+      "id" : "16",
+      "name" : "邵冬梅",
+      "age" : "41",
+      "country" : "新疆",
+      "height" : "166cm",
+      "weight" : "66kg",
+      "school" : "日本陆军大学",
+      "birthday" : "1698-03-02"
+    } ],
+    "currentPage" : 1,
+    "totalPageNum" : 39
+  }
+}

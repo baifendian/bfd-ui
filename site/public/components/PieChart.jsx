@@ -1,26 +1,52 @@
 import React from 'react'
-import { render } from 'react-dom'
-import PieChart from 'c/pieChart/index.jsx'
+import PieChart from 'c/PieChart'
+import Pre from '../Pre'
+import { Props, Prop } from '../Props'
 
-const config = {
-      name:'访问来源', 
-      // legend:{
-      //   position:'top'
-      // },   
-      data:[    //初始化数据。
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:848,name:'搜索引擎'},               
-                {value:35, name:'测试1'},
-                {value:35, name:'测试2'},
-                {value:2, name:'测试3'},               
-                {value:8,name:'测试4'},
-                {value:348,name:'百分点'}
-            ]
-    }
+export default React.createClass({
+  render() {
+    return (
+      <div>
+        <h1>饼图</h1>
+        <Pre>
+{`import PieChart from 'bfd-ui/lib/PieChart'
 
-export default () => {
-  render(<PieChart config={config} />, document.getElementById('demo'))
-}
+const App = React.createClass({
+  render() {
+    return <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+  }
+})`}
+        </Pre>
+
+        <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+        
+        <Props>
+          <Prop name="name" type="String" desc="tooltip标题"></Prop>
+          <Prop name="radius" type="Object" desc="饼图的内圆半径比例">
+            <Pre>
+{`{
+    inner:0.75
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="animation" type="Object" desc="饼图的动画时间参数">
+            <Pre>
+{`{
+    pie:2500,
+    lineText:500
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="tooltip" type="Object" desc="悬浮提示框配置">
+            <Pre>
+{`{
+ //禁用提示框，默认启用
+ enabled:true
+}`}
+            </Pre>
+          </Prop>
+        </Props>
+      </div>
+    )
+  }
+})

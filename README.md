@@ -39,9 +39,9 @@ $ git pull
 $ npm install
 ```
 
-#### 如何添加新组件？
+#### 如何添加新组件？注意首字母大写
 
-`src/yourComponent`
+`src/YourComponent`
 
 注意：`index.jsx` 为组件的入口
 
