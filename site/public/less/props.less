@@ -4,14 +4,23 @@
     list-style: none;
     > li {
       margin-bottom: 30px;
-      > span.name {
-        color: #c82829;
-        font-weight: 500;
+      p {
+        margin-bottom: 5px;
       }
-      > span.type {
-        color: #ababab;
-        margin-left: 5px;
-      }
+      > .common {
+        margin-bottom: 5px;
+        > span {
+          color: #999;
+          margin-left: 15px;
+          &:first-child {
+            margin-left: 0;
+          }
+          &.name {
+            color: #c82829;
+            font-weight: 500;
+          }
+        }
+      } 
     }
   }
 }

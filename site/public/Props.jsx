@@ -10,19 +10,7 @@ const Props = React.createClass({
     return (
       <div className="props">
         <h4>{this.props.title || '属性'}</h4>
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>属性</th>
-              <th>描述</th>
-              <th>类型</th>
-              <th>值</th>
-              <th>是否必须</th>
-              <th>默认值</th>
-            </tr>
-          </thead>
-          <tbody>{this.props.children}</tbody>
-        </table>
+        <ul>{this.props.children}</ul>
       </div>
     )
   }
@@ -31,14 +19,14 @@ const Props = React.createClass({
 const Prop = React.createClass({
   render() {
     return (
-      <tr>
-        <td>{this.props.name}</td>
-        <td>{this.props.desc}</td>
-        <td>{this.props.type}</td>
-        <td>{this.props.value}</td>
-        <td>{'required' in this.props ? '是' : '否'}</td>
-        <td>{this.props.default}</td>
-      </tr>
+      <li>
+        <div className="common">
+          <span className="name">{this.props.name}</span>
+          <span className="type">{this.props.type}</span>
+          {'required' in this.props ? <span>required</span> : null}
+        </div>
+        <div>{this.props.children}</div>
+      </li>
     )
   }
 })
