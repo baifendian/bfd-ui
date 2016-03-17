@@ -1,9 +1,4 @@
-import React from 'react'
+let aa = new Set([])
 
-class AA extends React.Component {
-  render() {
-    return <div></div>
-  }
-}
+console.log(aa)
 
-export default AA

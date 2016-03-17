@@ -1,6 +1,39 @@
 .modal {
+  display: block;
+  &.in-enter {
+    .modal-backdrop {
+      opacity: 0;
+    }
+    .modal-dialog {
+      opacity: 0;
+      transform: translate(0, -25%);
+    }
+    &.in-enter-active {
+      .modal-backdrop {
+        opacity: .5;
+        transition: opacity .15s linear;
+      }
+      .modal-dialog {
+        opacity: 1;
+        transform: translate(0, 0);
+        transition: all .3s ease-out;
+      }
+    }
+  }
+  &.in-leave.in-leave-active {
+    .modal-backdrop {
+      opacity: 0;
+      transition: opacity .15s linear;
+    }
+    .modal-dialog {
+      opacity: 0;
+      transform: translate(0, -25%);
+      transition: all .3s ease-out;
+    }
+  }
   .modal-backdrop {
     z-index: 0;
     bottom: -1px;
+    opacity: .5;
   }
 }

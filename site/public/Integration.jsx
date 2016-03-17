@@ -43,7 +43,7 @@ $ yo bfd`}</Pre>
   |-- components/        各个页面组件
   |-- data/              模拟数据，接口 URL 定义为 /data/xxx.json  
   |-- less/              css 文件，这里统一用 less 预处理
-  |-- app            入口文件，包含 App 组件及前端路由的定义
+  |-- app.jsx            入口文件，包含 App 组件及前端路由的定义
   |-- index.tpl          HTML 入口，采用模版形式的原因是可以动态生成不同后端语言下的模版
   |-- server.js          开发阶段服务环境，并处理 webpack 编译服务</Pre>
   |-- webpack.config.js  编译、打包配置`}</pre>

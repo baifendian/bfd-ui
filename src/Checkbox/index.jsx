@@ -3,10 +3,19 @@ import './main.less'
 
 const CheckboxGroup = React.createClass({
 
-  getDefaultProps: function() {
+  propTypes: {
+    selects: PropTypes.array,
+    onChange: PropTypes.func
+  },
+
+  getInitialState() {
     return {
-      selects: []
+      selects: this.props.selects || []
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({selects: nextProps.selects})  
   },
 
   childContextTypes: {
@@ -16,15 +25,15 @@ const CheckboxGroup = React.createClass({
 
   getChildContext() {
     return {
-      getCheckboxGroupSelects: () => this.props.selects,
+      getCheckboxGroupSelects: () => this.state.selects,
       setCheckboxGroupSelects: (value, isAdd) => {
-        const selects = this.props.selects
+        const selects = this.state.selects
         if (isAdd) {
           selects.push(value)
         } else {
           selects.splice(selects.indexOf(value), 1)
         }
-        this.props.onChange(selects)
+        this.props.onChange && this.props.onChange(selects)
       }
     }
   },
@@ -43,6 +52,10 @@ const CheckboxGroup = React.createClass({
 
 const Checkbox = React.createClass({
 
+  propTypes: {
+    children: PropTypes.node.isRequired
+  },
+
   contextTypes: {
     getCheckboxGroupSelects: PropTypes.func,
     setCheckboxGroupSelects: PropTypes.func
@@ -53,20 +66,24 @@ const Checkbox = React.createClass({
   },
 
   render() {
-    const { children, ...other } = this.props
+    const { children, ...props } = this.props
 
     if (this.isGroup) {
 
       // 选项卡组的逻辑单独处理
-      other.checked = this.context.getCheckboxGroupSelects().indexOf(this.props.value) > -1
-      other.onChange = e => {
+      const selects = this.context.getCheckboxGroupSelects()
+      if (selects.length) {
+        props.checked = selects.indexOf(this.props.value) > -1
+      }
+      
+      props.onChange = e => {
         this.context.setCheckboxGroupSelects(e.target.value, e.target.checked)
       }
     }
 
     return (
       <label className="bfd-checkbox checkbox-inline">
-        <input type="checkbox" {...other}/>
+        <input type="checkbox" {...props}/>
         <span className="status"></span>
         {children}
       </label>
