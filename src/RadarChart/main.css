@@ -16,3 +16,8 @@
 .bfd-radar-chart .axis-labels{
 	color:#666666;
 }
+
+.bfd-radar-chart{
+	background-color: #ffffff;
+	border:1px solid #eeeeee;
+}

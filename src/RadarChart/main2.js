@@ -16,13 +16,13 @@ export default  class {
      **/
     // initiate default config
     var w = 500;
-    var h = 500;
+    var h = 733;
     var config = {
       w: w,
       h: h,
       facet: false,
       levels: 5,
-      levelScale: 0.85,
+      levelScale: 0.75,
       labelScale: 1.0,
       facetPaddingScale: 2.5,
       maxValue: 0,
@@ -31,10 +31,10 @@ export default  class {
       polygonStrokeOpacity: 1,
       polygonPointSize: 4,
       legendBoxSize: 10,
-      translateX: w / 4,
-      translateY: h / 4,
-      paddingX: w,
-      paddingY: h,
+      translateX: 150,
+      translateY: 5,
+      paddingX: 0,
+      paddingY: 0,
       colors: d3.scale.category10(),
       showLevels: true,
       showLevelsLabels: true,
@@ -68,10 +68,6 @@ export default  class {
     }
 
     render(data); // render the visualization
-
-
-
-
 
     /** helper functions
      *
@@ -161,9 +157,12 @@ export default  class {
       vis.svg = d3.select(id)
         .append("svg").classed("svg-vis", true)
         .attr("width", config.w + config.paddingX)
-        .attr("height", config.h + config.paddingY)
+        .attr("height", config.h)
         .append("svg:g")
-        .attr("transform", "translate(" + config.translateX + "," + config.translateY + ")");;
+        .attr("transform", "translate(" + config.translateX + "," + config.translateY + ")");
+
+        console.log(config.paddingX);
+        console.log(config.h);
 
       // create verticesTooltip
       vis.verticesTooltip = d3.select("body")
@@ -296,7 +295,7 @@ export default  class {
           .attr("cy", function(d, i) { return d.coordinates.y; })
           .attr("fill", "#ffffff" ||config.colors(g))
           .attr('stroke',config.colors(g))
-          .attr('stroke-width',.3)
+          .attr('stroke-width',.8)
           .on(over, verticesTooltipShow)
           .on(out, verticesTooltipHide);
       });
