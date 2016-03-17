@@ -35,7 +35,7 @@ export default React.createClass({
             <Pre>
 {`{
   "code": 200,
-  "title":"标题"
+  "title":"标题",
   "data": [[
     {axis: "华为", value:200},
     {axis: "苹果", value:200}.

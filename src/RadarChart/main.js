@@ -1,14 +1,13 @@
 import d3 from 'd3'
 export default  class{
   constructor(_opt){
-  console.log(_opt);
   var cfg = {
-   radius: 5,
+   radius: 4,
    w: 700,
    h: 700,
    factor: 1,
    factorLegend: .85,
-   levels: 6,
+   levels: 3,
    maxValue: 0,
    radians: 2 * Math.PI,
    opacityArea: 0.5,
@@ -47,10 +46,10 @@ export default  class{
       ;
 
   var tooltip;
- console.log(g);
   //Circular segments
   for(var j=0; j<cfg.levels-1; j++){
     var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+    console.log(levelFactor);
     g.selectAll(".levels")  
      .data(allAxis)
      .enter()

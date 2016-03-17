@@ -1,4 +1,5 @@
 import d3 from 'd3'
+import Color from '../colors'
 export default  function(id, d, options){
 
   console.log(arguments);
@@ -6,18 +7,19 @@ export default  function(id, d, options){
 	 radius: 5,
 	 w: 600,
 	 h: 600,
-	 factor: 1,
-	 factorLegend: .85,
+	 factor: .3,
+	 factorLegend: 1,
 	 levels: 3,
+	 levelFactor:.3,
 	 maxValue: 0,
-	 radians: 2 * Math.PI,
+	 radians:   Math.PI,
 	 opacityArea: 0.5,
-	 ToRight: 5,
-	 TranslateX: 80,
-	 TranslateY: 30,
-	 ExtraWidthX: 100,
-	 ExtraWidthY: 100,
-	 color: d3.scale.category10()
+	 ToRight: 10,
+	 TranslateX: 40,
+	 TranslateY: 40,
+	 ExtraWidthX: 50,
+	 ExtraWidthY: 20,
+	 color: d3.scale.category10(Color)
 	};
 	if('undefined' !== typeof options){
 	  for(var i in options){
@@ -29,7 +31,7 @@ export default  function(id, d, options){
 	cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
 	var allAxis = (d[0].map(function(i, j){return i.axis}));
 	var total = allAxis.length;
-	var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
+	var radius = cfg.factor*Math.min((cfg.w-cfg.ExtraWidthX)/2, (cfg.h-cfg.ExtraWidthY)/2);
 
 	var Format = d3.format('%');
 
@@ -40,8 +42,7 @@ export default  function(id, d, options){
 			.attr("width", cfg.w-cfg.ExtraWidthX)
 			.attr("height", cfg.h-cfg.ExtraWidthY)
 			.append("g")
-			.attr("transform", "translate(" + 0 + "," + cfg.TranslateY + ")");
-			;
+			.attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
 
 	var tooltip;
 
@@ -89,10 +90,10 @@ export default  function(id, d, options){
 			.attr("class", "axis");
 
 	axis.append("line")
-		.attr("x1", (cfg.w-cfg.ExtraWidthX)/2)
-		.attr("y1", (cfg.h-cfg.ExtraWidthX)/2)
-		.attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-		.attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+		.attr("x1", (cfg.w-cfg.ExtraWidthX-cfg.TranslateX)/2)
+		.attr("y1", (cfg.h-cfg.ExtraWidthX-cfg.TranslateY)/2)
+		.attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total)－cfg.TranslateX);})
+		.attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total)－cfg.TranslateY);})
 		.attr("class", "line")
 		.style("stroke", "grey")
 		.style("stroke-width", "1px");
@@ -131,6 +132,7 @@ export default  function(id, d, options){
 						 for(var pti=0;pti<d.length;pti++){
 							 str=str+d[pti][0]+","+d[pti][1]+" ";
 						 }
+						 console.log(str);
 						 return str;
 					  })
 					 .style("fill", function(j, i){return cfg.color(series)})
