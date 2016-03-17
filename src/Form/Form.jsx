@@ -1,6 +1,6 @@
-
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
+
 
 class Form extends React.Component { 
 
@@ -10,14 +10,14 @@ class Form extends React.Component {
         
         return this.props.sibmitStatus
       },  
-      setValidate: (flag) => {         
-       this.props.isSuccess(flag);      
+      setValidate: (flag) => {  
+        this.props.isSuccess(flag);      
       }
     }
   }  
 
   render() {
-
+    
     const { prefixCls, className } = this.props;
     const formClassName = classNames({
       'bfd-form':true,
@@ -35,6 +35,14 @@ class Form extends React.Component {
   
 }
 
+Form.Validate = function(arr) {
+    let flag = true;
+    arr.map(function(item, i) {
+      if (!item) flag = false;
+    });
+    return flag;  
+};
+
 Form.propTypes = {
   prefixCls: React.PropTypes.string,
   horizontal: React.PropTypes.bool,
@@ -51,5 +59,7 @@ Form.childContextTypes = {
 Form.defaultProps = {
   prefixCls: 'form',
 };
+
+
 
 module.exports = Form;

@@ -70,9 +70,8 @@ export default React.createClass( {
         currentPage = this.state.currentPage,
         _this = this,
         url = this.state.url,
-        pageSize = parseInt(this.props.pageSize);
+        pageSize = parseInt(this.props.howRow);
       if(url.indexOf('?')<0 && url.indexOf('pageSize')<0){
-
             url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.currentPage
       }else{
 
@@ -119,7 +118,7 @@ export default React.createClass( {
                     </tbody>
                  </table>
               <div id="paging">
-                 <Paging currentPage={currentPage} totalPageNum={totalPageNum} pageSize={this.props.pageSize}
+                 <Paging currentPage={currentPage} totalPageNum={totalPageNum} pageSize={this.props.howRow}
                          onChange={this.onChange}></Paging>
               </div>
            </div>
