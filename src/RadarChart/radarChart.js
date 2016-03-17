@@ -1,6 +1,7 @@
 import d3 from 'd3'
-export default {
-  draw: function(id, d, options){
+export default  function(id, d, options){
+
+  console.log(arguments);
   var cfg = {
 	 radius: 5,
 	 w: 600,
@@ -210,5 +211,4 @@ export default {
 			   .style('opacity', 0)
 			   .style('font-family', 'sans-serif')
 			   .style('font-size', '13px');
-  }
-};
+  };
