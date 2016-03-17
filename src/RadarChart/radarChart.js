@@ -2,7 +2,6 @@ import d3 from 'd3'
 import Color from '../colors'
 export default  function(id, d, options){
 
-  console.log(arguments);
   var cfg = {
 	 radius: 5,
 	 w: 600,

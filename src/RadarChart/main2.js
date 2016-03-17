@@ -1,5 +1,5 @@
 import d3 from 'd3'
-
+import Color from '../colors'
 export default  class {
   constructor(config){
     this.draw('.'+config.className,config.data, config);
@@ -176,11 +176,12 @@ export default  class {
           "width": "100px",
           "height": "auto",
           "padding": "5px",
-          "border": "2px solid gray",
-          "border-radius": "5px",
+          "border": "1px solid gray",
+          "border-radius": "2px",
           "pointer-events": "none",
           "opacity": "0",
-          "background": "#f4f4f4"
+          "background": "#718395",
+          "color":"#ffffff"
         });
 
 
@@ -293,7 +294,9 @@ export default  class {
           .attr("r", config.polygonPointSize)
           .attr("cx", function(d, i) { return d.coordinates.x; })
           .attr("cy", function(d, i) { return d.coordinates.y; })
-          .attr("fill", config.colors(g))
+          .attr("fill", "#ffffff" ||config.colors(g))
+          .attr('stroke',config.colors(g))
+          .attr('stroke-width',.3)
           .on(over, verticesTooltipShow)
           .on(out, verticesTooltipHide);
       });
@@ -365,7 +368,7 @@ export default  class {
     function verticesTooltipShow(d) {
       vis.verticesTooltip.style("opacity", 0.9)
         .html("<strong>Value</strong>: " + d.value + "<br />" +
-          "<strong>Description</strong>: " + d.description + "<br />")
+          "<strong>Description</strong>: " + d.axis + "<br />")
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px");
     }
