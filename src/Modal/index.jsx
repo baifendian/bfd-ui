@@ -1,9 +1,9 @@
 import 'bfd-bootstrap'
-import './main.less'
 import React, { PropTypes } from 'react'
-import classNames from 'classnames'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import './main.less'
 
-
+// 获取浏览器滚动条的宽度，模态框打开时隐藏 body 滚动条
 const scrollbarWidth = (() => {
   const scrollDiv = document.createElement('div')
   const body = document.body
@@ -24,8 +24,7 @@ const Modal = React.createClass({
 
   getInitialState() {
     return {
-      show: false,
-      fadeIn: false
+      isOpen: this.props.isOpen
     }
   },
 
@@ -41,41 +40,13 @@ const Modal = React.createClass({
   
   handleClick(e) {
     if (e.target.className.indexOf('modal-backdrop') !== -1) {
-      this.props.onClose()
+      this.setState({isOpen: false})
+      this.props.onClose && this.props.onClose()
     }
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.isOpen && !nextState.show) {
-      this.setState({show: true})
-      setTimeout(() => {
-        this.setState({fadeIn: true})
-      }, 10)
-      return false
-    }
-
-    if (!nextProps.isOpen && nextState.fadeIn) {
-      this.setState({fadeIn: false})
-      setTimeout(() => {
-        this.setState({show: false})
-      }, 300)
-      return false
-    }
-
-    const body = document.body
-    if (nextState.show) {
-      body.className = this.bodyClassName + ' modal-open'
-      body.style.paddingRight = this.bodyPaddingRight + scrollbarWidth + 'px'
-    } else {
-      body.className = this.bodyClassName
-      if (this.bodyPaddingRight) {
-        body.style.paddingRight = this.bodyPaddingRight + 'px'
-      } else {
-        body.style.paddingRight = ''
-      }
-    }
-
-    return true
+  componentWillReceiveProps(nextProps) {
+    this.setState({isOpen: nextProps.isOpen})  
   },
 
   componentDidMount() {
@@ -83,16 +54,37 @@ const Modal = React.createClass({
     this.bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
   },
 
+  componentWillUpdate(nextProps, nextState) {
+    const body = document.body
+    if (nextState.isOpen) {
+      body.className = this.bodyClassName + ' modal-open'
+      body.style.paddingRight = this.bodyPaddingRight + scrollbarWidth + 'px'
+    } else {
+      setTimeout(() => {
+        body.className = this.bodyClassName
+        if (this.bodyPaddingRight) {
+          body.style.paddingRight = this.bodyPaddingRight + 'px'
+        } else {
+          body.style.paddingRight = ''
+        }
+      }, 300)
+    }
+  },
+
   render() {
     return (
-      <div ref="modal" style={{display: this.state.show ? 'block' : 'none'}} className={classNames('modal fade', {'in': this.state.fadeIn}, this.props.className)}>
-        <div className={classNames('modal-backdrop fade', {'in': this.state.fadeIn})} onClick={this.handleClick}></div>
-        <div className="modal-dialog">
-          <div className="modal-content">
-            {this.props.children}
+      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+        {this.state.isOpen ? (
+          <div className="modal">
+            <div className="modal-backdrop" onClick={this.handleClick}></div>
+            <div className="modal-dialog">
+              <div className="modal-content">
+                {this.props.children}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        ) : null}
+      </ReactCSSTransitionGroup>
     )
   }
 })

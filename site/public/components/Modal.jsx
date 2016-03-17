@@ -3,7 +3,7 @@ import { Modal, ModalHeader, ModalBody } from 'c/Modal'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const App = React.createClass({
+export default React.createClass({
 
   getInitialState() {
     return {
@@ -14,29 +14,7 @@ const App = React.createClass({
   handleClick() {
     this.setState({isOpen: true})
   },
-
-  handleClose() {
-    this.setState({isOpen: false})
-  },
-
-  render() {
-    return (
-      <div>
-        <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-        <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
-          <ModalHeader>
-            <h4 className="modal-title">test</h4>
-          </ModalHeader>
-          <ModalBody>
-            dadasd
-          </ModalBody>
-        </Modal>
-      </div>
-    )
-  }
-})
-
-export default React.createClass({
+  
   render() {
     return (
       <div>
@@ -56,15 +34,11 @@ const App = React.createClass({
     this.setState({isOpen: true})
   },
 
-  handleClose() {
-    this.setState({isOpen: false})
-  },
-
   render() {
     return (
       <div>
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-        <Modal isOpen={this.state.isOpen} onClose={this.handleClose}>
+        <Modal isOpen={this.state.isOpen}>
           <ModalHeader>
             <h4 className="modal-title">test</h4>
           </ModalHeader>
@@ -78,12 +52,23 @@ const App = React.createClass({
 })`}
         </Pre>
 
-        <App/>
+        <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
+        <Modal isOpen={this.state.isOpen}>
+          <ModalHeader>
+            <h4 className="modal-title">test</h4>
+          </ModalHeader>
+          <ModalBody>
+            dadasd
+          </ModalBody>
+        </Modal>
         
         <Props>
-          <Prop name="isOpen" type="Boolean" desc="是否为打开状态"></Prop>
-          <Prop name="onClose" type="Function" desc="关闭事件的回调函数"></Prop>
-          <Prop name="onClose" type="Function" desc="同上"></Prop>
+          <Prop name="isOpen" type="Boolean" required>
+            <p>是否为打开状态</p>
+          </Prop>
+          <Prop name="onClose" type="Function">
+            <p>关闭事件的回调函数</p>
+          </Prop>
         </Props>
       </div>
     )
