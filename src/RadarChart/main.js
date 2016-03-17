@@ -1,217 +1,422 @@
 import d3 from 'd3'
-export default  class{
-  constructor(_opt){
-  var cfg = {
-   radius: 4,
-   w: 700,
-   h: 700,
-   factor: 1,
-   factorLegend: .85,
-   levels: 3,
-   maxValue: 0,
-   radians: 2 * Math.PI,
-   opacityArea: 0.5,
-   ToRight: 30,
-   TranslateX: 80,
-   TranslateY: 30,
-   ExtraWidthX: 150,      
-   ExtraWidthY: 150,
-   color: d3.scale.category10()
-  };
-  if('undefined' !== typeof options){
-    for(var i in options){
-      if('undefined' !== typeof options[i]){
-        cfg[i ] = options[i];
+import Color from '../colors'
+export default class {
+  constructor(config) {
+    this.draw('.' + config.className, config.data, config);
+
+  }
+  draw(id, data, options) {
+
+    // add touch to mouseover and mouseout
+    var over = "ontouchstart" in window ? "touchstart" : "mouseover";
+    var out = "ontouchstart" in window ? "touchend" : "mouseout";
+
+    /** Initiate default configuration parameters and vis object
+     *
+     **/
+    // initiate default config
+    var w = 500;
+    var h = 733;
+    var config = {
+      w: w,
+      h: h,
+      facet: false,
+      levels: 5,
+      levelScale: 0.75,
+      labelScale: 1.0,
+      facetPaddingScale: 2.5,
+      maxValue: 0,
+      radians: 2 * Math.PI,
+      polygonAreaOpacity: 0.3,
+      polygonStrokeOpacity: 1,
+      polygonPointSize: 4,
+      legendBoxSize: 10,
+      translateX: 150,
+      translateY: 5,
+      paddingX: 0,
+      paddingY: 0,
+      colors: d3.scale.category10(),
+      showLevels: true,
+      showLevelsLabels: true,
+      showAxesLabels: true,
+      showAxes: true,
+      showLegend: true,
+      showVertices: true,
+      showPolygons: true
+    };
+
+    // initiate main vis component
+    var vis = {
+      svg: null,
+      tooltip: null,
+      levels: null,
+      axis: null,
+      vertices: null,
+      legend: null,
+      allAxis: null,
+      total: null,
+      radius: null
+    };
+
+    // feed user configuration options
+    if ("undefined" !== typeof options) {
+      for (var i in options) {
+        if ("undefined" !== typeof options[i]) {
+          config[i] = options[i];
+        }
       }
     }
-  }
-  var d = _opt.data;
-  cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){return d3.max(i.map(function(o){return o.value;}))}));
-  var allAxis = (d[0].map(function(i, j){
-    return i["axis"]
-  }));
-  var total = allAxis.length;
-  var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
 
-  var Format = d3.format('%');
+    render(data); // render the visualization
 
-  d3.select("."+_opt.className).select("svg").remove();
+    /** helper functions
+     *
+     * @function: render: render the visualization
+     * @function: updateConfig: update configuration parameters
+     * @function: buildVis: build visualization using the other build helper functions
+     * @function: buildVisComponents: build main vis components
+     * @function: buildLevels: build "spiderweb" levels
+     * @function: buildLevelsLabels: build out the levels labels
+     * @function: buildAxes: builds out the axes
+     * @function: buildAxesLabels: builds out the axes labels
+     * @function: buildCoordinates: builds [x, y] coordinates of polygon vertices.
+     * @function: buildPolygons: builds out the polygon areas of the dataset
+     * @function: buildVertices: builds out the polygon vertices of the dataset
+     * @function: buildLegend:  builds out the legend
+     **/
+    // render the visualization
+    function render(data) {
+      // remove existing svg if exists
+      d3.select(id).selectAll("svg").remove();
+      updateConfig();
 
-  var g = d3.select("."+_opt.className)
-      .append("svg")
-      .attr("width", cfg.w-cfg.ExtraWidthX)
-      .attr("height", cfg.h-cfg.ExtraWidthY)
-      .append("g")
-      .attr("transform", "translate(" + 0 + "," + cfg.TranslateY + ")");
-      ;
+      if (config.facet) {
+        data.forEach(function(d, i) {
+          buildVis([d]); // build svg for each data group
 
-  var tooltip;
-  //Circular segments
-  for(var j=0; j<cfg.levels-1; j++){
-    var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
-    console.log(levelFactor);
-    g.selectAll(".levels")  
-     .data(allAxis)
-     .enter()
-     .append("svg:line")
-     .attr("x1", function(d, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-     .attr("y1", function(d, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
-     .attr("x2", function(d, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
-     .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
-     .attr("class", "line")
-     .style("stroke", "grey")
-     .style("stroke-opacity", "0.75")
-     .style("stroke-width", "0.3px")
-     .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
-  }
-
-  //Text indicating at what % each level is
-  for(var j=0; j<cfg.levels; j++){
-    var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
-    g.selectAll(".levels")
-     .data([1]) //dummy data
-     .enter()
-     .append("svg:text")
-     .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
-     .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
-     .attr("class", "legend")
-     .style("font-family", "sans-serif")
-     .style("font-size", "10px")
-     .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
-     .attr("fill", "#737373")
-     .text(Format((j+1)*cfg.maxValue/cfg.levels));
-  }
-
-  let series = 0 , dataValues=[];
-
-  var axis = g.selectAll(".axis")
-      .data(allAxis)
-      .enter()
-      .append("g")
-      .attr("class", "axis");
-
-  axis.append("line")
-    .attr("x1", (cfg.w-cfg.ExtraWidthX)/2)
-    .attr("y1", (cfg.h-cfg.ExtraWidthX)/2)
-    .attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-    .attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
-    .attr("class", "line")
-    .style("stroke", "grey")
-    .style("stroke-width", "1px");
-
-  axis.append("text")
-    .attr("class", "legend")
-    .text(function(d){return d})
-    .style("font-family", "sans-serif")
-    .style("font-size", "11px")
-    .attr("text-anchor", "middle")
-    .attr("dy", "1.5em")
-    .attr("transform", function(d, i){return "translate(0, -10)"})
-    .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-    .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+          // override colors
+          vis.svg.selectAll(".polygon-areas")
+            .attr("stroke", config.colors(i))
+            .attr("fill", config.colors(i));
+          vis.svg.selectAll(".polygon-vertices")
+            .attr("fill", config.colors(i));
+          vis.svg.selectAll(".legend-tiles")
+            .attr("fill", config.colors(i));
+        });
+      } else {
+        buildVis(data); // build svg
+      }
+    }
 
 
-  d.forEach(function(y, x){
-    dataValues = [];
-    g.selectAll(".nodes")
-    .data(y, function(j, i){
-      dataValues.push([
-      cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-      cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
-      ]);
-    });
-    dataValues.push(dataValues[0]);
-    g.selectAll(".area")
-           .data([dataValues])
-           .enter()
-           .append("polygon")
-           .attr("class", "radar-chart-serie"+series)
-           .style("stroke-width", "2px")
-           .style("stroke", cfg.color(series))
-           .attr("points",function(d) {
-             var str="";
-             for(var pti=0;pti<d.length;pti++){
-               str=str+d[pti][0]+","+d[pti][1]+" ";
-             }
-             return str;
-            })
-           .style("fill", function(j, i){return cfg.color(series)})
-           .style("fill-opacity", cfg.opacityArea)
-           .on('mouseover', function (d){
-
-                  let   z = "polygon."+d3.select(this).attr("class");
-                    g.selectAll("polygon")
-                     .transition(200)
-                     .style("fill-opacity", 0.1);
-                    g.selectAll(z)
-                     .transition(200)
-                     .style("fill-opacity", .7);
-                    })
-           .on('mouseout', function(){
-                    g.selectAll("polygon")
-                     .transition(200)
-                     .style("fill-opacity", cfg.opacityArea);
-           });
-    series++;
-  });
-  series=0;
+    // update configuration parameters
+    function updateConfig() {
+      // adjust config parameters
+      config.maxValue = Math.max(config.maxValue, d3.max(data, function(d) {
+        return d3.max(d, function(o) {
+          return o.value;
+        });
+      }));
+      console.log(config.maxValue);
+      config.w *= config.levelScale;
+      config.h *= config.levelScale;
+      config.paddingX = config.w * config.levelScale;
+      config.paddingY = config.h * config.levelScale;
 
 
-  d.forEach(function(y, x){
-    g.selectAll(".nodes")
-    .data(y).enter()
-    .append("svg:circle")
-    .attr("class", "radar-chart-serie"+series)
-    .attr('r', cfg.radius)
-    .attr("alt", function(j){return Math.max(j.value, 0)})
-    .attr("cx", function(j, i){
-      dataValues.push([
-      cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-      cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
-    ]);
-    return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
-    })
-    .attr("cy", function(j, i){
-      return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
-    })
-    .attr("data-id", function(j){return j.axis})
-    .style("fill", cfg.color(series)).style("fill-opacity", .9)
-    .on('mouseover', function (d){
-        let newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-        let newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+      // if facet required:
+      if (config.facet) {
+        config.w /= data.length;
+        config.h /= data.length;
+        config.paddingX /= (data.length / config.facetPaddingScale);
+        config.paddingY /= (data.length / config.facetPaddingScale);
+        config.polygonPointSize *= Math.pow(0.9, data.length);
+      }
+    }
 
-          tooltip
-            .attr('x', newX)
-            .attr('y', newY)
-            .text(Format(d.value))
-            .transition(200)
-            .style('opacity', 1);
 
-        let z = "polygon."+d3.select(this).attr("class");
-          g.selectAll("polygon")
-            .transition(200)
-            .style("fill-opacity", 0.1);
-          g.selectAll(z)
-            .transition(200)
-            .style("fill-opacity", .7);
+    //build visualization using the other build helper functions
+    function buildVis(data) {
+      buildVisComponents();
+      buildCoordinates(data);
+      if (config.showLevels) buildLevels();
+      if (config.showLevelsLabels) buildLevelsLabels();
+      if (config.showAxes) buildAxes();
+      if (config.showAxesLabels) buildAxesLabels();
+      if (config.showLegend) buildLegend(data);
+      if (config.showVertices) buildVertices(data);
+      if (config.showPolygons) buildPolygons(data);
+    }
+
+    // build main vis components
+    function buildVisComponents() {
+      // update vis parameters
+      vis.allAxis = data[0].map(function(i, j) {
+        return i.axis;
+      });
+      vis.totalAxes = vis.allAxis.length;
+      vis.radius = Math.min(config.w / 2, config.h / 2);
+
+      // create main vis svg
+      vis.svg = d3.select(id)
+        .append("svg").classed("svg-vis", true)
+        .attr("width", config.w + config.paddingX)
+        .attr("height", config.h)
+        .append("svg:g")
+        .attr("transform", "translate(" + config.translateX + "," + config.translateY + ")");
+
+      console.log(config.paddingX);
+      console.log(config.h);
+
+      // create verticesTooltip
+      vis.verticesTooltip = d3.select("body")
+        .append("div").classed("verticesTooltip", true)
+        .attr("opacity", 0)
+        .style({
+          "position": "absolute",
+          "color": "black",
+          "font-size": "10px",
+          "width": "100px",
+          "height": "auto",
+          "padding": "5px",
+          "border": "1px solid gray",
+          "border-radius": "2px",
+          "pointer-events": "none",
+          "opacity": "0",
+          "background": "#718395",
+          "color": "#ffffff"
+        });
+
+
+      // create levels
+      vis.levels = vis.svg.selectAll(".levels")
+        .append("svg:g").classed("levels", true);
+
+      // create axes
+      vis.axes = vis.svg.selectAll(".axes")
+        .append("svg:g").classed("axes", true);
+
+      // create vertices
+      vis.vertices = vis.svg.selectAll(".vertices");
+
+      //Initiate Legend 
+      vis.legend = vis.svg.append("svg:g").classed("legend", true)
+        .attr("height", config.h / 2)
+        .attr("width", config.w / 2)
+        .attr("transform", "translate(" + 0 + ", " + 1.1 * config.h + ")");
+    }
+
+
+    // builds out the levels of the spiderweb
+    function buildLevels() {
+      for (var level = 0; level < config.levels; level++) {
+        var levelFactor = vis.radius * ((level + 1) / config.levels);
+
+        // build level-lines
+        vis.levels
+          .data(vis.allAxis).enter()
+          .append("svg:line").classed("level-lines", true)
+          .attr("x1", function(d, i) {
+            return levelFactor * (1 - Math.sin(i * config.radians / vis.totalAxes));
           })
-    .on('mouseout', function(){
-          tooltip
-            .transition(200)
-            .style('opacity', 0);
-          g.selectAll("polygon")
-            .transition(200)
-            .style("fill-opacity", cfg.opacityArea);
+          .attr("y1", function(d, i) {
+            return levelFactor * (1 - Math.cos(i * config.radians / vis.totalAxes));
           })
-    .append("svg:title")
-    .text(function(j){return Math.max(j.value, 0)});
+          .attr("x2", function(d, i) {
+            return levelFactor * (1 - Math.sin((i + 1) * config.radians / vis.totalAxes));
+          })
+          .attr("y2", function(d, i) {
+            return levelFactor * (1 - Math.cos((i + 1) * config.radians / vis.totalAxes));
+          })
+          .attr("transform", "translate(" + (config.w / 2 - levelFactor) + ", " + (config.h / 2 - levelFactor) + ")")
+          .attr("stroke", "gray")
+          .attr("stroke-width", "0.5px");
+      }
+    }
 
-    series++;
-  });
-  //Tooltip
-  tooltip = g.append('text')
-         .style('opacity', 0)
-         .style('font-family', 'sans-serif')
-         .style('font-size', '13px');
+
+    // builds out the levels labels
+    function buildLevelsLabels() {
+      for (var level = 0; level < config.levels; level++) {
+        var levelFactor = vis.radius * ((level + 1) / config.levels);
+
+        // build level-labels
+        vis.levels
+          .data([1]).enter()
+          .append("svg:text").classed("level-labels", true)
+          .text((config.maxValue * (level + 1) / config.levels).toFixed(2))
+          .attr("x", function(d) {
+            return levelFactor * (1 - Math.sin(0));
+          })
+          .attr("y", function(d) {
+            return levelFactor * (1 - Math.cos(0));
+          })
+          .attr("transform", "translate(" + (config.w / 2 - levelFactor + 5) + ", " + (config.h / 2 - levelFactor) + ")")
+          .attr("fill", "gray")
+          .attr("font-family", "sans-serif")
+          .attr("font-size", 10 * config.labelScale + "px");
+      }
+    }
+
+
+    // builds out the axes
+    function buildAxes() {
+      vis.axes
+        .data(vis.allAxis).enter()
+        .append("svg:line").classed("axis-lines", true)
+        .attr("x1", config.w / 2)
+        .attr("y1", config.h / 2)
+        .attr("x2", function(d, i) {
+          return config.w / 2 * (1 - Math.sin(i * config.radians / vis.totalAxes));
+        })
+        .attr("y2", function(d, i) {
+          return config.h / 2 * (1 - Math.cos(i * config.radians / vis.totalAxes));
+        })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px");
+    }
+
+
+    // builds out the axes labels
+    function buildAxesLabels() {
+      vis.axes
+        .data(vis.allAxis).enter()
+        .append("svg:text").classed("axis-labels", true)
+        .text(function(d) {
+          return d;
+        })
+        .attr("text-anchor", "middle")
+        .attr("x", function(d, i) {
+          return config.w / 2 * (1 - 1.3 * Math.sin(i * config.radians / vis.totalAxes));
+        })
+        .attr("y", function(d, i) {
+          return config.h / 2 * (1 - 1.1 * Math.cos(i * config.radians / vis.totalAxes));
+        })
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 11 * config.labelScale + "px");
+    }
+
+
+    // builds [x, y] coordinates of polygon vertices.
+    function buildCoordinates(data) {
+      data.forEach(function(group) {
+        group.forEach(function(d, i) {
+          d.coordinates = { // [x, y] coordinates
+            x: config.w / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / config.maxValue) * Math.sin(i * config.radians / vis.totalAxes)),
+            y: config.h / 2 * (1 - (parseFloat(Math.max(d.value, 0)) / config.maxValue) * Math.cos(i * config.radians / vis.totalAxes))
+          };
+        });
+      });
+    }
+
+
+    // builds out the polygon vertices of the dataset
+    function buildVertices(data) {
+      data.forEach(function(group, g) {
+        vis.vertices
+          .data(group).enter()
+          .append("svg:circle").classed("polygon-vertices", true)
+          .attr("r", config.polygonPointSize)
+          .attr("cx", function(d, i) {
+            return d.coordinates.x;
+          })
+          .attr("cy", function(d, i) {
+            return d.coordinates.y;
+          })
+          .attr("fill", "#ffffff" || config.colors(g))
+          .attr('stroke', config.colors(g))
+          .attr('stroke-width', .8)
+          .on(over, verticesTooltipShow)
+          .on(out, verticesTooltipHide);
+      });
+    }
+
+
+    // builds out the polygon areas of the dataset
+    function buildPolygons(data) {
+      vis.vertices
+        .data(data).enter()
+        .append("svg:polygon").classed("polygon-areas", true)
+        .attr("points", function(group) { // build verticesString for each group
+          var verticesString = "";
+          group.forEach(function(d) {
+            verticesString += d.coordinates.x + "," + d.coordinates.y + " ";
+          });
+          return verticesString;
+        })
+        .attr("stroke-width", "2px")
+        .attr("stroke", function(d, i) {
+          return config.colors(i);
+        })
+        .attr("fill", function(d, i) {
+          return config.colors(i);
+        })
+        .attr("fill-opacity", config.polygonAreaOpacity)
+        .attr("stroke-opacity", config.polygonStrokeOpacity)
+        .on(over, function(d) {
+          vis.svg.selectAll(".polygon-areas") // fade all other polygons out
+          .transition(250)
+            .attr("fill-opacity", 0.1)
+            .attr("stroke-opacity", 0.1);
+          d3.select(this) // focus on active polygon
+          .transition(250)
+            .attr("fill-opacity", 0.7)
+            .attr("stroke-opacity", config.polygonStrokeOpacity);
+        })
+        .on(out, function() {
+          d3.selectAll(".polygon-areas")
+            .transition(250)
+            .attr("fill-opacity", config.polygonAreaOpacity)
+            .attr("stroke-opacity", 1);
+        });
+    }
+
+
+    // builds out the legend
+    function buildLegend(data) {
+      //Create legend squares
+      vis.legend.selectAll(".legend-tiles")
+        .data(data).enter()
+        .append("svg:rect").classed("legend-tiles", true)
+        .attr("x", config.w - config.paddingX / 2)
+        .attr("y", function(d, i) {
+          return i * 2 * config.legendBoxSize;
+        })
+        .attr("width", config.legendBoxSize)
+        .attr("height", config.legendBoxSize)
+        .attr("fill", function(d, g) {
+          return config.colors(g);
+        });
+
+      //Create text next to squares
+      vis.legend.selectAll(".legend-labels")
+        .data(data).enter()
+        .append("svg:text").classed("legend-labels", true)
+        .attr("x", config.w - config.paddingX / 2 + (1.5 * config.legendBoxSize))
+        .attr("y", function(d, i) {
+          return i * 2 * config.legendBoxSize;
+        })
+        .attr("dy", 0.07 * config.legendBoxSize + "em")
+        .attr("font-size", 11 * config.labelScale + "px")
+        .attr("fill", "gray")
+        .text(function(d) {
+          return d.group;
+        });
+    }
+
+
+    // show tooltip of vertices
+    function verticesTooltipShow(d) {
+      vis.verticesTooltip.style("opacity", 0.9)
+        .html("<strong>Value</strong>: " + d.value + "<br />" +
+          "<strong>Description</strong>: " + d.axis + "<br />")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px");
+    }
+
+    // hide tooltip of vertices
+    function verticesTooltipHide() {
+      vis.verticesTooltip.style("opacity", 0);
+    }
   }
-}
+};

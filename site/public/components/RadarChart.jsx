@@ -22,7 +22,7 @@ export default React.createClass({
         <RadarChart url="/data/radarChart.json"/>
         
         <Props>
-          <Prop name="w" type="number">
+          <Prop name="w" type="number" required>
             <p>宽度:w</p>
             <Pre>
 {`{
@@ -30,8 +30,8 @@ export default React.createClass({
 }`}
             </Pre>
           </Prop>
-          <Prop>
-            <p>高度:h　</p>
+          <Prop name="h" type="number" required>
+            <p>高度:h</p>
             <Pre>
 {`{
   h:550

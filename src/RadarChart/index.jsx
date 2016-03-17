@@ -1,7 +1,7 @@
 import React from "react"
-import RadarChart from "./main2"
-import Chart from './chart'
-import "./main.css"
+import RadarChart from "./main"
+import Chart from '../chart'
+import "./main.less"
 
 export default React.createClass({
   render() {
