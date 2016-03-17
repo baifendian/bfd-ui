@@ -39,7 +39,7 @@ export default React.createClass({
             </Pre>
           </Prop>
       <Prop name="showLevels" type="boolean" default="true">
-        <p>是否显示，默认是显示的</p>
+        <p>是否显示图形底部圆，默认是显示的</p>
         <Pre>
 {`{
   showLevels:false
@@ -113,9 +113,9 @@ export default React.createClass({
       <Prop name="polygonPointSize" type="int" default="4">
         <p>设置多边形的点的透明度，4</p>
         <Pre>
-  {`{
-    polygonPointSize:15
-  }`}
+{`{
+  polygonPointSize:15
+}`}
   </Pre>
       </Prop>
       <Prop name="translateX: " type="Int" default="150">
