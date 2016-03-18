@@ -1,14 +1,11 @@
 import React from 'react'
-import Form from 'c/Form'
+import { Form, FormItem } from 'c/Form'
 import { CheckboxGroup, Checkbox } from 'c/Checkbox'
 import { Select, Option} from 'c/Select'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 
-
-
-const FormItem = Form.Item;
 let isSuccess;
 const Demo = React.createClass({ 
 
@@ -145,10 +142,10 @@ export default React.createClass({
         <h1>表单</h1>
         <Pre>
 {`
-import Form from 'bfd-ui/lib/Form'
-import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/CheckboxGroup'
+import { Form, FormItem } from 'c/Form'
+import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 import { Select ,Option} from 'bfd-ui/lib/Select'
-const FormItem = Form.Item;
+
 let isSuccess;
 const Demo = React.createClass({ 
   //初始化表单数据。
