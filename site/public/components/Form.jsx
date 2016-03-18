@@ -1,9 +1,12 @@
 import React from 'react'
 import Form from 'c/Form'
-import { CheckboxGroup, Checkbox } from 'c/CheckboxGroup'
+import { CheckboxGroup, Checkbox } from 'c/Checkbox'
 import { Select, Option} from 'c/Select'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+
+
+
 
 const FormItem = Form.Item;
 let isSuccess;
@@ -266,18 +269,35 @@ const Demo = React.createClass({
         </Pre>
 
         <Demo/>  
+        <h3>Form 属性</h3>
+        <Props>
+          <Prop name="onSubmit" type="Function" required>
+            <p>表单提交按钮</p>           
+          </Prop>
+          <Prop name="isSuccess" type="Function" required>
+            <p>获取每个FormItem是否验证通过</p>
+          </Prop>
+          <Prop name="sibmitStatus" type="Boolean">
+            <p>设置提交按钮状态。设置为true则一开始就验证，设置为false则点了提交按钮才验证。</p>            
+          </Prop>
+        </Props>
+        <h3>FormItem 属性</h3>
+        <Props>
+          <Prop name="label" type="String" required>
+            <p>表单字段名称</p>    
+          </Prop>
 
-        <Props title="Form 属性">
-          <Prop name="onSubmit" type="Function" desc="表单提交按钮" required></Prop>
-          <Prop name="isSuccess" type="Function" desc="获取每个FormItem是否验证通过" required></Prop>
-          <Prop name="sibmitStatus" type="Boolean" desc="设置提交按钮状态。设置为true则一开始就验证，设置为false则点了提交按钮才验证。" required></Prop>
-        </Props> 
-        <Props title="FormItem 属性">
-          <Prop name="label" type="String" desc="表单字段名称" required></Prop>
-          <Prop name="validate" type="Object" desc="验证条件" required></Prop>
-          <Prop name="required" type="Boolean" desc="是否必须"></Prop>
-          <Prop name="submit" type="Boolean" desc="表示是submit提交按钮"></Prop>
-        </Props> 
+          <Prop name="validate" type="Object" required>
+            <p>验证条件</p>    
+          </Prop>
+          <Prop name="required" type="Boolean">
+            <p>是否必须</p>    
+          </Prop>
+          <Prop name="submit" type="Boolean">
+            <p>表示是submit提交按钮</p>    
+          </Prop>
+
+        </Props>
 
     </div>
     )

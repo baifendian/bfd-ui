@@ -21,15 +21,20 @@ const App = React.createClass({
         <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
         
         <Props>
-          <Prop name="name" type="String" desc="tooltip标题"></Prop>
-          <Prop name="radius" type="Object" desc="饼图的内圆半径比例">
+          <Prop name="name" type="String" required>
+            <p>tooltip标题</p> 
+          </Prop>
+          <Prop name="radius" type="Object">
+                <p>饼图的内圆半径比例</p> 
+
             <Pre>
 {`{
     inner:0.75
 }`}
             </Pre>
           </Prop>
-          <Prop name="animation" type="Object" desc="饼图的动画时间参数">
+          <Prop name="animation" type="Object">
+            <p>饼图的动画时间参数</p> 
             <Pre>
 {`{
     pie:2500,
@@ -38,6 +43,7 @@ const App = React.createClass({
             </Pre>
           </Prop>
           <Prop name="tooltip" type="Object" desc="悬浮提示框配置">
+            <p>悬浮提示框配置</p> 
             <Pre>
 {`{
  //禁用提示框，默认启用

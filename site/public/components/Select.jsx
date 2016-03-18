@@ -95,15 +95,22 @@ import { Select ,Option} from 'bfd-ui/lib/Select'
   `}
         </Pre>
 
-        <App/>       
-        <Props title="Select 属性">
-          <Prop name="selected" desc="选中的值"></Prop>
-          <Prop name="onChange" type="Function" desc="选择后的回调"></Prop>
-          <Prop name="multiple" type="Boolean" desc="true表示可以多选，flase表示单选。默认为单选。"></Prop>
-        </Props>        
-        <Props title="Option 属性">
-           <Prop name="value" desc="下拉框值"></Prop>
-        </Props>
+        <App/>  
+
+        <Props>
+          <Prop name="selected" required>
+            <p>选中的值</p>    
+          </Prop>
+          <Prop name="onChange" type="Function" required>
+            <p>选择后的回调</p>    
+          </Prop>
+          <Prop name="multiple" type="Boolean">
+            <p>true表示可以多选，flase表示单选。默认为单选。</p>    
+          </Prop>
+          <Prop name="value" required>
+            <p>下拉框值</p>    
+          </Prop>
+        </Props>    
          
       </div>
     )
