@@ -21,40 +21,19 @@ const Select = React.createClass({
 	},	
 
 	getChildContext() {
-			return {
-				getSelected: () => this.props.selected,
-				setSelected: (value, text) => {
-					if (this.props.multiple) {
-						let _arr = this.state.arr;						
-						this.isInArray(value, _arr) ? _arr = this.removeObjInArr(value,_arr) :  _arr.push(value);
-						this.setState({	arr: _arr });
-						this.props.onChange(_arr);
-					} else {
-						this.props.onChange(value);
-					}
+		return {
+			getSelected: () => this.props.selected,
+			setSelected: (value, text) => {
+				if (this.props.multiple) {
+					let _arr = this.state.arr;						
+					_arr.indexOf(value) != -1 ? _arr.splice(_arr.indexOf(value),1) :  _arr.push(value);
+					this.setState({	arr: _arr });
+					this.props.onChange(_arr);
+				} else {
+					this.props.onChange(value);         
 				}
 			}
-		},
-
-	isInArray(obj, arr) {
-		var flag = false;
-		arr.map(function(item, i) {
-			if (item == obj) {
-				flag = true;
-			}
-		})
-		return flag;
-	},
-
-	removeObjInArr(obj,arr){
-		let _arr=[];
-		for(var k in arr){
-			if(obj == arr[k]){
-				continue;
-			}
-			_arr.push(arr[k]);
 		}
-		return _arr;
 	},
 
 	render() {	
