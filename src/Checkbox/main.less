@@ -1,18 +1,23 @@
 .bfd-checkbox {
   &.checkbox-inline {
-    padding-left: 25px;
+    padding-left: 0;
+    > label {
+      padding-left: 25px;
+      position: relative;
+      margin-bottom: 0;
+    }
     +.checkbox-inline {
       margin-left: 20px;
     }
   }
   &:hover {
-    > .status {
+    .status {
       &:before {
         border-color: #666;
       }
     }
   }
-  > input[type="checkbox"] {
+  input[type="checkbox"] {
     display: none;
     &:checked {
       + .status {
@@ -25,7 +30,7 @@
       }
     }
   }
-  > .status {
+  .status {
     pointer-events: none;
     + span {
       pointer-events: none;
@@ -57,8 +62,4 @@
       transition: transform .2s;
     }
   }
-}
-
-.form-horizontal .status:after{
-  top:8px!important;
 }
