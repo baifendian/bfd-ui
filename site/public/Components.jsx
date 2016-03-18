@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
+import components from './components.json'
 import './less/components.less'
 
 export default React.createClass({
@@ -8,7 +9,7 @@ export default React.createClass({
       <div className="components">
       {this.props.children ? this.props.children : (
         <ul>
-        {window.components.map((component, i) => {
+        {components.map((component, i) => {
           return (
             <li key={i}>
               <Link to={'/components/' + component.name}>
