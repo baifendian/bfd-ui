@@ -120,8 +120,9 @@ const App = React.createClass({
         <DataTable url="/data/table.json" column={column} howRow={10} />
         
         <Props>
-          <Prop name="url" type="String" desc="要请求数据的服务端地址"></Prop>
-          <Prop name="showRow" type="Integer" desc="每页需要显示的条数">
+          <Prop name = "url" type="String" required  type="要请求数据的服务端地址"></Prop>
+          <Prop name = "column" type="ArrayJson" required type = "数据表格表头列名"></Prop>
+          <Prop name="howRow" type="Integer" required type="每页需要显示的条数">
             <Pre>
 {`{
   title:'操作',
