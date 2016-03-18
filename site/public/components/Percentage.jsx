@@ -8,7 +8,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>环比图</h1>
+        <h1>环形百分比</h1>
         <Pre>
 {`import Percentage from 'bfd-ui/lib/Percentage'
 
