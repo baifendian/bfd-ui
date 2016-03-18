@@ -8,7 +8,8 @@ export default React.createClass({
     return (
       <div>
         <h1>日期选择</h1>
-        <h2>单选 DatePicker</h2>
+        <h2>DatePicker</h2>
+        <p>单选日期</p>
         <Pre>
 {`import { DatePicker } from 'bfd-ui/lib/DatePicker'
 
@@ -39,7 +40,8 @@ const App = React.createClass({
           </Prop>
         </Props>
 
-        <h2>日期段选择 DateRange</h2>
+        <h2>DateRange</h2>
+        <p>日期段选择</p>
         <Pre>
 {`import { DateRange } from 'bfd-ui/lib/DatePicker'
 

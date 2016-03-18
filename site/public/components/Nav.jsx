@@ -52,6 +52,18 @@ ReactDOM.render((
   </Router>
 ), document.getElementById('app'))`}
         </Pre>
+        <h2>NavItem</h2>
+        <Props>
+          <Prop name="href" type="String" required>
+            <p>菜单 URL</p>
+          </Prop>
+          <Prop name="icon" type="String">
+            <p>菜单图标，一级菜单配置，图标请参考 Bootstrap 图标</p>
+          </Prop>
+          <Prop name="title" type="String" required>
+            <p>菜单名称</p>
+          </Prop>
+        </Props>
       </div>
     )
   }

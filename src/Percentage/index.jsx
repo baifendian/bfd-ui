@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Percentage from './main'
+import './main.less'
 
 export default React.createClass({
+
+  propTypes: {
+    percent: PropTypes.number.isRequired
+  },
   
-  renderChart() {  
+  renderChart() {
     const config = {container: this.refs.container, ...this.props}  
     new Percentage(config)
   },
@@ -20,7 +25,7 @@ export default React.createClass({
   },
 
   render() {
-    return <div ref="container" style={{width:'400px',background:'#81d4fa'}} id="test"></div>
+    return <div ref="container" className="bfd-percentage"></div>
   }
 })
 

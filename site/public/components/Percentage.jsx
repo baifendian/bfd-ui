@@ -3,13 +3,6 @@ import Percentage from 'c/Percentage'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const config = { 
-  data : 80,
-  outterColor : '#b3e5fc',
-  innerColor : '#fff',
-  textColor : '#fff'
-}
-
 export default React.createClass({
   
   render() {
@@ -21,18 +14,27 @@ export default React.createClass({
 
 const App = React.createClass({
   render() {
-    return <Percentage config={config}></Percentage>
+    return <Percentage percent={80}></Percentage>
   }
 })`}
         </Pre>
 
-        <Percentage config={config}></Percentage>
+        <div style={{width:'200'}}>
+          <Percentage percent={80}></Percentage>
+        </div>
         
         <Props>
-          <Prop>
-            <Pre>
-{`说明：config.data为百分比数值，类型为int。`}
-            </Pre>
+          <Prop name="percent" type="Number" required>
+            <p>百分比值</p>
+          </Prop>
+          <Prop name="foreColor" type="String">
+            <p>前景色</p>
+          </Prop>
+          <Prop name="backColor" type="String">
+            <p>背景色</p>
+          </Prop>
+          <Prop name="textColor" type="String">
+            <p>文字景色</p>
           </Prop>
         </Props>
       </div>

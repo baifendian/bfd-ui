@@ -20,7 +20,23 @@ const App = React.createClass({
         <BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />
         
         <Props>
-          <Prop name="url" type="String" desc="数据源，返回格式参考：">
+          <Prop name="radiusMaker" type="String" required>
+            <p>决定气泡大小的数据字段名</p>
+          </Prop>
+          <Prop name="name" type="String" required>
+            <p>名称字段名，文字第一行</p>
+          </Prop>
+          <Prop name="value" type="Object" required>
+            <p>值配置，文字第二行</p>
+            <Pre>
+{`{
+  key: 'x', // 必填，值字段名
+  format: '.2%' // 可选，格式化配置
+}`}
+            </Pre>
+          </Prop>
+          <Prop name="url" type="String" required>
+            <p>数据源 URL，返回格式要求：</p>
             <Pre>
 {`{
   "code": 200,
@@ -31,16 +47,6 @@ const App = React.createClass({
     "x": 499,
     "name": "华为"
   }]
-}`}
-            </Pre>
-          </Prop>
-          <Prop name="radiusMaker" type="String" desc="决定气泡大小的数据字段名"></Prop>
-          <Prop name="name" type="String" desc="名称字段名，文字第一行"></Prop>
-          <Prop name="value" type="Object" desc="值配置，文字第二行">
-            <Pre>
-{`{
-  key: 'x', // 必填，值字段名
-  format: '.2%' // 可选，格式化配置
 }`}
             </Pre>
           </Prop>

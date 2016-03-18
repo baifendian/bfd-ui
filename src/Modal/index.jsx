@@ -34,15 +34,19 @@ const Modal = React.createClass({
 
   getChildContext() {
     return {
-      onClose: this.props.onClose
+      onClose: this.close
     }
   },
   
   handleClick(e) {
     if (e.target.className.indexOf('modal-backdrop') !== -1) {
-      this.setState({isOpen: false})
-      this.props.onClose && this.props.onClose()
+      this.close()
     }
+  },
+
+  close() {
+    this.setState({isOpen: false})
+    this.props.onClose && this.props.onClose()
   },
 
   componentWillReceiveProps(nextProps) {

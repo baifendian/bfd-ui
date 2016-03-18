@@ -13,7 +13,7 @@ export default React.createClass({
             <li key={i}>
               <Link to={'/components/' + component.name}>
                 <div>{component.cn}</div>
-                <img src={'/images/' + component.name + '.png'}/>
+                <img src={'/images/' + component.name + '.jpg'}/>
               </Link>
             </li>
           )
