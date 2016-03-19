@@ -4,6 +4,11 @@ import { Props, Prop } from '../Props'
 import { DatePicker, DateRange } from 'c/DatePicker'
 
 export default React.createClass({
+
+  handleSelect() {
+    this.setState({aa: 1})
+  },
+
   render() {
     return (
       <div>
@@ -20,7 +25,7 @@ const App = React.createClass({
 })`}
         </Pre>
 
-        <DatePicker date="2016-02-03"/>
+        <DatePicker date="2016-02-03" onSelect={this.handleSelect}/>
         
         <Props>
           <Prop name="date" type="Number | String">

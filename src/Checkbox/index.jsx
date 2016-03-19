@@ -15,7 +15,9 @@ const CheckboxGroup = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({selects: nextProps.selects})  
+    if (this.props.selects !== nextProps.selects) {
+      this.setState({selects: nextProps.selects})
+    }
   },
 
   childContextTypes: {

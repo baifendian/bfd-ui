@@ -26,14 +26,14 @@ const App = React.createClass({
 })`}
         </Pre>
 
-      <Tabs>
-        <TabList>
-          <Tab>群体特征报告</Tab>
-          <Tab>样例用户画像</Tab>
-        </TabList>
-        <TabPanel>我是群体特征报告</TabPanel>
-        <TabPanel>我是样例用户画像</TabPanel>
-      </Tabs>
+        <Tabs>
+          <TabList>
+            <Tab>群体特征报告</Tab>
+            <Tab>样例用户画像</Tab>
+          </TabList>
+          <TabPanel>我是群体特征报告</TabPanel>
+          <TabPanel>我是样例用户画像</TabPanel>
+        </Tabs>
         
       </div>
     )

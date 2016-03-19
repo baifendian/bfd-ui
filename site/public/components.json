@@ -58,4 +58,7 @@
 }, {
   "name": "Loading",
   "cn": "AJAX加载管理"
+}, {
+  "name": "Dropdown",
+  "cn": "下拉菜单"
 }]

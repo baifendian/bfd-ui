@@ -1,16 +1,15 @@
 import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import Calendar from './Calendar'
-import classnames from 'classnames'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
-import DropDownMixin from '../DropDownMixin'
+import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import './less/datePicker.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 export default React.createClass({
 
-  mixins: [PureRenderMixin, DropDownMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     date: checkDateTime,
@@ -21,14 +20,16 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      date: this.props.date
+      date: this.props.date || Date.now()
     }
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      date: nextProps.date,
-    })
+    if (this.props.date !== nextProps.date) {
+      this.setState({
+        date: nextProps.date,
+      })
+    }
   },
 
   handleSelect(date) {
@@ -38,17 +39,14 @@ export default React.createClass({
 
   render() {
     return (
-      <div onClick={this.stopPropagation} className={classnames('bfd-datepicker dropdown', {open: this.state.isOpen})}>
-        <div onClick={this.handleToggle}>
+      <Dropdown className="bfd-datepicker">
+        <DropdownToggle>
           <input type="text" className="form-control input-sm" value={new Date(this.state.date).toLocaleDateString()} readOnly/>
-        </div>
-        {
-          this.state.isOpen ? (
-          <div className="dropdown-menu">
-            <Calendar date={this.state.date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect}></Calendar>
-          </div> ) : null
-        }
-      </div>
+        </DropdownToggle>
+        <DropdownMenu>
+          <Calendar date={this.state.date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect}></Calendar>
+        </DropdownMenu>
+      </Dropdown>
     )
   }
 })
