@@ -35,8 +35,6 @@ var config = {
       test: /\.less$/,
       loader: 'style!css!less'
     }],
-    noParse: []
-    // ,
     // preLoaders: [{
     //   test: /\jsx?$/,
     //   loader: "eslint-loader",

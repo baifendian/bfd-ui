@@ -1,64 +1,66 @@
 .bfd-checkbox {
   &.checkbox-inline {
-    padding-left: 25px;
+    padding-left: 0;
+    > label {
+      padding-left: 25px;
+      position: relative;
+      margin-bottom: 0;
+      cursor: pointer;
+      &:hover {
+        > .status {
+          &:before {
+            border-color: #666;
+          }
+        }
+      }
+      > input[type="checkbox"] {
+        display: none;
+        &:checked {
+          + .status {
+            &:before {
+              border-color: #2196f3;
+            }
+            &:after {
+              transform: rotate(45deg) scale(1);
+            }
+          }
+        }
+      }
+      > .status {
+        pointer-events: none;
+        + span {
+          pointer-events: none;
+        }
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          margin-top: -9px;
+          width: 18px;
+          height: 18px;
+          border: 1px solid #9e9e9e;
+          border-radius: 2px;
+          transition: border-color .2s;
+        }
+        &:after {
+          content: '';
+          position: absolute;
+          left: 6px;
+          top: 4px;
+          width: 6px;
+          height: 10px;
+          border: 2px solid #2196f3;
+          border-top: 0;
+          border-left: 0;
+          transform: rotate(45deg) scale(0);
+          border-radius: 2px;
+          transition: transform .2s;
+        }
+      }
+    }
     +.checkbox-inline {
       margin-left: 20px;
     }
   }
-  &:hover {
-    > .status {
-      &:before {
-        border-color: #666;
-      }
-    }
-  }
-  > input[type="checkbox"] {
-    display: none;
-    &:checked {
-      + .status {
-        &:before {
-          border-color: #2196f3;
-        }
-        &:after {
-          transform: rotate(45deg) scale(1);
-        }
-      }
-    }
-  }
-  > .status {
-    pointer-events: none;
-    + span {
-      pointer-events: none;
-    }
-    &:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 50%;
-      margin-top: -9px;
-      width: 18px;
-      height: 18px;
-      border: 1px solid #9e9e9e;
-      border-radius: 2px;
-      transition: border-color .2s;
-    }
-    &:after {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 4px;
-      width: 6px;
-      height: 10px;
-      border: 2px solid #2196f3;
-      border-top: 0;
-      border-left: 0;
-      transform: rotate(45deg) scale(0);
-      border-radius: 2px;
-      transition: transform .2s;
-    }
-  }
-}
-
-.form-horizontal .status:after{
-  top:8px!important;
 }

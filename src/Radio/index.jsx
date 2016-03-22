@@ -44,11 +44,13 @@ const Radio = React.createClass({
       check.checked = this.props.value === value
     }
     return (
-      <label className="bfd-radio radio-inline">
-        <input name={'radio-' + this.context.radioName} type="radio" onChange={this.context.setValue} {...check} value={this.props.value}/>
-        <span className="status"></span>
-        {this.props.children}
-      </label>
+      <div className="bfd-radio radio-inline">
+        <label>
+          <input name={'radio-' + this.context.radioName} type="radio" onChange={this.context.setValue} {...check} value={this.props.value}/>
+          <span className="status"></span>
+          {this.props.children}
+        </label>
+      </div>
     )
   }
 })

@@ -55,11 +55,10 @@ const Demo = React.createClass({
     isSuccess = [];  
     const validates = [{
       validateVal: this.state.task,
-      required: '请填写任务名称',
       handle: function() {
         let s;
-        if (!this.validateVal && this.required) {
-          s = this.required;
+        if (!this.validateVal) {
+          s = '请填写任务名称';
         } else if (this.validateVal.length > 10) {
           s = '字符长度不能超过10个';
         } else {
@@ -79,12 +78,11 @@ const Demo = React.createClass({
         return s;
       }
     }, {
-      validateVal: this.state.fields,
-      required: '请设置字段',
+      validateVal: this.state.fields,     
       handle: function() {
         let s;
         if (this.validateVal.length == 0) {
-          s = this.required;
+          s = '请设置字段';
         } else {
           s = 'success';
         }
@@ -142,7 +140,7 @@ export default React.createClass({
         <h1>表单</h1>
         <Pre>
 {`
-import { Form, FormItem } from 'c/Form'
+import { Form, FormItem } from 'bfd-ui/lib/Form'
 import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 import { Select ,Option} from 'bfd-ui/lib/Select'
 
@@ -189,11 +187,10 @@ const Demo = React.createClass({
     isSuccess = [];  
     const validates = [{
       validateVal: this.state.task,
-      required: '请填写任务名称',
       handle: function() {
         let s;
-        if (!this.validateVal && this.required) {
-          s = this.required;
+        if (!this.validateVal) {
+          s = '请填写任务名称';
         } else if (this.validateVal.length > 10) {
           s = '字符长度不能超过10个';
         } else {
@@ -213,12 +210,11 @@ const Demo = React.createClass({
         return s;
       }
     }, {
-      validateVal: this.state.fields,
-      required: '请设置字段',
+      validateVal: this.state.fields,     
       handle: function() {
         let s;
         if (this.validateVal.length == 0) {
-          s = this.required;
+          s = '请设置字段';
         } else {
           s = 'success';
         }
@@ -293,7 +289,6 @@ const Demo = React.createClass({
           <Prop name="submit" type="Boolean">
             <p>表示是submit提交按钮</p>    
           </Prop>
-
         </Props>
 
     </div>

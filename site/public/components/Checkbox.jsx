@@ -20,9 +20,17 @@ const App = React.createClass({
 })`}
         </Pre>
         <Checkbox>选择</Checkbox>
+        <input type="checkbox" checked onChange={e=>{console.log(e.target.checked)}}/>
         <Props>
           <Prop name="checked" type="Boolean">
             <p>默认是否选中</p>
+            <p>定义 checked 属性后需要定义 onChange 事件</p>
+            <Pre>{`<Checkbox checked={this.state.isAll} onChange={this.toggle}>全选</Checkbox>`}</Pre>
+            <p>由于 React 的限制，checked 不能固定死，否则无法切换选择状态，比如</p>
+            <Pre>
+{`<Checkbox checked onChange={this.toggle}>全选</Checkbox>
+<Checkbox checked={false} onChange={this.toggle}>全选</Checkbox>`}
+            </Pre>
           </Prop>
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调</p>

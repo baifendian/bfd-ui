@@ -15,7 +15,9 @@ const CheckboxGroup = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({selects: nextProps.selects})  
+    if (this.props.selects !== nextProps.selects) {
+      this.setState({selects: nextProps.selects})
+    }
   },
 
   childContextTypes: {
@@ -82,11 +84,13 @@ const Checkbox = React.createClass({
     }
 
     return (
-      <label className="bfd-checkbox checkbox-inline">
-        <input type="checkbox" {...props}/>
-        <span className="status"></span>
-        {children}
-      </label>
+      <div className="bfd-checkbox checkbox-inline">
+        <label>
+          <input type="checkbox" {...props}/>
+          <span className="status"></span>
+          {children}
+        </label>
+      </div>
     )
   }
 })
