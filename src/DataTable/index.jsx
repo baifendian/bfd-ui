@@ -1,8 +1,9 @@
 /**
  * Created by BFD_270 on 2016-02-19.
  */
-import './main.less'
+
 import 'bfd-bootstrap'
+import './main.less'
 import React, {PropTypes} from 'react'
 import Loading from '../Loading'
 import classNames from 'classnames'
@@ -22,16 +23,22 @@ export default React.createClass( {
       }
    },
    onChange: function (params,currentPage) {
-      let url_ = this.props.url
+      if(this.props.url){
+         let url_ = this.props.url
 
-      if(url_.indexOf('?')>-1){
-         url_+="&"+params
-      }else{
-         url_+="?"+params
+         if(url_.indexOf('?')>-1){
+            url_+="&"+params
+         }else{
+            url_+="?"+params
+         }
+         this.setState({currentPage:currentPage})
+         this.setState({url:url_});
       }
-      this.setState({currentPage:currentPage})
-      this.setState({url:url_});
+
    } ,
+   onPageChange(page){
+      this.props.onPageChange(page)
+   },
    orderClick:function(column,i){
       if(column.order){
 
@@ -71,15 +78,23 @@ export default React.createClass( {
         _this = this,
         url = this.state.url,
         pageSize = parseInt(this.props.howRow);
-      if(url.indexOf('?')<0 && url.indexOf('pageSize')<0){
+
+      if(url&&url.indexOf('?')<0 && url.indexOf('pageSize')<0){
             url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.currentPage
       }else{
 
       }
       url+=this.state.order
+      if(this.props.data.totalList.length>0){
+         items = this.props.data.totalList
+         totalPageNum = this.props.data.totalPageNum
+         //url='';
+      }
+
+
       return (
            <div>
-              <Loading url={url} onSuccess={this.handleSuccess}></Loading>
+              {this.props.url ? <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading> : null}
                  <table className="table">
                     <thead>
                     <tr>{
@@ -118,7 +133,7 @@ export default React.createClass( {
                     </tbody>
                  </table>
               <div id="paging">
-                 <Paging currentPage={currentPage} totalPageNum={totalPageNum} pageSize={this.props.howRow}
+                 <Paging currentPage={currentPage} onPageChange={this.onPageChange} totalPageNum={totalPageNum} pageSize={this.props.howRow}
                          onChange={this.onChange}></Paging>
               </div>
            </div>
