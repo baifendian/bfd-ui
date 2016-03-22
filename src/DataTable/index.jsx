@@ -23,15 +23,18 @@ export default React.createClass( {
       }
    },
    onChange: function (params,currentPage) {
-      let url_ = this.props.url
+      if(this.props.url){
+         let url_ = this.props.url
 
-      if(url_.indexOf('?')>-1){
-         url_+="&"+params
-      }else{
-         url_+="?"+params
+         if(url_.indexOf('?')>-1){
+            url_+="&"+params
+         }else{
+            url_+="?"+params
+         }
+         this.setState({currentPage:currentPage})
+         this.setState({url:url_});
       }
-      this.setState({currentPage:currentPage})
-      this.setState({url:url_});
+
    } ,
    onPageChange(page){
       this.props.onPageChange(page)
