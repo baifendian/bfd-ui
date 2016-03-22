@@ -122,7 +122,7 @@ const App = React.createClass({
         <Props>
           <Prop name = "url" type="String" required  type="要请求数据的服务端地址"></Prop>
           <Prop name = "column" type="ArrayJson" required type = "数据表格表头列名"></Prop>
-          <Prop name="howRow" type="Integer" required type="每页需要显示的条数">
+          <Prop name="howRow" type="Integer" required type="每页需要显示的条数"></Prop>
             <Pre>
 {`{
   title:'操作',
