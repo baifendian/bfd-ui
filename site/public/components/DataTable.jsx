@@ -53,8 +53,46 @@ const column = [{
   key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
 }]
 
+
 export default React.createClass({
+   onPageChange(page){
+
+   }
+  ,
   render() {
+
+    const dataJson = {
+      "totalList" : [ {
+        "id" : "1",
+        "name" : "张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "张柏仁--",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      }],
+      "currentPage" : 1,
+      "totalPageNum" : 500
+    }
     return (
       <div>
         <h1>DataTable&分页</h1>
@@ -112,19 +150,29 @@ const column = [{
 
 const App = React.createClass({
   render() {
-    return <DataTable url="/data/table.json" column={column} howRow={10} />
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} column={column} howRow={10} />
   }
 })`}
         </Pre>
 
-        <DataTable url="/data/table.json" column={column} howRow={10} />
+        <DataTable data={dataJson} onPageChange={this.onPageChange}  column={column} howRow={3} />
         
         <Props>
-          <Prop name = "url" type="String" required  type="要请求数据的服务端地址"></Prop>
+          <Prop name = "url" type="String" optional  type="要请求数据的服务端地址"></Prop>
           <Prop name = "column" type="ArrayJson" required type = "数据表格表头列名"></Prop>
           <Prop name="howRow" type="Integer" required type="每页需要显示的条数"></Prop>
+          <Prop name="data" type="Array" optional type="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现"></Prop>
+          <Prop name="onPageChange" type="Function" optional type="点击分页时回调函数， ">
             <Pre>
-{`{
+{`
+
+  const dataJson = {
+    totalList:[], //表格数据
+    "currentPage" : 1,//当前页
+    "totalPageNum" : 500//总页数
+
+  }
+  {
   title:'操作',
   render(){
     return (<div className="icon">
