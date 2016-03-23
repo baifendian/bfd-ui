@@ -12,7 +12,7 @@ const Demo = React.createClass({
   //初始化表单数据。
   getInitialState() {
     return { 
-      isSubmit:false,    
+      validateState:false,    
       task: '',
       desc: '',
       train: ['apple','huawei'],
@@ -22,9 +22,9 @@ const Demo = React.createClass({
 
   //submit按钮提交操作
   handleSubmit(e) {    
-    this.setState({isSubmit:true}); 
+    this.setState({validateState:true}); 
     let o = this.state;
-    delete o.isSubmit;
+    delete o.validateState;
     Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
     e.preventDefault();
   },
@@ -38,16 +38,16 @@ const Demo = React.createClass({
    *设置表单字段值。
    */
   taskChange(e){
-    this.setState({task:e.target.value})
+    this.setState({task:e.target.value,validateState:false});  
   },
   descCahnge(e){
-     this.setState({desc:e.target.value})
+     this.setState({desc:e.target.value,validateState:false});   
   },
   fieldsChange(selects) {
-    this.setState({ selects });
+    this.setState({ selects,validateState:false});   
   },
   trainChange(selected,text){
-    this.setState({ train:selected });
+    this.setState({ train:selected ,validateState:false});  
   },
 
   render() {   
@@ -94,7 +94,7 @@ const Demo = React.createClass({
     return (
       <div style={{border:'1px solid #ddd',padding:'20px 10px'}}>
 
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>
 
           <FormItem label="任务名称：" validate={validates[0]} required>
             <input type="text" className="form-control" onChange={this.taskChange}/>        
@@ -143,13 +143,13 @@ export default React.createClass({
 import { Form, FormItem } from 'bfd-ui/lib/Form'
 import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 import { Select ,Option} from 'bfd-ui/lib/Select'
-
 let isSuccess;
 const Demo = React.createClass({ 
+
   //初始化表单数据。
   getInitialState() {
     return { 
-      isSubmit:false,    
+      validateState:false,    
       task: '',
       desc: '',
       train: ['apple','huawei'],
@@ -158,32 +158,34 @@ const Demo = React.createClass({
   },
   //submit按钮提交操作
   handleSubmit(e) {    
-    this.setState({isSubmit:true}); 
+    this.setState({validateState:true}); 
     let o = this.state;
-    delete o.isSubmit;
+    delete o.validateState;
     Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
     e.preventDefault();
   },
+
   //获取验证是否通过状态，并存放到isSuccess数组中。
   isSuccess(flag){   
     isSuccess.push(flag);
   },
+
   /*
    *设置表单字段值。
    */
-  taskChange(e){
-    this.setState({task:e.target.value})
+ taskChange(e){
+    this.setState({task:e.target.value,validateState:false});  
   },
   descCahnge(e){
-     this.setState({desc:e.target.value})
+     this.setState({desc:e.target.value,validateState:false});   
   },
   fieldsChange(selects) {
-    this.setState({ selects });
+    this.setState({ selects,validateState:false});   
   },
   trainChange(selected,text){
-    this.setState({ train:selected });
+    this.setState({ train:selected ,validateState:false});  
   },
-  render() { 
+  render() {  
     isSuccess = [];  
     const validates = [{
       validateVal: this.state.task,
@@ -221,8 +223,8 @@ const Demo = React.createClass({
         return s;
       }
     }];
-    return (      
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
+    return (
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>
           <FormItem label="任务名称：" validate={validates[0]} required>
             <input type="text" className="form-control" onChange={this.taskChange}/>        
           </FormItem>
@@ -248,16 +250,10 @@ const Demo = React.createClass({
           <FormItem submit>
             <button type="submit" className="btn btn-default">登录</button>
           </FormItem>
-        </Form>
+        </Form>      
     );
   }
 });
-
-  const App = React.createClass({
-      render() {
-        return <Demo/>
-      }
-  })
   `}
         </Pre>
 

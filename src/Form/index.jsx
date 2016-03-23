@@ -8,8 +8,7 @@ class Form extends React.Component {
 
   getChildContext() {
     return {   
-      submitStatu: () => {
-        
+      submitStatu: () => {        
         return this.props.sibmitStatus
       },  
       setValidate: (flag) => {  
@@ -94,22 +93,17 @@ class FormItem extends React.Component {
       [`col-md-3 control-label`]: true,    
       [`bfd-${props.prefixCls}-group-required`]: required,
     });
-    return props.label ? (
-      <label className={className} key="label">
+
+    //return props.label ? (
+     return <label className={className} key="label">
         {props.label}
       </label>
-    ) : null;
+    // ) : null;
   }
 
-  renderWrapper(children){   
-    const props = this.props;    
-    const className = classNames({
-      ['col-md-6']: true,
-      [`col-md-offset-3`]:!!props.submit
-    });
-
+  renderWrapper(children){
     return (
-      <div className={className} key="wrapper" >        
+      <div className="col-md-6" key="wrapper" >        
           {children}       
       </div>
     );
