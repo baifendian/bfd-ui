@@ -1,7 +1,6 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
-
 /**
  *Form
  */
@@ -9,8 +8,7 @@ class Form extends React.Component {
 
   getChildContext() {
     return {   
-      submitStatu: () => {
-        
+      submitStatu: () => {        
         return this.props.sibmitStatus
       },  
       setValidate: (flag) => {  
@@ -71,18 +69,18 @@ class FormItem extends React.Component {
    constructor(props){
         super(props);    
         this.state = {
-          style:{border:''}
+          flagErr:false
         }
     }
 
   componentWillReceiveProps(nextProps){  
     if (nextProps.validate && nextProps.validate.handle() !== 'success' && this.context.submitStatu()) {
       this.setState({
-        style: { border: '1px solid red' }
+        flagErr:true
       })
     } else {
       this.setState({
-        style: { border: '' }
+        flagErr:false
       })
     }
   }
@@ -95,58 +93,37 @@ class FormItem extends React.Component {
       [`col-md-3 control-label`]: true,    
       [`bfd-${props.prefixCls}-group-required`]: required,
     });
-    return props.label ? (
-      <label className={className} key="label">
+
+    //return props.label ? (
+     return <label className={className} key="label">
         {props.label}
       </label>
-    ) : null;
+    // ) : null;
   }
 
-  renderWrapper(children){   
-    const props = this.props;    
-    const className = classNames({
-      ['col-md-6']: true,
-      [`col-md-offset-3`]:!!props.submit
-    });
-
+  renderWrapper(children){
     return (
-      <div className={className} key="wrapper" >
-        <div style={this.state.style}>
-          {children}
-        </div>
-        
+      <div className="col-md-6" key="wrapper" >        
+          {children}       
       </div>
     );
   }
 
   renderError(){
-
-    let validate;
-    
-    const props = this.props;   
-
-    props.required ? validate = false : validate = true;
-
+    let validate = true;    
+    const props = this.props;  
     if(props.validate){
-
       let error;
-
-      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';
-      
+      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';      
       error = props.validate.handle();
-
-      error == 'success' ? validate = true : validate = false; 
-
-      this.context.setValidate(validate);     
-
-      if (validate || !this.context.submitStatu()) return;
-      
+      error == 'success' ? validate = true : validate = false;
+      this.context.setValidate(validate); 
+      if (validate || !this.context.submitStatu()) return;      
       return (
         <div className={cname} key="error" ref="bfdErr">
           <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
-
     }
   }
 
@@ -166,6 +143,7 @@ class FormItem extends React.Component {
     const props = this.props;
     const prefixCls = props.prefixCls;
     const groupClassName = {
+      'has-error':this.state.flagErr,
       [`${prefixCls}-group`]: true,
       [`${props.className}`]: !!props.className,
     };
