@@ -32,16 +32,14 @@
     &.open {
       @media (max-width: 700px) {
         display: block;
-        float: none;
-        width: auto;
       }
     }
   }
   > .content {
-    padding: 20px;
-    min-height: 600px;
     overflow: hidden;
+    margin-left: 200px;
     > div {
+      padding: 20px;
       -webkit-animation: in .5s;
     }
     @media (max-width: 700px) {
@@ -66,9 +64,10 @@ pre {
   color: #666;
   border: 0;
   font-size: 12px;
-  white-space: pre-wrap;
   padding: 1rem;
   max-width: 700px;
+  white-space: pre;
+  word-wrap: normal;
 }
 pre .kwd {
   color: #8959a8;

@@ -15,11 +15,32 @@ import LineChart from 'bfd-ui/lib/lineChart'
 render(<LineChart config={config}/>, mountNode)
 ```
 
+环境配置注意（以 webpack 为例）：
+* bfd-ui 依赖 eot、woff、woff2、ttf、svg、png、jpg、json、less 等资源，请配置相应的 loader(file/json/less)；
+* css 兼容性请配置 postcss-loader 及 autoprefixer；
+
+```javascript
+var autoprefixer = require('autoprefixer')
+var config = {
+  module: {
+    loaders: [{
+      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+      loader: 'file?name=files/[hash].[ext]'
+    }, {
+      test: /\.json$/,
+      loader: 'json'
+    }, {
+      test: /\.less$/,
+      loader: 'style!css!less!postcss'
+    }]
+  },
+  postcss: [autoprefixer({ browsers: ['last 3 versions'] })]
+}
+```
+
 ### 开发者说明
 
-#### 开发环境安装
-
-> 要求 npm 3+
+#### 开发环境安装，要求 npm 3+
 
 ```sh
 $ git clone http://git.baifendian.com/front-end/bfd-ui.git

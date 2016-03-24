@@ -1,7 +1,6 @@
 /**
  * 日历界面本身
  */
-
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import GetTimestrapMixin from './GetTimestrapMixin'
@@ -22,26 +21,11 @@ export default React.createClass({
 
   getInitialState() {
     const d = this.props.date ? new Date(this.props.date) : new Date()
-    const year = d.getFullYear()
-    const month = d.getMonth()
-    const day = d.getDate()
     return {
-      dayNames: ['日', '一', '二', '三', '四', '五', '六'],
-      currentYear: year,
-      currentMonth: month,
-      year,
-      month,
-      day,
-      min: this.props.min && this.getTimestrap(this.props.min),
-      max: this.props.max && this.getTimestrap(this.props.max)
+      year: d.getFullYear(),
+      month: d.getMonth(),
+      day: d.getDate()
     }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      min: this.props.min && this.getTimestrap(nextProps.min),
-      max: this.props.max && this.getTimestrap(nextProps.max)
-    })
   },
 
   // 日期区间功能
@@ -50,17 +34,19 @@ export default React.createClass({
     getEnd: PropTypes.func
   },
 
+  dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+
   // 切换年月
   handleToggle(change, type) {
-    const d = new Date(this.state.currentYear, this.state.currentMonth)
+    const d = new Date(this.state.year, this.state.month)
     if (type === 'year') {
       d.setFullYear(d.getFullYear() + change)
-      this.setState({currentYear: d.getFullYear()})
+      this.setState({year: d.getFullYear()})
     } else {
       d.setMonth(d.getMonth() + change)
       this.setState({
-        currentYear: d.getFullYear(),
-        currentMonth: d.getMonth()
+        year: d.getFullYear(),
+        month: d.getMonth()
       })
     }
   },
@@ -70,12 +56,17 @@ export default React.createClass({
     this.props.onSelect(new Date(day.year, day.month, day.day).getTime())
   },
 
-  isDisabled(day) {
-    if (this.state.min || this.state.max) {
-      const timestrap = new Date(day.year, day.month, day.day).getTime()
-      return timestrap < this.state.min || timestrap > this.state.max
+  disabledComparer() {
+    const min = this.props.min && this.getTimestrap(this.props.min)
+    const max = this.props.max && this.getTimestrap(this.props.max)
+    if (min || max) {
+      return day => {
+        const timestrap = new Date(day.year, day.month, day.day).getTime()
+        return timestrap < min || timestrap > max
+      }
+    } else {
+      return () => false
     }
-    return false
   },
 
   /**
@@ -112,7 +103,7 @@ export default React.createClass({
     const days = []
     
     // 上月
-    d = new Date(this.state.currentYear, this.state.currentMonth, 1)
+    d = new Date(this.state.year, this.state.month, 1)
     let dayInWeek = d.getDay()
     if (dayInWeek) {
       d.setDate(0)
@@ -128,7 +119,7 @@ export default React.createClass({
     }
 
     // 本月
-    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 0)
+    d = new Date(this.state.year, this.state.month + 1, 0)
     const thisMonthDaysCount = d.getDate()
     for (let i = 0; i < thisMonthDaysCount; i++) {
       days.push({
@@ -139,7 +130,7 @@ export default React.createClass({
     }
 
     // 下月
-    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
+    d = new Date(this.state.year, this.state.month + 1, 1)
     for (let i = 0, len = 42 - days.length; i < len; i++) {
       days.push({
         year: d.getFullYear(),
@@ -153,6 +144,7 @@ export default React.createClass({
   
   render() {
     const days = this.getDays()
+    const getComparerResult = this.disabledComparer()
     return (
       <div className="bfd-calendar">
         <div className="calendar-header">
@@ -160,7 +152,7 @@ export default React.createClass({
             <span className="toggle" onClick={this.handleToggle.bind(this, -1, 'year')}>«</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, -1)}>‹</span>
           </div>
-          <span className="result">{this.state.currentYear}年 {this.state.currentMonth + 1}月</span>
+          <span className="result">{this.state.year}年 {this.state.month + 1}月</span>
           <div className="pull-right">
             <span className="toggle" onClick={this.handleToggle.bind(this, 1)}>›</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, 1, 'year')}>»</span>
@@ -168,17 +160,17 @@ export default React.createClass({
         </div>
         <table>
           <thead>
-            <tr>{this.state.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
+            <tr>{this.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
           </thead>
           <tbody>
             {Array(7).join(0).split('').map((v, i) => {
               return (
-                <tr key={i}>{this.state.dayNames.map((name, j) => {
+                <tr key={i}>{this.dayNames.map((name, j) => {
                   const index = i * 7 + j
                   const day = days[index]
                   return (
                     <td key={index}>
-                      <button disabled={this.isDisabled(day)} className={this.getDayClassNames(day)} onClick={this.handleDaySelect.bind(this, day)}>{day.day}</button>
+                      <button disabled={getComparerResult(day)} className={this.getDayClassNames(day)} onClick={this.handleDaySelect.bind(this, day)}>{day.day}</button>
                     </td>
                   )
                 })}</tr>
