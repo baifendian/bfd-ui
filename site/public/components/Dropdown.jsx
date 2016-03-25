@@ -20,8 +20,7 @@ const App = React.createClass({
           <button className="btn btn-primary btn-sm">展开</button>
         </DropdownToggle>
         <DropdownMenu>
-          <h1>title</h1>
-          <p>content</p>
+          Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes
         </DropdownMenu>
       </Dropdown>
     )
@@ -33,18 +32,18 @@ const App = React.createClass({
             <button className="btn btn-primary btn-sm">展开</button>
           </DropdownToggle>
           <DropdownMenu>
-            <h1>title</h1>
-            <p>content</p>
+            Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes
           </DropdownMenu>
         </Dropdown>
 
         <h2>Dropdown</h2>
         <Props>
           <Prop name="className" type="String">
-            <p>自定义 className</p>
-            <p>打开后，className 会增加 open，可以自定义展开后的样式</p>
+            <p>自定义 className，当下拉菜单处于 open 状态，className 会增加 open 样式类，可定义展开后的样式</p>
           </Prop>
         </Props>
+        <h2>Dropdown 实例接口</h2>
+        <p>instance.close()，关闭下拉菜单</p>
       </div>
     )
   }

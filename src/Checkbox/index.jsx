@@ -15,9 +15,7 @@ const CheckboxGroup = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selects !== nextProps.selects) {
-      this.setState({selects: nextProps.selects})
-    }
+    'selects' in nextProps && this.setState({selects: nextProps.selects})
   },
 
   childContextTypes: {
@@ -72,7 +70,7 @@ const Checkbox = React.createClass({
 
     if (this.isGroup) {
 
-      // 选项卡组的逻辑单独处理
+      // 复选框组的逻辑单独处理
       const selects = this.context.getCheckboxGroupSelects()
       if (selects.length) {
         props.checked = selects.indexOf(this.props.value) > -1

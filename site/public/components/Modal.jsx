@@ -5,14 +5,8 @@ import { Props, Prop } from '../Props'
 
 export default React.createClass({
 
-  getInitialState() {
-    return {
-      isOpen: false        
-    }
-  },
-
   handleClick() {
-    this.setState({isOpen: true})
+    this.refs.modal.open()
   },
   
   render() {
@@ -24,21 +18,15 @@ export default React.createClass({
 
 const App = React.createClass({
 
-  getInitialState() {
-    return {
-      isOpen: false        
-    }
-  },
-
   handleClick() {
-    this.setState({isOpen: true})
+    this.refs.modal.open()
   },
 
   render() {
     return (
       <div>
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-        <Modal isOpen={this.state.isOpen}>
+        <Modal ref="modal">
           <ModalHeader>
             <h4 className="modal-title">test</h4>
           </ModalHeader>
@@ -53,7 +41,7 @@ const App = React.createClass({
         </Pre>
 
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-        <Modal isOpen={this.state.isOpen}>
+        <Modal ref="modal">
           <ModalHeader>
             <h4 className="modal-title">test</h4>
           </ModalHeader>
@@ -62,14 +50,8 @@ const App = React.createClass({
           </ModalBody>
         </Modal>
         
-        <Props>
-          <Prop name="isOpen" type="Boolean" required>
-            <p>是否为打开状态</p>
-          </Prop>
-          <Prop name="onClose" type="Function">
-            <p>关闭事件的回调函数</p>
-          </Prop>
-        </Props>
+        <h2>Modal 实例接口</h2>
+        <p>modal.open()</p>
       </div>
     )
   }

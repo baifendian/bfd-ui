@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Loading from './Loading'
+import classnames from 'classnames'
+import './chart.less'
 
 export default React.createClass({
+
+  propTypes: {
+    url: PropTypes.string,
+    data: PropTypes.array,
+    _valid(props) {
+      if (!props.url && !props.data) {
+        return new Error('url和data属性至少提供一个')
+      }
+    }
+  },
 
   renderChart(data) {
     this.config = {container: this.refs.chart, ...this.props, data}
@@ -13,14 +25,21 @@ export default React.createClass({
   },
 
   componentDidMount() {
-    this.refs.container.style.height = this.refs.chart.style.height = '100%'
+    const container = this.refs.container
+    if (!parseInt(getComputedStyle(container).height, 10)) {
+      container.style.height = '100%'
+    }
+    this.refs.chart.style.height = '100%'
+    if (this.props.data) {
+      this.renderChart(this.props.data)
+    }
   },
 
   render() {
     return (
-      <div ref="container">
-        <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading>
-        <div ref="chart" className={this.props.className}></div>
+      <div ref="container" className={classnames('bfd-chart', this.props.className)} style={this.props.style}>
+        {this.props.url ? <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading> : null}
+        <div ref="chart"></div>
       </div>
     )
   }

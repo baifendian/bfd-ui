@@ -25,26 +25,23 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.date !== nextProps.date) {
-      this.setState({
-        date: nextProps.date,
-      })
-    }
+    'date' in nextProps && this.setState({date: nextProps.date})
   },
 
   handleSelect(date) {
-    this.setState({ isOpen: false, date })
+    this.setState({ date })
+    this.refs.dropdown.close()
     this.props.onSelect && this.props.onSelect(date)
   },
 
   render() {
     return (
-      <Dropdown className="bfd-datepicker">
+      <Dropdown ref="dropdown" className="bfd-datepicker">
         <DropdownToggle>
-          <input type="text" className="form-control input-sm" value={new Date(this.state.date).toLocaleDateString()} readOnly/>
+          <input type="text" className="form-control input-sm" value={new Date(this.state.date).toLocaleDateString()} readOnly />
         </DropdownToggle>
         <DropdownMenu>
-          <Calendar date={this.state.date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect}></Calendar>
+          <Calendar date={this.state.date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect} />
         </DropdownMenu>
       </Dropdown>
     )

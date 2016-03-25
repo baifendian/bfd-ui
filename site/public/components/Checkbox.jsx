@@ -4,6 +4,7 @@ import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 export default React.createClass({
+
   render() {
     return (
       <div>
@@ -20,7 +21,6 @@ const App = React.createClass({
 })`}
         </Pre>
         <Checkbox>选择</Checkbox>
-        <input type="checkbox" checked onChange={e=>{console.log(e.target.checked)}}/>
         <Props>
           <Prop name="checked" type="Boolean">
             <p>默认是否选中</p>

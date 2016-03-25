@@ -24,17 +24,17 @@ const Modal = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: this.props.isOpen
+      isOpen: false
     }
   },
 
   childContextTypes: {
-    onClose: PropTypes.func
+    handleClose: PropTypes.func
   },
 
   getChildContext() {
     return {
-      onClose: this.close
+      handleClose: this.close
     }
   },
   
@@ -44,18 +44,17 @@ const Modal = React.createClass({
     }
   },
 
-  close() {
-    this.setState({isOpen: false})
-    this.props.onClose && this.props.onClose()
+  open() {
+    this.setState({isOpen: true})
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({isOpen: nextProps.isOpen})  
+  close() {
+    this.setState({isOpen: false})
   },
 
   componentDidMount() {
     this.bodyClassName = document.body.className
-    this.bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
+    this.bodyPaddingRight = parseInt(document.body.style.paddingRight, 10) || 0
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -77,7 +76,7 @@ const Modal = React.createClass({
 
   render() {
     return (
-      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
         {this.state.isOpen ? (
           <div className="modal">
             <div className="modal-backdrop" onClick={this.handleClick}></div>
@@ -100,13 +99,13 @@ const Modal = React.createClass({
 const ModalHeader = React.createClass({
 
   contextTypes: {
-    onClose: PropTypes.func,
+    handleClose: PropTypes.func,
   },
 
   render() {
     return (
       <div className="modal-header">
-        <button type="button" className="close" onClick={this.context.onClose}>
+        <button type="button" className="close" onClick={this.context.handleClose}>
           <span>&times;</span>
         </button>
         {this.props.children}

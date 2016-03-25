@@ -9,8 +9,8 @@ var config = {
   },
   output: {
     path: __dirname + '/public/dist',
-    filename: '[name].js',
-    chunkFilename: '[id].js',
+    filename: '[name]' + (isProduction ? '.[hash]' : '') + '.js',
+    chunkFilename: '[id]' + (isProduction ? '.[hash]' : '') + '.js',
     publicPath: '/dist/'
   },
   module: {
@@ -23,14 +23,14 @@ var config = {
         plugins: ['transform-runtime']
       }
     }, {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader'
-    }, {
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,
       loader: 'json-loader'
+    }, {
+      test: /\.css$/,
+      loader: 'style!css'
     }, {
       test: /\.less$/,
       loader: 'style!css!less'
@@ -51,7 +51,20 @@ var config = {
 }
 
 if (isProduction) {
+  
   config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+
+  config.plugins.push(function() {
+    this.plugin("done", function(statsData) {
+      var stats = statsData.toJson()
+      if (!stats.errors.length) {
+        var templateFile = 'index.html'
+        var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
+        template = template.replace('app.js', 'app.' + stats.hash + '.js')
+        fs.writeFileSync(path.join(__dirname, templateFile), template)
+      }
+    })
+  })
 }
 
 module.exports = config
