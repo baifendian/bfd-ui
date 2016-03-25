@@ -1,10 +1,14 @@
-## 百分点前端UI组件库
+## 百分点 UI 组件库
+
+http://192.168.188.154:4001
+
 
 ### 安装
 
 ```sh
 $ npm install --save bfd-ui
 ```
+
 
 ### 使用
 
@@ -38,7 +42,9 @@ var config = {
 }
 ```
 
-### 开发者说明
+
+
+### 开发
 
 #### 开发环境安装，要求 npm 3+
 
@@ -60,17 +66,33 @@ $ git pull
 $ npm install
 ```
 
-#### 如何添加新组件？注意首字母大写
-
-`src/YourComponent`
-
-注意：`index.jsx` 为组件的入口
-
-
-#### 如何测试、查看效果？
+#### 开始编写一个组件
 
 ```sh
+# 创建组件文件夹
+$ mkdir src/YourComponent
+
+# 创建组件入口
+$ touch src/YourComponent/index.jsx
+```
+
+#### 编写 Demo、文档
+
+```sh
+$ touch site/public/components/YourComponent.jsx
+
 $ npm start
 ```
 
-[查看详细说明](site/README.md)
+http://localhost:4001/components/YourComponent
+
+
+#### 开发规范
+
+* 开发过程中发现可复用的部分，向团队提出来，不得擅自处理
+* 修复某个 bug 后，commit 时带上 bug 号，这样会自动关联且关闭 bug，如 `git commit -m "Fixed #33"`
+* 每个组件的根元素设置 className 为 bfd-xxx，如 bfd-datepicker，并作为 CSS 的命名空间
+* 组件库本身依赖 bootstrap，所以 bootstrap 支持的部分不需要单独写样式，到时候更新 bfd-bootstrap 即可
+* 所有组件要支持自定义 className 以及 style 属性，并在文档中说明
+* 支持传入 children 的组件，请在文档中加上 children 属性
+* JS 代码规范已经发过，React 代码规范参考 https://github.com/airbnb/javascript/tree/master/react

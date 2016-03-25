@@ -11,6 +11,6 @@ export default React.createClass({
   },
 
   render() {
-    return <div onClick={this.context.handleToggle}>{this.props.children}</div>
+    return <div className="bfd-dropdown-toggle" onClick={this.context.handleToggle}>{this.props.children}</div>
   }
 })
