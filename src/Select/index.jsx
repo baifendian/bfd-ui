@@ -34,7 +34,7 @@ const Select = React.createClass({
 		}
 	},
 	handleClick(){
-		this.refs.select.close()
+		this.refs.select.close();
 	},
 
 	render() {	
@@ -57,7 +57,8 @@ const Select = React.createClass({
 				}
 			}) : (() => {
 				selected == children.props.value ? sText.push(children.props.children) : sText = [];
-			})();			
+			})();	
+
 		return (
 			<Dropdown ref="select" className="bfd-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
@@ -65,11 +66,9 @@ const Select = React.createClass({
 				  	<span className="caret bfd-caret"></span>
 		        </DropdownToggle>
 		        <DropdownMenu className="dropdown-menu">
-		        	<ul onClick={this.handleClick}>
-		        		{children}
-		        	</ul>		          
+		        	<ul onClick={this.handleClick}>{children}</ul>		          
 		        </DropdownMenu>
-		     </Dropdown>
+		    </Dropdown>
 		);
 	}  
 
@@ -88,15 +87,9 @@ const Option = React.createClass({
 		const {	children, value, ...other } = this.props;    	
     	const selected = this.context.getSelected();
 		
-		(selected instanceof Array) ?
+		selected instanceof Array ?   
 		className = classNames({
-			'active': (function() {
-				let f = false;
-				selected.map(function(item) {
-					if (item == value) f = true;
-				})
-				return f;
-			})()
+			'active': selected.indexOf(value) != -1
 		}):
 		className = classNames({
 			'active': selected == value
