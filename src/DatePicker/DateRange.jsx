@@ -60,7 +60,7 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="bfd-daterange clearfix">
+      <div className="bfd-daterange">
         <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
         <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
