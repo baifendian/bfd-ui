@@ -1,13 +1,10 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin'
-import DropDownMixin from '../DropDownMixin'
+import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 
 
-const Select = React.createClass({ 
-
-	mixins: [PureRenderMixin, DropDownMixin],
+const Select = React.createClass({ 	
 
 	childContextTypes: {
 		getSelected: PropTypes.func,
@@ -15,7 +12,8 @@ const Select = React.createClass({
 	},
 
 	getInitialState() {
-		return {			
+		return {		
+			disabled:this.props.disabled,	
 			arr:this.props.selected
 		}
 	},	
@@ -34,6 +32,9 @@ const Select = React.createClass({
 				}
 			}
 		}
+	},
+	handleClick(){
+		this.refs.select.close()
 	},
 
 	render() {	
@@ -56,21 +57,19 @@ const Select = React.createClass({
 				}
 			}) : (() => {
 				selected == children.props.value ? sText.push(children.props.children) : sText = [];
-			})();
-
+			})();			
 		return (
-			<div onClick={this.stopPropagation} className={classNames('bfd-dropdown dropdown', {open: this.state.isOpen})}>
-			  <div onClick={this.handleToggle} style={{height:'100%'}}>
-			     {sText.join(',')}
-			    <span className="caret bfd-caret"></span>
-			   {
-          		this.state.isOpen ? (
-			        <ul className="dropdown-menu bfd-menu">
-				   		{children}
-				 	</ul> ) : null
-			    }
-			  </div>
-			</div>
+			<Dropdown ref="select" className="bfd-select" disabled={this.state.disabled}>
+		        <DropdownToggle>
+		        	<div className="txt">{sText.join(',')}</div>
+				  	<span className="caret bfd-caret"></span>
+		        </DropdownToggle>
+		        <DropdownMenu className="dropdown-menu">
+		        	<ul onClick={this.handleClick}>
+		        		{children}
+		        	</ul>		          
+		        </DropdownMenu>
+		     </Dropdown>
 		);
 	}  
 
@@ -109,7 +108,7 @@ const Option = React.createClass({
 			this.context.setSelected(value, text);
 		}
 		return (
-			<li {...other}><a href="javascript:;"  value={value} className={className}>{children}</a></li>
+			<li {...other} className={className} value={value}> {children} </li>
 		)
 	}
 })
