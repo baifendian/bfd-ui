@@ -23,11 +23,15 @@ const Demo = React.createClass({
   },
 
   //submit按钮提交操作
-  handleSubmit(e) {    
+  handleSubmit(e) { 
     this.setState({validateState:true}); 
-    let o = this.state;
-    delete o.validateState;
-    Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
+    const obj = Form.handleData(this.state, isSuccess);
+    if (obj.isPass) {    //验证通过
+      console.log('表单验证通过');
+      console.log(JSON.stringify(obj.data));
+    } else {              //验证失败
+      console.log('表单验证失败');
+    }
     e.preventDefault();
   },
 
@@ -189,7 +193,7 @@ import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 import { Select ,Option} from 'bfd-ui/lib/Select'
 
 let isSuccess;
-const Demo = React.createClass({ 
+const Demo = React.createClass({
   //初始化表单数据。
   getInitialState() {
     return { 
@@ -203,11 +207,15 @@ const Demo = React.createClass({
     }
   },
   //submit按钮提交操作
-  handleSubmit(e) {    
+  handleSubmit(e) { 
     this.setState({validateState:true}); 
-    let o = this.state;
-    delete o.validateState;
-    Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
+    const obj = Form.handleData(this.state, isSuccess);
+    if (obj.isPass) {    //验证通过
+      console.log('表单验证通过');
+      console.log(JSON.stringify(obj.data));
+    } else {              //验证失败
+      console.log('表单验证失败');
+    }
     e.preventDefault();
   },
   //获取验证是否通过状态，并存放到isSuccess数组中。
@@ -298,7 +306,6 @@ const Demo = React.createClass({
     }];
     return (      
         <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>         
-          //多个FormItem在一排显示。
           <div className="row">
               <div className="col-md-6">
                  <FormItem label="用户名：" validate={validates[0]} inline required>
@@ -336,7 +343,7 @@ const Demo = React.createClass({
           <FormItem submit>
             <button type="submit" className="btn btn-default">登录</button>
           </FormItem>
-        </Form>      
+        </Form>    
     );
   }
 });

@@ -36,12 +36,12 @@ class Form extends React.Component {
   
 }
 
-Form.Validate = function(arr) {
-    let flag = true;
-    arr.map(function(item, i) {
-      if (!item) flag = false;
-    });
-    return flag;  
+Form.handleData = function(state, isSuccess) {
+  let obj = {};
+  obj.isPass = !(isSuccess.indexOf(false) !== -1);
+  if (state.validateState) delete state.validateState;
+  obj.data = state;
+  return obj;
 };
 
 Form.propTypes = {
