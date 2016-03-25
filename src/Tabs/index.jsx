@@ -36,7 +36,7 @@ const Tabs = React.createClass({
 
   getChildContext() {
     return {
-      isDynamic: 'dynamic' in this.props,
+      isDynamic: !!this.props.dynamic,
       getTabCount: () => this.state.tabCount++,
       reduceTabCount: () => {
         this.setState({tabCount: this.state.tabCount - 1})

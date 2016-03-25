@@ -96,34 +96,26 @@ const Modal = React.createClass({
 /**
  * ModalHeader
  */
-const ModalHeader = React.createClass({
+function ModalHeader(props, context) {
+  return (
+    <div className="modal-header">
+      <button type="button" className="close" onClick={context.handleClose}>
+        <span>&times;</span>
+      </button>
+      {props.children}
+    </div>
+  )
+}
+ModalHeader.contextTypes = {
+  handleClose: PropTypes.func
+}
 
-  contextTypes: {
-    handleClose: PropTypes.func,
-  },
-
-  render() {
-    return (
-      <div className="modal-header">
-        <button type="button" className="close" onClick={this.context.handleClose}>
-          <span>&times;</span>
-        </button>
-        {this.props.children}
-      </div>
-    )
-  }
-})
 
 /**
  * ModalBody
  */
-const ModalBody = React.createClass({
-
-  render() {
-    return (
-      <div className="modal-body">{this.props.children}</div>
-    )
-  }
-})
+function ModalBody(props) {
+  return <div className="modal-body">{props.children}</div>
+}
 
 export { Modal, ModalHeader, ModalBody }
