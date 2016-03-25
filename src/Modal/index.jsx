@@ -99,7 +99,7 @@ const Modal = React.createClass({
 const ModalHeader = React.createClass({
 
   contextTypes: {
-    onClose: PropTypes.func,
+    handleClose: PropTypes.func,
   },
 
   render() {

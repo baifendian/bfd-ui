@@ -14,7 +14,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false      
+      isOpen: false
     }
   },
 

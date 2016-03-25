@@ -25,10 +25,14 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      start: this.getTimestrap(nextProps.start),
-      end: this.getTimestrap(nextProps.end)
-    })
+    const state = {}
+    if ('start' in nextProps) {
+      state.start = this.getTimestrap(nextProps.start)
+    }
+    if ('end' in nextProps) {
+      state.end = this.getTimestrap(nextProps.end)
+    }
+    this.setState(state)
   },
 
   childContextTypes: {
@@ -57,9 +61,9 @@ export default React.createClass({
   render() {
     return (
       <div className="bfd-daterange clearfix">
-        <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')}></DatePicker>
+        <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
-        <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')}></DatePicker>
+        <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
       </div>
     )
   }

@@ -53,7 +53,7 @@ export default React.createClass({
 
   handleDaySelect(day) {
     this.setState(day)
-    this.props.onSelect(new Date(day.year, day.month, day.day).getTime())
+    this.props.onSelect(new Date(day.year, day.month, day.day).setHours(0, 0, 0, 0))
   },
 
   disabledComparer() {

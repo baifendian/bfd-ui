@@ -25,11 +25,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.date !== nextProps.date) {
-      this.setState({
-        date: nextProps.date,
-      })
-    }
+    'date' in nextProps && this.setState({date: nextProps.date})
   },
 
   handleSelect(date) {
