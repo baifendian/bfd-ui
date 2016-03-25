@@ -27,7 +27,7 @@ export default React.createClass({
         <Pre>
 {`import DatePicker from 'bfd-ui/lib/DatePicker'
 
-ReactDOM.render(<DatePicker date="2016-01-01"/>, mountNode)`}
+ReactDOM.render(<DatePicker />, mountNode)`}
         </Pre>
       </div>
     )

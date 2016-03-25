@@ -134,7 +134,7 @@ const App = React.createClass({
             <p>是否开启可关闭模式，并切换不同的选项卡样式</p>
           </Prop>
           <Prop name="handleClose" type="Function">
-            <p>关闭某个 Tab 的回调，参数为 Tab 的索引</p>
+            <p>Tab 关闭事件处理，参数为 Tab 的索引</p>
           </Prop>
           <Prop name="activeIndex" type="Number">
             <p>指定（索引值）某个 Tab 处于 active 状态</p>
