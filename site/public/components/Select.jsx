@@ -28,9 +28,7 @@ const App = React.createClass({
           <h3>下拉框(单选)</h3>
           <Select selected={this.state.selected} onChange={this.handleChange}>
               <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
+             
           </Select>
         </div> 
 
