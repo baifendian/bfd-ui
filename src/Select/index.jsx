@@ -1,13 +1,10 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 
 
-const Select = React.createClass({ 
-
-	mixins: [PureRenderMixin],
+const Select = React.createClass({ 	
 
 	childContextTypes: {
 		getSelected: PropTypes.func,
@@ -15,7 +12,8 @@ const Select = React.createClass({
 	},
 
 	getInitialState() {
-		return {			
+		return {		
+			disabled:this.props.disabled,	
 			arr:this.props.selected
 		}
 	},	
@@ -59,10 +57,9 @@ const Select = React.createClass({
 				}
 			}) : (() => {
 				selected == children.props.value ? sText.push(children.props.children) : sText = [];
-			})();
-
+			})();			
 		return (
-			<Dropdown ref="select" className="bfd-select" >
+			<Dropdown ref="select" className="bfd-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
 		        	<div className="txt">{sText.join(',')}</div>
 				  	<span className="caret bfd-caret"></span>

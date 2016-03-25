@@ -74,9 +74,9 @@ export default React.createClass({
     return this.state.isOpen !== nextState.isOpen
   },
 
-  render() {
+  render() { 
     return (
-      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', this.props.className, {open: this.state.isOpen})}>{this.props.children}</div>
+      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', this.props.className, {open: this.props.disabled ? false: this.state.isOpen})}>{this.props.children}</div>
     )
   }
 })
