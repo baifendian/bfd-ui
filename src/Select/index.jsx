@@ -25,7 +25,7 @@ const Select = React.createClass({
 			getSelected: () => this.props.selected,
 			setSelected: (value, text) => {
 				if (this.props.multiple) {
-					let _arr = this.state.arr;						
+					let _arr = this.state.arr;										
 					_arr.indexOf(value) != -1 ? _arr.splice(_arr.indexOf(value),1) :  _arr.push(value);
 					this.setState({	arr: _arr });
 					this.props.onChange(_arr);
@@ -39,19 +39,24 @@ const Select = React.createClass({
 	render() {	
 
 		let sText = [];
-		const { children,selected} = this.props;		
+		const { children,selected} = this.props;
+
 		this.props.multiple ?
-			children.map(function(item, i) {
+			children.length ? children.map(function(item, i) {
 				selected.map(function(_item, _i) {
 					if (item.props.value == _item) sText.push(item.props.children);
 				})
-			}) :
+			}) : (() => {
+				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+			})() :
+			children.length ?
 			children.map(function(item, i) {
 				if (selected == item.props.value) {
 					sText.push(item.props.children);
 				}
-			});
-
+			}) : (() => {
+				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+			})();
 
 		return (
 			<div onClick={this.stopPropagation} className={classNames('bfd-dropdown dropdown', {open: this.state.isOpen})}>
