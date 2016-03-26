@@ -3,17 +3,17 @@ import Loading from './Loading'
 import classnames from 'classnames'
 import './chart.less'
 
-export default React.createClass({
-
-  propTypes: {
-    url: PropTypes.string,
-    data: PropTypes.array,
-    _valid(props) {
-      if (!props.url && !props.data) {
-        return new Error('url和data属性至少提供一个')
-      }
+const propTypes = {
+  url: PropTypes.string,
+  data: PropTypes.array,
+  __valid(props) {
+    if (!props.url && !props.data) {
+      return new Error('url和data属性至少提供一个')
     }
-  },
+  }
+}
+
+const Chart = React.createClass({
 
   renderChart(data) {
     this.config = {container: this.refs.chart, ...this.props, data}
@@ -44,3 +44,7 @@ export default React.createClass({
     )
   }
 })
+
+Chart.propTypes = propTypes
+
+export default Chart

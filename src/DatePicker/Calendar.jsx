@@ -3,14 +3,15 @@
  */
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import GetTimestrapMixin from './GetTimestrapMixin'
+import getTimestrap from './getTimestrap'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 export default React.createClass({
 
-  mixins: [GetTimestrapMixin],
+  mixins: [PureRenderMixin],
 
   propTypes: {
     date: checkDateTime,
@@ -57,8 +58,8 @@ export default React.createClass({
   },
 
   disabledComparer() {
-    const min = this.props.min && this.getTimestrap(this.props.min)
-    const max = this.props.max && this.getTimestrap(this.props.max)
+    const min = this.props.min && getTimestrap(this.props.min)
+    const max = this.props.max && getTimestrap(this.props.max)
     if (min || max) {
       return day => {
         const timestrap = new Date(day.year, day.month, day.day).getTime()

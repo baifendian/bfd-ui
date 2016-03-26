@@ -1,15 +1,12 @@
 import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import Calendar from './Calendar'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import './less/datePicker.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 export default React.createClass({
-
-  mixins: [PureRenderMixin],
 
   propTypes: {
     date: checkDateTime,

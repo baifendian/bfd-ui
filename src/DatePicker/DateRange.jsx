@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react'
 import DatePicker from './DatePicker'
-import GetTimestrapMixin from './GetTimestrapMixin'
+import getTimestrap from './getTimestrap'
 import './less/dateRange.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 export default React.createClass({
-
-  mixins: [GetTimestrapMixin],
 
   propTypes: {
     start: checkDateTime,
@@ -19,18 +17,18 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      start: this.getTimestrap(this.props.start),
-      end: this.getTimestrap(this.props.end)
+      start: getTimestrap(this.props.start),
+      end: getTimestrap(this.props.end)
     }
   },
 
   componentWillReceiveProps(nextProps) {
     const state = {}
     if ('start' in nextProps) {
-      state.start = this.getTimestrap(nextProps.start)
+      state.start = getTimestrap(nextProps.start)
     }
     if ('end' in nextProps) {
-      state.end = this.getTimestrap(nextProps.end)
+      state.end = getTimestrap(nextProps.end)
     }
     this.setState(state)
   },

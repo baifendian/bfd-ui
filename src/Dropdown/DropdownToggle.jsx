@@ -1,16 +1,16 @@
 /**
  * 下拉触发组件
  */
-
 import React, { PropTypes } from 'react'
 
-export default React.createClass({
+const contextTypes = {
+  handleToggle: PropTypes.func
+}
 
-  contextTypes: {
-    handleToggle: PropTypes.func
-  },
+function DropdownToggle(props, context) {
+  return <div className="bfd-dropdown-toggle" onClick={context.handleToggle}>{props.children}</div>
+}
 
-  render() {
-    return <div className="bfd-dropdown-toggle" onClick={this.context.handleToggle}>{this.props.children}</div>
-  }
-})
+DropdownToggle.contextTypes = contextTypes
+
+export default DropdownToggle
