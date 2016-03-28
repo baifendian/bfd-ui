@@ -29,5 +29,5 @@ app.get('*', function(req, res) {
 })
 
 app.listen(4001, function() {
-  console.log('Server listening on http://localhost:4001, Ctrl+C to stop')
+  console.log('Server listening on http://localhost:8000, Ctrl+C to stop')
 })
