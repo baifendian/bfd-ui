@@ -90,7 +90,7 @@ const App = React.createClass({
             <p>切换选择后的回调，参数为选中的集合</p>
           </Prop>
           <Prop name="block" type="Boolean">
-            <p>是否垂直布局，默认 inline 模式</p>
+            <p>是否垂直布局，默认 inline 模式，如果手动声明 Checkbox，本属性无效，需要在 Checkbox 中指定</p>
           </Prop>
         </Props>
       </div>

@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import './checkbox.less'
 
-
 const propTypes = {
   children: PropTypes.node.isRequired,
   block: PropTypes.bool
