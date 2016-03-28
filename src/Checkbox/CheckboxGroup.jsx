@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import Checkbox from './Checkbox'
+import './less/checkboxGroup.less'
 
 const propTypes = {
   selects: PropTypes.array,
@@ -46,7 +47,7 @@ const CheckboxGroup = React.createClass({
     } else {
       children = this.props.children
     }
-    return <div className="checkbox-group">{children}</div>
+    return <div className="bfd-checkbox-group">{children}</div>
   }
 })
 
