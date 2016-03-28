@@ -35,6 +35,9 @@ const App = React.createClass({
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调</p>
           </Prop>
+          <Prop name="block" type="Boolean">
+            <p>是否块模式，默认 inline 模式</p>
+          </Prop>
         </Props>
         
         <h2>CheckboxGroup</h2>
@@ -85,6 +88,9 @@ const App = React.createClass({
           </Prop>
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调，参数为选中的集合</p>
+          </Prop>
+          <Prop name="block" type="Boolean">
+            <p>是否垂直布局，默认 inline 模式</p>
           </Prop>
         </Props>
       </div>
