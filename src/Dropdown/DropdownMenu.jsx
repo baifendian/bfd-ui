@@ -1,16 +1,11 @@
 /**
  * 下拉框内容
  */
-
 import React, { PropTypes } from 'react'
+import 'bfd-bootstrap'
 
-export default React.createClass({
-  
-  contextTypes: {
-    isOpen: PropTypes.func
-  },
+function DropdownMenu(props, context) {
+  return <div className="dropdown-menu">{props.children}</div>
+}
 
-  render() {
-    return this.context.isOpen() ? <div className="dropdown-menu">{this.props.children}</div> : null
-  }
-})
+export default DropdownMenu

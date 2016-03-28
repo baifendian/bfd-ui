@@ -1,4 +1,3 @@
-let aa = new Set([])
-
-console.log(aa)
-
+console.log(a)
+const a = 1
+a = 2

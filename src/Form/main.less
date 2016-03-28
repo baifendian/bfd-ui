@@ -13,15 +13,28 @@
 		color: #B94B45
 	}
 	.has-error .form-control {
-    	border-color: #a94442!important;    
+		border-color: #a94442 !important;
 	}
-	.form-control{
-		box-shadow:none;
-		border-radius:0;
-		border:1px solid #ccc;
+	.form-control {
+		box-shadow: none;
+		border-radius: 0;
+		border: 1px solid #ccc;
 	}
-	label{
+	.bfd-form-label {
 		font-weight: normal;
+		padding-left: 18px;
 	}
 }
-
+@media screen and (min-width:992px) {
+	.bfd-form {
+		.bfd-form-label {
+			float: left;
+			position: relative;
+			min-height: 1px;
+			padding-right: 8px;
+			padding-bottom: 4px;
+			width: 120px;
+			text-align: right;
+		}
+	}
+}

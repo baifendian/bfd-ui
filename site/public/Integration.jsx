@@ -7,6 +7,7 @@ export default React.createClass({
     return (
       <div className="guide">
         <p>主要介绍一个项目从零到上线的工作流，也是 bfd-ui 的最佳使用环境。</p>
+        <p>环境安装之前请确认 npm 版本为 3.x。</p>
         <h1>1、项目构建</h1>
 
         <p>项目生成器有助于快速产生一个项目的脚手架，同时避免的不同项目间结构的混乱。</p>

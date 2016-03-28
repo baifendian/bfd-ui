@@ -1,13 +1,11 @@
 import React, { PropTypes } from 'react'
 import DatePicker from './DatePicker'
-import GetTimestrapMixin from './GetTimestrapMixin'
+import getTimestrap from './getTimestrap'
 import './less/dateRange.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 export default React.createClass({
-
-  mixins: [GetTimestrapMixin],
 
   propTypes: {
     start: checkDateTime,
@@ -19,16 +17,20 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      start: this.getTimestrap(this.props.start),
-      end: this.getTimestrap(this.props.end)
+      start: getTimestrap(this.props.start),
+      end: getTimestrap(this.props.end)
     }
   },
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      start: this.getTimestrap(nextProps.start),
-      end: this.getTimestrap(nextProps.end)
-    })
+    const state = {}
+    if ('start' in nextProps) {
+      state.start = getTimestrap(nextProps.start)
+    }
+    if ('end' in nextProps) {
+      state.end = getTimestrap(nextProps.end)
+    }
+    this.setState(state)
   },
 
   childContextTypes: {
@@ -56,10 +58,10 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="bfd-daterange clearfix">
-        <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')}></DatePicker>
+      <div className="bfd-daterange">
+        <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
-        <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')}></DatePicker>
+        <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
       </div>
     )
   }

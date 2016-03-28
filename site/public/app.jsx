@@ -14,7 +14,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false      
+      isOpen: false
     }
   },
 
@@ -42,10 +42,10 @@ const App = React.createClass({
           )}
           <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
             <Nav onClick={this.handleClick}>
-              <NavItem href="/" icon="home" title="首页"/>
-              <NavItem href="/components" icon="th" title="组件"/>
-              <NavItem href="/integration" icon="hand-right" title="完整项目实例"/>
-              <NavItem href="/changeLog" icon="random" title="版本日志"/>
+              <NavItem href="/" icon="home" title="首页" />
+              <NavItem href="/components" icon="th" title="组件" />
+              <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
+              <NavItem href="/changeLog" icon="random" title="版本日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>

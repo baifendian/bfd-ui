@@ -8,34 +8,60 @@ import './main.less'
  */
 const Tabs = React.createClass({
 
+  propTypes: {
+    dynamic: PropTypes.bool,
+    handleClose: PropTypes.func,
+    activeIndex: PropTypes.number,
+    onChange: PropTypes.func
+  },
+
   getInitialState() {
     return {
-      tabIndex: 0,
-      panelIndex: 0,
-      currentIndex: 0
+      tabCount: 0,
+      panelCount: 0,
+      activeIndex: this.props.avtiveIndex || 0
     }
   },
 
   childContextTypes: {
-    getTabIndex: PropTypes.func,
-    getPanelIndex: PropTypes.func,
-    getCurrentIndex: PropTypes.func,
-    setCurrentIndex: PropTypes.func
+    getTabCount: PropTypes.func,
+    reduceTabCount: PropTypes.func,
+    getPanelCount: PropTypes.func,
+    reducePanelCount: PropTypes.func,
+    getActiveIndex: PropTypes.func,
+    setActiveIndex: PropTypes.func,
+    isDynamic: PropTypes.bool,
+    handleClose: PropTypes.func
   },
 
   getChildContext() {
     return {
-      getTabIndex: () => this.state.tabIndex++,
-      getPanelIndex: () => this.state.panelIndex++,
-      getCurrentIndex: () => this.state.currentIndex,
-      setCurrentIndex: currentIndex => {
-        this.setState({currentIndex})
+      isDynamic: !!this.props.dynamic,
+      getTabCount: () => this.state.tabCount++,
+      reduceTabCount: () => {
+        this.setState({tabCount: this.state.tabCount - 1})
+      },
+      getPanelCount: () => this.state.panelCount++,
+      reducePanelCount: () => {
+        this.setState({panelCount: this.state.panelCount - 1})
+      },
+      getActiveIndex: () => this.state.activeIndex,
+      setActiveIndex: activeIndex => {
+        this.setState({ activeIndex })
+        this.props.onChange && this.props.onChange(activeIndex)
+      },
+      handleClose: index => {
+        this.props.handleClose && this.props.handleClose(index)  
       }
     }
   },
 
+  componentWillReceiveProps(nextProps) {
+    'activeIndex' in this.props && this.setState({activeIndex: nextProps.activeIndex})  
+  },
+
   render() {
-    return <div className="bfd-tabs">{this.props.children}</div>
+    return <div className={classNames('bfd-tabs', {dynamic: this.props.dynamic})}>{this.props.children}</div>
   }
 })
 
@@ -56,27 +82,43 @@ const TabList = React.createClass({
  */
 const Tab = React.createClass({
 
-  getInitialState() {
-    return {
-      index: this.context.getTabIndex()
-    }
+  contextTypes: {
+    getTabCount: PropTypes.func,
+    reduceTabCount: PropTypes.func,
+    getActiveIndex: PropTypes.func,
+    setActiveIndex: PropTypes.func,
+    isDynamic: PropTypes.bool,
+    handleClose: PropTypes.func
   },
 
-  contextTypes: {
-    getTabIndex: PropTypes.func,
-    getCurrentIndex: PropTypes.func,
-    setCurrentIndex: PropTypes.func
+  getInitialState() {
+    return {
+      index: this.context.getTabCount()
+    }
   },
 
   handleClick(e) {
     e.preventDefault()
-    this.context.setCurrentIndex(this.state.index)
+    this.context.setActiveIndex(this.state.index)
+  },
+
+  handleClose(e) {
+    e.preventDefault()
+    e.stopPropagation()
+    this.context.handleClose(this.state.index)
+  },
+
+  componentWillUnmount() {
+    this.context.reduceTabCount()
   },
 
   render() {
     return (
-      <li className={classNames({'active': this.state.index === this.context.getCurrentIndex()})}>
-        <a href="" onClick={this.handleClick}>{this.props.children}</a>
+      <li className={classNames({'active': this.state.index === this.context.getActiveIndex()})}>
+        <a href="" onClick={this.handleClick}>
+          {this.props.children}
+          {this.context.isDynamic ? <button type="button" onClick={this.handleClose}>x</button> : null}
+        </a>
       </li>
     )
   }
@@ -88,19 +130,24 @@ const Tab = React.createClass({
  */
 const TabPanel = React.createClass({
 
+  contextTypes: {
+    getPanelCount: PropTypes.func,
+    reducePanelCount: PropTypes.func,
+    getActiveIndex: PropTypes.func
+  },
+
   getInitialState() {
     return {
-      index: this.context.getPanelIndex()
+      index: this.context.getPanelCount()
     }
   },
 
-  contextTypes: {
-    getPanelIndex: PropTypes.func,
-    getCurrentIndex: PropTypes.func
+  componentWillUnmount() {
+    this.context.reducePanelCount()
   },
 
   render() {
-    return <div className={classNames('tab-panel', {'active': this.state.index === this.context.getCurrentIndex()})}>{this.props.children}</div>
+    return <div className={classNames('tab-panel', {'active': this.state.index === this.context.getActiveIndex()})}>{this.props.children}</div>
   }
 })
 

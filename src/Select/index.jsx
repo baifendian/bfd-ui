@@ -1,13 +1,10 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
-import PureRenderMixin from 'react-addons-pure-render-mixin'
-import DropDownMixin from '../DropDownMixin'
+import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 
 
-const Select = React.createClass({ 
-
-	mixins: [PureRenderMixin, DropDownMixin],
+const Select = React.createClass({ 	
 
 	childContextTypes: {
 		getSelected: PropTypes.func,
@@ -15,7 +12,8 @@ const Select = React.createClass({
 	},
 
 	getInitialState() {
-		return {			
+		return {		
+			disabled:this.props.disabled,	
 			arr:this.props.selected
 		}
 	},	
@@ -25,7 +23,7 @@ const Select = React.createClass({
 			getSelected: () => this.props.selected,
 			setSelected: (value, text) => {
 				if (this.props.multiple) {
-					let _arr = this.state.arr;						
+					let _arr = this.state.arr;										
 					_arr.indexOf(value) != -1 ? _arr.splice(_arr.indexOf(value),1) :  _arr.push(value);
 					this.setState({	arr: _arr });
 					this.props.onChange(_arr);
@@ -35,37 +33,42 @@ const Select = React.createClass({
 			}
 		}
 	},
+	handleClick(){
+		this.refs.select.close();
+	},
 
 	render() {	
 
 		let sText = [];
-		const { children,selected} = this.props;		
+		const { children,selected} = this.props;
+
 		this.props.multiple ?
-			children.map(function(item, i) {
+			children.length ? children.map(function(item, i) {
 				selected.map(function(_item, _i) {
 					if (item.props.value == _item) sText.push(item.props.children);
 				})
-			}) :
+			}) : (() => {
+				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+			})() :
+			children.length ?
 			children.map(function(item, i) {
 				if (selected == item.props.value) {
 					sText.push(item.props.children);
 				}
-			});
-
+			}) : (() => {
+				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+			})();	
 
 		return (
-			<div onClick={this.stopPropagation} className={classNames('bfd-dropdown dropdown', {open: this.state.isOpen})}>
-			  <div onClick={this.handleToggle} style={{height:'100%'}}>
-			     {sText.join(',')}
-			    <span className="caret bfd-caret"></span>
-			   {
-          		this.state.isOpen ? (
-			        <ul className="dropdown-menu bfd-menu">
-				   		{children}
-				 	</ul> ) : null
-			    }
-			  </div>
-			</div>
+			<Dropdown ref="select" className="bfd-select" disabled={this.state.disabled}>
+		        <DropdownToggle>
+		        	<div className="txt">{sText.join(',')}</div>
+				  	<span className="caret bfd-caret"></span>
+		        </DropdownToggle>
+		        <DropdownMenu className="dropdown-menu">
+		        	<ul onClick={this.handleClick}>{children}</ul>		          
+		        </DropdownMenu>
+		    </Dropdown>
 		);
 	}  
 
@@ -84,15 +87,9 @@ const Option = React.createClass({
 		const {	children, value, ...other } = this.props;    	
     	const selected = this.context.getSelected();
 		
-		(selected instanceof Array) ?
+		selected instanceof Array ?   
 		className = classNames({
-			'active': (function() {
-				let f = false;
-				selected.map(function(item) {
-					if (item == value) f = true;
-				})
-				return f;
-			})()
+			'active': selected.indexOf(value) != -1
 		}):
 		className = classNames({
 			'active': selected == value
@@ -104,7 +101,7 @@ const Option = React.createClass({
 			this.context.setSelected(value, text);
 		}
 		return (
-			<li {...other}><a href="javascript:;"  value={value} className={className}>{children}</a></li>
+			<li {...other} className={className} value={value}> {children} </li>
 		)
 	}
 })

@@ -34,15 +34,19 @@ export default React.createClass({
   },
 
   handleSuccess(res) {
-    if ('code' in res && 'data' in res) {
-      if (res.code === 200) {
-        this.setState({xhr: 'success'})
-        this.props.onSuccess(res.data)
+    try {
+      if ('code' in res && 'data' in res) {
+        if (res.code === 200) {
+          this.setState({xhr: 'success'})
+          this.props.onSuccess(res.data)
+        } else {
+          this.handleError(res.message)
+        }
       } else {
-        this.handleError(res.message)
+        throw this.props.url + '返回的数据格式必须为{code: xxx, data: []}'
       }
-    } else {
-      throw this.props.url + '返回的数据格式必须为{code: xxx, data: []}'
+    } catch(e) {
+      throw '请查看数据接口是否正常，并保证返回的数据格式必须为{code: xxx, data: []}'
     }
   },
 
@@ -73,7 +77,7 @@ export default React.createClass({
       dom = null
     } else {
       dom = (
-        <div className="loading-mask" ref="container">
+        <div className="bfd-loading" ref="container">
           {(() => {
             switch(this.state.xhr) {
               case 'loading': return '加载中...'

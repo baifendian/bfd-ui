@@ -12,7 +12,9 @@ const Demo = React.createClass({
   //初始化表单数据。
   getInitialState() {
     return { 
-      isSubmit:false,    
+      validateState:false,  
+      username:'',
+      tel:'', 
       task: '',
       desc: '',
       train: ['apple','huawei'],
@@ -21,11 +23,15 @@ const Demo = React.createClass({
   },
 
   //submit按钮提交操作
-  handleSubmit(e) {    
-    this.setState({isSubmit:true}); 
-    let o = this.state;
-    delete o.isSubmit;
-    Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
+  handleSubmit(e) { 
+    this.setState({validateState:true}); 
+    const obj = Form.handleData(this.state, isSuccess);
+    if (obj.isPass) {    //验证通过
+      console.log('表单验证通过');
+      console.log(JSON.stringify(obj.data));
+    } else {              //验证失败
+      console.log('表单验证失败');
+    }
     e.preventDefault();
   },
 
@@ -37,23 +43,52 @@ const Demo = React.createClass({
   /*
    *设置表单字段值。
    */
+  usernameChange(e){
+      this.setState({username:e.target.value,validateState:false}); 
+  },
+  telChange(e){
+      this.setState({tel:e.target.value,validateState:false}); 
+  },
   taskChange(e){
-    this.setState({task:e.target.value})
+    this.setState({task:e.target.value,validateState:false});  
   },
   descCahnge(e){
-     this.setState({desc:e.target.value})
+     this.setState({desc:e.target.value,validateState:false});   
   },
   fieldsChange(selects) {
-    this.setState({ selects });
+    this.setState({ selects,validateState:false});   
   },
   trainChange(selected,text){
-    this.setState({ train:selected });
+    this.setState({ train:selected ,validateState:false});  
   },
 
   render() {   
 
     isSuccess = [];  
-    const validates = [{
+    const validates = [
+    {
+      validateVal: this.state.username,
+      handle: function() {
+        let s;
+        if (!this.validateVal) {
+          s = '请填写用户名';
+        }else {
+          s = 'success'
+        }
+        return s;
+      }
+    },{
+      validateVal: this.state.tel,
+      handle: function() {
+        let s;
+        if (!this.validateVal) {
+          s = '请填写手机号';
+        }else {
+          s = 'success'
+        }
+        return s;
+      }
+    },{
       validateVal: this.state.task,
       handle: function() {
         let s;
@@ -94,13 +129,26 @@ const Demo = React.createClass({
     return (
       <div style={{border:'1px solid #ddd',padding:'20px 10px'}}>
 
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>
+         
+          <div className="row">
+              <div className="col-md-6">
+                 <FormItem label="用户名：" validate={validates[0]} inline required>
+                  <input type="text" className="form-control" onChange={this.usernameChange}/>                      
+                </FormItem>
+              </div>
+              <div className="col-md-6">
+                <FormItem label="手机：" validate={validates[1]} inline required>
+                  <input type="text" className="form-control"  onChange={this.telChange}/>        
+                </FormItem>
+              </div>                          
+          </div>
 
-          <FormItem label="任务名称：" validate={validates[0]} required>
+          <FormItem label="任务名称：" validate={validates[2]} required>
             <input type="text" className="form-control" onChange={this.taskChange}/>        
           </FormItem>
 
-          <FormItem label="任务描述："  validate={validates[1]}>
+          <FormItem label="任务描述："  validate={validates[3]}>
             <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
           </FormItem>
 
@@ -113,7 +161,7 @@ const Demo = React.createClass({
             </Select>
           </FormItem>
 
-          <FormItem label="字段设置：" validate={validates[2]} required>
+          <FormItem label="字段设置：" validate={validates[4]} required>
             <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
               <Checkbox value="apple">苹果</Checkbox>
               <Checkbox value="mi">小米</Checkbox>
@@ -145,11 +193,13 @@ import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 import { Select ,Option} from 'bfd-ui/lib/Select'
 
 let isSuccess;
-const Demo = React.createClass({ 
+const Demo = React.createClass({
   //初始化表单数据。
   getInitialState() {
     return { 
-      isSubmit:false,    
+      validateState:false,  
+      username:'',
+      tel:'', 
       task: '',
       desc: '',
       train: ['apple','huawei'],
@@ -157,11 +207,15 @@ const Demo = React.createClass({
     }
   },
   //submit按钮提交操作
-  handleSubmit(e) {    
-    this.setState({isSubmit:true}); 
-    let o = this.state;
-    delete o.isSubmit;
-    Form.Validate(isSuccess) ? console.log('表单验证通过：'+JSON.stringify(o)):console.log('表单验证失败');     
+  handleSubmit(e) { 
+    this.setState({validateState:true}); 
+    const obj = Form.handleData(this.state, isSuccess);
+    if (obj.isPass) {    //验证通过
+      console.log('表单验证通过');
+      console.log(JSON.stringify(obj.data));
+    } else {              //验证失败
+      console.log('表单验证失败');
+    }
     e.preventDefault();
   },
   //获取验证是否通过状态，并存放到isSuccess数组中。
@@ -171,21 +225,50 @@ const Demo = React.createClass({
   /*
    *设置表单字段值。
    */
+  usernameChange(e){
+      this.setState({username:e.target.value,validateState:false}); 
+  },
+  telChange(e){
+      this.setState({tel:e.target.value,validateState:false}); 
+  },
   taskChange(e){
-    this.setState({task:e.target.value})
+    this.setState({task:e.target.value,validateState:false});  
   },
   descCahnge(e){
-     this.setState({desc:e.target.value})
+     this.setState({desc:e.target.value,validateState:false});   
   },
   fieldsChange(selects) {
-    this.setState({ selects });
+    this.setState({ selects,validateState:false});   
   },
   trainChange(selected,text){
-    this.setState({ train:selected });
+    this.setState({ train:selected ,validateState:false});  
   },
-  render() { 
+  render() {
     isSuccess = [];  
-    const validates = [{
+    const validates = [
+    {
+      validateVal: this.state.username,
+      handle: function() {
+        let s;
+        if (!this.validateVal) {
+          s = '请填写用户名';
+        }else {
+          s = 'success'
+        }
+        return s;
+      }
+    },{
+      validateVal: this.state.tel,
+      handle: function() {
+        let s;
+        if (!this.validateVal) {
+          s = '请填写手机号';
+        }else {
+          s = 'success'
+        }
+        return s;
+      }
+    },{
       validateVal: this.state.task,
       handle: function() {
         let s;
@@ -222,11 +305,23 @@ const Demo = React.createClass({
       }
     }];
     return (      
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.isSubmit}>
-          <FormItem label="任务名称：" validate={validates[0]} required>
+        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>         
+          <div className="row">
+              <div className="col-md-6">
+                 <FormItem label="用户名：" validate={validates[0]} inline required>
+                  <input type="text" className="form-control" onChange={this.usernameChange}/>                      
+                </FormItem>
+              </div>
+              <div className="col-md-6">
+                <FormItem label="手机：" validate={validates[1]} inline required>
+                  <input type="text" className="form-control"  onChange={this.telChange}/>        
+                </FormItem>
+              </div>                          
+          </div>
+          <FormItem label="任务名称：" validate={validates[2]} required>
             <input type="text" className="form-control" onChange={this.taskChange}/>        
           </FormItem>
-          <FormItem label="任务描述："  validate={validates[1]}>
+          <FormItem label="任务描述："  validate={validates[3]}>
             <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
           </FormItem>
           <FormItem label="训练数据：">
@@ -237,7 +332,7 @@ const Demo = React.createClass({
               <Option value="huawei">华为</Option>
             </Select>
           </FormItem>
-          <FormItem label="字段设置：" validate={validates[2]} required>
+          <FormItem label="字段设置：" validate={validates[4]} required>
             <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
               <Checkbox value="apple">苹果</Checkbox>
               <Checkbox value="mi">小米</Checkbox>
@@ -248,17 +343,11 @@ const Demo = React.createClass({
           <FormItem submit>
             <button type="submit" className="btn btn-default">登录</button>
           </FormItem>
-        </Form>
+        </Form>    
     );
   }
 });
-
-  const App = React.createClass({
-      render() {
-        return <Demo/>
-      }
-  })
-  `}
+`}
         </Pre>
 
         <Demo/>  
@@ -285,6 +374,9 @@ const Demo = React.createClass({
           </Prop>
           <Prop name="required" type="Boolean">
             <p>是否必须</p>    
+          </Prop>
+          <Prop name="inline" type="Boolean">
+            <p>存在inline时表示FormItem是否可以在一排</p>    
           </Prop>
           <Prop name="submit" type="Boolean">
             <p>表示是submit提交按钮</p>    

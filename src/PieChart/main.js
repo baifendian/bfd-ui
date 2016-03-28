@@ -6,6 +6,7 @@ import d3 from 'd3'
 import initPie from './pie'
 import assembleTooltip from './assembleTooltip'
 import assembleLegend from './assembleLegend'
+import color from './color'
 
 export default class {
 
@@ -32,12 +33,11 @@ export default class {
 
     if (!env.config.data) return;
 
-    //get color of category10
-    const colors = d3.scale.category10();
-
+    //获取颜色。可以有4个色系选择。  
+    const colors = color(4,env.config.data.length);
     //init color
     for (var i = 0; i < env.config.data.length; i++) {
-      env.config.data[i].color = colors(i);
+      env.config.data[i].color = colors[i];
       env.config.data[i].id = i;
     }
 

@@ -8,8 +8,7 @@ class Form extends React.Component {
 
   getChildContext() {
     return {   
-      submitStatu: () => {
-        
+      submitStatu: () => {        
         return this.props.sibmitStatus
       },  
       setValidate: (flag) => {  
@@ -37,12 +36,12 @@ class Form extends React.Component {
   
 }
 
-Form.Validate = function(arr) {
-    let flag = true;
-    arr.map(function(item, i) {
-      if (!item) flag = false;
-    });
-    return flag;  
+Form.handleData = function(state, isSuccess) {
+  let obj = {};
+  obj.isPass = !(isSuccess.indexOf(false) !== -1);
+  if (state.validateState) delete state.validateState;
+  obj.data = state;
+  return obj;
 };
 
 Form.propTypes = {
@@ -91,42 +90,53 @@ class FormItem extends React.Component {
     const props = this.props;    
     const required = props.required === undefined ? false : true;     
     const className = classNames({      
-      [`col-md-3 control-label`]: true,    
+      [`bfd-form-label control-label`]: true,    
       [`bfd-${props.prefixCls}-group-required`]: required,
     });
-    return props.label ? (
-      <label className={className} key="label">
+
+     return <label className={className} key="label">
         {props.label}
       </label>
-    ) : null;
+    
   }
 
-  renderWrapper(children){   
+  renderWrapper(children){
+    let flag = false;
     const props = this.props;    
-    const className = classNames({
-      ['col-md-6']: true,
-      [`col-md-offset-3`]:!!props.submit
-    });
-
+    let validate = true;
+    let error;    
+    if (props.validate && props.inline) {
+      error = props.validate.handle();
+      error == 'success' ? validate = true : validate = false;
+      this.context.setValidate(validate);
+      if (!validate && this.context.submitStatu()) {
+        flag = true;
+      }
+    }
     return (
-      <div className={className} key="wrapper" >        
-          {children}       
+      <div className="col-md-6" key="wrapper" >        
+          {children}   
+           {
+            flag ? (       
+              <div>
+                <span className="form-control bfd-error">{error}</span>
+              </div> ) : null
+          }
       </div>
     );
   }
 
   renderError(){
     let validate = true;    
-    const props = this.props;  
-    if(props.validate){
-      let error;
-      const cname = props.validate.span ? `col-md-${props.validate.span}` : 'col-md-3';      
+    const props = this.props; 
+    if(props.validate && !props.inline){
+      let error;        
       error = props.validate.handle();
       error == 'success' ? validate = true : validate = false;
       this.context.setValidate(validate); 
       if (validate || !this.context.submitStatu()) return;      
       return (
-        <div className={cname} key="error" ref="bfdErr">
+        <div className="col-md-3" key="error" ref="bfdErr">
           <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
