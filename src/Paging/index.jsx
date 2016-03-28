@@ -74,14 +74,14 @@ export default React.createClass({
             liArr.push( <li key={i} className={this.state.currentIndex === i ? 'active':''}
                               onClick={this.handleClick.bind(this, i)}><a>{i}</a></li> )
             if ( i == showPage ) {
-                   liArr[ i + 1 ] = <li key={i+1}><a>...</a></li> 
+                   liArr[ i + 1 ] = <li key={i+1}><a>...</a></li>
             }
         }
           //显示最后一页
-        if ( pageNum == i && pageNum>showPage) {	 
+        if ( pageNum == i && pageNum>showPage) {
                liArr[ i ] = <li key={i+1} className={this.state.currentIndex === i ? 'active':''}
                               onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
- 
+
           }
         if ( this.state.currentIndex + 1 > showPage ) {
 
