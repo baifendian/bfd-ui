@@ -128,7 +128,7 @@ export default React.createClass({
             <div className="col-md-3 layout-div">
               <label className="label-font">跳转到：</label>
               <input  onKeyUp={this.checkNumber} ref="inputNumber" className="input-number"/>
-              <button onClick={this.handleGoPage} className="btn-go">GO</button>
+              <button onClick={this.handleGoPage} className="btn btn-primary">GO</button>
             </div>
           </div>
         )
