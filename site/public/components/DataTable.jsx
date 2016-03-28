@@ -163,7 +163,7 @@ const column = [{
 
 const App = React.createClass({
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={10} />
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={10}></DataTable>
   }
 })`}
         </Pre>
@@ -171,13 +171,14 @@ const App = React.createClass({
         <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={3} />
         
         <Props>
-          <Prop name = "url" type="String" optional  type="要请求数据的服务端地址"></Prop>
-          <Prop name = "column" type="ArrayJson" required type = "数据表格表头列名"></Prop>
-          <Prop name="howRow" type="Integer" optional type="每页需要显示的条数"></Prop>
-          <Prop name="data" type="Array" optional type="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现"></Prop>
-          <Prop name="onPageChange" type="Function" optional type="点击分页时回调函数， "></Prop>
-          <Prop name="showPage" type="boolean" optional type="是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置">
-            <Pre>
+          <Prop name = "url" type="String" optional  children="要请求数据的服务端地址"></Prop>
+          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名"></Prop>
+          <Prop name="howRow" type="Integer" optional children="每页需要显示的条数"></Prop>
+          <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现"></Prop>
+          <Prop name="showPage" type="boolean" optional children="是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置"></Prop>
+          <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数， "></Prop>
+
+          <Pre>
 {`
 
   const dataJson = {
@@ -212,7 +213,6 @@ const App = React.createClass({
   key:'operation'
 }`}
             </Pre>
-          </Prop>
         </Props>
       </div>
     )
