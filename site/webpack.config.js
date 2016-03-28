@@ -1,6 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
-
+var autoprefixer = require('autoprefixer')
 var isProduction = process.argv.slice(2)[0] === '-p'
 
 var config = {
@@ -30,10 +30,10 @@ var config = {
       loader: 'json-loader'
     }, {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: 'style!css!postcss'
     }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: 'style!css!less!postcss'
     }],
     // preLoaders: [{
     //   test: /\jsx?$/,
@@ -41,6 +41,7 @@ var config = {
     //   exclude: /node_modules/
     // }]
   },
+  postcss: [autoprefixer({ browsers: ['last 3 versions'] })],
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {

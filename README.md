@@ -90,7 +90,7 @@ http://localhost:4001/components/YourComponent
 
 * 开发过程中发现可复用的部分，向团队提出来，避免重复造轮子
 * 依赖的组件如果功能不满足需求，可联系组件的作者处理，不得直接修改他人组件
-* 修复某个 bug 后，commit 时带上 bug 号，这样会自动关联且关闭 bug，如 `git commit -m "Fixed #33"`
+* 修复某个 bug 后，commit 时可自动关联和关闭 bug，包含关键字（fix #bug号）即可，如 `git commit -m "fix #33"`
 * 每个组件的根元素设置 className 为 bfd-xxx，如 bfd-datepicker，并作为 CSS 的命名空间
 * 组件库本身依赖 bootstrap，所以 bootstrap 支持的部分不需要单独写样式，到时候更新 bfd-bootstrap 即可
 * 所有组件要支持自定义 className 以及 style 属性，并在文档中说明
