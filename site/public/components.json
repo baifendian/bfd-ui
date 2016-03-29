@@ -56,6 +56,9 @@
   "name": "Select",
   "cn": "下拉框"
 }, {
+  "name": "SearchSelect",
+  "cn": "查询组件框"
+}, {
   "name": "Loading",
   "cn": "AJAX加载管理"
 }, {
