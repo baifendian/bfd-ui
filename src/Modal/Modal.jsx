@@ -37,20 +37,6 @@ const Modal = React.createClass({
       handleClose: this.close
     }
   },
-  
-  handleClick(e) {
-    if (e.target.className.indexOf('modal-backdrop') !== -1) {
-      this.close()
-    }
-  },
-
-  open() {
-    this.setState({isOpen: true})
-  },
-
-  close() {
-    this.setState({isOpen: false})
-  },
 
   componentDidMount() {
     this.bodyClassName = document.body.className
@@ -74,15 +60,33 @@ const Modal = React.createClass({
     }
   },
 
+  handleModalClick() {
+    this.close()
+  },
+
+  handleDialogClick(e) {
+    e.stopPropagation()
+  },
+
+  open() {
+    this.setState({isOpen: true})
+  },
+
+  close() {
+    this.setState({isOpen: false})
+  },
+
   render() {
     return (
       <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
         {this.state.isOpen ? (
-          <div className="modal">
-            <div className="modal-backdrop" onClick={this.handleClick}></div>
-            <div className="modal-dialog">
-              <div className="modal-content">
-                {this.props.children}
+          <div className="bfd-modal">
+            <div className="modal-backdrop"></div>
+            <div className="modal" onClick={this.handleModalClick}>
+              <div className="modal-dialog" onClick={this.handleDialogClick}>
+                <div className="modal-content">
+                  {this.props.children}
+                </div>
               </div>
             </div>
           </div>

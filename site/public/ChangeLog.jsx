@@ -4,11 +4,11 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>v1.0</h1>
+        <h1>v0.0.18</h1>
         <p>
           <em>2016-03-28</em>
         </p>
-        <p>第一版</p>
+        <p></p>
       </div>
     )
   }

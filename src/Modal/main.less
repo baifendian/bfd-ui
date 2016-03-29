@@ -1,7 +1,6 @@
-.modal {
-  display: block;
+.bfd-modal {
   &.in-enter {
-    .modal-backdrop {
+    > .modal-backdrop {
       opacity: 0;
     }
     .modal-dialog {
@@ -20,8 +19,14 @@
       }
     }
   }
+  > .modal-backdrop {
+    opacity: .5;
+  }
+  > .modal {
+    display: block;
+  }
   &.in-leave.in-leave-active {
-    .modal-backdrop {
+    > .modal-backdrop {
       opacity: 0;
       transition: opacity .15s linear;
     }
@@ -30,10 +35,5 @@
       transform: translate(0, -25%);
       transition: all .3s ease-out;
     }
-  }
-  .modal-backdrop {
-    z-index: 0;
-    bottom: -1px;
-    opacity: .5;
   }
 }

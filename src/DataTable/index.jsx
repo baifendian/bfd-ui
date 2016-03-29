@@ -84,7 +84,7 @@ export default React.createClass( {
 
       }
       url+=this.state.order
-      if(this.props.data.totalList.length>0){
+      if(this.props.data&&this.props.data.totalList.length>0){
          items = this.props.data.totalList
          totalPageNum = this.props.data.totalPageNum
       }

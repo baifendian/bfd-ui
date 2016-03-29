@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './checkbox.less'
+import './less/checkbox.less'
 
 const propTypes = {
   children: PropTypes.node.isRequired,
