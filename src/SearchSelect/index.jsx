@@ -32,7 +32,7 @@ const SearchSelect = React.createClass({
 		this.setState({result:arr});		
 	},
 
-	handleRemove(obj){
+	handleRemove(obj){		
 		let arr = [];		
 		this.state.result.forEach(item => {
         	if(obj.key !== item.key)
@@ -44,9 +44,7 @@ const SearchSelect = React.createClass({
 	},
 
 	handleSuccess(data) {
-		this.setState({
-			data
-		});	
+		this.setState({	data });	
 	},
 
 	render() {
@@ -62,7 +60,7 @@ const SearchSelect = React.createClass({
 					{item.value} 
 				</li> 
 			);
-			
+
 		});
 
 		const _result = this.state.result.map(function(item,i){
