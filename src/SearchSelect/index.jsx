@@ -25,8 +25,7 @@ const SearchSelect = React.createClass({
 
 	handleClick(item) {
 		let arr = this.state.result;
-		if (!new RegExp(JSON.stringify(item)).test(JSON.stringify(arr)))
-			arr.push(item);		
+		if (this.state.result.indexOf(item) == -1) arr.push(item);					
 		this.state.result.length>0 ? this.setState({selected:true,disabled:true}) : this.setState({selected:false,disabled:false});
 		this.props.onChange(arr);
 		this.setState({result:arr});		
@@ -38,7 +37,7 @@ const SearchSelect = React.createClass({
         	if(obj.key !== item.key)
 			arr.push(item);
       	});
-		if(arr.length == 0) this.setState({selected:false,disabled:false});
+		if (arr.length == 0)  this.setState({selected:false,disabled:false});
 		this.props.onChange(arr);
 		this.setState({result:arr});		
 	},
@@ -48,30 +47,24 @@ const SearchSelect = React.createClass({
 	},
 
 	render() {
-
-		const self = this;
-		const children = this.state.data.map(function(item,i){  			
+		const children = this.state.data.map(item => {			
 			const classname = classNames({
-				'active': new RegExp(JSON.stringify(item)).test(JSON.stringify(self.state.result))
-			});	
-
+				'active': this.state.result.indexOf(item) != -1
+			});
 			return ( 
-				<li value={item.key} key={item.key} onClick={self.handleClick.bind(self,item)} className={classname}> 
+				<li value={item.key} key={item.key} onClick={this.handleClick.bind(this,item)} className={classname}> 
 					{item.value} 
 				</li> 
 			);
-
 		});
-
-		const _result = this.state.result.map(function(item,i){
+		const _result = this.state.result.map(item=>{
 			return ( 
 				<li value={item.key} key={item.key}>
-					<i onClick={self.handleRemove.bind(self,item)} className="glyphicon glyphicon-remove"></i>
+					<i onClick={this.handleRemove.bind(this,item)} className="glyphicon glyphicon-remove"></i>
 					{item.value}
 				</li> 
 			);
 		})
-
 		return (				
 			<Dropdown ref="searchSelect" className="bfd-search-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
@@ -87,7 +80,6 @@ const SearchSelect = React.createClass({
 		        </DropdownMenu>
 	    	</Dropdown>			
 		);
-
 	}
 });
 
