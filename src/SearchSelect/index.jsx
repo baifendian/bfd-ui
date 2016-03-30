@@ -2,7 +2,7 @@ import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
-import Loading from '../Loading'
+import Fetch from '../Fetch'
 
 
 const SearchSelect = React.createClass({ 
@@ -73,7 +73,7 @@ const SearchSelect = React.createClass({
 	        		  ( <ul className="form-control" style={{height:'100%'}}>{_result}</ul> ) :
 	        		  ( <input onChange={this.handleChange} className="form-control" style={{boxShadow:'none'}}/> )
 		        	}		        	
-		        	<Loading url={this.state.url} onSuccess={this.handleSuccess} delay={300}></Loading>				       
+		        	<Fetch url={this.state.url} onSuccess={this.handleSuccess} delay={300}></Fetch>				       
 		        </DropdownToggle>
 		        <DropdownMenu>		        	
 		        	<ul>{children}</ul>      
