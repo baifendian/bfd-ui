@@ -1,0 +1,28 @@
+{
+  "code": 200,
+  "data": [{
+    "key": "mi",
+    "value": "小米"
+  }, {
+    "key": "huawei",
+    "value": "华为"
+  }, {
+    "key": "apple",
+    "value": "苹果"
+  }, {
+    "key": "letv",
+    "value": "乐视"
+  }, {
+    "key": "samsung",
+    "value": "三星"
+  }, {
+    "key": "meizu",
+    "value": "魅族"
+  }, {
+    "key": "lenove",
+    "value": "联想"
+  }, {
+    "key": "sony",
+    "value": "索尼"
+  }]
+}

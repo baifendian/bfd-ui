@@ -71,9 +71,9 @@ const Dropdown = React.createClass({
     window.removeEventListener('click', this.handleBodyClick)
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.isOpen !== nextState.isOpen
-  },
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state.isOpen !== nextState.isOpen   
+  // },
 
   render() { 
     return (
