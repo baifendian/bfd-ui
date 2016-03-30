@@ -42,7 +42,7 @@ export default React.createClass({
             </Pre>
           </Prop>
           <Prop name="url" type="String">
-            <p>数据源URL，返回格式要求：</p>
+            <p>数据源URL，data 格式要求数组，字段分别对应 cols 和 category</p>
             <Pre>
 {`{
   "code": 200,
@@ -50,21 +50,21 @@ export default React.createClass({
   "data": [{
     user: 100,
     sales: 3432,
-    date: '2016-01-01'
+    date: "2016-01-01"
   }]
 }`}
             </Pre>
-            <div className="alert alert-warning">url 和 data 属性至少提供一个</div>
           </Prop>
           <Prop name="data" type="Array">
-            <p>数据源，格式要求：</p>
+            <p>数据源，格式与 url 方式返回的 data 格式一样</p>
             <Pre>
 {`[{
   user: 100,
   sales: 3432,
-  date: '2016-01-01'
+  date: "2016-01-01"
 }]`}
             </Pre>
+            <div className="alert alert-warning">url 和 data 属性至少提供一个</div>
           </Prop>
         </Props>
       </div>

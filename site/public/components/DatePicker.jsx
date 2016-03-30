@@ -110,7 +110,7 @@ export default () => {
           <p>开始日期，时间戳（毫秒）或者日期字符串（下同）</p>
           <p>默认今天</p>
         </Prop>
-        <Prop name="start" type="Number | String">
+        <Prop name="end" type="Number | String">
           <p>结束日期，时间戳（毫秒）或者日期字符串（下同）</p>
           <p>默认今天</p>
         </Prop>

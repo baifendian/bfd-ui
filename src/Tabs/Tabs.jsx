@@ -32,7 +32,11 @@ const Tabs = React.createClass({
   },
 
   render() {
-    return <div className={classNames('bfd-tabs', {dynamic: this.props.dynamic})}>{this.props.children}</div>
+    return (
+      <div className={classNames('bfd-tabs', {dynamic: this.props.dynamic})}>
+        {this.props.children}
+      </div>
+    ) 
   }
 })
 

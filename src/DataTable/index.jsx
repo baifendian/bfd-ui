@@ -5,7 +5,7 @@
 import 'bfd-bootstrap'
 import './main.less'
 import React, {PropTypes} from 'react'
-import Loading from '../Loading'
+import Fetch from '../Fetch'
 import classNames from 'classnames'
 import Paging from '../Paging'
 
@@ -90,7 +90,7 @@ export default React.createClass( {
       }
       return (
            <div>
-              {this.props.url ? <Loading url={url} onSuccess={this.handleSuccess}></Loading> : null}
+              {this.props.url ? <Fetch url={url} onSuccess={this.handleSuccess}></Fetch> : null}
                  <table className="table">
                     <thead>
                     <tr>{

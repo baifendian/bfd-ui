@@ -1,5 +1,6 @@
 import React from 'react'
 import xhr from '../xhr'
+import classnames from 'classnames'
 import './main.less'
 
 export default React.createClass({
@@ -12,8 +13,8 @@ export default React.createClass({
   },
 
   fetch() {
-    this.lazyLoading()
-    this.props.onLoading && this.props.onLoading()
+    this.lazyFetch()
+    this.props.onFetch && this.props.onFetch()
     setTimeout(() => {
       xhr({
         url: this.props.url,
@@ -27,7 +28,7 @@ export default React.createClass({
   },
 
   // 加载快的情况下，不展示loading
-  lazyLoading() {
+  lazyFetch() {
     this.loadingTimer = setTimeout(() => {
       this.setState({xhr: 'loading'})
     }, 150)
@@ -64,29 +65,28 @@ export default React.createClass({
   },
   
   componentDidMount() {
-    const style = this.refs.container.parentNode.style
-    if (style.position !== 'absolute') {
-      style.position = 'relative'
+    const container = this.refs.container
+    if (!parseInt(getComputedStyle(container).height, 10)) {
+      container.style.height = '100%'
     }
     this.fetch()
   },
 
   render() {
-    let dom
-    if (this.state.xhr === 'success') {
-      dom = null
-    } else {
-      dom = (
-        <div className="bfd-loading" ref="container">
-          {(() => {
-            switch(this.state.xhr) {
-              case 'loading': return '加载中...'
-              case 'error':   return this.state.msg
-            }
-          })()}
-        </div>
-      )
-    }
-    return dom
+    return (
+      <div className={classnames('bfd-fetch', this.props.className)} style={this.props.style} ref="container">
+        {this.state.xhr !== 'success' ? (
+          <div className="fetch-mask">
+            {(() => {
+              switch(this.state.xhr) {
+                case 'loading': return '加载中...'
+                case 'error':   return this.state.msg
+              }
+            })()}
+          </div>
+        ) : null}
+        {this.props.children}
+      </div>
+    )
   }
 })

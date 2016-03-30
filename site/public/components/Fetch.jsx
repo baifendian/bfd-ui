@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
-import Loading from 'c/Loading'
+import Fetch from 'c/Fetch'
 
 const App = React.createClass({
 
@@ -32,8 +32,9 @@ const App = React.createClass({
           </select>
         </div>
         <div className="panel-body">
-          <Loading url={this.state.url} onSuccess={this.handleSuccess} delay={1000}></Loading>
-          {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+          <Fetch style={{minHeight:100}} url={this.state.url} onSuccess={this.handleSuccess} delay={1000}>
+            {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+          </Fetch>
         </div>
       </div>
     )
@@ -48,7 +49,7 @@ export default React.createClass({
         <p>动态请求数据渲染界面的场景非常多，渲染时也需要向用户反馈数据加载的状态，如加载中、加载失败、无数据等，使用本组件会自动帮您管理这些需求。</p>
         <p>bfd-ui 各个动态渲染的组件已内部集成，无需单独调用。</p>
         <Pre>
-{`import Loading from 'bfd-ui/lib/Loading'
+{`import Fetch from 'bfd-ui/lib/Fetch'
 
 const App = React.createClass({
 
@@ -78,8 +79,9 @@ const App = React.createClass({
           </select>
         </div>
         <div className="panel-body">
-          <Loading url={this.state.url} onSuccess={this.handleSuccess}></Loading>
-          {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+          <Fetch style={{minHeight:100}} url={this.state.url} onSuccess={this.handleSuccess}>
+            {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+          </Fetch>
         </div>
       </div>
     )

@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Loading from './Loading'
+import Fetch from './Fetch'
 import classnames from 'classnames'
 import './chart.less'
 
@@ -9,6 +9,9 @@ const propTypes = {
   __valid(props) {
     if (!props.url && !props.data) {
       return new Error('url和data属性至少提供一个')
+    }
+    if (props.url && props.data) {
+      return new Error('url和data属性只能提供一个')
     }
   }
 }
@@ -29,17 +32,16 @@ const Chart = React.createClass({
     if (!parseInt(getComputedStyle(container).height, 10)) {
       container.style.height = '100%'
     }
-    this.refs.chart.style.height = '100%'
     if (this.props.data) {
       this.renderChart(this.props.data)
     }
   },
 
   render() {
+    const chart = <div style={{height:'100%'}} ref="chart"></div>
     return (
       <div ref="container" className={classnames('bfd-chart', this.props.className)} style={this.props.style}>
-        {this.props.url ? <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading> : null}
-        <div ref="chart"></div>
+        {this.props.url ? <Fetch url={this.props.url} onSuccess={this.handleSuccess}>{chart}</Fetch> : chart}
       </div>
     )
   }
