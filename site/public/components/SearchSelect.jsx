@@ -29,7 +29,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>查询组件框</h1>
+        <h1>查询下拉框</h1>
         <Pre>
 {`
 import { SearchSelect } from 'bfd-ui/lib/SearchSelect'

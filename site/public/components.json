@@ -45,7 +45,7 @@
   "cn": "下拉框"
 }, {
   "name": "SearchSelect",
-  "cn": "查询组件框"
+  "cn": "查询下拉框"
 }, {
   "name": "Fetch",
   "cn": "AJAX加载管理"

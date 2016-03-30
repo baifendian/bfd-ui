@@ -8,14 +8,13 @@ import Fetch from '../Fetch'
 const SearchSelect = React.createClass({ 
 
 	getInitialState() {
-		return {
-			url: this.props.url,			
+		return {						
 			data: [],
 			searchData:[],
 			result:[],
 			type:null,
 			selected:false,
-			disabled:this.props.disabled,
+			disabled:false,
 		}
 	},
 
@@ -79,6 +78,7 @@ const SearchSelect = React.createClass({
 		this.props.onChange(arr);
 		this.setState({result:arr});				
 	},
+
 	render() {		
 		const children = this.state.searchData.map(item => {			
 			const classname = classNames({
@@ -127,6 +127,7 @@ const SearchSelect = React.createClass({
 					break;
 			}
 		});	
+
 		return (				
 			<Dropdown ref="searchSelect" className="bfd-search-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
@@ -135,14 +136,16 @@ const SearchSelect = React.createClass({
 	        		  ( <ul className="form-control" style={{height:'100%'}}>{_result}</ul> ) :
 	        		  ( <input onChange={this.handleChange} className="form-control" style={{boxShadow:'none'}}/> )
 		        	}		        	
-		        	<Fetch url={this.state.url} onSuccess={this.handleSuccess} delay={300}></Fetch>				       
+		        	<Fetch url={this.props.url} onSuccess={this.handleSuccess} delay={300}></Fetch>				       
 		        </DropdownToggle>
 		        <DropdownMenu>		        	
 		        	<ul>{children}</ul>      
 		        </DropdownMenu>
 	    	</Dropdown>			
 		);
+		
 	}
+
 });
 
 export { SearchSelect }
