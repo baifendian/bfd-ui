@@ -1,9 +1,24 @@
 {
   "code": 200,
   "data": [{
-    "key": "mi",
-    "value": "小米"
-  }, {
+    "key": "mi1",
+    "value": "小米1"
+  },{
+    "key": "mi2",
+    "value": "小米2"
+  },{
+    "key": "mi3",
+    "value": "小米3"
+  },{
+    "key": "mi4",
+    "value": "小米4"
+  },{
+    "key": "mi5",
+    "value": "小米5"
+  },{
+    "key": "mi6",
+    "value": "小米6"
+  },{
     "key": "huawei",
     "value": "华为"
   }, {
