@@ -61,4 +61,7 @@
 }, {
   "name": "Dropdown",
   "cn": "下拉菜单"
+}, {
+  "name": "Transfer",
+  "cn": "穿梭框"
 }]
