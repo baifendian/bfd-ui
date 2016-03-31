@@ -29,7 +29,7 @@ export default class {
     } = config
 
     const yAxisConfig = config.yAxis || {}
-    const colors = config.colors || ['#2196f3', '#4caf50', '#f9ce1d', '#9c27b0']
+    const colors = config.colors || ['#673ab7', '#00bcd4', '#f9ce1d', '#9c27b0']
 
     const padding = [20, 20, 30, 40]
 
@@ -196,7 +196,7 @@ export default class {
     // x轴边距实际大小
     const xAxisPadding = width / (categories.length - 1 + xAxisPaddingScale) * xAxisPaddingScale / 2
 
-    const duration = 200 / categories.length
+    const duration = 250 / categories.length
 
     const markers = svg.selectAll('.marker')
 

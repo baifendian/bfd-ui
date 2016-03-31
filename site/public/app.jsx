@@ -14,7 +14,7 @@ const App = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false      
+      isOpen: false
     }
   },
 
@@ -30,9 +30,12 @@ const App = React.createClass({
     return (
       <div id="wrapper">
         <div id="header">
-          <Link to="/">
+          <Link to="/" className="pull-left">
             <h2>BFD UI</h2>
           </Link>
+          <div className="pull-right">
+            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">发现问题？</a>
+          </div>
         </div>
         <div id="body" className="clearfix">
           {this.state.isOpen ? null : (
@@ -42,10 +45,10 @@ const App = React.createClass({
           )}
           <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
             <Nav onClick={this.handleClick}>
-              <NavItem href="/" icon="home" title="首页"/>
-              <NavItem href="/components" icon="th" title="组件"/>
-              <NavItem href="/integration" icon="hand-right" title="完整项目实例"/>
-              <NavItem href="/changeLog" icon="random" title="版本日志"/>
+              <NavItem href="/" icon="home" title="首页" />
+              <NavItem href="/components" icon="th" title="组件" />
+              <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
+              <NavItem href="/changeLog" icon="random" title="版本日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
@@ -53,9 +56,6 @@ const App = React.createClass({
         <div id="footer">
           <div className="pull-left">
             当前版本：v1.0
-            <br/>
-            <a href="http://git.baifendian.com/front-end/bfd-ui">Gitlab仓库</a>&nbsp;|&nbsp;
-            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">提交Bug</a>
           </div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>

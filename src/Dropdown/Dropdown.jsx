@@ -1,12 +1,21 @@
 /**
  * 下拉功能组件
  */
-
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import 'bfd-bootstrap'
 import './dropdown.less'
 
-export default React.createClass({
+
+const propTypes = {
+  disabled: PropTypes.bool
+}
+
+const childContextTypes = {
+  handleToggle: PropTypes.func
+}
+
+const Dropdown = React.createClass({
 
   // 存储所有的组件实例，当前打开后，其他关闭
   instances: [],
@@ -17,32 +26,35 @@ export default React.createClass({
     }
   },
 
-  childContextTypes: {
-    handleToggle: PropTypes.func,
-    isOpen: PropTypes.func
-  },
-
   getChildContext() {
     return {
-      handleToggle: this.handleToggle,
-      isOpen: () => this.state.isOpen
+      handleToggle: this.handleToggle
     }
   },
 
+  open() {
+    this.setState({isOpen: true})
+  },
+
+  close() {
+    this.setState({isOpen: false})
+  },
+
   handleToggle() {
-    this.setState({isOpen: !this.state.isOpen})
+    if (this.props.disabled) return
+    this[this.state.isOpen ? 'close' : 'open']()
     if (this.instances.length > 1) {
       this.instances.forEach(instance => {
         if (instance !== this) {
           // 关闭其他组件
-          instance.setState({isOpen: false})
+          instance.close()
         }
       })
     }
   },
 
   handleBodyClick() {
-    this.setState({isOpen: false})
+    this.close()
   },
 
   stopPropagation(e) {
@@ -59,9 +71,18 @@ export default React.createClass({
     window.removeEventListener('click', this.handleBodyClick)
   },
 
-  render() {
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state.isOpen !== nextState.isOpen   
+  // },
+
+  render() { 
     return (
       <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', this.props.className, {open: this.state.isOpen})}>{this.props.children}</div>
     )
   }
 })
+
+Dropdown.propTypes = propTypes
+Dropdown.childContextTypes = childContextTypes
+
+export default Dropdown

@@ -1,0 +1,61 @@
+.bfd-tree {
+  position: relative;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin-top: 10px;
+      position: relative;
+      margin-left: 26px;
+      &:before {
+        position: absolute;
+        top: 8px;
+        content: '';
+        width: 17px;
+        height: 0px;
+        border-top: 1px dotted #999;
+        left: -13px;
+      }
+      &:after {
+        position: absolute;
+        top: -10px;
+        left: -15px;
+        bottom: 1px;
+        content: '';
+        width: 0px;
+        border-right: 1px dotted #999;
+      }
+      &:last-child {
+        &:after {
+          bottom: 0;
+        }
+      }
+      button.toggle {
+        padding: 0;
+        width: 16px;
+        height: 16px;
+        line-height: 14px;
+        position: absolute;
+        left: -23px;
+        top: 0px;
+        z-index: 1;
+        > .glyphicon {
+          font-size: 12px;
+        }
+      }
+      > .glyphicon {
+        color: #2196f3;
+        margin: 0 5px;
+      }
+      > ul {
+        display: none;
+      }
+      &.open {
+        > ul {
+          display: block;
+        }
+      }
+    }
+  }
+}

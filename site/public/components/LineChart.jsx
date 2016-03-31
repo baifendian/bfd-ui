@@ -7,7 +7,7 @@ const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
 const App = React.createClass({
   render() {
-    return <LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+    return <LineChart style={{height:320}} category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
   }
 })`
 
@@ -15,10 +15,10 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>折线图</h1>
+        <h1>线图</h1>
         <Pre>{code}</Pre>
-
-        <LineChart category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+        
+        <LineChart style={{height:320}} category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json" />
         
         <Props>
           <Prop name="cols" type="Object" required>
@@ -41,18 +41,30 @@ export default React.createClass({
 }`}
             </Pre>
           </Prop>
-          <Prop name="url" type="String" required>
-            <p>数据源URL，返回格式要求：</p>
+          <Prop name="url" type="String">
+            <p>数据源URL，data 格式要求数组，字段分别对应 cols 和 category</p>
             <Pre>
 {`{
   "code": 200,
+  "message": "当code不是200时，message信息会展示到页面",
   "data": [{
     user: 100,
     sales: 3432,
-    date: '2016-01-01'
+    date: "2016-01-01"
   }]
 }`}
             </Pre>
+          </Prop>
+          <Prop name="data" type="Array">
+            <p>数据源，格式与 url 方式返回的 data 格式一样</p>
+            <Pre>
+{`[{
+  user: 100,
+  sales: 3432,
+  date: "2016-01-01"
+}]`}
+            </Pre>
+            <div className="alert alert-warning">url 和 data 属性至少提供一个</div>
           </Prop>
         </Props>
       </div>

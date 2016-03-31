@@ -41,9 +41,9 @@ var SourceTable = React.createClass({
   render : function() {
     var rows = [];
     var _this = this;
-    this.props.data.map(item => {
+    this.props.data.map((item, index) => {
       rows.push(<Row
-        key={item.id}
+        key={index}
         id={item.id}
         label={item.label}
         onClick={this.handleClick.bind(this,item)}
@@ -72,9 +72,9 @@ var TargetTable = React.createClass({
   render : function() {
     var rows = [];
     var _this = this;
-    this.props.data.map(item => {
+    this.props.data.map((item, index) => {
       rows.push(<Row 
-        key={item.id} 
+        key={index} 
         id={item.id} 
         label={item.label} 
         onClick={this.handleClick.bind(this, item)} 

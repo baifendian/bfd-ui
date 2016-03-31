@@ -5,7 +5,7 @@
 import 'bfd-bootstrap'
 import './main.less'
 import React, {PropTypes} from 'react'
-import Loading from '../Loading'
+import Fetch from '../Fetch'
 import classNames from 'classnames'
 import Paging from '../Paging'
 
@@ -62,7 +62,6 @@ export default React.createClass( {
          }
 
       }
-
    },
    handleSuccess: function ( data ) {
       this.setState( { items: data } )
@@ -85,16 +84,13 @@ export default React.createClass( {
 
       }
       url+=this.state.order
-      if(this.props.data.totalList.length>0){
+      if(this.props.data&&this.props.data.totalList.length>0){
          items = this.props.data.totalList
          totalPageNum = this.props.data.totalPageNum
-         //url='';
       }
-
-
       return (
            <div>
-              {this.props.url ? <Loading url={this.props.url} onSuccess={this.handleSuccess}></Loading> : null}
+              {this.props.url ? <Fetch url={url} onSuccess={this.handleSuccess}></Fetch> : null}
                  <table className="table">
                     <thead>
                     <tr>{
@@ -131,11 +127,14 @@ export default React.createClass( {
                         })
                       }
                     </tbody>
-                 </table>
-              <div id="paging">
-                 <Paging currentPage={currentPage} onPageChange={this.onPageChange} totalPageNum={totalPageNum} pageSize={this.props.howRow}
-                         onChange={this.onChange}></Paging>
-              </div>
+                 </table>{
+                     this.props.showPage=="true"?<div id="paging">
+                        <Paging currentPage={currentPage} onPageChange={this.onPageChange} totalPageNum={totalPageNum} pageSize={this.props.howRow}
+                                onChange={this.onChange}></Paging>
+                     </div>:''
+
+                   }
+
            </div>
       )
    }

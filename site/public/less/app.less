@@ -2,6 +2,8 @@
   background-color: #2196f3;
   height: 50px;
   padding: 0 20px;
+  line-height: 50px;
+  color: #fff;
   a {
     text-decoration: none;
     color: #fff;
@@ -14,7 +16,7 @@
 
 #body {
   position: relative;
-  
+  min-height: 600px;
   > .toggle {
     display: none;
     margin: 20px 0 0 20px;
@@ -32,16 +34,14 @@
     &.open {
       @media (max-width: 700px) {
         display: block;
-        float: none;
-        width: auto;
       }
     }
   }
   > .content {
-    padding: 20px;
-    min-height: 600px;
     overflow: hidden;
+    margin-left: 200px;
     > div {
+      padding: 20px;
       -webkit-animation: in .5s;
     }
     @media (max-width: 700px) {
@@ -66,9 +66,10 @@ pre {
   color: #666;
   border: 0;
   font-size: 12px;
-  white-space: pre-wrap;
   padding: 1rem;
   max-width: 700px;
+  white-space: pre;
+  word-wrap: normal;
 }
 pre .kwd {
   color: #8959a8;
@@ -94,13 +95,5 @@ pre .com {
   font-size: 12px;
   background-color: #333;
   color: #ccc;
-  .pull-left {
-    padding-top: 9px;
-    a {
-      color: #ccc;
-    }
-  }
-  .pull-right {
-    line-height: 50px;
-  }
+  line-height: 50px;
 }

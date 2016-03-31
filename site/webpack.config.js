@@ -1,6 +1,7 @@
-var path = require('path')
 var webpack = require('webpack')
-
+var path = require('path')
+var fs = require('fs')
+var autoprefixer = require('autoprefixer')
 var isProduction = process.argv.slice(2)[0] === '-p'
 
 var config = {
@@ -9,8 +10,8 @@ var config = {
   },
   output: {
     path: __dirname + '/public/dist',
-    filename: '[name].js',
-    chunkFilename: '[id].js',
+    filename: '[name]' + (isProduction ? '.[hash]' : '') + '.js',
+    chunkFilename: '[id]' + (isProduction ? '.[hash]' : '') + '.js',
     publicPath: '/dist/'
   },
   module: {
@@ -23,17 +24,17 @@ var config = {
         plugins: ['transform-runtime']
       }
     }, {
-      test: /\.css$/,
-      loader: 'style-loader!css-loader'
-    }, {
       test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,
       loader: 'json-loader'
     }, {
+      test: /\.css$/,
+      loader: 'style!css!postcss'
+    }, {
       test: /\.less$/,
-      loader: 'style!css!less'
+      loader: 'style!css!less!postcss'
     }],
     // preLoaders: [{
     //   test: /\jsx?$/,
@@ -41,6 +42,7 @@ var config = {
     //   exclude: /node_modules/
     // }]
   },
+  postcss: [autoprefixer({ browsers: ['last 3 versions'] })],
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
@@ -51,7 +53,20 @@ var config = {
 }
 
 if (isProduction) {
+  
   config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+
+  config.plugins.push(function() {
+    this.plugin("done", function(statsData) {
+      var stats = statsData.toJson()
+      if (!stats.errors.length) {
+        var templateFile = 'index.html'
+        var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
+        template = template.replace('app.js', 'app.' + stats.hash + '.js')
+        fs.writeFileSync(path.join(__dirname, templateFile), template)
+      }
+    })
+  })
 }
 
 module.exports = config

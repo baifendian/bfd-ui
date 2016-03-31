@@ -4,6 +4,7 @@ import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 export default React.createClass({
+
   render() {
     return (
       <div>
@@ -20,7 +21,6 @@ const App = React.createClass({
 })`}
         </Pre>
         <Checkbox>选择</Checkbox>
-        <input type="checkbox" checked onChange={e=>{console.log(e.target.checked)}}/>
         <Props>
           <Prop name="checked" type="Boolean">
             <p>默认是否选中</p>
@@ -34,6 +34,9 @@ const App = React.createClass({
           </Prop>
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调</p>
+          </Prop>
+          <Prop name="block" type="Boolean">
+            <p>是否块模式，默认 inline 模式</p>
           </Prop>
         </Props>
         
@@ -85,6 +88,9 @@ const App = React.createClass({
           </Prop>
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调，参数为选中的集合</p>
+          </Prop>
+          <Prop name="block" type="Boolean">
+            <p>是否垂直布局，默认 inline 模式，如果手动声明 Checkbox，本属性无效，需要在 Checkbox 中指定</p>
           </Prop>
         </Props>
       </div>
