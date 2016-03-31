@@ -17,16 +17,14 @@ class Form extends React.Component {
     }
   }  
 
-  render() {
-    
-    const { prefixCls, className } = this.props;
-    const formClassName = classNames({
+  render() {    
+    const { prefixCls, className } = this.props,    
+    formClassName = classNames({
       'bfd-form':true,
       [className]: !!className,
       [`${prefixCls}-horizontal`]: this.props.horizontal,
       [`${prefixCls}-inline`]: this.props.inline,
-    });
-    
+    });    
     return (
       <form {...this.props} className={formClassName}>
         {this.props.children}
@@ -38,10 +36,10 @@ class Form extends React.Component {
 
 Form.handleData = function(state, isSuccess) {
   let obj = {};
-  obj.isPass = !(isSuccess.indexOf(false) !== -1);
+      obj.isPass = !(isSuccess.indexOf(false) !== -1);
   if (state.validateState) delete state.validateState;
-  obj.data = state;
-  return obj;
+    obj.data = state;
+    return obj;
 };
 
 Form.propTypes = {
@@ -69,42 +67,39 @@ class FormItem extends React.Component {
    constructor(props){
         super(props);    
         this.state = {
-          flagErr:false
+          flagError:false
         }
     }
 
   componentWillReceiveProps(nextProps){  
-    if (nextProps.validate && nextProps.validate.handle() !== 'success' && this.context.submitStatu()) {
+    (nextProps.validate &&
+      nextProps.validate.handle() !== 'success' &&
+      this.context.submitStatu()) ?
+    this.setState({
+        flagError: true
+      }):
       this.setState({
-        flagErr:true
-      })
-    } else {
-      this.setState({
-        flagErr:false
-      })
-    }
+        flagError: false
+      });
   }
  
   renderLabel() {
-
-    const props = this.props;    
-    const required = props.required === undefined ? false : true;     
-    const className = classNames({      
-      [`bfd-form-label control-label`]: true,    
-      [`bfd-${props.prefixCls}-group-required`]: required,
+    const props = this.props,   
+    required = props.required === undefined ? false : true,    
+    className = classNames({      
+        [`bfd-form-label control-label`]: true,    
+        [`bfd-${props.prefixCls}-group-required`]: required,
     });
-
-     return <label className={className} key="label">
-        {props.label}
-      </label>
-    
+    return (
+          <label className={className} key="label">
+            {props.label}
+          </label>
+      )    
   }
 
   renderWrapper(children){
-    let flag = false;
-    const props = this.props;    
-    let validate = true;
-    let error;    
+    let error, flag = false, validate = true;
+    const props = this.props;       
     if (props.validate && props.inline) {
       error = props.validate.handle();
       error == 'success' ? validate = true : validate = false;
@@ -116,7 +111,7 @@ class FormItem extends React.Component {
     return (
       <div className="col-md-6" key="wrapper" >        
           {children}   
-           {
+          {
             flag ? (       
               <div>
                 <span className="form-control bfd-error">{error}</span>
@@ -127,25 +122,27 @@ class FormItem extends React.Component {
   }
 
   renderError(){
-    let validate = true;    
-    const props = this.props; 
-    if(props.validate && !props.inline){
-      let error;        
+    let validate = true;
+    const props = this.props;
+    if (props.validate && !props.inline) {
+      let error;
       error = props.validate.handle();
       error == 'success' ? validate = true : validate = false;
-      this.context.setValidate(validate); 
-      if (validate || !this.context.submitStatu()) return;      
-      return (
+      this.context.setValidate(validate);
+      if (validate || !this.context.submitStatu()) return;
+
+    return (
         <div className="col-md-3" key="error" ref="bfdErr">
           <span className="form-control bfd-error" style={{height:'auto'}}>{error}</span>
         </div>  
       )
+
     }
   }
 
   renderChildren() {
-    const props = this.props;      
-    const children = React.Children.map(props.children, (child) => {
+    const props = this.props,    
+    children = React.Children.map(props.children, (child) => {
       return child;
     });
     return [
@@ -156,10 +153,10 @@ class FormItem extends React.Component {
   }
   
   renderFormGroup(children) {
-    const props = this.props;
-    const prefixCls = props.prefixCls;
-    const groupClassName = {
-      'has-error':this.state.flagErr,
+    const props = this.props,
+    prefixCls = props.prefixCls,
+    groupClassName = {
+      'has-error':this.state.flagError,
       [`${prefixCls}-group`]: true,
       [`${props.className}`]: !!props.className,
     };
