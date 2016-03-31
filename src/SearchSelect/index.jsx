@@ -8,13 +8,13 @@ import Fetch from '../Fetch'
 const SearchSelect = React.createClass({ 
 
 	getInitialState() {
-		return {						
+		return {
 			data: [],
-			searchData:[],
-			result:[],
-			type:null,
-			selected:false,
-			disabled:false,
+			searchData: [],
+			result: this.props.selected,
+			type: null,
+			selected: !!this.props.selected.length,
+			disabled: !!this.props.selected.length,
 		}
 	},
 
@@ -79,7 +79,8 @@ const SearchSelect = React.createClass({
 		this.setState({result:arr});				
 	},
 
-	render() {		
+	render() {	
+		
 		const children = this.state.searchData.map(item => {			
 			const classname = classNames({
 				'active': this.state.result.indexOf(item) != -1

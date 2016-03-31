@@ -12,14 +12,13 @@ const App = React.createClass({
 			}
 		},
 
-	handleChange(result) {
-		console.log(result);
+	handleChange(result) {		
 		this.setState({	selected: result });
 	},
 
   render() {
     return (
-        <SearchSelect url="/data/searchSelect.json" onChange={this.handleChange}></SearchSelect>      
+        <SearchSelect url="/data/searchSelect.json"  selected={this.state.selected}  onChange={this.handleChange}></SearchSelect>      
     )
   }
 })
@@ -35,19 +34,21 @@ export default React.createClass({
 import { SearchSelect } from 'bfd-ui/lib/SearchSelect'
 
 const App = React.createClass({
-	getInitialState() {
+	
+  getInitialState() {
 		return {
 			selected: []
 		}
 	},
-	handleChange(result) {
-		console.log(result);
+
+  handleChange(result) {		
 		this.setState({	selected: result });
 	},
+  
   render() {
     return (
-        <SearchSelect url="/data/searchSelect.json?search=" onChange={this.handleChange}>
-        </SearchSelect>      
+      <SearchSelect url="/data/searchSelect.json" selected={this.state.selected} onChange={this.handleChange}>
+      </SearchSelect>              
     )
   }
 })
@@ -106,7 +107,10 @@ const App = React.createClass({
           	<Prop name="url" required>
             	<p>请求接口</p>  
           	</Prop>
-         	<Prop name="onChange" type="Function" required>
+            <Prop name="selected" required>
+              <p>选中的值</p>  
+            </Prop>
+         	  <Prop name="onChange" type="Function" required>
             	<p>选择后的回调</p>    
           	</Prop>
 
