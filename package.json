@@ -6,8 +6,8 @@
   "scripts": {
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name '*.jsx' -exec rm -rf {} \\;",
     "start": "node-dev site/server.js",
-    "online": "fuser -k 4001/tcp & cd site && webpack -p --progress && node server.js -p&",
-    "wakeup": "cd site && node server.js -p&"
+    "pack": "cd site && rm -rf public/dist && webpack -p --progress",
+    "server": "pm2 start site/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -46,6 +46,7 @@
     "express": "^4.13.3",
     "fastclick": "^1.0.6",
     "node-dev": "^2.7.1",
+    "pm2": "^1.0.2",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.4.0"
   }
