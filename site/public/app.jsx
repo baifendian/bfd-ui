@@ -54,7 +54,7 @@ const App = React.createClass({
           <div className="content">{this.props.children}</div>
         </div>
         <div id="footer">
-          <div className="pull-left">当前版本：v0.0.19</div>
+          <div className="pull-left">当前版本：v0.0.20</div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>
       </div>

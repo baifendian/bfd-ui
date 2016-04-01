@@ -4,7 +4,7 @@ import Version from './Version'
 function ChangeLog() {
   return (
     <div>
-      <Version version="0.0.19" date="2016-04-01">
+      <Version version="0.0.20" date="2016-04-01">
         <p>组件：</p>
         <ul>
           <li>线图：LineChart</li>
