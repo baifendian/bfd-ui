@@ -2,75 +2,132 @@ import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
-import Loading from '../Loading'
+import Fetch from '../Fetch'
 
 
 const SearchSelect = React.createClass({ 
 
 	getInitialState() {
 		return {
-			url: this.props.url,
 			data: [],
-			result:[],
-			selected:false,
-			disabled:this.props.disabled,
+			searchData: [],
+			result: this.props.selected,
+			type: null,
+			selected: !!this.props.selected.length,
+			disabled: !!this.props.selected.length,
 		}
-	},
-	
-	handleChange(e) {		
-		this.setState({
-			url: this.props.url + e.target.value
-		})
-	},
-
-	handleClick(item) {
-		let arr = this.state.result;
-		if (!new RegExp(JSON.stringify(item)).test(JSON.stringify(arr)))
-			arr.push(item);		
-		this.state.result.length>0 ? this.setState({selected:true,disabled:true}) : this.setState({selected:false,disabled:false});
-		this.props.onChange(arr);
-		this.setState({result:arr});		
-	},
-
-	handleRemove(obj){		
-		let arr = [];		
-		this.state.result.forEach(item => {
-        	if(obj.key !== item.key)
-			arr.push(item);
-      	});
-		if(arr.length == 0) this.setState({selected:false,disabled:false});
-		this.props.onChange(arr);
-		this.setState({result:arr});		
 	},
 
 	handleSuccess(data) {
-		this.setState({	data });	
+		if(this.getType(data,'string')){
+			this.setState({type:'string'});
+		} 
+		if(this.getType(data,'object')){
+			this.setState({type:'object'});
+		}
+		this.setState({	data: data,	searchData: data });
 	},
 
-	render() {
-
-		const self = this;
-		const children = this.state.data.map(function(item,i){  			
-			const classname = classNames({
-				'active': new RegExp(JSON.stringify(item)).test(JSON.stringify(self.state.result))
-			});	
-
-			return ( 
-				<li value={item.key} key={item.key} onClick={self.handleClick.bind(self,item)} className={classname}> 
-					{item.value} 
-				</li> 
-			);
-
-		});
-
-		const _result = this.state.result.map(function(item,i){
-			return ( 
-				<li value={item.key} key={item.key}>
-					<i onClick={self.handleRemove.bind(self,item)} className="glyphicon glyphicon-remove"></i>
-					{item.value}
-				</li> 
-			);
+	getType(data, type) {
+		let flag = true;
+		data.map(function(item) {
+			if (typeof item !== type) {
+				flag = false;
+			}
 		})
+		return flag;
+	},
+	
+	handleChange(e) {			
+		const array = this.state.data,
+			keyword = e.target.value;
+		let data = [];
+		switch (this.state.type) {
+			case 'string':
+				array.map(function(item){
+					if(item.indexOf(keyword) != -1){
+						data.push(item);
+					}
+				});
+				break;
+			case 'object':
+				array.map(function(item){
+					if(item.value.indexOf(keyword) != -1){
+						data.push(item);
+					}
+				});
+				break;
+			default:				
+				break;
+		}					
+		this.setState({ searchData: data });						
+	},
+
+	handleClick(item) {		
+		let arr = this.state.result;
+		if (this.state.result.indexOf(item) == -1) arr.push(item);					
+		this.state.result.length>0 ? this.setState({selected:true,disabled:true}) : this.setState({selected:false,disabled:false});
+		this.props.onChange(arr);
+		this.setState({result:arr});					
+	},
+
+	handleRemove(obj){	
+		let arr = this.state.result;
+			arr.splice(arr.indexOf(obj),1);
+		if (arr.length == 0)  this.setState({selected:false,disabled:false});
+		this.props.onChange(arr);
+		this.setState({result:arr});				
+	},
+
+	render() {	
+		
+		const children = this.state.searchData.map(item => {			
+			const classname = classNames({
+				'active': this.state.result.indexOf(item) != -1
+			});
+			switch (this.state.type) {
+				case 'string':
+					return ( 
+						<li value={item} key={item} onClick={this.handleClick.bind(this,item)} className={classname}> 
+							{item} 
+						</li> 
+					);
+					break;
+				case 'object':
+					return ( 
+						<li value={item.key} key={item.key} onClick={this.handleClick.bind(this,item)} className={classname}> 
+							{item.value} 
+						</li> 
+					);
+					break;
+				default:
+					return null;
+					break;
+			}
+		});
+		const _result = this.state.result.map(item=>{				
+			switch (this.state.type) {
+				case 'string':
+					return ( 
+						<li value={item} key={item}>
+							<i onClick={this.handleRemove.bind(this,item)} className="glyphicon glyphicon-remove"></i>
+							{item}
+						</li> 
+					);
+					break;
+				case 'object':
+					return ( 
+						<li value={item.key} key={item.key}>
+							<i onClick={this.handleRemove.bind(this,item)} className="glyphicon glyphicon-remove"></i>
+							{item.value}
+						</li> 
+					);
+					break;
+				default:
+					return null;
+					break;
+			}
+		});	
 
 		return (				
 			<Dropdown ref="searchSelect" className="bfd-search-select" disabled={this.state.disabled}>
@@ -80,15 +137,16 @@ const SearchSelect = React.createClass({
 	        		  ( <ul className="form-control" style={{height:'100%'}}>{_result}</ul> ) :
 	        		  ( <input onChange={this.handleChange} className="form-control" style={{boxShadow:'none'}}/> )
 		        	}		        	
-		        	<Loading url={this.state.url} onSuccess={this.handleSuccess} delay={300}></Loading>				       
+		        	<Fetch url={this.props.url} onSuccess={this.handleSuccess} delay={300}></Fetch>				       
 		        </DropdownToggle>
 		        <DropdownMenu>		        	
 		        	<ul>{children}</ul>      
 		        </DropdownMenu>
 	    	</Dropdown>			
 		);
-
+		
 	}
+
 });
 
 export { SearchSelect }
