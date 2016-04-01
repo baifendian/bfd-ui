@@ -62,7 +62,7 @@ if (isProduction) {
       if (!stats.errors.length) {
         var templateFile = 'index.html'
         var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
-        template = template.replace('app.js', 'app.' + stats.hash + '.js')
+        template = template.replace(/app.*?.js/, 'app.' + stats.hash + '.js')
         fs.writeFileSync(path.join(__dirname, templateFile), template)
       }
     })
