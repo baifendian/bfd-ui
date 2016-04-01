@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import Tabs from './Tabs'
 
@@ -28,21 +29,35 @@ const Tab = React.createClass({
   handleClick(e) {
     e.preventDefault()
     this.context.tabs.setState({activeIndex: this.state.index})
+    if (this.props.activeKey) {
+      this.context.tabs.setState({activeKey: this.props.activeKey})
+    }
   },
 
   handleClose(e) {
     e.preventDefault()
     e.stopPropagation()
     const handleClose = this.context.tabs.props.handleClose
-    handleClose && handleClose(this.state.index)
+    handleClose && handleClose(this.state.index, this.props.activeKey)
   },
 
   render() {
+    if (this.context.tabs.state.activeKey) {
+      if (!this.props.activeKey) {
+        throw new Error('既然 Tabs 采用 activeKey 方式，请给 Tab 组件 绑定 activeKey')
+      }
+    }
+    let isActive
+    if (this.props.activeKey) {
+      isActive = this.props.activeKey === this.context.tabs.state.activeKey
+    } else {
+      isActive = this.state.index === this.context.tabs.state.activeIndex
+    }
     return (
-      <li className={classNames({'active': this.state.index === this.context.tabs.state.activeIndex})}>
+      <li className={classNames({active: isActive})}>
         <a href="" onClick={this.handleClick}>
           {this.props.children}
-          {this.context.tabs.props.dynamic ? <button type="button" onClick={this.handleClose}>x</button> : null}
+          {this.context.tabs.props.dynamic && !this.props.abolishClose ? <button type="button" onClick={this.handleClose}>x</button> : null}
         </a>
       </li>
     )

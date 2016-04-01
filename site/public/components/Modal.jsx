@@ -52,6 +52,7 @@ const App = React.createClass({
         
         <h2>Modal 实例接口</h2>
         <p>modal.open()</p>
+        <p>modal.close()</p>
       </div>
     )
   }

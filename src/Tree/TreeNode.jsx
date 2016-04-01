@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+
+const propTypes = {
+  location: PropTypes.array.isRequired,
+  open: PropTypes.bool,
+  item: PropTypes.object,
+  parent: PropTypes.array,
+  nodeRender: PropTypes.func
+}
+
+const defaultProps = {
+  nodeRender(props) {
+    return props.item.name
+  }
+}
 
 const TreeNode = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: true
+      isOpen: !!this.props.open
     }
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(this.props.item === nextProps.item && this.state.isOpen === nextState.isOpen)
   },
 
   handleToggle() {
@@ -14,22 +32,27 @@ const TreeNode = React.createClass({
   },
 
   render() {
-    const data = this.props.data
+    const item = this.props.item
+    let icon
+    if (item.children) {
+      icon = 'folder-' + (this.state.isOpen ? 'open' : 'close')
+    } else {
+      icon = 'file'
+    }
     return (
       <li className={classnames({open: this.state.isOpen})}>
-        {data.children ? (
-          <button type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
-            <span className={'glyphicon glyphicon-' + (this.state.isOpen ? 'minus' : 'plus')}></span>
-          </button>
+        {item.children ? (
+          <button type="button" className="btn btn-primary toggle" onClick={this.handleToggle}></button>
         ) : null}
-        <span className="glyphicon glyphicon-file"></span>
-        {data.name}
-        {data.children ? (
-          <ul>{data.children.map((item, i) => <TreeNode key={i} data={item}></TreeNode>)}</ul>
-        ) : null}
+        <span className={'glyphicon glyphicon-' + icon}></span>
+        {this.props.nodeRender(this.props)}
+        {this.props.children}
       </li>
     )
   }
 })
+
+TreeNode.propTypes = propTypes
+TreeNode.defaultProps = defaultProps
 
 export default TreeNode

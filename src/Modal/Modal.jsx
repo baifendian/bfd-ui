@@ -1,6 +1,7 @@
 import 'bfd-bootstrap'
 import React, { PropTypes, Component } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import './modal.less'
 
 /**
  * 获取浏览器滚动条的宽度，模态框打开时隐藏 body 滚动条
@@ -78,7 +79,7 @@ const Modal = React.createClass({
 
   render() {
     return (
-      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {this.state.isOpen ? (
           <div className="bfd-modal">
             <div className="modal-backdrop"></div>

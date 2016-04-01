@@ -1,5 +1,11 @@
 .bfd-tree {
-  position: relative;
+  > ul {
+    > li:first-child {
+      &:after {
+        top: 8px;
+      }
+    }
+  }
   ul {
     margin: 0;
     padding: 0;
@@ -12,15 +18,15 @@
         position: absolute;
         top: 8px;
         content: '';
-        width: 17px;
+        width: 15px;
         height: 0px;
         border-top: 1px dotted #999;
-        left: -13px;
+        left: -9px;
       }
       &:after {
         position: absolute;
-        top: -10px;
-        left: -15px;
+        top: -12px;
+        left: -11px;
         bottom: 1px;
         content: '';
         width: 0px;
@@ -28,30 +34,51 @@
       }
       &:last-child {
         &:after {
-          bottom: 0;
+          bottom: 11px;
+        }
+        &:first-child {
+          &:after {
+            bottom: 11px;
+          }
         }
       }
-      button.toggle {
+      > button.toggle {
         padding: 0;
         width: 16px;
         height: 16px;
-        line-height: 14px;
         position: absolute;
-        left: -23px;
-        top: 0px;
+        left: -19px;
+        top: 1px;
         z-index: 1;
-        > .glyphicon {
-          font-size: 12px;
+        background-color: #64b5f6;
+        border: 0;
+        &:before {
+          content: '+';
+          position: absolute;
+          font: 14px monospace;
+          font-weight: bold;
+          line-height: 1;
+          left: 4px;
+          top: 0px;
         }
       }
-      > .glyphicon {
-        color: #2196f3;
-        margin: 0 5px;
+      > span.glyphicon {
+        color: #64b5f6;
+        margin: 0 8px;
       }
       > ul {
         display: none;
       }
       &.open {
+        &:last-child {
+          &:after {
+            bottom: 100%;
+          }
+        }
+        > button.toggle:before {
+          content: '-';
+          top: -1px;
+        }
         > ul {
           display: block;
         }

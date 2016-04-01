@@ -21,7 +21,7 @@
             border-color: #2196f3;
           }
           &:after {
-            transform: scale(1);
+            display: block;
           }
         }
       }
@@ -37,7 +37,6 @@
         height: 18px;
         border: 1px solid #9e9e9e;
         border-radius: 50%;
-        transition: border-color .2s;
       }
       &:after {
         content: '';
@@ -47,10 +46,9 @@
         margin-top: -4px;
         width: 8px;
         height: 8px;
-        transform: scale(0);
+        display: none;
         background-color: #2196f3;
         border-radius: 50%;
-        transition: transform .2s;
       }
     }
   }

@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name '*.jsx' -exec rm -rf {} \\;",
     "start": "node-dev site/server.js",
-    "online": "fuser -k 4001/tcp & cd site && webpack -p --progress && node server.js -p&"
+    "online": "fuser -k 4001/tcp & cd site && webpack -p --progress && node server.js -p&",
+    "wakeup": "cd site && node server.js -p&"
   },
   "author": "",
   "license": "ISC",
@@ -26,8 +27,10 @@
     "react": "^0.14.3",
     "react-addons-css-transition-group": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.7",
+    "react-addons-update": "^0.14.8",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.2",
+    "sortablejs": "^1.4.2",
     "style-loader": "^0.13.0"
   },
   "devDependencies": {
