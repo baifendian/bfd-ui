@@ -139,6 +139,7 @@ export default () => {
     <div>
       <h1>树</h1>
       <Pre>{TreeDemoCode}</Pre>
+      <TreeDemo></TreeDemo>
       <Props>
         <Prop name="data" type="Array" required>
           <p>数据源，格式如下</p>

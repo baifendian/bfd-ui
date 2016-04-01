@@ -59,7 +59,7 @@ const App = React.createClass({
   }
 })`}
         </Pre>
-        <CheckboxGroup>
+        <CheckboxGroup selects={null}>
           <Checkbox value="apple">苹果</Checkbox>
           <Checkbox value="mi">小米</Checkbox>
           <Checkbox value="samsung">三星</Checkbox>

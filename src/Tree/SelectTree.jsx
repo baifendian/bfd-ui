@@ -53,6 +53,7 @@ const SelectTree = React.createClass({
       temp = temp[index].children
     }
 
+    // 子节点是否全部选中，更新父节点选中状态
     for (let i = parents.length; i--; ) {
       const { parent, index, target } = parents[i]
       parent[index] = update(target, {

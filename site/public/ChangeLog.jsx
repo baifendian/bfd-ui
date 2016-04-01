@@ -4,7 +4,7 @@ import Version from './Version'
 function ChangeLog() {
   return (
     <div>
-      <Version version="0.0.18" date="2016-03-28">
+      <Version version="0.0.19" date="2016-04-01">
         <p>组件：</p>
         <ul>
           <li>线图：LineChart</li>
@@ -24,6 +24,9 @@ function ChangeLog() {
           <li>下拉框：Select</li>
           <li>AJAX加载管理：Fetch</li>
           <li>下拉菜单：Dropdown, DropdownToggle, DropdownMenu</li>
+          <li>穿梭框：Transfer</li>
+          <li>树：Tree, SelectTree</li>
+          <li>查询下拉框：SearchSelect</li>
         </ul>
       </Version>
     </div>
