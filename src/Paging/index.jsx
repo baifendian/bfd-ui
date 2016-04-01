@@ -117,18 +117,16 @@ export default React.createClass({
             }
         }
         return(
-          <div className="bfd-paging row">
-            <div className="col-md-8 layout-style">
+          <div className="bfd-paging">
              <ul className="pagination">
                <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
                  {liArr}
                <li><a onClick={this.handleRaquoClick}>下一页</a></li>
               </ul>
-            </div>
-            <div className="col-md-3 layout-div">
+            <div className="layout-div form-inline">
               <label className="label-font">跳转到：</label>
-              <input  onKeyUp={this.checkNumber} ref="inputNumber" className="input-number"/>
-              <button onClick={this.handleGoPage} className="btn btn-primary">GO</button>
+              <input  onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
+              <button onClick={this.handleGoPage} className="btn btn-primary btn-sm">GO</button>
             </div>
           </div>
         )

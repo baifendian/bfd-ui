@@ -38,6 +38,8 @@ export default React.createClass( {
    } ,
    onPageChange(page){
       this.props.onPageChange(page)
+      this.setState({currentPage: page})
+
    },
    orderClick:function(column,i){
       if(column.order){
@@ -128,10 +130,9 @@ export default React.createClass( {
                       }
                     </tbody>
                  </table>{
-                     this.props.showPage=="true"?<div id="paging">
+                     this.props.showPage=="true"?
                         <Paging currentPage={currentPage} onPageChange={this.onPageChange} totalPageNum={totalPageNum} pageSize={this.props.howRow}
-                                onChange={this.onChange}></Paging>
-                     </div>:''
+                                onChange={this.onChange}></Paging>:''
 
                    }
 
