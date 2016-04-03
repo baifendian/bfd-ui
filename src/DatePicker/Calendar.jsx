@@ -22,10 +22,15 @@ export default React.createClass({
 
   getInitialState() {
     const d = this.props.date ? new Date(this.props.date) : new Date()
+    const year = d.getFullYear()
+    const month = d.getMonth()
+    const day = d.getDate()
     return {
-      year: d.getFullYear(),
-      month: d.getMonth(),
-      day: d.getDate()
+      year,
+      month,
+      day,
+      currentYear: year,
+      currentMonth: month
     }
   },
 
@@ -39,30 +44,37 @@ export default React.createClass({
 
   // 切换年月
   handleToggle(change, type) {
-    const d = new Date(this.state.year, this.state.month)
+    const d = new Date(this.state.currentYear, this.state.currentMonth)
     if (type === 'year') {
       d.setFullYear(d.getFullYear() + change)
-      this.setState({year: d.getFullYear()})
+      this.setState({currentYear: d.getFullYear()})
     } else {
       d.setMonth(d.getMonth() + change)
       this.setState({
-        year: d.getFullYear(),
-        month: d.getMonth()
+        currentYear: d.getFullYear(),
+        currentMonth: d.getMonth()
       })
     }
   },
 
-  handleDaySelect(day) {
-    this.setState(day)
-    this.props.onSelect(new Date(day.year, day.month, day.day).setHours(0, 0, 0, 0))
+  handleDaySelect(date) {
+    const { year, month, day } = date
+    this.setState({
+      year,
+      month,
+      day,
+      currentYear: year,
+      currentMonth: month
+    })
+    this.props.onSelect && this.props.onSelect(new Date(year, month, day).setHours(0, 0, 0, 0))
   },
 
   disabledComparer() {
     const min = this.props.min && getTimestrap(this.props.min)
     const max = this.props.max && getTimestrap(this.props.max)
     if (min || max) {
-      return day => {
-        const timestrap = new Date(day.year, day.month, day.day).getTime()
+      return date => {
+        const timestrap = new Date(date.year, date.month, date.day).getTime()
         return timestrap < min || timestrap > max
       }
     } else {
@@ -73,8 +85,8 @@ export default React.createClass({
   /**
    * 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
    */
-  getDayClassNames(day) {
-    const timestrap = new Date(day.year, day.month, day.day).getTime()
+  getDateClassNames(date) {
+    const timestrap = new Date(date.year, date.month, date.day).getTime()
 
     let start, end
     if (this.context.getStart) {
@@ -88,7 +100,7 @@ export default React.createClass({
 
     return classnames({
       today: timestrap === new Date().setHours(0, 0, 0, 0),
-      exclude: day.notThisMonth,
+      exclude: date.notThisMonth,
       start: isStart,
       end: isEnd,
       active: timestrap === new Date(this.state.year, this.state.month, this.state.day).getTime() || isStart || isEnd,
@@ -99,18 +111,18 @@ export default React.createClass({
   /**
    * 当前月各天的时间状态
    */
-  getDays() {
+  getDates() {
     let d
-    const days = []
+    const dates = []
     
     // 上月
-    d = new Date(this.state.year, this.state.month, 1)
+    d = new Date(this.state.currentYear, this.state.currentMonth, 1)
     let dayInWeek = d.getDay()
     if (dayInWeek) {
       d.setDate(0)
       const lastMonthDaysCount = d.getDate()
       for (let i = dayInWeek; i--; ) {
-        days.push({
+        dates.push({
           year: d.getFullYear(),
           month: d.getMonth(),
           day: lastMonthDaysCount - i,
@@ -120,10 +132,10 @@ export default React.createClass({
     }
 
     // 本月
-    d = new Date(this.state.year, this.state.month + 1, 0)
+    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 0)
     const thisMonthDaysCount = d.getDate()
     for (let i = 0; i < thisMonthDaysCount; i++) {
-      days.push({
+      dates.push({
         year: d.getFullYear(),
         month: d.getMonth(),
         day: i + 1
@@ -131,20 +143,20 @@ export default React.createClass({
     }
 
     // 下月
-    d = new Date(this.state.year, this.state.month + 1, 1)
-    for (let i = 0, len = 42 - days.length; i < len; i++) {
-      days.push({
+    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
+    for (let i = 0, len = 42 - dates.length; i < len; i++) {
+      dates.push({
         year: d.getFullYear(),
         month: d.getMonth(),
         day: i + 1,
         notThisMonth: true
       })
     }
-    return days
+    return dates
   },
   
   render() {
-    const days = this.getDays()
+    const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
     return (
       <div className="bfd-calendar">
@@ -168,10 +180,10 @@ export default React.createClass({
               return (
                 <tr key={i}>{this.dayNames.map((name, j) => {
                   const index = i * 7 + j
-                  const day = days[index]
+                  const date = dates[index]
                   return (
                     <td key={index}>
-                      <button disabled={getComparerResult(day)} className={this.getDayClassNames(day)} onClick={this.handleDaySelect.bind(this, day)}>{day.day}</button>
+                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
                     </td>
                   )
                 })}</tr>
