@@ -42,7 +42,7 @@ module.exports = config`}
 
         <h2>使用</h2>
         <Pre>
-{`import DatePicker from 'bfd-ui/lib/DatePicker'
+{`import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
 
 ReactDOM.render(<DatePicker />, mountNode)`}
         </Pre>

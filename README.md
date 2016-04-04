@@ -13,7 +13,7 @@ $ npm install --save bfd-ui
 ### 使用
 
 ```javascript
-import DatePicker from 'bfd-ui/lib/DatePicker'
+import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
 
 ReactDOM.render(<DatePicker />, mountNode)
 ```
