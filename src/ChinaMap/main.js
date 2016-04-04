@@ -8,9 +8,7 @@ export default class {
 
   constructor(config) {
 
-    const {
-      container
-    } = config
+    const { container } = config
 
     const width = container.clientWidth
     const height = container.clientHeight || width * .7
@@ -35,7 +33,8 @@ export default class {
       .append('path')
       .attr('d', path)
       .on('mouseover', function(data) {
-        d3.select(this).attr('fill', '#64b5f6');
+        
+        d3.select(this).attr('fill', '#64b5f6')
 
         //创建显示tooltip用的矩形
         svg.append('rect')

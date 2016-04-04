@@ -1,5 +1,6 @@
 import React from 'react'
-import { Tree, SelectTree } from 'c/Tree'
+import Tree from 'c/Tree/Tree'
+import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import { Checkbox } from 'c/Checkbox'
@@ -37,7 +38,7 @@ const TreeDemo = React.createClass({
   }
 })
 
-const TreeDemoCode = `import { Tree } from 'bfd-ui/lib/Tree'
+const TreeDemoCode = `import Tree from 'bfd-ui/lib/Tree/Tree'
 
 const App = React.createClass({
   getInitialState() {
@@ -98,11 +99,11 @@ const SelectTreeDemo = React.createClass({
   },
 
   render() {
-    return <SelectTree data={this.state.data} onChange={this.handleChange} />
+    return <Tree data={this.state.data} onChange={this.handleChange} />
   }
 })
 
-const SelectTreeDemoCode = `import { SelectTree } from 'bfd-ui/lib/Tree'
+const SelectTreeDemoCode = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
 
 const App = React.createClass({
   getInitialState() {

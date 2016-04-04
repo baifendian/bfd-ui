@@ -36,11 +36,11 @@ var config = {
       test: /\.less$/,
       loader: 'style!css!less!postcss'
     }],
-    // preLoaders: [{
-    //   test: /\jsx?$/,
-    //   loader: "eslint-loader",
-    //   exclude: /node_modules/
-    // }]
+    preLoaders: [{
+      test: /\jsx?$/,
+      loader: "eslint-loader",
+      exclude: /node_modules/
+    }]
   },
   postcss: [autoprefixer({ browsers: ['last 3 versions'] })],
   resolve: {
@@ -53,9 +53,7 @@ var config = {
 }
 
 if (isProduction) {
-  
   config.plugins.push(new webpack.optimize.UglifyJsPlugin())
-
   config.plugins.push(function() {
     this.plugin("done", function(statsData) {
       var stats = statsData.toJson()
