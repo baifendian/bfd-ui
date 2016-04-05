@@ -27,10 +27,12 @@ const Tab = React.createClass({
 
   handleClick(e) {
     e.preventDefault()
-    this.context.tabs.setState({activeIndex: this.state.index})
+    const tabs = this.context.tabs
+    tabs.setState({activeIndex: this.state.index})
     if (this.props.activeKey) {
-      this.context.tabs.setState({activeKey: this.props.activeKey})
+      tabs.setState({activeKey: this.props.activeKey})
     }
+    tabs.props.onChange && tabs.props.onChange(this.state.index, this.props.activeKey)
   },
 
   handleClose(e) {

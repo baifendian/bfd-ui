@@ -46,6 +46,7 @@ export default React.createClass({
   },
 
   handleChange(activeIndex) {
+    debugger
     this.setState({ activeIndex })
   },
 
