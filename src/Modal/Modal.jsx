@@ -1,5 +1,5 @@
 import 'bfd-bootstrap'
-import React, { PropTypes, Component } from 'react'
+import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import './modal.less'
 

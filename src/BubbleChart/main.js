@@ -52,7 +52,7 @@ export default class {
 
     // Resolve collisions between nodes.
     const collide = alpha => {
-      const quadtree = d3.geom.quadtree(data);
+      const quadtree = d3.geom.quadtree(data)
       return d => {
         const r = d.radius + maxRadius + padding
         const nx1 = d.x - r
@@ -102,13 +102,13 @@ export default class {
         d3.select(this).select('circle')
           .transition()
           .duration(200)
-          .attr("r", d.radius * 1.3)
+          .attr('r', d.radius * 1.3)
       })
       .on('mouseleave', function(d) {
         d3.select(this).select('circle')
           .transition()
           .duration(200)
-          .attr("r", d.radius)
+          .attr('r', d.radius)
       })
       .call(forceLayout.drag)
 

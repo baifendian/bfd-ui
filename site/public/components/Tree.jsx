@@ -3,8 +3,6 @@ import Tree from 'c/Tree/Tree'
 import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
-import { Checkbox } from 'c/Checkbox'
-import update from 'react-addons-update'
 
 const TreeDemo = React.createClass({
   getInitialState() {
@@ -99,7 +97,7 @@ const SelectTreeDemo = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} onChange={this.handleChange} />
+    return <SelectTree data={this.state.data} onChange={this.handleChange} />
   }
 })
 

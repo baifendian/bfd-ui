@@ -5,6 +5,7 @@
   "ecmaFeatures": {
     "blockBindings": true,
     "modules": true,
+    "experimentalObjectRestSpread": true,
     "jsx": true
   },
   "rules": {

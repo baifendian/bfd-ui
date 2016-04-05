@@ -19,11 +19,11 @@ export default option => {
     }
   }
 
+  let dataArray
+
   if (isPOST) {
+    dataArray = []
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-
-    const dataArray = []
-
     if (option.data) {
       for (let k in option.data) {
         dataArray.push(encodeURIComponent(k) + '=' + encodeURIComponent(option.data[k]))

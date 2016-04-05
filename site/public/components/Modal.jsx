@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal, ModalHeader, ModalBody } from 'c/Modal'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
 
 export default React.createClass({
 

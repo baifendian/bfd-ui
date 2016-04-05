@@ -43,7 +43,6 @@ const SelectTree = React.createClass({
     const parents = []
     let temp = data
     for (let i = 0; i < location.length; i++) {
-      const parent = temp
       const index = location[i]
       parents.push({
         index,
@@ -63,8 +62,8 @@ const SelectTree = React.createClass({
   },
 
   render() {
-    const { children, ...other } = this.props
-    other.nodeRender = props => {
+    const {...props} = this.props
+    props.nodeRender = props => {
       const { item, location, parent } = props
       return (
         <Checkbox checked={item.checked} onChange={this.handleChange.bind(this, item, location, parent)}>
@@ -72,7 +71,7 @@ const SelectTree = React.createClass({
         </Checkbox>
       )
     }
-    return <Tree {...other} />
+    return <Tree {...this.props} />
   }
 })
 

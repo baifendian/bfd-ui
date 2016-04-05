@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import DatePicker from 'c/DatePicker/DatePicker'
@@ -29,7 +29,7 @@ const DateRangeDemo = React.createClass({
     }
   },
 
-  handleSelect(start, end) {
+  handleSelect(start) {
     this.setState({ start })
   },
 
