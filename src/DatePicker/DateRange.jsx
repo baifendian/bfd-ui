@@ -53,7 +53,7 @@ export default React.createClass({
     } else {
       range = [this.state.start, date]
     }
-    this.onSelect && this.onSelect.apply(this, range)
+    this.props.onSelect && this.props.onSelect.apply(this, range)
   },
 
   render() {
