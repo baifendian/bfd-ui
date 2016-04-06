@@ -8,23 +8,42 @@ import Fetch from '../Fetch'
 const SearchSelect = React.createClass({ 
 
 	getInitialState() {
+
+		let o;
+		const data = this.props.data;
+		if(data && this.getType(data,'string')){
+			o = 'string';
+		} else if(data&&this.getType(data,'object')){
+			o = 'object';
+		}else{
+			o=null;
+		}
+
 		return {
-			data: [],
-			searchData: [],
+
+			data:this.props.data || [],
+			searchData:this.props.data || [],
 			result: this.props.selected,
-			type: null,
+			type: o,
 			selected: !!this.props.selected.length,
 			disabled: !!this.props.selected.length,
+			value:''
+
 		}
 	},
 
 	handleSuccess(data) {
+
+		if(this.props.data) return;
+
 		if(this.getType(data,'string')){
 			this.setState({type:'string'});
 		} 
+
 		if(this.getType(data,'object')){
 			this.setState({type:'object'});
 		}
+
 		this.setState({	data: data,	searchData: data });
 	},
 
@@ -37,10 +56,18 @@ const SearchSelect = React.createClass({
 		})
 		return flag;
 	},
+
+	handleFocus(e){
+		this.setState({disabled:false});
+	},
 	
-	handleChange(e) {			
+	handleChange(e) {	
+
 		const array = this.state.data,
 			keyword = e.target.value;
+
+		this.setState({value:keyword});
+
 		let data = [];
 		switch (this.state.type) {
 			case 'string':
@@ -79,6 +106,10 @@ const SearchSelect = React.createClass({
 		this.setState({result:arr});				
 	},
 
+	handleClickLi(item){
+		this.setState({disabled:true});
+	},
+
 	render() {	
 		
 		const children = this.state.searchData.map(item => {			
@@ -109,7 +140,7 @@ const SearchSelect = React.createClass({
 			switch (this.state.type) {
 				case 'string':
 					return ( 
-						<li value={item} key={item}>
+						<li value={item} key={item} onClick={this.handleClickLi}>
 							<i onClick={this.handleRemove.bind(this,item)} className="glyphicon glyphicon-remove"></i>
 							{item}
 						</li> 
@@ -117,7 +148,7 @@ const SearchSelect = React.createClass({
 					break;
 				case 'object':
 					return ( 
-						<li value={item.key} key={item.key}>
+						<li value={item.key} key={item.key} onClick={this.handleClickLi}>
 							<i onClick={this.handleRemove.bind(this,item)} className="glyphicon glyphicon-remove"></i>
 							{item.value}
 						</li> 
@@ -129,22 +160,33 @@ const SearchSelect = React.createClass({
 			}
 		});	
 
+		_result.push(
+				<li key="search-input" className="sh-li">
+					<input onChange={this.handleChange} onFocus={this.handleFocus} className="sh-input" value={this.state.value}/>
+				</li> );
+
 		return (				
 			<Dropdown ref="searchSelect" className="bfd-search-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
 		        	{
 		        	this.state.selected ? 
-	        		  ( <ul className="form-control" style={{height:'100%'}}>{_result}</ul> ) :
-	        		  ( <input onChange={this.handleChange} className="form-control" style={{boxShadow:'none'}}/> )
-		        	}		        	
-		        	<Fetch url={this.props.url} onSuccess={this.handleSuccess} delay={300}></Fetch>				       
+	        		  (
+	        		  	<div>
+			        		<ul className="form-control" style={{height:'100%'}}>{_result}</ul>
+			        		
+		        		</div>  ) :
+	        		  ( <input onChange={this.handleChange} onFocus={this.handleFocus} className="form-control"  value={this.state.value}/> )
+		        	}
+		        	{
+		        		this.props.url?<Fetch url={this.props.url} onSuccess={this.handleSuccess} delay={300}></Fetch>:null
+		        	}	        	
+		        				       
 		        </DropdownToggle>
 		        <DropdownMenu>		        	
-		        	<ul>{children}</ul>      
+		        	<ul className="dropdown-menu-ul">{children}</ul>      
 		        </DropdownMenu>
 	    	</Dropdown>			
-		);
-		
+		);		
 	}
 
 });
