@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from 'react-dom'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import Fetch from 'c/Fetch'

@@ -7,7 +7,7 @@ export default class {
    */
   getDomain(series) {
     let domain = []
-    series.forEach((serie, i) => {
+    series.forEach((serie) => {
       domain = domain.concat(d3.extent(serie.data, d => d))
     })
     domain = d3.extent(domain, d => d)

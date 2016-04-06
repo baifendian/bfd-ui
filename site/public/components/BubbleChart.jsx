@@ -7,13 +7,14 @@ export default React.createClass({
   render() {
     return (
       <div>
-      	<h1>气泡图</h1>
+        <h1>气泡图</h1>
         <Pre>
 {`import BubbleChart from 'bfd-ui/lib/bubbleChart'
 
 const App = React.createClass({
   render() {
-    return <BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />
+    return <BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />]
+  }
 })`}
         </Pre>
 

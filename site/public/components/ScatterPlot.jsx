@@ -7,7 +7,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-      	<h1>散点图</h1>
+        <h1>散点图</h1>
         <Pre>
 {`import ScatterPlot from 'bfd-ui/lib/scatterPlot'
 

@@ -71,7 +71,7 @@ export default React.createClass({
       var currentIndex = this.props.currentPage
       for ( let i = 1; i <= pageNum; i++ ) {
         if ( i <= showPage ) {
-            liArr.push( <li key={i} className={this.state.currentIndex === i ? 'active':''}
+            liArr.push( <li key={i} className={this.state.currentIndex === i ? '_active':''}
                               onClick={this.handleClick.bind(this, i)}><a>{i}</a></li> )
             if ( i == showPage ) {
                    liArr[ i + 1 ] = <li key={i+1}><a>...</a></li>
@@ -79,7 +79,7 @@ export default React.createClass({
         }
           //显示最后一页
         if ( pageNum == i && pageNum>showPage) {
-               liArr[ i ] = <li key={i+1} className={this.state.currentIndex === i ? 'active':''}
+               liArr[ i ] = <li key={i+1} className={this.state.currentIndex === i ? '_active':''}
                               onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
 
           }
@@ -93,14 +93,14 @@ export default React.createClass({
             for ( let o = everpage; o <= index + 1; o++ ) {
                 if ( o <= pageNum ) {
                     k++
-                    currentArr[ k ] = <li key={k} className={this.state.currentIndex === o ? 'active':''}
+                    currentArr[ k ] = <li key={k} className={this.state.currentIndex === o ? '_active':''}
                                           onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
                }else{
                     lastPage = true
                   break
                  }
            }
-           liArr[ 0 ] = <li key="01" className={this.state.currentIndex === 1 ? 'active':''}
+           liArr[ 0 ] = <li key="01" className={this.state.currentIndex === 1 ? '_active':''}
                             onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
                  liArr[ 1 ] = <li key="0"><a>...</a></li>
            for ( let p = 2; p <= currentArr.length + 1; p++ ) {
@@ -109,7 +109,7 @@ export default React.createClass({
           if ( !lastPage ) {
              if ( index < (pageNum - 1) ) {
                    liArr[ liArr.length ] = <li key={liArr.length}><a>...</a></li>
-                   liArr[ liArr.length ] = <li key={liArr.length} className={this.state.currentIndex === pageNum ? 'active':''}
+                   liArr[ liArr.length ] = <li key={liArr.length} className={this.state.currentIndex === pageNum ? '_active':''}
                          onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
                 }
              }
@@ -117,20 +117,23 @@ export default React.createClass({
             }
         }
         return(
-          <div className="row">
-            <div className="col-md-8 layout-style">
-             <ul className="pagination">
-               <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
-                 {liArr}
-               <li><a onClick={this.handleRaquoClick}>下一页</a></li>
+          <div className="bfd-paging row">
+             <div className="layout-div form-inline pull-left">
+               <span className="total-name">共有<span className="total-size">{ parseInt(this.props.totalPageNum) }</span>条记录</span>
+             </div>
+            <div className="pull-right layout-right">
+              <ul className="pagination">
+                <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
+                {liArr}
+                <li><a onClick={this.handleRaquoClick}>下一页</a></li>
               </ul>
+              <div className="layout-div form-inline">
+                <label className="label-font">跳转到：</label>
+                <input  onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
+                <button onClick={this.handleGoPage} className="btn btn-primary btn-sm">GO</button>
+              </div>
             </div>
-            <div className="col-md-3 layout-div">
-              <label className="label-font">跳转到：</label>
-              <input  onKeyUp={this.checkNumber} ref="inputNumber" className="input-number"/>
-              <button onClick={this.handleGoPage} className="btn btn-primary">GO</button>
-            </div>
-          </div>
+           </div>
         )
    }
 	 

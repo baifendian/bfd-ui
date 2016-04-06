@@ -10,7 +10,7 @@ export default class {
    */
   getDomain(series) {
     let domain = []
-    series.forEach((serie, i) => {
+    series.forEach((serie) => {
       domain = domain.concat(d3.extent(serie.data, d => d))
     })
     domain = d3.extent(domain, d => d)
@@ -24,9 +24,7 @@ export default class {
 
   constructor(config) {
 
-    const {
-      container, category, cols, data, yAixs, tooltip
-    } = config
+    const { container, category, cols, data } = config
 
     const yAxisConfig = config.yAxis || {}
     const colors = config.colors || ['#673ab7', '#00bcd4', '#f9ce1d', '#9c27b0']
@@ -51,11 +49,12 @@ export default class {
      * 转换数据格式
      */
     let series = Object.keys(cols).map(key => {
-        return {
-          key, name: cols[key], data: []
-        }
-      })
-      // X轴节点数
+      return {
+        key, name: cols[key], data: []
+      }
+    })
+    
+    // X轴节点数
     const categories = []
 
     data.forEach(item => {
@@ -256,7 +255,7 @@ export default class {
 
         // Tooltip 内容
         let html = categories[xAxisIndex] + '<br>'
-        series.forEach((serie, i) => {
+        series.forEach((serie) => {
           html += serie.name + '：' + serie.data[xAxisIndex] + '</br>'
         })
         tooltipElement.html(html)

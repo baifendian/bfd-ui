@@ -4,27 +4,10 @@ import { Link } from 'react-router'
 import classNames from 'classnames'
 
 const Nav = React.createClass({
-
-  childContextTypes: {
-    handleClick: PropTypes.func
-  },
-
-  contextTypes: {
-    handleClick: PropTypes.func
-  },
-
-  getChildContext() {
-    return {
-      handleClick: () => {
-        this.props.onClick && this.props.onClick()
-        this.context.handleClick && this.context.handleClick()
-      }
-    }
-  },
   
   render() {
     return (
-      <ul className="nav nav-pills nav-stacked">{this.props.children}</ul>
+      <ul {...this.props} className="nav nav-pills nav-stacked">{this.props.children}</ul>
     )
   }
 })
@@ -32,8 +15,7 @@ const Nav = React.createClass({
 const NavItem = React.createClass({
 
   contextTypes: {
-    history: PropTypes.object.isRequired,
-    handleClick: PropTypes.func
+    history: PropTypes.object.isRequired
   },
 
   getInitialState() {
@@ -67,13 +49,12 @@ const NavItem = React.createClass({
     if (this.props.children) {
       Item = <a href={this.props.href} onClick={this.toggle}>{Icon}{this.props.title}{Toggle}</a>
     } else {
-      Item = <Link onClick={this.context.handleClick} to={this.props.href} query={this.props.query}>{Icon}{this.props.title}{Toggle}</Link>
+      Item = <Link to={this.props.href} query={this.props.query}>{Icon}{this.props.title}{Toggle}</Link>
     }
 
     const indexOnly = this.props.href === '/'
-
     return (
-      <li className={classNames({open: this.state.isOpen, active: this.isActive(indexOnly)})}>
+      <li {...this.props} className={classNames({open: this.state.isOpen, active: this.isActive(indexOnly)})}>
         {Item}
         { this.props.children ? <Nav>{this.props.children}</Nav> : null }
       </li>

@@ -8,9 +8,7 @@ export default class {
 
   constructor(config) {
 
-    const {
-      container
-    } = config
+    const { container } = config
 
     const width = container.clientWidth
     const height = container.clientHeight || width * .7
@@ -35,7 +33,8 @@ export default class {
       .append('path')
       .attr('d', path)
       .on('mouseover', function(data) {
-        d3.select(this).attr('fill', '#64b5f6');
+        
+        d3.select(this).attr('fill', '#64b5f6')
 
         //创建显示tooltip用的矩形
         svg.append('rect')
@@ -45,7 +44,7 @@ export default class {
           .attr('width', 140)
           .attr('height', 130)
           .attr('stroke', 'black')
-          .attr('fill', 'none');
+          .attr('fill', 'none')
 
         //创建显示tooltip文本
         svg.append('text')
@@ -57,13 +56,13 @@ export default class {
           .attr('font-size', '11px')
           .attr('font-weight', 'bold')
           .attr('fill', 'black')
-          .text(data.properties.name);
+          .text(data.properties.name)
       })
-      .on('mouseout', function(data) {
-        d3.select(this).attr('fill', '#ccc');
+      .on('mouseout', function() {
+        d3.select(this).attr('fill', '#ccc')
         //Remove the tooltip
-        d3.select('#tooltip1').remove();
-        d3.select('#tooltip2').remove();
+        d3.select('#tooltip1').remove()
+        d3.select('#tooltip2').remove()
       })
       .attr('fill', function(d) {
         if (d.id === 'an_hui') {
@@ -72,7 +71,7 @@ export default class {
         return '#ccc'
       })
       .attr('stroke', 'rgba(255,255,255,1)')
-      .attr('stroke-width', 1);
+      .attr('stroke-width', 1)
 
     // 经纬度像素坐标
     // svg.selectAll('circle')

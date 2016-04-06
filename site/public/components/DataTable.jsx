@@ -70,7 +70,7 @@ export default React.createClass({
     const dataJson = {
       "totalList" : [ {
         "id" : "1",
-        "name" : "张三",
+        "name" : "1.张三",
         "age" : "11",
         "country" : "中国",
         "height" : "185cm",
@@ -79,7 +79,7 @@ export default React.createClass({
         "birthday" : "1990-03-16"
       }, {
         "id" : "10",
-        "name" : "张柏仁--",
+        "name" : "2.张柏仁",
         "age" : "23",
         "country" : "美国",
         "height" : "170cm",
@@ -88,16 +88,98 @@ export default React.createClass({
         "birthday" : "2016-03-02"
       }, {
         "id" : "11",
-        "name" : "黄冬冬",
+        "name" : "3.黄冬冬",
         "age" : "25",
         "country" : "英国",
         "height" : "168cm",
         "weight" : "64kg",
         "school" : "剑桥大学",
         "birthday" : "2016-03-07"
-      }],
+      },{
+        "id" : "1",
+        "name" : "4.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "5.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "6.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      },{
+        "id" : "1",
+        "name" : "7.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "8.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "9.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      },{
+        "id" : "1",
+        "name" : "10.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "11.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "12.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      }
+      ],
       "currentPage" : 1,
-      "totalPageNum" : 500
+      "totalPageNum" : 12
     }
     return (
       <div>
@@ -163,7 +245,7 @@ const column = [{
 
 const App = React.createClass({
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={10}></DataTable>
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={3}></DataTable>
   }
 })`}
         </Pre>
@@ -173,46 +255,50 @@ const App = React.createClass({
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址"></Prop>
           <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名"></Prop>
+          <Pre>
+            {
+`
+const column = [{
+        title:'操作',
+        render(){
+          return (<div className="icon"><span className="glyphicon glyphicon-edit"></span></div>)
+        },
+        //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
+        {
+          title: '体重',//列表标题
+          key: 'weight',//数据库字段名
+          order: true //是否排序 true为显示排序，false为不显示排序
+        },
+        {
+          title:'序号',
+          key:'sequence'//用于标记显示序号
+        },
+        //非数据操作字段
+        {
+          title:'操作',
+          key:'operation'
+        }]
+`
+            }
+          </Pre>
           <Prop name="howRow" type="Integer" optional children="每页需要显示的条数"></Prop>
           <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现"></Prop>
+          <Pre>
+{
+`const data = {
+  "totalList": [], //表格数据
+  "currentPage": 1, //当前页
+  "totalPageNum": 500 //总页数
+}
+`
+}
+          </Pre>
+
+
           <Prop name="showPage" type="boolean" optional children="是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置"></Prop>
           <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数， "></Prop>
 
-          <Pre>
-{`
 
-  const dataJson = {
-    totalList:[], //表格数据
-    "currentPage" : 1,//当前页
-    "totalPageNum" : 500//总页数
-
-  }
-  {
-  title:'操作',
-  render(){
-    return (<div className="icon">
-             <span className="glyphicon glyphicon-search" ></span>
-             <span className="glyphicon glyphicon-trash"></span>
-             <span className="glyphicon glyphicon-edit"></span>
-            </div>)
-  }
-  //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
-
-  {
-  title: '体重',//列表标题
-   key: 'weight',//数据库字段名
-   order: true //是否排序 true为显示排序，false为不显示排序
-  }
-  {
-  title:'序号',
-  key:'sequence'//用于标记显示序号
-  }
-  //非数据操作字段
-  {
-  title:'操作',
-  key:'operation'
-}`}
-            </Pre>
         </Props>
       </div>
     )

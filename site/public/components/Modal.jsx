@@ -1,7 +1,6 @@
 import React from 'react'
 import { Modal, ModalHeader, ModalBody } from 'c/Modal'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
 
 export default React.createClass({
 
@@ -52,6 +51,7 @@ const App = React.createClass({
         
         <h2>Modal 实例接口</h2>
         <p>modal.open()</p>
+        <p>modal.close()</p>
       </div>
     )
   }

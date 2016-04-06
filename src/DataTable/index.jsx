@@ -38,6 +38,8 @@ export default React.createClass( {
    } ,
    onPageChange(page){
       this.props.onPageChange(page)
+      this.setState({currentPage: page})
+
    },
    orderClick:function(column,i){
       if(column.order){
@@ -71,69 +73,77 @@ export default React.createClass( {
    } ,
    render: function () {
       let column = this.props.column
-      let items = this.state.items.totalList;
-      let totalPageNum = this.state.items.totalPageNum ,
-        currentPage = this.state.currentPage,
+      let items = []
+      let totalPageNum = 0,
+        currentPage = parseInt(this.state.currentPage),
         _this = this,
         url = this.state.url,
         pageSize = parseInt(this.props.howRow);
 
-      if(url&&url.indexOf('?')<0 && url.indexOf('pageSize')<0){
-            url+="?pageSize="+this.props.pageSize+"&currentPage="+this.state.currentPage
-      }else{
+      if( this.props.data ) {
+        if(this.props.data.totalPageNum){
+          totalPageNum = this.props.data.totalPageNum;
+        }
+        let data_ = this.props.data.totalList;
+        if( data_ && data_.length > 0 && typeof data_=== 'object' ) {
+           let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize;
+           let end = currentPage === 1 ? pageSize : start + pageSize ;
+           items = data_.slice( start, end )
+        }
+      }
+      if( url && url.indexOf('?') < 0 && url.indexOf('pageSize') < 0 ) {
+            url += "?pageSize=" + this.props.pageSize + "&currentPage=" + this.state.currentPage
+      }else {
 
       }
       url+=this.state.order
-      if(this.props.data&&this.props.data.totalList.length>0){
-         items = this.props.data.totalList
-         totalPageNum = this.props.data.totalPageNum
-      }
       return (
            <div>
-              {this.props.url ? <Fetch url={url} onSuccess={this.handleSuccess}></Fetch> : null}
-                 <table className="table">
-                    <thead>
-                    <tr>{
-                      column.map(function(head_column,i) {
-                              return <th key={head_column['title']} ref={i} onClick={_this.orderClick.bind(_this,head_column,i)}    title={head_column['order']===true?head_column['title']+'排序':''} className={head_column['order']===true?'sorting':''} >{head_column['title']}</th>
-                        }
-                        )}</tr>
-                    </thead>
-                    <tbody>
-                    {
-                      items.map(function(item,j) {
-                        return (<tr key={j}>{
-                          column.map(function(columns,i){
-                            for(let col in columns){
-                              if(columns[col] === 'sequence'){
-                                return <td key={String(i)+j}>{((currentPage-1)*pageSize)+(j+1)}</td>
-                                }
-
-                              if(columns[col]=='operation'){
-                                return <td key={String(i)+j}>{columns['render'](item,_this)}</td>
-                                }else{
-                                if(col==='key'){
-                                  if(typeof columns['render'] === 'function'){
-                                     return <td key={String(i)+j}> {columns['render'](item[columns[col]])} </td>
-                                    }else{
-                                     return <td key={String(i)+j}>{item[columns[col]]}</td>
-                                    }
-                                  }
-                                }
-                              }
-                            })
-                          }
-                        </tr>)
-                        })
-                      }
-                    </tbody>
-                 </table>{
-                     this.props.showPage=="true"?<div id="paging">
-                        <Paging currentPage={currentPage} onPageChange={this.onPageChange} totalPageNum={totalPageNum} pageSize={this.props.howRow}
-                                onChange={this.onChange}></Paging>
-                     </div>:''
-
+              {
+                this.props.url ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null
+              }
+              <table className = "table" >
+                 <thead>
+                 <tr>
+                   {
+                     column.map ( function ( head_column, i ) {
+                           return <th key = { head_column['title'] } ref = { i } onClick = { _this.orderClick.bind( _this, head_column, i ) }    title = { head_column['order'] === true ? head_column['title'] + '排序' : '' } className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
+                     })
                    }
+                 </tr>
+                 </thead>
+                 <tbody>
+                   {
+                     items.map( function ( item, j ) {
+                       return ( <tr key= { j } >
+                         {
+                           column.map(function(columns,i) {
+                             for(let col in columns) {
+                               if(columns[col] === 'sequence') {
+                                 return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
+                               }
+                               if(columns[col] == 'operation' ) {
+                                 return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
+                               }else{
+                                 if(col==='key') {
+                                   if(typeof columns['render'] === 'function') {
+                                      return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]]) } </td>
+                                   }else {
+                                     return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
+                                   }
+                                 }
+                               }
+                             }
+                           })
+                         }
+                       </tr> )
+                     })
+                   }
+                 </tbody>
+              </table>
+                {
+                  this.props.showPage == "true" ? <Paging currentPage = { currentPage } onPageChange = { this.onPageChange } totalPageNum = { totalPageNum } pageSize = { this.props.howRow } onChange = { this.onChange }></Paging> : ''
+                }
 
            </div>
       )
