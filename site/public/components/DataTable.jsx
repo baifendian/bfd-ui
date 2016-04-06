@@ -70,7 +70,7 @@ export default React.createClass({
     const dataJson = {
       "totalList" : [ {
         "id" : "1",
-        "name" : "张三",
+        "name" : "1.张三",
         "age" : "11",
         "country" : "中国",
         "height" : "185cm",
@@ -79,7 +79,7 @@ export default React.createClass({
         "birthday" : "1990-03-16"
       }, {
         "id" : "10",
-        "name" : "张柏仁--",
+        "name" : "2.张柏仁",
         "age" : "23",
         "country" : "美国",
         "height" : "170cm",
@@ -88,16 +88,98 @@ export default React.createClass({
         "birthday" : "2016-03-02"
       }, {
         "id" : "11",
-        "name" : "黄冬冬",
+        "name" : "3.黄冬冬",
         "age" : "25",
         "country" : "英国",
         "height" : "168cm",
         "weight" : "64kg",
         "school" : "剑桥大学",
         "birthday" : "2016-03-07"
-      }],
+      },{
+        "id" : "1",
+        "name" : "4.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "5.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "6.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      },{
+        "id" : "1",
+        "name" : "7.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "8.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "9.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      },{
+        "id" : "1",
+        "name" : "10.张三",
+        "age" : "11",
+        "country" : "中国",
+        "height" : "185cm",
+        "weight" : "65kg",
+        "school" : "六安一中",
+        "birthday" : "1990-03-16"
+      }, {
+        "id" : "10",
+        "name" : "11.张柏仁",
+        "age" : "23",
+        "country" : "美国",
+        "height" : "170cm",
+        "weight" : "60kg",
+        "school" : "斯坦福大学",
+        "birthday" : "2016-03-02"
+      }, {
+        "id" : "11",
+        "name" : "12.黄冬冬",
+        "age" : "25",
+        "country" : "英国",
+        "height" : "168cm",
+        "weight" : "64kg",
+        "school" : "剑桥大学",
+        "birthday" : "2016-03-07"
+      }
+      ],
       "currentPage" : 1,
-      "totalPageNum" : 500
+      "totalPageNum" : 12
     }
     return (
       <div>
@@ -163,7 +245,7 @@ const column = [{
 
 const App = React.createClass({
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={10}></DataTable>
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={3}></DataTable>
   }
 })`}
         </Pre>
