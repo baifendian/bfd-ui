@@ -92,20 +92,20 @@ export default class {
       .tickSize(-width)
 
     svg.append('g')
+      .attr('class', 'axis-y')
+      .call(yAxis)
+
+    svg.append('g')
       .attr('class', 'axis-x')
       .attr('transform', `translate(0, ${height})`)
       .call(xAxis)
-
-    svg.append('g')
-      .attr('class', 'axis-y')
-      .call(yAxis)
 
     // 初始化渲染动画，从左到右划出
     svg.append('clipPath')
       .attr('id', `rectClip-${id}`)
       .append('rect')
       .attr('width', 0)
-      .attr('height', height + 10)
+      .attr('height', height - 1)
       .transition()
       .duration(900)
       .attr('width', width)
@@ -335,9 +335,14 @@ export default class {
       .each(function(d, i) {
         let node = d3.select(this)
         node.append('span')
-          .attr('class', 'legend-rect')
+          .attr('class', 'line')
           .style('background-color', colors[i])
-        node.append('span').text(d.name)
+        node.append('span')
+          .attr('class', 'circle')
+          .style('border-color', colors[i])
+        node.append('span')
+          .attr('class', 'text')
+          .text(d.name)
       })
   }
 
