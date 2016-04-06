@@ -170,21 +170,20 @@ export default class {
         .attr('class', (d, i) => 'marker marker-' + i)
 
       gEnter.append('circle')
-        .attr('class', 'marker-outer')
-        .attr('cx', d => xScale(d[config.category]))
-        .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 6)
-        .attr('fill', color)
-        .attr('stroke', '#f5f5f5')
-        .attr('stroke-width', 2)
-
-      gEnter.append('circle')
         .attr('class', 'marker-inner')
         .attr('cx', d => xScale(d[config.category]))
         .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 2)
+        .attr('r', 4)
         .attr('fill', '#fff')
         .attr('stroke', '#fff')
+
+      gEnter.append('circle')
+        .attr('class', 'marker-outer')
+        .attr('cx', d => xScale(d[config.category]))
+        .attr('cy', d => yScale(d[serie.key]))
+        .attr('r', 3)
+        .attr('fill', '#fff')
+        .attr('stroke', color)
         .attr('stroke-width', 2)
     })
 
@@ -261,17 +260,17 @@ export default class {
         tooltipElement.html(html)
 
         // 更新标记显示
-        lastMarkers && resetLastMarkers()
+        // lastMarkers && resetLastMarkers()
 
-        lastMarkers = markers.filter(`.marker-${xAxisIndex}`)
-        lastMarkers
-          .select('.marker-outer')
-          .attr('r', 7)
-        lastMarkers
-          .select('.marker-inner')
-          .attr('r', 3)
-          .data(series)
-          .attr('fill', (d, i) => colors[i])
+        // lastMarkers = markers.filter(`.marker-${xAxisIndex}`)
+        // lastMarkers
+        //   .select('.marker-outer')
+        //   .attr('r', 7)
+        // lastMarkers
+        //   .select('.marker-inner')
+        //   .attr('r', 3)
+        //   .data(series)
+        //   .attr('fill', (d, i) => colors[i])
 
       })
       .on('mouseout', function() {
