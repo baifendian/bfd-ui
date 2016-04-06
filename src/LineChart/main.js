@@ -92,20 +92,20 @@ export default class {
       .tickSize(-width)
 
     svg.append('g')
+      .attr('class', 'axis-y')
+      .call(yAxis)
+
+    svg.append('g')
       .attr('class', 'axis-x')
       .attr('transform', `translate(0, ${height})`)
       .call(xAxis)
-
-    svg.append('g')
-      .attr('class', 'axis-y')
-      .call(yAxis)
 
     // 初始化渲染动画，从左到右划出
     svg.append('clipPath')
       .attr('id', `rectClip-${id}`)
       .append('rect')
       .attr('width', 0)
-      .attr('height', height + 10)
+      .attr('height', height - 1)
       .transition()
       .duration(900)
       .attr('width', width)
@@ -170,21 +170,20 @@ export default class {
         .attr('class', (d, i) => 'marker marker-' + i)
 
       gEnter.append('circle')
-        .attr('class', 'marker-outer')
-        .attr('cx', d => xScale(d[config.category]))
-        .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 6)
-        .attr('fill', color)
-        .attr('stroke', '#f5f5f5')
-        .attr('stroke-width', 2)
-
-      gEnter.append('circle')
         .attr('class', 'marker-inner')
         .attr('cx', d => xScale(d[config.category]))
         .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 2)
+        .attr('r', 4)
         .attr('fill', '#fff')
         .attr('stroke', '#fff')
+
+      gEnter.append('circle')
+        .attr('class', 'marker-outer')
+        .attr('cx', d => xScale(d[config.category]))
+        .attr('cy', d => yScale(d[serie.key]))
+        .attr('r', 3)
+        .attr('fill', '#fff')
+        .attr('stroke', color)
         .attr('stroke-width', 2)
     })
 
@@ -261,17 +260,17 @@ export default class {
         tooltipElement.html(html)
 
         // 更新标记显示
-        lastMarkers && resetLastMarkers()
+        // lastMarkers && resetLastMarkers()
 
-        lastMarkers = markers.filter(`.marker-${xAxisIndex}`)
-        lastMarkers
-          .select('.marker-outer')
-          .attr('r', 7)
-        lastMarkers
-          .select('.marker-inner')
-          .attr('r', 3)
-          .data(series)
-          .attr('fill', (d, i) => colors[i])
+        // lastMarkers = markers.filter(`.marker-${xAxisIndex}`)
+        // lastMarkers
+        //   .select('.marker-outer')
+        //   .attr('r', 7)
+        // lastMarkers
+        //   .select('.marker-inner')
+        //   .attr('r', 3)
+        //   .data(series)
+        //   .attr('fill', (d, i) => colors[i])
 
       })
       .on('mouseout', function() {
@@ -335,9 +334,14 @@ export default class {
       .each(function(d, i) {
         let node = d3.select(this)
         node.append('span')
-          .attr('class', 'legend-rect')
+          .attr('class', 'line')
           .style('background-color', colors[i])
-        node.append('span').text(d.name)
+        node.append('span')
+          .attr('class', 'circle')
+          .style('border-color', colors[i])
+        node.append('span')
+          .attr('class', 'text')
+          .text(d.name)
       })
   }
 

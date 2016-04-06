@@ -1,10 +1,8 @@
-class AA extends React.Component {
-
-  constructor() {
-    super()
-  }
-
-  test= () => {
-    console.log(this)
-  }
+loadsh = {
+  each() {}
 }
+
+import { each } from 'loadsh' 100kb
+
+
+import each from 'loadsh/each' 1kb

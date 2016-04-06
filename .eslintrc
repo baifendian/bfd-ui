@@ -9,6 +9,7 @@
     "jsx": true
   },
   "rules": {
+    "linebreak-style": 0,
     "no-var": 2,
     "jsx-quotes": 2,
     "react/jsx-uses-react": 2,
@@ -17,7 +18,7 @@
     "react/self-closing-comp": 2,
     "indent": [2, 2],
     "quotes": [2, "single"],
-    "linebreak-style": [2, "unix"],
+    "linebreak-style": 0,
     "semi": [2, "never"]
   },
   "env": {

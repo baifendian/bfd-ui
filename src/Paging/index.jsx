@@ -123,9 +123,9 @@ export default React.createClass({
              </div>
             <div className="pull-right layout-right">
               <ul className="pagination">
-                <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
+                <li ><a onClick={this.handleLaquoClick} className="prev">上一页</a></li>
                 {liArr}
-                <li><a onClick={this.handleRaquoClick}>下一页</a></li>
+                <li><a onClick={this.handleRaquoClick} className="next">下一页</a></li>
               </ul>
               <div className="layout-div form-inline">
                 <label className="label-font">跳转到：</label>
