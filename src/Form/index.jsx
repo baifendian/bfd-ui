@@ -1,6 +1,7 @@
 import './main.less'
 import React, { PropTypes } from 'react'
 import classNames from 'classnames';
+
 /**
  *Form
  */
@@ -64,12 +65,12 @@ Form.defaultProps = {
  */
 class FormItem extends React.Component {
 
-   constructor(props){
-        super(props);    
-        this.state = {
-          flagError:false
-        }
-    }
+  constructor(props){
+      super(props);    
+      this.state = {
+        flagError:false
+      }
+  }
 
   componentWillReceiveProps(nextProps){  
     (nextProps.validate &&
@@ -171,6 +172,7 @@ class FormItem extends React.Component {
     const children = this.renderChildren();
     return this.renderFormGroup(children);
   }
+
 }
 
 FormItem.propTypes = {

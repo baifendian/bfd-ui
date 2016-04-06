@@ -44,7 +44,7 @@ const App = React.createClass({
             </button>
           )}
           <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
-            <Nav>
+            <Nav onClick={this.handleClick}>
               <NavItem href="/" icon="home" title="首页" />
               <NavItem href="/components" icon="th" title="组件" />
               <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
