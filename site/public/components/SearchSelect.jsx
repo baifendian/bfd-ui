@@ -17,9 +17,7 @@ const App = React.createClass({
 	},
 
   render() {
-
     //const data = ["小米1","小米2","小米3","小米4","三星1","三星2","三星3","三星4","乐视1","乐视2","乐视3"];
-
     const data = [{ "key": "mi1", "value": "小米1" },{ "key": "mi2", "value": "小米2" },{ "key": "mi3", "value": "小米3" },
                   { "key": "huawei", "value": "华为" }, { "key": "apple", "value": "苹果" },{ "key": "letv","value": "乐视" },
                   { "key": "samsung","value": "三星" }, { "key": "meizu", "value": "魅族" }, { "key": "lenove","value": "联想" },
