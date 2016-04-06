@@ -117,18 +117,23 @@ export default React.createClass({
             }
         }
         return(
-          <div className="bfd-paging">
-             <ul className="pagination">
-               <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
-                 {liArr}
-               <li><a onClick={this.handleRaquoClick}>下一页</a></li>
+          <div className="bfd-paging row">
+             <div className="layout-div form-inline pull-left">
+               <span className="total-name">共有<span className="total-size">{ parseInt(this.props.totalPageNum) }</span>条记录</span>
+             </div>
+            <div className="pull-right layout-right">
+              <ul className="pagination">
+                <li ><a onClick={this.handleLaquoClick} >上一页</a></li>
+                {liArr}
+                <li><a onClick={this.handleRaquoClick}>下一页</a></li>
               </ul>
-            <div className="layout-div form-inline">
-              <label className="label-font">跳转到：</label>
-              <input  onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
-              <button onClick={this.handleGoPage} className="btn btn-primary btn-sm">GO</button>
+              <div className="layout-div form-inline">
+                <label className="label-font">跳转到：</label>
+                <input  onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
+                <button onClick={this.handleGoPage} className="btn btn-primary btn-sm">GO</button>
+              </div>
             </div>
-          </div>
+           </div>
         )
    }
 	 
