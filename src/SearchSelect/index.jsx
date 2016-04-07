@@ -112,7 +112,7 @@ const SearchSelect = React.createClass({
 
 	render() {	
 		
-		const children = this.state.searchData.map(item => {			
+			const children = this.state.searchData.map(item => {			
 			const classname = classNames({
 				'active': this.state.result.indexOf(item) != -1
 			});
@@ -169,18 +169,13 @@ const SearchSelect = React.createClass({
 			<Dropdown ref="searchSelect" className="bfd-search-select" disabled={this.state.disabled}>
 		        <DropdownToggle>
 		        	{
-		        	this.state.selected ? 
-	        		  (
-	        		  	<div>
-			        		<ul className="form-control" style={{height:'100%'}}>{_result}</ul>
-			        		
-		        		</div>  ) :
+		        	  this.state.selected ? 
+	        		  ( <div><ul className="form-control s-s-u" >{_result}</ul></div> ) :
 	        		  ( <input onChange={this.handleChange} onFocus={this.handleFocus} className="form-control"  value={this.state.value}/> )
 		        	}
 		        	{
-		        		this.props.url?<Fetch url={this.props.url} onSuccess={this.handleSuccess} delay={300}></Fetch>:null
-		        	}	        	
-		        				       
+		        	  this.props.url?<Fetch url={this.props.url} onSuccess={this.handleSuccess}></Fetch>:null
+		        	}		        				       
 		        </DropdownToggle>
 		        <DropdownMenu>		        	
 		        	<ul className="dropdown-menu-ul">{children}</ul>      
