@@ -3,16 +3,12 @@
 - * Created by BFD_270 on 2016-02-22.
 3	 
 - */
-	 
 import 'bfd-bootstrap'
 import React from 'react'
 import './main.less'
 export default React.createClass({
   getInitialState() {
-	  return {
-	    currentIndex: 1,
-			showPage: 4
-		}
+	  return { currentIndex: 1, showPage: 4 }
 	},
 
   handleClick(i, e) {
