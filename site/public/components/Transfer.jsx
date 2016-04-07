@@ -38,7 +38,7 @@ export default React.createClass({
         <h2>Transfer</h2>
         <Pre>
         {`
-import { Transfer } from 'bfd-ui/lib/Transfer'
+import Transfer from 'bfd-ui/lib/Transfer'
 
 const App = React.createClass({
   render() {
