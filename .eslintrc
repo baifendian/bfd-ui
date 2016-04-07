@@ -9,7 +9,6 @@
     "jsx": true
   },
   "rules": {
-    "linebreak-style": 0,
     "no-var": 2,
     "jsx-quotes": 2,
     "react/jsx-uses-react": 2,

@@ -71,7 +71,7 @@ const SelectTree = React.createClass({
         </Checkbox>
       )
     }
-    return <Tree {...this.props} />
+    return <Tree {...props} />
   }
 })
 

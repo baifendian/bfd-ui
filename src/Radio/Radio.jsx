@@ -1,8 +1,14 @@
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 import './less/radio.less'
 
+const propTypes = {
+  value: PropTypes.string.isRequired,
+  disabled: PropTypes.bool
+}
+
 const contextTypes = {
-  value: PropTypes.func,
+  value: PropTypes.string,
   setValue: PropTypes.func,
   radioName: PropTypes.string
 }
@@ -15,18 +21,20 @@ const Radio = React.createClass({
     if (value) {
       check.checked = this.props.value === value
     }
+    const { children, ...others } = this.props
     return (
-      <div className="bfd-radio radio-inline">
+      <div className={classnames('bfd-radio radio-inline', {disabled: this.props.disabled})}>
         <label>
-          <input name={'radio-' + this.context.radioName} type="radio" onChange={this.context.setValue} {...check} value={this.props.value}/>
+          <input name={'radio-' + this.context.radioName} type="radio" onChange={this.context.setValue} {...check} {...others} />
           <span className="status"></span>
-          {this.props.children}
+          {children}
         </label>
       </div>
     )
   }
 })
 
+Radio.propTypes = propTypes
 Radio.contextTypes = contextTypes
 
 export default Radio

@@ -47,7 +47,7 @@ export default React.createClass({
         throw this.props.url + '返回的数据格式必须为{code: xxx, data: []}'
       }
     } catch(e) {
-      throw '请查看数据接口是否正常，并保证返回的数据格式必须为{code: xxx, data: []}'
+      throw e
     }
   },
 

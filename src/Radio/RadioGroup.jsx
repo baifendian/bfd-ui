@@ -25,7 +25,7 @@ const RadioGroup = React.createClass({
   },
   
   render() {
-    return <div className="radios">{this.props.children}</div>
+    return <div className="radios bfd-radio-group">{this.props.children}</div>
   }
 })
 
