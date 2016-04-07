@@ -48,13 +48,11 @@ const column = [{
    * @returns {XML}  返回dom对象
    */
   render(item, component){
-    return <span
+    return <a
               onClick={
                   function(){
                       //todo
-                  }
-              }
-      className="glyphicon glyphicon-edit"></span>
+                  }}>编辑</a>
   },
   key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
 }]
@@ -282,7 +280,7 @@ const column = [{
             }
           </Pre>
           <Prop name="howRow" type="Integer" optional children="每页需要显示的条数"></Prop>
-          <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现"></Prop>
+          <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现。data支持一次性查询多条数据传入data属性中，不需要点击一次分页再发送一次ajax请求，此功能根据业务需求使用！"></Prop>
           <Pre>
 {
 `const data = {

@@ -5,7 +5,6 @@ import  'bfd-bootstrap'
 import  './main.less'
 import  React from 'react'
 import  Fetch from '../Fetch'
-/*import  classNames from 'classnames'*/
 import Paging from '../Paging'
 
 export default React.createClass( {
@@ -21,6 +20,7 @@ export default React.createClass( {
       currentPage: 1
     }
   },
+
   onChange: function (params, currentPage) {
     if( this.props.url ) {
       let url_ = this.props.url
@@ -32,11 +32,13 @@ export default React.createClass( {
       this.setState( { currentPage: currentPage } )
       this.setState( { url: url_ } )
     }
-  } ,
+  },
+
   onPageChange(page){
     this.props.onPageChange( page )
     this.setState({currentPage: page } )
   },
+
   orderClick:function(column, i){
     if(column.order ) {
       if(this.refs[i].getAttribute('order') == null ) {
@@ -59,12 +61,15 @@ export default React.createClass( {
       }
     }
   },
+
   handleSuccess: function ( data ) {
     this.setState( { items: data } )
-  } ,
+  },
+
   refresh: function () {
     this.setState( { refresh: true } )
-  } ,
+  },
+
   render: function () {
     let column = this.props.column
     let items = []
@@ -138,4 +143,4 @@ export default React.createClass( {
       </div>
     )
   }
-} )
+})
