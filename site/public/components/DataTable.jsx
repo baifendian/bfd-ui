@@ -4,14 +4,19 @@ import Paging from 'c/Paging'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
+const common = {
+  commonClick: function( item ){
+  }
+}
+
 const column = [{
   title:'序号',
   key:'sequence'
 }, {
   title: '姓名',
   order: true,
-  render(text, i) {
-    return <a href="#">{text}</a>
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
   },
   key: 'name'
 }, {
@@ -22,8 +27,8 @@ const column = [{
   title: '身高',
   key: 'height',
   order: true,
-  render(text) {
-    return <a href="#">{text}</a>
+  render(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)} }>{text}</a>
   }
 }, {
   title: '体重',
@@ -185,14 +190,18 @@ export default React.createClass({
         <Pre>
 {`import DataTable from 'bfd-ui/lib/DataTable'
 
+const common = {
+  commonClick: function( item ){
+  }
+}
 const column = [{
   title:'序号',
   key:'sequence'
 }, {
   title: '姓名',
   order: true,
-  render(text, i) {
-    return <a href="#"></a>
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
   },
   key: 'name'
 }, {
@@ -203,9 +212,9 @@ const column = [{
   title: '身高',
   key: 'height',
   order: true,
-  render(text) {
-    return <a href="#">{text}</a>
-  }
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
+  },
 }, {
   title: '体重',
   key: 'weight',
