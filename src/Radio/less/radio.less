@@ -1,6 +1,14 @@
 .bfd-radio {
   padding-left: 0;
   line-height: 1;
+  &.disabled {
+    > label {
+      cursor: default;
+      &:hover {
+        color: #666;
+      }
+    }
+  }
   > label {
     font-weight: 400;
     padding-left: 25px;
@@ -8,9 +16,10 @@
     margin-bottom: 0;
     cursor: pointer;
     &:hover {
+      color: #2196f3;
       > .status {
         &:before {
-          border-color: #666;
+          border-color: #2196f3;
         }
       }
     }
@@ -23,6 +32,17 @@
           }
           &:after {
             display: block;
+          }
+        }
+      }
+      &:disabled {
+        + .status {
+          &:before {
+            border-color: #eceff1;
+          }
+          &:after {
+            display: block;
+            background-color: #eceff1;
           }
         }
       }

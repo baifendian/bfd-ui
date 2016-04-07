@@ -20,6 +20,7 @@ const App = React.createClass({
       <RadioGroup>
         <Radio value="apple">苹果</Radio>
         <Radio value="mi">小米</Radio>
+        <Radio value="samsung" disabled>三星</Radio>
       </RadioGroup>
     )
   }
@@ -29,9 +30,22 @@ const App = React.createClass({
         <RadioGroup>
           <Radio value="apple">苹果</Radio>
           <Radio value="mi">小米</Radio>
-          <Radio value="samsung">三星</Radio>
+          <Radio value="samsung" disabled>三星</Radio>
         </RadioGroup>
-        
+
+        <h2>Radio</h2>
+
+        <Props>
+          <Prop name="value" type="String" required>
+            <p>值</p>
+          </Prop>
+          <Prop name="disabled" type="Boolean">
+            <p>是否禁用</p>
+          </Prop>
+        </Props>
+
+        <h2>RadioGroup</h2>
+
         <Props>
           <Prop name="value" type="String">
             <p>默认选中的值，如果该值与某个 Radio 的值相同，则该 Radio 为选中状态</p>
