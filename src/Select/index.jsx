@@ -37,14 +37,12 @@ const Select = React.createClass({
 		this.refs.select.close();		
 	},
 
-	remove(item) {			
+	remove(item, e) {
 		let _arr = this.state.arr;
-			_arr.indexOf(item.value) != -1 ? _arr.splice(_arr.indexOf(item.value), 1) : null;
-			this.setState({ arr: _arr });
-			this.props.onChange(_arr);		
-			setTimeout(()=>{			
-				this.refs.select.close();
-			},1);
+		_arr.indexOf(item.value) != -1 ? _arr.splice(_arr.indexOf(item.value), 1) : null;
+		this.setState({	arr: _arr });
+		this.props.onChange(_arr);
+		if (e && e.stopPropagation) e.stopPropagation();
 	},
 
 	render() {	
