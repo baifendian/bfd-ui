@@ -171,17 +171,18 @@ export default React.createClass({
     }
   },
   getInitialState: function () {
-      return {
-        filterText : "",
-        sdata : this.props.sdata || [],
-        tdata : this.props.tdata || [],
-        searchData : this.props.sdata || []
-      };
+    return {
+      filterText : "",
+      sdata : this.props.sdata || [],
+      tdata : this.props.tdata || [],
+      searchData : this.props.sdata || []
+    };
   },
   componentWillReceiveProps: function(nextProps) {
     if(nextProps.sdata != this.props.sdata) {
       this.setState({
-        sdata : nextProps.sdata
+        sdata : nextProps.sdata,
+        searchData : nextProps.sdata
       });
     }
     if(nextProps.tdata != this.props.tdata) {
