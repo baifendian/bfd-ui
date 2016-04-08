@@ -1,19 +1,51 @@
 .bfd-select {
 	border: 1px solid #ddd;
-	padding: 6px;
+	padding: 0px;
 	height: 34px;
 	width: 100%;
-	.txt{
-		height:20px;
+
+	.txt {
+		height: 20px;
+	}
+	ul {
+		list-style: none;
+		padding-left: 4px;		
+	}
+	.bfd-multiple {
+		li {
+			cursor: pointer;
+			padding: 2px 6px;
+			margin: 4px 2px;
+			display: inline-block;
+			border: 1px solid #ddd;
+			&:hover .bfd-remove{
+				opacity: 1;
+			}
+		}
+		.bfd-remove{
+			position: absolute;
+		    border: 1px solid #B7E3DE;
+		    border-radius: 50%;
+		    background-color: #B7E3DE;
+		    color: #fff;
+		    font-size: 12px;
+		    opacity: 0;
+		}
+	}
+	.bfd-not-multiple{
+		li{
+			padding-top: 8px;
+		}
 	}
 	.dropdown-menu {
-		padding: 4px!important;
+		padding: 4px !important;
 		width: 100%;
 		ul {
 			padding: 0;
 			margin: 0;
-
-			li {				
+			max-height: 136px;
+			overflow-y: auto;
+			li {
 				cursor: pointer;
 				height: 34px;
 				line-height: 34px;
@@ -23,11 +55,11 @@
 			}
 			li:hover {
 				color: #000;
-				background-color: #ddd;					
+				background-color: #ddd;
 			}
 			.active {
 				color: #fff;
-				background-color: #26A69A;				
+				background-color: #26A69A;
 			}
 		}
 	}
@@ -37,6 +69,6 @@
 		top: 14px;
 	}
 }
-.bfd-select-disabled{
-	background-color:#eceff1;
+.bfd-select-disabled {
+	background-color: #eceff1;
 }
