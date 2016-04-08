@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --no-cache",
+    "test": "jest",
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name '*.jsx' -exec rm -rf {} \\;",
     "start": "node-dev site/server.js",
     "pack": "cd site && rm -rf public/dist && webpack -p --progress",
@@ -64,6 +64,7 @@
       "<rootDir>/node_modules/react-dom",
       "<rootDir>/node_modules/react-addons-test-utils"
     ],
+    "testPathDirs": ["<rootDir>/src"],
     "moduleFileExtensions": [
       "js",
       "jsx"

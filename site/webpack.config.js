@@ -57,12 +57,11 @@ if (isProduction) {
   config.plugins.push(function() {
     this.plugin("done", function(statsData) {
       var stats = statsData.toJson()
-      if (!stats.errors.length) {
-        var templateFile = 'index.html'
-        var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
-        template = template.replace(/app.*?.js/, 'app.' + stats.hash + '.js')
-        fs.writeFileSync(path.join(__dirname, templateFile), template)
-      }
+      console.log(stats.errors)
+      var templateFile = 'index.html'
+      var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
+      template = template.replace(/app.*?.js/, 'app.' + stats.hash + '.js')
+      fs.writeFileSync(path.join(__dirname, templateFile), template)
     })
   })
 }
