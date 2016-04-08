@@ -8,7 +8,7 @@ const App = React.createClass({
   getInitialState() {
     return {      
       selected:'apple',
-      selected2: ['apple','mi','samsung','huawei','sony','tcl','youku','tudou'],
+      selected2: ['apple','mi'],
       selected3:'mi',
       }
     },

@@ -24,7 +24,7 @@ const Select = React.createClass({
 			setSelected: (value, text) => {
 				if (this.props.multiple) {
 					let _arr = this.state.arr;										
-					_arr.indexOf(value) != -1 ? _arr.splice(_arr.indexOf(value),1) :  _arr.push(value);
+					_arr.indexOf(value) != -1 ? null :  _arr.push(value);
 					this.setState({	arr: _arr });
 					this.props.onChange(_arr);
 				} else {
@@ -34,7 +34,17 @@ const Select = React.createClass({
 		}
 	},
 	handleClick(){
-		this.refs.select.close();
+		this.refs.select.close();		
+	},
+
+	remove(item) {			
+		let _arr = this.state.arr;
+			_arr.indexOf(item.value) != -1 ? _arr.splice(_arr.indexOf(item.value), 1) : null;
+			this.setState({ arr: _arr });
+			this.props.onChange(_arr);		
+			setTimeout(()=>{			
+				this.refs.select.close();
+			},1);
 	},
 
 	render() {	
@@ -43,37 +53,41 @@ const Select = React.createClass({
 		const { children,selected} = this.props;
 
 		this.props.multiple ?
-			children.length ? children.map(function(item, i) {
-				selected.map(function(_item, _i) {
-					if (item.props.value == _item) sText.push({value:item.props.value,children:item.props.children});
-				})
-			}) : (() => {
-				selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
-			})() :
-			children.length ?
-			children.map(function(item, i) {
-				if (selected == item.props.value) {
-					sText.push({value:item.props.value,children:item.props.children})
-				}
-			}) : (() => {
-				selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
-			})();	
 
-			console.log(sText)
+			children.length ?
+				children.map(function(item, i) {
+					selected.map(function(_item, _i) {
+						if (item.props.value == _item) sText.push({value:item.props.value,children:item.props.children});
+					})
+				}) : (() => {
+					selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
+				})() :
+
+			children.length ?
+				children.map(function(item, i) {
+					if (selected == item.props.value) {
+						sText.push({value:item.props.value,children:item.props.children})
+					}
+				}) : (() => {
+					selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
+				})();	
+			
 			const stextChild = sText.map((item,i)=>{
 				return (
 					<li key={item.value} value={item.value}>
 						{item.children}
+						{
+						   this.props.multiple ? <i className="glyphicon glyphicon-remove bfd-remove" onClick={this.remove.bind(this,item)}></i> : null
+						}						
 					</li>
 				);
 			});
-
 
 		return (
 			<Dropdown ref="select" className={classNames('bfd-select', {'bfd-select-disabled': this.state.disabled})} disabled={this.state.disabled}>
 		        <DropdownToggle>
 		        	<div className="txt">
-		        		<ul>{stextChild}</ul>
+		        		<ul className={classNames({'bfd-multiple':this.props.multiple},{'bfd-not-multiple':!this.props.multiple})}>{stextChild}</ul>		        		
 		        	</div>
 				  	<span className="caret bfd-caret"></span>
 		        </DropdownToggle>
