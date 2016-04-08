@@ -45,27 +45,36 @@ const Select = React.createClass({
 		this.props.multiple ?
 			children.length ? children.map(function(item, i) {
 				selected.map(function(_item, _i) {
-					if (item.props.value == _item) sText.push(item.props.children);
+					if (item.props.value == _item) sText.push({value:item.props.value,children:item.props.children});
 				})
 			}) : (() => {
-				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+				selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
 			})() :
 			children.length ?
 			children.map(function(item, i) {
 				if (selected == item.props.value) {
-					sText.push(item.props.children);
+					sText.push({value:item.props.value,children:item.props.children})
 				}
 			}) : (() => {
-				selected == children.props.value ? sText.push(children.props.children) : sText = [];
+				selected == children.props.value ? sText.push({value:item.props.value,children:item.props.children}) : sText = [];
 			})();	
 
-
+			console.log(sText)
+			const stextChild = sText.map((item,i)=>{
+				return (
+					<li key={item.value} value={item.value}>
+						{item.children}
+					</li>
+				);
+			});
 
 
 		return (
 			<Dropdown ref="select" className={classNames('bfd-select', {'bfd-select-disabled': this.state.disabled})} disabled={this.state.disabled}>
 		        <DropdownToggle>
-		        	<div className="txt">{sText.join(',')}</div>
+		        	<div className="txt">
+		        		<ul>{stextChild}</ul>
+		        	</div>
 				  	<span className="caret bfd-caret"></span>
 		        </DropdownToggle>
 		        <DropdownMenu className="dropdown-menu">
@@ -98,10 +107,10 @@ const Option = React.createClass({
 			'active': selected == value
 		});
 
-		other.onClick = e => {
-			const value = e.target.getAttribute('value');
-			const text = e.target.innerHTML;
-			this.context.setSelected(value, text);
+		other.onClick = e => {		
+			const value = e.currentTarget.getAttribute('value');
+			const text = e.currentTarget.innerHTML;
+			this.context.setSelected(value, text);		
 		}
 		return (
 			<li {...other} className={className} value={value}> {children} </li>
