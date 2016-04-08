@@ -59,8 +59,11 @@ const Select = React.createClass({
 				selected == children.props.value ? sText.push(children.props.children) : sText = [];
 			})();	
 
+
+
+
 		return (
-			<Dropdown ref="select" className="bfd-select" disabled={this.state.disabled}>
+			<Dropdown ref="select" className={classNames('bfd-select', {'bfd-select-disabled': this.state.disabled})} disabled={this.state.disabled}>
 		        <DropdownToggle>
 		        	<div className="txt">{sText.join(',')}</div>
 				  	<span className="caret bfd-caret"></span>

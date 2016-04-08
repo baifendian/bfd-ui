@@ -44,22 +44,22 @@ const Demo = React.createClass({
    *设置表单字段值。
    */
   usernameChange(e){
-      this.setState({username:e.target.value,validateState:false}); 
+      this.setState({username:e.target.value}); 
   },
   telChange(e){
-      this.setState({tel:e.target.value,validateState:false}); 
+      this.setState({tel:e.target.value}); 
   },
   taskChange(e){
-    this.setState({task:e.target.value,validateState:false});  
+    this.setState({task:e.target.value});  
   },
   descCahnge(e){
-     this.setState({desc:e.target.value,validateState:false});   
+     this.setState({desc:e.target.value});   
   },
   fieldsChange(selects) {
-    this.setState({ selects,validateState:false});   
+    this.setState({ selects});   
   },
   trainChange(selected,text){
-    this.setState({ train:selected ,validateState:false});  
+    this.setState({ train:selected});  
   },
 
   render() {   
@@ -71,7 +71,7 @@ const Demo = React.createClass({
       handle: function() {
         let s;
         if (!this.validateVal) {
-          s = '请填写用户名';
+          s = '请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名';
         }else {
           s = 'success'
         }
@@ -93,7 +93,7 @@ const Demo = React.createClass({
       handle: function() {
         let s;
         if (!this.validateVal) {
-          s = '请填写任务名称';
+          s = '请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称';
         } else if (this.validateVal.length > 10) {
           s = '字符长度不能超过10个';
         } else {
