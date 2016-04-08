@@ -20,7 +20,7 @@ const App = React.createClass({
   }
 })`}
         </Pre>
-        <Checkbox disabled>选择</Checkbox>
+        <Checkbox>选择</Checkbox>
         <Props>
           <Prop name="checked" type="Boolean">
             <p>默认是否选中</p>

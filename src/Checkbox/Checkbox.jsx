@@ -3,7 +3,6 @@ import classnames from 'classnames'
 import './less/checkbox.less'
 
 const propTypes = {
-  children: PropTypes.node.isRequired,
   block: PropTypes.bool
 }
 

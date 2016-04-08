@@ -6,13 +6,7 @@ const propTypes = {
   open: PropTypes.bool,
   item: PropTypes.object,
   parent: PropTypes.array,
-  nodeRender: PropTypes.func
-}
-
-const defaultProps = {
-  nodeRender(props) {
-    return props.item.name
-  }
+  beforeNode: PropTypes.func
 }
 
 const TreeNode = React.createClass({
@@ -33,19 +27,28 @@ const TreeNode = React.createClass({
 
   render() {
     const item = this.props.item
+
+    if (!item.name) {
+      throw 'Tree 数据节点 name 字段不能为空'
+    }
+
+    const hasChildren = item.children && item.children.length
     let icon
-    if (item.children) {
+    if (hasChildren) {
       icon = 'folder-' + (this.state.isOpen ? 'open' : 'close')
     } else {
       icon = 'file'
     }
     return (
       <li className={classnames({open: this.state.isOpen})}>
-        {item.children ? (
-          <button type="button" className="btn btn-primary toggle" onClick={this.handleToggle}></button>
-        ) : null}
-        <span className={'glyphicon glyphicon-' + icon}></span>
-        {this.props.nodeRender(this.props)}
+        <button style={{visibility: hasChildren ? 'visible' : 'hidden'}}  type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
+          <span className={'glyphicon glyphicon-' + (this.state.isOpen ? 'minus' : 'plus')}></span>
+        </button>
+        {this.props.beforeNode ? this.props.beforeNode(this.props) : null}
+        <div className="toggle-icon">
+          <span className={' glyphicon glyphicon-' + icon}></span>
+        </div>
+        <div className="node-content">{item.name}</div>
         {this.props.children}
       </li>
     )
@@ -53,6 +56,5 @@ const TreeNode = React.createClass({
 })
 
 TreeNode.propTypes = propTypes
-TreeNode.defaultProps = defaultProps
 
 export default TreeNode
