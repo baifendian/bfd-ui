@@ -1,15 +1,16 @@
 .alert-message{
-	width: 30%;
+	width: 50%;
 	position: fixed;
 	top:10px;
-	left:35%;
 	right: 0;
+	left:25%;
 	text-align: left;
 	animation:message .5s;
 	animation-iteration-count:1;
 }
 .alert{
-	padding: 20px 0 20px 15px;
+	padding: 18px 0 18px 15px;
+	font-size: 14px;
 }
 .alert.alert-success{
 	color:#48874a;
