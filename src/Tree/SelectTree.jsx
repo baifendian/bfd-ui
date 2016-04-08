@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import Tree from './Tree'
 import { Checkbox } from '../Checkbox'
 import update from 'react-addons-update'
+import classnames from 'classnames'
+import './less/selectTree.less'
 
 const propTypes = {
   data: PropTypes.array.isRequired,
@@ -63,15 +65,14 @@ const SelectTree = React.createClass({
 
   render() {
     const {...props} = this.props
-    props.nodeRender = props => {
+    props.className = classnames('bfd-select-tree', this.props.className)
+    props.beforeNode = props => {
       const { item, location, parent } = props
       return (
-        <Checkbox checked={item.checked} onChange={this.handleChange.bind(this, item, location, parent)}>
-          {item.name}
-        </Checkbox>
+        <Checkbox checked={item.checked} onChange={this.handleChange.bind(this, item, location, parent)} />
       )
     }
-    return <Tree {...this.props} />
+    return <Tree {...props} />
   }
 })
 

@@ -1,4 +1,9 @@
 .bfd-form {
+	font-size: 12px;
+
+	input, textarea, .bfd-error, .bfd-dropdown {
+		border-radius: 2px !important;
+	}
 	.bfd-form-group-required:before {
 		display: inline-block;
 		margin-right: 4px;
@@ -10,10 +15,20 @@
 	.bfd-error {
 		background-color: #FBDECF;
 		border-color: #FBDECF;
-		color: #B94B45
+		color: #B94B45;
+		font-size: 12px;
+		border: none !important;
 	}
-	.has-error .form-control {
-		border-color: #a94442 !important;
+	.has-error {
+		.form-control, .bfd-dropdown {
+			border-color: #a94442 !important;
+			height: auto;
+		}
+	}
+	.has-bfd-success {
+		.form-control, .bfd-dropdown {
+			border-color: #42a5f5 !important;
+		}
 	}
 	.form-control {
 		box-shadow: none;
@@ -23,6 +38,13 @@
 	.bfd-form-label {
 		font-weight: normal;
 		padding-left: 18px;
+	}
+	 .col-md-1, .col-md-10, .col-md-11, 
+	 .col-md-12, .col-md-2, .col-md-3, 
+	 .col-md-4, .col-md-5, .col-md-6, 
+	 .col-md-7, .col-md-8, .col-md-9{		
+		padding-right: 10px;
+		padding-left: 10px;
 	}
 }
 @media screen and (min-width:992px) {

@@ -1,16 +1,27 @@
 .bfd-checkbox {
   padding-left: 0;
-  line-height: 1;
+  line-height: 0;
+  &.disabled {
+    > label {
+      cursor: default;
+      &:hover {
+        color: #666;
+      }
+    }
+  }
   > label {
+    line-height: 18px;
+    min-height: 18px;
+    padding-left: 18px;
     font-weight: 400;
-    padding-left: 25px;
     position: relative;
     margin-bottom: 0;
     cursor: pointer;
     &:hover {
+      color: #2196f3;
       > .status {
         &:before {
-          border-color: #666;
+          border-color: #2196f3;
         }
       }
     }
@@ -24,6 +35,16 @@
           &:after {
             display: block;
           }
+          + span {
+            color: #2196f3;
+          }
+        }
+      }
+      &:disabled {
+        + .status {
+          &:before {
+            border-color: #eceff1;
+          }
         }
       }
     }
@@ -31,10 +52,12 @@
       pointer-events: none;
       + span {
         pointer-events: none;
+        margin-left: 7px;
       }
       &:before {
         content: '';
         position: absolute;
+        background-color: #fff;
         left: 0;
         top: 50%;
         margin-top: -9px;
@@ -47,7 +70,7 @@
         content: '';
         position: absolute;
         left: 6px;
-        top: 0px;
+        top: 3px;
         width: 6px;
         height: 10px;
         border: 2px solid #2196f3;

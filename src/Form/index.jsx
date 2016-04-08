@@ -157,7 +157,8 @@ class FormItem extends React.Component {
     const props = this.props,
     prefixCls = props.prefixCls,
     groupClassName = {
-      'has-error':this.state.flagError,
+      'has-error': this.context.submitStatu() && this.state.flagError,
+      'has-bfd-success': this.context.submitStatu() && !this.state.flagError,
       [`${prefixCls}-group`]: true,
       [`${props.className}`]: !!props.className,
     };

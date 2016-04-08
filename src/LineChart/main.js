@@ -27,7 +27,7 @@ export default class {
     const { container, category, cols, data } = config
 
     const yAxisConfig = config.yAxis || {}
-    const colors = config.colors || ['#673ab7', '#00bcd4', '#f9ce1d', '#9c27b0']
+    const colors = config.colors || ['#26c6da', '#5c6bc0', '#f9ce1d', '#9c27b0']
 
     const padding = [20, 20, 30, 40]
 
@@ -110,18 +110,26 @@ export default class {
       .duration(900)
       .attr('width', width)
 
+    const activeLine = svg.append('line')
+      .attr('y1', height)
+      .attr('class', 'active-line')
+      .style('opacity', 0)
+      .style('stroke', colors[0])
+
 
     /**
      * 绘制曲线、曲面、标记点
      */
     const group = svg.append('g').attr('clip-path', 'url(#rectClip-' + id + ')')
 
+    const interpolate = 'cardinal'
+
     const linePathGenerator = d3.svg.line()
-      .interpolate('cardinal')
+      .interpolate(interpolate)
       .x(d => xScale(d[category]))
 
     const areaPathGenerator = d3.svg.area()
-      .interpolate('cardinal')
+      .interpolate(interpolate)
       .x(d => xScale(d[category]))
       .y0(height)
 
@@ -209,17 +217,17 @@ export default class {
         'pointer-events': 'none'
       })
 
-    const resetLastMarkers = function() {
-      lastMarkers
-        .select('.marker-outer')
-        .attr('r', 6)
-      lastMarkers
-        .select('.marker-inner')
-        .attr('r', 2)
-        .attr('fill', '#fff')
-    }
+    // const resetLastMarkers = function() {
+    //   lastMarkers
+    //     .select('.marker-outer')
+    //     .attr('r', 6)
+    //   lastMarkers
+    //     .select('.marker-inner')
+    //     .attr('r', 2)
+    //     .attr('fill', '#fff')
+    // }
 
-    let lastMarkers
+    // let lastMarkers
     let lastxAxisIndex
 
     // 绘制一个矩形，鼠标在此区域下均可触发 tooltip
@@ -242,9 +250,24 @@ export default class {
 
         if (lastxAxisIndex === xAxisIndex) return
 
+        const x = xScale(categories[xAxisIndex])
+        const dataItem = data[xAxisIndex]
+        const maxValue = Math.max.apply(null, series.map(serie => {
+          return serie.data[xAxisIndex]
+        }))
+        activeLine
+          .transition()
+          .duration(duration)
+          .attr('x1', x)
+          .attr('x2', x)
+          .attr('y2', yScale(maxValue))
+          // .attr('y2', 0)
+          .style('opacity', 1)
+
         lastxAxisIndex = xAxisIndex
 
-        tooltipElement.transition()
+        tooltipElement
+          .transition()
           .duration(duration)
           .style({
             left: d3.event.offsetX + 'px',
@@ -275,11 +298,12 @@ export default class {
       })
       .on('mouseout', function() {
         lastxAxisIndex = null
-        resetLastMarkers()
+        // resetLastMarkers()
         tooltipElement
           .transition()
           .delay(200)
           .style('opacity', 0)
+        activeLine.style('opacity', 0)
       })
 
 

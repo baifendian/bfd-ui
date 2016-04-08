@@ -4,14 +4,19 @@ import Paging from 'c/Paging'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
+const common = {
+  commonClick: function( item ){
+  }
+}
+
 const column = [{
   title:'序号',
   key:'sequence'
 }, {
   title: '姓名',
   order: true,
-  render(text, i) {
-    return <a href="#">{text}</a>
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
   },
   key: 'name'
 }, {
@@ -22,8 +27,8 @@ const column = [{
   title: '身高',
   key: 'height',
   order: true,
-  render(text) {
-    return <a href="#">{text}</a>
+  render(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)} }>{text}</a>
   }
 }, {
   title: '体重',
@@ -48,11 +53,7 @@ const column = [{
    * @returns {XML}  返回dom对象
    */
   render(item, component){
-    return <a
-              onClick={
-                  function(){
-                      //todo
-                  }}>编辑</a>
+    return <a onClick={ function(){ common.commonClick(item) }}>编辑</a>
   },
   key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
 }]
@@ -185,14 +186,18 @@ export default React.createClass({
         <Pre>
 {`import DataTable from 'bfd-ui/lib/DataTable'
 
+const common = {
+  commonClick: function( item ){
+  }
+}
 const column = [{
   title:'序号',
   key:'sequence'
 }, {
   title: '姓名',
   order: true,
-  render(text, i) {
-    return <a href="#"></a>
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ ``common.commonClick(item)}}>{text}</a>
   },
   key: 'name'
 }, {
@@ -203,9 +208,9 @@ const column = [{
   title: '身高',
   key: 'height',
   order: true,
-  render(text) {
-    return <a href="#">{text}</a>
-  }
+  render: function(text, item) {
+    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
+  },
 }, {
   title: '体重',
   key: 'weight',
@@ -229,15 +234,8 @@ const column = [{
    * @returns {XML}  返回dom对象
    */
   render(item, component){
-    return <span
-              onClick={
-                  function(){
-                      //todo
-                      //item，当前点击的数据对象
-                  }
-              }
-      className="glyphicon glyphicon-edit"></span>
-  },
+    return <a onClick={ ``function(){ common.commonClick(item) }}>编辑</a>
+  },,
   key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
 }]
 
@@ -245,7 +243,8 @@ const App = React.createClass({
   render() {
     return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={3}></DataTable>
   }
-})`}
+})`
+}
         </Pre>
 
         <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={3} />
@@ -258,8 +257,8 @@ const App = React.createClass({
 `
 const column = [{
         title:'操作',
-        render(){
-          return (<div className="icon"><span className="glyphicon glyphicon-edit"></span></div>)
+          render(item, component){
+            return <a onClick={ ``function(){ common.commonClick(item) }}>编辑</a>
         },
         //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
         {
@@ -286,7 +285,7 @@ const column = [{
 `const data = {
   "totalList": [], //表格数据
   "currentPage": 1, //当前页
-  "totalPageNum": 500 //总页数
+  "totalPageNum": 500 //总条数
 }
 `
 }

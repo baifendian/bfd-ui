@@ -35,6 +35,9 @@ const App = React.createClass({
           <Prop name="onChange" type="Function">
             <p>切换选择后的回调</p>
           </Prop>
+          <Prop name="disabled" type="Boolean">
+            <p>是否禁用</p>
+          </Prop>
           <Prop name="block" type="Boolean">
             <p>是否块模式，默认 inline 模式</p>
           </Prop>
@@ -63,7 +66,7 @@ const App = React.createClass({
           <Checkbox value="apple">苹果</Checkbox>
           <Checkbox value="mi">小米</Checkbox>
           <Checkbox value="samsung">三星</Checkbox>
-          <Checkbox value="huawei">华为</Checkbox>
+          <Checkbox value="huawei" disabled>华为</Checkbox>
         </CheckboxGroup>
 
         <br/>

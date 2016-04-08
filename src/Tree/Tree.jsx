@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import TreeNode from './TreeNode'
-import './tree.less'
+import classnames from 'classnames'
+import './less/tree.less'
 
 const propTypes = {
   data: PropTypes.array.isRequired
@@ -13,9 +14,9 @@ const Tree = React.createClass({
     return (
       <ul>
       {data.map((item, i) => {
-        const location = [...parentLocation, i]
+        const location = parentLocation.concat([i])
         return (
-          <TreeNode location={location} key={i} open={item.open} parent={data} item={item} nodeRender={this.props.nodeRender}>
+          <TreeNode location={location} key={i} open={item.open} parent={data} item={item} beforeNode={this.props.beforeNode}>
             {this.loopData(item.children, location)}
           </TreeNode>
         )
@@ -26,7 +27,7 @@ const Tree = React.createClass({
 
   render() {
     return (
-      <div className="bfd-tree">{this.loopData(this.props.data, 0, [])}</div>
+      <div className={classnames('bfd-tree', this.props.className)}>{this.loopData(this.props.data, [])}</div>
     )
   }
 })

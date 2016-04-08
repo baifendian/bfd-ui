@@ -48,13 +48,13 @@ const App = React.createClass({
               <NavItem href="/" icon="home" title="首页" />
               <NavItem href="/components" icon="th" title="组件" />
               <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
-              <NavItem href="/changeLog" icon="random" title="版本日志" />
+              <NavItem href="/changeLog" icon="random" title="更新日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
         </div>
         <div id="footer">
-          <div className="pull-left">当前版本：v0.0.20</div>
+          <div className="pull-left">当前版本：v0.0.21</div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>
       </div>

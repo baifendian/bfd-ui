@@ -8,7 +8,7 @@ const App = React.createClass({
   getInitialState() {
     return {      
       selected:'apple',
-      selected2: ['apple','mi','samsung','huawei'],
+      selected2: ['apple','mi'],
       selected3:'mi',
       }
     },
@@ -34,6 +34,10 @@ const App = React.createClass({
               <Option value="mi">小米</Option>
               <Option value="samsung">三星</Option>
               <Option value="huawei">华为</Option>
+              <Option value="sony">索尼</Option>
+              <Option value="tcl">TCL</Option>
+              <Option value="youku">优酷</Option>
+              <Option value="tudou">土豆</Option>
           </Select>
         </div>
         <div className="col-md-4">

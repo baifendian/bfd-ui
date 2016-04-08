@@ -1,0 +1,88 @@
+.bfd-tree {
+  > ul {
+    > li:first-child {
+      &:after {
+        top: 8px;
+      }
+    }
+    ul {
+      margin-left: 23px;
+    }
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      margin-top: 10px;
+      position: relative;
+      > .toggle, > .toggle-icon, >.node-content {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      > .toggle-icon {
+        margin: 0 8px;
+        .glyphicon {
+          position: relative;
+          top: 1px;
+          color: #64b5f6;
+        }
+      }
+      > button.toggle {
+        padding: 0;
+        width: 16px;
+        height: 16px;
+        background-color: #64b5f6;
+        border: 0;
+        line-height: 1;
+        font-size: 12px;
+      }
+      > .node-content {
+        position: relative;
+        &:before {
+          position: absolute;
+          top: 50%;
+          content: '';
+          width: 15px;
+          height: 0px;
+          border-top: 1px dotted #999;
+          left: -36px;
+          z-index: -1;
+        }
+      }
+      > ul {
+        display: none;
+      }
+      &:after {
+        z-index: -1;
+        position: absolute;
+        top: -12px;
+        left: 7px;
+        bottom: 3px;
+        content: '';
+        width: 0px;
+        border-right: 1px dotted #999;
+      }
+      &:last-child {
+        &:after {
+          bottom: 8px;
+        }
+        &:first-child {
+          &:after {
+            bottom: 8px;
+          }
+        }
+      }
+      &.open {
+        &:last-child {
+          &:after {
+            bottom: 100%;
+          }
+        }
+        > ul {
+          display: block;
+        }
+      }
+    }
+  }
+}
