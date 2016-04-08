@@ -13,7 +13,7 @@ const Tree = React.createClass({
     return (
       <ul>
       {data.map((item, i) => {
-        const location = [...parentLocation, i]
+        const location = parentLocation.concat([i])
         return (
           <TreeNode location={location} key={i} open={item.open} parent={data} item={item} nodeRender={this.props.nodeRender}>
             {this.loopData(item.children, location)}
@@ -26,7 +26,7 @@ const Tree = React.createClass({
 
   render() {
     return (
-      <div className="bfd-tree">{this.loopData(this.props.data, 0, [])}</div>
+      <div className="bfd-tree">{this.loopData(this.props.data, [])}</div>
     )
   }
 })

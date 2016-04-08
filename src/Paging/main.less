@@ -34,10 +34,22 @@
     font-weight: normal;
   }
   ._active a{
-    background: #2196f3 !important;
-    color: white;
-    border:1px solid  #2196f3;
+    /*background: #2196f3!important;
+    border: 1px solid #2196f3;*/
+  }
+  .pull-right ._active a{
+    background: #2196f3!important;
+    color: #fff;
+    border-top: 1px solid #2196f3;
+    border-bottom: 1px solid #2196f3;
 
+  }
+  .pull-right ._active a:hover{
+    background: #2196f3!important;
+
+  }
+  .pull-right .prev{
+    border-radius: 2px 0 0 2px;
   }
   .number{
     width: 40px;
@@ -54,16 +66,75 @@
     padding-right: 15px;
   }
   .pagination li a{
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 30px;
+    color: #666;
+    line-height: 30px;
+    text-align: center;
+    padding: 0!important;
+    /*border-right: 0;*/
+
+
+  }
+  .pagination li span{
+    padding: 0;
+    width: 40px;
+    text-align: center;
+    line-height: 30px;
+    height: 30px;
+    cursor: default;
+
   }
   .pagination li .prev{
     width: 63px;
-    height: 32px;
+    height: 30px;
   }
   .pagination li .next{
     width: 63px;
-    height: 32px;
+    height: 30px;
   }
+  .pagination .page span:hover{
+     background: none !important;
+  }
+  .pagination li a:hover{
+    background: #90caf8 !important;
+    color: #fff;
+    border-top: 1px solid #90caf8;
+    border-bottom: 1px solid #90caf8;
 
+  }
+  .pagination li .frist{
+    background: #eceff1!important;
+    color: #999;
+  }
+  .pagination li .frist:hover{
+    cursor: default;
+    background: #eceff1!important;
+    color: #999;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .pagination li .end:hover{
+    cursor: default;
+    background: #eceff1!important;
+    color: #999;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .pagination li .end{
+    background: #eceff1!important;
+    color: #999;
+  }
+  .pagination li{
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+
+    /*
+      Introduced in IE 10.
+      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+  }
 }

@@ -1,5 +1,6 @@
 .bfd-tabs {
   .nav-tabs {
+    padding: 0 30px;
     border-bottom: 1px solid #e3ebf3;
     > li {
       margin-bottom: 0;
@@ -19,8 +20,12 @@
       > a {
         padding: 8px 12px;
         border-radius: 2px 2px 0 0;
-        color: #999;
+        color: #666;
         border: 0;
+        &:hover {
+          background-color: #2196f3;
+          color: #fff;
+        }
       }
     }
   }
@@ -33,6 +38,7 @@
   }
   &.dynamic {
     .nav-tabs {
+      padding: 0;
       background-color: #fafafa;
       border-bottom-color: #f0f0f0;
       > li {

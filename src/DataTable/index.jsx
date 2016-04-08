@@ -5,7 +5,6 @@ import  'bfd-bootstrap'
 import  './main.less'
 import  React from 'react'
 import  Fetch from '../Fetch'
-/*import  classNames from 'classnames'*/
 import Paging from '../Paging'
 
 export default React.createClass( {
@@ -21,6 +20,7 @@ export default React.createClass( {
       currentPage: 1
     }
   },
+
   onChange: function (params, currentPage) {
     if( this.props.url ) {
       let url_ = this.props.url
@@ -32,11 +32,13 @@ export default React.createClass( {
       this.setState( { currentPage: currentPage } )
       this.setState( { url: url_ } )
     }
-  } ,
+  },
+
   onPageChange(page){
     this.props.onPageChange( page )
     this.setState({currentPage: page } )
   },
+
   orderClick:function(column, i){
     if(column.order ) {
       if(this.refs[i].getAttribute('order') == null ) {
@@ -59,12 +61,15 @@ export default React.createClass( {
       }
     }
   },
+
   handleSuccess: function ( data ) {
     this.setState( { items: data } )
-  } ,
+  },
+
   refresh: function () {
     this.setState( { refresh: true } )
-  } ,
+  },
+
   render: function () {
     let column = this.props.column
     let items = []
@@ -110,18 +115,19 @@ export default React.createClass( {
                   {
                     column.map(function(columns,i) {
                       for(let col in columns) {
+                        //序号
                         if(columns[col] === 'sequence') {
                           return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
                         }
+                        //操作
                         if(columns[col] == 'operation' ) {
                           return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
-                        }else {
-                          if(col==='key') {
-                            if(typeof columns['render'] === 'function') {
-                              return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]]) } </td>
-                            }else {
-                              return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
-                            }
+                        }
+                        if(columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
+                          if(typeof columns['render'] === 'function') {
+                            return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item) } </td>
+                          }else {
+                            return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
                           }
                         }
                       }
@@ -138,4 +144,4 @@ export default React.createClass( {
       </div>
     )
   }
-} )
+})

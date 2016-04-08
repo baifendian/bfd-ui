@@ -19,7 +19,7 @@ const Checkbox = React.createClass({
   },
 
   render() {
-    const { children, ...props } = this.props
+    const { children, block, ...props } = this.props
 
     if (this.isGroup) {
 
@@ -35,7 +35,7 @@ const Checkbox = React.createClass({
     }
 
     return (
-      <div className={classnames('bfd-checkbox', {checkbox: this.props.block, 'checkbox-inline': !this.props.block})}>
+      <div className={classnames('bfd-checkbox', {checkbox: block, 'checkbox-inline': !block, disabled: props.disabled})}>
         <label>
           <input type="checkbox" {...props}/>
           <span className="status"></span>
