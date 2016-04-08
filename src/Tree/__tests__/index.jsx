@@ -8,7 +8,7 @@ import Tree from '../Tree'
 describe('Tree', () => {
   it('adds 2 + 2 to equal 3', () => {
     const data = [{
-      name: 'a'
+      ds: 'a'
     }]
     const test = TestUtils.renderIntoDocument(<Tree data={data} />)
     // const testNode = ReactDOM.findDOMNode(test)

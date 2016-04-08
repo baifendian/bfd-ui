@@ -45,9 +45,7 @@ const TreeNode = React.createClass({
           <span className={'glyphicon glyphicon-' + (this.state.isOpen ? 'minus' : 'plus')}></span>
         </button>
         {this.props.beforeNode ? this.props.beforeNode(this.props) : null}
-        <div className="toggle-icon">
-          <span className={' glyphicon glyphicon-' + icon}></span>
-        </div>
+        <span className={'toggle-icon glyphicon glyphicon-' + icon}></span>
         <div className="node-content">{item.name}</div>
         {this.props.children}
       </li>
