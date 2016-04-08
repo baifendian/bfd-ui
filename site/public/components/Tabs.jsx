@@ -72,7 +72,7 @@ const App = React.createClass({
 })`}
         </Pre>
 
-        <TabsDemo></TabsDemo>
+        <TabsDemo />
         
         <h2>可添加和关闭的</h2>
 

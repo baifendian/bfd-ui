@@ -31,7 +31,7 @@ const App = React.createClass({
           </select>
         </div>
         <div className="panel-body">
-          <Fetch style={{minHeight:100}} url={this.state.url} onSuccess={this.handleSuccess} delay={1000}>
+          <Fetch style={{minHeight: 100}} url={this.state.url} onSuccess={this.handleSuccess} delay={1000}>
             {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
           </Fetch>
         </div>

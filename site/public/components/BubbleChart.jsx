@@ -13,12 +13,12 @@ export default React.createClass({
 
 const App = React.createClass({
   render() {
-    return <BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />]
+    return <BubbleChart radiusMaker="x" name="name" value={{key: 'x'}} url="/data/bubbleChart.json" />]
   }
 })`}
         </Pre>
 
-        <BubbleChart radiusMaker="x" name="name" value={{key:'x'}} url="/data/bubbleChart.json" />
+        <BubbleChart radiusMaker="x" name="name" value={{key: 'x'}} url="/data/bubbleChart.json" />
         
         <Props>
           <Prop name="radiusMaker" type="String" required>

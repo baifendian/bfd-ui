@@ -204,7 +204,7 @@ export default class {
 
     const duration = 250 / categories.length
 
-    const markers = svg.selectAll('.marker')
+    // const markers = svg.selectAll('.marker')
 
     const tooltipElement = d3.select(container)
       .append('div')
@@ -251,7 +251,6 @@ export default class {
         if (lastxAxisIndex === xAxisIndex) return
 
         const x = xScale(categories[xAxisIndex])
-        const dataItem = data[xAxisIndex]
         const maxValue = Math.max.apply(null, series.map(serie => {
           return serie.data[xAxisIndex]
         }))

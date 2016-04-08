@@ -56,7 +56,7 @@ const NavItem = React.createClass({
     return (
       <li {...this.props} className={classNames({open: this.state.isOpen, active: this.isActive(indexOnly)})}>
         {Item}
-        { this.props.children ? <Nav>{this.props.children}</Nav> : null }
+        {this.props.children ? <Nav>{this.props.children}</Nav> : null}
       </li>
     )
   }

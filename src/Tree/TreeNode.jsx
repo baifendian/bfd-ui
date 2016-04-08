@@ -41,7 +41,7 @@ const TreeNode = React.createClass({
     }
     return (
       <li className={classnames({open: this.state.isOpen})}>
-        <button style={{visibility: hasChildren ? 'visible' : 'hidden'}}  type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
+        <button style={{visibility: hasChildren ? 'visible' : 'hidden'}} type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
           <span className={'glyphicon glyphicon-' + (this.state.isOpen ? 'minus' : 'plus')}></span>
         </button>
         {this.props.beforeNode ? this.props.beforeNode(this.props) : null}

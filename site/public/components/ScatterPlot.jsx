@@ -17,7 +17,7 @@ const App = React.createClass({
 })`}
         </Pre>
 
-        <ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />
+        <ScatterPlot category="height" cols={{male: '男', female: '女'}} url="/data/scatterPlot.json" />
         
         <Props>
           <Prop name="cols" type="Object" desc="y轴字段配置（x轴字段单独指定），数据字段：中文名">
@@ -28,7 +28,7 @@ const App = React.createClass({
 }`}
             </Pre>
           </Prop>
-          <Prop name="category" type="String" desc="x轴字段名"></Prop>
+          <Prop name="category" type="String" desc="x轴字段名" />
           <Prop name="yAxis" type="Object" desc="y轴相关配置">
             <Pre>
 {`{ 

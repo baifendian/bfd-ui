@@ -36,7 +36,7 @@ const Checkbox = React.createClass({
     return (
       <div className={classnames('bfd-checkbox', {checkbox: block, 'checkbox-inline': !block, disabled: props.disabled})}>
         <label>
-          <input type="checkbox" {...props}/>
+          <input type="checkbox" {...props} />
           <span className="status"></span>
           {children}
         </label>

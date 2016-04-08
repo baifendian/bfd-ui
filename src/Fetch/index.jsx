@@ -78,10 +78,10 @@ export default React.createClass({
         {this.state.xhr !== 'success' ? (
           <div className="fetch-mask">
             {(() => {
-            switch(this.state.xhr) {
-              case 'loading': return '加载中...'
-              case 'error':   return this.state.msg
-            }
+              switch(this.state.xhr) {
+                case 'loading': return '加载中...'
+                case 'error': return this.state.msg
+              }
             })()}
           </div>
         ) : null}
