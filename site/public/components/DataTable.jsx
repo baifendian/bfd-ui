@@ -16,7 +16,7 @@ const column = [{
   title: '姓名',
   order: true,
   render: function(text, item) {
-    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
+    return <a href="javascript:void(0);" onClick={function(){ }}>{text}</a>
   },
   key: 'name'
 }, {
@@ -184,81 +184,45 @@ export default React.createClass({
       <div>
         <h1>DataTable&分页</h1>
         <Pre>
-{`import DataTable from 'bfd-ui/lib/DataTable'
-
-const common = {
-  commonClick: function( item ){
-  }
-}
-const column = [{
-  title:'序号',
-  key:'sequence'
-}, {
-  title: '姓名',
-  order: true,
-  render: function(text, item) {
-    return <a href="javascript:void(0);" onClick={function(){ ``common.commonClick(item)}}>{text}</a>
-  },
-  key: 'name'
-}, {
-  title: '年龄',
-  key: 'age',
-  order: true
-}, {
-  title: '身高',
-  key: 'height',
-  order: true,
-  render: function(text, item) {
-    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)}}>{text}</a>
-  },
-}, {
-  title: '体重',
-  key: 'weight',
-  order: true
-}, {
-  title: '国家/地区',
-  key: 'country'
-}, {
-  title: '学校',
-  key: 'school'
-}, {
-  title: '生日',
-  key: 'birthday',
-  order: true
-}, {
-  title: '操作',
-  /**
-   *
-   * @param item  当前数据对象
-   * @param component 当前
-   * @returns {XML}  返回dom对象
-   */
-  render(item, component){
-    return <a onClick={ ``function(){ common.commonClick(item) }}>编辑</a>
-  },,
-  key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
-}]
-
+{
+`
+import DataTable from 'bfd-ui/lib/DataTable'
 const App = React.createClass({
+  /**
+   * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
+   * @param page 当前页
+   */
+   onPageChange(page){
+
+   }
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={3}></DataTable>
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 10 }></DataTable>
   }
 })`
 }
         </Pre>
 
-        <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={3} />
+        <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={10} />
         
         <Props>
-          <Prop name = "url" type="String" optional  children="要请求数据的服务端地址"></Prop>
+          <Prop name = "url" type="String" optional  children="要请求数据的服务端地址！注【不太推荐使用，不灵活】"></Prop>
           <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名"></Prop>
           <Pre>
             {
 `
+//事件方法对象
+const common = {
+  commonClick: function( item ){
+  }
+}
 const column = [{
+        //非数据操作字段
         title:'操作',
-          render(item, component){
-            return <a onClick={ ``function(){ common.commonClick(item) }}>编辑</a>
+        /**
+         *@param item  当前行的数据对象，数据类型为JSON格式{}
+         */
+        render(item){
+            return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item) }}>编辑</a>
         },
         //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
         {
@@ -266,15 +230,23 @@ const column = [{
           key: 'weight',//数据库字段名
           order: true //是否排序 true为显示排序，false为不显示排序
         },
+
         {
           title:'序号',
           key:'sequence'//用于标记显示序号
         },
-        //非数据操作字段
+
         {
-          title:'操作',
-          key:'operation'
-        }]
+        title: '姓名',
+        order: true,
+        /***
+         * @param text 需要渲染的列名
+         * @param item  当前行的数据对象，数据类型为JSON格式{}
+         */
+        render: function(text, item) {
+          return <a href="javascript:void(0);" href="javascript:void(0);" onClick={function(){ common.commonClick(item) }}>{text}</a>
+        }
+        ]
 `
             }
           </Pre>
@@ -293,9 +265,23 @@ const column = [{
 
 
           <Prop name="showPage" type="boolean" optional children="是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置"></Prop>
-          <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数， "></Prop>
-
-
+          <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】"></Prop>
+          <Pre>
+{
+`
+/**
+ * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
+ * @param page 鼠标点击时的当前页码
+ */
+ onPageChange(page){
+   //TODO Ajax请求
+ }
+render() {
+  return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 10 }></DataTable>
+}
+`
+}
+          </Pre>
         </Props>
       </div>
     )
