@@ -205,7 +205,7 @@ const App = React.createClass({
         <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={10} />
         
         <Props>
-          <Prop name = "url" type="String" optional  children="要请求数据的服务端地址！注【不太推荐使用，不灵活】"></Prop>
+          <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
           <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名"></Prop>
           <Pre>
             {
