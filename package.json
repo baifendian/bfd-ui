@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "eslint src && jest",
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name '*.jsx' -exec rm -rf {} \\;",
     "start": "node-dev site/server.js",
     "pack": "cd site && rm -rf public/dist && webpack -p --progress",
@@ -45,7 +45,6 @@
     "code-beautify": "0.0.5",
     "compression": "^1.6.0",
     "eslint": "^1.10.3",
-    "eslint-loader": "^1.3.0",
     "eslint-plugin-react": "^4.2.3",
     "express": "^4.13.3",
     "fastclick": "^1.0.6",

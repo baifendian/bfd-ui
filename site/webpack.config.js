@@ -35,11 +35,6 @@ var config = {
     }, {
       test: /\.less$/,
       loader: 'style!css!less!postcss'
-    }],
-    preLoaders: [{
-      test: /\jsx?$/,
-      loader: "eslint-loader",
-      exclude: /node_modules/
     }]
   },
   postcss: [autoprefixer({ browsers: ['last 3 versions'] })],
