@@ -10,7 +10,11 @@
   },
   "rules": {
     "no-var": 2,
+    "prefer-const": 2,
+    "prefer-template": 2,
+    "object-shorthand": 2,
     "no-multi-spaces": 2,
+    "spaced-comment": 2,
     "camelcase": 2,
     "comma-spacing": 2,
     "jsx-quotes": 2,
