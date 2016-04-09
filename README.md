@@ -19,7 +19,7 @@ http://192.168.188.154:4001
 
 * 支持传入 children 的组件，请在文档中加上 children 属性
 
-* JS 代码规范已经发过，React 代码规范参考 https://github.com/airbnb/javascript/tree/master/react
+* 注意代码规范 http://git.baifendian.com/front-end/style-guide
 
 * 代码规范已经用 eslint 来做错误提醒，提交前请保证自己的组件没有代码规范的错误
 
@@ -112,4 +112,4 @@ $ touch site/public/components/YourComponent.jsx
 $ npm start
 ```
 
-http://localhost:4001/components/YourComponent
+查看 http://localhost:4001/components/YourComponent
