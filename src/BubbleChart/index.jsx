@@ -4,6 +4,6 @@ import BubbleChart from './main'
 
 export default React.createClass({
   render() {
-    return <Chart type={BubbleChart} className="bubble-chart" {...this.props}/>
+    return <Chart type={BubbleChart} className="bubble-chart" {...this.props} />
   }
 })

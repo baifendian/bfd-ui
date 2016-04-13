@@ -5,6 +5,6 @@ import './main.less'
 
 export default React.createClass({
   render() {
-    return <Chart type={ScatterPlot} className="bfd-scatter-plot" {...this.props}/>
+    return <Chart type={ScatterPlot} className="bfd-scatter-plot" {...this.props} />
   }
 })

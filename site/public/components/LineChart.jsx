@@ -7,7 +7,7 @@ const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
 const App = React.createClass({
   render() {
-    return <LineChart style={{height:320}} category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json"/>
+    return <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json"/>
   }
 })`
 
@@ -18,7 +18,7 @@ export default React.createClass({
         <h1>线图</h1>
         <Pre>{code}</Pre>
         
-        <LineChart style={{height:320}} category="date" cols={{x:'用户',y:'销量'}} url="/data/lineChart.json" />
+        <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json" />
         
         <Props>
           <Prop name="cols" type="Object" required>

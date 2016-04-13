@@ -38,7 +38,7 @@ const Chart = React.createClass({
   },
 
   render() {
-    const chart = <div style={{height:'100%'}} ref="chart"></div>
+    const chart = <div style={{height: '100%'}} ref="chart"></div>
     return (
       <div ref="container" className={classnames('bfd-chart', this.props.className)} style={this.props.style}>
         {this.props.url ? <Fetch url={this.props.url} onSuccess={this.handleSuccess}>{chart}</Fetch> : chart}

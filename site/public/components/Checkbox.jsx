@@ -77,11 +77,11 @@ const App = React.createClass({
 
 const App = React.createClass({
   render() {
-    return <CheckboxGroup values={['苹果','小米','三星','华为']}/>
+    return <CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>
   }
 })`}
         </Pre>
-        <CheckboxGroup values={['苹果','小米','三星','华为']}/>
+        <CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>
         <Props>
           <Prop name="selects" type="Array">
             <p>默认选中的 value 集合</p>

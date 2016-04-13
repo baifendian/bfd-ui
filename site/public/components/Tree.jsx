@@ -138,7 +138,7 @@ export default () => {
     <div>
       <h1>树</h1>
       <Pre>{TreeDemoCode}</Pre>
-      <TreeDemo></TreeDemo>
+      <TreeDemo />
       <Props>
         <Prop name="data" type="Array" required>
           <p>数据源，格式如下</p>
@@ -153,7 +153,7 @@ export default () => {
       </Props>
       <h1>带选择的树</h1>
       <Pre>{SelectTreeDemoCode}</Pre>
-      <SelectTreeDemo></SelectTreeDemo>
+      <SelectTreeDemo />
       <Props>
         <Prop name="data" type="Array" required>
           <p>数据源，格式如下</p>
