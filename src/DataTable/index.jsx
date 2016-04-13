@@ -74,16 +74,16 @@ export default React.createClass( {
     let column = this.props.column
     let items = []
     let totalPageNum = 0,
-      currentPage = parseInt( this.state.currentPage ),
-      _this = this,
-      url = this.state.url,
-      pageSize = parseInt( this.props.howRow )
-    if( this.props.data ) {
+    currentPage = parseInt( this.state.currentPage ),
+    _this = this,
+    url = this.state.url,
+    pageSize = parseInt( this.props.howRow )
+    let data_ = this.props.data.totalList
+    if( this.props.data) {
       if(this.props.data.totalPageNum){
         totalPageNum = this.props.data.totalPageNum
       }
-      let data_ = this.props.data.totalList
-      if(data_ && data_.length > 0 && typeof data_ === 'object') {
+      if(data_ && data_.length > 0 && typeof data_ === 'object' && data_.length > pageSize) {
         let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize
         let end = currentPage === 1 ? pageSize : start + pageSize
         items = data_.slice( start, end )
