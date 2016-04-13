@@ -1,0 +1,30 @@
+.bfd-confirm {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+  &.in-enter {
+    transform: scale(0);
+    &.in-enter-active {
+      transform: scale(1);
+      transition: transform .15s ease-in-out;
+    }
+  }
+  &.in-leave {
+    &.in-leave-active {
+      transform: scale(0);
+      transition: transform .1s ease-in;
+    }
+  }
+  .modal-header, .modal-body {
+    padding: 10px;
+  }
+  .operate {
+    margin-top: 10px;
+    text-align: right;
+    > button + button {
+      margin-left: 5px;
+    }
+  }
+}

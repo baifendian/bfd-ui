@@ -13,29 +13,40 @@ describe('SelectTree', () => {
         checked: true
       }]
     }, {
-      name: 'dsds',
+      name: 'dsds'
       
     }]
-    const selectTree = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={d => {data = d}}/>)
+    const selectTree = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={d => {}}/>)
     const checks = TestUtils.scryRenderedDOMComponentsWithTag(selectTree, 'input')
     expect(checks.filter(input => input.checked).length).toBe(1)
   })
 
   it('checked change', () => {
-    const data = [{
-      name: 'test',
-      children: [{
-        name: 'dsds'
-      }]
-    }, {
-      name: 'dsds',
+    const Test = React.createClass({
+      getInitialState() {
+        return {
+          data: [{
+            name: 'test',
+            children: [{
+              name: 'dsds'
+            }]
+          }, {
+            name: 'dsds'
+          }]
+        }
+      },
+
+      handleChange(data) {
+        this.setState({ data })
+      },
       
-    }]
-    function render() {
-      return TestUtils.renderIntoDocument(<SelectTree data={data} onChange={d => {data = d}}/>)
-    }
-    let selectTree = render()
-    TestUtils.Simulate.click(TestUtils.scryRenderedDOMComponentsWithTag(selectTree, 'input')[1])
-    // expect(TestUtils.scryRenderedDOMComponentsWithTag(selectTree, 'input')).toBe(1)
+      render() {
+        return <SelectTree data={this.state.data} onChange={this.handleChange} />
+      }
+    })
+    const test = TestUtils.renderIntoDocument(<Test />)
+    const checks = TestUtils.scryRenderedDOMComponentsWithTag(test, 'input')
+    TestUtils.Simulate.change(checks[1], {target: {checked: true}})
+    expect(checks.filter(input => input.checked).length).toBe(2)
   })
 })

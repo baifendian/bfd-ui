@@ -63,7 +63,9 @@
       "<rootDir>/node_modules",
       "<rootDir>/src"
     ],
-    "testPathDirs": ["<rootDir>/src"],
+    "testPathDirs": [
+      "<rootDir>/src"
+    ],
     "moduleFileExtensions": [
       "js",
       "jsx"

@@ -39,8 +39,8 @@ describe('Tree', () => {
       name: 'dsds'
     }]
     const tree = TestUtils.renderIntoDocument(<Tree data={data} />)
-    const firstToggleNode = TestUtils.scryRenderedDOMComponentsWithTag(tree, 'button')[0]
-    TestUtils.Simulate.click(firstToggleNode)
-    expect(TestUtils.scryRenderedComponentsWithType(tree, TreeNode)[0].state.isOpen).toBe(true)
+    const toggles = TestUtils.scryRenderedDOMComponentsWithTag(tree, 'button')
+    TestUtils.Simulate.click(toggles[0])
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(tree, 'li')[0].className).toContain('open')
   })
 })

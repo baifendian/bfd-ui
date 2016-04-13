@@ -22,7 +22,8 @@ const App = React.createClass({
     this.setState({isOpen: true})
   },
 
-  handleClick() {
+  handleClick(props) {
+    console.log(props)
     this.setState({isOpen: false})
   },
 
