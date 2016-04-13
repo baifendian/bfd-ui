@@ -181,7 +181,7 @@ export default class {
         .attr('class', 'marker-inner')
         .attr('cx', d => xScale(d[config.category]))
         .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 4)
+        .attr('r', 5)
         .attr('fill', '#fff')
         .attr('stroke', '#fff')
 
@@ -189,7 +189,7 @@ export default class {
         .attr('class', 'marker-outer')
         .attr('cx', d => xScale(d[config.category]))
         .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 3)
+        .attr('r', 3.5)
         .attr('fill', '#fff')
         .attr('stroke', color)
         .attr('stroke-width', 2)

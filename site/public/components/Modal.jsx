@@ -4,8 +4,14 @@ import Pre from '../Pre'
 
 export default React.createClass({
 
+  getInitialState() {
+    return {
+      isOpen: false 
+    }
+  },
+
   handleClick() {
-    this.refs.modal.open()
+    this.setState({isOpen: true})
   },
   
   render() {
@@ -40,7 +46,7 @@ const App = React.createClass({
         </Pre>
 
         <button className="btn btn-primary" onClick={this.handleClick}>点击打开</button>
-        <Modal ref="modal">
+        <Modal ref="modal" isOpen={this.state.isOpen}>
           <ModalHeader>
             <h4 className="modal-title">test</h4>
           </ModalHeader>

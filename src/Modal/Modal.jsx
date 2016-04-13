@@ -1,6 +1,7 @@
 import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import classnames from 'classnames'
 import './modal.less'
 
 /**
@@ -29,7 +30,7 @@ const childContextTypes = {
 const Modal = React.createClass({
   getInitialState() {
     return {
-      isOpen: false    
+      isOpen: !!this.props.isOpen
     }
   },
 
@@ -37,6 +38,10 @@ const Modal = React.createClass({
     return {
       handleClose: this.close
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    'isOpen' in nextProps && this.setState({isOpen: nextProps.isOpen})  
   },
 
   componentDidMount() {
@@ -78,10 +83,11 @@ const Modal = React.createClass({
   },
 
   render() {
+    const { className, ...other } = this.props
     return (
       <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {this.state.isOpen ? (
-          <div className="bfd-modal">
+          <div className={classnames('bfd-modal', className)} {...other}>
             <div className="modal-backdrop"></div>
             <div className="modal" onClick={this.handleModalClick}>
               <div className="modal-dialog" onClick={this.handleDialogClick}>
