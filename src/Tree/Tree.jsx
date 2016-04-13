@@ -8,7 +8,7 @@ const propTypes = {
 }
 
 const Tree = React.createClass({
-
+  
   loopData(data, parentLocation) {
     if (!data || !data.length) return null
     return (
