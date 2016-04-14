@@ -14,8 +14,6 @@ export default env => {
     }
   }
   Object.assign(legend, env.config.legend);
-  console.log(legend);
-  console.log(env)
 
   let dom = d3.select(env.container)
     .append('div')
@@ -52,7 +50,6 @@ export default env => {
           left: legend.style.x + 'px' || '0px',
           top: legend.style.y + 'px' || '0px'
         })
-
       if (legend.layout == 'horizontal') {
         d3.select(env.container)
           .selectAll('div')
@@ -60,14 +57,13 @@ export default env => {
             display: 'inline-block'
           })
       }
-
       break;
     case 'bottom':
       d3.select(env.container)
         .select('.legend')
         .style({
           left: legend.style.x + 'px' || '0px',
-          top: legend.style.y +env.height+ 'px' || '0px'
+          top: legend.style.y + env.height + 'px' || '0px'
         })
       if (legend.layout == 'horizontal') {
         d3.select(env.container)
@@ -77,12 +73,9 @@ export default env => {
           })
       }
       break;
-
     default:
       break;
   }
-
-
 
   dom.on('click', function(d, i) {
 

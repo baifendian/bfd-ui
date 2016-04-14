@@ -39,7 +39,7 @@ export default class {
     if (!env.config.data) return;
 
     //获取颜色。可以有4个色系选择。  
-    const colors =config.colors || color(4, env.config.data.length);
+    const colors = config.colors || color(4, env.config.data.length);
     //init color
     for (var i = 0; i < env.config.data.length; i++) {
       env.config.data[i].color = colors[i];
