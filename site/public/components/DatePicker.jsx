@@ -40,41 +40,41 @@ const DateRangeDemo = React.createClass({
 
 const DatePickeDemoCode = `import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
 
-class DatePickerDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+const DatePickerDemo = React.createClass({
+
+  getInitialState() {
+    return {
       date: '2016-02-03'
     }
-  }
+  },
 
-  handleSelect(data) {
+  handleSelect(date) {
     this.setState({ date })
-  }
+  },
 
   render() {
     return <DatePicker date={this.state.date} onSelect={this.handleSelect} />
   }
-}`
+})`
 
 const DateRangeDemoCode = `import DateRange from 'bfd-ui/lib/DatePicker/DateRange'
 
-class DateRangeDemo extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
+const DateRangeDemo = React.createClass({
+
+  getInitialState() {
+    return {
       start: '2016-02-03'
     }
-  }
+  },
 
-  handleSelect(start, end) {
+  handleSelect(start) {
     this.setState({ start })
-  }
+  },
 
   render() {
     return <DateRange start={this.state.start} onSelect={this.handleSelect} />
   }
-}`
+})`
 
 export default () => {
   return (

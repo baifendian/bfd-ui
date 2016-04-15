@@ -6,37 +6,54 @@ import ClearableInput from '../'
 describe('ClearableInput', () => {
 
   it('className is ok', () => {
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput className="test" />)
-    expect(ReactDOM.findDOMNode(clearableInput).className.split(' ')).toContain('test')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput className="test" />)
+    expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
+  })
+
+  it('style is ok', () => {
+    const instance = TestUtils.renderIntoDocument(<ClearableInput style={{color: 'red'}} />)
+    expect(ReactDOM.findDOMNode(instance).style.color).toContain('red')
+  })
+
+  it('onClick is ok', () => {
+    const handleClick = jest.fn()
+    const instance = TestUtils.renderIntoDocument(<ClearableInput onClick={handleClick} />)
+    TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
+    expect(handleClick).toBeCalled()
   })
 
   it('value is ok', () => {
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput value="test" />)
-    expect(TestUtils.findRenderedDOMComponentWithTag(clearableInput, 'input').value).toBe('test')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput value="test" onChange={() => {}} />)
+    expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'input').value).toBe('test')
   })
 
   it('size is ok', () => {
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput size="sm" />)
-    expect(TestUtils.findRenderedDOMComponentWithTag(clearableInput, 'input').className.split(' ')).toContain('input-sm')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput size="sm" />)
+    expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'input').className.split(' ')).toContain('input-sm')
   })
 
   it('placeholder is ok', () => {
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput placeholder="test" />)
-    expect(TestUtils.findRenderedDOMComponentWithTag(clearableInput, 'input').getAttribute('placeholder')).toBe('test')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput placeholder="test" />)
+    expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'input').getAttribute('placeholder')).toBe('test')
+  })
+
+  it('inline is ok', () => {
+    const instance = TestUtils.renderIntoDocument(<ClearableInput inline />)
+    expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('inline')
   })
 
   it('onChange is ok', () => {
     let value
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput onChange={v => {value = v}} />)
-    const inputNode = TestUtils.findRenderedDOMComponentWithTag(clearableInput, 'input')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput onChange={v => {value = v}} />)
+    const inputNode = TestUtils.findRenderedDOMComponentWithTag(instance, 'input')
     TestUtils.Simulate.change(inputNode, {target: {value: 'changed'}})
     expect(value).toBe('changed')
   })
 
   it('clear is ok', () => {
     let value
-    const clearableInput = TestUtils.renderIntoDocument(<ClearableInput value="test" onChange={v => {value = v}} />)
-    const clearNode = TestUtils.findRenderedDOMComponentWithClass(clearableInput, 'clear')
+    const instance = TestUtils.renderIntoDocument(<ClearableInput value="test" onChange={v => {value = v}} />)
+    const clearNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'clear')
     TestUtils.Simulate.click(clearNode)
     expect(value).toBe('')
   })

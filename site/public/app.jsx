@@ -6,26 +6,8 @@ import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
 import classnames from 'classnames'
-import fastclick from 'fastclick'
-
-fastclick.attach(document.body)
 
 const App = React.createClass({
-
-  getInitialState() {
-    return {
-      isOpen: false
-    }
-  },
-
-  handleToggle() {
-    this.setState({isOpen: true})
-  },
-
-  handleClick(props) {
-    console.log(props)
-    this.setState({isOpen: false})
-  },
 
   render() {
     return (
@@ -39,13 +21,8 @@ const App = React.createClass({
           </div>
         </div>
         <div id="body" className="clearfix">
-          {this.state.isOpen ? null : (
-            <button className="toggle btn btn-default" type="button" onClick={this.handleToggle}>
-              <span className="glyphicon glyphicon-align-justify"></span>
-            </button>
-          )}
-          <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
-            <Nav onClick={this.handleClick}>
+          <div className="sidebar">
+            <Nav>
               <NavItem href="/" icon="home" title="首页" />
               <NavItem href="/components" icon="th" title="组件" />
               <NavItem href="/integration" icon="hand-right" title="完整项目实例" />

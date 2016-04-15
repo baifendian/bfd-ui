@@ -17,12 +17,18 @@ const TreeNode = React.createClass({
     }
   },
 
+  componentWillReceiveProps(nextProps) {
+    'open' in nextProps && this.setState({isOpen: nextProps.open})
+  },
+
   shouldComponentUpdate(nextProps, nextState) {
     return !(this.props.item === nextProps.item && this.state.isOpen === nextState.isOpen)
   },
 
   handleToggle() {
-    this.setState({isOpen: !this.state.isOpen})
+    const isOpen = !this.state.isOpen
+    this.setState({ isOpen })
+    this.props.onToggle && this.props.onToggle(this.props, isOpen)
   },
 
   render() {

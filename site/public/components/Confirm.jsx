@@ -3,13 +3,6 @@ import Confirm from 'c/Confirm'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const code = `import Confirm from 'bfd-ui/lib/Confirm'
-
-const App = React.createClass({
-  render() {
-    return <ClearableInput value="test" />
-})`
-
 const ConfirmDemo = React.createClass({
 
   getInitialState() {
@@ -22,15 +15,55 @@ const ConfirmDemo = React.createClass({
     this.setState({isOpen: true})
   },
 
+  handleClose() {
+    this.setState({isOpen: false})
+  },
+
+  onConfirm() {
+    console.log(1)
+  },
+
   render() {
     return (
       <div>
         <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
-        <Confirm open={this.state.isOpen}>确认删除吗？</Confirm>
+        <Confirm open={this.state.isOpen} handleClose={this.handleClose} onConfirm={this.onConfirm}>确认删除吗？</Confirm>
       </div>
     )
   }
 })
+
+const ConfirmDemoCode = `import Confirm from 'bfd-ui/lib/Confirm'
+
+const App = React.createClass({
+
+  getInitialState() {
+    return {
+      isOpen: false
+    }
+  },
+
+  handleDelete() {
+    this.setState({isOpen: true})
+  },
+
+  handleClose() {
+    this.setState({isOpen: false})
+  },
+
+  onConfirm() {
+    console.log(1)
+  },
+
+  render() {
+    return (
+      <div>
+        <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
+        <Confirm open={this.state.isOpen} handleClose={this.handleClose} onConfirm={this.onConfirm}>确认删除吗？</Confirm>
+      </div>
+    )
+  }
+})`
 
 export default React.createClass({
 
@@ -38,20 +71,17 @@ export default React.createClass({
     return (
       <div>
         <h1>确认提示</h1>
-        <Pre>{code}</Pre>
+        <Pre>{ConfirmDemoCode}</Pre>
         <ConfirmDemo></ConfirmDemo>
         <Props>
-          <Prop name="value" type="String">
-            <p>输入框值</p>
+          <Prop name="open" type="boolean" required>
+            <p>是否打开，默认关闭</p>
           </Prop>
-          <Prop name="size" type="String">
-            <p>输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm</p>
+          <Prop name="handleClose" type="fucntion" required>
+            <p>关闭动作的处理，用来同步 isOpen 的状态</p>
           </Prop>
-          <Prop name="placeholder" type="String">
-            <p>同 input placeholder</p>
-          </Prop>
-          <Prop name="onChange" type="Function">
-            <p>输入框值改变后的回调，包括清空动作。参数为改变后的值</p>
+          <Prop name="onConfirm" type="fucntion">
+            <p>确定后的回调</p>
           </Prop>
         </Props>
       </div>

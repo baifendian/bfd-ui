@@ -7,7 +7,7 @@ const code = `import ClearableInput from 'bfd-ui/lib/ClearableInput'
 
 const App = React.createClass({
   render() {
-    return <ClearableInput value="test" />
+    return <ClearableInput />
 })`
 
 export default React.createClass({
@@ -16,18 +16,21 @@ export default React.createClass({
       <div>
         <h1>可清空的输入框</h1>
         <Pre>{code}</Pre>
-        <ClearableInput value="test"></ClearableInput>
+        <ClearableInput></ClearableInput>
         <Props>
           <Prop name="value" type="String">
             <p>输入框值</p>
           </Prop>
-          <Prop name="size" type="String">
+          <Prop name="size" type="string">
             <p>输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm</p>
           </Prop>
-          <Prop name="placeholder" type="String">
+          <Prop name="placeholder" type="string">
             <p>同 input placeholder</p>
           </Prop>
-          <Prop name="onChange" type="Function">
+          <Prop name="inline" type="boolean">
+            <p>是否为行内模式(display: inline-block)</p>
+          </Prop>
+          <Prop name="onChange" type="function">
             <p>输入框值改变后的回调，包括清空动作。参数为改变后的值</p>
           </Prop>
         </Props>

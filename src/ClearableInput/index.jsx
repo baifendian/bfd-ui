@@ -6,38 +6,41 @@ const propTypes = {
   value: PropTypes.string,
   size: PropTypes.string,
   placeholder: PropTypes.string,
-  onChange: PropTypes.func
+  inline: PropTypes.bool,
+  onChange: PropTypes.func,
+  customProp(props) {
+    if (props.value && !props.onChange) {
+      return new Error('You provided a `value` prop without an `onChange` handler')
+    }
+  }
 }
 
 const ClearableInput = React.createClass({
 
   getInitialState() {
     return {
-      value: this.props.value  
+      value: ''
     }
   },
 
-  componentWillReceiveProps(nextProps) {
-    'value' in this.props && this.setState({value: nextProps.value})  
-  },
-
-  handleClick() {
-    this.setState({value: ''})
+  handleClear() {
+    'value' in this.props || this.setState({value: ''})
     this.props.onChange && this.props.onChange('')
   },
 
   handleChange(e) {
     const value = e.target.value
-    this.setState({ value })
+    'value' in this.props || this.setState({ value })
     this.props.onChange && this.props.onChange(value)
   },
 
   render() {
     const { size, placeholder, className, onChange, ...other } = this.props
+    const value = this.props.value || this.state.value
     return (
-      <div className={classnames('bfd-clearable-input', className)}>
-        <input type="text" placeholder={placeholder} className={'form-control' + (size ? ' input-' + size : '')} value={this.state.value} onChange={this.handleChange} />
-        { this.state.value ? <span className="clear glyphicon glyphicon-remove" onClick={this.handleClick}></span> : null }
+      <div className={classnames('bfd-clearable-input', className, {inline: this.props.inline})} {...other}>
+        <input type="text" placeholder={placeholder} className={'form-control' + (size ? ' input-' + size : '')} value={value} onChange={this.handleChange} />
+        {value ? <span className="clear glyphicon glyphicon-remove" onClick={this.handleClear}></span> : null}
       </div>
     )
   }

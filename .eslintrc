@@ -30,6 +30,7 @@
     "react/no-did-update-set-state": 2,
     "react/no-direct-mutation-state": 2,
     "react/no-unknown-property": 2,
+    "react/jsx-boolean-value": 2,
     "indent": [2, 2],
     "quotes": [2, "single"],
     "linebreak-style": 0,

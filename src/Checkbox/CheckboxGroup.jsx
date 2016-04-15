@@ -4,7 +4,12 @@ import './less/checkboxGroup.less'
 
 const propTypes = {
   selects: PropTypes.array,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  customProp(props) {
+    if (props.selects && !props.onChange) {
+      return new Error('You provided a `selects` prop without an `onChange` handler')
+    }
+  }
 }
 
 const childContextTypes = {
@@ -16,15 +21,15 @@ const CheckboxGroup = React.createClass({
 
   getInitialState() {
     return {
-      selects: this.props.selects || []
+      selects: []
     }
   },
 
   getChildContext() {
     return {
-      checkboxGroupSelects: this.state.selects,
+      checkboxGroupSelects: this.props.selects,
       setCheckboxGroupSelects: (value, isAdd) => {
-        const selects = this.state.selects
+        const selects = this.props.selects || this.state.selects
         if (isAdd) {
           selects.push(value)
         } else {
@@ -33,10 +38,6 @@ const CheckboxGroup = React.createClass({
         this.props.onChange && this.props.onChange(selects)
       }
     }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    'selects' in nextProps && this.setState({selects: nextProps.selects})
   },
 
   render() {

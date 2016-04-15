@@ -10,3 +10,4 @@ build
 dist
 lib
 test.js
+test.jsx

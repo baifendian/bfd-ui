@@ -3,6 +3,35 @@ import { CheckboxGroup, Checkbox } from 'c/Checkbox'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
+const CheckboxGroupDemo = React.createClass({
+
+  render() {
+    return (
+      <CheckboxGroup>
+        <Checkbox value="apple">苹果</Checkbox>
+        <Checkbox value="mi">小米</Checkbox>
+        <Checkbox value="samsung">三星</Checkbox>
+        <Checkbox value="huawei" disabled>华为</Checkbox>
+      </CheckboxGroup>
+    )
+  }
+})
+
+const checkboxGroupDemoCode = `import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
+
+const App = React.createClass({
+  render() {
+    return (
+      <CheckboxGroup>
+        <Checkbox value="apple">苹果</Checkbox>
+        <Checkbox value="mi">小米</Checkbox>
+        <Checkbox value="samsung">三星</Checkbox>
+        <Checkbox value="huawei">华为</Checkbox>
+      </CheckboxGroup>
+    )
+  }
+})`
+
 export default React.createClass({
 
   render() {
@@ -46,31 +75,9 @@ const App = React.createClass({
         <h2>CheckboxGroup</h2>
         <p>复选框组，复选框的大部分使用场景</p>
         <p>针对 value 和 label 不同的情况，布局可灵活控制</p>
-        <Pre>
-{`import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
-
-const App = React.createClass({
-  render() {
-    return (
-      <CheckboxGroup>
-        <Checkbox value="apple">苹果</Checkbox>
-        <Checkbox value="mi">小米</Checkbox>
-        <Checkbox value="samsung">三星</Checkbox>
-        <Checkbox value="huawei">华为</Checkbox>
-      </CheckboxGroup>
-    )
-  }
-})`}
-        </Pre>
-        <CheckboxGroup selects={null}>
-          <Checkbox value="apple">苹果</Checkbox>
-          <Checkbox value="mi">小米</Checkbox>
-          <Checkbox value="samsung">三星</Checkbox>
-          <Checkbox value="huawei" disabled>华为</Checkbox>
-        </CheckboxGroup>
-
+        <Pre>{checkboxGroupDemoCode}</Pre>
+        <CheckboxGroupDemo></CheckboxGroupDemo>
         <br/>
-
         <p>value 和 label 相同，快速构建复选框组。且布局默认水平平铺</p>
         <Pre>
 {`import { CheckboxGroup } from 'bfd-ui/lib/Checkbox'
@@ -83,16 +90,16 @@ const App = React.createClass({
         </Pre>
         <CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>
         <Props>
-          <Prop name="selects" type="Array">
-            <p>默认选中的 value 集合</p>
+          <Prop name="selects" type="array">
+            <p>默认选中的 value 集合，必须同时声明 onChange 属性</p>
           </Prop>
-          <Prop name="values" type="Array">
+          <Prop name="values" type="array">
             <p>针对 value 和 label 相同时快速创建复选框组，无需再调用 Checkbox</p>
           </Prop>
-          <Prop name="onChange" type="Function">
+          <Prop name="onChange" type="function">
             <p>切换选择后的回调，参数为选中的集合</p>
           </Prop>
-          <Prop name="block" type="Boolean">
+          <Prop name="block" type="boolean">
             <p>是否垂直布局，默认 inline 模式，如果手动声明 Checkbox，本属性无效，需要在 Checkbox 中指定</p>
           </Prop>
         </Props>

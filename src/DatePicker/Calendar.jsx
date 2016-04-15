@@ -47,7 +47,9 @@ export default React.createClass({
     const d = new Date(this.state.currentYear, this.state.currentMonth)
     if (type === 'year') {
       d.setFullYear(d.getFullYear() + change)
-      this.setState({currentYear: d.getFullYear()})
+      this.setState({
+        currentYear: d.getFullYear()
+      })
     } else {
       d.setMonth(d.getMonth() + change)
       this.setState({
@@ -165,7 +167,7 @@ export default React.createClass({
             <span className="toggle" onClick={this.handleToggle.bind(this, -1, 'year')}>«</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, -1)}>‹</span>
           </div>
-          <span className="result">{this.state.year}年 {this.state.month + 1}月</span>
+          <span className="result">{this.state.currentYear}年 {this.state.currentMonth + 1}月</span>
           <div className="pull-right">
             <span className="toggle" onClick={this.handleToggle.bind(this, 1)}>›</span>
             <span className="toggle" onClick={this.handleToggle.bind(this, 1, 'year')}>»</span>

@@ -1,3 +1,5 @@
+@import './pre.less';
+
 html, body, #app {
   height: 100%;
 }
@@ -24,27 +26,10 @@ html, body, #app {
 }
 
 #body {
-  position: relative;
   padding-bottom: 50px;
-  > .toggle {
-    display: none;
-    margin: 20px 0 0 20px;
-    @media (max-width: 700px) {
-      display: block;
-    }
-  }
-
   > .sidebar {
     width: 200px;
     float: left;
-    @media (max-width: 700px) {
-      display: none;
-    }
-    &.open {
-      @media (max-width: 700px) {
-        display: block;
-      }
-    }
   }
   > .content {
     overflow: hidden;
@@ -52,9 +37,6 @@ html, body, #app {
     > div {
       padding: 20px;
       -webkit-animation: in .5s;
-    }
-    @media (max-width: 700px) {
-      margin-left: 0;
     }
   }
 } 
@@ -67,35 +49,6 @@ html, body, #app {
     opacity: 1;
     -webkit-transform: translate3d(0, 0, 0);
   }
-}
-
-pre {
-  border-radius: 6px;
-  background-color: #f9f9f9;
-  color: #666;
-  border: 0;
-  font-size: 12px;
-  padding: 1rem;
-  max-width: 700px;
-  white-space: pre;
-  word-wrap: normal;
-}
-pre .kwd {
-  color: #8959a8;
-}
-pre .tag,
-pre .attr {
-  color: #c82829;
-}
-pre .str {
-  color: #718c00;
-}
-pre .num,
-pre .kc {
-  color: #3498db;
-}
-pre .com {
-  color: #969896;
 }
 
 #footer {
