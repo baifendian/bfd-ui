@@ -7,8 +7,6 @@ var fs = require('fs')
 var app = express()
 app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'jade')
 
 var isProduction = process.argv.slice(2)[0] === '-p'
 

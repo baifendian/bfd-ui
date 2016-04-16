@@ -6,6 +6,10 @@ import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
 import classnames from 'classnames'
+import pace from './pace'
+import './less/pace.less'
+
+pace.start()
 
 const App = React.createClass({
 
@@ -25,7 +29,7 @@ const App = React.createClass({
             <Nav>
               <NavItem href="/" icon="home" title="首页" />
               <NavItem href="/components" icon="th" title="组件" />
-              <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
+              <NavItem href="/integration" icon="hand-right" title="开发工作流" />
               <NavItem href="/changeLog" icon="random" title="更新日志" />
             </Nav>
           </div>

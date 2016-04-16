@@ -18,7 +18,7 @@ function ChangeLog() {
           <li>修复 Select 只有一个 Option 报错的问题 <a href="http://git.baifendian.com/front-end/bfd-ui/issues/37">#37</a></li>
           <li>Pie 新增 colors、legend 属性 <a href="http://git.baifendian.com/front-end/bfd-ui/issues/29">#29</a></li>
           <li>Nav 新增 onItemClick 属性，回调参数为 NavItem 的 props</li>
-          <li>Modal 使用 isOpen、handleClose 来控制开关状态，原有 refs 方式仍然支持</li>
+          <li>Modal 使用 open、handleClose 来控制开关状态，原有 refs 方式仍然支持</li>
           <li>Tree 添加 onChange 属性，同步 data 状态</li>
         </ol>
       </Version>

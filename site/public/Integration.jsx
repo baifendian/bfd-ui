@@ -41,11 +41,13 @@ $ yo bfd`}</Pre>
 
         <pre>{
 `myapp
-  |-- components/        各个页面组件
   |-- data/              模拟数据，接口 URL 定义为 /data/xxx.json  
-  |-- less/              css 文件，这里统一用 less 预处理
-  |-- app.jsx            入口文件，包含 App 组件及前端路由的定义
+  |-- lib/               存放一些不支持 npm 方式安装的第三方库
+  |-- src/               业务逻辑源代码，包括 less 源代码
+  |-- .eslintrc          eslint 代码规范配置
+  |-- .gitignore         
   |-- index.tpl          HTML 入口，采用模版形式的原因是可以动态生成不同后端语言下的模版
+  |-- package.json
   |-- server.js          开发阶段服务环境，并处理 webpack 编译服务
   |-- webpack.config.js  编译、打包配置`}</pre>
 
@@ -71,7 +73,14 @@ $ npm start`}</Pre>
 
         <h1>3、部署测试/上线</h1>
 
-        <h3>3.1、生成线上代码</h3>
+        <h3>3.1、代码规范检查</h3>
+
+        <Pre lang="sh">{
+`$ cd myapp
+
+$ npm run lint`}</Pre>
+
+        <h3>3.2、生成线上代码</h3>
 
         <Pre lang="sh">{
 `$ cd myapp
@@ -80,9 +89,9 @@ $ npm run build`}</Pre>
 
         <p>完成后，myapp 下的文件发送给后台，如 Java web 项目下的 webapp 目录，使用 git、svn 方式更佳。</p>
         
-        <h3>3.2、修改服务器配置（Java）</h3>
+        <h3>3.3、修改服务器配置（Java）</h3>
         
-        <h5>3.2.1、配置数据接口匹配规则，防止和下面的单页面功能冲突。修改 web.xml，增加 servlet 节点</h5>
+        <h5>3.3.1、配置数据接口匹配规则，防止和下面的单页面功能冲突。修改 web.xml，增加 servlet 节点</h5>
         
         <Pre lang="markup">{
 `<servlet> 
@@ -98,7 +107,7 @@ $ npm run build`}</Pre>
   <servlet-name>dispatcher</servlet-name> 
   <url-pattern>正则，用于拦截数据接口请求，eg：*.do</url-pattern> 
 </servlet-mapping>`}</Pre>
-        <h5>3.2.2、配置单页面功能，除数据接口外，所有 URL 均渲染 index.jsp。修改 web.xml，增加 servlet 节点并新增 DispatcherServlet</h5>
+        <h5>3.3.2、配置单页面功能，除数据接口外，所有 URL 均渲染 index.jsp。修改 web.xml，增加 servlet 节点并新增 DispatcherServlet</h5>
         <Pre lang="markup">{
 `<servlet> 
   <servlet-name>webDispatcher</servlet-name> 
