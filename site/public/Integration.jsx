@@ -6,7 +6,7 @@ export default React.createClass({
   render() {
     return (
       <div className="guide">
-        <p>主要介绍一个项目从零到上线的工作流，也是 bfd-ui 的最佳使用环境。</p>
+        <p>主要介绍一个项目从零到上线的工作流，让开发人员更多的关注业务编写，同时也是 bfd-ui 的最佳使用环境。</p>
         <p>环境安装之前请确认 npm 版本为 3.x。</p>
         <h1>1、项目构建</h1>
 
