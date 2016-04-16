@@ -112,6 +112,7 @@ const Modal = React.createClass({
   }
 })
 
+Modal.propTypes = propTypes
 Modal.childContextTypes = childContextTypes
 
 export default Modal

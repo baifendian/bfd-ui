@@ -29,13 +29,14 @@ const ClearableInput = React.createClass({
   },
 
   handleChange(e) {
+    e.stopPropagation()
     const value = e.target.value
     'value' in this.props || this.setState({ value })
     this.props.onChange && this.props.onChange(value)
   },
 
   render() {
-    const { size, placeholder, className, onChange, ...other } = this.props
+    const { size, placeholder, className, ...other } = this.props
     const value = this.props.value || this.state.value
     return (
       <div className={classnames('bfd-clearable-input', className, {inline: this.props.inline})} {...other}>

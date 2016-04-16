@@ -91,7 +91,7 @@ const App = React.createClass({
         <CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>
         <Props>
           <Prop name="selects" type="array">
-            <p>默认选中的 value 集合，必须同时声明 onChange 属性</p>
+            <p>默认选中的 value 集合</p>
           </Prop>
           <Prop name="values" type="array">
             <p>针对 value 和 label 相同时快速创建复选框组，无需再调用 Checkbox</p>

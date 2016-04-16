@@ -20,7 +20,7 @@ const Checkbox = React.createClass({
 
       // 复选框组的逻辑单独处理
       const selects = this.context.checkboxGroupSelects
-      if (selects) {
+      if (selects.length) {
         other.checked = selects.indexOf(this.props.value) > -1
       }
       
@@ -34,7 +34,7 @@ const Checkbox = React.createClass({
         <label>
           <input type="checkbox" {...other} />
           <span className="status"></span>
-          {children}
+          {children ? <span>{children}</span> : null}
         </label>
       </div>
     )

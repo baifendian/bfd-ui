@@ -25,7 +25,7 @@ function Confirm(props) {
         <h4 className="modal-title">确认提示</h4>
       </ModalHeader>
       <ModalBody>
-        <div>{children}</div>
+        <div className="message">{children}</div>
         <div className="operate">
           <button type="button" className="btn btn-sm btn-default" onClick={other.handleClose}>取消</button>
           <button type="button" className="btn btn-sm btn-primary" onClick={onConfirm}>确定</button>

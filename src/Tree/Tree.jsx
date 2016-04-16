@@ -37,7 +37,7 @@ const Tree = React.createClass({
   },
 
   render() {
-    const { className, data, onChange, ...other } = this.props
+    const { className, data, ...other } = this.props
     return (
       <div className={classnames('bfd-tree', className)} {...other}>{this.loopData(data, [])}</div>
     )

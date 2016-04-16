@@ -39,7 +39,7 @@ describe('SelectTree', () => {
     }, {
       name: 'dsds'
     }]
-    const selectTree = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={d => {}}/>)
+    const selectTree = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={jest.fn()}/>)
     const checks = TestUtils.scryRenderedDOMComponentsWithTag(selectTree, 'input')
     expect(checks.filter(input => input.checked).length).toBe(1)
   })

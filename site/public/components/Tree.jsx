@@ -32,7 +32,7 @@ const TreeDemo = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} onChange={d => {console.log(d)}} />
+    return <Tree data={this.state.data} />
   }
 })
 

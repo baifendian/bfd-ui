@@ -77,12 +77,12 @@ export default React.createClass({
       <div className={classnames('bfd-fetch', this.props.className)} style={this.props.style} ref="container">
         {this.state.xhr !== 'success' ? (
           <div className="fetch-mask">
-            {(() => {
-              switch(this.state.xhr) {
-                case 'loading': return '加载中...'
-                case 'error': return this.state.msg
-              }
-            })()}
+          {(() => {
+            switch(this.state.xhr) {
+              case 'loading': return '加载中...'
+              case 'error': return this.state.msg
+            }
+          })()}
           </div>
         ) : null}
         {this.props.children}

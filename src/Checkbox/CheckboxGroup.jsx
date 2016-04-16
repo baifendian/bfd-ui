@@ -21,15 +21,19 @@ const CheckboxGroup = React.createClass({
 
   getInitialState() {
     return {
-      selects: []
+      selects: this.props.selects || []
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    'selects' in nextProps && this.setState({selects: nextProps.selects}) 
   },
 
   getChildContext() {
     return {
-      checkboxGroupSelects: this.props.selects,
+      checkboxGroupSelects: this.state.selects,
       setCheckboxGroupSelects: (value, isAdd) => {
-        const selects = this.props.selects || this.state.selects
+        const selects = this.state.selects
         if (isAdd) {
           selects.push(value)
         } else {

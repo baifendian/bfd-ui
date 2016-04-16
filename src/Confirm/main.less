@@ -1,18 +1,24 @@
 .bfd-confirm {
   .modal-dialog {
-    width: 300px;
+    width: 350px;
   }
-  .modal-header, 
+  .modal-header {
+    padding: 10px;
+    > .modal-title {
+      font-size: 14px;
+    }
+  }
   .modal-body {
     padding: 10px;
-  }
-  .modal-body {
-    text-align: center;  
-  }
-  .operate {
-    margin-top: 10px;
-    > button + button {
-      margin-left: 10px;
+    text-align: center;
+    .message {
+      padding: 10px;
+    }
+    .operate {
+      margin-top: 20px;
+      > button + button {
+        margin-left: 5px;
+      }
     }
   }
 }

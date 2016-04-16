@@ -11,7 +11,6 @@
   "rules": {
     "no-var": 2,
     "prefer-const": 2,
-    "prefer-template": 2,
     "object-shorthand": 2,
     "no-multi-spaces": 2,
     "spaced-comment": 2,
@@ -38,8 +37,8 @@
   },
   "env": {
     "es6": true,
-    "node": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "extends": ["eslint:recommended"]
 }

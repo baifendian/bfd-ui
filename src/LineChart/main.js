@@ -120,7 +120,7 @@ export default class {
     /**
      * 绘制曲线、曲面、标记点
      */
-    const group = svg.append('g').attr('clip-path', 'url(#rectClip-' + id + ')')
+    const group = svg.append('g').attr('clip-path', `url(#rectClip-${id})`)
 
     const interpolate = 'cardinal'
 
@@ -134,7 +134,7 @@ export default class {
       .y0(height)
 
     series.forEach((serie, i) => {
-      const serieGroup = group.append('g').attr('class', 'serie-group serie-group-' + i)
+      const serieGroup = group.append('g').attr('class', `serie-group serie-group-${i}`)
       const color = colors[i]
       const gradientID = `gradient-${id}-${i}`
 
@@ -166,7 +166,7 @@ export default class {
         .datum(data)
         .attr('d', areaPathGenerator.y1(d => yScale(d[serie.key])))
         .style({
-          fill: 'url(#' + gradientID + ')',
+          fill: `url(#${gradientID})`,
           opacity: 0.4
         })
 
@@ -175,7 +175,7 @@ export default class {
         .data(data)
         .enter()
         .append('g')
-        .attr('class', (d, i) => 'marker marker-' + i)
+        .attr('class', (d, i) => `marker marker-${i}`)
 
       gEnter.append('circle')
         .attr('class', 'marker-inner')
@@ -238,8 +238,8 @@ export default class {
       .attr('height', height)
       .on('mouseover', function() {
         tooltipElement.style({
-          left: d3.event.offsetX + 'px',
-          top: d3.event.offsetY + 'px',
+          left: `${d3.event.offsetX}px`,
+          top: `${d3.event.offsetY}px`,
           opacity: 1
         })
       })
@@ -269,15 +269,15 @@ export default class {
           .transition()
           .duration(duration)
           .style({
-            left: d3.event.offsetX + 'px',
-            top: d3.event.offsetY + 'px',
+            left: `${d3.event.offsetX}px`,
+            top: `${d3.event.offsetY}px`,
             opacity: 1
           })
 
         // Tooltip 内容
-        let html = categories[xAxisIndex] + '<br>'
+        let html = `${categories[xAxisIndex]}<br>`
         series.forEach((serie) => {
-          html += serie.name + '：' + serie.data[xAxisIndex] + '</br>'
+          html += `${serie.name}: ${serie.data[xAxisIndex]}</br>`
         })
         tooltipElement.html(html)
 
@@ -323,8 +323,8 @@ export default class {
       .style('cursor', 'pointer')
       .on('click', function(d, i) {
 
-        let node = d3.select(this)
-        let isDisabled = node.classed('disabled')
+        const node = d3.select(this)
+        const isDisabled = node.classed('disabled')
 
         // 至少保留一条系列
         if (!isDisabled && series.length === 1) return
@@ -340,12 +340,12 @@ export default class {
         // 轴、曲线、曲面重绘
         svg.select('.axis-y').transition().duration(500).call(yAxis)
 
-        let serieGroups = svg.selectAll('.serie-group')
-        serieGroups.filter('.serie-group-' + i).style('display', isDisabled ? 'block' : 'none')
+        const serieGroups = svg.selectAll('.serie-group')
+        serieGroups.filter(`.serie-group-${i}`).style('display', isDisabled ? 'block' : 'none')
 
         _series.forEach((serie, i) => {
           if (serie.disabled) return
-          let serieGroup = d3.select(serieGroups[0][i]).transition().duration(500)
+          const serieGroup = d3.select(serieGroups[0][i]).transition().duration(500)
           serieGroup.select('path.line')
             .attr('d', linePathGenerator.y(d => yScale(d[serie.key])))
           serieGroup.select('path.area')
@@ -355,7 +355,7 @@ export default class {
         })
       })
       .each(function(d, i) {
-        let node = d3.select(this)
+        const node = d3.select(this)
         node.append('span')
           .attr('class', 'line')
           .style('background-color', colors[i])

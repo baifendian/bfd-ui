@@ -33,7 +33,7 @@ describe('Tree', () => {
       _name: 'test'
     }]
     function render() {
-      const tree = TestUtils.renderIntoDocument(<Tree data={data} />)  
+      TestUtils.renderIntoDocument(<Tree data={data} />)  
     }
     expect(render).toThrow()
   })
