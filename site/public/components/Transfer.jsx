@@ -10,7 +10,7 @@ export default React.createClass({
     //  targetData : [{id:12, label:"jiangtl"},{id:13, label:"roloy"}]
     //});
   },
-  getInitialState: function () {
+  getInitialState: function() {
     const sourceData = [
       {id : 1, label : "张三"},
       {id : 2, label : "李四"},
@@ -30,6 +30,12 @@ export default React.createClass({
       sourceData : sourceData,
       targetData : targetData
     };
+  },
+  handleChange : function(sourceData, targetData) {
+    this.setState({
+      sourceData : sourceData,
+      targetData : targetData
+    })
   },
   render() {
     return (
@@ -62,7 +68,13 @@ const App = React.createClass({
 })`
         }
         </Pre>
-        <Transfer height={200} title="已选的用户" sdata={this.state.sourceData} tdata={this.state.targetData} />
+        <Transfer 
+          height={200} 
+          title="已选的用户" 
+          sdata={this.state.sourceData} 
+          tdata={this.state.targetData}
+          onChange={this.handleChange}
+        />
         <div className="clearfix"></div>
 
         <Props>          

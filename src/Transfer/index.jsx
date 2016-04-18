@@ -5,99 +5,20 @@
 import 'bfd-bootstrap'
 import './main.less'
 import React, { PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import SearchBar from './SearchBar'
 import classNames from 'classnames'
+import SelectTable from './SelectTable'
 
-var Row = React.createClass({
-  handleClick : function() {
-    this.props.onClick();
-  },
-  handleDbClick : function() {
-    this.props.onDoubleClick();
-  },
-  render : function() {
-    return (
-      <a 
-        id={this.props.id}
-        key={this.props.id}
-        href="javascrip:"
-        onClick={this.handleClick}
-        onDoubleClick={this.handleDbClick}
-        className="list-group-item bfd-row">
-      {this.props.label}
-      </a>
-    )
-  }
-})
-
-var SourceTable = React.createClass({
-  handleClick : function(item) {
-    this.props.onFoucsItem(item.id);
-  },
-  handleDbClick : function(item) {
-    this.props.onFoucsItem(item.id);
-    this.props.onTransfer(1);
-  },
-  render : function() {
-    var rows = [];
-    var _this = this;
-    this.props.data.map((item, index) => {
-      rows.push(<Row
-        key={index}
-        id={item.id}
-        label={item.label}
-        onClick={this.handleClick.bind(this,item)}
-        onDoubleClick={this.handleDbClick.bind(this,item)} 
-      />);
-    })
-
-    return (
-      <div style={{height: this.props.height + "px"}} className="bfd-table">
-        <div className="bfd-table-conent">
-          {rows}
-        </div>
-      </div>
-    )
-  }
-})
-
-var TargetTable = React.createClass({
-  handleClick : function(item) {
-    this.props.onFoucsItem(item.id);
-  },
-  handleDbClick : function(item) {
-    this.props.onFoucsItem(item.id);
-    this.props.onTransfer(-1);
-  },
-  render : function() {
-    var rows = [];
-    var _this = this;
-    this.props.data.map((item, index) => {
-      rows.push(<Row 
-        key={index} 
-        id={item.id} 
-        label={item.label} 
-        onClick={this.handleClick.bind(this, item)} 
-        onDoubleClick={this.handleDbClick.bind(this, item)} 
-      />);
-    });
-
-    return (
-      <div style={{height:this.props.height + "px"}} className="bfd-table">
-        <div className="bfd-table-conent">
-          {rows}
-        </div>
-      </div>
-    )
-  }
-})
+var SourceTable = SelectTable;
+var TargetTable = SelectTable
 
 var TransferPanel = React.createClass({
   handleS2T : function() {
-    this.props.onTransfer(1);
+    this.props.onTransfer("s2t");
   },
   handleT2S : function() {
-    this.props.onTransfer(-1);
+    this.props.onTransfer("t2s");
   },
   render : function() {
     return (
@@ -116,6 +37,8 @@ var TransferPanel = React.createClass({
  * Transfer
  */
 export default React.createClass({
+  sid : [],
+  tid : [],
   handleUserInput: function(filterText) {
     var arr = [];
     for (var i = 0, len = this.state.sdata.length; i < len; i++) {
@@ -130,44 +53,66 @@ export default React.createClass({
     });
   },
   handleSourceFouceItem : function(sid) {
-    this.setState({
-      sid : sid
-    })
+    if(!sid) {
+      return;
+    }
+    if(sid instanceof Array) {
+      this.sid = sid;
+    } else {
+      this.sid = [sid];
+    }
   },
   handleTargetFouceItem : function(tid) {
-    this.setState({
-      tid : tid
-    })
+    if(!tid) {
+      return;
+    }
+    if(tid instanceof Array) {
+      this.tid = tid;
+    } else {
+      this.tid = [tid];
+    }
   },
-  handleTransfer : function(sign) {
+  handleTransfer : function(direct) {
     //s->t
-    if (sign == 1) {
-      this.transferData(this.state.sid, this.state.sdata, this.state.tdata, "s2t");
+    if (direct == "s2t") {
+      if(!this.sid || this.sid.length == 0) {
+        return;
+      }
+      this.transferData(this.sid, this.state.sdata, this.state.tdata, direct);
     }
     //t->s
-    if (sign == -1) {
-      this.transferData(this.state.tid, this.state.tdata, this.state.sdata, "t2s");
+    if (direct == "t2s") {
+      if(!this.tid || this.tid.length == 0) {
+        return;
+      }
+      this.transferData(this.tid, this.state.tdata, this.state.sdata, direct);
     }
   },
-  transferData : function(id, source, target, option) {
+  transferData : function(ids, source, target, option) {
     var flag = 0;
-    for(var i = 0, len = source.length; i < len; i++) {
+    if(!ids || ids.length == 0) {
+      this.sid = [];
+      this.tid = [];
+      this.setState({
+        sdata : option == "s2t" ? source : target,
+        tdata : option == "t2s" ? source : target
+      });
+      this.handleUserInput(this.state.filterText) 
+      return;
+    }
+    var id = ids[0]; // 取第一个id
+    for(var i = source.length - 1; i >= 0; i--) {
       if(id == source[i].id) {
         var item =  source.splice(i, 1);
         target.push(item[0]);
         flag = 1;
         break;
-      }
+      }      
     }
 
     if (flag) {
-      this.setState({
-        sid : "",
-        tid : "",
-        sdata : option == "s2t" ? source : target,
-        tdata : option == "t2s" ? source : target
-      });
-      this.handleUserInput(this.state.filterText)      
+      ids.shift(); //删除第一个id
+      this.transferData(ids, source, target, option);
     }
   },
   getInitialState: function () {
@@ -200,7 +145,9 @@ export default React.createClass({
             onTransfer={this.handleTransfer} 
             onFoucsItem={this.handleSourceFouceItem} 
             data={this.state.searchData} 
-            height={this.props.height || 200} />
+            height={this.props.height || 200} 
+            direct="s2t"
+            />
         </div>
         <div className="col-xs-2 bfd-pannel">
           <TransferPanel 
@@ -215,7 +162,9 @@ export default React.createClass({
             onTransfer={this.handleTransfer} 
             onFoucsItem={this.handleTargetFouceItem} 
             data={this.state.tdata} 
-            height={this.props.height || 200} />
+            height={this.props.height || 200} 
+            direct="t2s"
+            />
         </div>
       </div>
     )

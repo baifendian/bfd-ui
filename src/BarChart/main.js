@@ -16,8 +16,8 @@ export default class {
     const dataset = config.data || [];
 
     let div = d3.select("body").append("div")
-    .attr("class", "barTooltip")
-    .style("opacity", 0);  
+      .attr("class", "barTooltip")
+      .style("opacity", 0);
     let valueSet = [];
     let nameSet = [];
     for (let i = 0; i < dataset.length; i++) {
