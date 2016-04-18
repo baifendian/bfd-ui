@@ -91,7 +91,8 @@ const App = React.createClass({
         <App/>
         
         <Props>
-          <Prop name="url" type="String" desc="请求地址">
+          <Prop name="url" type="String">
+            <p>请求地址</p>
             <Pre>
 {`{
   "code": 200,
@@ -100,7 +101,9 @@ const App = React.createClass({
 }`}
             </Pre>
           </Prop>
-          <Prop name="onSuccess" type="Function" desc="获取数据后的回调"></Prop>
+          <Prop name="onSuccess" type="Function">
+            <p>获取数据后的回调</p>
+          </Prop>
         </Props>
       </div>
     )

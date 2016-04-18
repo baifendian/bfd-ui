@@ -24,6 +24,19 @@
   }
   > .modal {
     display: block;
+    .modal-header {
+      padding: 0 20px;
+      line-height: 50px;
+      > .modal-title {
+        line-height: 50px;
+      }
+      > button.close {
+        margin-top: 13px;
+      }
+    }
+    .modal-body {
+      padding: 20px;
+    }
   }
   &.in-leave.in-leave-active {
     > .modal-backdrop {

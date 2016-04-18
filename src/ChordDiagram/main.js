@@ -26,7 +26,7 @@ export default class {
 
     const len = matrix.length
     for (let i = len; i--; ) {
-      let row = matrix[i]
+      const row = matrix[i]
       for (let j = len; j--; ) {
         if (i === j) continue
         if (row[j] === undefined) {
@@ -51,7 +51,7 @@ export default class {
       return d3.range(0, d.value, tickStep).map((v, i) => {
         return {
           angle: v * k + d.startAngle,
-          label: i % 5 ? null : (v / 1000).toFixed(1) + 'k'
+          label: i % 5 ? null : `${(v / 1000).toFixed(1)}k`
         }
       })
     }
@@ -76,7 +76,7 @@ export default class {
       .attr('width', width)
       .attr('height', height)
       .append('g')
-      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      .attr('transform', `translate(${width / 2}, ${height / 2})`)
 
     svg.append('g').selectAll('path')
       .data(chord.groups)
@@ -98,7 +98,7 @@ export default class {
       .data(chord.groups)
       .enter().append('g')
       .attr('class', 'chord-label')
-      .attr('transform', d => 'rotate(' + (getLabelAngle(d) * 180 / Math.PI - 90) + ')' + 'translate(' + (+outerRadius + 30) + ', 0)')
+      .attr('transform', d => `rotate(${getLabelAngle(d) * 180 / Math.PI - 90}) translate(${+outerRadius + 30}, 0)`)
       .append('text')
       .attr('x', 8)
       .attr('dy', '.35em')
@@ -111,7 +111,7 @@ export default class {
       .data(groupTicks)
       .enter().append('g')
       .attr('class', 'tick')
-      .attr('transform', d => 'rotate(' + (d.angle * 180 / Math.PI - 90) + ')' + 'translate(' + outerRadius + ',0)')
+      .attr('transform', d => `rotate(${d.angle * 180 / Math.PI - 90}) translate(${outerRadius}, 0)`)
 
     ticks.append('line')
       .attr('x1', 1)

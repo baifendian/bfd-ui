@@ -6,25 +6,12 @@ import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
 import classnames from 'classnames'
-import fastclick from 'fastclick'
+import pace from './pace'
+import './less/pace.less'
 
-fastclick.attach(document.body)
+pace.start()
 
 const App = React.createClass({
-
-  getInitialState() {
-    return {
-      isOpen: false
-    }
-  },
-
-  handleToggle() {
-    this.setState({isOpen: true})
-  },
-
-  handleClick() {
-    this.setState({isOpen: false})
-  },
 
   render() {
     return (
@@ -38,23 +25,18 @@ const App = React.createClass({
           </div>
         </div>
         <div id="body" className="clearfix">
-          {this.state.isOpen ? null : (
-            <button className="toggle btn btn-default" type="button" onClick={this.handleToggle}>
-              <span className="glyphicon glyphicon-align-justify"></span>
-            </button>
-          )}
-          <div className={classnames('sidebar', {open: this.state.isOpen})} id="sidebar">
-            <Nav onClick={this.handleClick}>
+          <div className="sidebar">
+            <Nav>
               <NavItem href="/" icon="home" title="首页" />
               <NavItem href="/components" icon="th" title="组件" />
-              <NavItem href="/integration" icon="hand-right" title="完整项目实例" />
+              <NavItem href="/integration" icon="hand-right" title="开发工作流" />
               <NavItem href="/changeLog" icon="random" title="更新日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
         </div>
         <div id="footer">
-          <div className="pull-left">当前版本：v0.0.21</div>
+          <div className="pull-left">当前版本：v0.0.22</div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>
       </div>

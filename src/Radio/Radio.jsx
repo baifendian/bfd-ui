@@ -25,9 +25,9 @@ const Radio = React.createClass({
     return (
       <div className={classnames('bfd-radio radio-inline', {disabled: this.props.disabled})}>
         <label>
-          <input name={'radio-' + this.context.radioName} type="radio" onChange={this.context.setValue} {...check} {...others} />
+          <input name={`radio-${this.context.radioName}`} type="radio" onChange={this.context.setValue} {...check} {...others} />
           <span className="status"></span>
-          {children}
+          <span>{children}</span>
         </label>
       </div>
     )

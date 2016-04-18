@@ -25,8 +25,8 @@ export default option => {
     dataArray = []
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     if (option.data) {
-      for (let k in option.data) {
-        dataArray.push(encodeURIComponent(k) + '=' + encodeURIComponent(option.data[k]))
+      for (const k in option.data) {
+        dataArray.push(`${encodeURIComponent(k)}=${encodeURIComponent(option.data[k])}`)
       }      
     }
   }

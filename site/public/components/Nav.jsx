@@ -52,6 +52,12 @@ ReactDOM.render((
   </Router>
 ), document.getElementById('app'))`}
         </Pre>
+        <h2>Nav</h2>
+        <Props>
+          <Prop name="onItemClick" type="Function">
+            <p>单条菜单点击后的回调，参数为当前点击菜单的 props</p>
+          </Prop>
+        </Props>
         <h2>NavItem</h2>
         <Props>
           <Prop name="href" type="String" required>

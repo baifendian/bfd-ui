@@ -12,7 +12,9 @@ const propTypes = {
 
 const SelectTree = React.createClass({
 
-  handleChange(item, location, parent, e) {
+  handleSelect(item, location, parent, e) {
+
+    e.stopPropagation()
     
     const isChecked = e.target.checked
     const index = location.pop()
@@ -64,15 +66,14 @@ const SelectTree = React.createClass({
   },
 
   render() {
-    const {...props} = this.props
-    props.className = classnames('bfd-select-tree', this.props.className)
-    props.beforeNode = props => {
+    const { className, ...other } = this.props
+    other.beforeNode = props => {
       const { item, location, parent } = props
       return (
-        <Checkbox checked={item.checked} onChange={this.handleChange.bind(this, item, location, parent)} />
+        <Checkbox checked={item.checked || false} onChange={this.handleSelect.bind(this, item, location, parent)} />
       )
     }
-    return <Tree {...props} />
+    return <Tree className={classnames('bfd-select-tree', className)} {...other} />
   }
 })
 

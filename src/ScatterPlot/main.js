@@ -51,13 +51,13 @@ export default class {
 
 
     // get data
-    let series = Object.keys(cols).map(key => {
+    const series = Object.keys(cols).map(key => {
       return {
         key, name: cols[key], data: []
       }
     })
 
-    let categories = []
+    const categories = []
 
     data.forEach(item => {
       categories.push(item[category])
@@ -123,7 +123,7 @@ export default class {
         'pointer-events': 'none'
       })
 
-    const seriesGroup = svg.append('g').attr('clip-path', 'url(#rectClip-' + id + ')')
+    const seriesGroup = svg.append('g').attr('clip-path', `url(#rectClip-${id})`)
     series.forEach((serie, i) => {
       seriesGroup.append('g')
         .selectAll('circle')
@@ -142,12 +142,12 @@ export default class {
           target.attr('r', 10)
 
           // Tooltip content
-          let html = categories[i] + '<br>' + target.attr('name') + '：' + target.attr('value')
+          const html = `${categories[i]}<br>${target.attr('name')}：${target.attr('value')}`
           tooltip
             .html(html)
             .style({
-              left: d3.event.offsetX + 'px',
-              top: d3.event.offsetY + 'px',
+              left: `${d3.event.offsetX}px`,
+              top: `${d3.event.offsetY}px`,
               opacity: 1
             })
         })

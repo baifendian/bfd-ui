@@ -6,9 +6,15 @@ const contextTypes = {
 }
 
 function ModalHeader(props, context) {
+
+  function handleClose() {
+    props.handleClose && props.handleClose()
+    context.handleClose && context.handleClose()
+  }
+
   return (
     <div className="modal-header">
-      <button type="button" className="close" onClick={context.handleClose}>
+      <button type="button" className="close" onClick={handleClose}>
         <span>&times;</span>
       </button>
       {props.children}

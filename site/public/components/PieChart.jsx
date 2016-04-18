@@ -9,20 +9,64 @@ export default React.createClass({
       <div>
         <h1>饼图</h1>
         <Pre>
-{`import PieChart from 'bfd-ui/lib/PieChart'
+{
+`import PieChart from 'bfd-ui/lib/PieChart'
 
 const App = React.createClass({
   render() {
-    return <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+    return     <PieChart name="访问来源" 
+                  legend={{
+                    layout: 'horizontal',
+                    align: 'bottom',
+                    style:{
+                      x:100,
+                      y:10
+                    }
+                  }} 
+                  colors={['red','yellow','blue','#000','green']}
+                  radius={{inner:0.75}} 
+                  animation={{pie:2500,lineText:500}}
+                  tooltip={{enabled:true}} 
+                  url="/data/pieChart.json"/>
   }
 })`}
         </Pre>
 
-        <PieChart name="访问来源" radius={{inner:0.75}} animation={{pie:2500,lineText:500}} tooltip={{enabled:true}} url="/data/pieChart.json" />
+        <PieChart name="访问来源" 
+                  legend={{
+                    layout: 'vertical',
+                    align: 'left',
+                    style:{
+                      x:0,
+                      y:100
+                    }
+                  }} 
+                  colors={['red','yellow','blue','#000','green']}
+                  radius={{inner:0.75}} 
+                  animation={{pie:2500,lineText:500}}
+                  tooltip={{enabled:true}} 
+                  url="/data/pieChart.json"/>
         
         <Props>
           <Prop name="name" type="String" required>
             <p>tooltip标题</p> 
+          </Prop>
+          <Prop name="colors" type="Array">
+            <p>饼图颜色</p> 
+          </Prop>
+          <Prop name="legend" type="Object">
+            <p>用于设定legend位置</p> 
+
+                        <Pre>
+{`{
+ layout:'horizontal',//表示legend 的形状是水平还是垂直，'horizontal'表示水平 'vertical'表示垂直
+ align:'bottom' ,    //表示legend的方位。可以有left right top bottom 四种
+ style:{             //用于调整legend 的位置
+  x:0,               //x表示水平方向
+  y:0                //y表示垂直方向
+ }
+}`}
+            </Pre>
           </Prop>
           <Prop name="radius" type="Object">
                 <p>饼图的内圆半径比例</p> 
@@ -51,6 +95,9 @@ const App = React.createClass({
 }`}
             </Pre>
           </Prop>
+          
+
+
         </Props>
       </div>
     )

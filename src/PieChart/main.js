@@ -10,31 +10,36 @@ import color from './color'
 
 export default class {
 
-  constructor(config) {   
-
-    const padding = [20, 100, 30, 10];
+  constructor(config) {
     
-    const {
-      container, data, name, animation, radius, tooltip
-    } = config
-
+    const padding = [100, 60];
+    const { container, data, name, animation, radius, tooltip, legend } = config;  
     let env = {};
     env.container = container;
     env.config = {};
     env.config.data = data;
     env.config.name = name;
+    env.config.legend = {
+      layout: legend.layout || 'vertical',
+      align: legend.align || 'right',
+      style: {
+        x: legend.style.x || 0,
+        y: legend.style.y || 0
+      }
+    };
     if (animation) env.config.animation = animation;
     if (radius) env.config.radius = radius;
     if (tooltip) env.config.tooltip = tooltip;
 
-    env.container.style.position = 'relative';
-    env.width = env.container.clientWidth - padding[3] - padding[1];
-    env.height = (env.container.clientHeight || env.container.clientWidth) - padding[0] - padding[2];
+    env.container.style.position = 'relative';      
+
+    env.config.legend.layout == 'vertical' ? env.width = env.container.clientWidth - padding[0]:env.width = env.container.clientWidth;
+    env.height = (env.container.clientHeight || env.container.clientWidth);
 
     if (!env.config.data) return;
 
     //获取颜色。可以有4个色系选择。  
-    const colors = color(4,env.config.data.length);
+    const colors = config.colors || color(4, env.config.data.length);
     //init color
     for (var i = 0; i < env.config.data.length; i++) {
       env.config.data[i].color = colors[i];
@@ -48,8 +53,14 @@ export default class {
       .append('svg')
       .attr('width', env.width)
       .attr('height', env.height)
-      .style('margin-top', '20px')
       .append('g');
+
+
+    if (env.config.legend.align == 'left') d3.select(env.container).select('svg').style('margin-left', padding[0] + 'px');
+    //if (env.config.legend.align == 'right') d3.select(env.container).select('svg').style('margin-left', padding[0] + 'px');
+    if (env.config.legend.align == 'top') d3.select(env.container).select('svg').style('margin-top', padding[1] + 'px');
+    if (env.config.legend.align == 'bottom') d3.select(env.container).select('svg').style('margin-bottom', padding[1] + 'px');
+
 
     env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2 + 10) + ')');
 
@@ -68,7 +79,7 @@ export default class {
     /*
      *init pie
      */
-    initPie(env, true); 
+    initPie(env, true);
     /*
      *init tooltip
      */
