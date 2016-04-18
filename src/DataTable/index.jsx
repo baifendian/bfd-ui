@@ -77,9 +77,13 @@ export default React.createClass( {
     currentPage = parseInt( this.state.currentPage ),
     _this = this,
     url = this.state.url,
+    /****
+     * 新增自动分页功能
+     * @type {Number}
+     */
     pageSize = parseInt( this.props.howRow )
-    let data_ = this.props.data.totalList
     if( this.props.data) {
+      let data_ = this.props.data.totalList
       if(this.props.data.totalPageNum){
         totalPageNum = this.props.data.totalPageNum
       }
