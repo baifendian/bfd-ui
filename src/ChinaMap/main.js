@@ -36,7 +36,7 @@ export default class {
         
         d3.select(this).attr('fill', '#64b5f6')
 
-        //创建显示tooltip用的矩形
+        // 创建显示tooltip用的矩形
         svg.append('rect')
           .attr('id', 'tooltip1')
           .attr('x', 50)
@@ -46,7 +46,7 @@ export default class {
           .attr('stroke', 'black')
           .attr('fill', 'none')
 
-        //创建显示tooltip文本
+        // 创建显示tooltip文本
         svg.append('text')
           .attr('id', 'tooltip2')
           .attr('x', 100)
@@ -60,7 +60,7 @@ export default class {
       })
       .on('mouseout', function() {
         d3.select(this).attr('fill', '#ccc')
-        //Remove the tooltip
+        // Remove the tooltip
         d3.select('#tooltip1').remove()
         d3.select('#tooltip2').remove()
       })

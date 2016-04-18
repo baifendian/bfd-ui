@@ -11,7 +11,6 @@
   "rules": {
     "no-var": 2,
     "prefer-const": 2,
-    "prefer-template": 2,
     "object-shorthand": 2,
     "no-multi-spaces": 2,
     "spaced-comment": 2,
@@ -30,6 +29,7 @@
     "react/no-did-update-set-state": 2,
     "react/no-direct-mutation-state": 2,
     "react/no-unknown-property": 2,
+    "react/jsx-boolean-value": 2,
     "indent": [2, 2],
     "quotes": [2, "single"],
     "linebreak-style": 0,
@@ -37,8 +37,8 @@
   },
   "env": {
     "es6": true,
-    "node": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "extends": ["eslint:recommended"]
 }

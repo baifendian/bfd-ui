@@ -19,7 +19,7 @@ const App = React.createClass({
 })`}
         </Pre>
 
-        <div style={{width:'200'}}>
+        <div style={{width:'100'}}>
           <Percentage percent={80}></Percentage>
         </div>
         

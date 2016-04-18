@@ -37,7 +37,9 @@ var config = {
       loader: 'style!css!less!postcss'
     }]
   },
-  postcss: [autoprefixer({ browsers: ['last 3 versions'] })],
+  postcss: [autoprefixer({
+    browsers: ['last 3 versions']
+  })],
   resolve: {
     extensions: ['', '.js', '.jsx'],
     alias: {
@@ -48,7 +50,16 @@ var config = {
 }
 
 if (isProduction) {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin())
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify('production')
+    }
+  }))
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    output: {
+      comments: false
+    }
+  }))
   config.plugins.push(function() {
     this.plugin("done", function(statsData) {
       var stats = statsData.toJson()

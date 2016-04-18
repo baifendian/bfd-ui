@@ -58,4 +58,10 @@
 }, {
   "name": "Tree",
   "cn": "树"
+}, {
+  "name": "ClearableInput",
+  "cn": "可清空的输入框"
+}, {
+  "name": "Confirm",
+  "cn": "确认提示"
 }]

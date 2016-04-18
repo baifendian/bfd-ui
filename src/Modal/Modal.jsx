@@ -1,6 +1,7 @@
-import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import classnames from 'classnames'
+import 'bfd-bootstrap'
 import './modal.less'
 
 /**
@@ -18,6 +19,11 @@ const scrollbarWidth = (() => {
   return scrollbarWidth
 })()
 
+// TODO: 1.0版本这两个属性都是必选的
+const propTypes = {
+  open: PropTypes.bool,
+  handleClose: PropTypes.func
+}
 
 const childContextTypes = {
   /**
@@ -29,7 +35,7 @@ const childContextTypes = {
 const Modal = React.createClass({
   getInitialState() {
     return {
-      isOpen: false    
+      isOpen: !!this.props.open
     }
   },
 
@@ -39,25 +45,30 @@ const Modal = React.createClass({
     }
   },
 
-  componentDidMount() {
-    this.bodyClassName = document.body.className
-    this.bodyPaddingRight = parseInt(document.body.style.paddingRight, 10) || 0
+  componentWillReceiveProps(nextProps) {
+    'open' in nextProps && this.setState({isOpen: nextProps.open})  
   },
 
   componentWillUpdate(nextProps, nextState) {
     const body = document.body
+    const bodyClassName = body.className
+    const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
+
     if (nextState.isOpen) {
-      body.className = this.bodyClassName + ' modal-open'
-      body.style.paddingRight = this.bodyPaddingRight + scrollbarWidth + 'px'
+      body.className = bodyClassName + ' modal-open'
+      body.style.paddingRight = bodyPaddingRight + (
+        body.scrollHeight > body.clientHeight
+        ? scrollbarWidth
+        : 0) + 'px'
     } else {
       setTimeout(() => {
-        body.className = this.bodyClassName
-        if (this.bodyPaddingRight) {
-          body.style.paddingRight = this.bodyPaddingRight + 'px'
+        body.className = bodyClassName.replace(' modal-open', '')
+        if (bodyPaddingRight) {
+          body.style.paddingRight = bodyPaddingRight + 'px'
         } else {
           body.style.paddingRight = ''
         }
-      }, 300)
+      }, 150)
     }
   },
 
@@ -75,13 +86,15 @@ const Modal = React.createClass({
 
   close() {
     this.setState({isOpen: false})
+    this.props.handleClose && this.props.handleClose()
   },
 
   render() {
+    const { className, ...other } = this.props
     return (
       <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {this.state.isOpen ? (
-          <div className="bfd-modal">
+          <div className={classnames('bfd-modal', className)} {...other}>
             <div className="modal-backdrop"></div>
             <div className="modal" onClick={this.handleModalClick}>
               <div className="modal-dialog" onClick={this.handleDialogClick}>
@@ -97,6 +110,7 @@ const Modal = React.createClass({
   }
 })
 
+Modal.propTypes = propTypes
 Modal.childContextTypes = childContextTypes
 
 export default Modal

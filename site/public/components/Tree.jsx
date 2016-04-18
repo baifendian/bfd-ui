@@ -140,7 +140,7 @@ export default () => {
       <Pre>{TreeDemoCode}</Pre>
       <TreeDemo />
       <Props>
-        <Prop name="data" type="Array" required>
+        <Prop name="data" type="array" required>
           <p>数据源，格式如下</p>
           <Pre>
 {`[{
@@ -150,12 +150,15 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
+        <Prop name="onChange" type="function" required>
+          <p>状态改变后的回调，同步树的状态，params: data（整个树状态）, target（目标节点状态）</p>
+        </Prop>
       </Props>
       <h1>带选择的树</h1>
       <Pre>{SelectTreeDemoCode}</Pre>
       <SelectTreeDemo />
       <Props>
-        <Prop name="data" type="Array" required>
+        <Prop name="data" type="array" required>
           <p>数据源，格式如下</p>
           <Pre>
 {`[{
@@ -166,7 +169,7 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <Prop name="onChange" type="Function" required>
+        <Prop name="onChange" type="function" required>
           <p>切换选择后回调，更新树的状态，params: data（整个树状态）, target（目标节点状态）</p>
         </Prop>
       </Props>
