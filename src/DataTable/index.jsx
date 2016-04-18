@@ -82,8 +82,8 @@ export default React.createClass( {
      * @type {Number}
      */
     pageSize = parseInt( this.props.howRow )
-    let data_ = this.props.data.totalList
     if( this.props.data) {
+      let data_ = this.props.data.totalList
       if(this.props.data.totalPageNum){
         totalPageNum = this.props.data.totalPageNum
       }
