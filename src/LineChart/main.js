@@ -97,6 +97,7 @@ export default class {
 
     const yAxis = d3.svg.axis().scale(yScale)
       .orient('left')
+      // .ticks(5)
       .tickValues(this.getTickValues(yScale))
       .tickFormat(d => d3.format(yAxisConfig.format || 's')(d))
       .tickSize(-width, 10)
@@ -300,28 +301,6 @@ export default class {
       }
     }
 
-    // 绘制一个矩形，鼠标在此区域下均可触发 tooltip
-    svg.append('rect')
-      .attr('fill', 'none')
-      .attr('pointer-events', 'all')
-      .attr('width', width)
-      .attr('height', height)
-      .on('mouseover', function() {
-        drawTooltip(this, true)
-      })
-      .on('mousemove', function() {
-        drawTooltip(this)
-      })
-      .on('mouseout', function() {
-        lastxAxisIndex = null
-        activeLine.style('opacity', 0)
-        activeCircle.style('opacity', 0)
-        tooltipElement
-          .transition()
-          .delay(200)
-          .style('opacity', 0)
-      })
-
 
     /**
      * =========================================================================================
@@ -351,6 +330,32 @@ export default class {
         .attr('stroke', colors[i])
         .attr('stroke-width', 2)
     })
+
+
+    /**
+     * =========================================================================================
+     * 绘制一个矩形，鼠标在此区域下均可触发 tooltip
+     */
+    svg.append('rect')
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .attr('width', width)
+      .attr('height', height)
+      .on('mouseover', function() {
+        drawTooltip(this, true)
+      })
+      .on('mousemove', function() {
+        drawTooltip(this)
+      })
+      .on('mouseout', function() {
+        lastxAxisIndex = null
+        activeLine.style('opacity', 0)
+        activeCircle.style('opacity', 0)
+        tooltipElement
+          .transition()
+          .delay(200)
+          .style('opacity', 0)
+      })
 
 
     /**

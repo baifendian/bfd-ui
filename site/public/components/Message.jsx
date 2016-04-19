@@ -13,7 +13,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>提示信息</h1>
+        <h1>全局提示</h1>
         <Pre>
 {`import message from 'bfd-ui/lib/message'
 

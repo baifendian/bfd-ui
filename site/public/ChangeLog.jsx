@@ -58,7 +58,7 @@ import SelectTree from 'bfd-ui/lib/Tree/SelectTree'`}</Pre>
           <li>日期选择：DatePicker, DateRange</li>
           <li>导航：Nav, NavItem</li>
           <li>选项卡：Tabs, TabList, Tab, TabPanel</li>
-          <li>全局提示：message</li>
+          <li>全局提示：Message</li>
           <li>数据表格&分页：DataTable</li>
           <li>表单：Form, FormItem</li>
           <li>单选框：Radio, RadioGroup</li>

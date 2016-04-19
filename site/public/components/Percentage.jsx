@@ -14,27 +14,25 @@ export default React.createClass({
 
 const App = React.createClass({
   render() {
-    return <Percentage percent={80}></Percentage>
+    return <Percentage percent={80} style={{width: '150px'}}></Percentage>
   }
 })`}
         </Pre>
 
-        <div style={{width:'100'}}>
-          <Percentage percent={80}></Percentage>
-        </div>
+        <Percentage percent={80} style={{width: '150px'}}></Percentage>
         
         <Props>
-          <Prop name="percent" type="Number" required>
+          <Prop name="percent" type="number" required>
             <p>百分比值</p>
           </Prop>
-          <Prop name="foreColor" type="String">
+          <Prop name="foreColor" type="string">
             <p>前景色</p>
           </Prop>
-          <Prop name="backColor" type="String">
+          <Prop name="backColor" type="string">
             <p>背景色</p>
           </Prop>
-          <Prop name="textColor" type="String">
-            <p>文字景色</p>
+          <Prop name="textColor" type="string">
+            <p>文字颜色</p>
           </Prop>
         </Props>
       </div>

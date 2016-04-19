@@ -6,11 +6,11 @@ import './chart.less'
 const propTypes = {
   url: PropTypes.string,
   data: PropTypes.array,
-  customProp(props) {
-    if (!props.url && !props.data) {
+  customProp({ url, data }) {
+    if (!url && !data) {
       return new Error('url和data属性至少提供一个')
     }
-    if (props.url && props.data) {
+    if (url && data) {
       return new Error('url和data属性只能提供一个')
     }
   }
