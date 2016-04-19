@@ -21,7 +21,7 @@ const Select = React.createClass({
 	getChildContext() {
 		return {
 			getSelected: () => this.props.selected,
-			setSelected: (value, text) => {
+			setSelected: (value, text) => {				
 				if (this.props.multiple) {
 					let _arr = this.state.arr;										
 					_arr.indexOf(value) != -1 ? null :  _arr.push(value);
@@ -48,7 +48,7 @@ const Select = React.createClass({
 	render() {	
 
 		let sText = [];
-		const { children,selected} = this.props;		
+		const { children,selected} = this.props;			
 
 		this.props.multiple ?
 
@@ -72,7 +72,7 @@ const Select = React.createClass({
 			
 			const stextChild = sText.map((item,i)=>{
 				return (
-					<li key={item.value} value={item.value}>
+					<li key={item.value} data-value={item.value}>
 						{item.children}
 						{
 						   this.props.multiple ? <i className="glyphicon glyphicon-remove bfd-remove" onClick={this.remove.bind(this,item)}></i> : null
@@ -108,7 +108,8 @@ const Option = React.createClass({
 	render(){	
 		
 		let className;
-		const {	children, value, ...other } = this.props;    	
+		const {	children, value, ...other } = this.props;  
+	
     	const selected = this.context.getSelected();
 		
 		selected instanceof Array ?   
@@ -120,12 +121,14 @@ const Option = React.createClass({
 		});
 
 		other.onClick = e => {		
-			const value = e.currentTarget.getAttribute('value');
-			const text = e.currentTarget.innerHTML;
+			const value = e.currentTarget.getAttribute('data-value');
+			const text = e.currentTarget.innerHTML;	
+			
 			this.context.setSelected(value, text);		
 		}
+		
 		return (
-			<li {...other} className={className} value={value}> {children} </li>
+			<li {...other}  className={className} data-value={value}> {children} </li>
 		)
 	}
 })

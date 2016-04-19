@@ -7,11 +7,11 @@ import './main.less'
 import React from 'react'
 
 export default React.createClass({
-  handleChange: function() {
-    var v = this.refs.filterTextInput.value;
-    this.props.onUserInput(v);
+  handleChange() {
+    const v = this.refs.filterTextInput.value
+    this.props.onUserInput(v)
   },
-  render : function() {
+  render() {
     return (
       <div>
         <span className="search glyphicon glyphicon-search"></span>
@@ -20,6 +20,6 @@ export default React.createClass({
           ref="filterTextInput"
           onChange={this.handleChange} />
       </div>
-    );
+    )
   }
-});
+})

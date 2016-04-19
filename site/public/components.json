@@ -5,9 +5,6 @@
   "name": "PieChart",
   "cn": "饼图"
 }, {
-  "name": "ScatterPlot",
-  "cn": "散点图"
-}, {
   "name": "BubbleChart",
   "cn": "气泡图"
 }, {

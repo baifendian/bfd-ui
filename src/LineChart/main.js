@@ -9,17 +9,25 @@ export default class {
    * 获取Y轴最大最小值区间
    */
   getDomain(series) {
-    let domain = []
+    let maxs = []
     series.forEach((serie) => {
-      domain = domain.concat(d3.extent(serie.data, d => d))
+      maxs.push(d3.max(serie.data))
     })
-    domain = d3.extent(domain, d => d)
+    const max = d3.max(maxs)
+    return [0, max * 1.1]
+  }
 
-    const paddingScale = 0.2
-    const padding = (domain[1] - domain[0]) * paddingScale
-    domain = [domain[0] >= 0 ? 0 : domain[0] - padding, domain[1] + padding]
-
-    return domain
+  /**
+   * 获取Y轴 tickValues，nice 和 ticks 无法同时使用，只能手动划分
+   */
+  getTickValues(yScale) {
+    const max = yScale.invert(0)
+    const values = []
+    const step = max / 5
+    for (let i = 0; i <= 5; i++) {
+      values.push(step * i)
+    }
+    return values
   }
 
   constructor(config) {
@@ -29,7 +37,7 @@ export default class {
     const yAxisConfig = config.yAxis || {}
     const colors = config.colors || ['#26c6da', '#5c6bc0', '#f9ce1d', '#9c27b0']
 
-    const padding = [20, 20, 30, 40]
+    const padding = [30, 10, 30, 40]
 
     // 实例唯一ID
     const id = Math.random().toString(16).slice(2)
@@ -76,10 +84,12 @@ export default class {
     const yScale = d3.scale.linear()
       .range([height, 0])
       .domain(this.getDomain(series))
+      .nice()
 
     const xAxis = d3.svg.axis().scale(xScale)
       .orient('bottom')
-      .tickSize(6, 0)
+      .tickSize(0, 0)
+      .tickPadding(10)
 
     // 处理x轴数据节点过多的问题
     const interval = Math.ceil(categories.join('').length / (width / 10))
@@ -87,9 +97,10 @@ export default class {
 
     const yAxis = d3.svg.axis().scale(yScale)
       .orient('left')
-      .ticks(5)
+      // .ticks(5)
+      .tickValues(this.getTickValues(yScale))
       .tickFormat(d => d3.format(yAxisConfig.format || 's')(d))
-      .tickSize(-width)
+      .tickSize(-width, 10)
 
     svg.append('g')
       .attr('class', 'axis-y')
@@ -110,17 +121,10 @@ export default class {
       .duration(900)
       .attr('width', width)
 
-    const activeLine = svg.append('line')
-      .attr('y1', height)
-      .attr('class', 'active-line')
-      .style('opacity', 0)
-      .style('stroke', colors[0])
-
-
     /**
-     * 绘制曲线、曲面、标记点
+     * 绘制曲线、曲面
      */
-    const group = svg.append('g').attr('clip-path', `url(#rectClip-${id})`)
+    const seriesGroup = svg.append('g').attr('clip-path', `url(#rectClip-${id})`)
 
     const interpolate = 'cardinal'
 
@@ -134,7 +138,7 @@ export default class {
       .y0(height)
 
     series.forEach((serie, i) => {
-      const serieGroup = group.append('g').attr('class', `serie-group serie-group-${i}`)
+      const serieGroup = seriesGroup.append('g').attr('class', `serie-group serie-group-${i}`)
       const color = colors[i]
       const gradientID = `gradient-${id}-${i}`
 
@@ -169,43 +173,50 @@ export default class {
           fill: `url(#${gradientID})`,
           opacity: 0.4
         })
-
-      // 标记点
-      const gEnter = serieGroup.selectAll('g')
-        .data(data)
-        .enter()
-        .append('g')
-        .attr('class', (d, i) => `marker marker-${i}`)
-
-      gEnter.append('circle')
-        .attr('class', 'marker-inner')
-        .attr('cx', d => xScale(d[config.category]))
-        .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 5)
-        .attr('fill', '#fff')
-        .attr('stroke', '#fff')
-
-      gEnter.append('circle')
-        .attr('class', 'marker-outer')
-        .attr('cx', d => xScale(d[config.category]))
-        .attr('cy', d => yScale(d[serie.key]))
-        .attr('r', 3.5)
-        .attr('fill', '#fff')
-        .attr('stroke', color)
-        .attr('stroke-width', 2)
     })
 
 
     /**
-     * tooltip功能
+     * =========================================================================================
+     * tooltip功能：参考线、参考线与 x 轴交汇的圆点、详细数据浮层
      */
-    // x轴边距实际大小
-    const xAxisPadding = width / (categories.length - 1 + xAxisPaddingScale) * xAxisPaddingScale / 2
+    
+    /**
+     * 存储最后的索引，相同的位置不再重复绘制(参考线、tooltip等)
+     * @type {number}
+     */
+    let lastxAxisIndex
 
+    /** 
+     * 动画时长（参考线、tooltip平滑过渡）
+     * @type {number}
+     */
     const duration = 250 / categories.length
 
-    // const markers = svg.selectAll('.marker')
+    /**
+     * 参考线
+     * @type {node}
+     */
+    const activeLine = svg.append('line')
+      .attr('y2', 0)
+      .attr('y1', height)
+      .attr('class', 'active-line')
+      .style('opacity', 0)
 
+    /**
+     * 参考线与 x 轴交汇的圆点
+     * @type {node}
+     */
+    const activeCircle = svg.append('circle')
+      .style('opacity', 0)
+      .attr('class', 'active-circle')
+      .attr('r', 2)
+      .attr('cy', height)
+
+    /**
+     * tooltip 浮层对象节点
+     * @type {node}
+     */
     const tooltipElement = d3.select(container)
       .append('div')
       .attr('class', 'tooltip')
@@ -217,96 +228,138 @@ export default class {
         'pointer-events': 'none'
       })
 
-    // const resetLastMarkers = function() {
-    //   lastMarkers
-    //     .select('.marker-outer')
-    //     .attr('r', 6)
-    //   lastMarkers
-    //     .select('.marker-inner')
-    //     .attr('r', 2)
-    //     .attr('fill', '#fff')
-    // }
+    /** 
+     * x轴边距实际大小，计算 getXAxisIndex 时需要
+     * @type {number}
+     */
+    const xAxisPadding = width / (categories.length - 1 + xAxisPaddingScale) * xAxisPaddingScale / 2
 
-    // let lastMarkers
-    let lastxAxisIndex
+    /**
+     * 获取当前鼠标位置最接近的 x 轴索引
+     */
+    function getXAxisIndex(eventTarget) {
+      let xAxisIndex = (categories.length - 1) * (d3.mouse(eventTarget)[0] - xAxisPadding) / (width - xAxisPadding * 2)
+      return +xAxisIndex.toFixed(0)
+    }
 
-    // 绘制一个矩形，鼠标在此区域下均可触发 tooltip
-    svg.append('rect')
-      .attr('fill', 'none')
-      .attr('pointer-events', 'all')
-      .attr('width', width)
-      .attr('height', height)
-      .on('mouseover', function() {
-        tooltipElement.style({
-          left: `${d3.event.offsetX}px`,
-          top: `${d3.event.offsetY}px`,
-          opacity: 1
-        })
-      })
-      .on('mousemove', function() {
-        // 计算当前鼠标位置最接近的x轴节点
-        let xAxisIndex = (categories.length - 1) * (d3.mouse(this)[0] - xAxisPadding) / (width - xAxisPadding * 2)
-        xAxisIndex = +xAxisIndex.toFixed(0)
+    /**
+     * 鼠标滑动绘制相关元件
+     * @param  {Number}  xAxisIndex x轴索引
+     * @param  {Boolean} isInitial  是否mouseover
+     */
+    function drawTooltip(eventTarget, isInitial) {
 
-        if (lastxAxisIndex === xAxisIndex) return
-
-        const x = xScale(categories[xAxisIndex])
-        const maxValue = Math.max.apply(null, series.map(serie => {
-          return serie.data[xAxisIndex]
-        }))
-        activeLine
-          .transition()
-          .duration(duration)
-          .attr('x1', x)
-          .attr('x2', x)
-          .attr('y2', yScale(maxValue))
-          // .attr('y2', 0)
-          .style('opacity', 1)
+      const xAxisIndex = getXAxisIndex(eventTarget)
+      
+      if (lastxAxisIndex !== xAxisIndex) {
 
         lastxAxisIndex = xAxisIndex
 
-        tooltipElement
-          .transition()
-          .duration(duration)
-          .style({
-            left: `${d3.event.offsetX}px`,
-            top: `${d3.event.offsetY}px`,
-            opacity: 1
-          })
+        // x 轴坐标
+        const x = xScale(categories[xAxisIndex])
+        const _duration = isInitial ? 0 : duration
 
-        // Tooltip 内容
+        // 绘制参考线
+        activeLine
+          .transition()
+          .duration(_duration)
+          .attr('x1', x)
+          .attr('x2', x)
+          .style('opacity', 1)
+
+        // 绘制参考线与 x 轴交汇的圆点
+        activeCircle.transition()
+          .duration(_duration)
+          .attr('cx', x)
+          .style('opacity', 1)
+
+        // Tooltip 浮层内容
         let html = `${categories[xAxisIndex]}<br>`
         series.forEach((serie) => {
           html += `${serie.name}: ${serie.data[xAxisIndex]}</br>`
         })
         tooltipElement.html(html)
 
-        // 更新标记显示
-        // lastMarkers && resetLastMarkers()
 
-        // lastMarkers = markers.filter(`.marker-${xAxisIndex}`)
-        // lastMarkers
-        //   .select('.marker-outer')
-        //   .attr('r', 7)
-        // lastMarkers
-        //   .select('.marker-inner')
-        //   .attr('r', 3)
-        //   .data(series)
-        //   .attr('fill', (d, i) => colors[i])
+        // 绘制浮层
+        const tooltipWidth = tooltipElement[0][0].clientWidth
+        const tooltipHeight = tooltipElement[0][0].clientHeight
 
+        let relativeSize = -(tooltipWidth / 2 + 15)
+        if (x - 10 < tooltipWidth) {
+          relativeSize = Math.abs(relativeSize)
+        }
+
+        tooltipElement
+          .transition()
+          .duration(_duration)
+          .style({
+            left: x + relativeSize + 'px',
+            top: d3.event.offsetY - tooltipHeight / 2 + 'px',
+            opacity: 1
+          })
+      }
+    }
+
+
+    /**
+     * =========================================================================================
+     * 标记点。没有和线、面一起绘制的原因是因为需要放到最顶层，防止被 activeLine 覆盖
+     */
+    const markersGroup = svg.append('g').attr('clip-path', `url(#rectClip-${id})`)
+    series.forEach((serie, i) => {
+      const markerGroup = markersGroup.append('g').attr('class', `marker-group marker-group-${i}`)
+
+      const gEnter = markerGroup.selectAll('g')
+        .data(data)
+        .enter()
+        .append('g')
+        .attr('transform', d => `translate(${xScale(d[category])}, ${yScale(d[serie.key])})`)
+        .attr('class', 'marker')
+
+      gEnter.append('circle')
+        .attr('class', 'marker-inner')
+        .attr('r', 5)
+        .attr('fill', '#fff')
+        .attr('stroke', '#fff')
+
+      gEnter.append('circle')
+        .attr('class', 'marker-outer')
+        .attr('r', 3.5)
+        .attr('fill', '#fff')
+        .attr('stroke', colors[i])
+        .attr('stroke-width', 2)
+    })
+
+
+    /**
+     * =========================================================================================
+     * 绘制一个矩形，鼠标在此区域下均可触发 tooltip
+     */
+    svg.append('rect')
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all')
+      .attr('width', width)
+      .attr('height', height)
+      .on('mouseover', function() {
+        drawTooltip(this, true)
+      })
+      .on('mousemove', function() {
+        drawTooltip(this)
       })
       .on('mouseout', function() {
         lastxAxisIndex = null
-        // resetLastMarkers()
+        activeLine.style('opacity', 0)
+        activeCircle.style('opacity', 0)
         tooltipElement
           .transition()
           .delay(200)
           .style('opacity', 0)
-        activeLine.style('opacity', 0)
       })
 
 
     /**
+     * =========================================================================================
      * 图例
      */
     // series副本，保存初始数据
@@ -335,23 +388,31 @@ export default class {
 
         series = _series.filter(serie => !serie.disabled)
 
-        yScale.domain(that.getDomain(series))
+        yScale.domain(that.getDomain(series)).nice()
+        yAxis.tickValues(that.getTickValues(yScale))
 
-        // 轴、曲线、曲面重绘
+        // 轴、曲线、曲面、标记点重绘
         svg.select('.axis-y').transition().duration(500).call(yAxis)
 
         const serieGroups = svg.selectAll('.serie-group')
-        serieGroups.filter(`.serie-group-${i}`).style('display', isDisabled ? 'block' : 'none')
+        const markerGroups = svg.selectAll('.marker-group')
+        const display = isDisabled ? 'block' : 'none'
+        serieGroups.filter(`.serie-group-${i}`).style('display', display)
+        markerGroups.filter(`.marker-group-${i}`).style('display', display)
 
         _series.forEach((serie, i) => {
           if (serie.disabled) return
+          
           const serieGroup = d3.select(serieGroups[0][i]).transition().duration(500)
+          const markerGroup = d3.select(markerGroups[0][i]).transition().duration(500)
+
           serieGroup.select('path.line')
             .attr('d', linePathGenerator.y(d => yScale(d[serie.key])))
           serieGroup.select('path.area')
             .attr('d', areaPathGenerator.y1(d => yScale(d[serie.key])))
-          serieGroup.selectAll('.marker circle')
-            .attr('cy', d => yScale(d[serie.key]))
+          
+          markerGroup.selectAll('.marker')
+            .attr('transform', d => `translate(${xScale(d[category])}, ${yScale(d[serie.key])})`)
         })
       })
       .each(function(d, i) {

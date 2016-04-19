@@ -101,12 +101,14 @@ export default class {
         // self.tooltip.model.reset(d);
         d3.select(this).select('circle')
           .transition()
+          .ease(d3.ease('back'))
           .duration(200)
           .attr('r', d.radius * 1.3)
       })
       .on('mouseleave', function(d) {
         d3.select(this).select('circle')
           .transition()
+          .ease(d3.ease('back'))
           .duration(200)
           .attr('r', d.radius)
       })
