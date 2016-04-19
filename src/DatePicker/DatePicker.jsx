@@ -2,45 +2,53 @@ import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import Calendar from './Calendar'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
+import classnames from 'classnames'
 import './less/datePicker.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
-export default React.createClass({
+const propTypes = {
+  date: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func,
+  customProp({ date, onSelect }) {
+    if (date && !onSelect) {
+      return new Error('You provided a `date` prop without an `onSelect` handler')
+    }
+  }
+}
 
-  propTypes: {
-    date: checkDateTime,
-    min: checkDateTime,
-    max: checkDateTime,
-    onSelect: PropTypes.func
-  },
+const DatePicker = React.createClass({
 
   getInitialState() {
-    return {
-      date: this.props.date || Date.now()
+    return this.props.date ? null : {
+      date: Date.now() 
     }
   },
 
-  componentWillReceiveProps(nextProps) {
-    'date' in nextProps && this.setState({date: nextProps.date})
-  },
-
   handleSelect(date) {
-    this.setState({ date })
+    this.state && this.setState({ date })
     this.refs.dropdown.close()
     this.props.onSelect && this.props.onSelect(date)
   },
 
   render() {
+    const { className, onSelect, ...other } = this.props
+    const date = this.props.date || this.state.date
     return (
-      <Dropdown ref="dropdown" className="bfd-datepicker">
+      <Dropdown ref="dropdown" className={classnames('bfd-datepicker', className)} {...other}>
         <DropdownToggle>
-          <input type="text" className="form-control input-sm" value={new Date(this.state.date).toLocaleDateString()} readOnly />
+          <input type="text" className="form-control input-sm" value={new Date(date).toLocaleDateString()} readOnly />
         </DropdownToggle>
         <DropdownMenu>
-          <Calendar date={this.state.date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect} />
+          <Calendar date={date} min={this.props.min} max={this.props.max} onSelect={this.handleSelect} />
         </DropdownMenu>
       </Dropdown>
     )
   }
 })
+
+DatePicker.propTypes = propTypes
+
+export default DatePicker

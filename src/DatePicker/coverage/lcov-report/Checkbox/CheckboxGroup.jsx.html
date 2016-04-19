@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for Checkbox/CheckboxGroup.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">Checkbox/</a> CheckboxGroup.jsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">54.84% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>17/31</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">33.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>6/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">25% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>2/8</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">39.13% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/23</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">4 statements, 1 function, 2 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</td><td class="line-coverage quiet"><span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { PropTypes } from 'react'
+import Checkbox from './Checkbox'
+import './less/checkboxGroup.less'
+&nbsp;
+const propTypes = {
+  selects: PropTypes.array,
+  onChange: PropTypes.func,
+  customProp(p<span class="fstat-no" title="function not covered" >rops) {</span>
+<span class="cstat-no" title="statement not covered" >    if (props.selects &amp;&amp; !props.onChange) {</span>
+<span class="cstat-no" title="statement not covered" >      return new Error('You provided a `selects` prop without an `onChange` handler')</span>
+    }
+  }
+}
+&nbsp;
+const childContextTypes = {
+  checkboxGroupSelects: PropTypes.array,
+  setCheckboxGroupSelects: PropTypes.func
+}
+&nbsp;
+const CheckboxGroup = React.createClass({
+&nbsp;
+  getInitialState()<span class="fstat-no" title="function not covered" > {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      selects: this.props.selects || []
+    }
+  },
+&nbsp;
+  componentWillReceiveProps(n<span class="fstat-no" title="function not covered" >extProps) {</span>
+<span class="cstat-no" title="statement not covered" >    'selects' in nextProps &amp;&amp; this.setState({selects: nextProps.selects}) </span>
+  },
+&nbsp;
+  getChildContext()<span class="fstat-no" title="function not covered" > {<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
+      checkboxGroupSelects: this.state.selects,
+      setCheckboxGroupSelects: <span class="fstat-no" title="function not covered" >(value, isAdd) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >        const selects = this.state.selects</span>
+<span class="cstat-no" title="statement not covered" >        if (isAdd) {</span>
+<span class="cstat-no" title="statement not covered" >          selects.push(value)</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          selects.splice(selects.indexOf(value), 1)</span>
+        }
+        this.props.onChange &amp;&amp; thi<span class="cstat-no" title="statement not covered" >s.props.onChange(selects)</span>
+      }
+    }
+  },
+&nbsp;
+  render()<span class="fstat-no" title="function not covered" > {<span class="cstat-no" title="statement not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >    let children</span>
+<span class="cstat-skip" title="statement not covered" >    if (this.props.values) {</span>
+      // 自动构建 values 与 label 相同的 Checkbox
+<span class="cstat-skip" title="statement not covered" >      children = this.props.values.map(<span class="fstat-skip" title="function not covered" >(value, i) =&gt; &lt;Checkbox key={i} value={value} b<span class="cstat-skip" title="statement not covered" ></span>lock={!!this.props.block}&gt;{value}&lt;/Checkbox&gt;)</span></span>
+    } else {
+<span class="cstat-skip" title="statement not covered" >      children = this.props.children</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return &lt;div className="bfd-checkbox-group"&gt;{children}&lt;/div&gt;</span>
+  }
+})
+&nbsp;
+CheckboxGroup.propTypes = propTypes
+CheckboxGroup.childContextTypes = childContextTypes
+&nbsp;
+export default CheckboxGroup</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 19 2016 15:14:42 GMT+0800 (CST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

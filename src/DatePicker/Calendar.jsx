@@ -9,16 +9,22 @@ import './less/calendar.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
-export default React.createClass({
+const propTypes = {
+  date: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func
+}
+
+// For DateRange
+const contextTypes = {
+  getStart: PropTypes.func,
+  getEnd: PropTypes.func
+}
+
+const Calendar = React.createClass({
 
   mixins: [PureRenderMixin],
-
-  propTypes: {
-    date: checkDateTime,
-    min: checkDateTime,
-    max: checkDateTime,
-    onSelect: PropTypes.func
-  },
 
   getInitialState() {
     const d = this.props.date ? new Date(this.props.date) : new Date()
@@ -32,12 +38,6 @@ export default React.createClass({
       currentYear: year,
       currentMonth: month
     }
-  },
-
-  // 日期区间功能
-  contextTypes: {
-    getStart: PropTypes.func,
-    getEnd: PropTypes.func
   },
 
   dayNames: ['日', '一', '二', '三', '四', '五', '六'],
@@ -146,7 +146,8 @@ export default React.createClass({
 
     // 下月
     d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
-    for (let i = 0, len = 42 - dates.length; i < len; i++) {
+    const _len = dates.length
+    for (let i = 0, len = (_len <= 35 ? 35 : 42) - _len; i < len; i++) {
       dates.push({
         year: d.getFullYear(),
         month: d.getMonth(),
@@ -178,7 +179,7 @@ export default React.createClass({
             <tr>{this.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
           </thead>
           <tbody>
-            {Array(7).join(0).split('').map((v, i) => {
+            {Array(dates.length / 7 + 1).join(0).split('').map((v, i) => {
               return (
                 <tr key={i}>{this.dayNames.map((name, j) => {
                   const index = i * 7 + j
@@ -197,3 +198,8 @@ export default React.createClass({
     )
   }
 })
+
+Calendar.propTypes = propTypes
+Calendar.contextTypes = contextTypes
+
+export default Calendar
