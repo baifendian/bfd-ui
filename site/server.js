@@ -26,6 +26,8 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-app.listen(4001, function() {
-  console.log('Server listening on http://localhost:4001, Ctrl+C to stop')
+var port = process.argv.slice(2)[0] || 4001
+
+app.listen(port, function() {
+  console.log('Server listening on http://localhost:' + port + ', Ctrl+C to stop')
 })
