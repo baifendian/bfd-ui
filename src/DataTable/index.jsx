@@ -91,6 +91,8 @@ export default React.createClass( {
         let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize
         let end = currentPage === 1 ? pageSize : start + pageSize
         items = data_.slice( start, end )
+      }else{
+        items = data_
       }
     }
     if( url && url.indexOf('?') < 0 && url.indexOf('pageSize') < 0 ) {
