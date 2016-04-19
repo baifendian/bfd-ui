@@ -12,29 +12,29 @@ export default React.createClass({
   },
   getInitialState: function() {
     const sourceData = [
-      {id : 1, label : "张三"},
-      {id : 2, label : "李四"},
-      {id : 3, label : "李五"},
-      {id : 4, label : "李六"},
-      {id : 5, label : "李七五"},
-      {id : 6, label : "李八"},
-      {id : 7, label : "李九四"},
-      {id : 8, label : "李十"},
-      {id : 9, label : "李时珍"}
+      {id: 1, label: "张三"},
+      {id: 2, label: "李四"},
+      {id: 3, label: "李五"},
+      {id: 4, label: "李六"},
+      {id: 5, label: "李七五"},
+      {id: 6, label: "李八"},
+      {id: 7, label: "李九四"},
+      {id: 8, label: "李十"},
+      {id: 9, label: "李时珍"}
     ];
     const targetData = [
-      {id : 10, label : "张三疯"},
-      {id : 11, label : "王二小"}
+      {id: 10, label: "张三疯"},
+      {id: 11, label: "王二小"}
     ];
     return {
-      sourceData : sourceData,
-      targetData : targetData
+      sourceData: sourceData,
+      targetData: targetData
     };
   },
   handleChange : function(sourceData, targetData) {
     this.setState({
-      sourceData : sourceData,
-      targetData : targetData
+      sourceData: sourceData,
+      targetData: targetData
     })
   },
   render() {
@@ -49,19 +49,19 @@ import Transfer from 'bfd-ui/lib/Transfer'
 const App = React.createClass({
   render() {
     var sourceData = [
-      {id : 1, label : "张三"},
-      {id : 2, label : "李四"},
-      {id : 3, label : "李五"},
-      {id : 4, label : "李六"},
-      {id : 5, label : "李七五"},
-      {id : 6, label : "李八"},
-      {id : 7, label : "李九四"},
-      {id : 8, label : "李十"},
-      {id : 9, label : "李时珍"}
+      {id: 1, label: "张三"},
+      {id: 2, label: "李四"},
+      {id: 3, label: "李五"},
+      {id: 4, label: "李六"},
+      {id: 5, label: "李七五"},
+      {id: 6, label: "李八"},
+      {id: 7, label: "李九四"},
+      {id: 8, label: "李十"},
+      {id: 9, label: "李时珍"}
     ];
     var targetData = [
-      {id : 10, label : "张三疯"},
-      {id : 11, label : "王二小"}
+      {id: 10, label: "张三疯"},
+      {id: 11, label: "王二小"}
     ];
     return <Transfer height={200} title={"已选的用户"} sdata={sourceData} tdata={targetData} />
   }
@@ -89,7 +89,10 @@ const App = React.createClass({
           </Prop>
           <Prop name="tdata" type="Array">
             <p>目标数据，包含id、label属性</p>
-          </Prop>          
+          </Prop> 
+          <Prop name="onChange" type="function">
+            <p>传输框值改变后的回调函数。参数为改变后的值, 第一个参数：sdata, 第二个参数：tdata</p>
+          </Prop>         
         </Props>
       </div>
     )
