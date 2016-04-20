@@ -69,7 +69,7 @@ export default React.createClass({
       this.tid = [tid]
     }
   },
-  handleTransfer(direct) {    
+  handleTransfer(direct) {
     if (direct == 's2t') {  //  s->t
       if(!this.sid || this.sid.length == 0) {
         return
@@ -86,8 +86,12 @@ export default React.createClass({
   transferData(ids, source, target, option) {
     let flag = 0
     if(!ids || ids.length == 0) {
-      this.sid = []
-      this.tid = []
+      if('s2t' == option) {
+        this.sid = []
+      }
+      if('t2s' == option) {
+        this.tid = []
+      }
       this.handleUserInput(this.state.filterText)
       switch(option) {
       case 's2t': this.props.onChange(source, target); break
