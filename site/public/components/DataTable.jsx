@@ -196,13 +196,13 @@ const App = React.createClass({
 
    }
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 12 }></DataTable>
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 13 }></DataTable>
   }
 })`
 }
         </Pre>
 
-        <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={12} />
+        <DataTable data={dataJson} onPageChange={this.onPageChange}  showPage="true"  column={column} howRow={6} />
         
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
