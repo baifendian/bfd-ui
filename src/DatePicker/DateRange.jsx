@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import DatePicker from './DatePicker'
-import getTimestrap from './getTimestrap'
+import classnames from 'classnames'
 import './less/dateRange.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -38,28 +38,37 @@ const DateRange = React.createClass({
 
   getChildContext() {
     return {
-      getStart: () => this.props.start || this.state.start,
-      getEnd: () => this.props.end || this.state.end
+      getStart: () => this.getStart(),
+      getEnd: () => this.getEnd()
     }
+  },
+
+  getStart() {
+    return this.props.start || this.state.start
+  },
+
+  getEnd() {
+    return this.props.end || this.state.end
   },
 
   handleSelect(type, date) {
     let range
     if (type === 'start') {
       this.state.start && this.setState({start: date})
-      range = [date, this.props.end || this.state.end]
+      range = [date, this.getEnd()]
     } else {
       this.state.end && this.setState({end: date})
-      range = [this.props.start || this.state.start, date]
+      range = [this.getStart(), date]
     }
     this.props.onSelect && this.props.onSelect.apply(this, range)
   },
 
   render() {
-    const start = this.props.start || this.state.start
-    const end = this.props.end || this.state.end
+    const { className, onSelect, ...other } = this.props
+    const start = this.getStart()
+    const end = this.getEnd()
     return (
-      <div className="bfd-daterange">
+      <div className={classnames('bfd-daterange', className)} {...other}>
         <DatePicker date={start} min={this.props.min} max={end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
         <DatePicker date={end} min={start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />

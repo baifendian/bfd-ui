@@ -17,7 +17,7 @@ const App = React.createClass({
     return (
       <div id="wrapper">
         <div id="header">
-          <Link to="/" className="pull-left">
+          <Link to="/dsadda" className="pull-left">
             <h2>BFD UI</h2>
           </Link>
           <div className="pull-right">

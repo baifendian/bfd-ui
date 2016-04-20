@@ -14,7 +14,7 @@ describe('Modal', () => {
 
     it('style is ok', () => {
       const instance = TestUtils.renderIntoDocument(<Modal open style={{color: 'red'}} />)
-      expect(ReactDOM.findDOMNode(instance).firstElementChild.style.color).toContain('red')
+      expect(ReactDOM.findDOMNode(instance).firstElementChild.style.color).toBe('red')
     })
 
     it('onClick is ok', () => {

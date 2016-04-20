@@ -44,7 +44,7 @@ const DateRangeDemo = React.createClass({
 
   getInitialState() {
     return {
-      start: '2016-02-03'
+      start: '2016-01-01'
     }
   },
 
@@ -63,7 +63,7 @@ const DateRangeDemo = React.createClass({
 
   getInitialState() {
     return {
-      start: '2016-02-03'
+      start: '2016-01-01'
     }
   },
 
@@ -124,7 +124,7 @@ export default () => {
           <p>默认不限制</p>
         </Prop>
         <Prop name="onSelect" type="Function">
-          <p>选择后的回调，回调参数为选中日期 (start, end) 的时间戳</p>
+          <p>选择后的回调，回调参数为选中日期 (start, end)</p>
         </Prop>
       </Props>
     </div>

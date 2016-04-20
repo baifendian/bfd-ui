@@ -22,9 +22,11 @@ const propTypes = {
 const DatePicker = React.createClass({
 
   getInitialState() {
-    return this.props.date ? null : {
-      date: Date.now() 
-    }
+    return this.props.date 
+      ? null 
+      : {
+        date: Date.now() 
+      }
   },
 
   handleSelect(date) {

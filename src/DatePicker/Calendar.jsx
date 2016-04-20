@@ -1,9 +1,5 @@
-/**
- * 日历界面本身
- */
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import getTimestrap from './getTimestrap'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
@@ -71,9 +67,13 @@ const Calendar = React.createClass({
     this.props.onSelect && this.props.onSelect(new Date(year, month, day).setHours(0, 0, 0, 0))
   },
 
+  getZeroTimestrap(date) {
+    return new Date(date).setHours(0, 0, 0, 0)
+  },
+
   disabledComparer() {
-    const min = this.props.min && getTimestrap(this.props.min)
-    const max = this.props.max && getTimestrap(this.props.max)
+    const min = this.props.min && this.getZeroTimestrap(this.props.min)
+    const max = this.props.max && this.getZeroTimestrap(this.props.max)
     if (min || max) {
       return date => {
         const timestrap = new Date(date.year, date.month, date.day).getTime()
@@ -84,19 +84,9 @@ const Calendar = React.createClass({
     }
   },
 
-  /**
-   * 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
-   */
-  getDateClassNames(date) {
+  // 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
+  getDateClassNames(date, start, end) {
     const timestrap = new Date(date.year, date.month, date.day).getTime()
-
-    let start, end
-    if (this.context.getStart) {
-      // DateRange
-      start = this.context.getStart()
-      end = this.context.getEnd()
-    }
-
     const isStart = timestrap === start
     const isEnd = timestrap === end
 
@@ -110,9 +100,7 @@ const Calendar = React.createClass({
     })
   },
 
-  /**
-   * 当前月各天的时间状态
-   */
+  // 当前月各天的时间状态
   getDates() {
     let d
     const dates = []
@@ -161,6 +149,14 @@ const Calendar = React.createClass({
   render() {
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
+    
+    // DateRange
+    let start, end
+    if (this.context.getStart) {
+      start = new Date(this.context.getStart()).setHours(0, 0, 0, 0)
+      end = new Date(this.context.getEnd()).setHours(0, 0, 0, 0)
+    }
+
     return (
       <div className="bfd-calendar">
         <div className="calendar-header">
@@ -186,7 +182,7 @@ const Calendar = React.createClass({
                   const date = dates[index]
                   return (
                     <td key={index}>
-                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
+                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date, start, end)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
                     </td>
                   )
                 })}</tr>
