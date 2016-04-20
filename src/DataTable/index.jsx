@@ -35,7 +35,9 @@ export default React.createClass( {
   },
 
   onPageChange(page){
-    this.props.onPageChange( page )
+    if(this.props.onPageChange){
+      this.props.onPageChange( page )
+    }
     this.setState({currentPage: page } )
   },
 
