@@ -50,9 +50,6 @@ export default class {
     env.config.dataLegend = [];
     for (var k in env.config.data) env.config.dataLegend.push(env.config.data[k]);
 
-
-
-
     env.svg = d3.select(env.container)
       .append('svg')
       .attr('width', env.width)
@@ -89,11 +86,16 @@ export default class {
       assembleTooltip(env, true);
     }
 
+
+    /*
+     *自适应容器大小
+    */
     window.onresize = function() {
 
       env.svg.select('.pie-slices').selectAll('path').remove();
       env.svg.select('.pie-labels').selectAll('text').remove();
       env.svg.select('.pie-lines').selectAll('polyline').remove();
+
       env.config.legend.layout == 'vertical' ? env.width = env.container.clientWidth - padding[0] : env.width = env.container.clientWidth;
       env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2 + 10) + ')');
 
@@ -101,7 +103,10 @@ export default class {
         .select('svg')
         .attr('width', env.width)
         .attr('height', env.height);
-      initPie(env, true);
+
+      initPie(env, false);
+
+      assembleTooltip(env, false);
 
     }
 

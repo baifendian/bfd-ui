@@ -30,7 +30,7 @@ const App = React.createClass({
         <div className="col-md-4">
           <h3>下拉框(单选)</h3>
           <Select selected={this.state.selected} onChange={this.handleChange}>
-              <Option value="apple">苹果</Option>
+              <Option value="apple">苹果22222222222222222222222222222222222222222222222222222222222</Option>
               <Option value="mi">小米</Option>
               <Option value="samsung">三星</Option>
               <Option value="huawei">华为</Option>
@@ -40,7 +40,7 @@ const App = React.createClass({
           <h3>下拉框(多选)</h3>
           <Select selected={this.state.selected2} onChange={this.handleChange2} multiple>
               <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
+              <Option value="mi">小米3333333333333333333333333333333333</Option>
               <Option value="samsung">三星</Option>
               <Option value="huawei">华为</Option>
           </Select>

@@ -48,11 +48,11 @@ const Select = React.createClass({
 	render() {	
 
 		let sText = [];
-		const { children,selected} = this.props;			
+		const { children,selected} = this.props;					
 
 		this.props.multiple ?
 
-			children.length ?
+			children.length > 1 ?
 				children.map(function(item, i) {
 					selected.map(function(_item, _i) {
 						if (item.props.value == _item) sText.push({value:item.props.value,children:item.props.children});
@@ -61,7 +61,7 @@ const Select = React.createClass({
 					selected == children.props.value ? sText.push({value:children.props.value,children:children.props.children}) : sText = [];
 				})() :
 
-			children.length ?
+			children.length > 1 ?
 				children.map(function(item, i) {
 					if (selected == item.props.value) {
 						sText.push({value:item.props.value,children:item.props.children})
