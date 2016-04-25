@@ -11,11 +11,17 @@
 		list-style: none;
 		padding-left: 4px;
 
-		li {
+		li >span {
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
+			display: block;
 		}
+	}
+	.dropdown-menu>ul>li {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.bfd-multiple {
 		li {
@@ -30,10 +36,14 @@
 			&:hover .bfd-remove {
 				opacity: 1;
 			}
+			&:hover{
+				border: 1px solid #B7E3DE;
+			}
+
 		}
 		.bfd-remove {
-			top: 0;
-			right: 0;
+			top: -6px;
+			right: -6px;
 			position: absolute;
 			border: 1px solid #B7E3DE;
 			border-radius: 50%;
@@ -72,6 +82,7 @@
 			li:hover {
 				color: #000;
 				background-color: #ddd;
+
 			}
 			.active {
 				color: #fff;

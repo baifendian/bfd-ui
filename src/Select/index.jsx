@@ -73,7 +73,8 @@ const Select = React.createClass({
 			const stextChild = sText.map((item,i)=>{
 				return (
 					<li key={item.value} data-value={item.value}>
-						{item.children}
+						
+						<span>{item.children}</span>
 						{
 						   this.props.multiple ? <i className="glyphicon glyphicon-remove bfd-remove" onClick={this.remove.bind(this,item)}></i> : null
 						}						
@@ -90,7 +91,7 @@ const Select = React.createClass({
 				  	<span className="caret bfd-caret"></span>
 		        </DropdownToggle>
 		        <DropdownMenu className="dropdown-menu">
-		        	<ul onClick={this.handleClick}>{children}</ul>		          
+		        	<ul  onClick={this.handleClick}>{children}</ul>		          
 		        </DropdownMenu>
 		    </Dropdown>
 		);
