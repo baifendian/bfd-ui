@@ -24,14 +24,19 @@ export default (env, flag) => {
   var arcs = [];
 
   // for drawing slices
+  const arcOut = d3.svg.arc()
+    .outerRadius(0.6 * radius + 4)
+    .innerRadius(0.6 * _config.radius.inner * radius - 4);
+  arcs.push(arcOut);
+
   const arc = d3.svg.arc()
     .outerRadius(0.6 * radius)
     .innerRadius(0.6 * _config.radius.inner * radius);
   arcs.push(arc);
 
   const arc2 = d3.svg.arc()
-    .outerRadius(0.6 * _config.radius.inner * radius - 1)
-    .innerRadius(0.6 * _config.radius.inner * radius - 5);
+    .outerRadius(0.6 * _config.radius.inner * radius - 8)
+    .innerRadius(0.6 * _config.radius.inner * radius - 12);
   arcs.push(arc2);
 
   // for labels and polylines  设置label和line的位置。
@@ -76,10 +81,16 @@ export default (env, flag) => {
       .style('opacity', 1.0)
       .attr('transform', 'rotate(0,0,0)');
 
-    if (i === 1) {
+    if (i === 0) {
       slice.style('display', 'none')
-        //添加一个class来标记arc2的圆弧。
-        .attr('class', 'pie-flag');
+        .attr('class', 'bfd-pie-lg');
+    }
+    if (i === 1) {
+      slice.attr('class', 'bfd-pie-md');
+    }
+    if (i === 2) {
+      slice.style('display', 'none')
+        .attr('class', 'bfd-pie-flag');
     }
   }
 

@@ -39,7 +39,7 @@ export default class {
 
     if (!env.config.data) return;
 
-    //获取颜色。可以有4个色系选择。  
+    //获取颜色。 
     const colors = config.colors || color(2, env.config.data.length);
     //init color
     for (var i = 0; i < env.config.data.length; i++) {
@@ -75,17 +75,18 @@ export default class {
      *init legend
      */
     assembleLegend(env);
+
     /*
      *init pie
      */
     initPie(env, true);
+    
     /*
      *init tooltip
      */
     if (!env.config.tooltip || env.config.tooltip.enabled !== false) {
       assembleTooltip(env, true);
     }
-
 
     /*
      *自适应容器大小
