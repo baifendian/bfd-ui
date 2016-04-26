@@ -57,7 +57,7 @@ const Modal = React.createClass({
     if (nextState.isOpen) {
       this.scrollbarWidth = body.scrollHeight > body.clientHeight ? scrollbarWidth : 0
       body.className = bodyClassName + ' modal-open'
-      body.style.paddingRight = bodyPaddingRight + scrollbarWidth + 'px'
+      body.style.paddingRight = bodyPaddingRight + this.scrollbarWidth + 'px'
     } else {
       setTimeout(() => {
         body.className = bodyClassName.replace(' modal-open', '')

@@ -1,24 +1,26 @@
-/**
- * 日历界面本身
- */
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import getTimestrap from './getTimestrap'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
-export default React.createClass({
+const propTypes = {
+  date: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func
+}
+
+// For DateRange
+const contextTypes = {
+  getStart: PropTypes.func,
+  getEnd: PropTypes.func
+}
+
+const Calendar = React.createClass({
 
   mixins: [PureRenderMixin],
-
-  propTypes: {
-    date: checkDateTime,
-    min: checkDateTime,
-    max: checkDateTime,
-    onSelect: PropTypes.func
-  },
 
   getInitialState() {
     const d = this.props.date ? new Date(this.props.date) : new Date()
@@ -32,12 +34,6 @@ export default React.createClass({
       currentYear: year,
       currentMonth: month
     }
-  },
-
-  // 日期区间功能
-  contextTypes: {
-    getStart: PropTypes.func,
-    getEnd: PropTypes.func
   },
 
   dayNames: ['日', '一', '二', '三', '四', '五', '六'],
@@ -71,9 +67,13 @@ export default React.createClass({
     this.props.onSelect && this.props.onSelect(new Date(year, month, day).setHours(0, 0, 0, 0))
   },
 
+  getZeroTimestrap(date) {
+    return new Date(date).setHours(0, 0, 0, 0)
+  },
+
   disabledComparer() {
-    const min = this.props.min && getTimestrap(this.props.min)
-    const max = this.props.max && getTimestrap(this.props.max)
+    const min = this.props.min && this.getZeroTimestrap(this.props.min)
+    const max = this.props.max && this.getZeroTimestrap(this.props.max)
     if (min || max) {
       return date => {
         const timestrap = new Date(date.year, date.month, date.day).getTime()
@@ -84,19 +84,9 @@ export default React.createClass({
     }
   },
 
-  /**
-   * 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
-   */
-  getDateClassNames(date) {
+  // 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
+  getDateClassNames(date, start, end) {
     const timestrap = new Date(date.year, date.month, date.day).getTime()
-
-    let start, end
-    if (this.context.getStart) {
-      // DateRange
-      start = this.context.getStart()
-      end = this.context.getEnd()
-    }
-
     const isStart = timestrap === start
     const isEnd = timestrap === end
 
@@ -110,9 +100,7 @@ export default React.createClass({
     })
   },
 
-  /**
-   * 当前月各天的时间状态
-   */
+  // 当前月各天的时间状态
   getDates() {
     let d
     const dates = []
@@ -146,7 +134,8 @@ export default React.createClass({
 
     // 下月
     d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
-    for (let i = 0, len = 42 - dates.length; i < len; i++) {
+    const _len = dates.length
+    for (let i = 0, len = (_len <= 35 ? 35 : 42) - _len; i < len; i++) {
       dates.push({
         year: d.getFullYear(),
         month: d.getMonth(),
@@ -160,6 +149,14 @@ export default React.createClass({
   render() {
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
+    
+    // DateRange
+    let start, end
+    if (this.context.getStart) {
+      start = new Date(this.context.getStart()).setHours(0, 0, 0, 0)
+      end = new Date(this.context.getEnd()).setHours(0, 0, 0, 0)
+    }
+
     return (
       <div className="bfd-calendar">
         <div className="calendar-header">
@@ -178,14 +175,14 @@ export default React.createClass({
             <tr>{this.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
           </thead>
           <tbody>
-            {Array(7).join(0).split('').map((v, i) => {
+            {Array(dates.length / 7 + 1).join(0).split('').map((v, i) => {
               return (
                 <tr key={i}>{this.dayNames.map((name, j) => {
                   const index = i * 7 + j
                   const date = dates[index]
                   return (
                     <td key={index}>
-                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
+                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date, start, end)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
                     </td>
                   )
                 })}</tr>
@@ -197,3 +194,8 @@ export default React.createClass({
     )
   }
 })
+
+Calendar.propTypes = propTypes
+Calendar.contextTypes = contextTypes
+
+export default Calendar

@@ -22,7 +22,7 @@ const ModalDemo = React.createClass({
     return (
       <div>
         <button className="btn btn-primary" onClick={this.handleOpen}>点击打开</button>
-        <Modal open={this.state.isOpen} handleClose={this.handleClose}>
+        <Modal ref="test" open={this.state.isOpen} handleClose={this.handleClose}>
           <ModalHeader>
             <h4 className="modal-title">test</h4>
           </ModalHeader>

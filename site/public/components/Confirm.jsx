@@ -1,67 +1,33 @@
 import React from 'react'
-import Confirm from 'c/Confirm'
+import confirm from 'c/confirm'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 const ConfirmDemo = React.createClass({
 
-  getInitialState() {
-    return {
-      isOpen: false
-    }
-  },
-
   handleDelete() {
-    this.setState({isOpen: true})
-  },
-
-  handleClose() {
-    this.setState({isOpen: false})
-  },
-
-  onConfirm() {
-    console.log(1)
+    confirm('确认删除吗', () => {
+      console.log(1)
+    })
   },
 
   render() {
-    return (
-      <div>
-        <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
-        <Confirm open={this.state.isOpen} handleClose={this.handleClose} onConfirm={this.onConfirm}>确认删除吗？</Confirm>
-      </div>
-    )
+    return <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
   }
 })
 
-const ConfirmDemoCode = `import Confirm from 'bfd-ui/lib/Confirm'
+const ConfirmDemoCode = `import confirm from 'bfd-ui/lib/confirm'
 
 const App = React.createClass({
 
-  getInitialState() {
-    return {
-      isOpen: false
-    }
-  },
-
   handleDelete() {
-    this.setState({isOpen: true})
-  },
-
-  handleClose() {
-    this.setState({isOpen: false})
-  },
-
-  onConfirm() {
-    console.log(1)
+    confirm('确认删除吗', () => {
+      console.log(1)
+    })
   },
 
   render() {
-    return (
-      <div>
-        <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
-        <Confirm open={this.state.isOpen} handleClose={this.handleClose} onConfirm={this.onConfirm}>确认删除吗？</Confirm>
-      </div>
-    )
+    return <button type="button" className="btn btn-primary" onClick={this.handleDelete}>删除</button>
   }
 })`
 

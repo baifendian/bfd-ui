@@ -1,6 +1,3 @@
-/**
- * 下拉功能组件
- */
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import 'bfd-bootstrap'
@@ -71,13 +68,10 @@ const Dropdown = React.createClass({
     window.removeEventListener('click', this.handleBodyClick)
   },
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return this.state.isOpen !== nextState.isOpen   
-  // },
-
-  render() { 
+  render() {
+    const { className, children, ...other } = this.props
     return (
-      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', this.props.className, {open: this.state.isOpen})}>{this.props.children}</div>
+      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
     )
   }
 })
