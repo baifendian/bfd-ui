@@ -105,7 +105,9 @@ export default React.createClass( {
       //通过url查询后返回的回调函数重新渲染的数据
       if(this.state.items && this.state.items.totalList.length > 0 ){
         items = this.state.items.totalList
-        debugger
+      }
+      if(this.state.items.totalPageNum > 0 ){
+        totalPageNum = this.state.items.totalPageNum
       }
 
     }
