@@ -118,7 +118,8 @@ const Demo = React.createClass({
             </CheckboxGroup>
           </FormItem>
           <FormItem submit>
-            <button type="submit" className="btn btn-default">登录</button>
+            <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
+            <button className="btn  bfd-cancel-btn">取消</button>
           </FormItem>
         </Form>
       </div>            
@@ -211,7 +212,8 @@ const Demo2 = React.createClass({
               </div>                          
           </div>        
           <FormItem submit>
-            <button type="submit" className="btn btn-default">登录</button>
+            <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
+            <button className="btn  bfd-cancel-btn">取消</button>
           </FormItem>           
         </Form>
       </div>         

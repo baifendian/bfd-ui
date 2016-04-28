@@ -97,10 +97,21 @@ export default React.createClass( {
         items = data_
       }
     }
-    if( url && url.indexOf('?') < 0 && url.indexOf('pageSize') < 0 ) {
-      url += '?pageSize=' + this.props.pageSize + '&currentPage=' + this.state.currentPage
+    //如果是传入url查询数据就附带参数查询
+    if( url && url !== '' ) {
+      if(url.indexOf('?') < 0 && url.indexOf('pageSize') < 0 ) {
+        url += '?pageSize=' + this.props.pageSize + '&currentPage=' + this.state.currentPage+"&order="+this.state.order
+      }
+      //通过url查询后返回的回调函数重新渲染的数据
+      if(this.state.items && this.state.items.totalList.length > 0 ){
+        items = this.state.items.totalList
+      }
+      if(this.state.items.totalPageNum > 0 ){
+        totalPageNum = this.state.items.totalPageNum
+      }
+
     }
-    url += this.state.order
+    //url
     return (
       <div>
         {

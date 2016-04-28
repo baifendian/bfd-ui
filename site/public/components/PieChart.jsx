@@ -41,7 +41,7 @@ const App = React.createClass({
                       y:100
                     }
                   }} 
-                  colors={['red','yellow','blue','#000','green']}
+                  
                   radius={{inner:0.75}} 
                   animation={{pie:2500,lineText:500}}
                   tooltip={{enabled:true}} 
