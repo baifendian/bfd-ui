@@ -1,27 +1,19 @@
 import React, { PropTypes } from 'react'
 import 'bfd-bootstrap'
 
-const contextTypes = {
-  handleClose: PropTypes.func
-}
-
-function ModalHeader(props, context) {
-
-  function handleClose() {
-    props.handleClose && props.handleClose()
-    context.handleClose && context.handleClose()
-  }
-
+function ModalHeader({ children }, { modal }) {
   return (
     <div className="modal-header">
-      <button type="button" className="close" onClick={handleClose}>
+      <button type="button" className="close" onClick={modal.close}>
         <span>&times;</span>
       </button>
-      {props.children}
+      {children}
     </div>
   )
 }
 
-ModalHeader.contextTypes = contextTypes
+ModalHeader.contextTypes = {
+  modal: PropTypes.object
+}
 
 export default ModalHeader

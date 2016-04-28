@@ -46,6 +46,7 @@ var config = {
       c: path.resolve(__dirname, '../src')
     }
   },
+  devtool: '#source-map',
   plugins: []
 }
 
@@ -57,11 +58,12 @@ if (isProduction) {
   }))
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     output: {
+      warnings: false,
       comments: false
     }
   }))
   config.plugins.push(function() {
-    this.plugin("done", function(statsData) {
+    this.plugin('done', function(statsData) {
       var stats = statsData.toJson()
       console.log(stats.errors)
       var templateFile = 'index.html'

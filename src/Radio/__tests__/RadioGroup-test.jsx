@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import RadioGroup from '../RadioGroup'
 import Radio from '../Radio'
@@ -64,18 +64,18 @@ describe('RadioGroup', () => {
 
     it('className is ok', () => {
       const instance = TestUtils.renderIntoDocument(<RadioGroup className="test" />)
-      expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
+      expect(findDOMNode(instance).className.split(' ')).toContain('test')
     })
 
     it('style is ok', () => {
       const instance = TestUtils.renderIntoDocument(<RadioGroup style={{color: 'red'}} />)
-      expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
+      expect(findDOMNode(instance).style.color).toBe('red')
     })
 
     it('onClick is ok', () => {
       const handleClick = jest.fn()
       const instance = TestUtils.renderIntoDocument(<RadioGroup onClick={handleClick} />)
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
+      TestUtils.Simulate.click(findDOMNode(instance))
       expect(handleClick).toBeCalled()
     })
   })

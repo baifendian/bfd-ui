@@ -21,6 +21,8 @@ export default option => {
 
   let dataArray
 
+  xhr.open(type, option.url)
+
   if (isPOST) {
     dataArray = []
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
@@ -31,6 +33,5 @@ export default option => {
     }
   }
 
-  xhr.open(type, option.url)
   xhr.send(isPOST ? dataArray.join('&') : null)
 }

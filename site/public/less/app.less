@@ -32,22 +32,8 @@ html, body, #app {
     float: left;
   }
   > .content {
-    overflow: hidden;
     margin-left: 200px;
-    > div {
-      padding: 20px;
-      -webkit-animation: in .5s;
-    }
-  }
-} 
-@-webkit-keyframes in {
-  from {
-    opacity: 0.05;
-    -webkit-transform: translate3d(30px, 0, 0);
-  }
-  to {
-    opacity: 1;
-    -webkit-transform: translate3d(0, 0, 0);
+    padding: 20px;
   }
 }
 
@@ -62,4 +48,7 @@ html, body, #app {
   background-color: #333;
   color: #ccc;
   line-height: 50px;
+  a {
+    color: #fff;
+  }
 }

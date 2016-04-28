@@ -1,23 +1,10 @@
-import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import Calendar from './Calendar'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
+import 'bfd-bootstrap'
 import './less/datePicker.less'
-
-const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-
-const propTypes = {
-  date: checkDateTime,
-  min: checkDateTime,
-  max: checkDateTime,
-  onSelect: PropTypes.func,
-  customProp({ date, onSelect }) {
-    if (date && !onSelect) {
-      return new Error('You provided a `date` prop without an `onSelect` handler')
-    }
-  }
-}
 
 const DatePicker = React.createClass({
 
@@ -28,6 +15,8 @@ const DatePicker = React.createClass({
         date: Date.now() 
       }
   },
+
+  shouldComponentUpdate,
 
   handleSelect(date) {
     this.state && this.setState({ date })
@@ -51,6 +40,18 @@ const DatePicker = React.createClass({
   }
 })
 
-DatePicker.propTypes = propTypes
+const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+
+DatePicker.propTypes = {
+  date: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func,
+  customProp({ date, onSelect }) {
+    if (date && !onSelect) {
+      return new Error('You provided a `date` prop without an `onSelect` handler')
+    }
+  }
+}
 
 export default DatePicker

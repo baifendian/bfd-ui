@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import PureRenderMixin from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -19,8 +18,6 @@ const contextTypes = {
 }
 
 const Calendar = React.createClass({
-
-  mixins: [PureRenderMixin],
 
   getInitialState() {
     const d = this.props.date ? new Date(this.props.date) : new Date()

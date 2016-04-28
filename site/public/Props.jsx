@@ -1,33 +1,31 @@
-/**
- * 文档封装
- */
-
-import React from 'react'
+import React, { PropTypes } from 'react'
 import './less/props.less'
 
-const Props = React.createClass({
-  render() {
-    return (
-      <div className="props">
-        <ul>{this.props.children}</ul>
-      </div>
-    )
-  }
-})
+function Props({ children }) {
+  return (
+    <div className="props">
+      <ul>{children}</ul>
+    </div>
+  )
+}
 
-const Prop = React.createClass({
-  render() {
-    return (
-      <li>
-        <div className="common">
-          <span className="name">{this.props.name}</span>
-          <span className="type">{this.props.type}</span>
-          {'required' in this.props ? <span>required</span> : <span>optional</span>}
-        </div>
-        <div>{this.props.children}</div>
-      </li>
-    )
-  }
-})
+function Prop(props) {
+  return (
+    <li>
+      <div className="common">
+        <span className="name">{props.name}</span>
+        <span className="type">{props.type}</span>
+        {'required' in props ? <span>required</span> : <span>optional</span>}
+      </div>
+      <div>{props.children}</div>
+    </li>
+  )
+}
+
+Prop.propTypes = {
+  name: PropTypes.string,
+  type: PropTypes.string,
+  required: PropTypes.bool
+}
 
 export { Props, Prop }

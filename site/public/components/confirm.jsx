@@ -39,14 +39,12 @@ export default React.createClass({
         <h1>确认提示</h1>
         <Pre>{ConfirmDemoCode}</Pre>
         <ConfirmDemo></ConfirmDemo>
+        <h2>confirm(message, callback)</h2>
         <Props>
-          <Prop name="open" type="boolean" required>
-            <p>是否打开，默认关闭</p>
+          <Prop name="message" type="string | ReactElement" required>
+            <p>确认提示内容</p>
           </Prop>
-          <Prop name="handleClose" type="fucntion" required>
-            <p>关闭动作的处理，用来同步 isOpen 的状态</p>
-          </Prop>
-          <Prop name="onConfirm" type="fucntion">
+          <Prop name="callback" type="fucntion" required>
             <p>确定后的回调</p>
           </Prop>
         </Props>
