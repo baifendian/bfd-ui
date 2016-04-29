@@ -17,7 +17,7 @@ describe('SelectTree', () => {
 
     it('style is ok', () => {
       const instance = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={handleChange} style={{color: 'red'}} />)
-      expect(ReactDOM.findDOMNode(instance).style.color).toContain('red')
+      expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
     })
 
     it('onClick is ok', () => {

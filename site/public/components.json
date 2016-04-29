@@ -23,7 +23,7 @@
   "name": "Tabs",
   "cn": "选项卡"
 }, {
-  "name": "Message",
+  "name": "message",
   "cn": "全局提示"
 }, {
   "name": "DataTable",
@@ -31,6 +31,9 @@
 }, {
   "name": "Form",
   "cn": "表单"
+}, {
+  "name": "Form2",
+  "cn": "表单2"
 }, {
   "name": "Radio",
   "cn": "单选框"
@@ -59,7 +62,7 @@
   "name": "ClearableInput",
   "cn": "可清空的输入框"
 }, {
-  "name": "Confirm",
+  "name": "confirm",
   "cn": "确认提示"
 }, {
   "name": "ColumnChart",

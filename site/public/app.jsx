@@ -17,26 +17,28 @@ const App = React.createClass({
     return (
       <div id="wrapper">
         <div id="header">
-          <Link to="/" className="pull-left">
+          <a href="/" className="pull-left">
             <h2>BFD UI</h2>
-          </Link>
+          </a>
           <div className="pull-right">
-            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">发现问题？</a>
+            文档版本：v0.x
           </div>
         </div>
         <div id="body" className="clearfix">
           <div className="sidebar">
-            <Nav>
-              <NavItem href="/" icon="home" title="首页" />
-              <NavItem href="/components" icon="th" title="组件" />
-              <NavItem href="/integration" icon="hand-right" title="开发工作流" />
-              <NavItem href="/changeLog" icon="random" title="更新日志" />
+            <Nav href="/">
+              <NavItem icon="home" title="首页" />
+              <NavItem href="components" icon="th" title="组件" />
+              <NavItem href="integration" icon="hand-right" title="开发工作流" />
+              <NavItem href="changeLog" icon="random" title="更新日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
         </div>
         <div id="footer">
-          <div className="pull-left">当前版本：v0.0.22</div>
+          <div className="pull-left">
+            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">提交bug</a>
+          </div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>
       </div>

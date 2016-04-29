@@ -198,7 +198,7 @@ export default class {
      * 动画时长（参考线、tooltip平滑过渡）
      * @type {number}
      */
-    const duration = 250 / categories.length
+    const duration = 400 / categories.length
 
     /**
      * 参考线

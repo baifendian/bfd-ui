@@ -54,19 +54,22 @@ ReactDOM.render((
         </Pre>
         <h2>Nav</h2>
         <Props>
-          <Prop name="onItemClick" type="Function">
+          <Prop name="href" type="string">
+            <p>基础 URL </p>
+          </Prop>
+          <Prop name="onItemClick" type="function">
             <p>单条菜单点击后的回调，参数为当前点击菜单的 props</p>
           </Prop>
         </Props>
         <h2>NavItem</h2>
         <Props>
-          <Prop name="href" type="String" required>
+          <Prop name="href" type="string" required>
             <p>菜单 URL</p>
           </Prop>
-          <Prop name="icon" type="String">
+          <Prop name="icon" type="string">
             <p>菜单图标，一级菜单配置，图标请参考 Bootstrap 图标</p>
           </Prop>
-          <Prop name="title" type="String" required>
+          <Prop name="title" type="string" required>
             <p>菜单名称</p>
           </Prop>
         </Props>

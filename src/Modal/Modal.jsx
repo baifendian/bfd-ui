@@ -4,9 +4,6 @@ import classnames from 'classnames'
 import 'bfd-bootstrap'
 import './modal.less'
 
-/**
- * 获取浏览器滚动条的宽度，模态框打开时隐藏 body 滚动条
- */
 const scrollbarWidth = (() => {
   const scrollDiv = document.createElement('div')
   const body = document.body
@@ -19,34 +16,18 @@ const scrollbarWidth = (() => {
   return scrollbarWidth
 })()
 
-// TODO: 1.0版本这两个属性都是必选的
-const propTypes = {
-  open: PropTypes.bool,
-  handleClose: PropTypes.func
-}
-
-const childContextTypes = {
-  /**
-   * 响应 ModelHeader 关闭点击事件
-   */
-  handleClose: PropTypes.func
-}
-
 const Modal = React.createClass({
+
   getInitialState() {
     return {
-      isOpen: !!this.props.open
+      isOpen: false
     }
   },
 
   getChildContext() {
     return {
-      handleClose: this.close
+      modal: this
     }
-  },
-
-  componentWillReceiveProps(nextProps) {
-    'open' in nextProps && this.setState({isOpen: nextProps.open})  
   },
 
   componentWillUpdate(nextProps, nextState) {
@@ -54,11 +35,11 @@ const Modal = React.createClass({
     const bodyClassName = body.className
     const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
 
-    if (nextState.isOpen) {
-      this.scrollbarWidth = body.scrollHeight > body.clientHeight ? scrollbarWidth : 0
+    if (nextState.isOpen && !this.state.isOpen) {
+      this.scrollbarWidth = body.scrollHeight > window.innerHeight ? scrollbarWidth : 0
       body.className = bodyClassName + ' modal-open'
-      body.style.paddingRight = bodyPaddingRight + scrollbarWidth + 'px'
-    } else {
+      body.style.paddingRight = bodyPaddingRight + this.scrollbarWidth + 'px'
+    } else if (!nextState.isOpen && this.state.isOpen) {
       setTimeout(() => {
         body.className = bodyClassName.replace(' modal-open', '')
         if (bodyPaddingRight) {
@@ -84,7 +65,6 @@ const Modal = React.createClass({
 
   close() {
     this.setState({isOpen: false})
-    this.props.handleClose && this.props.handleClose()
   },
 
   render() {
@@ -108,7 +88,8 @@ const Modal = React.createClass({
   }
 })
 
-Modal.propTypes = propTypes
-Modal.childContextTypes = childContextTypes
+Modal.childContextTypes = {
+  modal: PropTypes.instanceOf(Modal)
+}
 
 export default Modal

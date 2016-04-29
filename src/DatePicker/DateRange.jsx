@@ -1,68 +1,83 @@
 import React, { PropTypes } from 'react'
 import DatePicker from './DatePicker'
-import getTimestrap from './getTimestrap'
+import classnames from 'classnames'
 import './less/dateRange.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
-export default React.createClass({
+const propTypes = {
+  start: checkDateTime,
+  end: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func,
+  customProp({ start, end, onSelect }) {
+    if ((start || end) && !onSelect) {
+      return new Error('You provided a `start` or `end` prop without an `onSelect` handler')
+    }
+  }
+}
 
-  propTypes: {
-    start: checkDateTime,
-    end: checkDateTime,
-    min: checkDateTime,
-    max: checkDateTime,
-    onSelect: PropTypes.func
-  },
+const childContextTypes = {
+  getStart: PropTypes.func,
+  getEnd: PropTypes.func
+}
+
+const DateRange = React.createClass({
 
   getInitialState() {
-    return {
-      start: getTimestrap(this.props.start),
-      end: getTimestrap(this.props.end)
-    }
-  },
-
-  componentWillReceiveProps(nextProps) {
     const state = {}
-    if ('start' in nextProps) {
-      state.start = getTimestrap(nextProps.start)
+    if (!this.props.start) {
+      state.start = new Date().setHours(0, 0, 0, 0)
     }
-    if ('end' in nextProps) {
-      state.end = getTimestrap(nextProps.end)
+    if (!this.props.end) {
+      state.end = new Date().setHours(0, 0, 0, 0)
     }
-    this.setState(state)
-  },
-
-  childContextTypes: {
-    getStart: PropTypes.func,
-    getEnd: PropTypes.func
+    return state
   },
 
   getChildContext() {
     return {
-      getStart: () => this.state.start,
-      getEnd: () => this.state.end
+      getStart: () => this.getStart(),
+      getEnd: () => this.getEnd()
     }
   },
 
+  getStart() {
+    return this.props.start || this.state.start
+  },
+
+  getEnd() {
+    return this.props.end || this.state.end
+  },
+
   handleSelect(type, date) {
-    this.setState({[type]: date})
     let range
     if (type === 'start') {
-      range = [date, this.state.end]
+      this.state.start && this.setState({start: date})
+      range = [date, this.getEnd()]
     } else {
-      range = [this.state.start, date]
+      this.state.end && this.setState({end: date})
+      range = [this.getStart(), date]
     }
     this.props.onSelect && this.props.onSelect.apply(this, range)
   },
 
   render() {
+    const { className, onSelect, ...other } = this.props
+    const start = this.getStart()
+    const end = this.getEnd()
     return (
-      <div className="bfd-daterange">
-        <DatePicker date={this.state.start} min={this.props.min} max={this.state.end} onSelect={this.handleSelect.bind(this, 'start')} />
+      <div className={classnames('bfd-daterange', className)} {...other}>
+        <DatePicker date={start} min={this.props.min} max={end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
-        <DatePicker date={this.state.end} min={this.state.start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
+        <DatePicker date={end} min={start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
       </div>
     )
   }
 })
+
+DateRange.propTypes = propTypes
+DateRange.childContextTypes = childContextTypes
+
+export default DateRange

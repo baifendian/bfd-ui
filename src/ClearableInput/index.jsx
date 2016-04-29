@@ -8,8 +8,8 @@ const propTypes = {
   placeholder: PropTypes.string,
   inline: PropTypes.bool,
   onChange: PropTypes.func,
-  customProp(props) {
-    if (props.value && !props.onChange) {
+  customProp({ value, onChange }) {
+    if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
   }

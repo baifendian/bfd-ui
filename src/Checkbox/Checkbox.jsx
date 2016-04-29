@@ -2,46 +2,44 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import './less/checkbox.less'
 
-const propTypes = {
+function Checkbox(props, { checkboxGroup }) {
+
+  const { className, value, checked, disabled, children, block, onChange, ...other } = props
+  const {...inputProps} = { value, checked, disabled, onChange }
+
+  if (checkboxGroup) {
+
+    const selects = checkboxGroup.getSelects()
+    if (selects.length) {
+      inputProps.checked = selects.indexOf(value) > -1
+    }
+    
+    inputProps.onChange = e => {
+      checkboxGroup[(e.target.checked ? 'add' : 'remove') + 'Select'](e.target.value)
+    }
+  }
+
+  return (
+    <div className={classnames('bfd-checkbox', {checkbox: block, 'checkbox-inline': !block, disabled: disabled}, className)} {...other}>
+      <label>
+        <input type="checkbox" {...inputProps} />
+        <span className="status"></span>
+        {children ? <span>{children}</span> : null}
+      </label>
+    </div>
+  )
+}
+
+Checkbox.propTypes = {
+  value: PropTypes.string,
+  checked: PropTypes.bool,
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
   block: PropTypes.bool
 }
 
-const contextTypes = {
-  checkboxGroupSelects: PropTypes.array,
-  setCheckboxGroupSelects: PropTypes.func
+Checkbox.contextTypes = {
+  checkboxGroup: PropTypes.object
 }
-
-const Checkbox = React.createClass({
-
-  render() {
-    const { children, block, ...other } = this.props
-
-    if (this.context.setCheckboxGroupSelects) {
-
-      // 复选框组的逻辑单独处理
-      const selects = this.context.checkboxGroupSelects
-      if (selects.length) {
-        other.checked = selects.indexOf(this.props.value) > -1
-      }
-      
-      other.onChange = e => {
-        this.context.setCheckboxGroupSelects(e.target.value, e.target.checked)
-      }
-    }
-
-    return (
-      <div className={classnames('bfd-checkbox', {checkbox: block, 'checkbox-inline': !block, disabled: other.disabled})}>
-        <label>
-          <input type="checkbox" {...other} />
-          <span className="status"></span>
-          {children ? <span>{children}</span> : null}
-        </label>
-      </div>
-    )
-  }
-})
-
-Checkbox.propTypes = propTypes
-Checkbox.contextTypes = contextTypes
 
 export default Checkbox

@@ -1,45 +1,73 @@
+import React, { PropTypes } from 'react'
+import { render } from 'react-dom'
+import warning from '../warning'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import classnames from 'classnames'
 import 'bfd-bootstrap'
-import './main.css'
-import React from 'react'
-import ReactDOM from 'react-dom'
-import classNames from 'classnames'
+import './main.less'
 
-const defaultDuration = 2;
+const Message = React.createClass({
 
-function buildDom(infoClass,content){
-  const fDiv = document.createElement('div');
-  const cDiv = document.createElement('div');
-  fDiv.className = 'alert-message';
-  cDiv.className = 'alert alert-'+infoClass+'';
-  cDiv.innerHTML = content;
-  fDiv.appendChild(cDiv);
-  document.body.appendChild(fDiv);
-}
+  getInitialState() {
+    return {}
+  },
 
-function closeDom(){
-  var div = document.getElementsByClassName('alert-message')[0];
-  document.body.removeChild(div);
-}
+  handleRemove() {
+    this.setState({show: false})
+  },
 
-function notice(content,duration,infoClass){
-  if(duration === undefined){
-    duration = defaultDuration
+  render() {
+    const { show, type, message } = this.state
+    return (
+      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
+        {show ? (
+          <div className={classnames('bfd-message', type)}>
+            {message}
+            {type === 'danger' ? <span className="glyphicon glyphicon-remove remove" onClick={this.handleRemove}></span> : null}
+          </div>
+        ) : null}
+      </ReactCSSTransitionGroup>
+    )
   }
-  buildDom(infoClass,content);
-  setTimeout(closeDom, duration*1000)
+})
+
+
+let instance
+
+function showMessage(type, message, duration = 2) {
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (typeof message !== 'string' && !(message && message['$$typeof'])) {
+      warning('`message` should be `string` or `ReactElement`, check the first param of message.' + type)
+    }
+  }
+
+  if (!instance) {
+    const container = document.createElement('div')
+    document.body.appendChild(container)
+    instance = render(<Message />, container)
+  }
+
+  instance.setState({
+    message,
+    type,
+    duration,
+    show: true
+  })
+
+  if (type !== 'danger') {
+    setTimeout(() => {
+      instance.setState({show: false})
+    }, duration * 1000)
+  }
 }
 
 export default {
-  info(content, duration) {
-    return notice(content, duration, 'info' );
+  success(message, duration) {
+    showMessage('success', message, duration)
   },
-  success(content, duration) {
-    return notice(content, duration, 'success');
-  },
-  danger(content, duration) {
-    return notice(content, duration, 'danger');
-  },
-  warning(content, duration) {
-    return notice(content, duration, 'warning');
+
+  danger(message) {
+    showMessage('danger', message)
   }
 }

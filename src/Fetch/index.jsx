@@ -12,6 +12,23 @@ export default React.createClass({
     }
   },
 
+  shouldComponentUpdate(nextProps) {
+    // URL变化触发ajax请求
+    if (this.props.url !== nextProps.url) {
+      this.fetch()
+      return false
+    }
+    return true
+  },
+  
+  componentDidMount() {
+    const container = this.refs.container
+    if (!parseInt(getComputedStyle(container).height, 10)) {
+      container.style.height = '100%'
+    }
+    this.fetch()
+  },
+
   fetch() {
     this.lazyFetch()
     this.props.onFetch && this.props.onFetch()
@@ -55,23 +72,6 @@ export default React.createClass({
     this.setState({xhr: 'error', msg})
   },
 
-  shouldComponentUpdate(nextProps) {
-    // URL变化触发ajax请求
-    if (this.props.url !== nextProps.url) {
-      this.fetch()
-      return false
-    }
-    return true
-  },
-  
-  componentDidMount() {
-    const container = this.refs.container
-    if (!parseInt(getComputedStyle(container).height, 10)) {
-      container.style.height = '100%'
-    }
-    this.fetch()
-  },
-
   render() {
     return (
       <div className={classnames('bfd-fetch', this.props.className)} style={this.props.style} ref="container">
@@ -79,8 +79,14 @@ export default React.createClass({
           <div className="fetch-mask">
           {(() => {
             switch(this.state.xhr) {
-              case 'loading': return '加载中...'
-              case 'error': return this.state.msg
+              case 'loading': return (
+                <div className="state loading">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+              )
+              case 'error': return <div className="state">{this.state.msg}</div>
             }
           })()}
           </div>
