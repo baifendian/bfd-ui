@@ -46,7 +46,6 @@ var config = {
       c: path.resolve(__dirname, '../src')
     }
   },
-  devtool: '#source-map',
   plugins: []
 }
 
@@ -58,7 +57,6 @@ if (isProduction) {
   }))
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     output: {
-      warnings: false,
       comments: false
     }
   }))
@@ -72,6 +70,8 @@ if (isProduction) {
       fs.writeFileSync(path.join(__dirname, templateFile), template)
     })
   })
+} else {
+  config.devtool = '#source-map'
 }
 
 module.exports = config
