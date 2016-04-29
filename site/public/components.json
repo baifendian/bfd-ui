@@ -2,6 +2,12 @@
   "name": "LineChart",
   "cn": "线图"
 }, {
+  "name": "ColumnChart",
+  "cn": "柱状图"
+}, {
+  "name": "StackedColumnChart",
+  "cn": "堆叠图"
+}, {
   "name": "PieChart",
   "cn": "饼图"
 }, {
@@ -70,4 +76,4 @@
 }, {
   "name": "xhr",
   "cn": "AJAX请求"
-}]
+}]  
