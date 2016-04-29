@@ -32,7 +32,12 @@ export default class {
 
   constructor(config) {
 
-    const { container, category, cols, data } = config
+    const {
+      container,
+      category,
+      cols,
+      data
+    } = config
 
     const yAxisConfig = config.yAxis || {}
     const colors = config.colors || ['#26c6da', '#5c6bc0', '#f9ce1d', '#9c27b0']
@@ -58,10 +63,12 @@ export default class {
      */
     let series = Object.keys(cols).map(key => {
       return {
-        key, name: cols[key], data: []
+        key,
+        name: cols[key],
+        data: []
       }
     })
-    
+
     // X轴节点数
     const categories = []
 
@@ -180,7 +187,7 @@ export default class {
      * =========================================================================================
      * tooltip功能：参考线、参考线与 x 轴交汇的圆点、详细数据浮层
      */
-    
+
     /**
      * 存储最后的索引，相同的位置不再重复绘制(参考线、tooltip等)
      * @type {number}
@@ -250,7 +257,7 @@ export default class {
     function drawTooltip(eventTarget, isInitial) {
 
       const xAxisIndex = getXAxisIndex(eventTarget)
-      
+
       if (lastxAxisIndex !== xAxisIndex) {
 
         lastxAxisIndex = xAxisIndex
@@ -402,7 +409,7 @@ export default class {
 
         _series.forEach((serie, i) => {
           if (serie.disabled) return
-          
+
           const serieGroup = d3.select(serieGroups[0][i]).transition().duration(500)
           const markerGroup = d3.select(markerGroups[0][i]).transition().duration(500)
 
@@ -410,7 +417,7 @@ export default class {
             .attr('d', linePathGenerator.y(d => yScale(d[serie.key])))
           serieGroup.select('path.area')
             .attr('d', areaPathGenerator.y1(d => yScale(d[serie.key])))
-          
+
           markerGroup.selectAll('.marker')
             .attr('transform', d => `translate(${xScale(d[category])}, ${yScale(d[serie.key])})`)
         })
