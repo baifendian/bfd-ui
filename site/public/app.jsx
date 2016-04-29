@@ -19,10 +19,8 @@ const App = React.createClass({
         <div id="header">
           <a href="/" className="pull-left">
             <h2>BFD UI</h2>
+            <span>v0.x</span>
           </a>
-          <div className="pull-right">
-            文档版本：v0.x
-          </div>
         </div>
         <div id="body" className="clearfix">
           <div className="sidebar">
@@ -30,6 +28,7 @@ const App = React.createClass({
               <NavItem icon="home" title="首页" />
               <NavItem href="components" icon="th" title="组件" />
               <NavItem href="integration" icon="hand-right" title="开发工作流" />
+              <NavItem href="rules" icon="bullhorn" title="开发规范" />
               <NavItem href="changeLog" icon="random" title="更新日志" />
             </Nav>
           </div>
@@ -68,6 +67,11 @@ render((
       <Route path="integration" getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./Integration').default)
+        })
+      }}/>
+      <Route path="rules" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./Rules').default)
         })
       }}/>
       <Route path="changeLog" getComponent={(location, cb) => {

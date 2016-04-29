@@ -22,9 +22,12 @@ if (!isProduction) {
   }))
 }
 
-// app.get('/', function(req, res) {
-//   res.send('index')
-// })
+app.post('/api/form', function(req, res) {
+  res.json({
+    code: 200,
+    data: {}
+  })
+})
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))

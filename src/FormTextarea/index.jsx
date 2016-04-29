@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './FormInput.less'
+import './index.less'
 
-const FormInput = React.createClass({
+const FormTextarea = React.createClass({
   
   render() {
 
@@ -34,13 +34,13 @@ const FormInput = React.createClass({
       this.context.formItem.validate(value)
     }
     
-    return <input type="text" className={classnames('form-control form-input', className)} {...other} />
+    return <textarea className={classnames('form-control bfd-form-textarea', className)} {...other} />
   }
 })
 
-FormInput.contextTypes = {
+FormTextarea.contextTypes = {
   form: PropTypes.object,
   formItem: PropTypes.object
 }
 
-export default FormInput
+export default FormTextarea

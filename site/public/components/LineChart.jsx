@@ -2,6 +2,7 @@ import React from 'react'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import LineChart from 'c/LineChart'
+import Warn from '../Warn'
 
 const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
@@ -64,7 +65,7 @@ export default React.createClass({
   date: "2016-01-01"
 }]`}
             </Pre>
-            <div className="alert alert-warning">url 和 data 属性至少提供一个</div>
+            <Warn>url 和 data 属性至少提供一个</Warn>
           </Prop>
         </Props>
       </div>

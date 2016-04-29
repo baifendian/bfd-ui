@@ -28,9 +28,6 @@ const FormItem = React.createClass({
   },
 
   validate(value) {
-    
-    if (this.state.error) return false
-
     const rules = this.context.form.props.rules
     const rule = rules && rules[this.props.name]
     let isValid = true
@@ -77,7 +74,7 @@ const FormItem = React.createClass({
 
     return (
       <div className={classnames('form-group', className, {'has-error': error})} {...other}>
-        <div className="form-label" style={{width: labelWidth + 'px'}}>{label}：</div>
+        { label ? <div className="form-label" style={{width: labelWidth + 'px'}}>{label}：</div> : null }
         <div className="form-content" style={{marginLeft: labelWidth + 'px'}}>
           {children}
           {Error ? Error : Help}

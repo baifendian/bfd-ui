@@ -5,13 +5,34 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
-      <Version version="0.0.22" date="2016-04-16">
-        <p>新增组件：</p>
+      <Version version="0.1.0" date="2016-04-29">
+        <p>新增组件: </p>
         <ul>
-          <li>可清空的输入框：ClearableInput</li>
-          <li>确认提示：Confirm</li>
+          <li>新版表单: Form、FormItem 及其生态圈组件 FormInput、FormSelect、FormTextarea</li>
+          <li>新版选择列表: Select、Option</li>
+          <li>AJAX 请求: xhr</li>
+          <li>柱状图: ColumnChart</li>
+          <li>堆叠柱状图: StackedColumnChart</li>
         </ul>
-        <p>其他：</p>
+        <p>其他: </p>
+        <ol>
+          <li>Modal 实时获取 body 的 className，解决因动态变化导致的意外问题</li>
+          <li>Confirm 修改为 confirm，直接代码调用</li>
+          <li>Fetch 加载中样式更新</li>
+          <li>修复 Modal 打开并重绘时带来的问题</li>
+          <li>Nav 添加 href 作为 baseURL</li>
+          <li>message 样式更新，danger 类型调整为手动关闭</li>
+          <li>Datepicker、DateRange 日期默认修正为空 <a href="http://git.baifendian.com/front-end/bfd-ui/issues/50">#50</a></li>
+          <li>开发规范栏目开通，包括前后端接口规范、代码规范</li>
+        </ol>
+      </Version>
+      <Version version="0.0.22" date="2016-04-16">
+        <p>新增组件: </p>
+        <ul>
+          <li>可清空的输入框: ClearableInput</li>
+          <li>确认提示: Confirm</li>
+        </ul>
+        <p>其他: </p>
         <ol>
           <li>修复当页面没有垂直滚动条时，Modal 打开时抖动的问题 <a href="http://git.baifendian.com/front-end/bfd-ui/issues/40">#40</a></li>
           <li>Fix <a href="http://git.baifendian.com/front-end/bfd-ui/issues/39">#39</a></li>
@@ -47,28 +68,28 @@ import SelectTree from 'bfd-ui/lib/Tree/SelectTree'`}</Pre>
         </ol>
       </Version>
       <Version version="0.0.20" date="2016-04-01">
-        <p>组件：</p>
+        <p>组件: </p>
         <ul>
-          <li>线图：LineChart</li>
-          <li>饼图：PieChart</li>
-          <li>散点图：ScatterPlot</li>
-          <li>气泡图：BubbleChart</li>
-          <li>环形百分比：Percentage</li>
-          <li>模态框：Modal, ModalHeader, ModalBody</li>
-          <li>日期选择：DatePicker, DateRange</li>
-          <li>导航：Nav, NavItem</li>
-          <li>选项卡：Tabs, TabList, Tab, TabPanel</li>
-          <li>全局提示：Message</li>
-          <li>数据表格&分页：DataTable</li>
-          <li>表单：Form, FormItem</li>
-          <li>单选框：Radio, RadioGroup</li>
-          <li>复选框：Checkbox, CheckboxGroup</li>
-          <li>下拉框：Select</li>
-          <li>AJAX加载管理：Fetch</li>
-          <li>下拉菜单：Dropdown, DropdownToggle, DropdownMenu</li>
-          <li>穿梭框：Transfer</li>
-          <li>树：Tree, SelectTree</li>
-          <li>查询下拉框：SearchSelect</li>
+          <li>线图: LineChart</li>
+          <li>饼图: PieChart</li>
+          <li>散点图: ScatterPlot</li>
+          <li>气泡图: BubbleChart</li>
+          <li>环形百分比: Percentage</li>
+          <li>模态框: Modal, ModalHeader, ModalBody</li>
+          <li>日期选择: DatePicker, DateRange</li>
+          <li>导航: Nav, NavItem</li>
+          <li>选项卡: Tabs, TabList, Tab, TabPanel</li>
+          <li>全局提示: Message</li>
+          <li>数据表格&分页: DataTable</li>
+          <li>表单: Form, FormItem</li>
+          <li>单选框: Radio, RadioGroup</li>
+          <li>复选框: Checkbox, CheckboxGroup</li>
+          <li>下拉框: Select</li>
+          <li>AJAX加载管理: Fetch</li>
+          <li>下拉菜单: Dropdown, DropdownToggle, DropdownMenu</li>
+          <li>穿梭框: Transfer</li>
+          <li>树: Tree, SelectTree</li>
+          <li>查询下拉框: SearchSelect</li>
         </ul>
       </Version>
     </div>

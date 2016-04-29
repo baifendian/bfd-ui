@@ -51,21 +51,9 @@ export default React.createClass({
     }, 150)
   },
 
-  handleSuccess(res) {
-    try {
-      if ('code' in res && 'data' in res) {
-        if (res.code === 200) {
-          this.setState({xhr: 'success'})
-          this.props.onSuccess(res.data)
-        } else {
-          this.handleError(res.message)
-        }
-      } else {
-        throw this.props.url + '返回的数据格式必须为{code: xxx, data: []}'
-      }
-    } catch(e) {
-      throw e
-    }
+  handleSuccess(data) {
+    this.setState({xhr: 'success'})
+    this.props.onSuccess(data)
   },
 
   handleError(msg) {

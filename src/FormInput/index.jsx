@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import ClearableInput from '../ClearableInput'
 import classnames from 'classnames'
 import './index.less'
 
@@ -19,8 +20,7 @@ const FormInput = React.createClass({
       }
     }
     
-    other.onChange = e => {
-      const value = e.target.value
+    other.onChange = value => {
       const formData = form.props.data
 
       if (!formItem.props.multiple) {
@@ -34,7 +34,7 @@ const FormInput = React.createClass({
       this.context.formItem.validate(value)
     }
     
-    return <input type="text" className={classnames('form-control bfd-form-input', className)} {...other} />
+    return <ClearableInput className={classnames('bfd-form-input', className)} {...other} />
   }
 })
 

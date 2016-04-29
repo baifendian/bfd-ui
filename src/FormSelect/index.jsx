@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import { Select, Option } from '../Select'
+import { Select, Option } from '../Select2'
 import './index.less'
 
 const FormSelect = React.createClass({
@@ -13,10 +13,10 @@ const FormSelect = React.createClass({
     const data = form.props.data[name]
 
     if (!formItem.props.multiple) {
-      other.selected = data
+      other.value = data
     } else {
       if (data instanceof Array) {
-        other.selected = data[formItem.multipleIndex]
+        other.value = data[formItem.multipleIndex]
       }
     }
     

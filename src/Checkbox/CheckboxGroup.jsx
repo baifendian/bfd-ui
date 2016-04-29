@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Checkbox from './Checkbox'
-import update from 'react-addons-update'
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
 import './less/checkboxGroup.less'
@@ -21,39 +20,19 @@ const CheckboxGroup = React.createClass({
     }
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!this.props.children) {
-      return shouldComponentUpdate.call(this, nextProps, nextState)
-    }
-    return true
-  },
-
   getSelects() {
     return this.props.selects || this.state.selects
   },
 
   addSelect(value) {
     let selects = this.getSelects()
-    if (this.state.selects) {
-      selects.push(value)
-    } else {
-      selects = update(selects, {
-        $push: [value]
-      })
-    }
+    selects.push(value)
     this.props.onChange && this.props.onChange(selects)
   },
 
   removeSelect(value) {
     let selects = this.getSelects()
-    const splice = [selects.indexOf(value), 1]
-    if (this.state.selects) {
-      selects.splice(splice[0], splice[1])
-    } else {
-      selects = update(selects, {
-        $splice: [splice]
-      })
-    }
+    selects.splice(selects.indexOf(value), 1)
     this.props.onChange && this.props.onChange(selects)
   },
 

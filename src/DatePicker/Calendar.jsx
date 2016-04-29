@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -32,6 +33,8 @@ const Calendar = React.createClass({
       currentMonth: month
     }
   },
+
+  shouldComponentUpdate,
 
   dayNames: ['日', '一', '二', '三', '四', '五', '六'],
 

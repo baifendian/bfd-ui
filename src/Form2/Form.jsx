@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import xhr from '../xhr'
 import message from '../message'
+import warning from '../warning'
 import './Form.less'
 
 const Form = React.createClass({
@@ -20,8 +21,8 @@ const Form = React.createClass({
     this.multipleCounterMap = {}
   },
 
-  validate() {
-    const data = this.props.data
+  validate(data) {
+    data || (data = this.props.data)
     let isValid = true
     this.formItems.forEach(formItem => {
       const { name, multiple } = formItem.props
@@ -40,14 +41,17 @@ const Form = React.createClass({
     e.preventDefault()
   },
 
-  save() {
+  save(data) {
     if (this.validate()) {
+      if (process.env.NODE_ENV !== 'production') {
+        this.props.action || warning('No `action` provided, check the Form component you save.')
+      }
       xhr({
         type: 'post',
         url: this.props.action,
-        data: this.props.data,
-        success: res => {
-          this.props.onSuccess && this.props.onSuccess(res)
+        data: data || this.props.data,
+        success: data => {
+          this.props.onSuccess && this.props.onSuccess(data)
         }
       })
     }
@@ -68,13 +72,15 @@ Form.defaultProps = {
 }
 
 Form.propTypes = {
-  rules: PropTypes.object,
   data: PropTypes.object,
   onChange: PropTypes.func,
+  rules: PropTypes.object,
   labelWidth: PropTypes.number,
+  action: PropTypes.string,
+  onSuccess: PropTypes.func,
   customProp({ data, onChange }) {
     if (data && !onChange) {
-      return new Error('You provided a `data` prop without an `onChange` handler')
+      return new Error('You provided a `data` prop without an `onChange` handler.')
     }
   }
 }
