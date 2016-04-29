@@ -61,4 +61,10 @@
 }, {
   "name": "Confirm",
   "cn": "确认提示"
+}, {
+  "name": "ColumnChart",
+  "cn": "柱状图"
+}, {
+  "name": "StackedColumnChart",
+  "cn": "堆叠图"
 }]
