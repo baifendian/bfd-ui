@@ -43,28 +43,20 @@ export default React.createClass({
             </Pre>
           </Prop>
           <Prop name="url" type="String">
-            <p>数据源URL，data 格式要求数组，字段分别对应 cols 和 category</p>
+            <p>数据源URL，依赖 xhr 组件，返回格式：</p>
             <Pre>
-{`{
-  "code": 200,
-  "message": "当code不是200时，message信息会展示到页面",
-  "data": [{
-    user: 100,
-    sales: 3432,
-    date: "2016-01-01"
-  }]
-}`}
-            </Pre>
-          </Prop>
-          <Prop name="data" type="Array">
-            <p>数据源，格式与 url 方式返回的 data 格式一样</p>
-            <Pre>
-{`[{
+{`
+// 字段分别对应 cols 和 category 的配置
+[{
   user: 100,
   sales: 3432,
   date: "2016-01-01"
-}]`}
+}]
+`}
             </Pre>
+          </Prop>
+          <Prop name="data" type="Array">
+            <p>数据源，格式参考 url 属性</p>
             <Warn>url 和 data 属性至少提供一个</Warn>
           </Prop>
         </Props>

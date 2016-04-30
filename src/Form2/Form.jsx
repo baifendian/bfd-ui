@@ -14,11 +14,19 @@ const Form = React.createClass({
   },
 
   componentWillMount() {
-    this.multipleCounterMap = {}
+    this.items = []
+    // this.
   },
 
-  componentWillUpdate() {
-    this.multipleCounterMap = {}
+  // componentWillUpdate() {
+  //   this.multipleCounterMap = {}
+  // },
+
+  addItem(item) {
+    this.items.push(item)
+    if (item.props.multiple) {
+      item.uuid = Math.random().toString(16).slice(2)
+    }
   },
 
   validate(data) {

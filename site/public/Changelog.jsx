@@ -23,7 +23,6 @@ function ChangeLog() {
           <li>Nav 添加 href 作为 baseURL</li>
           <li>message 样式更新，danger 类型调整为手动关闭</li>
           <li>Datepicker、DateRange 日期默认修正为空 <a href="http://git.baifendian.com/front-end/bfd-ui/issues/50">#50</a></li>
-          <li>开发规范栏目开通，包括前后端接口规范、代码规范</li>
         </ol>
       </Version>
       <Version version="0.0.22" date="2016-04-16">

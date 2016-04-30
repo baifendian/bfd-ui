@@ -1,70 +1,49 @@
-import message from './message'
+const request = new XMLHttpRequest()
 
 function xhr(option) {
 
-  const type = (option.type || 'GET').toUpperCase()
-  const isPOST = type === 'POST'
-  const xhr = new XMLHttpRequest()
-  const { success, error, url } = option
-  const urlCheckTip = `, check the response of '${url}'.`
-  
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        let response = xhr.responseText
-        if (xhr.getResponseHeader('Content-Type').indexOf('application/json') !== -1) {
-          response = JSON.parse(xhr.responseText)
-        } else {
-          message.danger(`Type of response should be 'json'${urlCheckTip}`)
-        }
+  option.url = (xhr.baseUrl || '') + option.url
+  option.type = (option.type || 'get').toUpperCase()
 
-        if ('code' in response && 'data' in response) {
-          const code = response.code
-          if (code === 200) {
-            success && success(response.data)
-          } else {
-            const msg = 'code ' + code + ', ' + (response.message || 'unknown error')
-            if (error) {
-              error(msg)
-            } else {
-              message.danger(msg + urlCheckTip)
-            }
-          }
-        } else {
-          message.danger('Wrong data format' + urlCheckTip)
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      if (request.status === 200) {
+        let response = request.responseText
+        if (request.getResponseHeader('Content-Type').indexOf('application/json') !== -1) {
+          response = JSON.parse(request.responseText)
         }
+        if (xhr.dataFilter) {
+          response = xhr.dataFilter(response, option)
+        }
+        option.success && option.success(response)
       } else {
-        const { status, statusText } = xhr
-        const msg = 'Status Code: ' + status + ', ' + statusText + urlCheckTip
-        if (error) {
-          error(msg)
-        } else {
-          message.danger(msg)
-        }
+        const { status, statusText } = request
+        const msg = 'Status Code: ' + status + ', ' + statusText
+        option.error && option.error(msg)
       }
       option.complete && option.complete()
     }
   }
 
-  let dataArray
+  request.open(option.type, option.url)
 
-  xhr.open(type, url)
-
-  if (isPOST) {
-    dataArray = []
+  let sendData = null
+  if (option.type === 'POST') {
+    sendData = []
     const data = option.data
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
     if (data) {
       for (const k in data) {
         if (typeof data[k] === 'object' && data[k]) {
           data[k] = JSON.stringify(data[k])
         }
-        dataArray.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+        sendData.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
       }      
     }
+    sendData = sendData.join('&')
   }
 
-  xhr.send(isPOST ? dataArray.join('&') : null)
+  request.send(sendData)
 }
 
 export default xhr

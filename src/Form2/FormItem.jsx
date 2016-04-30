@@ -17,9 +17,9 @@ const FormItem = React.createClass({
   },
 
   componentWillMount() {
-    const form = this.context.form
-    form.formItems || (form.formItems = [])
-    form.formItems.push(this)
+    this.context.form.addItem(this)
+    // form.formItems || (form.formItems = [])
+    // form.formItems.push(this)
   },
 
   componentWillUnmount() {

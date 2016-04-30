@@ -1,13 +1,23 @@
 import 'bfd-bootstrap'
 import './less/app.less'
-import './less/pace.less'
 import pace from './pace'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
+import xhr from 'c/xhr'
+import message from 'c/message'
 import classnames from 'classnames'
+
+xhr.dataFilter = (res, option) => {
+  if (typeof res !== 'object') {
+    message.danger(option.url + ': response data should be JSON')
+  } else if (res.code !== 200) {
+    message.danger(option.url + ': code ' + res.code + ', ' + (res.message || 'unknown error'))
+  }
+  return res.data
+}
 
 pace.start()
 
@@ -27,9 +37,8 @@ const App = React.createClass({
             <Nav href="/">
               <NavItem icon="home" title="首页" />
               <NavItem href="components" icon="th" title="组件" />
-              <NavItem href="integration" icon="hand-right" title="开发工作流" />
-              <NavItem href="rules" icon="bullhorn" title="开发规范" />
-              <NavItem href="changeLog" icon="random" title="更新日志" />
+              <NavItem href="workflow" icon="hand-right" title="工作流" />
+              <NavItem href="changelog" icon="random" title="更新日志" />
             </Nav>
           </div>
           <div className="content">{this.props.children}</div>
@@ -64,19 +73,14 @@ render((
           })
         }}></Route>
       </Route>
-      <Route path="integration" getComponent={(location, cb) => {
+      <Route path="workflow" getComponent={(location, cb) => {
         require.ensure([], require => {
-          cb(null, require('./Integration').default)
+          cb(null, require('./Workflow').default)
         })
       }}/>
-      <Route path="rules" getComponent={(location, cb) => {
+      <Route path="Changelog" getComponent={(location, cb) => {
         require.ensure([], require => {
-          cb(null, require('./Rules').default)
-        })
-      }}/>
-      <Route path="changeLog" getComponent={(location, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./ChangeLog').default)
+          cb(null, require('./Changelog').default)
         })
       }}/>
     </Route>
