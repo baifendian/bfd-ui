@@ -1,13 +1,13 @@
 import 'bfd-bootstrap'
 import './less/app.less'
+import './less/pace.less'
+import pace from './pace'
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
 import classnames from 'classnames'
-import pace from './pace'
-import './less/pace.less'
 
 pace.start()
 
@@ -17,10 +17,10 @@ const App = React.createClass({
     return (
       <div id="wrapper">
         <div id="header">
-          <a href="/" className="pull-left">
+          <Link to="/" className="pull-left">
             <h2>BFD UI</h2>
             <span>v0.x</span>
-          </a>
+          </Link>
         </div>
         <div id="body" className="clearfix">
           <div className="sidebar">

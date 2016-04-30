@@ -74,7 +74,7 @@ export default React.createClass({
                   <div></div>
                 </div>
               )
-              case 'error': return <div className="state">{this.state.msg}</div>
+              case 'error': return <div className="state error">{this.state.msg}</div>
             }
           })()}
           </div>

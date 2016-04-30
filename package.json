@@ -17,7 +17,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.5",
     "babel-plugin-transform-runtime": "^6.4.3",
-    "bfd-bootstrap": "*",
+    "bfd-bootstrap": "0.0.17",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.0",
     "d3": "^3.5.11",
