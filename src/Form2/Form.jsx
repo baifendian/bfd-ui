@@ -15,31 +15,43 @@ const Form = React.createClass({
 
   componentWillMount() {
     this.items = []
-    // this.
   },
 
-  // componentWillUpdate() {
-  //   this.multipleCounterMap = {}
-  // },
-
-  addItem(item) {
-    this.items.push(item)
-    if (item.props.multiple) {
-      item.uuid = Math.random().toString(16).slice(2)
+  addItem(newItem) {
+    
+    if (newItem.props.multiple) {
+      newItem.uuid = Math.random().toString(16).slice(2)
+      this.multipleMap || (this.multipleMap = {})
+      this.multipleMap[newItem.uuid] = this.items.filter(item => item.props.name === newItem.props.name).length
     }
+
+    this.items.push(newItem)
+  },
+
+  removeItem(item) {
+
+    if (item.props.multiple) {
+      delete this.multipleMap[item.uuid]
+      // Reset index
+      const name = item.props.name
+      this.items.filter(item => item.props.name === name).forEach((item, i) => {
+        this.multipleMap[item.uuid] = i
+      })
+    }
+
+    this.items.splice(this.items.indexOf(item), 1)
   },
 
   validate(data) {
     data || (data = this.props.data)
     let isValid = true
-    this.formItems.forEach(formItem => {
+    this.items.forEach(formItem => {
       const { name, multiple } = formItem.props
       if (!multiple) {
         formItem.validate(data[name]) || (isValid = false)
       } else {
-        data[name].forEach(value => {
-          formItem.validate(value) || (isValid = false)
-        })
+        const index = this.multipleMap[formItem.uuid]
+        formItem.validate(data[name] && data[name][index]) || (isValid = false)
       }
     })
     return isValid

@@ -18,13 +18,10 @@ const FormItem = React.createClass({
 
   componentWillMount() {
     this.context.form.addItem(this)
-    // form.formItems || (form.formItems = [])
-    // form.formItems.push(this)
   },
 
   componentWillUnmount() {
-    const formItems = this.context.form.formItems
-    formItems.splice(formItems.indexOf(this), 1)
+    this.context.form.removeItem(this)
   },
 
   validate(value) {
@@ -45,12 +42,6 @@ const FormItem = React.createClass({
     const { error } = this.state
     const { name, multiple, help, label, className, children, ...other } = this.props
     const labelWidth = this.context.form.props.labelWidth
-
-    if (multiple) {
-      const multipleCounterMap = this.context.form.multipleCounterMap
-      name in multipleCounterMap || (multipleCounterMap[name] = -1)
-      this.multipleIndex = ++multipleCounterMap[name]
-    }
 
     let Help
     if (help) {
