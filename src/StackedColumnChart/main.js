@@ -123,7 +123,7 @@ export default class {
 
     const rect = new Rect({
       div: tooltipElement,
-      svg: svg.svg,
+      svg: svg.getSvg(),
       arrow,
       height,
       padding,
@@ -147,7 +147,7 @@ export default class {
       svg.setYScale(yScale)
       svg.setSeries(series)
 
-      svg.svg.selectAll('rect.MyRect').remove()
+      svg.getSvg().selectAll('rect.MyRect').remove()
 
       rect.resetYScale(yScale)
 
