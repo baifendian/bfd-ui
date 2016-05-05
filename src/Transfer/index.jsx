@@ -144,6 +144,7 @@ export default React.createClass({
             data={this.state.searchData} 
             height={this.props.height || 200} 
             direct="s2t"
+            render={this.props.render}
             />
         </div>
         <div className="col-xs-2 bfd-pannel">
@@ -161,6 +162,7 @@ export default React.createClass({
             data={this.props.tdata} 
             height={this.props.height || 200} 
             direct="t2s"
+            render={this.props.render}
             />
         </div>
       </div>

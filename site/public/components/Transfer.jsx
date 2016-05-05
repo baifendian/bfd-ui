@@ -12,19 +12,19 @@ export default React.createClass({
   },
   getInitialState: function() {
     const sourceData = [
-      {id: 1, label: "张三"},
-      {id: 2, label: "李四"},
-      {id: 3, label: "李五"},
-      {id: 4, label: "李六"},
-      {id: 5, label: "李七五"},
-      {id: 6, label: "李八"},
-      {id: 7, label: "李九四"},
-      {id: 8, label: "李十"},
-      {id: 9, label: "李时珍"}
+      {id: 1, label: "张三", description: '描述1'},
+      {id: 2, label: "李四", description: '描述2'},
+      {id: 3, label: "李五", description: '描述3'},
+      {id: 4, label: "李六", description: '描述4'},
+      {id: 5, label: "李七五", description: '描述5'},
+      {id: 6, label: "李八", description: '描述6'},
+      {id: 7, label: "李九四", description: '描述7'},
+      {id: 8, label: "李十", description: '描述8'},
+      {id: 9, label: "李时珍", description: '描述9'}
     ];
     const targetData = [
-      {id: 10, label: "张三疯"},
-      {id: 11, label: "王二小"}
+      {id: 10, label: "张三疯", description: '描述10'},
+      {id: 11, label: "王二小", description: '描述11'}
     ];
     return {
       sourceData: sourceData,
@@ -49,21 +49,21 @@ import Transfer from 'bfd-ui/lib/Transfer'
 const App = React.createClass({
   render() {
     var sourceData = [
-      {id: 1, label: "张三"},
-      {id: 2, label: "李四"},
-      {id: 3, label: "李五"},
-      {id: 4, label: "李六"},
-      {id: 5, label: "李七五"},
-      {id: 6, label: "李八"},
-      {id: 7, label: "李九四"},
-      {id: 8, label: "李十"},
-      {id: 9, label: "李时珍"}
+      {id: 1, label: '张三', description: '描述1'},
+      {id: 2, label: '李四', description: '描述2'},
+      {id: 3, label: '李五', description: '描述3'},
+      {id: 4, label: '李六', description: '描述4'},
+      {id: 5, label: '李七五', description: '描述5'},
+      {id: 6, label: '李八', description: '描述6'},
+      {id: 7, label: '李九四', description: '描述7'},
+      {id: 8, label: '李十', description: '描述8'},
+      {id: 9, label: '李时珍', description: '描述9'}
     ];
     var targetData = [
-      {id: 10, label: "张三疯"},
-      {id: 11, label: "王二小"}
+      {id: 10, label: '张三疯', description: '描述10'},
+      {id: 11, label: '王二小', description: '描述11'}
     ];
-    return <Transfer height={200} title={"已选的用户"} sdata={sourceData} tdata={targetData} />
+    return <Transfer height={200} title={"已选的用户"} sdata={sourceData} tdata={targetData} render={item => \`\${item.label}-\${item.description}\`} />
   }
 })`
         }
@@ -74,6 +74,7 @@ const App = React.createClass({
           sdata={this.state.sourceData} 
           tdata={this.state.targetData}
           onChange={this.handleChange}
+          render={item => `${item.label}-${item.description}`}
         />
         <div className="clearfix"></div>
 
@@ -92,7 +93,10 @@ const App = React.createClass({
           </Prop> 
           <Prop name="onChange" type="function">
             <p>传输框值改变后的回调函数。参数为改变后的值, 第一个参数：sdata, 第二个参数：tdata</p>
-          </Prop>         
+          </Prop>  
+          <Prop name="render" type="function">
+            <p>每行数据渲染函数</p>
+          </Prop>       
         </Props>
       </div>
     )

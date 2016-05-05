@@ -205,7 +205,7 @@ const SelectTable = React.createClass({
       rows.push(<Row
         key={index}
         id={item.id}
-        label={item.label}
+        label={this.props.render ? this.props.render(item) : item.label}
         ref={item.id}
         onClick={this.handleClick.bind(this, item)}
         onDoubleClick={this.handleDbClick.bind(this, item)}
