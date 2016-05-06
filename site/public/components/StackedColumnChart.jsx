@@ -33,8 +33,8 @@ export default React.createClass({
             <Pre>
 {`{
   x: '日环比新增', 
-  y: '系列环比新增',
-  z: '进店环比新增',
+  y: '系列新增',
+  z: '进店新增',
   a: '消费新增'
 }`}
             </Pre>

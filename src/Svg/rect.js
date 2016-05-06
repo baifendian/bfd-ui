@@ -46,10 +46,10 @@ export default class {
 
         div.html(dataset.name + '：' + d)
           .style('left', (padding.left + x - (div[0][0].clientWidth / 2)) + (width / 2) + 'px')
-          .style('top', (yScale(d)) + 'px')
+          .style('top', (yScale(d) + 16) + 'px')
 
-        arrow.style('left', (padding.left + x + width / 2 - 10) + 'px')
-          .style('top', (yScale(d) + div[0][0].clientHeight) + 'px')
+        arrow.style('left', (padding.left + x + width / 2 - 6) + 'px')
+          .style('top', (yScale(d) + div[0][0].clientHeight + 16) + 'px')
         d3.select(this).attr('opacity', '0.8')
       })
       .on('mouseout', function() {

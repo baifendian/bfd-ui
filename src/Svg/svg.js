@@ -86,22 +86,21 @@ export default class {
 					.style("fill", "#FFF")
 					.style("stroke", "#FFF")
 					.on("mousemove", function(d, i) {
-						d3.select(this).attr("opacity", "0.8").style("fill", "#EBF4FF");
+						d3.select(this).attr("opacity", "0.8").style("fill", "#EBF4FF")
 
 						div.transition()
 							.duration(200)
-							.style("opacity", .9);
+							.style("opacity", .9)
 
 						div.html(_this.getToolTipHtml(data, index))
 							.style("left", (d3.event.offsetX + 15) + "px")
-							.style("top", (d3.event.offsetY - div[0][0].clientHeight / 2 + 10) + "px");
-
+							.style("top", (d3.event.offsetY - div[0][0].clientHeight / 2 + 10) + "px")
 					})
 					.on("mouseout", function(d) {
-						d3.select(this).attr("opacity", "1").style("fill", "#fff");
+						d3.select(this).attr("opacity", "1").style("fill", "#fff")
 						div.transition()
 							.duration(200)
-							.style("opacity", 0);
+							.style("opacity", 0)
 					})
 			})
 		}
@@ -208,5 +207,7 @@ export default class {
 
 	}
 
-	svg = this.svg
+	getSvg() {
+		return this.svg
+	}
 }

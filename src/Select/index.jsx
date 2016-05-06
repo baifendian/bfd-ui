@@ -58,7 +58,7 @@ const Select = React.createClass({
             if (item.props.value == _item) sText.push({value:item.props.value,children:item.props.children});
           })
         }) : (() => {
-          selected == children.props.value ? sText.push({value:children.props.value,children:children.props.children}) : sText = [];
+         children.props && selected == children.props.value ? sText.push({value:children.props.value,children:children.props.children}) : sText = [];
         })() :
 
       children.length > 1 ?
@@ -67,7 +67,7 @@ const Select = React.createClass({
             sText.push({value:item.props.value,children:item.props.children})
           }
         }) : (() => {         
-          selected == children.props.value ? sText.push({value:children.props.value,children:children.props.children}) : sText = [];
+         children.props && selected == children.props.value ? sText.push({value:children.props.value,children:children.props.children}) : sText = [];
         })(); 
       
       const stextChild = sText.map((item,i)=>{
