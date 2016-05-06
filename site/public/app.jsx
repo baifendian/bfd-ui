@@ -10,13 +10,21 @@ import xhr from 'c/xhr'
 import message from 'c/message'
 import classnames from 'classnames'
 
-xhr.dataFilter = (res, option) => {
+xhr.success = (res, option) => {
   if (typeof res !== 'object') {
     message.danger(option.url + ': response data should be JSON')
-  } else if (res.code !== 200) {
-    message.danger(option.url + ': code ' + res.code + ', ' + (res.message || 'unknown error'))
+    return
   }
-  return res.data
+  switch (res.code) {
+    case 200:
+      option.success && option.success(res.data)
+      break
+    case 401:
+      // redirect to '/login'
+      break
+    default:
+      message.danger(res.message || 'unknown error')
+  }
 }
 
 pace.start()

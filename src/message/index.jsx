@@ -48,7 +48,7 @@ function showMessage(type, message, duration = 2) {
     instance = render(<Message />, container)
   }
 
-  instance.setState({
+  instance.state.show || instance.setState({
     message,
     type,
     duration,

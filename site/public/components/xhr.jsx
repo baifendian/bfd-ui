@@ -19,18 +19,26 @@ const xhrUsage = `xhr({
   data: {
     key: value
   }, // POST 请求时提交的数据，value 如果为对象，自动 JSON.stringify
-  success(data) {}, // 成功后的回调，这里的成功是指返回的 JSON code 值 为 200
-  error() {}, // 失败后的回调，一般不需要指定，默认会有一个全局错误提示的 error handle
-  complete() {} // 不管成功或者失败后的回调
+  success(data) {},
+  error() {},
+  complete() {}
 })`
 
-const dataFilterUsage = `xhr.dataFilter = (res, option) => {
+const successUsage = `xhr.success = (res, option) => {
   if (typeof res !== 'object') {
     message.danger(option.url + ': response data should be JSON')
-  } else if (res.code !== 200) {
-    message.danger(option.url + ': code ' + res.code + ', ' + (res.message || 'unknown error'))
+    return
   }
-  return res.data
+  switch (res.code) {
+    case 200:
+      option.success && option.success(res.data)
+      break
+    case 401:
+      // redirect to '/login'
+      break
+    default:
+      message.danger(res.message || 'unknown error')
+  }
 }`
 
 export default () => {
@@ -48,8 +56,11 @@ export default () => {
       <Pre>{`xhr.baseUrl = 'http://192.168.184.236:8080/api/'`}</Pre>
       <h3>xhr.dataFilter(res, option)</h3>
       <p>全局数据过滤器，可对全局数据进行二次封装，也可进行一些全局处理</p>
-      <Pre>{dataFilterUsage}</Pre>
       <Warn>处理后的数据需要返回，作为 success 回调参数</Warn>
+      <h3>xhr.success(res, option)</h3>
+      <p>全局成功回调，在 dataFilter 后执行，此方法会覆盖单独的 success 方法，如果需要可手动调用</p>
+      <Pre>{successUsage}</Pre>
+      
     </div>
   )
 }

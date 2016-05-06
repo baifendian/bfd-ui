@@ -36,6 +36,22 @@ const Calendar = React.createClass({
 
   shouldComponentUpdate,
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.date) {
+      const d = new Date(nextProps.date)
+      const year = d.getFullYear()
+      const month = d.getMonth()
+      const day = d.getDate()
+      this.setState({
+        year,
+        month,
+        day,
+        currentYear: year,
+        currentMonth: month
+      })
+    }
+  },
+
   dayNames: ['日', '一', '二', '三', '四', '五', '六'],
 
   // 切换年月

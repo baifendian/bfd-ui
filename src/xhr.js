@@ -15,7 +15,8 @@ function xhr(option) {
         if (xhr.dataFilter) {
           response = xhr.dataFilter(response, option)
         }
-        option.success && option.success(response)
+        const success = xhr.success || option.success
+        success && success(response, option)
       } else {
         const { status, statusText } = request
         const msg = 'Status Code: ' + status + ', ' + statusText
