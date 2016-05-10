@@ -18,6 +18,9 @@ export default React.createClass({
         <Pre>{code}</Pre>
         <ClearableInput></ClearableInput>
         <Props>
+          <Prop name="type" type="String">
+            <p>输入框类型，同 input type，默认 text</p>
+          </Prop>
           <Prop name="value" type="String">
             <p>输入框值</p>
           </Prop>

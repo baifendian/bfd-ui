@@ -5,6 +5,18 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.3" date="2016-05-06">
+        <ol>
+          <li>Transfer 每行显示信息调整为可配置，增加 render 渲染函数</li>
+          <li>Fetch error 状态样式更新</li>
+          <li>xhr 添加全局设置: baseUrl、dataFilter、success</li>
+          <li>FormItem multiple bug 修复</li>
+          <li>Select2 下拉后最大高度限制</li>
+          <li>Datepicker 解决外部赋值后当前日期未更新的问题</li>
+          <li>ClearableInput 支持 type 属性，默认 type 为 ‘text’</li>
+          <li>message 避免重复调用</li>
+        </ol>
+      </Version>
       <Version version="0.1.0" date="2016-04-29">
         <p>新增组件: </p>
         <ul>

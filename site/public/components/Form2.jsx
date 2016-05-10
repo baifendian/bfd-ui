@@ -200,11 +200,11 @@ export default () => {
       <FormCustomDemo></FormCustomDemo>
       <h2>Form</h2>
       <Props>
-        <Prop name="data" type="object" required>
+        <Prop name="data" type="object">
           <p>表单数据对象，rules 各属性 及 FormItem 的 name 值与其属性一一对应</p>
           <p>FormItem 如果声明为 multiple, 则 data 相应的属性值必须为数组, 形成对应关系</p>
         </Prop>
-        <Prop name="onChange" type="function" required>
+        <Prop name="onChange" type="function">
           <p>表单数据改变（用户输入）后的回调，参数为整个表单数据，让 Form 组件重绘</p>
         </Prop>
         <Prop name="rules" type="object">

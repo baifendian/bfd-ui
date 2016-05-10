@@ -1,5 +1,6 @@
 import React from 'react'
 import Pre from './Pre'
+import Warn from './Warn'
 
 export default React.createClass({
 
@@ -7,7 +8,7 @@ export default React.createClass({
     return (
       <div className="guide">
         <p>主要介绍一个项目从零到上线的工作流，让开发人员更多的关注业务编写，同时也是 bfd-ui 的最佳使用环境</p>
-        <p>环境安装之前请确认 npm 版本为 3.x</p>
+        <Warn>环境安装之前请确认 npm 版本为 3.x</Warn>
         <h1>1、项目构建</h1>
 
         <p>项目生成器有助于快速产生一个项目的脚手架，同时避免的不同项目间结构的混乱</p>
@@ -27,23 +28,26 @@ $ npm install -g generator-bfd`}</Pre>
 `$ cd workspace
 
 $ yo bfd myapp`}</Pre>
-
-        <p>如果不定义项目名，则在当前文件夹下生成</p>
         
-        <Pre>{
-`$ cd myapp
-
-$ yo bfd`}</Pre>
-
-        <p>注意：生成后会自动安装 npm 依赖</p>
+        <Warn>
+          <p>A、如果不定义项目名，则在当前文件夹下生成</p>
+          <p>B、生成后会自动安装 npm 依赖</p>
+        </Warn>
 
         <p>文件结构介绍：</p>
 
         <pre>{
 `myapp
   |-- data/              模拟数据，接口 URL 定义为 /data/xxx.json  
-  |-- lib/               存放一些不支持 npm 方式安装的第三方库
   |-- src/               业务逻辑源代码，包括 less 源代码
+    |-- functions/           各个功能页面
+    |-- public/              业务逻辑中可复用的资源（代码、图片等等）
+    |-- App.jsx             
+    |-- App.less             
+    |-- index.js             整个应用的入口
+    |-- pace.js           
+    |-- pace.less           
+    |-- router.jsx           前端路由配置
   |-- .eslintrc          eslint 代码规范配置
   |-- .gitignore         
   |-- index.tpl          HTML 入口，采用模版形式的原因是可以动态生成不同后端语言下的模版
@@ -65,11 +69,11 @@ $ npm start`}</Pre>
         <Pre lang="sh">{
 `$ npm start -p 4001`}</Pre>
 
-        <p><b>开发阶段注意事项：</b></p>
+        <Warn>
+          <p>A、直接修改 index.tpl，以便生成不同服务器环境下的模板文件</p>
+          <p>B、数据接口请允许跨域（CORS），接口的命名规则见下方服务器配置，防止和单页面冲突</p>
+        </Warn>
 
-        <p>1、不直接修改 index.html，请在 index.tpl 中修改，以便生成不同服务器环境下的模板文件</p>
-
-        <p>2、数据接口请允许跨域（CORS），接口的命名规则见下方服务器配置，防止和单页面冲突</p>
 
         <h1>3、部署测试/上线</h1>
 
