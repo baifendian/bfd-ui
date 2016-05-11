@@ -3,7 +3,7 @@ import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import { Steps, Step } from 'c/Steps'
 
-const code = `import Steps from 'bfd-ui/lib/Steps'
+const code = `import { Steps, Step } from 'bfd-ui/lib/Steps'
 
 const App = React.createClass({
   render() {
@@ -54,8 +54,9 @@ export default React.createClass({
         <h1>Steps</h1>
         <p>整体步骤条。</p>
         <Props>
-          <Prop name="height" type="Number" required>
+          <Prop name="height" type="Number" optional>
             <p>步骤条高度</p>
+            <p>如果不给出高度，组件高度默认100%</p>
           </Prop>
           <Prop name="current" type="Number" required>
             <p>指定当前步骤，从 0 开始记数</p>
@@ -64,8 +65,9 @@ export default React.createClass({
         <h1>Steps.Step</h1>
         <p>步骤条内的每一个步骤。</p>
         <Props>
-          <Prop name="title" type="String" required>
+          <Prop name="title" type="String" optional>
             <p>标题</p>
+            <p>如果不给出标题，默认为空</p>
           </Prop>
         </Props>
       </div>

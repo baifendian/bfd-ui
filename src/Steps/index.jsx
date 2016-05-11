@@ -145,7 +145,7 @@ const Steps = React.createClass({
         max={this.state.data.length}
         width={this.state.width} 
         height={this.state.height} 
-        title={item.props.title}/>)
+        title={item.props.title || ''}/>)
     })
     
     return (
@@ -162,7 +162,7 @@ const Steps = React.createClass({
     if (!parseInt(getComputedStyle(container).height, 10)) {
       container.style.height = '100%'
     }
-    //this.renderChart(container)
+
     const width = this.refs.container.clientWidth
     const height = this.refs.container.clientHeight
     
@@ -170,112 +170,6 @@ const Steps = React.createClass({
       width : width / this.state.data.length,
       height : height
     })
-  },
-
-  renderChart(container) {    
-    let data = this.props.children;
-    if(!data) {
-      return;
-    }
-    if(!(data instanceof Array)) {
-      data = [data];
-    }
-
-    const width = this.refs.container.clientWidth
-    const height = this.refs.container.clientHeight
-    const len = data.length;
-    let current = this.props.current || 0;
-    current = current > (len - 1) ? (len - 1) : current
-    const status = this.props.status;
-
-    data.map((item, index) => {
-      let w = width / len
-      let x = (w / 2);// * index
-      let y = height / 2
-      this.draw(container, item.props, w, height, current, index, data)
-    })
-  },
-
-  draw(container, item, width, height, current, index, data) {
-    let div = document.createElement('div')
-    div.className = 'box'
-    div.style.width = width + 'px'
-    div.style.height = height + 'px'
-
-    let circle = document.createElement('div')
-    let w = width >= height ? height : width
-    let x = (width / 2) - (w / 4)
-    let y = (height / 2) - (height / 4) - 10
-    let radius = w / 4;
-    const fontSize = height / 2 / 2
-    circle.style.width = (w / 2) + 'px'
-    circle.style.height = (w / 2) + 'px'
-    circle.style.borderRadius = radius + 'px'
-    circle.style.left = x + 'px'
-    circle.style.top = y + 'px'
-    circle.className = 'circle'
-    circle.style.lineHeight = (w / 2) + 'px'
-    circle.style.fontSize = fontSize + 'px'
-    circle.innerHTML = index + 1
-    if(index < current) {
-      circle.style.color = "#8096A3";   
-      circle.style.backgroundColor = "#FFF"  
-      circle.style.borderColor = "8096A3"    
-    } else if(index > current) {
-      circle.style.color = "#E1E1E1"
-      circle.style.backgroundColor = "#FFF"
-      circle.style.borderColor = "#E1E1E1"
-    } else {
-      circle.style.color = "#FFF";   
-      circle.style.backgroundColor = "#41A1F5"
-      circle.style.borderColor = "#8096A3"
-    }
-
-    let lineA = document.createElement('div')
-    lineA.className = 'line'
-    lineA.style.left = '0px'
-    lineA.style.top = Math.floor(y + radius) + 'px'
-    lineA.style.width = (width / 2) + 'px'
-    lineA.style.float = 'left'
-    if(index <= current) {
-      lineA.style.color = '#8096A3'
-    } else {
-      lineA.style.color = '#E1E1E1'
-    }
-
-    let lineB = document.createElement('div')
-    lineB.className = 'line';
-    lineB.style.left = width / 2 + radius + 'px'
-    lineB.style.top = Math.floor(y + radius) + 'px'
-    lineB.style.width = (width / 2) + 'px'
-    lineB.style.color = '#666'
-    if(index >= current) {
-      lineB.style.color = '#E1E1E1'
-    } else {
-      lineB.style.color = '#8096A3'
-    }
-
-    let title = document.createElement('div')
-    title.innerHTML = item.title
-    title.className = 'title'
-    title.style.top = y * 2 + 'px'
-    if(index <= current) {
-      title.style.color = "#41A1F5"         
-    } else if(index > current) {
-      title.style.color = "#E1E1E1"
-    }
-
-    if(index != 0) {
-      div.appendChild(lineA)
-    }
-    if(index != data.length -1) {
-      div.appendChild(lineB)
-    }
-    
-    div.appendChild(circle)
-    div.appendChild(title)
-
-    container.appendChild(div)
   }
 })
 
