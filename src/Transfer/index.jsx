@@ -93,9 +93,11 @@ export default React.createClass({
         this.tid = []
       }
       this.handleUserInput(this.state.filterText)
-      switch(option) {
-      case 's2t': this.props.onChange(source, target); break
-      case 't2s': this.props.onChange(target, source); break
+      if(typeof this.props.onChange == 'function') {
+        switch(option) {
+        case 's2t': this.props.onChange(source, target); break
+        case 't2s': this.props.onChange(target, source); break
+        }
       }
       return
     }
