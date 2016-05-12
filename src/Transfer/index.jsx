@@ -39,8 +39,9 @@ export default React.createClass({
   handleUserInput(filterText) {
     const arr = []
     for (let i = 0, len = this.props.sdata.length; i < len; i++) {
-      const item = this.props.sdata[i]
-      if (item.label.indexOf(filterText) != -1) {
+      const item = this.props.sdata[i];
+      const label = this.props.render ? this.props.render(item) : item.label
+      if (label.indexOf(filterText) != -1) {
         arr.push(item)
       }
     }
