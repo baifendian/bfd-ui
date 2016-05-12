@@ -10,6 +10,7 @@ function ChangeLog() {
         <ul>
           <li>步骤条: Steps、Step</li>
         </ul>
+        <p>其他: </p>
         <ol>
           <li>Form2、Select2 className 修正，解决与 Form、Select 冲突的问题</li>
           <li>Dropdown 关闭采用 mousedown 触发，防止 click 事件阻止冒泡后无效的问题</li>
