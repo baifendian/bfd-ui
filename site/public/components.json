@@ -76,4 +76,7 @@
 }, {
   "name": "xhr",
   "cn": "AJAX请求"
+}, {
+  "name": "Steps",
+  "cn": "步骤条"
 }]  

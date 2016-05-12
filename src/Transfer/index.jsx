@@ -39,8 +39,9 @@ export default React.createClass({
   handleUserInput(filterText) {
     const arr = []
     for (let i = 0, len = this.props.sdata.length; i < len; i++) {
-      const item = this.props.sdata[i]
-      if (item.label.indexOf(filterText) != -1) {
+      const item = this.props.sdata[i];
+      const label = this.props.render ? this.props.render(item) : item.label
+      if (label.indexOf(filterText) != -1) {
         arr.push(item)
       }
     }
@@ -93,9 +94,11 @@ export default React.createClass({
         this.tid = []
       }
       this.handleUserInput(this.state.filterText)
-      switch(option) {
-      case 's2t': this.props.onChange(source, target); break
-      case 't2s': this.props.onChange(target, source); break
+      if(typeof this.props.onChange == 'function') {
+        switch(option) {
+        case 's2t': this.props.onChange(source, target); break
+        case 't2s': this.props.onChange(target, source); break
+        }
       }
       return
     }
