@@ -64,7 +64,7 @@ const FormItem = React.createClass({
     }
 
     return (
-      <div className={classnames('form-group', className, {'has-error': error})} {...other}>
+      <div className={classnames('form-group bfd-form-item2', className, {'has-error': error})} {...other}>
         { label ? <div className="form-label" style={{width: labelWidth + 'px'}}>{label}：</div> : null }
         <div className="form-content" style={{marginLeft: labelWidth + 'px'}}>
           {children}

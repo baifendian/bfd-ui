@@ -5,6 +5,19 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.4" date="2016-05-12">
+        <p>新增组件: </p>
+        <ul>
+          <li>步骤条: Steps、Step</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>Form2、Select2 className 修正，解决与 Form、Select 冲突的问题</li>
+          <li>Dropdown 关闭采用 mousedown 触发，防止 click 事件阻止冒泡后无效的问题</li>
+          <li>解决 xhr 模块 cancel 的问题</li>
+          <li>修复 Transfer 搜索框搜索不准确的问题</li>
+        </ol>
+      </Version>
       <Version version="0.1.3" date="2016-05-06">
         <ol>
           <li>Transfer 每行显示信息调整为可配置，增加 render 渲染函数</li>

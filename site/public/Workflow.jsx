@@ -38,7 +38,7 @@ $ yo bfd myapp`}</Pre>
 
         <pre>{
 `myapp
-  |-- data/              模拟数据，接口 URL 定义为 /data/xxx.json  
+  |-- data/              模拟数据，接口 URL 定义为 xxx.json，需要时，baseUrl 统一配置成 '/data/'
   |-- src/               业务逻辑源代码，包括 less 源代码
     |-- functions/           各个功能页面
     |-- public/              业务逻辑中可复用的资源（代码、图片等等）

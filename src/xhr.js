@@ -1,6 +1,6 @@
-const request = new XMLHttpRequest()
-
 function xhr(option) {
+
+  const request = new XMLHttpRequest()
 
   option.url = (xhr.baseUrl || '') + option.url
   option.type = (option.type || 'get').toUpperCase()

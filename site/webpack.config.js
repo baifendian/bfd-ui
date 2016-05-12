@@ -2,7 +2,7 @@ var webpack = require('webpack')
 var path = require('path')
 var fs = require('fs')
 var autoprefixer = require('autoprefixer')
-var isProduction = process.argv.slice(2)[0] === '-p'
+var isProduction = process.argv.slice(2)[0] === '-production'
 
 var config = {
   entry: {

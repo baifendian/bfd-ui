@@ -8,7 +8,7 @@ const contextTypes = {
 }
 
 function DropdownToggle(props, context) {
-  return <div className="dropdown-toggle" onClick={context.handleToggle}>{props.children}</div>
+  return <div className="dropdown-toggle" onMouseDown={context.handleToggle}>{props.children}</div>
 }
 
 DropdownToggle.contextTypes = contextTypes

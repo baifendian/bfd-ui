@@ -60,18 +60,18 @@ const Dropdown = React.createClass({
 
   componentDidMount() {
     this.instances.push(this)
-    window.addEventListener('click', this.handleBodyClick)
+    window.addEventListener('mousedown', this.handleBodyClick)
   },
 
   componentWillUnmount() {
     this.instances.splice(this.instances.indexOf(this), 1)
-    window.removeEventListener('click', this.handleBodyClick)
+    window.removeEventListener('mousedown', this.handleBodyClick)
   },
 
   render() {
     const { className, children, ...other } = this.props
     return (
-      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
+      <div onMouseDown={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
     )
   }
 })

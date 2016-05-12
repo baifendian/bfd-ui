@@ -8,7 +8,7 @@ var app = express()
 app.use(compression())
 app.use(express.static(path.join(__dirname, 'public')))
 
-var isProduction = process.argv.slice(2)[0] === '-p'
+var isProduction = process.argv.slice(2)[0] === '-production'
 
 if (!isProduction) {
   var webpack = require('webpack')
