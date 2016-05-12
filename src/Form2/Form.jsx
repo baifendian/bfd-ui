@@ -79,7 +79,7 @@ const Form = React.createClass({
 
   render() {
     const { className, data, children, onChange, onSubmit, ...other } = this.props
-    return <form onSubmit={this.handleSubmit} className={classnames('bfd-form', className)} {...other}>{children}</form>
+    return <form onSubmit={this.handleSubmit} className={classnames('bfd-form2', className)} {...other}>{children}</form>
   }
 })
 

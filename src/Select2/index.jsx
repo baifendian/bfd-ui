@@ -55,7 +55,7 @@ const Select = React.createClass({
   render() {  
     const { className, children, disabled, ...other } = this.props
     return (
-      <Dropdown ref="dropdown" className={classnames('bfd-select', disabled, className)} disabled={disabled} {...other}>
+      <Dropdown ref="dropdown" className={classnames('bfd-select2', disabled, className)} disabled={disabled} {...other}>
         <DropdownToggle>
           <Title ref="title"></Title>
           <span className="caret"></span>

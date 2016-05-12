@@ -68,7 +68,7 @@ const Modal = React.createClass({
   },
 
   render() {
-    const { className, ...other } = this.props
+    const { className, children, ...other } = this.props
     return (
       <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {this.state.isOpen ? (
@@ -77,7 +77,7 @@ const Modal = React.createClass({
             <div className="modal" onClick={this.handleModalClick}>
               <div className="modal-dialog" onClick={this.handleDialogClick}>
                 <div className="modal-content">
-                  {this.props.children}
+                  {children}
                 </div>
               </div>
             </div>
