@@ -1,3 +1,4 @@
+import 'bfd-bootstrap'
 import React from 'react'
 import classnames from 'classnames'
 import './main.less'

@@ -6,15 +6,30 @@ import { Steps, Step } from 'c/Steps'
 const code = `import { Steps, Step } from 'bfd-ui/lib/Steps'
 
 const App = React.createClass({
+  getInitialState() {
+    return {
+      current: 0
+    }
+  },
+  handleClick(e) {
+    let value = this.state.current + 1
+    if(value == 5) {
+      value = 0;
+    }
+    this.setState({
+      current: value
+    })
+  },
   render() {
     return 
-      <Steps height={100} current={0}>
+      <Steps height={100} current={this.state.current}>
         <Step title="配置推荐栏" />
         <Step title="配置推荐策略" />
         <Step title="配置算法" />
         <Step title="配置规则" />
         <Step title="配置样式" />
       </Steps>
+      <button type="button" className="btn btn-primary" onClick={this.handleClick}>下一步</button>
   }
 })`
 
@@ -26,7 +41,7 @@ export default React.createClass({
   },
   handleClick(e) {
     let value = this.state.current + 1
-    if(value >= 5) {
+    if(value == 5) {
       value = 0;
     }
     this.setState({
@@ -46,11 +61,9 @@ export default React.createClass({
           <Step title="配置规则" />
           <Step title="配置样式" />
         </Steps>
-        <div style={{marginTop:'30px', marginRight:'30px', textAlign:'right'}}>
-      
-          <button style={{width:'80px', height:'30px'}} onClick={this.handleClick}>下一步</button>
-    
-        </div>
+        <p className="text-right" style={{marginTop:'30px', marginRight:'30px'}}>
+          <button type="button" className="btn btn-primary" onClick={this.handleClick}>下一步</button>
+        </p>
         <h1>Steps</h1>
         <p>整体步骤条。</p>
         <Props>
@@ -62,7 +75,7 @@ export default React.createClass({
             <p>指定当前步骤，从 0 开始记数</p>
           </Prop>
         </Props>
-        <h1>Steps.Step</h1>
+        <h1>Step</h1>
         <p>步骤条内的每一个步骤。</p>
         <Props>
           <Prop name="title" type="String" optional>
