@@ -79,4 +79,7 @@
 }, {
   "name": "Steps",
   "cn": "步骤条"
+}, {
+  "name": "SearchInput",
+  "cn": "搜索框"
 }]  
