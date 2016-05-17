@@ -3,15 +3,6 @@ import classnames from 'classnames'
 import 'bfd-bootstrap'
 import './dropdown.less'
 
-
-const propTypes = {
-  disabled: PropTypes.bool
-}
-
-const childContextTypes = {
-  handleToggle: PropTypes.func
-}
-
 const Dropdown = React.createClass({
 
   // 存储所有的组件实例，当前打开后，其他关闭
@@ -25,7 +16,7 @@ const Dropdown = React.createClass({
 
   getChildContext() {
     return {
-      handleToggle: this.handleToggle
+      dropdown: this
     }
   },
 
@@ -60,23 +51,28 @@ const Dropdown = React.createClass({
 
   componentDidMount() {
     this.instances.push(this)
-    window.addEventListener('mousedown', this.handleBodyClick)
+    window.addEventListener('click', this.handleBodyClick)
   },
 
   componentWillUnmount() {
     this.instances.splice(this.instances.indexOf(this), 1)
-    window.removeEventListener('mousedown', this.handleBodyClick)
+    window.removeEventListener('click', this.handleBodyClick)
   },
 
   render() {
     const { className, children, ...other } = this.props
     return (
-      <div onMouseDown={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
+      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
     )
   }
 })
 
-Dropdown.propTypes = propTypes
-Dropdown.childContextTypes = childContextTypes
+Dropdown.propTypes = {
+  disabled: PropTypes.bool
+}
+
+Dropdown.childContextTypes = {
+  dropdown: PropTypes.instanceOf(Dropdown)
+}
 
 export default Dropdown

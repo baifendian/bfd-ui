@@ -91,17 +91,10 @@ const App = React.createClass({
         <App/>
         
         <Props>
-          <Prop name="url" type="String">
+          <Prop name="url" type="string">
             <p>请求地址</p>
-            <Pre>
-{`{
-  "code": 200,
-  "message": "", // code 不是200时，给出错误信息
-  "data": []
-}`}
-            </Pre>
           </Prop>
-          <Prop name="onSuccess" type="Function">
+          <Prop name="onSuccess" type="function">
             <p>获取数据后的回调</p>
           </Prop>
         </Props>

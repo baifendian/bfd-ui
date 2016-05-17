@@ -8,13 +8,13 @@ import React from 'react'
 import classnames from 'classnames'
 
 export default React.createClass({
-  handleChange() {
-
+  propTypes: {
+    onSearch: React.PropTypes.func.isRequired
   },
   handleClick() {
     const v = this.refs.searchInput.value
-    if(typeof this.props.onClick == 'function') {
-      this.props.onClick(v);
+    if(typeof this.props.onSearch == 'function') {
+      this.props.onSearch(v);
     }
   },
   render() {

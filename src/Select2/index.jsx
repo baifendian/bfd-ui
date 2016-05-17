@@ -126,4 +126,4 @@ Option.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 
-export { Select, Option }
+export { Select, Option, Select as Select2, Option as Option2 }

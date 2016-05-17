@@ -3,14 +3,12 @@
  */
 import React, { PropTypes } from 'react'
 
-const contextTypes = {
-  handleToggle: PropTypes.func
+function DropdownToggle(props, { dropdown }) {
+  return <div className="dropdown-toggle" onClick={dropdown.handleToggle}>{props.children}</div>
 }
 
-function DropdownToggle(props, context) {
-  return <div className="dropdown-toggle" onMouseDown={context.handleToggle}>{props.children}</div>
+DropdownToggle.contextTypes = {
+  dropdown: PropTypes.object
 }
-
-DropdownToggle.contextTypes = contextTypes
 
 export default DropdownToggle

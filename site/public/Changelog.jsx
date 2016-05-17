@@ -5,6 +5,23 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.5" date="2016-05-16">
+        <p>新增组件: </p>
+        <ul>
+          <li>搜索框: SearchInput</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>
+            <p>Form2、Select2 支持别名，支持和旧版混用</p>
+            <Pre>{`import { Select2, Option2 } from 'bfd-ui/lib/Select2'`}</Pre>
+          </li>
+          <li>修正 message z-index 的位置</li>
+          <li>修复 Dropdown 及下游组件（Select、DatePicker ...）水平对齐的问题</li>
+          <li>Checkbox、Radio 控件高度修正，与 input、button 等一致</li>
+          <li>Dropdown 恢复使用 click 方式控制</li>
+        </ol>
+      </Version>
       <Version version="0.1.4" date="2016-05-12">
         <p>新增组件: </p>
         <ul>
