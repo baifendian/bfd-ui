@@ -1,5 +1,6 @@
 import 'bfd-bootstrap'
 import React from 'react'
+import { findAllByType } from '../util/ReactUtils'
 import classnames from 'classnames'
 import './main.less'
 
@@ -122,18 +123,13 @@ const Step = React.createClass({
 
 const Steps = React.createClass({
   getInitialState() {
+    const { children } = this.props;
+    const items = findAllByType(children, Step);
 
-    let data = this.props.children
-    if(!data) {
-      return;
-    }
-    if(!(data instanceof Array)) {
-      data = [data]
-    }
     return {
       width: 0,
       height: 0,
-      data : data
+      data : items
     }
   },
   render() {
