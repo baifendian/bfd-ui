@@ -31,11 +31,14 @@ export default React.createClass({
       targetData: targetData
     };
   },
-  handleChange : function(sourceData, targetData) {
+  handleChange: function(sourceData, targetData) {
     this.setState({
       sourceData: sourceData,
       targetData: targetData
     })
+  },
+  handleSearch: function(label, keyValue) {
+    return label.indexOf(keyValue) != -1;
   },
   render() {
     return (
@@ -47,6 +50,9 @@ export default React.createClass({
 import Transfer from 'bfd-ui/lib/Transfer'
 
 const App = React.createClass({
+  handleSearch: function(label, keyValue) {
+    return label.indexOf(keyValue) != -1;
+  },
   render() {
     var sourceData = [
       {id: 1, label: '张三', description: '描述1'},
@@ -63,7 +69,7 @@ const App = React.createClass({
       {id: 10, label: '张三疯', description: '描述10'},
       {id: 11, label: '王二小', description: '描述11'}
     ];
-    return <Transfer height={200} title={"已选的用户"} sdata={sourceData} tdata={targetData} render={item => \`\${item.label}-\${item.description}\`} />
+    return <Transfer height={200} title={"已选的用户"} sdata={sourceData} tdata={targetData} onSearch={this.handleSearch} render={item => \`\${item.label}-\${item.description}\`} />
   }
 })`
         }
@@ -74,6 +80,7 @@ const App = React.createClass({
           sdata={this.state.sourceData} 
           tdata={this.state.targetData}
           onChange={this.handleChange}
+          onSearch={this.handleSearch}
           render={item => `${item.label}-${item.description}`}
         />
         <div className="clearfix"></div>
@@ -93,7 +100,10 @@ const App = React.createClass({
           </Prop> 
           <Prop name="onChange" type="function">
             <p>传输框值改变后的回调函数。参数为改变后的值, 第一个参数：sdata, 第二个参数：tdata</p>
-          </Prop>  
+          </Prop>
+          <Prop name="onSearch" type="function">
+            <p>搜索框关键词与列表数据匹配规则函数, 第一个参数为列表项数据, 第二个参数为搜索关键词</p>
+          </Prop>
           <Prop name="render" type="function">
             <p>每行数据渲染函数</p>
           </Prop>       

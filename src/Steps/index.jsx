@@ -123,23 +123,21 @@ const Step = React.createClass({
 
 const Steps = React.createClass({
   getInitialState() {
-    const { children } = this.props;
-    const items = findAllByType(children, Step);
-
     return {
       width: 0,
-      height: 0,
-      data : items
+      height: 0
     }
   },
   render() {
     let rows = [];
-    this.state.data.map((item, index) => {
+    const { children } = this.props;
+    const items = findAllByType(children, Step);
+    items.map((item, index) => {
       rows.push(<Step 
         key={index} 
         index={index}         
         current={this.props.current || 0}
-        max={this.state.data.length}
+        max={items.length}
         width={this.state.width} 
         height={this.state.height} 
         title={item.props.title || ''}/>)
@@ -162,9 +160,10 @@ const Steps = React.createClass({
 
     const width = this.refs.container.clientWidth
     const height = this.refs.container.clientHeight
-    
+    const { children } = this.props;
+    const items = findAllByType(children, Step);
     this.setState({
-      width : width / this.state.data.length,
+      width : width / items.length,
       height : height
     })
   }
