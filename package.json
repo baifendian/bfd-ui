@@ -1,6 +1,6 @@
 {
   "name": "bfd-ui",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "unit": "jest || true",
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name \\*.jsx -type f -delete",
     "start": "node-dev site/server.js",
-    "pack": "cd site && rm -rf public/dist && webpack -production --progress",
+    "pack": "cd site && rm -rf public/dist && webpack -p --progress",
     "server": "pm2 start site/server.js -- -production"
   },
   "author": "",

@@ -51,12 +51,10 @@ const Modal = React.createClass({
     }
   },
 
-  handleModalClick() {
-    this.close()
-  },
-
-  handleDialogClick(e) {
-    e.stopPropagation()
+  handleModalClick(e) {
+    if (e.target.className === 'modal') {
+      this.close()  
+    }
   },
 
   open() {
@@ -75,7 +73,7 @@ const Modal = React.createClass({
           <div className={classnames('bfd-modal', className)} {...other}>
             <div className="modal-backdrop"></div>
             <div className="modal" onClick={this.handleModalClick}>
-              <div className="modal-dialog" onClick={this.handleDialogClick}>
+              <div className="modal-dialog">
                 <div className="modal-content">
                   {children}
                 </div>
