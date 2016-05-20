@@ -23,6 +23,7 @@ function ChangeLog() {
           <li>Tree、SelectTree 新增 defaultData 属性</li>
           <li>Steps 样式调整</li>
           <li>SearchInput 样式调整</li>
+          <li>Transfer 新增 onSearch 属性，自定义搜索规则函数</li>
         </ol>
       </Version>
       <Version version="0.1.5" date="2016-05-16">
