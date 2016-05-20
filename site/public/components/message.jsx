@@ -36,13 +36,16 @@ export default React.createClass({
         <Pre>{code}</Pre>
         <MessageDemo></MessageDemo>
         <h2>message.success(message, duration)</h2>
-        <h2>message.danger(message)</h2>
+        <h2>message.danger(message, onClose)</h2>
         <Props>
           <Prop name="message" type="string | ReactElement" required>
             <p>消息内容</p>
           </Prop>
           <Prop name="duration" type="number">
             <p>持续时间，单位秒，默认 2 秒，danger类型无效（手动关闭）</p>
+          </Prop>
+          <Prop name="onClose" type="function">
+            <p>手动关闭后的回调</p>
           </Prop>
         </Props>
       </div>

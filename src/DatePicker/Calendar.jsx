@@ -52,7 +52,7 @@ const Calendar = React.createClass({
     }
   },
 
-  dayNames: ['日', '一', '二', '三', '四', '五', '六'],
+  dayNames: ['一', '二', '三', '四', '五', '六', '日'],
 
   // 切换年月
   handleToggle(change, type) {
@@ -123,11 +123,11 @@ const Calendar = React.createClass({
     
     // 上月
     d = new Date(this.state.currentYear, this.state.currentMonth, 1)
-    let dayInWeek = d.getDay()
-    if (dayInWeek) {
+    let dayInWeek = d.getDay() || 7
+    if (dayInWeek > 1) {
       d.setDate(0)
       const lastMonthDaysCount = d.getDate()
-      for (let i = dayInWeek; i--; ) {
+      for (let i = dayInWeek - 1; i--; ) {
         dates.push({
           year: d.getFullYear(),
           month: d.getMonth(),

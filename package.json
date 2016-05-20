@@ -17,7 +17,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.5",
     "babel-plugin-transform-runtime": "^6.4.3",
-    "bfd-bootstrap": "0.0.17",
+    "bfd-bootstrap": "0.0.18",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.0",
     "d3": "^3.5.11",
@@ -54,7 +54,8 @@
     "pm2": "^1.0.2",
     "react-addons-test-utils": "^0.14.8",
     "webpack": "^1.12.12",
-    "webpack-dev-middleware": "^1.4.0"
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.10.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jestPreproess",

@@ -1,49 +1,53 @@
 import React, { PropTypes } from 'react'
 import TreeNode from './TreeNode'
-import update from 'react-addons-update'
 import classnames from 'classnames'
 import './less/tree.less'
 
-const propTypes = {
-  data: PropTypes.array.isRequired,
-  onChange: PropTypes.func
-}
-
 const Tree = React.createClass({
 
-  handleToggle(props, isOpen) {
-    const { location, item, parent } = props
-    const index = location.pop()
-    parent[index] = update(item, {
-      open: {$set: isOpen}
-    })
-    this.props.onChange && this.props.onChange(this.props.data, parent[index])
+  getInitialState() {
+    return {
+      data: this.props.data || this.props.defaultData
+    }
   },
-  
-  loopData(data, parentLocation) {
-    if (!data || !data.length) return null
-    return (
-      <ul>
-      {data.map((item, i) => {
-        const location = parentLocation.concat([i])
-        return (
-          <TreeNode location={location} key={i} open={item.open} parent={data} item={item} beforeNode={this.props.beforeNode} onToggle={this.handleToggle}>
-            {this.loopData(item.children, location)}
-          </TreeNode>
-        )
-      })}
-      </ul>
-    )
+
+  componentWillReceiveProps(nextProps) {
+    'data' in nextProps && this.setState({
+      data: nextProps.data
+    })
+  },
+
+  handleNodeChange() {
+    this.props.onChange && this.props.onChange(this.state.data)
   },
 
   render() {
-    const { className, data, ...other } = this.props
+    const { className, beforeNodeRender, ...other } = this.props
+    const data = this.state.data
     return (
-      <div className={classnames('bfd-tree', className)} {...other}>{this.loopData(data, [])}</div>
+      <div className={classnames('bfd-tree', className)} {...other}>
+        <ul>
+          {data.map((item, i) => {
+            return <TreeNode key={i} parentData={data} index={i} data={item} onChange={this.handleNodeChange} beforeNodeRender={beforeNodeRender} />
+          })}
+        </ul>
+      </div>
     )
   }
 })
 
-Tree.propTypes = propTypes
+Tree.propTypes = {
+  data: PropTypes.array,
+  defaultData: PropTypes.array,
+  onChange: PropTypes.func,
+  customProp({ data, defaultData, onChange }) {
+    if (data && !onChange) {
+      return new Error('You provided a `data` prop without an `onChange` handler')
+    }
+    if (!data && !defaultData) {
+      return new Error('You should provided a `data` prop or a `defaultData` prop at least')
+    }
+  }
+}
 
 export default Tree

@@ -3,6 +3,7 @@ import Tree from 'c/Tree/Tree'
 import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+import Warn from '../Warn'
 
 const TreeDemo = React.createClass({
   getInitialState() {
@@ -32,7 +33,7 @@ const TreeDemo = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} />
+    return <Tree defaultData={this.state.data} />
   }
 })
 
@@ -66,7 +67,7 @@ const App = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} />
+    return <Tree defaultData={this.state.data} />
   }
 })
 `
@@ -78,8 +79,7 @@ const SelectTreeDemo = React.createClass({
         name: '数据工厂',
         open: true,
         children: [{
-          name: 'adsdsd',
-          checked: true
+          name: 'adsdsd'
         }]
       }, {
         name: '配置中心',
@@ -92,12 +92,8 @@ const SelectTreeDemo = React.createClass({
     }
   },
 
-  handleChange(data) {
-    this.setState({ data })
-  },
-
   render() {
-    return <SelectTree data={this.state.data} onChange={this.handleChange} />
+    return <SelectTree defaultData={this.state.data} />
   }
 })
 
@@ -124,12 +120,8 @@ const App = React.createClass({
     }
   },
 
-  handleChange(data) {
-    this.setState({ data })
-  },
-
   render() {
-    return <SelectTree data={this.state.data} onChange={this.handleChange} />
+    return <SelectTree defaultData={this.state.data} />
   }
 })`
 
@@ -140,7 +132,7 @@ export default () => {
       <Pre>{TreeDemoCode}</Pre>
       <TreeDemo />
       <Props>
-        <Prop name="data" type="array" required>
+        <Prop name="data" type="array">
           <p>数据源，格式如下</p>
           <Pre>
 {`[{
@@ -150,7 +142,11 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <Prop name="onChange" type="function" required>
+        <Prop name="defaultData" type="array">
+          <p>同 data </p>
+        </Prop>
+        <Warn>data 或者 defaultData 至少提供一个</Warn>
+        <Prop name="onChange" type="function">
           <p>状态改变后的回调，同步树的状态，params: data（整个树状态）, target（目标节点状态）</p>
         </Prop>
       </Props>
@@ -158,7 +154,7 @@ export default () => {
       <Pre>{SelectTreeDemoCode}</Pre>
       <SelectTreeDemo />
       <Props>
-        <Prop name="data" type="array" required>
+        <Prop name="data" type="array">
           <p>数据源，格式如下</p>
           <Pre>
 {`[{
@@ -169,7 +165,11 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <Prop name="onChange" type="function" required>
+        <Prop name="defaultData" type="array">
+          <p>同 data </p>
+        </Prop>
+        <Warn>data 或者 defaultData 至少提供一个</Warn>
+        <Prop name="onChange" type="function">
           <p>切换选择后回调，更新树的状态，params: data（整个树状态）, target（目标节点状态）</p>
         </Prop>
       </Props>
