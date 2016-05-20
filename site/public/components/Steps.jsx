@@ -22,7 +22,7 @@ const App = React.createClass({
   },
   render() {
     return 
-      <Steps height={100} current={this.state.current}>
+      <Steps height={70} current={this.state.current}>
         <Step title="配置推荐栏" />
         <Step title="配置推荐策略" />
         <Step title="配置算法" />
@@ -49,12 +49,13 @@ export default React.createClass({
     })
   },
   render() {
+    const arr = [{name:"step1"}, {name:"step2"}];
     return (
       <div>
         <h1>步骤条</h1>
         <Pre>{code}</Pre>
         
-        <Steps height={100} current={this.state.current} >
+        <Steps height={70} current={this.state.current} >
           <Step title="配置推荐栏" />
           <Step title="配置推荐策略" />
           <Step title="配置算法" />
