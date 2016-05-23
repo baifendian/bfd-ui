@@ -40,7 +40,7 @@ const FormDemo = React.createClass({
   render() {
     return (
       <Form ref="form" action="/api/form" data={this.state.data} rules={this.rules} onChange={this.handleChange} onSuccess={this.handleSuccess}>
-        <FormItem label="用户群" name="name" help="5个字符以内">
+        <FormItem label="用户群" required name="name" help="5个字符以内">
           <FormInput style={{width: '200px'}}></FormInput>
         </FormItem>
         <FormItem label="品牌偏好" name="brand">
@@ -97,7 +97,7 @@ const FormDemo = React.createClass({
   render() {
     return (
       <Form ref="form" action="/api/form" data={this.state.data} rules={this.rules} onChange={this.handleChange} onSuccess={this.handleSuccess}>
-        <FormItem label="用户群" name="name" help="5个字符以内">
+        <FormItem label="用户群" required name="name" help="5个字符以内">
           <FormInput style={{width: '200px'}}></FormInput>
         </FormItem>
         <FormItem label="品牌偏好" name="brand">
@@ -140,7 +140,7 @@ const FormCustomDemo = React.createClass({
   render() {
     return (
       <Form ref="form" rules={this.rules}>
-        <FormItem ref="dateItem" label="选择日期" name="date">
+        <FormItem ref="dateItem" label="选择日期" required name="date">
           <DatePicker style={{marginRight: '10px'}} date={this.state.date} onSelect={this.handleSelect} />
         </FormItem>
         <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
@@ -176,7 +176,7 @@ const FormCustomDemo = React.createClass({
   render() {
     return (
       <Form ref="form" rules={this.rules}>
-        <FormItem ref="dateItem" label="选择日期" name="date">
+        <FormItem ref="dateItem" label="选择日期" required name="date">
           <DatePicker style={{marginRight: '10px'}} date={this.state.date} onSelect={this.handleSelect} />
         </FormItem>
         <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
@@ -240,6 +240,9 @@ export default () => {
       <Props>
         <Prop name="label" type="string">
           <p>label 显示名称</p>
+        </Prop>
+        <Prop name="required" type="boolean">
+          <p>是否必须，如果必须，则 label 前带 * 的标识</p>
         </Prop>
         <Prop name="name" type="string" rquired>
           <p>关联的数据字段</p>

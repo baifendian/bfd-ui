@@ -53,6 +53,9 @@
   "name": "Select2",
   "cn": "选择列表"
 }, {
+  "name": "MultipleSelect",
+  "cn": "多选列表"
+}, {
   "name": "SearchSelect",
   "cn": "查询下拉框"
 }, {
@@ -85,4 +88,7 @@
 }, {
   "name": "Slider",
   "cn": "拖动条"
+}, {
+  "name": "Editable",
+  "cn": "可编辑的"
 }]  

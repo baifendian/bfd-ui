@@ -27,7 +27,7 @@ const App = React.createClass({
 })`
         }
         </Pre>
-        <Slider defaultValue={0} tickValue={10} start={0} end={20} suffix="%" onSlid={this.handleSlid} />
+        <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSlid={this.handleSlid} />
         <div className="clearfix"></div>
         <Props>
           <Prop name="defaultValue" type="String">

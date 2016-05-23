@@ -14,6 +14,9 @@ const Message = React.createClass({
 
   handleRemove() {
     this.setState({show: false})
+    if (typeof this.state.duration === 'function') {
+      this.state.duration()
+    }
   },
 
   render() {
@@ -37,7 +40,7 @@ let instance
 function showMessage(type, message, duration = 2) {
 
   if (process.env.NODE_ENV !== 'production') {
-    if (typeof message !== 'string' && !(message && message['$$typeof'])) {
+    if (typeof message !== 'string' && !(message && React.isValidElement(message))) {
       warning('`message` should be `string` or `ReactElement`, check the first param of message.' + type)
     }
   }
@@ -67,7 +70,7 @@ export default {
     showMessage('success', message, duration)
   },
 
-  danger(message) {
-    showMessage('danger', message)
+  danger(message, onClose) {
+    showMessage('danger', message, onClose)
   }
 }

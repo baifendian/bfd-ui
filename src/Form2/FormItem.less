@@ -1,8 +1,18 @@
 .bfd-form-item2 {
   .form-label {
     float: left;
-    line-height: 34px;
+    line-height: 30px;
+    height: 30px;
     text-align: right;
+    &.required {
+      &:before {
+        content: '* ';
+        color: #d9534f;
+        font-size: 14px;
+        font-weight: bold;
+        vertical-align: middle;
+      }
+    }
   }
   .tip {
     font-size: 12px;
