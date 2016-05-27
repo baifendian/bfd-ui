@@ -8,7 +8,7 @@ const DatePickerDemo = React.createClass({
 
   getInitialState() {
     return {
-      date: '2016-02-03'
+      date: '2016-01-01'
     }
   },
 

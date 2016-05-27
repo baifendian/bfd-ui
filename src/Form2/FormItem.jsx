@@ -40,7 +40,7 @@ const FormItem = React.createClass({
 
   render() {
     const { error } = this.state
-    const { name, multiple, help, label, className, children, ...other } = this.props
+    const { name, multiple, required, help, label, className, children, ...other } = this.props
     const labelWidth = this.context.form.props.labelWidth
 
     let Help
@@ -65,7 +65,7 @@ const FormItem = React.createClass({
 
     return (
       <div className={classnames('form-group bfd-form-item2', className, {'has-error': error})} {...other}>
-        { label ? <div className="form-label" style={{width: labelWidth + 'px'}}>{label}：</div> : null }
+        { label ? <div className={classnames('form-label', { required })} style={{width: labelWidth + 'px'}}>{label}：</div> : null }
         <div className="form-content" style={{marginLeft: labelWidth + 'px'}}>
           {children}
           {Error ? Error : Help}
@@ -86,6 +86,7 @@ FormItem.childContextTypes = {
 FormItem.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
+  required: PropTypes.bool,
   help: PropTypes.string,
   multiple: PropTypes.bool
 }

@@ -5,6 +5,27 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.6" date="2016-05-20">
+        <p>新增组件: </p>
+        <ul>
+          <li>多选列表: MultipleSelect</li>
+          <li>可编辑的: Editable</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>message.success 样式更新</li>
+          <li>message.danger 添加手动关闭后的回调功能</li>
+          <li>Modal 打开时，message 位置调整</li>
+          <li>input、button 等基础控件默认高度调整，Checkbox、Select2 等组件对应调整</li>
+          <li>Select2 新增 defaultValue 属性，修正 disabled 样式、文字过长等问题</li>
+          <li>DatePicker 每周设置为从周一开始</li>
+          <li>Form2 中 FormItem 支持 required 属性</li>
+          <li>Tree、SelectTree 新增 defaultData 属性</li>
+          <li>Steps 样式调整</li>
+          <li>SearchInput 样式调整</li>
+          <li>Transfer 新增 onSearch 属性，自定义搜索规则函数</li>
+        </ol>
+      </Version>
       <Version version="0.1.5" date="2016-05-16">
         <p>新增组件: </p>
         <ul>

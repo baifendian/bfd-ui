@@ -94,7 +94,7 @@ $ npm run lint`}</Pre>
         <Pre lang="sh">{
 `$ cd myapp
 
-$ npm run build`}</Pre>
+$ npm run build -- jsp`}</Pre>
 
         <p>完成后，myapp 下的文件发送给后台，如 Java web 项目下的 webapp 目录，使用 git、svn 方式更佳</p>
         

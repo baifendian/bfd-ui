@@ -10,33 +10,33 @@ describe('Tree', () => {
     const data = []
 
     it('className is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<Tree data={data} className="test" />)
+      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} className="test" />)
       expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
     })
 
     it('style is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<Tree data={data} style={{color: 'red'}} />)
+      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} style={{color: 'red'}} />)
       expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
     })
 
     it('onClick is ok', () => {
       const handleClick = jest.fn()
-      const instance = TestUtils.renderIntoDocument(<Tree data={data} onClick={handleClick} />)
+      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} onClick={handleClick} />)
       TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
       expect(handleClick).toBeCalled()
     })
   })
   
 
-  it('throw error if no name col', () => {
-    const data = [{
-      _name: 'test'
-    }]
-    function render() {
-      TestUtils.renderIntoDocument(<Tree data={data} />)  
-    }
-    expect(render).toThrow()
-  })
+  // it('throw error if no name col', () => {
+  //   const data = [{
+  //     _name: 'test'
+  //   }]
+  //   function render() {
+  //     TestUtils.renderIntoDocument(<Tree data={data} />)  
+  //   }
+  //   expect(render).toThrow()
+  // })
 
 
   describe('open/name/loopData', () => {
@@ -49,7 +49,7 @@ describe('Tree', () => {
     }, {
       name: 'test2'
     }]
-    const tree = TestUtils.renderIntoDocument(<Tree data={data} />)
+    const tree = TestUtils.renderIntoDocument(<Tree defaultData={data} />)
 
     it('open is ok', () => {
       expect(TestUtils.scryRenderedDOMComponentsWithTag(tree, 'li')[0].className.split(' ')).toContain('open')

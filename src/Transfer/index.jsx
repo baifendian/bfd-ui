@@ -41,8 +41,14 @@ export default React.createClass({
     for (let i = 0, len = this.props.sdata.length; i < len; i++) {
       const item = this.props.sdata[i];
       const label = this.props.render ? this.props.render(item) : item.label
-      if (label.indexOf(filterText) != -1) {
-        arr.push(item)
+      if(typeof this.props.onSearch == 'function') {
+        if(this.props.onSearch(label, filterText)) {
+          arr.push(item)
+        }
+      } else {
+        if (label.indexOf(filterText) != -1) {
+          arr.push(item)
+        }
       }
     }
     this.setState({

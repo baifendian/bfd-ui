@@ -1,64 +1,78 @@
 import React, { PropTypes } from 'react'
+import update from 'react-addons-update'
+import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
-
-const propTypes = {
-  location: PropTypes.array.isRequired,
-  open: PropTypes.bool,
-  item: PropTypes.object,
-  parent: PropTypes.array,
-  beforeNode: PropTypes.func
-}
 
 const TreeNode = React.createClass({
 
   getInitialState() {
-    return {
-      isOpen: !!this.props.open
-    }
+    return this.props.data
   },
 
   componentWillReceiveProps(nextProps) {
-    'open' in nextProps && this.setState({isOpen: !!nextProps.open})
+    'data' in nextProps && this.setState(nextProps.data)
   },
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return !(this.props.item === nextProps.item && this.state.isOpen === nextState.isOpen)
-  },
+  shouldComponentUpdate,
 
   handleToggle() {
-    const isOpen = !this.state.isOpen
-    this.setState({ isOpen })
-    this.props.onToggle && this.props.onToggle(this.props, isOpen)
+    this.set('open', !this.state.open)
+    this.props.onChange()
+  },
+
+  set(key, value) {
+    this.setState({[key]: value})
+    this.updateParentValue(key, value)
+  },
+
+  updateParentValue(key, value) {
+    const { parentData, index } = this.props
+    parentData[index] = update(parentData[index], {
+      [key]: {$set: value}
+    })
   },
 
   render() {
-    const item = this.props.item
+    const { data, beforeNodeRender, onChange } = this.props
+    const isOpen = this.state.open
 
-    if (!item.name) {
-      throw 'Tree 数据节点 name 字段不能为空'
-    }
-
-    const hasChildren = item.children && item.children.length
+    const hasChildren = data.children && data.children.length
     let icon
+    let Children
     if (hasChildren) {
-      icon = `folder-${this.state.isOpen ? 'open' : 'close'}`
+      icon = 'folder-' + (isOpen ? 'open' : 'close')
+      Children = (
+        <ul>
+        {data.children.map((item, i) => {
+          return <TreeNode key={i} parent={this} parentData={data.children} index={i} data={item} onChange={onChange} beforeNodeRender={beforeNodeRender} />
+        })}
+        </ul>
+      )
     } else {
       icon = 'file'
     }
+
     return (
-      <li className={classnames({open: this.state.isOpen})}>
+      <li className={classnames({open: isOpen})}>
         <button style={{visibility: hasChildren ? 'visible' : 'hidden'}} type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
-          <span className={`glyphicon glyphicon-${this.state.isOpen ? 'minus' : 'plus'}`}></span>
+          <span className={`glyphicon glyphicon-${isOpen ? 'minus' : 'plus'}`}></span>
         </button>
-        {this.props.beforeNode ? this.props.beforeNode(this.props) : null}
+        {beforeNodeRender ? beforeNodeRender(this) : null}
         <span className={`toggle-icon glyphicon glyphicon-${icon}`}></span>
-        <div className="node-content">{item.name}</div>
-        {this.props.children}
+        <div className="node-content">{data.name}</div>
+        {Children}
       </li>
     )
   }
 })
 
-TreeNode.propTypes = propTypes
+TreeNode.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  parent: PropTypes.instanceOf(TreeNode),
+  parentData: PropTypes.array,
+  index: PropTypes.number,
+  data: PropTypes.object,
+  beforeNode: PropTypes.func
+}
 
 export default TreeNode

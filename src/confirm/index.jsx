@@ -50,7 +50,7 @@ let instance
 function confirm(message, callback) {
 
   if (process.env.NODE_ENV !== 'production') {
-    if (typeof message !== 'string' && !(message && message['$$typeof'])) {
+    if (typeof message !== 'string' && !(message && React.isValidElement(message))) {
       warning('`message` should be `string` or `ReactElement`, check the first param of confirm')
     }
     if (typeof callback !== 'function') {
