@@ -1,13 +1,14 @@
 import React, { PropTypes } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import classnames from 'classnames'
+import TextOverflow from '../TextOverflow'
 import './Select.less'
 
 const Select = React.createClass({
 
   getInitialState() {
     return {
-      value: this.props.value || this.props.defaultValue
+      value: 'value' in this.props ? this.props.value : this.props.defaultValue
     }
   },
 
@@ -39,7 +40,9 @@ const Select = React.createClass({
     return (
       <Dropdown ref="dropdown" className={classnames('bfd-select2', { disabled }, className)} disabled={disabled} {...other}>
         <DropdownToggle>
-          <div className="title">{label}</div>
+          <TextOverflow>
+            <div className="title">{label}</div>
+          </TextOverflow>
           <span className="caret"></span>
         </DropdownToggle>
         <DropdownMenu>

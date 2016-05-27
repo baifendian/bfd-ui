@@ -5,7 +5,7 @@ import './index.less'
 const Editable = React.createClass({
 
   getInitialState() {
-    const value = this.props.value || this.props.defaultValue
+    const value = 'value' in this.props ? this.props.value : this.props.defaultValue
     return {
       value,
       changedValue: value,

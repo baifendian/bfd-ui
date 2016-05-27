@@ -13,7 +13,6 @@ export default React.createClass({
   },
 
   shouldComponentUpdate(nextProps) {
-    // URL变化触发ajax请求
     if (this.props.url !== nextProps.url) {
       this.fetch()
       return false
@@ -44,7 +43,6 @@ export default React.createClass({
     }, this.props.delay || 0)
   },
 
-  // 加载快的情况下，不展示loading
   lazyFetch() {
     this.loadingTimer = setTimeout(() => {
       this.setState({xhr: 'loading'})

@@ -53,6 +53,9 @@
   "name": "Select2",
   "cn": "选择列表"
 }, {
+  "name": "AjaxSelect",
+  "cn": "AJAX 选择列表"
+}, {
   "name": "MultipleSelect",
   "cn": "多选列表"
 }, {
@@ -88,4 +91,7 @@
 }, {
   "name": "Editable",
   "cn": "可编辑的"
+}, {
+  "name": "TextOverflow",
+  "cn": "文字溢出"
 }]  
