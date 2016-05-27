@@ -89,6 +89,9 @@
   "name": "SearchInput",
   "cn": "搜索框"
 }, {
+  "name": "Slider",
+  "cn": "拖动条"
+}, {
   "name": "Editable",
   "cn": "可编辑的"
 }, {
