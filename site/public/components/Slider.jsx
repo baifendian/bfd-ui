@@ -5,8 +5,11 @@ import Slider from 'c/Slider'
 
 
 export default React.createClass({
+  handleSliding(value) {
+    console.log('sliding:', value);
+  },
   handleSlid(value) {
-    console.log(value);
+    console.log('slid:', value);
   },
   render() {
     return (
@@ -18,16 +21,19 @@ export default React.createClass({
 import Slider from 'bfd-ui/lib/Slider'
 
 const App = React.createClass({
+  handleSliding(value) {
+    console.log('sliding:', value);
+  },
   handleSlid(value) {
-    console.log(value)  
+    console.log('slid:', value);
   },
   render() {    
-    return <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSlid={this.handleSlid} />
+    return <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSliding={this.handleSliding} onSlid={this.handleSlid} />
   }
 })`
         }
         </Pre>
-        <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSlid={this.handleSlid} />
+        <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSliding={this.handleSliding} onSlid={this.handleSlid} />
         <div className="clearfix"></div>
         <Props>
           <Prop name="defaultValue" type="String">
@@ -45,9 +51,12 @@ const App = React.createClass({
           <Prop name="suffix" type="String" required>
             <p>后缀</p>
           </Prop>
-          <Prop name="onDrag" type="function" required>
-            <p>滑块拖动事件，value为拖动条当前值</p>
-          </Prop>       
+          <Prop name="onSliding" type="function" required>
+            <p>滑块拖动进行时事件，value为拖动条当前值</p>
+          </Prop>
+          <Prop name="onSlid" type="function" required>
+            <p>滑块拖动完成时事件，即鼠标抬起后执行，value为拖动条当前值</p>
+          </Prop>
         </Props>
       </div>
     )
