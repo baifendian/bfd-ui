@@ -21,8 +21,11 @@ export default React.createClass({
 import Slider from 'bfd-ui/lib/Slider'
 
 const App = React.createClass({
+  handleSliding(value) {
+    console.log('sliding:', value);
+  },
   handleSlid(value) {
-    console.log(value)  
+    console.log('slid:', value);
   },
   render() {    
     return <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSliding={this.handleSliding} onSlid={this.handleSlid} />
