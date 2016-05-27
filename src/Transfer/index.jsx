@@ -39,7 +39,7 @@ export default React.createClass({
   handleUserInput(filterText) {
     const arr = []
     for (let i = 0, len = this.props.sdata.length; i < len; i++) {
-      const item = this.props.sdata[i];
+      const item = this.props.sdata[i]
       const label = this.props.render ? this.props.render(item) : item.label
       if(typeof this.props.onSearch == 'function') {
         if(this.props.onSearch(label, filterText)) {
