@@ -13,8 +13,16 @@ export default class {
   constructor(config) {
 
     const padding = [100, 60];
-    const { container, data, name, animation, radius, tooltip, legend } = config;
-    
+    const {
+      container,
+      data,
+      name,
+      animation,
+      radius,
+      tooltip,
+      legend
+    } = config;
+
     let env = {};
     env.container = container;
     env.config = {};
@@ -80,7 +88,7 @@ export default class {
      *init pie
      */
     initPie(env, true);
-    
+
     /*
      *init tooltip
      */
@@ -90,26 +98,32 @@ export default class {
 
     /*
      *自适应容器大小
-    */
-    window.onresize = function() {
+     */
 
-      env.svg.select('.pie-slices').selectAll('path').remove();
-      env.svg.select('.pie-labels').selectAll('text').remove();
-      env.svg.select('.pie-lines').selectAll('polyline').remove();
+    let __w = env.container.clientWidth;
+    window.onresize = function() {   
+       
+      if (env.container.clientWidth != __w) {
 
-      env.config.legend.layout == 'vertical' ? env.width = env.container.clientWidth - padding[0] : env.width = env.container.clientWidth;
-      env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2 + 10) + ')');
+        env.svg.select('.pie-slices').selectAll('path').remove();
+        env.svg.select('.pie-labels').selectAll('text').remove();
+        env.svg.select('.pie-lines').selectAll('polyline').remove();
 
-      d3.select(env.container)
-        .select('svg')
-        .attr('width', env.width)
-        .attr('height', env.height);
+        env.config.legend.layout == 'vertical' ? env.width = env.container.clientWidth - padding[0] : env.width = env.container.clientWidth;
+        env.svg.attr('transform', 'translate(' + (env.width / 2 + 10) + ',' + (env.width / 2 + 10) + ')');
 
-      initPie(env, false);
+        d3.select(env.container)
+          .select('svg')
+          .attr('width', env.width)
+          .attr('height', env.height);
 
-      assembleTooltip(env, false);
+        initPie(env, false);
+
+        assembleTooltip(env, false);
+
+        __w = env.container.clientWidth;
+      }
 
     }
-
   }
 }
