@@ -1,0 +1,49 @@
+.bfd-text-overflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bfd-tooltip {
+  position: absolute;
+  border-radius: 2px;
+  left: 0;
+  top: 0;
+  padding: 10px 12px;
+  border: 1px solid #ececec;
+  background: #fff;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.14), 0 4px 5px 0 rgba(0, 0, 0, 0.098), 0 1px 10px 0 rgba(0, 0, 0, 0.014);
+  max-width: 300px;
+  word-wrap: break-word;
+  z-index: 9999;
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+  }
+  &:before {
+    bottom: -8px;
+    border-top: 7px solid #ececec;
+  }
+  &:after {
+    bottom: -7px;
+    border-top: 7px solid #fff;
+  }
+  &.show-enter {
+    opacity: 0;
+    &.show-enter-active {
+      opacity: 1;
+      transition: all .2s ease-out;
+    }
+  }
+  &.show-leave.show-leave-active {
+    opacity: 0;
+    transition: all .2s ease-out;
+  }
+}

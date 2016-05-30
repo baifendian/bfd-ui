@@ -46,8 +46,8 @@ const FormDemo = React.createClass({
         <FormItem label="品牌偏好" name="brand">
           <FormSelect style={{width: '200px'}}>
             <Option>请选择</Option>
-            <Option value="0">小米</Option>
-            <Option value="1">苹果</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
           </FormSelect>
         </FormItem>
         <FormItem label="描述" name="desc" help="500个字符以内">
@@ -103,8 +103,8 @@ const FormDemo = React.createClass({
         <FormItem label="品牌偏好" name="brand">
           <FormSelect style={{width: '200px'}}>
             <Option>请选择</Option>
-            <Option value="0">小米</Option>
-            <Option value="1">苹果</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
           </FormSelect>
         </FormItem>
         <FormItem label="描述" name="desc" help="500个字符以内">

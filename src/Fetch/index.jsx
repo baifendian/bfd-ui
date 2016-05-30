@@ -13,12 +13,15 @@ export default React.createClass({
   },
 
   shouldComponentUpdate(nextProps) {
-    // URL变化触发ajax请求
     if (this.props.url !== nextProps.url) {
       this.fetch()
       return false
     }
     return true
+  },
+
+  componentWillMount() {
+    this.props.url && this.fetch()
   },
   
   componentDidMount() {
@@ -26,7 +29,6 @@ export default React.createClass({
     if (!parseInt(getComputedStyle(container).height, 10)) {
       container.style.height = '100%'
     }
-    this.fetch()
   },
 
   fetch() {
@@ -44,7 +46,6 @@ export default React.createClass({
     }, this.props.delay || 0)
   },
 
-  // 加载快的情况下，不展示loading
   lazyFetch() {
     this.loadingTimer = setTimeout(() => {
       this.setState({xhr: 'loading'})
@@ -63,7 +64,7 @@ export default React.createClass({
   render() {
     return (
       <div className={classnames('bfd-fetch', this.props.className)} style={this.props.style} ref="container">
-        {this.state.xhr !== 'success' ? (
+        {this.props.url && this.state.xhr !== 'success' ? (
           <div className="fetch-mask">
           {(() => {
             switch(this.state.xhr) {

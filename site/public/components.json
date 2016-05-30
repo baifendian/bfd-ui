@@ -91,4 +91,7 @@
 }, {
   "name": "Editable",
   "cn": "可编辑的"
+}, {
+  "name": "TextOverflow",
+  "cn": "文字溢出"
 }]  

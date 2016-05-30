@@ -17,38 +17,40 @@ export default (env, flag) => {
 
   env.svg.select('.pie-slices')
     .selectAll('.bfd-pie-md')
-    .on('mouseover', function(d) {
+    .on('click', function(d) {
       d3.select('.pie-slices').selectAll(".bfd-pie-lg").style('display', 'none');
       d3.select('.pie-slices').selectAll(".bfd-pie-md").style('display', 'block');
       d3.select(env.container).selectAll('.bfd-pie-flag').style('display', 'none');
       d3.select('.pie-slices').selectAll("path[fill='" + d.data.color + "']").style('display', 'block');
       d3.select(this).style('display', 'none');
+
+      if (env.config.tooltip.point && typeof env.config.tooltip.point.events.click === 'function') {
+        env.config.tooltip.point.events.click(d.data);
+      }
+
     });
 
 
   env.svg.select('.pie-slices')
-    .selectAll('.bfd-pie-lg')
+    .selectAll('.bfd-pie-md,.bfd-pie-lg')
     .on('mouseover', function(d) {
       //计算份额的百分比
       let percent = Number(d.value) / d3.sum(flag ? env.config.data : env.config.dataLegend, function(d) {
         return d.value;
       }) * 100;
+
       tooltip.html(env.config.name + '<br/>' + d.data.name + ':' + d.data.value + '(' + percent.toFixed(0) + '%)')
-        .style('left', (d3.event.offsetX) + 'px')
-        .style('top', (d3.event.offsetY + 50) + 'px')
+        .style('left', (d3.event.layerX) + 'px')
+        .style('top', (d3.event.layerY + 50) + 'px')
         .style('opacity', 1.0);
     })
     .on('mousemove', function(d) {
       /* left 和 top 来改变提示框的位置 */
-      tooltip.style('left', (d3.event.offsetX) + 'px')
-        .style('top', (d3.event.offsetY + 50) + 'px');
+      tooltip.style('left', (d3.event.layerX) + 'px')
+        .style('top', (d3.event.layerY + 50) + 'px');
     })
     .on('mouseout', function(d) {
-      tooltip.style('opacity', 0.0);      
-    })
-    .on('click', function(d) {
-      console.log(d);
+      tooltip.style('opacity', 0.0);
     });
-
 
 }

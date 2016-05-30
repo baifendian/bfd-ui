@@ -1,5 +1,5 @@
 import React from 'react'
-import Tree from 'c/Tree/Tree'
+import Tree from 'c/Tree'
 import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
