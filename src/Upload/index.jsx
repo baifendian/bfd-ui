@@ -42,6 +42,18 @@ export default React.createClass({
           type: 'post',
           url: self.props.action,
           data: fd,
+          beforeSend(xhr) {
+            //侦查当前附件上传情况
+            xhr.upload.onprogress = function(evt) {
+                const loaded = evt.loaded;
+                const tot = evt.total;
+                const per = Math.floor(100 * loaded / tot); //已经上传的百分比
+                let list = self.state.list.slice(0);
+                let f = list[index];
+                f.percent = per;
+                self.setState({list: list})
+            };
+          }, 
           success(data) {
             let list = self.state.list.slice(0);
             let f = list[index];
@@ -51,11 +63,14 @@ export default React.createClass({
               self.props.onComplete(data);
             }
           },
-          error() {
+          error(msg) {
             let list = self.state.list.slice(0);
             let f = list[index];
             f.state = 2;
             self.setState({list: list})
+            if(typeof self.props.onComplete == 'function') {
+              self.props.onComplete(msg);
+            }
           },
           complete() {
           }

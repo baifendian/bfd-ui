@@ -23,7 +23,7 @@ export default  React.createClass({
           return (
             <div key={index} className="row">
               <span>{item.name}</span>
-              <span>{item.state}</span>
+              <span>{item.percent}%</span>
               <span style={{display:item.state == 0 ? '' : 'none'}} className="glyphicon glyphicon-upload"></span>
               <span style={{color:'green', display:item.state == 1 ? '' : 'none'}} className="glyphicon glyphicon-ok-sign"></span>
               <span title="上传失败" style={{color:'red', display:item.state == 2 ? '' : 'none'}} className="glyphicon glyphicon-remove-sign"></span>
