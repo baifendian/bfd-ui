@@ -7,7 +7,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>散点图</h1>
+        <h1>散点图 @hai.jiang</h1>
         <p>与线图、柱状图不同的是，散点图可以多出一个维度，即散点的大小</p>
         <Pre>
 {`import ScatterPlot from 'bfd-ui/lib/ScatterPlot'

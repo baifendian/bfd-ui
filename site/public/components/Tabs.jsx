@@ -52,7 +52,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>选项卡</h1>
+        <h1>选项卡 @hai.jiang</h1>
         <Pre>
 {`import { Tabs, TabList, Tab, TabPanel } from 'bfd-ui/lib/Tabs'
 

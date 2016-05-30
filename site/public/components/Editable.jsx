@@ -24,7 +24,7 @@ const EditableDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>可编辑的</h1>
+      <h1>可编辑的 @hai.jiang</h1>
       <Pre>{code}</Pre>
       <EditableDemo />
       <h2>Editable</h2>

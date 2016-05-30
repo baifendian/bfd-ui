@@ -18,7 +18,8 @@ const xhrUsage = `xhr({
   url: '/user/5', // 请求 URL 地址
   data: {
     key: value
-  }, // POST 请求时提交的数据，value 如果为对象，自动 JSON.stringify
+  }, // 提交的数据，支持 FormData。POST 请求时，value 如果为对象，自动 JSON.stringify
+  beforeSend(xhr) {}, // 请求发送前操作，如 setRequestHeader、定义 onprogress 事件等
   success(data) {},
   error() {},
   complete() {}
@@ -44,7 +45,7 @@ const successUsage = `xhr.success = (res, option) => {
 export default () => {
   return (
     <div>
-      <h1>AJAX 请求</h1>
+      <h1>AJAX 请求 @hai.jiang</h1>
       <p>即使有 Fetch、Form 的 action 属性、组件 url 属性等功能，还是有单独发送 AJAX 的需求</p>
       <Pre>{code}</Pre>
       <h2>xhr(option)</h2>
@@ -60,7 +61,6 @@ export default () => {
       <h3>xhr.success(res, option)</h3>
       <p>全局成功回调，在 dataFilter 后执行，此方法会覆盖单独的 success 方法，如果需要可手动调用</p>
       <Pre>{successUsage}</Pre>
-      
     </div>
   )
 }

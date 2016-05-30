@@ -32,7 +32,7 @@ const MultipleSelectDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>多选列表</h1>
+      <h1>多选列表 @hai.jiang</h1>
       <Pre>{code}</Pre>
       <MultipleSelectDemo />
       <h2>MultipleSelect</h2>

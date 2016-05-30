@@ -23,7 +23,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>下拉菜单</h1>
+        <h1>下拉菜单 @hai.jiang</h1>
         <p>特征：自定义触发和下拉菜单内容，点击空白区域消失。一个页面下最多只显示一个下拉的状态</p>
         <Pre>{code}</Pre>
 

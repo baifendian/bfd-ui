@@ -23,9 +23,9 @@ const ClearableInput = React.createClass({
   },
 
   render() {
-    const { size, placeholder, type, className, onChange, ...other } = this.props
+    const { size, placeholder, type, disabled, className, onChange, ...other } = this.props
     const value = this.props.value || this.state.value
-    const { ...inputProps } = { placeholder, type, value}
+    const { ...inputProps } = { placeholder, type, value, disabled}
     return (
       <div className={classnames('bfd-clearable-input', className, {inline: this.props.inline})} {...other}>
         <input {...inputProps} className={'form-control' + (size ? ' input-' + size : '')} onChange={this.handleChange} />
@@ -39,6 +39,7 @@ ClearableInput.propTypes = {
   value: PropTypes.string,
   size: PropTypes.string,
   placeholder: PropTypes.string,
+  disabled: PropTypes.bool,
   inline: PropTypes.bool,
   onChange: PropTypes.func,
   customProp({ value, onChange }) {

@@ -35,7 +35,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>单选框</h1>
+        <h1>单选框 @hai.jiang</h1>
         <h2>RadioGroup</h2>
         <Pre>{code}</Pre>
         <RadioGroupDemo></RadioGroupDemo>

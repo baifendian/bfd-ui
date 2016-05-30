@@ -1,6 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
-import warning from '../warning'
+import warning from 'warning'
 import './index.less'
 
 const TextOverflow = React.createClass({
@@ -8,9 +8,7 @@ const TextOverflow = React.createClass({
     const { children } = this.props
 
     if (process.env.NODE_ENV !== 'production') {
-      if (children.length) {
-        warning('Children should be single, check the children of TextOverflow')
-      }
+      warning(!children.length, 'Children should be single, check the children of TextOverflow')
     }
 
     return React.cloneElement(children, {

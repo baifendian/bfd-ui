@@ -28,7 +28,7 @@ const TextOverflowDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>文字溢出</h1>
+      <h1>文字溢出 @hai.jiang</h1>
       <Pre>{code}</Pre>
       <TextOverflowDemo />
       <Warn>TextOverflow 只能包裹单个元素</Warn>
