@@ -119,7 +119,7 @@ const Demo = React.createClass({
           </FormItem>
           <FormItem submit>
             <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
-            <button className="btn  bfd-cancel-btn">取消</button>
+            <button type="button" className="btn  bfd-cancel-btn">取消</button>
           </FormItem>
         </Form>
       </div>            
@@ -213,7 +213,7 @@ const Demo2 = React.createClass({
           </div>        
           <FormItem submit>
             <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
-            <button className="btn  bfd-cancel-btn">取消</button>
+            <button type="button" className="btn  bfd-cancel-btn">取消</button>
           </FormItem>           
         </Form>
       </div>         

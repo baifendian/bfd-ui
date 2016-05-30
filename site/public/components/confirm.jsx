@@ -36,7 +36,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>确认提示</h1>
+        <h1>确认提示 @hai.jiang</h1>
         <Pre>{ConfirmDemoCode}</Pre>
         <ConfirmDemo></ConfirmDemo>
         <h2>confirm(message, callback)</h2>

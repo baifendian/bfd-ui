@@ -28,7 +28,7 @@ function xhr(option) {
 
   request.open(option.type, option.url)
 
-  let sendData = null
+  let sendData = option.data
   if (option.type === 'POST') {
     sendData = []
     const data = option.data
@@ -43,6 +43,8 @@ function xhr(option) {
     }
     sendData = sendData.join('&')
   }
+
+  option.beforeSend && option.beforeSend(request)
 
   request.send(sendData)
 }

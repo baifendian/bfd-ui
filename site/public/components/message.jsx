@@ -32,7 +32,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>全局提示</h1>
+        <h1>全局提示 @hai.jiang</h1>
         <Pre>{code}</Pre>
         <MessageDemo></MessageDemo>
         <h2>message.success(message, duration)</h2>

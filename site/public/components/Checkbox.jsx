@@ -79,7 +79,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>复选框</h1>
+        <h1>复选框 @hai.jiang</h1>
         <h2>Checkbox</h2>
         <p>单独使用，常见使用场景：是否全选、控制单一状态</p>
         <Pre>{CheckboxDemoCode}</Pre>

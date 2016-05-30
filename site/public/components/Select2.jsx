@@ -3,11 +3,15 @@ import { Select, Option } from 'c/Select2'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
+const render = (item, i) => {
+  return <Option value={item.id}>{item.name}</Option>
+}
+
 const SelectDemo = React.createClass({
   render() {
     return (
-      <Select defaultValue="1">
-        <Option>请选择</Option>
+      <Select>
+        <Option>请选择 @hai.jiang</Option>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>
@@ -21,7 +25,7 @@ const code = `import { Select, Option } from 'bfd-ui/lib/Select2'
 const SelectDemo = React.createClass({
   render() {
     return (
-      <Select defaultValue="1">
+      <Select>
         <Option>请选择</Option>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
@@ -47,6 +51,18 @@ export default () => {
         </Prop>
         <Prop name="onChange" type="function">
           <p>切换选择后的回调，参数为选中的值</p>
+        </Prop>
+        <Prop name="url" type="string">
+          <p>ajax 方式加载数据</p>
+        </Prop>
+        <Prop name="render" type="function">
+          <p>使用 url 方式时，自定义 Option 渲染逻辑</p>
+          <Pre>{`const render = item => <Option value={item.id}>{item.name}</Option>
+<Select url="/api/list" render={render}></Select>`}</Pre>
+        </Prop>
+        <Prop name="defaultOption" type="React element">
+          <p>使用 url 方式时，自定义空值时的 Option</p>
+          <Pre>{`<Select url="/api/list" defaultOption={<Option>请选择</Option>} />`}</Pre>
         </Prop>
       </Props>
       <h2>Option</h2>

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import warning from 'warning'
 import xhr from '../xhr'
 import message from '../message'
-import warning from '../warning'
 import './Form.less'
 
 const Form = React.createClass({
@@ -64,7 +64,7 @@ const Form = React.createClass({
   save(data) {
     if (this.validate()) {
       if (process.env.NODE_ENV !== 'production') {
-        this.props.action || warning('No `action` provided, check the Form component you save.')
+        warning(this.props.action, 'No `action` provided, check the Form component you save.')
       }
       xhr({
         type: 'post',

@@ -60,8 +60,11 @@ const column = [{
 
 
 export default React.createClass({
-   onPageChange(page){
-
+  getInitialState: function () {
+    return {url: "../data/table.json"}
+  },
+     onPageChange(page){
+    this.setState({url:"../data/table.json?dd=55"})
    }
   ,
   render() {
@@ -202,7 +205,7 @@ const App = React.createClass({
 }
         </Pre>
 
-        <DataTable url="../data/table.json"   showPage="true"  column={column} howRow={6} />
+        <DataTable url={this.state.url}   showPage="true"  column={column} howRow={6} />
         
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>

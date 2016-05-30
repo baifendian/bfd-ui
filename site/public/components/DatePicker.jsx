@@ -79,7 +79,7 @@ const DateRangeDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>日期选择</h1>
+      <h1>日期选择 @hai.jiang</h1>
       <h2>DatePicker</h2>
       <p>单选日期</p>
       <Pre>{DatePickeDemoCode}</Pre>

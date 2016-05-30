@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
-import warning from '../warning'
+import warning from 'warning'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import classnames from 'classnames'
 import 'bfd-bootstrap'
@@ -40,9 +40,7 @@ let instance
 function showMessage(type, message, duration = 2) {
 
   if (process.env.NODE_ENV !== 'production') {
-    if (typeof message !== 'string' && !(message && React.isValidElement(message))) {
-      warning('`message` should be `string` or `ReactElement`, check the first param of message.' + type)
-    }
+    warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of message.' + type)
   }
 
   if (!instance) {

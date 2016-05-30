@@ -11,7 +11,6 @@ const SelectTree = React.createClass({
 
     e.stopPropagation()
     
-    const parent = instance.props.parent
     const isChecked = e.target.checked
     const children = instance.state.children
     this.syncChildren(children, isChecked)

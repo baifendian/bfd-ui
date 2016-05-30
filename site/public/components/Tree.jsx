@@ -1,5 +1,5 @@
 import React from 'react'
-import Tree from 'c/Tree/Tree'
+import Tree from 'c/Tree'
 import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
@@ -128,7 +128,7 @@ const App = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>树</h1>
+      <h1>树 @hai.jiang</h1>
       <Pre>{TreeDemoCode}</Pre>
       <TreeDemo />
       <Props>

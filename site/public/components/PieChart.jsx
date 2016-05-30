@@ -2,6 +2,7 @@ import React from 'react'
 import PieChart from 'c/PieChart'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+import Warn from '../Warn'
 
 export default React.createClass({
   render() {
@@ -16,17 +17,25 @@ const App = React.createClass({
   render() {
     return     <PieChart name="访问来源" 
                   legend={{
-                    layout: 'horizontal',
-                    align: 'bottom',
+                    layout: 'vertical',
+                    align: 'left',
                     style:{
-                      x:100,
-                      y:10
+                      x:0,
+                      y:100
                     }
-                  }} 
-                  colors={['red','yellow','blue','#000','green']}
+                  }}                  
                   radius={{inner:0.75}} 
                   animation={{pie:2500,lineText:500}}
-                  tooltip={{enabled:true}} 
+                  tooltip={{
+                    enabled:true,
+                    point:{
+                      events:{
+                        click:function(data){
+                          console.log(data);
+                        }
+                      }
+                    }
+                  }}               
                   url="/data/pieChart.json"/>
   }
 })`}
@@ -40,11 +49,19 @@ const App = React.createClass({
                       x:0,
                       y:100
                     }
-                  }} 
-                  
+                  }}                  
                   radius={{inner:0.75}} 
                   animation={{pie:2500,lineText:500}}
-                  tooltip={{enabled:true}} 
+                  tooltip={{
+                    enabled:true,
+                    point:{
+                      events:{
+                        click:function(data){
+                          console.log(data);
+                        }
+                      }
+                    }
+                  }}               
                   url="/data/pieChart.json"/>
         
         <Props>
@@ -91,12 +108,23 @@ const App = React.createClass({
             <Pre>
 {`{
  //禁用提示框，默认启用
- enabled:true
+ enabled:true,
+ point:{
+  //事件回调处理函数
+    events:{
+      click:function(data){
+        console.log(data);
+      }
+    }
+  }
 }`}
             </Pre>
           </Prop>
           
-
+          <Prop name="data" type="Array">
+            <p>数据源，格式参考 url 属性</p>
+            <Warn>url 和 data 属性至少提供一个</Warn>
+          </Prop>
 
         </Props>
       </div>

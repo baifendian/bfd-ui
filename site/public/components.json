@@ -94,4 +94,7 @@
 }, {
   "name": "Upload",
   "cn": "上传"
+}, {
+  "name": "TextOverflow",
+  "cn": "文字溢出"
 }]  

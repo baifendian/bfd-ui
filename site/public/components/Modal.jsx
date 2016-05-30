@@ -55,7 +55,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>模态框</h1>
+        <h1>模态框 @hai.jiang</h1>
         <Pre>{ModalDemoCode}</Pre>
         <ModalDemo></ModalDemo>
         <h2>refs.modal</h2>

@@ -29,8 +29,7 @@ export default React.createClass( {
       }else {
         url_ += '?' + params
       }
-      this.setState( { currentPage: currentPage } )
-      this.setState( { url: url_ } )
+      this.setState( { currentPage: currentPage,url: url_  } )
     }
   },
 
@@ -100,9 +99,9 @@ export default React.createClass( {
     //如果是传入url查询数据就附带参数查询
     if( url && url !== '' ) {
       if(url.indexOf('?') < 0 ) {
-        url += '?pageSize=' + this.props.pageSize + '&currentPage =' + this.state.currentPage
+        url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }else {
-        url += '&pageSize=' + this.props.pageSize + '&currentPage =' + this.state.currentPage
+        url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
       //通过url查询后返回的回调函数重新渲染的数据
       if(this.state.items && this.state.items.totalList.length > 0 ){
@@ -111,7 +110,6 @@ export default React.createClass( {
       if(this.state.items.totalPageNum > 0 ){
         totalPageNum = this.state.items.totalPageNum
       }
-
     }
     //url
     return (
