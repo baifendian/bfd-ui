@@ -5,6 +5,19 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.7" date="2016-05-30">
+        <p>新增组件: </p>
+        <ul>
+          <li>拖动条: Slider</li>
+          <li>文字溢出: TextOverflow</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>Select2 新增 url、render、defaultOption 属性，实现 ajax 数据源</li>
+          <li>MultipleSelect 设计为复选框方式，且支持全选</li>
+          <li>Checkbox value 支持 number 类型</li>
+        </ol>
+      </Version>
       <Version version="0.1.6" date="2016-05-20">
         <p>新增组件: </p>
         <ul>

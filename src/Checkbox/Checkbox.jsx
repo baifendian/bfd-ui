@@ -15,7 +15,7 @@ function Checkbox(props, { checkboxGroup }) {
     }
     
     inputProps.onChange = e => {
-      checkboxGroup[(e.target.checked ? 'add' : 'remove') + 'Select'](e.target.value)
+      checkboxGroup[(e.target.checked ? 'add' : 'remove') + 'Select'](value)
     }
   }
 
@@ -31,7 +31,7 @@ function Checkbox(props, { checkboxGroup }) {
 }
 
 Checkbox.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,

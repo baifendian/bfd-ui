@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select2/Option'
+import { CheckboxGroup, Checkbox } from '../Checkbox'
 import classnames from 'classnames'
 import './index.less'
 
@@ -8,60 +9,61 @@ const MultipleSelect = React.createClass({
 
   getInitialState() {
     return {
-      values: this.props.defaultValues
+      values: this.props.values || this.props.defaultValues || []
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    nextProps.values && this.setState({values: nextProps.values})  
   },
 
   handleRemove(valueSet, value, e) {
     e.stopPropagation()
-    this.removeValue(valueSet, value)
-  },
-
-  addValue(valueSet, value) {
-    valueSet.add(value)
-    this.update(valueSet)
-  },
-
-  removeValue(valueSet, value) {
     valueSet.delete(value)
-    this.update(valueSet)
+    const values = [...valueSet]
+    this.setState({ values })
+    this.props.onChange && this.props.onChange(values)
   },
 
-  update(valueSet) {
-    const values = [...valueSet]
-    this.state.values && this.setState({ values })
-    this.props.onChange && this.props.onChange(values)
+  handleChange(values) {
+    this.setState({ values })
+  },
+
+  handleToggleAll(e) {
+    e.stopPropagation()
+    let values = []
+    if (e.target.checked) {
+      values = React.Children.map(this.props.children, child => {
+        return child.props.value
+      })
+    }
+    this.setState({ values })
   },
 
   render() {
     const { className, children, disabled, ...other } = this.props
-    const valueSet = new Set(this.state.values || this.props.values || [])
+    const valueSet = new Set(this.state.values)
     const labels = []
+    
     const childrenWithProps = React.Children.map(children, (child, i) => {
       const { value, children } = child.props
-      let isActive = false
       if (valueSet.has(value)) {
         labels.push({
           value,
           label: children
         })
-        isActive = true
       }
-      return React.cloneElement(child, {
-        active: isActive,
-        onClick: () => {
-          if (isActive) {
-            this.removeValue(valueSet, value)
-          } else {
-            this.addValue(valueSet, value)
-          }
-        }
-      })
+      return <Checkbox value={value} block>{children}</Checkbox>
     })
-    return (
-      <Dropdown className={classnames('bfd-multiple-select', { disabled }, className)} disabled={disabled} {...other}>
-        <DropdownToggle>
-        {labels.length ? (
+
+    const isAll = labels.length === childrenWithProps.length
+    
+    let head
+    if (labels.length) {
+      if (isAll) {
+        head = <div className="default-title">全部</div>
+      } else {
+        head = (
           <ul>
           {labels.map((item, i) => {
             return (
@@ -72,10 +74,18 @@ const MultipleSelect = React.createClass({
             )
           })}
           </ul>
-        ) : <div className="default-title">请选择</div>}
-        </DropdownToggle>
+        )
+      }
+    } else {
+      head = <div className="default-title">请选择</div>
+    }
+    
+    return (
+      <Dropdown className={classnames('bfd-multiple-select', { disabled }, className)} disabled={disabled} {...other}>
+        <DropdownToggle>{head}</DropdownToggle>
         <DropdownMenu>
-          <ul>{childrenWithProps}</ul>
+          <Checkbox checked={isAll} onChange={this.handleToggleAll}>全选</Checkbox>
+          <CheckboxGroup selects={this.state.values} onChange={this.handleChange}>{childrenWithProps}</CheckboxGroup>
         </DropdownMenu>
       </Dropdown>
     )
