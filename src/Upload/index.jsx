@@ -5,7 +5,6 @@
 import 'bfd-bootstrap'
 import './main.less'
 import React from 'react'
-import confirm from '../confirm'
 import classnames from 'classnames'
 import xhr from '../xhr'
 import FileList from './FileList'
@@ -13,21 +12,20 @@ import FileList from './FileList'
 export default React.createClass({
   getInitialState() {
     return {
-      width: 0,
-      list : []
+      list: []
     }
   },
-  handleClick(event) {
-    const fileEl = this.refs.file;
-    fileEl.click();
+  handleClick() {
+    const fileEl = this.refs.file
+    fileEl.click()
   },
   handleChange(event) {
     const el = event.target
     const files = el.files
-    const self = this;
+    const self = this
     const arr = []
-    for(var i=0; i<files.length; i++) {
-      const file = files[i];
+    for(let i=0; i<files.length; i++) {
+      const file = files[i]
       arr.push({
         name: file.name,
         size: file.size,
@@ -36,40 +34,40 @@ export default React.createClass({
       });
 
       (function(self, file, index){
-        let fd = new FormData();
-        fd.append("files", file);
+        const fd = new FormData()
+        fd.append('files', file)
         xhr({
           type: 'post',
           url: self.props.action,
           data: fd,
           beforeSend(xhr) {
-            //侦查当前附件上传情况
+            // 侦查当前附件上传情况
             xhr.upload.onprogress = function(evt) {
-                const loaded = evt.loaded;
-                const tot = evt.total;
-                const per = Math.floor(100 * loaded / tot); //已经上传的百分比
-                let list = self.state.list.slice(0);
-                let f = list[index];
-                f.percent = per;
-                self.setState({list: list})
-            };
+              const loaded = evt.loaded
+              const tot = evt.total
+              const per = Math.floor(100 * loaded / tot) // 已经上传的百分比
+              const list = self.state.list.slice(0)
+              const f = list[index]
+              f.percent = per
+              self.setState({list})
+            }
           }, 
           success(data) {
-            let list = self.state.list.slice(0);
-            let f = list[index];
-            f.state = 1;
-            self.setState({list: list})
+            const list = self.state.list.slice(0)
+            const f = list[index]
+            f.state = 1
+            self.setState({list})
             if(typeof self.props.onComplete == 'function') {
-              self.props.onComplete(data);
+              self.props.onComplete(data)
             }
           },
           error(msg) {
-            let list = self.state.list.slice(0);
-            let f = list[index];
-            f.state = 2;
-            self.setState({list: list})
+            const list = self.state.list.slice(0)
+            const f = list[index]
+            f.state = 2
+            self.setState({list})
             if(typeof self.props.onComplete == 'function') {
-              self.props.onComplete(msg);
+              self.props.onComplete(msg)
             }
           },
           complete() {
@@ -82,16 +80,16 @@ export default React.createClass({
       list: arr
     })
   },
-  handleRemove: function(currItem) {
-    const self = this;
-    let arr = this.state.list.slice(0)
+  handleRemove(currItem) {
+    const self = this
+    const arr = this.state.list.slice(0)
     arr.map((item, index) => {
       if(item == currItem) {
-        arr.splice(index, 1);
+        arr.splice(index, 1)
         self.setState({
           list: arr
         })
-        return;
+        return
       }
     })
   },
