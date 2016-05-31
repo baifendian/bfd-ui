@@ -8,6 +8,7 @@ function ChangeLog() {
       <Version version="0.1.8" date="2016-05-31">
         <p>新增组件: </p>
         <ul>
+          <li>文件上传: Upload</li>
           <li>自动完成: AutoComplete</li>
         </ul>
         <p>其他: </p>
