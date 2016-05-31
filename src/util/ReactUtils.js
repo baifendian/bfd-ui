@@ -3,7 +3,10 @@
  * 通用方法
  */
 import React from 'react'
-import _ from 'lodash'
+
+function isArray(v) {
+  return Object.prototype.toString.call(v) === '[object Array]';
+}
 
 export const getDisplayName = (Comp) => {
     if (!Comp) {
@@ -23,7 +26,7 @@ export const findAllByType = (children, type) => {
     const result = []
     let types = []
 
-    if (_.isArray(type)) {
+    if (isArray(type)) {
       types = type.map(t => getDisplayName(t))
     } else {
       types = [getDisplayName(type)]

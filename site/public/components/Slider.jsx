@@ -14,7 +14,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>拖动条</h1>
+        <h1>拖动条 @tenglong.jiang</h1>
         <h2>Slider</h2>
         <Pre>
         {`

@@ -8,43 +8,43 @@ import React from 'react'
 import './main.less'
 export default React.createClass({
   getInitialState() {
-	  return { currentIndex: 1, showPage: 4 }
+	  return { currentIndex: this.props.currentPage, showPage: 4 }
 	},
 
-  handleClick(i, e) {
+  handleClick (i, e ) {
 		this.setState({	currentIndex: i	})
     this.props.onPageChange(i)
 		this.props.onChange("currentPage=" + i + "&pageSize=" + this.props.pageSize, i)
 	},
 
-  handleGoPage() {
+  handleGoPage () {
     let number = this.refs.inputNumber.value
-    let pageNum=Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    if(number<=pageNum&&number>0){
+    let pageNum = Math.ceil( this.props.totalPageNum / this.props.pageSize )
+    if( number <= pageNum && number > 0 ){
       this.setState({	currentIndex: parseInt(this.refs.inputNumber.value)	})
-      this.props.onPageChange(parseInt(this.refs.inputNumber.value))
-    }else{
+      this.props.onPageChange( parseInt( this.refs.inputNumber.value ) )
+    } else {
       this.refs.inputNumber.value="";
     }
   },
 
-  checkNumber(){
+  checkNumber () {
     let number = /^\+?[1-9][0-9]*$/;
-    if(!number.test(this.refs.inputNumber.value)){
+    if( !number.test( this.refs.inputNumber.value ) ) {
       this.refs.inputNumber.value="";
     }
   },
 
-	handleLaquoClick() {
-		if (this.state.currentIndex > 1) {
-			this.props.onChange("currentPage=" + (this.state.currentIndex - 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex - 1)
-			this.setState({	currentIndex: this.state.currentIndex - 1})
-      this.props.onPageChange(parseInt(this.state.currentIndex - 1))
+	handleLaquoClick () {
+		if ( this.state.currentIndex > 1 ) {
+			this.props.onChange( "currentPage=" + (this.state.currentIndex - 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex - 1 )
+			this.setState({	currentIndex: this.state.currentIndex - 1} )
+      this.props.onPageChange( parseInt( this.state.currentIndex - 1 ) )
 		}
 	},
 	 
-	handleRaquoClick() {
-    let pageNum=Math.ceil(this.props.totalPageNum / this.props.pageSize)
+	handleRaquoClick () {
+    let pageNum = Math.ceil( this.props.totalPageNum / this.props.pageSize )
 		if(this.state.currentIndex < pageNum) {
 			this.props.onChange("currentPage=" + (this.state.currentIndex + 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex + 1)
 			this.setState({ currentIndex: this.state.currentIndex + 1 })
@@ -55,20 +55,26 @@ export default React.createClass({
   render() {
     //分页逻辑代码
     let pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    let liArr = [] , showPage = this.state.showPage
+    let liArr = []
+    let showPage = this.state.showPage
+    let currentIndex = this.state.currentIndex
     for( let i = 1; i <= pageNum; i++ ) {
+      //如果分页页数小于等于规定显示的分页页数就全部显示出来
       if( i <= showPage ) {
-        liArr.push( <li key={i} className={this.state.currentIndex === i ? '_active':''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li> )
+        liArr.push( <li key = { i } className = { currentIndex === i ? '_active':'' } onClick = { this.handleClick.bind(this, i) }><a> { i } </a></li> )
+      }
+      //当分页页数大于规定显示页数是出现....和最后页数
+      if(pageNum > showPage){
         if( i == showPage ) {
-          liArr[ i + 1 ] = <li key={i+1} className="page"><span>...</span></li>
+          liArr[ i + 1 ] = <li key = { i+1 } className = "page" ><span>...</span></li>
         }
       }
-       //显示最后一页
+      //显示最后一页
       if( pageNum == i && pageNum>showPage) {
-        liArr[ i ] = <li key={i+1} className={this.state.currentIndex === i ? '_active':''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
+        liArr[ i ] = <li key = {i+1} className = { currentIndex === i ? '_active':''} onClick = { this.handleClick.bind(this, i) }><a>{i}</a></li>
       }
-      if( this.state.currentIndex + 1 > showPage ) {
-        let index = this.state.currentIndex , show_ = index + 1;
+      if( currentIndex + 1 > showPage && pageNum > showPage) {
+        let index = currentIndex , show_ = index + 1;
         let everpage = show_ - (showPage - 1)
         let currentArr = []
         var k = 0;
@@ -76,13 +82,13 @@ export default React.createClass({
         for( let o = everpage; o <= index + 1; o++ ) {
           if( o <= pageNum ) {
             k++
-            currentArr[ k ] = <li key={k} className={this.state.currentIndex === o ? '_active':''} onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
+            currentArr[ k ] = <li key={k} className={ currentIndex === o ? '_active':''} onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
           }else {
             lastPage = true
             break
           }
         }
-        liArr[ 0 ] = <li key="01" className={this.state.currentIndex === 1 ? '_active':''} onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
+        liArr[ 0 ] = <li key="01" className={ currentIndex === 1 ? '_active':''} onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
         liArr[ 1 ] = <li key="0" className="page"><span>...</span></li>
         for ( let p = 2; p <= currentArr.length + 1; p++ ) {
           liArr[ p ] = currentArr[ p - 2 ]
@@ -90,27 +96,27 @@ export default React.createClass({
         if( !lastPage ) {
           if( index < (pageNum - 1) ) {
             liArr[ liArr.length ] = <li key={liArr.length} className="page"><a>...</a></li>
-            liArr[ liArr.length ] = <li key={liArr.length} className={this.state.currentIndex === pageNum ? '_active':''} onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
+            liArr[ liArr.length ] = <li key={liArr.length} className={ currentIndex === pageNum ? '_active':''} onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
           }
         }
         break
       }
     }
     return(
-      <div className="bfd-paging row">
-        <div className="layout-div form-inline pull-left">
-          <span className="total-name">共有<span className="total-size">{ parseInt(this.props.totalPageNum) }</span>条记录</span>
+      <div className = "bfd-paging row" >
+        <div className = "layout-div form-inline pull-left" >
+          <span className = "total-name" > 共有 <span className = "total-size" >{ parseInt(this.props.totalPageNum) }</span>条记录</span>
         </div>
-        <div className="pull-right layout-right">
-          <ul className="pagination">
-            <li ><a onClick={this.handleLaquoClick}  className= {'prev '+(this.state.currentIndex===1?'frist':'')}   >上一页</a></li>
-              {liArr}
-            <li><a onClick={this.handleRaquoClick} className={'next '+(this.state.currentIndex===pageNum?'end':'') }>下一页</a></li>
+        <div className = "pull-right layout-right">
+          <ul className = "pagination">
+            <li ><a onClick={this.handleLaquoClick}  className = {'prev '+( currentIndex===1?'frist':'')}   >上一页</a></li>
+              { liArr }
+            <li><a onClick={this.handleRaquoClick} className = {'next '+( currentIndex===pageNum?'end':'') }>下一页</a></li>
           </ul>
           <div className="layout-div form-inline">
-            <label className="label-font">跳转到：</label>
-            <input  onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
-            <button onClick={this.handleGoPage} className="btn btn-primary btn-sm">GO</button>
+            <label className = "label-font">跳转到：</label>
+            <input  onKeyUp = {this.checkNumber} ref = "inputNumber" className = "form-control input-sm number"/>
+            <button onClick = {this.handleGoPage} className = "btn btn-primary btn-sm" >GO</button>
           </div>
         </div>
       </div>

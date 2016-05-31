@@ -4,228 +4,109 @@ import Paging from 'c/Paging'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const common = {
-  commonClick: function( item ){
-  }
-}
-
-const column = [{
-  title:'序号',
-  key:'sequence'
-}, {
-  title: '姓名',
-  order: true,
-  render: function(text, item) {
-    return <a href="javascript:void(0);" onClick={function(){ }}>{text}</a>
-  },
-  key: 'name'
-}, {
-  title: '年龄',
-  key: 'age',
-  order: true
-}, {
-  title: '身高',
-  key: 'height',
-  order: true,
-  render(text, item) {
-    return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item)} }>{text}</a>
-  }
-}, {
-  title: '体重',
-  key: 'weight',
-  order: true
-}, {
-  title: '国家/地区',
-  key: 'country'
-}, {
-  title: '学校',
-  key: 'school'
-}, {
-  title: '生日',
-  key: 'birthday',
-  order: true
-}, {
-  title: '操作',
-  /**
-   *
-   * @param item  当前数据对象
-   * @param component 当前
-   * @returns {XML}  返回dom对象
-   */
-  render(item, component){
-    return <a onClick={ function(){ common.commonClick(item) }}>编辑</a>
-  },
-  key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
-}]
-
-
 export default React.createClass({
   getInitialState: function () {
     return {url: "../data/table.json"}
   },
-     onPageChange(page){
-    this.setState({url:"../data/table.json?dd=55"})
-   }
-  ,
+  handleClick (item) {
+   console.log(item)
+  },
+
+  onPageChange( page) {
+    this.setState({url:"../data/table.json?num="+page})
+  },
+
   render() {
 
-    const dataJson = {
-      "totalList" : [ {
-        "id" : "1",
-        "name" : "1.张三",
-        "age" : "11",
-        "country" : "中国",
-        "height" : "185cm",
-        "weight" : "65kg",
-        "school" : "六安一中",
-        "birthday" : "1990-03-16"
-      }, {
-        "id" : "10",
-        "name" : "2.张柏仁",
-        "age" : "23",
-        "country" : "美国",
-        "height" : "170cm",
-        "weight" : "60kg",
-        "school" : "斯坦福大学",
-        "birthday" : "2016-03-02"
-      }, {
-        "id" : "11",
-        "name" : "3.黄冬冬",
-        "age" : "25",
-        "country" : "英国",
-        "height" : "168cm",
-        "weight" : "64kg",
-        "school" : "剑桥大学",
-        "birthday" : "2016-03-07"
-      },{
-        "id" : "1",
-        "name" : "4.张三",
-        "age" : "11",
-        "country" : "中国",
-        "height" : "185cm",
-        "weight" : "65kg",
-        "school" : "六安一中",
-        "birthday" : "1990-03-16"
-      }, {
-        "id" : "10",
-        "name" : "5.张柏仁",
-        "age" : "23",
-        "country" : "美国",
-        "height" : "170cm",
-        "weight" : "60kg",
-        "school" : "斯坦福大学",
-        "birthday" : "2016-03-02"
-      }, {
-        "id" : "11",
-        "name" : "6.黄冬冬",
-        "age" : "25",
-        "country" : "英国",
-        "height" : "168cm",
-        "weight" : "64kg",
-        "school" : "剑桥大学",
-        "birthday" : "2016-03-07"
-      },{
-        "id" : "1",
-        "name" : "7.张三",
-        "age" : "11",
-        "country" : "中国",
-        "height" : "185cm",
-        "weight" : "65kg",
-        "school" : "六安一中",
-        "birthday" : "1990-03-16"
-      }, {
-        "id" : "10",
-        "name" : "8.张柏仁",
-        "age" : "23",
-        "country" : "美国",
-        "height" : "170cm",
-        "weight" : "60kg",
-        "school" : "斯坦福大学",
-        "birthday" : "2016-03-02"
-      }, {
-        "id" : "11",
-        "name" : "9.黄冬冬",
-        "age" : "25",
-        "country" : "英国",
-        "height" : "168cm",
-        "weight" : "64kg",
-        "school" : "剑桥大学",
-        "birthday" : "2016-03-07"
-      },{
-        "id" : "1",
-        "name" : "10.张三",
-        "age" : "11",
-        "country" : "中国",
-        "height" : "185cm",
-        "weight" : "65kg",
-        "school" : "六安一中",
-        "birthday" : "1990-03-16"
-      }, {
-        "id" : "10",
-        "name" : "11.张柏仁",
-        "age" : "23",
-        "country" : "美国",
-        "height" : "170cm",
-        "weight" : "60kg",
-        "school" : "斯坦福大学",
-        "birthday" : "2016-03-02"
-      }, {
-        "id" : "11",
-        "name" : "12.黄冬冬",
-        "age" : "25",
-        "country" : "英国",
-        "height" : "168cm",
-        "weight" : "64kg",
-        "school" : "剑桥大学",
-        "birthday" : "2016-03-07"
+    const column = [{
+      title:'序号',
+      key:'sequence'
+    }, {
+      title: '姓名',
+      order: true,
+      render: (text, item) => {
+        return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
+      },
+      key: 'name'
+    }, {
+      title: '年龄',
+      key: 'age',
+      order: true
+    }, {
+      title: '身高',
+      key: 'height',
+      order: true,
+      render: (text, item) => {
+        return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
       }
-      ],
-      "currentPage" : 1,
-      "totalPageNum" : 12
-    }
+    }, {
+      title: '体重',
+      key: 'weight',
+      order: true
+    }, {
+      title: '国家/地区',
+      key: 'country'
+    }, {
+      title: '学校',
+      key: 'school'
+    }, {
+      title: '生日',
+      key: 'birthday',
+      order: true
+    }, {
+      title: '操作',
+      /**
+       * @param item  当前数据对象
+       * @param component 当前
+       * @returns {XML}  返回dom对象
+       */
+      render:(item, component)=>{
+        return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
+      },
+      key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+    }]
     return (
       <div>
-        <h1>DataTable&分页</h1>
+        <h1>DataTable&分页@houyi.li</h1>
         <Pre>
 {
 `
 import DataTable from 'bfd-ui/lib/DataTable'
 const App = React.createClass({
   /**
+   * 定义初始化状态
+   */
+  getInitialState: function () {
+    return { name: 'thomson'}
+  },
+  /**
    * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
    * @param page 当前页
    */
-   onPageChange(page){
-
-   }
+  onPageChange(page){
+     //TODO
+  },
   render() {
     return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 13 }></DataTable>
   }
 })`
 }
         </Pre>
-
-        <DataTable url={this.state.url}   showPage="true"  column={column} howRow={6} />
-        
+        <DataTable url = { this.state.url }   showPage = "true" data = ""  column = { column } howRow = { 8 } />
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
-          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名"></Prop>
+          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名，放在组件内部render()内"></Prop>
           <Pre>
             {
 `
-//事件方法对象
-const common = {
-  commonClick: function( item ){
-  }
-}
 const column = [{
         //非数据操作字段
         title:'操作',
         /**
          *@param item  当前行的数据对象，数据类型为JSON格式{}
          */
-        render(item){
-            return <a href="javascript:void(0);" onClick={function(){ common.commonClick(item) }}>编辑</a>
+        render: (text, item) => {
+          return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
         },
         //render用于渲染特定的列 ， 例如操作列内的 查询、修改、删除显示等。
         {
@@ -247,7 +128,7 @@ const column = [{
          * @param item  当前行的数据对象，数据类型为JSON格式{}
          */
         render: function(text, item) {
-          return <a href="javascript:void(0);" href="javascript:void(0);" onClick={function(){ common.commonClick(item) }}>{text}</a>
+          return <a href="javascript:void(0);" href="javascript:void(0);" onClick={function(){ () => { this.handleClick(item) } }>{text}</a>
         }
         ]
 `
@@ -259,7 +140,7 @@ const column = [{
 {
 `const data = {
   "totalList": [], //表格数据
-  "currentPage": 1, //当前页
+  "currentPage": 1, //当前页 【注：升级版本可省略currentPage，只有在每次点击分页需要发送ajax请求返回时才需要此字段】
   "totalPageNum": 500 //总条数
 }
 `

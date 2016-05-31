@@ -95,6 +95,9 @@
   "name": "Editable",
   "cn": "可编辑的"
 }, {
+  "name": "Upload",
+  "cn": "上传"
+}, {
   "name": "TextOverflow",
   "cn": "文字溢出"
 }]  

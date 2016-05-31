@@ -43,7 +43,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>传输框</h1>
+        <h1>传输框 @tenglong.jiang</h1>
         <h2>Transfer</h2>
         <Pre>
         {`
