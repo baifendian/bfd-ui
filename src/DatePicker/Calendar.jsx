@@ -21,7 +21,17 @@ const contextTypes = {
 const Calendar = React.createClass({
 
   getInitialState() {
-    const d = this.props.date ? new Date(this.props.date) : new Date()
+    return this.getDateState(this.props.date)
+  },
+
+  shouldComponentUpdate,
+
+  componentWillReceiveProps(nextProps) {
+    'date' in nextProps && this.setState(this.getDateState(nextProps.date))
+  },
+
+  getDateState(date) {
+    const d = date ? new Date(date) : new Date()
     const year = d.getFullYear()
     const month = d.getMonth()
     const day = d.getDate()
@@ -31,24 +41,6 @@ const Calendar = React.createClass({
       day,
       currentYear: year,
       currentMonth: month
-    }
-  },
-
-  shouldComponentUpdate,
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.date) {
-      const d = new Date(nextProps.date)
-      const year = d.getFullYear()
-      const month = d.getMonth()
-      const day = d.getDate()
-      this.setState({
-        year,
-        month,
-        day,
-        currentYear: year,
-        currentMonth: month
-      })
     }
   },
 
@@ -112,7 +104,7 @@ const Calendar = React.createClass({
       start: isStart,
       end: isEnd,
       active: timestrap === new Date(this.state.year, this.state.month, this.state.day).getTime() || isStart || isEnd,
-      inside: timestrap > start && timestrap < end
+      inside: start && end ? timestrap > start && timestrap < end : false
     })
   },
 
@@ -169,8 +161,8 @@ const Calendar = React.createClass({
     // DateRange
     let start, end
     if (this.context.getStart) {
-      start = new Date(this.context.getStart()).setHours(0, 0, 0, 0)
-      end = new Date(this.context.getEnd()).setHours(0, 0, 0, 0)
+      start = new Date(this.context.getStart()).setHours(0, 0, 0, 0) || 0
+      end = new Date(this.context.getEnd()).setHours(0, 0, 0, 0) || 0
     }
 
     return (

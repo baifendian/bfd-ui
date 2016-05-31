@@ -23,15 +23,15 @@ const Select = React.createClass({
     this.setState({ list })
   },
 
-  getOptionWithProps(Option, i) {
-    if (!Option) return
-    const { value, children } = Option.props
+  getOptionWithProps(child, i) {
+    if (!child) return
+    const { value, children } = child.props
     let isActive = false
     if (this.state.value === value) {
       this.title = children
       isActive = true
     }
-    return React.cloneElement(Option, {
+    return React.cloneElement(child, {
       key: i,
       active: isActive,
       onClick: () => {
@@ -44,11 +44,10 @@ const Select = React.createClass({
 
   render() {
     const { className, children, disabled, url, render, defaultOption, ...other } = this.props
-    const { list } = this.state
 
     let OptionsWithProps
     if (url) {
-      OptionsWithProps = (list || []).map((item, i) => {
+      OptionsWithProps = (this.state.list || []).map((item, i) => {
         return this.getOptionWithProps(render.call(this, item, i), i)
       })
       defaultOption && OptionsWithProps.unshift(this.getOptionWithProps(defaultOption, -1))

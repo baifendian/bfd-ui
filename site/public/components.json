@@ -56,6 +56,9 @@
   "name": "MultipleSelect",
   "cn": "多选列表"
 }, {
+  "name": "AutoComplete",
+  "cn": "自动完成"
+}, {
   "name": "SearchSelect",
   "cn": "查询下拉框"
 }, {

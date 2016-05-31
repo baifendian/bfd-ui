@@ -5,6 +5,22 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.8" date="2016-05-31">
+        <p>新增组件: </p>
+        <ul>
+          <li>自动完成: AutoComplete</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>Select2 render、defaultOption 配置更新，无需手动设置 key 属性</li>
+          <li>xhr 新增 beforeSend 配置</li>
+          <li>MultipleSelect 新增 url、render 属性，实现 ajax 数据源</li>
+          <li>ClearableInput 新增 defaultValue 属性，同时支持 input 所有属性</li>
+          <li>DatePicker 支持清空操作，新增 defaultDate 属性</li>
+          <li>DateRange 新增 defaultStart、defaultEnd 属性</li>
+          <li>Dropdown 增加 open 属性，控制打开状态</li>
+        </ol>
+      </Version>
       <Version version="0.1.7" date="2016-05-30">
         <p>新增组件: </p>
         <ul>

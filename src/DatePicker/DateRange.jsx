@@ -7,7 +7,9 @@ const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 const propTypes = {
   start: checkDateTime,
+  defaultStart: checkDateTime,
   end: checkDateTime,
+  defaultEnd: checkDateTime,
   min: checkDateTime,
   max: checkDateTime,
   onSelect: PropTypes.func,
@@ -26,52 +28,52 @@ const childContextTypes = {
 const DateRange = React.createClass({
 
   getInitialState() {
-    const state = {}
-    if (!this.props.start) {
-      state.start = new Date().setHours(0, 0, 0, 0)
+    return {
+      start: this.props.defaultStart || this.props.start,
+      end: this.props.defaultEnd || this.props.end
     }
-    if (!this.props.end) {
-      state.end = new Date().setHours(0, 0, 0, 0)
-    }
-    return state
+    // const state = {}
+    // if (!this.props.start) {
+    //   state.start = new Date().setHours(0, 0, 0, 0)
+    // }
+    // if (!this.props.end) {
+    //   state.end = new Date().setHours(0, 0, 0, 0)
+    // }
+    // return state
   },
 
   getChildContext() {
     return {
-      getStart: () => this.getStart(),
-      getEnd: () => this.getEnd()
+      getStart: () => this.state.start,
+      getEnd: () => this.state.end
     }
   },
 
-  getStart() {
-    return this.props.start || this.state.start
-  },
-
-  getEnd() {
-    return this.props.end || this.state.end
+  componentWillReceiveProps(nextProps) {
+    'start' in nextProps && this.setState({start: nextProps.start})  
+    'end' in nextProps && this.setState({end: nextProps.end})  
   },
 
   handleSelect(type, date) {
     let range
     if (type === 'start') {
-      this.state.start && this.setState({start: date})
-      range = [date, this.getEnd()]
+      this.setState({start: date})
+      range = [date, this.state.end]
     } else {
-      this.state.end && this.setState({end: date})
-      range = [this.getStart(), date]
+      this.setState({end: date})
+      range = [this.state.start, date]
     }
     this.props.onSelect && this.props.onSelect.apply(this, range)
   },
 
   render() {
-    const { className, onSelect, ...other } = this.props
-    const start = this.getStart()
-    const end = this.getEnd()
+    const { className, onSelect, min, max, ...other } = this.props
+    const { start, end } = this.state
     return (
       <div className={classnames('bfd-daterange', className)} {...other}>
-        <DatePicker date={start} min={this.props.min} max={end} onSelect={this.handleSelect.bind(this, 'start')} />
+        <DatePicker date={start} min={min} max={end} onSelect={this.handleSelect.bind(this, 'start')} />
         <span className="seperator">至</span>
-        <DatePicker date={end} min={start} max={this.props.max} onSelect={this.handleSelect.bind(this, 'end')} />
+        <DatePicker date={end} min={start} max={max} onSelect={this.handleSelect.bind(this, 'end')} />
       </div>
     )
   }

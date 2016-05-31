@@ -38,15 +38,16 @@ export default React.createClass({
 
         <h2>Dropdown</h2>
         <Props>
-          <Prop name="className" type="String">
-            <p>自定义 className，当下拉菜单处于 open 状态，className 会增加 open 样式类，可定义展开后的样式</p>
+          <Prop name="open" type="boolean">
+            <p>是否打开，默认关闭，当使用 refs 方式不方便时，使用 props 直接控制</p>
           </Prop>
-          <Prop name="disabled" type="Boolean">
+          <Prop name="disabled" type="boolean">
             <p>是否禁用</p>
           </Prop>
         </Props>
         <h2>Dropdown 实例接口</h2>
-        <p>instance.close()，关闭下拉菜单</p>
+        <p>instance.close()，关闭</p>
+        <p>instance.open()，打开</p>
       </div>
     )
   }

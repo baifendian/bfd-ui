@@ -11,7 +11,7 @@ const SelectDemo = React.createClass({
   render() {
     return (
       <Select>
-        <Option>请选择 @hai.jiang</Option>
+        <Option>请选择</Option>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>
@@ -38,7 +38,7 @@ const SelectDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>选择列表</h1>
+      <h1>选择列表 @hai.jiang</h1>
       <Pre>{code}</Pre>
       <SelectDemo />
       <h2>Select</h2>
@@ -58,7 +58,7 @@ export default () => {
         <Prop name="render" type="function">
           <p>使用 url 方式时，自定义 Option 渲染逻辑</p>
           <Pre>{`const render = item => <Option value={item.id}>{item.name}</Option>
-<Select url="/api/list" render={render}></Select>`}</Pre>
+<Select url="/api/list" render={render} />`}</Pre>
         </Prop>
         <Prop name="defaultOption" type="React element">
           <p>使用 url 方式时，自定义空值时的 Option</p>

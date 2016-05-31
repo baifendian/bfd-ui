@@ -3,6 +3,7 @@ import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select2/Option'
 import { CheckboxGroup, Checkbox } from '../Checkbox'
 import classnames from 'classnames'
+import Fetch from '../Fetch'
 import './index.less'
 
 const MultipleSelect = React.createClass({
@@ -17,10 +18,10 @@ const MultipleSelect = React.createClass({
     nextProps.values && this.setState({values: nextProps.values})  
   },
 
-  handleRemove(valueSet, value, e) {
+  handleRemove(value, e) {
     e.stopPropagation()
-    valueSet.delete(value)
-    const values = [...valueSet]
+    this.valueSet.delete(value)
+    const values = [...this.valueSet]
     this.setState({ values })
     this.props.onChange && this.props.onChange(values)
   },
@@ -40,36 +41,51 @@ const MultipleSelect = React.createClass({
     this.setState({ values })
   },
 
-  render() {
-    const { className, children, disabled, ...other } = this.props
-    const valueSet = new Set(this.state.values)
-    const labels = []
-    
-    const childrenWithProps = React.Children.map(children, (child, i) => {
-      const { value, children } = child.props
-      if (valueSet.has(value)) {
-        labels.push({
-          value,
-          label: children
-        })
-      }
-      return <Checkbox value={value} block>{children}</Checkbox>
-    })
+  getCheckboxWithProps(child, i) {
+    if (!child) return
+    const { value, children } = child.props
+    if (this.valueSet.has(value)) {
+      this.labels.push({
+        value,
+        label: children
+      })
+    }
+    return <Checkbox key={i} value={value} block>{children}</Checkbox>
+  },
 
-    const isAll = labels.length === childrenWithProps.length
+  handleLoad(list) {
+    this.setState({ list })
+  },
+
+  render() {
+    const { className, children, url, render, disabled, ...other } = this.props
+    
+    this.valueSet = new Set(this.state.values)
+    this.labels = []
+
+    let childrenWithProps
+    if (url) {
+      childrenWithProps = (this.state.list || []).map((item, i) => {
+        return this.getCheckboxWithProps(render.call(this, item, i), i)
+      })
+    } else {
+      childrenWithProps = React.Children.map(children, this.getCheckboxWithProps)
+    }
+
+    const isAll = this.labels.length === childrenWithProps.length
     
     let head
-    if (labels.length) {
+    if (this.labels.length) {
       if (isAll) {
         head = <div className="default-title">全部</div>
       } else {
         head = (
           <ul>
-          {labels.map((item, i) => {
+          {this.labels.map((item, i) => {
             return (
               <li key={i}>
                 <span className="label-name">{item.label}</span>
-                <span className="remove" onClick={e => {this.handleRemove(valueSet, item.value, e)}}>&times;</span>
+                <span className="remove" onClick={e => {this.handleRemove(item.value, e)}}>&times;</span>
               </li>
             )
           })}
@@ -82,7 +98,9 @@ const MultipleSelect = React.createClass({
     
     return (
       <Dropdown className={classnames('bfd-multiple-select', { disabled }, className)} disabled={disabled} {...other}>
-        <DropdownToggle>{head}</DropdownToggle>
+        <DropdownToggle>
+          <Fetch url={url} onSuccess={this.handleLoad}>{head}</Fetch>
+        </DropdownToggle>
         <DropdownMenu>
           <Checkbox checked={isAll} onChange={this.handleToggleAll}>全选</Checkbox>
           <CheckboxGroup selects={this.state.values} onChange={this.handleChange}>{childrenWithProps}</CheckboxGroup>
@@ -97,9 +115,14 @@ MultipleSelect.propTypes = {
   defaultValues: PropTypes.array,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
-  customProp({ values, onChange }) {
+  url: PropTypes.string,
+  render: PropTypes.func,
+  customProp({ values, onChange, url, render }) {
     if (values && !onChange) {
       return new Error('You provided a `values` prop without an `onChange` handler')
+    }
+    if (url && !render) {
+      return new Error('You provided a `url` prop without an `render` handler')
     }
   }
 }
