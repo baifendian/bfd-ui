@@ -52,7 +52,7 @@ export default React.createClass({
     const arr = [{name:"step1"}, {name:"step2"}];
     return (
       <div>
-        <h1>步骤条</h1>
+        <h1>步骤条 @tenglong.jiang</h1>
         <Pre>{code}</Pre>
         
         <Steps height={70} current={this.state.current} >

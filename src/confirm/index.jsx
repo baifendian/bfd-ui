@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
-import warning from '../warning'
+import warning from 'warning'
 import classnames from 'classnames'
 import 'bfd-bootstrap'
 import './main.less'
@@ -50,12 +50,8 @@ let instance
 function confirm(message, callback) {
 
   if (process.env.NODE_ENV !== 'production') {
-    if (typeof message !== 'string' && !(message && React.isValidElement(message))) {
-      warning('`message` should be `string` or `ReactElement`, check the first param of confirm')
-    }
-    if (typeof callback !== 'function') {
-      warning('`callback` should be `function`, check the second param of confirm')
-    }
+    warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
+    warning(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
   }
 
   if (!instance) {

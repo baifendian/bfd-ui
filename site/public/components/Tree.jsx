@@ -128,7 +128,7 @@ const App = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>树</h1>
+      <h1>树 @hai.jiang</h1>
       <Pre>{TreeDemoCode}</Pre>
       <TreeDemo />
       <Props>

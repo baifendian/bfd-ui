@@ -11,7 +11,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>搜索框</h1>
+        <h1>搜索框 @tenglong.jiang</h1>
         <h2>SearchInput</h2>
         <Pre>
         {`

@@ -2,6 +2,7 @@ import React from 'react'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import StackedColumnChart from 'c/StackedColumnChart'
+import Warn from '../Warn'
 
 const code = `import StackedColumnChart from 'bfd-ui/lib/StackedColumnChart'
 
@@ -22,7 +23,8 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>柱型图</h1>
+        <h1>柱型图 @tenglong.jiang</h1>
+        <Warn>暂停维护，建议使用 Echarts webpack 方式</Warn>
         <Pre>{code}</Pre>
         
         <StackedColumnChart style={{height: 400}} category="name" cols={cols} url="/data/columnChart.json"  />

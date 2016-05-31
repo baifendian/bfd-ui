@@ -29,6 +29,15 @@ app.post('/api/form', function(req, res) {
   })
 })
 
+app.post('/upload.do', function(req, res) {
+  res.json({
+    code: 200,
+    data: {
+      id: new Date().getTime()
+    }
+  })
+})
+
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })

@@ -65,7 +65,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>下拉框</h1>
+        <h1>下拉框@zhangyu</h1>
         <Pre>
 {`
 import { Select ,Option} from 'bfd-ui/lib/Select'

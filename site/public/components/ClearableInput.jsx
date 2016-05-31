@@ -14,7 +14,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>可清空的输入框</h1>
+        <h1>可清空的输入框 @hai.jiang</h1>
         <Pre>{code}</Pre>
         <ClearableInput></ClearableInput>
         <Props>
@@ -29,6 +29,9 @@ export default React.createClass({
           </Prop>
           <Prop name="placeholder" type="string">
             <p>同 input placeholder</p>
+          </Prop>
+          <Prop name="disabled" type="boolean">
+            <p>是否禁用</p>
           </Prop>
           <Prop name="inline" type="boolean">
             <p>是否为行内模式(display: inline-block)</p>

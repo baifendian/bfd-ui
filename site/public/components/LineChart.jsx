@@ -16,7 +16,8 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>线图</h1>
+        <h1>线图 @hai.jiang</h1>
+        <Warn>暂停维护，建议使用 Echarts webpack 方式</Warn>
         <Pre>{code}</Pre>
         
         <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json" />

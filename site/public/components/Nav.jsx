@@ -6,7 +6,7 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>导航菜单</h1>
+        <h1>导航菜单 @hai.jiang</h1>
         <p>导航菜单内部依赖 React-router，所以使用本组件后需要配置前端路由。</p>
         <Pre>
 {`import { Router, Route, IndexRoute } from 'react-router'

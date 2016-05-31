@@ -189,7 +189,7 @@ const FormCustomDemo = React.createClass({
 export default () => {
   return (
     <div>
-      <h1>表单</h1>
+      <h1>表单 @hai.jiang</h1>
       <h3>1、最简单的用法</h3>
       <p>集成数据双向绑定、数据校验、服务器通信、提交状态处理、结果反馈等。</p>
       <Pre>{FormDemoCode}</Pre>
