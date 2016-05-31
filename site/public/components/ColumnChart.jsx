@@ -2,7 +2,7 @@ import React from 'react'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import ColumnChart from 'c/ColumnChart'
-
+import Warn from '../Warn'
 const code = `import ColumnChart from 'bfd-ui/lib/ColumnChart'
 
 const App = React.createClass({
@@ -22,7 +22,8 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>柱型图</h1>
+        <h1>柱型图 @tenglong.jiang</h1>
+        <Warn>暂停维护，建议使用 Echarts webpack 方式</Warn>
         <Pre>{code}</Pre>
         
         <ColumnChart style={{height: 400}} category="name" cols={cols} url="/data/columnChart.json"  />

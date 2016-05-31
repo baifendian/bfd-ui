@@ -15,7 +15,7 @@ export default React.createClass({
     }
     return (
       <div>
-        <h1>上传</h1>
+        <h1>上传 @tenglong.jiang</h1>
         <h2>Upload</h2>
         <Pre>
         {`
