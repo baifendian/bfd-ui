@@ -8,7 +8,8 @@ export default React.createClass({
   render() {
     return (
       <div>
-        <h1>饼图</h1>
+        <h1>饼图@zhangyu</h1>
+         <Warn>暂停维护，建议使用 Echarts webpack 方式</Warn>
         <Pre>
 {
 `import PieChart from 'bfd-ui/lib/PieChart'
