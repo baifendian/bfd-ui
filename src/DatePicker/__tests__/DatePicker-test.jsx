@@ -25,11 +25,6 @@ describe('DatePicker', () => {
     })
   })
 
-  it('default date is ok', () => {
-    const instance = TestUtils.renderIntoDocument(<DatePicker />)
-    expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')[0].value).toBe(new Date().toLocaleDateString())
-  })
-
   it('custom date is ok', () => {
     const instance = TestUtils.renderIntoDocument(<DatePicker date="2016-01-01" onSelect={jest.fn()} />)
     expect(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')[0].value).toBe(new Date('2016-01-01').toLocaleDateString())

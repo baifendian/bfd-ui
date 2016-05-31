@@ -10,18 +10,6 @@ describe('ClearableInput', () => {
     expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
   })
 
-  it('style is ok', () => {
-    const instance = TestUtils.renderIntoDocument(<ClearableInput style={{color: 'red'}} />)
-    expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
-  })
-
-  it('onClick is ok', () => {
-    const handleClick = jest.fn()
-    const instance = TestUtils.renderIntoDocument(<ClearableInput onClick={handleClick} />)
-    TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
-    expect(handleClick).toBeCalled()
-  })
-
   it('value is ok', () => {
     const instance = TestUtils.renderIntoDocument(<ClearableInput value="test" onChange={() => {}} />)
     expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'input').value).toBe('test')
