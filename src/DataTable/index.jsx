@@ -37,7 +37,7 @@ export default React.createClass( {
     if(this.props.onPageChange){
       this.props.onPageChange( page )
     }
-    this.setState({currentPage: page } )
+    this.setState({currentPage: page })
   },
 
   orderClick:function(column, i){
@@ -85,8 +85,11 @@ export default React.createClass( {
     pageSize = parseInt( this.props.howRow )
     if( this.props.data) {
       let data_ = this.props.data.totalList
-      if(this.props.data.totalPageNum){
+      if( this.props.data.totalPageNum ) {
         totalPageNum = this.props.data.totalPageNum
+      }
+      if (this.props.data.totalList) {
+        totalPageNum = this.props.data.totalList.length
       }
       if(data_ && data_.length > 0 && typeof data_ === 'object' && data_.length > pageSize) {
         let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize
@@ -100,23 +103,26 @@ export default React.createClass( {
     if( url && url !== '' ) {
       if(url.indexOf('?') < 0 ) {
         url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
-      }else {
+      } else if( url.indexOf('pageSize') > 0 && url.indexOf('currentPage') < 0 ) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
       //通过url查询后返回的回调函数重新渲染的数据
-      if(this.state.items && this.state.items.totalList.length > 0 ){
+      if( this.state.items && this.state.items.totalList.length > 0 ) {
         items = this.state.items.totalList
-      }
-      if(this.state.items.totalPageNum > 0 ){
-        totalPageNum = this.state.items.totalPageNum
+        if( this.state.items.totalPageNum > 0 ) {
+          totalPageNum = this.state.items.totalPageNum
+        } else {
+          totalPageNum = this.state.items.totalList.length
+        }
+        //服务端是否返回currentPage
+        if( this.state.items.currentPage ) {
+          currentPage = this.state.items.currentPage
+        }
       }
     }
-    //url
     return (
       <div>
-        {
-          this.props.url ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null
-        }
+        { this.props.url ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null }
         <table className = "table" >
           <thead>
             <tr>
@@ -129,37 +135,39 @@ export default React.createClass( {
           </thead>
           <tbody>
             {
+              items.length > 0 ?
               items.map( function ( item, j ) {
-                return (<tr key= { j } >
-                  {
-                    column.map(function(columns,i) {
-                      for(let col in columns) {
-                        //序号
-                        if(columns[col] === 'sequence') {
-                          return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
-                        }
-                        //操作
-                        if(columns[col] == 'operation' ) {
-                          return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
-                        }
-                        if(columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
-                          if(typeof columns['render'] === 'function') {
-                            return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item) } </td>
-                          }else {
-                            return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
+                return (
+                  <tr key= { j } >
+                    {
+                      column.map(function(columns,i) {
+                        for(let col in columns) {
+                          //序号
+                          if(columns[col] === 'sequence') {
+                            return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
+                          }
+                          //操作
+                          if(columns[col] == 'operation' ) {
+                            return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
+                          }
+                          //正常非字段编辑列
+                          if(columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
+                            if(typeof columns['render'] === 'function') {
+                              return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item) } </td>
+                            }else {
+                              return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
+                            }
                           }
                         }
-                      }
-                    })
-                  }
-                </tr>)
-              })
-             }
+                      })
+                    }
+                  </tr>
+                )
+              }) : <tr><td colSpan="9"><div className="align-center" ref = "nothingData" ></div>暂无数据!</td></tr>
+            }
           </tbody>
         </table>
-        {
-          this.props.showPage == 'true' ? <Paging currentPage = { currentPage } onPageChange = { this.onPageChange } totalPageNum = { totalPageNum } pageSize = { this.props.howRow } onChange = { this.onChange }></Paging> : ''
-        }
+        { items.length > 0 ?this.props.showPage == 'true' ? <Paging currentPage = { currentPage } onPageChange = { this.onPageChange } totalPageNum = { totalPageNum } pageSize = { this.props.howRow } onChange = { this.onChange }></Paging> : '' : ''}
       </div>
     )
   }
