@@ -43,6 +43,9 @@ const App = React.createClass({
           <Prop name="action" type="String" required>
             <p>上传的地址</p>
           </Prop>
+          <Prop name="text" type="String">
+            <p>上传按钮文本内容，默认为文件上传</p>
+          </Prop>
           <Prop name="multiple" type="Boolean">
             <p>可选参数, 是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。</p>
           </Prop>          

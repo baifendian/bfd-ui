@@ -98,7 +98,7 @@ export default React.createClass({
       <div className={classnames('bfd-upload', this.props.className)}>
         <input ref="file" onChange={this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
         <button className="btn btn-primary" type="button" onClick={this.handleClick}>
-          文件上传 
+          {this.props.text || '文件上传'} 
         </button>
         <div className="listbox">
           <FileList data={this.state.list} onRemove={this.handleRemove}></FileList>
