@@ -83,15 +83,15 @@ export default React.createClass( {
      * @type {Number}
      */
     pageSize = parseInt( this.props.howRow )
-    if( this.props.data) {
+    if( this.props.data ) {
       let data_ = this.props.data.totalList
-      if( this.props.data.totalPageNum ) {
+      //检查是否有totalPageNum，否则就取 totalList的个数
+      if( this.props.data.totalPageNum && this.props.data.totalPageNum >0 ) {
         totalPageNum = this.props.data.totalPageNum
-      }
-      if (this.props.data.totalList) {
+      } else {
         totalPageNum = this.props.data.totalList.length
       }
-      if(data_ && data_.length > 0 && typeof data_ === 'object' && data_.length > pageSize) {
+      if( data_ && data_.length > 0 && typeof data_ === 'object' && data_.length > pageSize) {
         let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize
         let end = currentPage === 1 ? pageSize : start + pageSize
         items = data_.slice( start, end )
@@ -101,10 +101,10 @@ export default React.createClass( {
     }
     //如果是传入url查询数据就附带参数查询
     if( url && url !== '' ) {
-      if(url.indexOf('?') < 0 ) {
+      if( url.indexOf('?') < 0 ) {
         url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
-      if( url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?')>-1) {
+      if( url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1 ) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
       //通过url查询后返回的回调函数重新渲染的数据
@@ -124,7 +124,6 @@ export default React.createClass( {
     return (
       <div>
         { url!="" ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null }
-
         <table className = "table" >
           <thead>
             <tr>
