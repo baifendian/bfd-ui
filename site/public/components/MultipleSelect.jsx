@@ -8,9 +8,14 @@ const render = (item, i) => {
 }
 
 const MultipleSelectDemo = React.createClass({
+
+  handleChange(values) {
+    console.log(values)
+  },
+
   render() {
     return (
-      <MultipleSelect defaultValues={['0', '1']}>
+      <MultipleSelect defaultValues={['0', '1']} onChange={this.handleChange}>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>
@@ -22,9 +27,14 @@ const MultipleSelectDemo = React.createClass({
 const code = `import { MultipleSelect, Option } from 'bfd-ui/lib/MultipleSelect'
 
 const MultipleSelectDemo = React.createClass({
+
+  handleChange(values) {
+    console.log(values)
+  },
+
   render() {
     return (
-      <MultipleSelect defaultValues={['0', '1']}>
+      <MultipleSelect defaultValues={['0', '1']} onChange={this.handleChange}>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>

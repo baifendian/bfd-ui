@@ -28,6 +28,7 @@ const MultipleSelect = React.createClass({
 
   handleChange(values) {
     this.setState({ values })
+    this.props.onChange && this.props.onChange(values)
   },
 
   handleToggleAll(e) {
@@ -39,6 +40,7 @@ const MultipleSelect = React.createClass({
       })
     }
     this.setState({ values })
+    this.props.onChange && this.props.onChange(values)
   },
 
   getCheckboxWithProps(child, i) {
@@ -58,7 +60,8 @@ const MultipleSelect = React.createClass({
   },
 
   render() {
-    const { className, children, url, render, disabled, ...other } = this.props
+    const { className, children, url, render, ...other } = this.props
+    let disabled = this.props.disabled
     
     this.valueSet = new Set(this.state.values)
     this.labels = []
@@ -69,7 +72,7 @@ const MultipleSelect = React.createClass({
         return this.getCheckboxWithProps(render.call(this, item, i), i)
       })
     } else {
-      childrenWithProps = React.Children.map(children, this.getCheckboxWithProps)
+      childrenWithProps = React.Children.map(children, this.getCheckboxWithProps) || []
     }
 
     const isAll = this.labels.length === childrenWithProps.length
@@ -95,6 +98,8 @@ const MultipleSelect = React.createClass({
     } else {
       head = <div className="default-title">请选择</div>
     }
+
+    if (!childrenWithProps.length) disabled = true
     
     return (
       <Dropdown className={classnames('bfd-multiple-select', { disabled }, className)} disabled={disabled} {...other}>
