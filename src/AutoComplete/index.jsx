@@ -75,9 +75,10 @@ const AutoComplete = React.createClass({
   },
 
   render() {
+    const { className, ...other } = this.props
     return (
-      <Dropdown open={this.state.isOpen} className="bfd-auto-complete">
-        <ClearableInput onKeyDown={this.handleKeyDown} value={this.state.value} onChange={this.handleChange} />
+      <Dropdown open={this.state.isOpen} className={classnames('bfd-auto-complete', className)}>
+        <ClearableInput onKeyDown={this.handleKeyDown} value={this.state.value} onChange={this.handleChange} {...other} />
         <DropdownMenu>
           <ul className="result">
           {this.state.result.map((item, i) => <li className={classnames({active: this.state.index === i})} key={i} onClick={this.handleSelect.bind(this, item)}>{item}</li>)}

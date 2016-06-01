@@ -1,6 +1,6 @@
 {
   "name": "bfd-ui",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "dependencies": {
     "autoprefixer": "^6.3.5",
     "babel-plugin-transform-runtime": "^6.4.3",
-    "bfd-bootstrap": "0.0.18",
+    "bfd-bootstrap": "0.0.19",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.0",
     "d3": "^3.5.11",

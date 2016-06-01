@@ -37,6 +37,7 @@ export default () => {
         <Prop name="onChange" type="function">
           <p>输入框值改变后的回调，参数为改变后的值</p>
         </Prop>
+        <p>input 其他属性均支持</p>
       </Props>
     </div>
   )

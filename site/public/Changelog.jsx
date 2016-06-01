@@ -5,6 +5,12 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.1.9" date="2016-06-01">
+        <ol>
+          <li>修复 MultipleSelect onChange 回调参数错误的问题</li>
+          <li>处理 MultipleSelect 无 Option 时的场景，设置为禁用状态</li>
+        </ol>
+      </Version>
       <Version version="0.1.8" date="2016-05-31">
         <p>新增组件: </p>
         <ul>

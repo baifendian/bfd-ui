@@ -15,6 +15,7 @@ function Checkbox(props, { checkboxGroup }) {
     }
     
     inputProps.onChange = e => {
+      e.stopPropagation()
       checkboxGroup[(e.target.checked ? 'add' : 'remove') + 'Select'](value)
     }
   }
