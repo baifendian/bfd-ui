@@ -1,70 +1,73 @@
 import React from 'react'
 import DataTable from 'c/DataTable'
+import SearchInput from 'c/SearchInput'
 import Paging from 'c/Paging'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 export default React.createClass({
   getInitialState: function () {
-    return {url: "../data/table.json"}
+    return {url: "../data/table.json",
+      column: [{
+        title:'序号',
+        key:'sequence'
+      }, {
+        title: '姓名',
+        order: true,
+        render: (text, item) => {
+          return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
+        },
+        key: 'name'
+      }, {
+        title: '年龄',
+        key: 'age',
+        order: true
+      }, {
+        title: '身高',
+        key: 'height',
+        order: true,
+        render: (text, item) => {
+          return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
+        }
+      }, {
+        title: '体重',
+        key: 'weight',
+        order: true
+      }, {
+        title: '国家/地区',
+        key: 'country'
+      }, {
+        title: '学校',
+        key: 'school'
+      }, {
+        title: '生日',
+        key: 'birthday',
+        order: true
+      }, {
+        title: '操作',
+        /**
+         * @param item  当前数据对象
+         * @param component 当前
+         * @returns {XML}  返回dom对象
+         */
+        render:(item, component)=>{
+          return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
+        },
+        key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+      }]
+    }
   },
   handleClick (item) {
    console.log(item)
   },
+  handleSearch(data){
 
+  },
   onPageChange( page) {
     this.setState({url:"../data/table.json?num="+page})
   },
 
   render() {
-
-    const column = [{
-      title:'序号',
-      key:'sequence'
-    }, {
-      title: '姓名',
-      order: true,
-      render: (text, item) => {
-        return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
-      },
-      key: 'name'
-    }, {
-      title: '年龄',
-      key: 'age',
-      order: true
-    }, {
-      title: '身高',
-      key: 'height',
-      order: true,
-      render: (text, item) => {
-        return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
-      }
-    }, {
-      title: '体重',
-      key: 'weight',
-      order: true
-    }, {
-      title: '国家/地区',
-      key: 'country'
-    }, {
-      title: '学校',
-      key: 'school'
-    }, {
-      title: '生日',
-      key: 'birthday',
-      order: true
-    }, {
-      title: '操作',
-      /**
-       * @param item  当前数据对象
-       * @param component 当前
-       * @returns {XML}  返回dom对象
-       */
-      render:(item, component)=>{
-        return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
-      },
-      key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
-    }]
     return (
       <div>
         <h1>DataTable&分页@houyi.li</h1>
@@ -87,19 +90,19 @@ const App = React.createClass({
      //TODO
   },
   render() {
-    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 13 }></DataTable>
+    return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={this.state.column} howRow={ 13 }></DataTable>
   }
 })`
 }
         </Pre>
-        <DataTable url = { this.state.url }   showPage = "true" data = ""  column = { column } howRow = { 8 } />
+        <DataTable url = { this.state.url }   showPage = "true" data = ""  column = { this.state.column } howRow = { 8 } />
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
-          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名，放在组件内部render()内"></Prop>
+          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名称"></Prop>
           <Pre>
             {
-`
-const column = [{
+`getInitialState(){
+  return { column: [{
         //非数据操作字段
         title:'操作',
         /**
@@ -129,8 +132,10 @@ const column = [{
          */
         render: function(text, item) {
           return <a href="javascript:void(0);" href="javascript:void(0);" onClick={function(){ () => { this.handleClick(item) } }>{text}</a>
-        }
-        ]
+        }]
+      }
+
+ }
 `
             }
           </Pre>
@@ -161,7 +166,7 @@ const column = [{
    //TODO Ajax请求
  }
 render() {
-  return <DataTable url="" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={column} howRow={ 10 }></DataTable>
+  return <DataTable url="this.state.url" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={this.state.column} howRow={ 10 }></DataTable>
 }
 `
 }
