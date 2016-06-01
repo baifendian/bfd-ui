@@ -144,7 +144,7 @@ export default React.createClass( {
                       column.map(function(columns,i) {
                         for(let col in columns) {
                           //序号
-                          if(columns[col] === 'sequence') {
+                          if( columns[col] === 'sequence') {
                             return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
                           }
                           //操作
@@ -152,9 +152,9 @@ export default React.createClass( {
                             return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
                           }
                           //正常非字段编辑列
-                          if(columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
+                          if( columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key' ) {
                             if(typeof columns['render'] === 'function') {
-                              return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item) } </td>
+                              return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item ) } </td>
                             }else {
                               return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
                             }
