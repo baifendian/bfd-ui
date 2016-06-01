@@ -5,7 +5,7 @@ import { Props, Prop } from '../Props'
 
 const AutoCompleteDemo = React.createClass({
   render() {
-    return <AutoComplete source={['test', 'test2']} disabled />
+    return <AutoComplete source={['test', 'test2']} />
   }
 })
 
