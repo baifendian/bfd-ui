@@ -22,15 +22,15 @@ export default React.createClass( {
   },
 
   onChange: function (params, currentPage) {
-    if( this.props.url ) {
-      let url_ = this.props.url
-      if(url_.indexOf('?') > -1 ) {
-        url_ += '&' + params
-      }else {
-        url_ += '?' + params
-      }
-      this.setState( { currentPage: currentPage,url: url_  } )
-    }
+    //if( this.props.url ) {
+    //  let url_ = this.props.url
+    //  if(url_.indexOf('?') > -1 ) {
+    //    url_ += '&' + params
+    //  }else {
+    //    url_ += '?' + params
+    //  }
+    //  this.setState( { currentPage: currentPage,url: url_  } )
+    //}
   },
 
   onPageChange(page){
@@ -77,7 +77,7 @@ export default React.createClass( {
     let totalPageNum = 0,
     currentPage = parseInt( this.state.currentPage ),
     _this = this,
-    url = this.state.url,
+    url = this.props.url,
     /****
      * 新增自动分页功能
      * @type {Number}
@@ -103,7 +103,8 @@ export default React.createClass( {
     if( url && url !== '' ) {
       if(url.indexOf('?') < 0 ) {
         url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
-      } else if( url.indexOf('pageSize') > 0 && url.indexOf('currentPage') < 0 ) {
+      }
+      if( url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?')>-1) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
       //通过url查询后返回的回调函数重新渲染的数据
@@ -122,7 +123,8 @@ export default React.createClass( {
     }
     return (
       <div>
-        { this.props.url ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null }
+        { url!="" ? <Fetch url = { url } onSuccess = { this.handleSuccess } ></Fetch> : null }
+
         <table className = "table" >
           <thead>
             <tr>

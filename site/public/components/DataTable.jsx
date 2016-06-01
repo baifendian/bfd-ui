@@ -1,5 +1,6 @@
 import React from 'react'
 import DataTable from 'c/DataTable'
+import SearchInput from 'c/SearchInput'
 import Paging from 'c/Paging'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
@@ -11,13 +12,15 @@ export default React.createClass({
   handleClick (item) {
    console.log(item)
   },
+  handleSearch(data){
 
+  },
   onPageChange( page) {
     this.setState({url:"../data/table.json?num="+page})
   },
 
   render() {
-
+    console.log(this.state.url)
     const column = [{
       title:'序号',
       key:'sequence'
