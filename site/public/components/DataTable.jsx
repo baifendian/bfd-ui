@@ -50,7 +50,7 @@ export default React.createClass({
          * @param component 当前
          * @returns {XML}  返回dom对象
          */
-        render:(item, component)=>{
+        render: (item, component)=> {
           return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
         },
         key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
@@ -109,7 +109,7 @@ const App = React.createClass({
          * @param component 当前
          * @returns {XML}  返回dom对象
          */
-        render:(item, component)=>{
+        render:(item, component)=> {
           return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
         },
         key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
@@ -120,7 +120,7 @@ const App = React.createClass({
    * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
    * @param page 当前页
    */
-  onPageChange(page){
+  onPageChange(page) {
      //TODO
   },
   render() {
@@ -177,7 +177,7 @@ const App = React.createClass({
  * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
  * @param page 鼠标点击时的当前页码
  */
- onPageChange(page){
+ onPageChange (page) {
    //TODO Ajax请求
  },
 
