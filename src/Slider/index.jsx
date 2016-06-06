@@ -48,6 +48,9 @@ export default React.createClass({
   },
   handleMouseUp() {
     const selectedBar = this.refs.selectedBar
+    if(typeof selectedBar == 'undefined') {
+      return;
+    }
     this.isDown = false
     const text = this.getValue(parseInt(selectedBar.style.width, 10))
     if(typeof this.props.onSlid == 'function') {
@@ -94,6 +97,11 @@ export default React.createClass({
     const BODY = document.body
     BODY.addEventListener('mousemove', this.handleMouseMove)
     BODY.addEventListener('mouseup', this.handleMouseUp)
+  },
+  componentWillUnmount() {
+    const BODY = document.body
+    BODY.removeEventListener('mousemove', this.handleMouseMove)
+    BODY.removeEventListener('mouseup', this.handleMouseUp)
   },
   render() {
     return (
