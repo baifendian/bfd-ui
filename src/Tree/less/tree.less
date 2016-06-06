@@ -6,7 +6,7 @@
       }
     }
     ul {
-      margin-left: 25px;
+      margin-left: 21px;
     }
   }
   ul {
@@ -16,35 +16,27 @@
     li {
       margin-top: 10px;
       position: relative;
-      > .toggle, > .toggle-icon, >.node-content {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 18px;
+      > .toggle {
+        color: #42a5f5;
+        cursor: pointer;
+        background-color: #fff;
       }
       > .toggle-icon {
         margin: 0 10px;
         color: #42a5f5;
-        top: 0px;
       }
-      > button.toggle {
-        padding: 0;
-        width: 16px;
-        height: 16px;
-        background-color: #42a5f5;
-        border: 0;
-        line-height: 1;
-        font-size: 12px;
-      }
+      
       > .node-content {
         position: relative;
+        display: inline-block;
         &:before {
           position: absolute;
           top: 50%;
           content: '';
-          width: 15px;
+          width: 11px;
           height: 0px;
           border-top: 1px dotted #999;
-          left: -39px;
+          left: -36px;
           z-index: -1;
         }
       }
@@ -55,7 +47,7 @@
         z-index: -1;
         position: absolute;
         top: -12px;
-        left: 7px;
+        left: 6px;
         bottom: 3px;
         content: '';
         width: 0px;

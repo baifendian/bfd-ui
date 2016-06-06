@@ -13,7 +13,7 @@ const EditableDemo = React.createClass({
 
 const code = `import Editable from 'bfd-ui/lib/Editable'
 
-const EditableDemo = React.createClass({
+export default React.createClass({
   render() {
     return (
       <Editable defaultValue="我可以修改哦" />

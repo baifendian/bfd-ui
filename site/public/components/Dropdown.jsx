@@ -5,7 +5,7 @@ import { Props, Prop } from '../Props'
 
 const code = `import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd-ui/lib/Dropdown'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return (
       <Dropdown>
@@ -17,6 +17,7 @@ const App = React.createClass({
         </DropdownMenu>
       </Dropdown>
     )
+  }
 })`
 
 export default React.createClass({

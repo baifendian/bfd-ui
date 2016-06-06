@@ -47,6 +47,9 @@
   "name": "Checkbox",
   "cn": "复选框"
 }, {
+  "name": "Switch",
+  "cn": "开关"
+}, {
   "name": "Select",
   "cn": "下拉框"
 }, {
@@ -100,4 +103,7 @@
 }, {
   "name": "TextOverflow",
   "cn": "文字溢出"
+}, {
+  "name": "Icon",
+  "cn": "图标"
 }]

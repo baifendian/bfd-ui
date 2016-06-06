@@ -5,6 +5,27 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.2.0" date="2016-06-06">
+        <p>新增组件: </p>
+        <ul>
+          <li>开关: Switch</li>
+          <li>
+            <p>图标: Icon</p>
+            <p>Icon 组件依赖 font-awesome，webpack file-loader 文件后缀需要加上版本号</p>
+            <Pre>{
+`{
+  test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
+  loader: 'file-loader?name=files/[hash].[ext]'
+}`}</Pre>
+          </li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>修复 ClearableInput 清空无效的问题</li>
+          <li>Modal instance.close 方法添加回调函数作为参数</li>
+          <li>NavItem icon 升级为 font-awesome 图标</li>
+        </ol>
+      </Version>
       <Version version="0.1.9" date="2016-06-01">
         <ol>
           <li>修复 MultipleSelect onChange 回调参数错误的问题</li>

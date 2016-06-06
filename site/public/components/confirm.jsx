@@ -18,7 +18,7 @@ const ConfirmDemo = React.createClass({
 
 const ConfirmDemoCode = `import confirm from 'bfd-ui/lib/confirm'
 
-const App = React.createClass({
+export default React.createClass({
 
   handleDelete() {
     confirm('确认删除吗', () => {

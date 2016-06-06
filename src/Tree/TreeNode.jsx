@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import update from 'react-addons-update'
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
+import Icon from '../Icon'
 
 const TreeNode = React.createClass({
 
@@ -40,7 +41,7 @@ const TreeNode = React.createClass({
     let icon
     let Children
     if (hasChildren) {
-      icon = 'folder-' + (isOpen ? 'open' : 'close')
+      icon = 'folder' + (isOpen ? '-open' : '')
       Children = (
         <ul>
         {data.children.map((item, i) => {
@@ -54,11 +55,9 @@ const TreeNode = React.createClass({
 
     return (
       <li className={classnames({open: isOpen})}>
-        <button style={{visibility: hasChildren ? 'visible' : 'hidden'}} type="button" className="btn btn-primary toggle" onClick={this.handleToggle}>
-          <span className={`glyphicon glyphicon-${isOpen ? 'minus' : 'plus'}`}></span>
-        </button>
+        <Icon style={{visibility: hasChildren ? 'visible' : 'hidden'}} type={isOpen ? 'minus-square' : 'plus-square'} onClick={this.handleToggle} className="toggle"/>
         {beforeNodeRender ? beforeNodeRender(this) : null}
-        <span className={`toggle-icon glyphicon glyphicon-${icon}`}></span>
+        <Icon type={icon} className="toggle-icon" />
         <div className="node-content">{data.name}</div>
         {Children}
       </li>

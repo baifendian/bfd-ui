@@ -17,7 +17,7 @@ const DatePickerDemo = React.createClass({
 
 const DatePickeDemoCode = `import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
 
-const DatePickerDemo = React.createClass({
+export default React.createClass({
   
   handleSelect(date) {
     console.log(date)
@@ -41,7 +41,7 @@ const DateRangeDemo = React.createClass({
 
 const DateRangeDemoCode = `import DateRange from 'bfd-ui/lib/DatePicker/DateRange'
 
-const DateRangeDemo = React.createClass({
+export default React.createClass({
 
   handleSelect(start, end) {
     console.log(start, end)

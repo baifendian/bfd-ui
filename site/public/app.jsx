@@ -45,7 +45,7 @@ const App = React.createClass({
             <Nav href="/">
               <NavItem icon="home" title="首页" />
               <NavItem href="components" icon="th" title="组件" />
-              <NavItem href="workflow" icon="hand-right" title="工作流" />
+              <NavItem href="workflow" icon="hand-o-right" title="工作流" />
               <NavItem href="changelog" icon="random" title="更新日志" />
             </Nav>
           </div>
@@ -63,7 +63,7 @@ const App = React.createClass({
 })
 
 render((
-  <Router history={createHistory()}>
+  <Router onUpdate={() => window.scrollTo(0, 0)} history={createHistory()}>
     <Route path="/" component={App}>
       <IndexRoute getComponent={(location, cb) => {
         require.ensure([], require => {

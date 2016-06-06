@@ -1,0 +1,37 @@
+.bfd-switch {
+  cursor: pointer;
+  margin: 0;
+  height: 22px;
+  line-height: 20px;
+  .switch {
+    background-color: #ccc;
+    display: inline-block;
+    width: 44px;
+    height: 100%;
+    border-radius: 22px;
+    color: #fff;
+    position: relative;
+    &:before {
+      position: absolute;
+      content: '';
+      left: 2px;
+      top: 2px;
+      width: 18px;
+      height: 18px;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: left .2s;
+    }
+  }
+  input {
+    display: none;
+    &:checked {
+      + .switch {
+        background-color: #42a5f5;
+        &:before {
+          left: 24px;
+        }
+      }
+    }
+  }
+}

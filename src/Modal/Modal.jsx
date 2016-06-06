@@ -30,6 +30,8 @@ const Modal = React.createClass({
     }
   },
 
+  closeTimeout: 150,
+
   componentWillUpdate(nextProps, nextState) {
     const body = document.body
     const bodyClassName = body.className
@@ -47,7 +49,7 @@ const Modal = React.createClass({
         } else {
           body.style.paddingRight = ''
         }
-      }, 150)
+      }, this.closeTimeout)
     }
   },
 
@@ -61,14 +63,15 @@ const Modal = React.createClass({
     this.setState({isOpen: true})
   },
 
-  close() {
+  close(callback) {
     this.setState({isOpen: false})
+    setTimeout(callback, this.closeTimeout)
   },
 
   render() {
     const { className, children, ...other } = this.props
     return (
-      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
+      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={this.closeTimeout}>
         {this.state.isOpen ? (
           <div className={classnames('bfd-modal', className)} {...other}>
             <div className="modal-backdrop"></div>

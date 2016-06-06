@@ -10,9 +10,9 @@ export default React.createClass({
         <Pre>
 {`import ChinaMap from 'bfd-ui/lib/ChinaMap'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
-    return <ChinaMap/>
+    return <ChinaMap />
 })`}
         </Pre>
 
