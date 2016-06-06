@@ -65,7 +65,7 @@ import FormTextarea from 'bfd-ui/lib/FormTextarea'
 import { FormSelect, Option } from 'bfd-ui/lib/FormSelect'
 import message from 'bfd-ui/lib/message'
 
-const FormDemo = React.createClass({
+export default React.createClass({
 
   getInitialState() {
     this.rules = {
@@ -152,7 +152,7 @@ const FormCustomDemo = React.createClass({
 const FormCustomDemoCode = `import { Form, FormItem } from 'bfd-ui/lib/Form2'
 import { DatePicker } from 'bfd-ui/lib/DatePicker'
 
-const FormCustomDemo = React.createClass({
+export default React.createClass({
 
   getInitialState() {
     this.rules = {

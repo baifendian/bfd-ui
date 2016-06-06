@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import Pre from './Pre'
 
 export default React.createClass({
@@ -10,40 +11,45 @@ export default React.createClass({
           <footer>不仅仅是一个组件库，更是一种开发模式。</footer>
         </blockquote>
 
-        <h2>安装</h2>
-        <p>请先安装 NodeJS 平台 <a href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-        <p>NodeJS 安装后会自动安装 npm 包管理工具，接下来就可以安装组件库</p>
+        <Pre>
+{`import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
+
+const DatePickerDemo = React.createClass({
+  
+  handleSelect(date) {
+    console.log(date)
+  },
+
+  render() {
+    return <DatePicker onSelect={this.handleSelect} />
+  }
+})`}
+        </Pre>
+
+        <h2>如何开始</h2>
+        
+        <p>如果你对 Node.js、npm、React、webpack 等不熟悉，直接按 <Link to="/workflow">工作流</Link> 方式开始使用，各种环境、配置都不用操心了。</p>
+
+        <p>如果已经有相关环境，想单独用组件库的话：</p>
+        
         <Pre lang="sh">{`$ npm install bfd-ui --save`}</Pre>
 
-        <p>安装 webpack 编译打包环境</p>
-        <Pre lang="sh">{`$ npm install webpack -g --save-dev`}</Pre>
-
-        <p>webpack 环境配置</p>
+        <p>webpack 环境额外配置</p>
         <Pre>
 {`var autoprefixer = require('autoprefixer')
 var config = {
   module: {
     loaders: [{
-      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+      test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
       loader: 'file?name=files/[hash].[ext]'
     }, {
-      test: /\.json$/,
-      loader: 'json'
-    }, {
-      test: /\.less$/,
+      test: /\\.less$/,
       loader: 'style!css!less!postcss'
     }]
   },
   postcss: [autoprefixer({ browsers: ['last 3 versions'] })]
 }
 module.exports = config`}
-        </Pre>
-
-        <h2>使用</h2>
-        <Pre>
-{`import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
-
-ReactDOM.render(<DatePicker />, mountNode)`}
         </Pre>
 
         <h2>浏览器支持</h2>

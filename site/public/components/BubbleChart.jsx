@@ -11,7 +11,7 @@ export default React.createClass({
         <Pre>
 {`import BubbleChart from 'bfd-ui/lib/bubbleChart'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return <BubbleChart radiusMaker="x" name="name" value={{key: 'x'}} url="/data/bubbleChart.json" />]
   }

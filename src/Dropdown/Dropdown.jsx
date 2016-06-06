@@ -10,7 +10,7 @@ const Dropdown = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false
+      isOpen: this.props.open || false
     }
   },
 
@@ -18,6 +18,10 @@ const Dropdown = React.createClass({
     return {
       dropdown: this
     }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    'open' in nextProps && this.setState({isOpen: nextProps.open})  
   },
 
   open() {
@@ -68,7 +72,8 @@ const Dropdown = React.createClass({
 })
 
 Dropdown.propTypes = {
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  open: PropTypes.bool
 }
 
 Dropdown.childContextTypes = {

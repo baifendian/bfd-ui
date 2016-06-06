@@ -12,7 +12,7 @@ export default React.createClass({
         <Pre>
 {`import Percentage from 'bfd-ui/lib/Percentage'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return <Percentage percent={80} style={{width: '150px'}}></Percentage>
   }

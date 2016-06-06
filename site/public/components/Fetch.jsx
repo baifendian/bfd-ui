@@ -50,7 +50,7 @@ export default React.createClass({
         <Pre>
 {`import Fetch from 'bfd-ui/lib/Fetch'
 
-const App = React.createClass({
+export default React.createClass({
 
   getInitialState() {
     return {

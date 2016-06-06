@@ -36,8 +36,8 @@ const Confirm = React.createClass({
         <ModalBody>
           <div className="message">{this.state.message}</div>
           <div className="operate">
-            <button type="button" className="btn btn-sm btn-default" onClick={this.close}>取消</button>
-            <button type="button" className="btn btn-sm btn-primary" onClick={this.onConfirm}>确定</button>
+            <button type="button" className="btn btn-primary" onClick={this.onConfirm}>确定</button>
+            <button type="button" className="btn btn-default" onClick={this.close}>取消</button>
           </div>
         </ModalBody>
       </Modal>

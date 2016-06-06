@@ -6,7 +6,7 @@ import Warn from '../Warn'
 
 const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json"/>
   }

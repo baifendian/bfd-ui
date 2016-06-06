@@ -6,73 +6,49 @@ import DateRange from 'c/DatePicker/DateRange'
 
 const DatePickerDemo = React.createClass({
 
-  getInitialState() {
-    return {
-      date: '2016-01-01'
-    }
-  },
-
   handleSelect(date) {
-    this.setState({ date })
+    console.log(date)
   },
 
   render() {
-    return <DatePicker date={this.state.date} onSelect={this.handleSelect} />
+    return <DatePicker onSelect={this.handleSelect} />
   }
 })
 
 const DatePickeDemoCode = `import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
 
-const DatePickerDemo = React.createClass({
-
-  getInitialState() {
-    return {
-      date: '2016-02-03'
-    }
-  },
-
+export default React.createClass({
+  
   handleSelect(date) {
-    this.setState({ date })
+    console.log(date)
   },
 
   render() {
-    return <DatePicker date={this.state.date} onSelect={this.handleSelect} />
+    return <DatePicker onSelect={this.handleSelect} />
   }
 })`
 
 const DateRangeDemo = React.createClass({
 
-  getInitialState() {
-    return {
-      start: '2016-01-01'
-    }
-  },
-
-  handleSelect(start) {
-    this.setState({ start })
+  handleSelect(start, end) {
+    console.log(start, end)
   },
 
   render() {
-    return <DateRange start={this.state.start} onSelect={this.handleSelect} />
+    return <DateRange onSelect={this.handleSelect} />
   }
 })
 
 const DateRangeDemoCode = `import DateRange from 'bfd-ui/lib/DatePicker/DateRange'
 
-const DateRangeDemo = React.createClass({
+export default React.createClass({
 
-  getInitialState() {
-    return {
-      start: '2016-01-01'
-    }
-  },
-
-  handleSelect(start) {
-    this.setState({ start })
+  handleSelect(start, end) {
+    console.log(start, end)
   },
 
   render() {
-    return <DateRange start={this.state.start} onSelect={this.handleSelect} />
+    return <DateRange onSelect={this.handleSelect} />
   }
 })`
 
@@ -85,19 +61,22 @@ export default () => {
       <Pre>{DatePickeDemoCode}</Pre>
       <DatePickerDemo />
       <Props>
-        <Prop name="date" type="Number | String">
+        <Prop name="date" type="number | string">
           <p>当前日期，时间戳（毫秒）或者日期字符串（下同）</p>
           <p>默认今天</p>
         </Prop>
-        <Prop name="min" type="Number | String">
+        <Prop name="defaultDate" type="number | string">
+          <p>同 date</p>
+        </Prop>
+        <Prop name="min" type="number | string">
           <p>最小日期</p>
           <p>默认不限制</p>
         </Prop>
-        <Prop name="max" type="Number | String">
+        <Prop name="max" type="number | string">
           <p>最大日期</p>
           <p>默认不限制</p>
         </Prop>
-        <Prop name="onSelect" type="Function">
+        <Prop name="onSelect" type="function">
           <p>选择后的回调，回调参数为选中日期的时间戳</p>
         </Prop>
       </Props>
@@ -107,23 +86,29 @@ export default () => {
       <Pre>{DateRangeDemoCode}</Pre>
       <DateRangeDemo />
       <Props>
-        <Prop name="start" type="Number | String">
+        <Prop name="start" type="number | string">
           <p>开始日期，时间戳（毫秒）或者日期字符串（下同）</p>
           <p>默认今天</p>
         </Prop>
-        <Prop name="end" type="Number | String">
+        <Prop name="defaultStart" type="number | string">
+          <p>同 start</p>
+        </Prop>
+        <Prop name="end" type="number | string">
           <p>结束日期，时间戳（毫秒）或者日期字符串（下同）</p>
           <p>默认今天</p>
         </Prop>
-        <Prop name="min" type="Number | String">
+        <Prop name="defaultEnd" type="number | string">
+          <p>同 end</p>
+        </Prop>
+        <Prop name="min" type="number | string">
           <p>最小日期</p>
           <p>默认不限制</p>
         </Prop>
-        <Prop name="max" type="Number | String">
+        <Prop name="max" type="number | string">
           <p>最大日期</p>
           <p>默认不限制</p>
         </Prop>
-        <Prop name="onSelect" type="Function">
+        <Prop name="onSelect" type="function">
           <p>选择后的回调，回调参数为选中日期 (start, end)</p>
         </Prop>
       </Props>

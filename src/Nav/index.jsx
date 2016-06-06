@@ -1,7 +1,9 @@
 import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import classNames from 'classnames'
+import classnames from 'classnames'
+import Icon from '../Icon'
+import './index.less'
 
 let baseURL
 
@@ -29,8 +31,9 @@ const Nav = React.createClass({
   },
   
   render() {
+    const { className, children, ...other } = this.props
     return (
-      <ul {...this.props} className="nav nav-pills nav-stacked">{this.props.children}</ul>
+      <ul className={classnames('nav nav-pills nav-stacked bfd-nav', className)} {...other}>{children}</ul>
     )
   }
 })
@@ -75,7 +78,7 @@ const NavItem = React.createClass({
   render() {
 
     let Toggle
-    let Icon
+    let NavIcon
     let Item
 
     const { children, icon, title, ...other } = this.props
@@ -89,20 +92,20 @@ const NavItem = React.createClass({
     href = '/' + paths.join('/')
 
     if (children) {
-      Toggle = <span className="glyphicon glyphicon-menu-right"></span> 
+      Toggle = <Icon type="angle-right" />
     }
     if (icon) {
-      Icon = <span className={'glyphicon glyphicon-' + icon}></span>
+      NavIcon = <Icon type={icon} />
     }
     if (children) {
-      Item = <a href={href} onClick={this.toggle}>{Icon}{title}{Toggle}</a>
+      Item = <a href={href} onClick={this.toggle}>{NavIcon}{title}{Toggle}</a>
     } else {
-      Item = <Link to={href} query={this.props.query}>{Icon}{title}{Toggle}</Link>
+      Item = <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
     }
 
     const indexOnly = href === '/' + baseURL
     return (
-      <li {...other} onClick={this.handleClick} className={classNames({open: this.state.isOpen, active: this.isActive(href, indexOnly)})}>
+      <li onClick={this.handleClick} className={classnames({open: this.state.isOpen, active: this.isActive(href, indexOnly)})} {...other}>
         {Item}
         {this.props.children ? <Nav>{this.props.children}</Nav> : null}
       </li>

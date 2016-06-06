@@ -26,6 +26,21 @@
     box-shadow: none;
     border: 1px solid #ececec;
     border-top: 0;
+    .search-box {
+      margin: 10px;
+      position: relative;
+      .clear {
+        color: #999;
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        margin-top: -6px;
+        cursor: pointer;
+        &:hover {
+          color: #666;
+        }
+      }
+    }
     > ul {
       list-style: none;
       padding: 0;

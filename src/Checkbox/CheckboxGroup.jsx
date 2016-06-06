@@ -37,7 +37,7 @@ const CheckboxGroup = React.createClass({
   },
 
   render() {
-    const { className, values, children, block, onChange, ...other } = this.props
+    const { className, values, children, block, ...other } = this.props
     let checkboxes
     if (values) {
       checkboxes = values.map((value, i) => <Checkbox key={i} value={value} block={block}>{value}</Checkbox>)

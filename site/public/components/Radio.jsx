@@ -6,7 +6,7 @@ import { Props, Prop } from '../Props'
 const RadioGroupDemo = React.createClass({
   render() {
     return (
-      <RadioGroup onChange={e => {debugger}}>
+      <RadioGroup>
         <Radio value="apple">苹果</Radio>
         <Radio value="mi">小米</Radio>
         <Radio value="samsung" disabled>三星</Radio>
@@ -17,8 +17,7 @@ const RadioGroupDemo = React.createClass({
 
 const code = `import { RadioGroup, Radio } from 'bfd-ui/lib/Radio'
 
-const App = React.createClass({
-
+export default React.createClass({
   render() {
     return (
       <RadioGroup>
