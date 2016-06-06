@@ -23,6 +23,7 @@ function ChangeLog() {
         <ol>
           <li>修复 ClearableInput 清空无效的问题</li>
           <li>Modal instance.close 方法添加回调函数作为参数</li>
+          <li>NavItem icon 升级为 font-awesome 图标</li>
           <li>修复 DateTable 不发送请求问题</li>
           <li>修复分页错误的问题</li>
         </ol>
