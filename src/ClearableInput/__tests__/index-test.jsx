@@ -11,6 +11,6 @@ describe('ClearableInput', () => {
     const clearNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'clear')
     TestUtils.Simulate.click(clearNode)
     expect(handleChange).toBeCalledWith('')
-    expect(TestUtils.findRenderedDOMComponentWithClass(instance, 'input').value).toBe('')
+    expect(TestUtils.findRenderedDOMComponentWithTag(instance, 'input').value).toBe('')
   })
 })

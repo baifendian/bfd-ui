@@ -26,17 +26,6 @@ describe('Tree', () => {
       expect(handleClick).toBeCalled()
     })
   })
-  
-
-  // it('throw error if no name col', () => {
-  //   const data = [{
-  //     _name: 'test'
-  //   }]
-  //   function render() {
-  //     TestUtils.renderIntoDocument(<Tree data={data} />)  
-  //   }
-  //   expect(render).toThrow()
-  // })
 
 
   describe('open/name/loopData', () => {
@@ -75,7 +64,7 @@ describe('Tree', () => {
       name: 'dsds'
     }]
     const tree = TestUtils.renderIntoDocument(<Tree data={data} onChange={d => {data = d}} />)
-    const toggles = TestUtils.scryRenderedDOMComponentsWithTag(tree, 'button')
+    const toggles = TestUtils.scryRenderedDOMComponentsWithClass(tree, 'toggle')
     TestUtils.Simulate.click(toggles[0])
     expect(data[0].open).toBe(true)
   })
