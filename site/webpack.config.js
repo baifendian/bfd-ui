@@ -24,7 +24,7 @@ var config = {
         plugins: ['transform-runtime']
       }
     }, {
-      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
+      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)(\?v=[\d\.]+)?$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,

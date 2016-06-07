@@ -15,7 +15,7 @@ const TextOverflowDemo = React.createClass({
 
 const code = `import TextOverflow from 'bfd-ui/lib/TextOverflow'
 
-const TextOverflowDemo = React.createClass({
+export default React.createClass({
   render() {
     return (
       <TextOverflow>

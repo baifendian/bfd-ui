@@ -26,7 +26,7 @@ const MultipleSelectDemo = React.createClass({
 
 const code = `import { MultipleSelect, Option } from 'bfd-ui/lib/MultipleSelect'
 
-const MultipleSelectDemo = React.createClass({
+export default React.createClass({
 
   handleChange(values) {
     console.log(values)

@@ -11,7 +11,7 @@ const AutoCompleteDemo = React.createClass({
 
 const code = `import AutoComplete from 'bfd-ui/lib/AutoComplete'
 
-const AutoCompleteDemo = React.createClass({
+export default React.createClass({
   render() {
     return <AutoComplete source={['test', 'test2']} />
   }

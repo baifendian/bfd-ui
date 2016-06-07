@@ -17,7 +17,7 @@ const MessageDemo = React.createClass({
 
 const code = `import message from 'bfd-ui/lib/message'
 
-const MessageDemo = React.createClass({
+export default React.createClass({
   
   dnager() {
     message.danger('这是失败信息')

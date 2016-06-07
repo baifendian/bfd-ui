@@ -12,7 +12,7 @@ export default React.createClass({
         <Pre>
 {`import ScatterPlot from 'bfd-ui/lib/ScatterPlot'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return <ScatterPlot category="height" cols={{male:'男',female:'女'}} url="/data/scatterPlot.json" />
 })`}

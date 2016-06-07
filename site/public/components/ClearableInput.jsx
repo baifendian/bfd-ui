@@ -5,7 +5,7 @@ import { Props, Prop } from '../Props'
 
 const code = `import ClearableInput from 'bfd-ui/lib/ClearableInput'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return <ClearableInput />
 })`

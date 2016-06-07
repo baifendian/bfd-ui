@@ -10,7 +10,7 @@ const render = (item, i) => {
 const SelectDemo = React.createClass({
   render() {
     return (
-      <Select>
+      <Select searchable>
         <Option>请选择</Option>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
@@ -22,7 +22,7 @@ const SelectDemo = React.createClass({
 
 const code = `import { Select, Option } from 'bfd-ui/lib/Select2'
 
-const SelectDemo = React.createClass({
+export default React.createClass({
   render() {
     return (
       <Select>

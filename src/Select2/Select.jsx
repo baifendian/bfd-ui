@@ -24,8 +24,17 @@ const Select = React.createClass({
   },
 
   getOptionWithProps(child, i) {
+
     if (!child) return
+
     const { value, children } = child.props
+
+    // 搜索过滤
+    const searchValue = this.state.searchValue
+    if (searchValue) {
+      if (children.indexOf(searchValue) === -1) return
+    }
+    
     let isActive = false
     if (this.state.value === value) {
       this.title = children
@@ -42,8 +51,13 @@ const Select = React.createClass({
     })
   },
 
+  handleSearch(e) {
+    const searchValue = e.target.value
+    this.setState({ searchValue })
+  },
+
   render() {
-    const { className, children, disabled, url, render, defaultOption, ...other } = this.props
+    const { className, children, disabled, searchable, url, render, defaultOption, ...other } = this.props
 
     let OptionsWithProps
     if (url) {
@@ -53,6 +67,16 @@ const Select = React.createClass({
       defaultOption && OptionsWithProps.unshift(this.getOptionWithProps(defaultOption, -1))
     } else {
       OptionsWithProps = React.Children.map(children, this.getOptionWithProps)
+    }
+
+    let Search
+    if (searchable) {
+      Search = (
+        <div className="search-box">
+          <input className="form-control" value={this.state.searchValue} onChange={this.handleSearch} />
+          <span className="clear glyphicon glyphicon-remove" onClick={this.handleClear}></span>
+        </div>
+      )
     }
 
     return (
@@ -66,6 +90,7 @@ const Select = React.createClass({
           </Fetch>
         </DropdownToggle>
         <DropdownMenu>
+          {Search}
           <ul>{OptionsWithProps}</ul>
         </DropdownMenu>
       </Dropdown>
@@ -77,6 +102,7 @@ Select.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
+  searchable: PropTypes.bool,
   disabled: PropTypes.bool,
   url: PropTypes.string,
   render: PropTypes.func,

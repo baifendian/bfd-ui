@@ -17,7 +17,7 @@ const RadioGroupDemo = React.createClass({
 
 const code = `import { RadioGroup, Radio } from 'bfd-ui/lib/Radio'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return (
       <RadioGroup>

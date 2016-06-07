@@ -5,7 +5,7 @@ import { Props, Prop } from '../Props'
 
 const CheckboxDemoCode = `import { Checkbox } from 'bfd-ui/lib/Checkbox'
 
-const CheckboxDemo = React.createClass({
+export default React.createClass({
   render() {
     return <Checkbox>选择</Checkbox>
   }
@@ -19,7 +19,7 @@ const CheckboxDemo = React.createClass({
 
 const CheckboxGroupDemoCode = `import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
 
-const CheckboxGroupDemo = React.createClass({
+export default React.createClass({
   render() {
     return (
       <CheckboxGroup>
@@ -48,7 +48,7 @@ const CheckboxGroupDemo = React.createClass({
 
 const ShortlyCheckboxGroupDemoCode = `import { CheckboxGroup } from 'bfd-ui/lib/Checkbox'
 
-const ShortlyCheckboxGroupDemo = React.createClass({
+export default React.createClass({
   
   getInitialState() {
     return {

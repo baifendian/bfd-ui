@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import Icon from '../Icon'
 import './index.less'
 
 const ClearableInput = React.createClass({
@@ -29,11 +30,11 @@ const ClearableInput = React.createClass({
 
   render() {
     const { size, inline, className, onChange, ...other } = this.props
-    const value = this.props.value || this.state.value
+    const value = this.state.value
     return (
       <div className={classnames('bfd-clearable-input', className, { inline })}>
-        <input {...other} className={'form-control' + (size ? ' input-' + size : '')} onChange={this.handleChange} />
-        {value ? <span className="clear glyphicon glyphicon-remove" onClick={this.handleClear}></span> : null}
+        <input {...other} value={value} className={'form-control' + (size ? ' input-' + size : '')} onChange={this.handleChange} />
+        {value ? <Icon type="remove" className="clear" onClick={this.handleClear} /> : null}
       </div>
     )
   }

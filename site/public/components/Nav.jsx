@@ -67,7 +67,7 @@ ReactDOM.render((
             <p>菜单 URL</p>
           </Prop>
           <Prop name="icon" type="string">
-            <p>菜单图标，一级菜单配置，图标请参考 Bootstrap 图标</p>
+            <p>菜单图标，一级菜单配置，传入 Icon type</p>
           </Prop>
           <Prop name="title" type="string" required>
             <p>菜单名称</p>

@@ -56,7 +56,7 @@ export default React.createClass({
         <Pre>
 {`import { Tabs, TabList, Tab, TabPanel } from 'bfd-ui/lib/Tabs'
 
-const App = React.createClass({
+export default React.createClass({
   render() {
     return (
       <Tabs>
@@ -79,7 +79,7 @@ const App = React.createClass({
         <Pre>
 {`import { Tabs, TabList, Tab, TabPanel } from 'bfd-ui/lib/Tabs'
 
-const App = React.createClass({
+export default React.createClass({
 
   getInitialState() {
     return {

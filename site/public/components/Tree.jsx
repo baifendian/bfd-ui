@@ -39,7 +39,8 @@ const TreeDemo = React.createClass({
 
 const TreeDemoCode = `import Tree from 'bfd-ui/lib/Tree/Tree'
 
-const App = React.createClass({
+export default React.createClass({
+
   getInitialState() {
     return {
       data: [{
@@ -99,7 +100,8 @@ const SelectTreeDemo = React.createClass({
 
 const SelectTreeDemoCode = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
 
-const App = React.createClass({
+export default React.createClass({
+  
   getInitialState() {
     return {
       data: [{
