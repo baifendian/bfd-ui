@@ -5,7 +5,7 @@ import { Props, Prop } from '../Props'
 
 const SwitchDemo = React.createClass({
   render() {
-    return <Switch />
+    return <Switch labelOn="打开" labelOff="关闭" />
   }
 })
 
@@ -13,7 +13,7 @@ const code = `import Switch from 'bfd-ui/lib/Switch'
 
 export default React.createClass({
   render() {
-    return <Switch />
+    return <Switch labelOn="打开" labelOff="关闭" />
   }
 })`
 
@@ -29,7 +29,13 @@ export default () => {
           <p>是否打开，默认关闭</p>
         </Prop>
         <Prop name="onChange" type="function">
-          <p>切换开关后的回调，参数为是否开关</p>
+          <p>切换开关后的回调，参数为是否打开</p>
+        </Prop>
+        <Prop name="labelOn" type="string | React element">
+          <p>打开时显示的内容</p>
+        </Prop>
+        <Prop name="labelOff" type="string | React element">
+          <p>关闭时显示的内容</p>
         </Prop>
       </Props>
     </div>

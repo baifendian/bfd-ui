@@ -5,6 +5,15 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.2.1" date="2016-06-13">
+        <ol>
+          <li>Switch 新增 labelOn、labelOff 属性，作为辅助提示信息</li>
+          <li>Select2 新增 placeholder 属性</li>
+          <li>Dropdown 新增 onToggle 属性</li>
+          <li>MultipleSelect 支持搜索并新增 tagable 属性，支持自定义输入</li>
+          <li>优化了 AutoComplete 交互体验</li>
+        </ol>
+      </Version>
       <Version version="0.2.0" date="2016-06-06">
         <p>新增组件: </p>
         <ul>

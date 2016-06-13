@@ -45,6 +45,9 @@ export default React.createClass({
           <Prop name="disabled" type="boolean">
             <p>是否禁用</p>
           </Prop>
+          <Prop name="onToggle" type="function">
+            <p>toggle 回调，参数为是否打开</p>
+          </Prop>
         </Props>
         <h2>Dropdown 实例接口</h2>
         <p>instance.close()，关闭</p>

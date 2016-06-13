@@ -7,6 +7,7 @@
     padding: 0px 0px 4px 6px;
     border: 1px solid #ececec;
     border-radius: 2px;
+    cursor: text;
     .default-title {
       line-height: 20px;
       margin-top: 4px;
@@ -18,35 +19,40 @@
       list-style: none;
       li {
         display: inline-block;
-        border-radius: 2px;
-        background-color: #f3f3f3;
         line-height: 20px;
         height: 20px;
-        padding: 0 5px;
-        padding-right: 16px;
         margin-top: 4px;
         margin-right: 6px;
-        cursor: default;
-        position: relative;
-        .label-name {
-          display: inline-block;
-          white-space: nowrap;
-          max-width: 100px;
-          overflow: hidden;
-          vertical-align: top;
-          text-overflow: ellipsis;
-        }
-        .remove {
-          position: absolute;
-          line-height: 1;
-          right: 2px;
-          top: 2px;
-          padding: 0 2px;
-          cursor: pointer;
-          font-size: 14px;
-          &:hover {
-            color: #000;
+        &.tag {
+          border-radius: 2px;
+          background-color: #f3f3f3;
+          padding: 0 5px;
+          padding-right: 16px;
+          cursor: default;
+          position: relative;
+          .label-name {
+            display: inline-block;
+            max-width: 100px;
+            vertical-align: top;
           }
+          .remove {
+            position: absolute;
+            line-height: 1;
+            right: 2px;
+            top: 2px;
+            padding: 0 2px;
+            cursor: pointer;
+            font-size: 14px;
+            &:hover {
+              color: #000;
+            }
+          }
+        }
+        input {
+          height: 20px;
+          border: none;
+          outline: none;
+          vertical-align: top;
         }
       }
     }
@@ -60,10 +66,9 @@
     box-shadow: none;
     border: 1px solid #ececec;
     border-top: 0;
-    > ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .empty {
+      padding: 0 7px;
+      line-height: 30px;
     }
   }
   &.disabled {
@@ -82,10 +87,15 @@
       border-bottom-color: #ececec;
     }
     .dropdown-menu {
-      padding: 0 7px;
       border-color: #42a5f5;
       border-top-right-radius: 0;
       border-top-left-radius: 0;
+      .bfd-checkbox {
+        padding: 0 7px;
+        &.active {
+          background-color: #e3f2fd;  
+        }
+      }
     }
   }
 }

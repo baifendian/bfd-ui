@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import xhr from '../xhr'
 import classnames from 'classnames'
 import './main.less'
@@ -19,16 +20,13 @@ export default React.createClass({
     }
     return true
   },
-
-  componentWillMount() {
-    this.props.url && this.fetch()
-  },
   
   componentDidMount() {
     const container = this.refs.container
     if (!parseInt(getComputedStyle(container).height, 10)) {
       container.style.height = '100%'
     }
+    this.props.url && this.fetch()
   },
 
   fetch() {

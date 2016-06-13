@@ -2,15 +2,18 @@ import React, { PropTypes } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select2/Option'
 import { CheckboxGroup, Checkbox } from '../Checkbox'
-import classnames from 'classnames'
+import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
+import classnames from 'classnames'
 import './index.less'
 
 const MultipleSelect = React.createClass({
 
   getInitialState() {
     return {
-      values: this.props.values || this.props.defaultValues || []
+      values: this.props.values || this.props.defaultValues || [],
+      searchValue: '',
+      index: -1
     }
   },
 
@@ -18,97 +21,223 @@ const MultipleSelect = React.createClass({
     nextProps.values && this.setState({values: nextProps.values})  
   },
 
-  handleRemove(value, e) {
-    e.stopPropagation()
+  componentDidUpdate() {
+    this.refs.input.focus()
+  },
+
+  addValue(value) {
+    this.valueSet.add(value)
+    this.handleChange([...this.valueSet])
+  },
+
+  removeValue(value) {
     this.valueSet.delete(value)
-    const values = [...this.valueSet]
-    this.setState({ values })
-    this.props.onChange && this.props.onChange(values)
+    this.handleChange([...this.valueSet])
   },
 
   handleChange(values) {
-    this.setState({ values })
+    this.setState({ 
+      values,
+      searchValue: ''
+    })
     this.props.onChange && this.props.onChange(values)
+  },
+
+  handleRemove(value, e) {
+    e.stopPropagation()
+    this.removeValue(value)
+  },
+
+  handleCheckboxGroupChange(values) {
+    this.handleChange(values)
   },
 
   handleToggleAll(e) {
     e.stopPropagation()
-    let values = []
-    if (e.target.checked) {
-      values = React.Children.map(this.props.children, child => {
-        return child.props.value
-      })
-    }
-    this.setState({ values })
-    this.props.onChange && this.props.onChange(values)
+    this.toggleAll(e.target.checked)
   },
 
-  getCheckboxWithProps(child, i) {
-    if (!child) return
-    const { value, children } = child.props
-    if (this.valueSet.has(value)) {
-      this.labels.push({
-        value,
-        label: children
-      })
-    }
-    return <Checkbox key={i} value={value} block>{children}</Checkbox>
+  toggleAll(checked) {
+    this.Options.forEach(Option => {
+      this.valueSet[checked ? 'add' : 'delete'](Option.props.value)
+    })
+    this.handleChange([...this.valueSet])
   },
 
   handleLoad(list) {
     this.setState({ list })
   },
 
-  render() {
-    const { className, children, url, render, ...other } = this.props
-    let disabled = this.props.disabled
-    
-    this.valueSet = new Set(this.state.values)
-    this.labels = []
+  handleToggle(isOpen) {
+    if (isOpen) {
+      this.refs.input.focus()
+    } else {
+      this.refs.input.blur()
+    }
+  },
 
-    let childrenWithProps
-    if (url) {
-      childrenWithProps = (this.state.list || []).map((item, i) => {
-        return this.getCheckboxWithProps(render.call(this, item, i), i)
+  handleInput(e) {
+    e.stopPropagation()
+    const value = e.target.value
+    this.setState({
+      searchValue: value,
+      index: 0
+    })
+  },
+
+  handleKeyDown(e) {
+    const key = e.key
+    let index = this.state.index
+    const options = this.Options
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+      if (key === 'ArrowDown') {
+        index++
+        if (index === options.length + 1) index = 0
+      }
+      if (key === 'ArrowUp') {
+        e.preventDefault()
+        if (index === -1 || index === 0) index = options.length - 1
+        else index--
+      }
+      this.setState({
+        index
+      })
+    }
+    if (key === 'Enter' && index > -1) {
+      if (index < options.length) {
+        const value = options[index].props.value
+        if (this.valueSet.has(value)) {
+          this.removeValue(value)
+        } else {
+          this.addValue(value)
+        }
+      } else {
+        this.toggleAll(!this.isAll)
+      }
+    }
+    if (key === 'Backspace' && !this.state.searchValue) {
+      const value = this.state.values.pop()
+      value && this.removeValue(value)
+    }
+  },
+
+  optionsMap(callback) {
+    if (this.props.url) {
+      return (this.state.list || []).map((item, i) => {
+        return callback.call(this, this.props.render.call(this, item, i), i)
       })
     } else {
-      childrenWithProps = React.Children.map(children, this.getCheckboxWithProps) || []
+      return React.Children.map(this.props.children, callback)
     }
+  },
 
-    const isAll = this.labels.length === childrenWithProps.length
-    
-    let head
-    if (this.labels.length) {
-      if (isAll) {
-        head = <div className="default-title">全部</div>
-      } else {
-        head = (
-          <ul>
-          {this.labels.map((item, i) => {
-            return (
-              <li key={i}>
-                <span className="label-name">{item.label}</span>
-                <span className="remove" onClick={e => {this.handleRemove(item.value, e)}}>&times;</span>
-              </li>
-            )
-          })}
-          </ul>
-        )
+  render() {
+    const { className, children, url, tagable, render, ...other } = this.props
+    const placeholder = '请选择'
+
+    const OptionsMap = {}
+
+    let Options = this.optionsMap((child, i) => {
+      if (!child) return
+      const { value, children } = child.props
+      OptionsMap[value || children] = children
+      return <Checkbox key={i} value={value || children} block>{children}</Checkbox>
+    })
+
+    const labels = this.state.values.map(key => {
+      return {
+        key: key,
+        value: OptionsMap[key] || key
       }
-    } else {
-      head = <div className="default-title">请选择</div>
+    })
+    
+    // 搜索、自定义输入(tagable)
+    const searchValue = this.state.searchValue
+    if (searchValue) {
+      Options = Options.filter((child, i) => {
+        return child && child.props.children.indexOf(searchValue) > -1
+      })
+      // 防止重复
+      if (tagable && (!Options[0] || Options[0].props.children !== searchValue)) {
+        Options.unshift(<Checkbox key={-1} value={searchValue} block>{searchValue}</Checkbox>)
+      }
     }
 
-    if (!childrenWithProps.length) disabled = true
-    
+    // 键盘上下切换样式
+    Options = Options.map((child, i) => {
+      return React.cloneElement(child, {
+        key: i,
+        className: classnames(child.className, {active: this.state.index === i})
+      })
+    })
+
+    const valueSet = new Set(this.state.values)
+
+    const isAll = Options.filter(Option => {
+      return valueSet.has(Option.props.value)
+    }).length === Options.length
+
+    const isEmpty = !Options.length
+
+    let disabled = this.props.disabled
+    if (isEmpty && !this.state.searchValue) disabled = true
+
+    let inputSize
+    if (labels.length) {
+      inputSize = this.state.searchValue.length || 1
+    } else {
+      inputSize = placeholder.length
+    }
+
+    this.Options = Options
+    this.valueSet = valueSet
+    this.isAll = isAll
+
     return (
-      <Dropdown className={classnames('bfd-multiple-select', { disabled }, className)} disabled={disabled} {...other}>
+      <Dropdown 
+        onToggle={this.handleToggle} 
+        className={classnames('bfd-multiple-select', { disabled }, className)} 
+        disabled={disabled} 
+        {...other}>
         <DropdownToggle>
-          <Fetch url={url} onSuccess={this.handleLoad}>{head}</Fetch>
+          <Fetch url={url} onSuccess={this.handleLoad}>
+            <ul>
+              {labels.map((item, i) => {
+                return (
+                  <li key={i} className="tag">
+                    <TextOverflow>
+                      <span className="label-name">{item.value}</span>
+                    </TextOverflow>
+                    <span className="remove" onClick={e => {this.handleRemove(item.key, e)}}>&times;</span>
+                  </li>
+                )
+              })}
+              <li>
+                <input 
+                  ref="input"
+                  type="text"
+                  style={{width: inputSize * 1.2 + 'em'}}
+                  value={this.state.searchValue} 
+                  onChange={this.handleInput} 
+                  onKeyDown={this.handleKeyDown} 
+                  placeholder={labels.length ? '' : placeholder} />
+              </li>
+            </ul>
+          </Fetch>
         </DropdownToggle>
         <DropdownMenu>
-          <Checkbox checked={isAll} onChange={this.handleToggleAll}>全选</Checkbox>
-          <CheckboxGroup selects={this.state.values} onChange={this.handleChange}>{childrenWithProps}</CheckboxGroup>
+          {
+            isEmpty ? 
+            <div className="empty">无匹配选项</div> : 
+            <div>
+              <CheckboxGroup selects={this.state.values} onChange={this.handleCheckboxGroupChange}>{Options}</CheckboxGroup>
+              <Checkbox 
+                className={classnames({active: this.state.index === Options.length})}
+                checked={isAll} 
+                block 
+                onChange={this.handleToggleAll}>全选</Checkbox>
+            </div>
+          }
         </DropdownMenu>
       </Dropdown>
     )
@@ -120,6 +249,7 @@ MultipleSelect.propTypes = {
   defaultValues: PropTypes.array,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
+  tagable: PropTypes.bool,
   url: PropTypes.string,
   render: PropTypes.func,
   customProp({ values, onChange, url, render }) {

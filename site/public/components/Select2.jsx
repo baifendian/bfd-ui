@@ -10,7 +10,7 @@ const render = (item, i) => {
 const SelectDemo = React.createClass({
   render() {
     return (
-      <Select searchable>
+      <Select>
         <Option>请选择</Option>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
@@ -51,6 +51,9 @@ export default () => {
         </Prop>
         <Prop name="onChange" type="function">
           <p>切换选择后的回调，参数为选中的值</p>
+        </Prop>
+        <Prop name="placeholder" type="string">
+          <p>无选项匹配时显示的内容</p>
         </Prop>
         <Prop name="url" type="string">
           <p>ajax 方式加载数据</p>

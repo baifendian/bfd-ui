@@ -43,6 +43,7 @@ const Dropdown = React.createClass({
         }
       })
     }
+    this.props.onToggle && this.props.onToggle(!this.state.isOpen)
   },
 
   handleBodyClick() {
@@ -73,7 +74,8 @@ const Dropdown = React.createClass({
 
 Dropdown.propTypes = {
   disabled: PropTypes.bool,
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  onToggle: PropTypes.func
 }
 
 Dropdown.childContextTypes = {

@@ -57,7 +57,7 @@ const Select = React.createClass({
   },
 
   render() {
-    const { className, children, disabled, searchable, url, render, defaultOption, ...other } = this.props
+    const { className, children, disabled, placeholder, searchable, url, render, defaultOption, ...other } = this.props
 
     let OptionsWithProps
     if (url) {
@@ -84,7 +84,7 @@ const Select = React.createClass({
         <DropdownToggle>
           <Fetch url={url} onSuccess={this.handleLoad}>
             <TextOverflow>
-              <div className="title">{this.title}</div>
+              <div className="title">{this.title || placeholder}</div>
             </TextOverflow>
             <span className="caret"></span>
           </Fetch>
@@ -102,6 +102,7 @@ Select.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
+  placeholder: PropTypes.string,
   searchable: PropTypes.bool,
   disabled: PropTypes.bool,
   url: PropTypes.string,

@@ -66,11 +66,7 @@ const Tooltip = React.createClass({
   },
 
   render() {
-    return (
-      <ReactCSSTransitionGroup transitionName="show" transitionEnterTimeout={200} transitionLeaveTimeout={200}>
-        {this.state.show ? <div ref="tooltip" className="bfd-tooltip">{this.state.content}</div> : null}
-      </ReactCSSTransitionGroup>
-    )
+    return this.state.show ? <div ref="tooltip" className="bfd-tooltip">{this.state.content}</div> : null
   }
 })
 

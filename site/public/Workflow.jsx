@@ -137,6 +137,7 @@ $ npm run build -- jsp`}</Pre>
 `<welcome-file-list>
   <welcome-file>index.jsp</welcome-file>
 </welcome-file-list>`}</Pre>
+        <h5>3.3.3、设置 tomcat 启用 gzip 压缩</h5>
       </div>
     )
   }
