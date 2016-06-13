@@ -134,6 +134,7 @@ const MultipleSelect = React.createClass({
   render() {
     const { className, children, url, tagable, render, ...other } = this.props
     const placeholder = '请选择'
+    const searchValue = this.state.searchValue
 
     const OptionsMap = {}
 
@@ -152,7 +153,7 @@ const MultipleSelect = React.createClass({
     })
     
     // 搜索、自定义输入(tagable)
-    const searchValue = this.state.searchValue
+    
     if (searchValue) {
       Options = Options.filter((child, i) => {
         return child && child.props.children.indexOf(searchValue) > -1
@@ -180,11 +181,11 @@ const MultipleSelect = React.createClass({
     const isEmpty = !Options.length
 
     let disabled = this.props.disabled
-    if (isEmpty && !this.state.searchValue) disabled = true
+    if (isEmpty && !searchValue) disabled = true
 
     let inputSize
     if (labels.length) {
-      inputSize = this.state.searchValue.length || 1
+      inputSize = searchValue.length || 1
     } else {
       inputSize = placeholder.length
     }
@@ -217,7 +218,7 @@ const MultipleSelect = React.createClass({
                   ref="input"
                   type="text"
                   style={{width: inputSize * 1.2 + 'em'}}
-                  value={this.state.searchValue} 
+                  value={searchValue} 
                   onChange={this.handleInput} 
                   onKeyDown={this.handleKeyDown} 
                   placeholder={labels.length ? '' : placeholder} />

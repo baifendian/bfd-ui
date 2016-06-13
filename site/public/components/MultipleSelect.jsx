@@ -17,7 +17,7 @@ export default React.createClass({
 
   render() {
     return (
-      <MultipleSelect defaultValues={['0', '1']} onChange={this.handleChange}>
+      <MultipleSelect defaultValues={['1', '2']} onChange={this.handleChange}>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>
@@ -34,7 +34,7 @@ const Basic = React.createClass({
 
   render() {
     return (
-      <MultipleSelect defaultValues={['0', '1']} onChange={this.handleChange}>
+      <MultipleSelect defaultValues={['1', '2']} onChange={this.handleChange}>
         <Option value="0">苹果</Option>
         <Option value="1">三星</Option>
         <Option value="2">小米</Option>
