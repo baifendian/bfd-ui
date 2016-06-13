@@ -5,7 +5,7 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
-      <Version version="0.2.1" date="2016-06-13">
+      <Version version="0.2.2" date="2016-06-13">
         <ol>
           <li>Switch 新增 labelOn、labelOff 属性，作为辅助提示信息</li>
           <li>Select2 新增 placeholder 属性</li>
