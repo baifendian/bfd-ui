@@ -13,8 +13,13 @@ export default React.createClass({
 
   handleClick (i, e ) {
 		this.setState({	currentIndex: i	})
-    this.props.onPageChange(i)
-		this.props.onChange("currentPage=" + i + "&pageSize=" + this.props.pageSize, i)
+    if(this.props.onPageChange){
+      this.props.onPageChange(i)
+    }
+    if(this.props.onChange){
+      this.props.onChange("currentPage=" + i + "&pageSize=" + this.props.pageSize, i)
+    }
+
 	},
 
   handleGoPage () {
@@ -22,9 +27,11 @@ export default React.createClass({
     let pageNum = Math.ceil( this.props.totalPageNum / this.props.pageSize )
     if( number <= pageNum && number > 0 ){
       this.setState({	currentIndex: parseInt(this.refs.inputNumber.value)	})
-      this.props.onPageChange( parseInt( this.refs.inputNumber.value ) )
+      if(this.props.onPageChange){
+        this.props.onPageChange( parseInt( this.refs.inputNumber.value ) )
+      }
     } else {
-      this.refs.inputNumber.value="";
+      this.refs.inputNumber.value = "";
     }
   },
 
@@ -37,18 +44,28 @@ export default React.createClass({
 
 	handleLaquoClick () {
 		if ( this.state.currentIndex > 1 ) {
-			this.props.onChange( "currentPage=" + (this.state.currentIndex - 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex - 1 )
+      if (this.props.onChange) {
+        this.props.onChange( "currentPage=" + (this.state.currentIndex - 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex - 1 )
+      }
 			this.setState({	currentIndex: this.state.currentIndex - 1} )
-      this.props.onPageChange( parseInt( this.state.currentIndex - 1 ) )
+      if (this.props.onPageChange) {
+        this.props.onPageChange( parseInt( this.state.currentIndex - 1 ) )
+      }
 		}
 	},
 	 
 	handleRaquoClick () {
     let pageNum = Math.ceil( this.props.totalPageNum / this.props.pageSize )
 		if(this.state.currentIndex < pageNum) {
-			this.props.onChange("currentPage=" + (this.state.currentIndex + 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex + 1)
+      if (this.props.onChange) {
+        this.props.onChange("currentPage=" + (this.state.currentIndex + 1) + "&pageSize=" + this.props.pageSize, this.state.currentIndex + 1)
+      }
+
 			this.setState({ currentIndex: this.state.currentIndex + 1 })
-      this.props.onPageChange(parseInt(this.state.currentIndex + 1))
+      if (this.props.onPageChange) {
+        this.props.onPageChange(parseInt(this.state.currentIndex + 1))
+      }
+
 		}
 	},
 	 

@@ -19,11 +19,13 @@ export default React.createClass({
   handleMouseDown(event) {
     event.stopPropagation()
     this.isDown = true
+    const BODY = document.body
+    BODY.addEventListener('mousemove', this.handleMouseMove)
+    BODY.addEventListener('mouseup', this.handleMouseUp)
   },
   handleMouseMove(event) {
     const slider = this.refs.slider
     const selectedBar = this.refs.selectedBar
-
 
     if(this.isDown) {
       let left = event.pageX - this.offsetLeft
@@ -48,11 +50,18 @@ export default React.createClass({
   },
   handleMouseUp() {
     const selectedBar = this.refs.selectedBar
+    if(typeof selectedBar == 'undefined') {
+      return;
+    }
     this.isDown = false
     const text = this.getValue(parseInt(selectedBar.style.width, 10))
     if(typeof this.props.onSlid == 'function') {
       this.props.onSlid(text)
     }
+
+    const BODY = document.body
+    BODY.removeEventListener('mousemove', this.handleMouseMove)
+    BODY.removeEventListener('mouseup', this.handleMouseUp)
   },
   getValue(currWidth) {
     const end = this.props.end
@@ -91,9 +100,10 @@ export default React.createClass({
     
     this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
 
-    const BODY = document.body
-    BODY.addEventListener('mousemove', this.handleMouseMove)
-    BODY.addEventListener('mouseup', this.handleMouseUp)
+    
+  },
+  componentWillUnmount() {
+    
   },
   render() {
     return (
