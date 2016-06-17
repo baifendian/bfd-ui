@@ -5,7 +5,7 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
-      <Version version="0.3.0" date="2016-06-17">
+      <Version version="0.3.1" date="2016-06-17">
         <p>新增组件: </p>
         <ul>
           <li>按钮: Button</li>
