@@ -21,10 +21,6 @@ const MultipleSelect = React.createClass({
     nextProps.values && this.setState({values: nextProps.values})  
   },
 
-  componentDidUpdate() {
-    this.refs.input.focus()
-  },
-
   addValue(value) {
     this.valueSet.add(value)
     this.handleChange([...this.valueSet])
@@ -40,6 +36,7 @@ const MultipleSelect = React.createClass({
       values,
       searchValue: ''
     })
+    this.refs.input.focus()
     this.props.onChange && this.props.onChange(values)
   },
 
@@ -96,7 +93,7 @@ const MultipleSelect = React.createClass({
       }
       if (key === 'ArrowUp') {
         e.preventDefault()
-        if (index === -1 || index === 0) index = options.length - 1
+        if (index === -1 || index === 0) index = options.length
         else index--
       }
       this.setState({
@@ -132,33 +129,37 @@ const MultipleSelect = React.createClass({
   },
 
   render() {
-    const { className, children, url, tagable, render, ...other } = this.props
+
+    const { className, children, url, disabled, tagable, render, ...other } = this.props
     const placeholder = '请选择'
     const searchValue = this.state.searchValue
 
-    const OptionsMap = {}
+    const OptionsMapper = {}
 
     let Options = this.optionsMap((child, i) => {
       if (!child) return
       const { value, children } = child.props
-      OptionsMap[value || children] = children
+      OptionsMapper[value || children] = children
       return <Checkbox key={i} value={value || children} block>{children}</Checkbox>
-    })
+    }) || []
 
-    const labels = this.state.values.map(key => {
-      return {
-        key: key,
-        value: OptionsMap[key] || key
+    // 选中的标签
+    const labels = []
+    this.state.values.forEach(key => {
+      if (OptionsMapper[key] || tagable) {
+        labels.push({
+          key,
+          value: OptionsMapper[key] || key
+        })
       }
     })
     
-    // 搜索、自定义输入(tagable)
-    
+    // 搜索
     if (searchValue) {
       Options = Options.filter((child, i) => {
         return child && child.props.children.indexOf(searchValue) > -1
       })
-      // 防止重复
+      // 自定义输入(tagable)，并防止重复
       if (tagable && (!Options[0] || Options[0].props.children !== searchValue)) {
         Options.unshift(<Checkbox key={-1} value={searchValue} block>{searchValue}</Checkbox>)
       }
@@ -180,9 +181,6 @@ const MultipleSelect = React.createClass({
 
     const isEmpty = !Options.length
 
-    let disabled = this.props.disabled
-    if (isEmpty && !searchValue) disabled = true
-
     let inputSize
     if (labels.length) {
       inputSize = searchValue.length || 1
@@ -194,6 +192,31 @@ const MultipleSelect = React.createClass({
     this.valueSet = valueSet
     this.isAll = isAll
 
+    const Header = (
+      <ul>
+        {labels.map((item, i) => {
+          return (
+            <li key={i} className="tag">
+              <TextOverflow>
+                <span className="label-name">{item.value}</span>
+              </TextOverflow>
+              <span className="remove" onClick={e => {this.handleRemove(item.key, e)}}>&times;</span>
+            </li>
+          )
+        })}
+        <li>
+          <input 
+            ref="input"
+            type="text"
+            style={{width: inputSize * 1.2 + 'em'}}
+            value={searchValue} 
+            onChange={this.handleInput} 
+            onKeyDown={this.handleKeyDown} 
+            placeholder={labels.length ? '' : placeholder} />
+        </li>
+      </ul>
+    )
+
     return (
       <Dropdown 
         onToggle={this.handleToggle} 
@@ -201,35 +224,17 @@ const MultipleSelect = React.createClass({
         disabled={disabled} 
         {...other}>
         <DropdownToggle>
-          <Fetch url={url} onSuccess={this.handleLoad}>
-            <ul>
-              {labels.map((item, i) => {
-                return (
-                  <li key={i} className="tag">
-                    <TextOverflow>
-                      <span className="label-name">{item.value}</span>
-                    </TextOverflow>
-                    <span className="remove" onClick={e => {this.handleRemove(item.key, e)}}>&times;</span>
-                  </li>
-                )
-              })}
-              <li>
-                <input 
-                  ref="input"
-                  type="text"
-                  style={{width: inputSize * 1.2 + 'em'}}
-                  value={searchValue} 
-                  onChange={this.handleInput} 
-                  onKeyDown={this.handleKeyDown} 
-                  placeholder={labels.length ? '' : placeholder} />
-              </li>
-            </ul>
-          </Fetch>
+          {
+            url ?
+            <Fetch url={url} onSuccess={this.handleLoad}>
+              {Header}
+            </Fetch> : 
+            Header
+          }
         </DropdownToggle>
         <DropdownMenu>
           {
-            isEmpty ? 
-            <div className="empty">无匹配选项</div> : 
+            Options.length ? 
             <div>
               <CheckboxGroup selects={this.state.values} onChange={this.handleCheckboxGroupChange}>{Options}</CheckboxGroup>
               <Checkbox 
@@ -237,7 +242,8 @@ const MultipleSelect = React.createClass({
                 checked={isAll} 
                 block 
                 onChange={this.handleToggleAll}>全选</Checkbox>
-            </div>
+            </div> : 
+            <div className="empty">无匹配选项</div>
           }
         </DropdownMenu>
       </Dropdown>

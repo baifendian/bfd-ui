@@ -7,59 +7,9 @@ import message from 'c/message'
 import { DatePicker } from 'c/DatePicker'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+import Panel from '../Panel'
 
-const FormDemo = React.createClass({
-
-  getInitialState() {
-    this.rules = {
-      name(v) {
-        if (!v) return '请填写用户群'
-      }
-    }
-    return {
-      data: {
-        brand: 0
-      }  
-    }
-  },
-
-  handleChange(data) {
-    this.setState({ data })
-  },
-
-  handleSave() {
-    console.log(this.state.data)
-    this.refs.form.save()
-  },
-
-  handleSuccess(data) {
-    console.log(data)
-    message.success('操作成功！')
-  },
-
-  render() {
-    return (
-      <Form ref="form" action="/api/form" data={this.state.data} rules={this.rules} onChange={this.handleChange} onSuccess={this.handleSuccess}>
-        <FormItem label="用户群" required name="name" help="5个字符以内">
-          <FormInput style={{width: '200px'}}></FormInput>
-        </FormItem>
-        <FormItem label="品牌偏好" name="brand">
-          <FormSelect style={{width: '200px'}}>
-            <Option>请选择</Option>
-            <Option value={0}>小米</Option>
-            <Option value={1}>苹果</Option>
-          </FormSelect>
-        </FormItem>
-        <FormItem label="描述" name="desc" help="500个字符以内">
-          <FormTextarea></FormTextarea>
-        </FormItem>
-        <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
-      </Form>
-    )
-  }
-})
-
-const FormDemoCode = `import { Form, FormItem } from 'bfd-ui/lib/Form2'
+const codeBasic = `import { Form, FormItem } from 'bfd-ui/lib/Form2'
 import FormInput from 'bfd-ui/lib/FormInput'
 import FormTextarea from 'bfd-ui/lib/FormTextarea'
 import { FormSelect, Option } from 'bfd-ui/lib/FormSelect'
@@ -71,32 +21,44 @@ export default React.createClass({
     this.rules = {
       name(v) {
         if (!v) return '请填写用户群'
+      },
+      date(v) {
+        if (!v) return '日期不能为空'
       }
     }
     return {
-      data: {
+      formData: {
         brand: 0
-      }  
+      }
     }
   },
 
-  handleChange(data) {
-    this.setState({ data })
+  handleDateSelect(date) {
+    const formData = this.state.formData
+    formData.date = date
+    this.setState({ formData })
   },
 
   handleSave() {
-    console.log(this.state.data)
+    console.log(this.state.formData)
     this.refs.form.save()
   },
 
-  handleSuccess(data) {
-    console.log(data)
-    message.success('操作成功！')
+  handleSuccess(res) {
+    console.log(res)
+    message.success('保存成功！')
   },
 
   render() {
+    const { formData } = this.state
     return (
-      <Form ref="form" action="/api/form" data={this.state.data} rules={this.rules} onChange={this.handleChange} onSuccess={this.handleSuccess}>
+      <Form 
+        ref="form" 
+        action="/api/form" 
+        data={formData} 
+        rules={this.rules} 
+        onSuccess={this.handleSuccess}
+      >
         <FormItem label="用户群" required name="name" help="5个字符以内">
           <FormInput style={{width: '200px'}}></FormInput>
         </FormItem>
@@ -107,6 +69,9 @@ export default React.createClass({
             <Option value={1}>苹果</Option>
           </FormSelect>
         </FormItem>
+        <FormItem label="选择日期" required name="date">
+          <DatePicker style={{marginRight: '10px'}} date={formData.date} onSelect={this.handleDateSelect} />
+        </FormItem>
         <FormItem label="描述" name="desc" help="500个字符以内">
           <FormTextarea></FormTextarea>
         </FormItem>
@@ -116,88 +81,81 @@ export default React.createClass({
   }
 })`
 
-const FormCustomDemo = React.createClass({
+const Basic = React.createClass({
 
   getInitialState() {
     this.rules = {
+      name(v) {
+        if (!v) return '请填写用户群'
+      },
       date(v) {
         if (!v) return '日期不能为空'
-        if (v > Date.now()) return '选择的日期不能大于今天'
       }
     }
-    return {}
+    return {
+      formData: {
+        brand: 0
+      }
+    }
   },
 
-  handleSelect(date) {
-    this.refs.dateItem.validate(date)
-    this.setState({ date })
+  handleDateSelect(date) {
+    const formData = this.state.formData
+    formData.date = date
+    this.setState({ formData })
   },
 
   handleSave() {
-    this.refs.form.validate(this.state)
+    console.log(this.state.formData)
+    this.refs.form.save()
+  },
+
+  handleSuccess(res) {
+    console.log(res)
+    message.success('操作成功！')
   },
 
   render() {
+    const { formData } = this.state
     return (
-      <Form ref="form" rules={this.rules}>
-        <FormItem ref="dateItem" label="选择日期" required name="date">
-          <DatePicker style={{marginRight: '10px'}} date={this.state.date} onSelect={this.handleSelect} />
+      <Form 
+        ref="form" 
+        action="/api/form" 
+        data={formData} 
+        rules={this.rules} 
+        onSuccess={this.handleSuccess}
+      >
+        <FormItem label="用户群" required name="name" help="5个字符以内">
+          <FormInput style={{width: '200px'}}></FormInput>
+        </FormItem>
+        <FormItem label="品牌偏好" name="brand">
+          <FormSelect style={{width: '200px'}}>
+            <Option>请选择</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
+          </FormSelect>
+        </FormItem>
+        <FormItem label="选择日期" required name="date">
+          <DatePicker style={{marginRight: '10px'}} date={formData.date} onSelect={this.handleDateSelect} />
+        </FormItem>
+        <FormItem label="描述" name="desc" help="500个字符以内">
+          <FormTextarea></FormTextarea>
         </FormItem>
         <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
       </Form>
     )
   }
 })
-
-const FormCustomDemoCode = `import { Form, FormItem } from 'bfd-ui/lib/Form2'
-import { DatePicker } from 'bfd-ui/lib/DatePicker'
-
-export default React.createClass({
-
-  getInitialState() {
-    this.rules = {
-      date(v) {
-        if (!v) return '日期不能为空'
-        if (v > Date.now()) return '选择的日期不能大于今天'
-      }
-    }
-    return {}
-  },
-
-  handleSelect(date) {
-    this.refs.dateItem.validate(date)
-    this.setState({ date })
-  },
-
-  handleSave() {
-    this.refs.form.validate(this.state)
-  },
-
-  render() {
-    return (
-      <Form ref="form" rules={this.rules}>
-        <FormItem ref="dateItem" label="选择日期" required name="date">
-          <DatePicker style={{marginRight: '10px'}} date={this.state.date} onSelect={this.handleSelect} />
-        </FormItem>
-        <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
-      </Form>
-    )
-  }
-})
-`
 
 export default () => {
   return (
     <div>
       <h1>表单 @hai.jiang</h1>
-      <h3>1、最简单的用法</h3>
-      <p>集成数据双向绑定、数据校验、服务器通信、提交状态处理、结果反馈等。</p>
-      <Pre>{FormDemoCode}</Pre>
-      <FormDemo></FormDemo>
-      <h3>2、自定义表单域</h3>
-      <p>提交的数据来源不仅仅是 input、select、textarea 等基础组件，设计形式千变万化，这个时候就需要手动绑定数据了</p>
-      <Pre>{FormCustomDemoCode}</Pre>
-      <FormCustomDemo></FormCustomDemo>
+
+      <Panel title="基础功能" code={codeBasic}>
+        <Basic />
+      </Panel>
+
       <h2>Form</h2>
       <Props>
         <Prop name="data" type="object">
@@ -220,7 +178,8 @@ export default () => {
           <p>提交成功后的回调，参数为服务器返回的 data 的值</p>
         </Prop>
       </Props>
-      <h3>this.refs.form</h3>
+
+      <h3>组件方法</h3>
       <ul>
         <li>
           <p>
@@ -254,7 +213,7 @@ export default () => {
           <p>是否为多条数据，默认单个。多个的话对应的数据应为数组</p>
         </Prop>
       </Props>
-      <h3>this.refs.formItem</h3>
+      <h3>组件方法</h3>
       <ul>
         <li>
           <p>

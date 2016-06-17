@@ -20,6 +20,10 @@ const FormItem = React.createClass({
     this.context.form.addItem(this)
   },
 
+  componentWillReceiveProps() {
+    this.validate(this.context.form.props.data[this.props.name])
+  },
+
   componentWillUnmount() {
     this.context.form.removeItem(this)
   },

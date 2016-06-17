@@ -6,26 +6,26 @@ import { render } from 'react-dom'
 import { Router, Route, IndexRoute, Link } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem } from 'c/Nav'
-import xhr from 'c/xhr'
-import message from 'c/message'
-import classnames from 'classnames'
+// import xhr from 'c/xhr'
+// import message from 'c/message'
+// import classnames from 'classnames'
 
-xhr.success = (res, option) => {
-  if (typeof res !== 'object') {
-    message.danger(option.url + ': response data should be JSON')
-    return
-  }
-  switch (res.code) {
-    case 200:
-      option.success && option.success(res.data)
-      break
-    case 401:
-      // redirect to '/login'
-      break
-    default:
-      message.danger(res.message || 'unknown error')
-  }
-}
+// xhr.success = (res, option) => {
+//   if (typeof res !== 'object') {
+//     message.danger(option.url + ': response data should be JSON')
+//     return
+//   }
+//   switch (res.code) {
+//     case 200:
+//       option.success && option.success(res.data)
+//       break
+//     case 401:
+//       // redirect to '/login'
+//       break
+//     default:
+//       message.danger(res.message || 'unknown error')
+//   }
+// }
 
 pace.start()
 

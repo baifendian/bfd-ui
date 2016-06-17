@@ -4,18 +4,20 @@
     background-color: #fff;
     position: relative;
     min-height: 30px;
-    padding: 0px 0px 4px 6px;
     border: 1px solid #ececec;
     border-radius: 2px;
     cursor: text;
-    .default-title {
-      line-height: 20px;
-      margin-top: 4px;
-      margin-left: 4px;
+    > .bfd-fetch,
+    > ul {
+      padding: 0px 0px 4px 6px;
+    }
+    > .bfd-fetch {
+      > ul {
+        padding: 0;
+      }
     }
     ul {
       margin: 0;
-      padding: 0;
       list-style: none;
       li {
         display: inline-block;

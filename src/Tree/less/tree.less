@@ -1,6 +1,7 @@
 .bfd-tree {
   > ul {
     > li:first-child {
+      margin-top: 0;
       &:after {
         top: 8px;
       }
@@ -20,6 +21,8 @@
         color: #42a5f5;
         cursor: pointer;
         background-color: #fff;
+        position: relative;
+        z-index: 1;
       }
       > .toggle-icon {
         margin: 0 10px;
@@ -37,14 +40,12 @@
           height: 0px;
           border-top: 1px dotted #999;
           left: -36px;
-          z-index: -1;
         }
       }
       > ul {
         display: none;
       }
       &:after {
-        z-index: -1;
         position: absolute;
         top: -12px;
         left: 6px;

@@ -4,46 +4,9 @@ import SelectTree from 'c/Tree/SelectTree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import Warn from '../Warn'
+import Panel from '../Panel'
 
-const TreeDemo = React.createClass({
-  getInitialState() {
-    return {
-      data: [{
-        name: '数据工厂',
-        open: true,
-        children: [{
-          name: 'adsdsd'
-        }, {
-          name: 'ioio'
-        }, {
-          name: 'tutrut',
-          children: [{
-            name: 'dasd'
-          }]
-        }]
-      }, {
-        name: '配置中心',
-        children: [{
-          name: 'dsads'
-        }]
-      }, {
-        name: '配置中心2'
-      }]
-    }
-  },
-
-  render() {
-    return <Tree defaultData={this.state.data} />
-  }
-})
-
-const TreeDemoCode = `import Tree from 'bfd-ui/lib/Tree/Tree'
-
-export default React.createClass({
-
-  getInitialState() {
-    return {
-      data: [{
+const codeData = `[{
         name: '数据工厂',
         open: true,
         children: [{
@@ -63,42 +26,127 @@ export default React.createClass({
         children: [{
           name: 'dsads'
         }]
-      }]
-    }
-  },
+      }]`
 
-  render() {
-    return <Tree defaultData={this.state.data} />
-  }
-})
-`
+const data = [{
+  name: '数据工厂',
+  open: true,
+  children: [{
+    name: 'adsdsd'
+  }, {
+    name: 'ioio'
+  }, {
+    name: 'tutrut',
+    children: [{
+      name: 'dasd'
+    }]
+  }]
+}, {
+  name: '配置中心',
+}, {
+  name: '配置中心2',
+  children: [{
+    name: 'dsads'
+  }]
+}]
 
-const SelectTreeDemo = React.createClass({
+
+// =======================================================================
+
+const codeBasic = `import Tree from 'bfd-ui/lib/Tree/Tree'
+
+export default React.createClass({
+
   getInitialState() {
     return {
-      data: [{
-        name: '数据工厂',
-        open: true,
-        children: [{
-          name: 'adsdsd'
-        }]
-      }, {
-        name: '配置中心',
-        children: [{
-          name: 'dsads'
-        }]
-      }, {
-        name: '配置中心2'
-      }]
+      data: ${codeData}
     }
   },
 
   render() {
-    return <SelectTree defaultData={this.state.data} />
+    return <Tree data={this.state.data} />
+  }
+})`
+
+const Basic = React.createClass({
+
+  getInitialState() {
+    return {
+      data: data
+    }
+  },
+
+  render() {
+    return <Tree data={this.state.data} />
   }
 })
 
-const SelectTreeDemoCode = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
+
+// =======================================================================
+
+const codeCustomRender = `import Tree from 'bfd-ui/lib/Tree/Tree'
+
+export default React.createClass({
+
+  getInitialState() {
+    return {
+      data: ${codeData}
+    }
+  },
+
+  render() {
+    return <Tree data={this.state.data} render={data => <a href="">{data.name}</a>} />
+  }
+})`
+
+const CustomRender = React.createClass({
+
+  getInitialState() {
+    return {
+      data: data
+    }
+  },
+
+  render() {
+    return <Tree data={this.state.data} render={data => <a href="">{data.name}</a>} />
+  }
+})
+
+
+// =======================================================================
+
+const codeCustomIcon = `import Tree from 'bfd-ui/lib/Tree/Tree'
+
+export default React.createClass({
+
+  getInitialState() {
+    return {
+      data: ${codeData}
+    }
+  },
+
+  render() {
+    return <Tree data={this.state.data} getIcon={data => 'tag'} />
+  }
+})`
+
+const CustomIcon = React.createClass({
+
+  getInitialState() {
+    return {
+      data: data
+    }
+  },
+
+  render() {
+    return <Tree data={this.state.data} getIcon={data => 'tag'} />
+  }
+})
+
+
+// =======================================================================
+
+const codeSelectable = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
 
 export default React.createClass({
   
@@ -123,18 +171,60 @@ export default React.createClass({
   },
 
   render() {
-    return <SelectTree defaultData={this.state.data} />
+    return <SelectTree data={this.state.data} />
   }
 })`
+
+const Selectable = React.createClass({
+  
+  getInitialState() {
+    return {
+      data: [{
+        name: '数据工厂',
+        open: true,
+        children: [{
+          name: 'adsdsd'
+        }]
+      }, {
+        name: '配置中心',
+        children: [{
+          name: 'dsads'
+        }]
+      }, {
+        name: '配置中心2'
+      }]
+    }
+  },
+
+  render() {
+    return <SelectTree data={this.state.data} />
+  }
+})
 
 export default () => {
   return (
     <div>
       <h1>树 @hai.jiang</h1>
-      <Pre>{TreeDemoCode}</Pre>
-      <TreeDemo />
+
+      <Panel title="基础展示" code={codeBasic}>
+        <Basic />
+      </Panel>
+
+      <Panel title="自定义节点" code={codeCustomRender}>
+        <CustomRender />
+      </Panel>
+
+      <Panel title="自定义图标" code={codeCustomIcon}>
+        <CustomIcon />
+      </Panel>
+
+      <Panel title="节点可选择" code={codeSelectable}>
+        <Selectable />
+      </Panel>
+
+      <h2>Tree</h2>
       <Props>
-        <Prop name="data" type="array">
+        <Prop name="data" type="array" required>
           <p>数据源，格式如下</p>
           <Pre>
 {`[{
@@ -144,20 +234,24 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <Prop name="defaultData" type="array">
-          <p>同 data </p>
-        </Prop>
-        <Warn>data 或者 defaultData 至少提供一个</Warn>
         <Prop name="onChange" type="function">
-          <p>状态改变后的回调，同步树的状态，params: data（整个树状态）, target（目标节点状态）</p>
+          <p>状态改变后的回调</p>
+        </Prop>
+        <Prop name="render" type="function">
+          <p>节点渲染逻辑，参数为当前节点数据，默认渲染 data.name</p>
+        </Prop>
+        <Prop name="getIcon" type="function">
+          <p>设置图标，参数为当前节点数据，可动态判断</p>
+          <Pre>
+{`<Tree getIcon={data => data.open ? 'folder-open' : 'folder'} />`}
+          </Pre>
         </Prop>
       </Props>
-      <h1>带选择的树</h1>
-      <Pre>{SelectTreeDemoCode}</Pre>
-      <SelectTreeDemo />
+
+      <h2>SelectTree</h2>
       <Props>
         <Prop name="data" type="array">
-          <p>数据源，格式如下</p>
+          <p>数据源，多一个 checked 字段，格式如下</p>
           <Pre>
 {`[{
   name: '配置中心', // 显示的字符,
@@ -167,13 +261,7 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <Prop name="defaultData" type="array">
-          <p>同 data </p>
-        </Prop>
-        <Warn>data 或者 defaultData 至少提供一个</Warn>
-        <Prop name="onChange" type="function">
-          <p>切换选择后回调，更新树的状态，params: data（整个树状态）, target（目标节点状态）</p>
-        </Prop>
+        <p>其他属性同 Tree</p>
       </Props>
     </div>
   )

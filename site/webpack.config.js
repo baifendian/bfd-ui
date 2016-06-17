@@ -1,6 +1,7 @@
 var webpack = require('webpack')
 var path = require('path')
 var fs = require('fs')
+var LiveReloadPlugin = require('webpack-livereload-plugin')
 var autoprefixer = require('autoprefixer')
 var isProduction = process.argv.slice(2)[0] === '-p'
 
@@ -71,7 +72,9 @@ if (isProduction) {
     })
   })
 } else {
-  config.devtool = '#source-map'
+  config.plugins.push(new LiveReloadPlugin({
+    appendScriptTag: true
+  }))
 }
 
 module.exports = config

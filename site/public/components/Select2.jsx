@@ -55,6 +55,12 @@ export default () => {
         <Prop name="placeholder" type="string">
           <p>无选项匹配时显示的内容</p>
         </Prop>
+        <Prop name="disabled" type="boolean">
+          <p>是否禁用</p>
+        </Prop>
+        <Prop name="size" type="string">
+          <p>其他尺寸，可选值：lg</p>
+        </Prop>
         <Prop name="url" type="string">
           <p>ajax 方式加载数据</p>
         </Prop>

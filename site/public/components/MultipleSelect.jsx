@@ -2,6 +2,7 @@ import React from 'react'
 import { MultipleSelect, Option } from 'c/MultipleSelect'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+import Panel from '../Panel'
 
 // const render = (item, i) => {
 //   return <Option value={item.id}>{item.name}</Option>
@@ -43,20 +44,27 @@ const Basic = React.createClass({
   }
 })
 
+const codeURLable = `import { MultipleSelect, Option } from 'bfd-ui/lib/MultipleSelect'
 
-const Tagable = React.createClass({
-
-  handleChange(values) {
-    console.log(values)
-  },
-
+export default React.createClass({
   render() {
     return (
-      <MultipleSelect defaultValues={['便宜']} tagable onChange={this.handleChange}>
-        <Option>质量好</Option>
-        <Option>便宜</Option>
-        <Option>外观漂亮</Option>
-      </MultipleSelect>
+      <MultipleSelect 
+        defaultValues={[1, 2]} 
+        url="/data/MultipleSelect.json" 
+        render={item => <Option value={item.id}>{item.name}</Option>} 
+      />
+    )
+  }
+})`
+
+const URLable = React.createClass({
+  render() {
+    return (
+      <MultipleSelect 
+        defaultValues={[1, 2]} 
+        url="/data/MultipleSelect.json" 
+        render={item => <Option value={item.id}>{item.name}</Option>} />
     )
   }
 })
@@ -71,7 +79,7 @@ export default React.createClass({
 
   render() {
     return (
-      <MultipleSelect defaultValues={['便宜']} tagable onChange={this.handleChange}>
+      <MultipleSelect defaultValues={['质量好']} tagable onChange={this.handleChange}>
         <Option>质量好</Option>
         <Option>便宜</Option>
         <Option>外观漂亮</Option>
@@ -80,16 +88,42 @@ export default React.createClass({
   }
 })`
 
+const Tagable = React.createClass({
+
+  handleChange(values) {
+    console.log(values)
+  },
+
+  render() {
+    return (
+      <MultipleSelect defaultValues={['质量好']} tagable onChange={this.handleChange}>
+        <Option>质量好</Option>
+        <Option>便宜</Option>
+        <Option>外观漂亮</Option>
+      </MultipleSelect>
+    )
+  }
+})
+
 export default () => {
   return (
     <div>
       <h1>多选列表 @hai.jiang</h1>
-      <h2>基础功能</h2>
-      <Pre>{codeBasic}</Pre>
-      <Basic />
-      <h2>标签输入功能</h2>
-      <Pre>{codeTagable}</Pre>
-      <Tagable />
+
+      <Panel title="基础功能" code={codeBasic}>
+        <Basic />
+      </Panel>
+
+      <Panel title="自加载数据" code={codeURLable}>
+        <p>很多时候，多选列表的数据源就是一个单独的接口</p>
+        <URLable />
+      </Panel>
+
+      <Panel title="标签输入功能" code={codeTagable}>
+        <p>当待选项没有时，可以自定义输入想要的选项</p>
+        <Tagable />
+      </Panel>
+      
       <h2>MultipleSelect</h2>
       <Props>
         <Prop name="values" type="array">
