@@ -10,18 +10,18 @@ describe('Tree', () => {
     const data = []
 
     it('className is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} className="test" />)
+      const instance = TestUtils.renderIntoDocument(<Tree data={data} className="test" />)
       expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
     })
 
     it('style is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} style={{color: 'red'}} />)
+      const instance = TestUtils.renderIntoDocument(<Tree data={data} style={{color: 'red'}} />)
       expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
     })
 
     it('onClick is ok', () => {
       const handleClick = jest.fn()
-      const instance = TestUtils.renderIntoDocument(<Tree defaultData={data} onClick={handleClick} />)
+      const instance = TestUtils.renderIntoDocument(<Tree data={data} onClick={handleClick} />)
       TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
       expect(handleClick).toBeCalled()
     })
@@ -38,7 +38,7 @@ describe('Tree', () => {
     }, {
       name: 'test2'
     }]
-    const tree = TestUtils.renderIntoDocument(<Tree defaultData={data} />)
+    const tree = TestUtils.renderIntoDocument(<Tree data={data} />)
 
     it('open is ok', () => {
       expect(TestUtils.scryRenderedDOMComponentsWithTag(tree, 'li')[0].className.split(' ')).toContain('open')

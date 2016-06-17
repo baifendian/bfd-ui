@@ -47,7 +47,8 @@ const Tree = React.createClass({
 })
 
 Tree.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.array,
+  defaultData: PropTypes.array,
   onChange: PropTypes.func,
   render: PropTypes.func,
   getIcon: PropTypes.func

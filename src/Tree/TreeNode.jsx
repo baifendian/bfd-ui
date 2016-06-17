@@ -48,7 +48,8 @@ const TreeNode = React.createClass({
         {data.children.map((item, i) => {
           return (
             <TreeNode 
-              key={i} 
+              key={i}
+              parent={this} 
               parentData={data.children} 
               index={i} 
               data={item} 
