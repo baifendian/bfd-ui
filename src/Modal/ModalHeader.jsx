@@ -4,7 +4,7 @@ import 'bfd-bootstrap'
 function ModalHeader({ children }, { modal }) {
   return (
     <div className="modal-header">
-      <button type="button" className="close" onClick={modal.close}>
+      <button type="button" className="close" onClick={modal.handleClose}>
         <span>&times;</span>
       </button>
       {children}

@@ -57,7 +57,7 @@ const Select = React.createClass({
   },
 
   render() {
-    const { className, children, disabled, placeholder, searchable, url, render, defaultOption, ...other } = this.props
+    const { className, children, disabled, size, placeholder, searchable, url, render, defaultOption, ...other } = this.props
 
     let OptionsWithProps
     if (url) {
@@ -80,7 +80,7 @@ const Select = React.createClass({
     }
 
     return (
-      <Dropdown ref="dropdown" className={classnames('bfd-select2', { disabled }, className)} disabled={disabled} {...other}>
+      <Dropdown ref="dropdown" className={classnames('bfd-select2', { disabled }, className, size)} disabled={disabled} {...other}>
         <DropdownToggle>
           <Fetch url={url} onSuccess={this.handleLoad}>
             <TextOverflow>
@@ -105,6 +105,7 @@ Select.propTypes = {
   placeholder: PropTypes.string,
   searchable: PropTypes.bool,
   disabled: PropTypes.bool,
+  size: PropTypes.string,
   url: PropTypes.string,
   render: PropTypes.func,
   defaultOption: PropTypes.element,

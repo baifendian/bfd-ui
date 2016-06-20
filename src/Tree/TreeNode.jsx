@@ -34,7 +34,8 @@ const TreeNode = React.createClass({
   },
 
   render() {
-    const { data, beforeNodeRender, onChange } = this.props
+    const { data, beforeNodeRender, render, getIcon, onChange } = this.props
+    const { ...treeNode } = { beforeNodeRender, render, getIcon }
     const isOpen = this.state.open
 
     const hasChildren = data.children && data.children.length
@@ -45,7 +46,17 @@ const TreeNode = React.createClass({
       Children = (
         <ul>
         {data.children.map((item, i) => {
-          return <TreeNode key={i} parent={this} parentData={data.children} index={i} data={item} onChange={onChange} beforeNodeRender={beforeNodeRender} />
+          return (
+            <TreeNode 
+              key={i}
+              parent={this} 
+              parentData={data.children} 
+              index={i} 
+              data={item} 
+              onChange={onChange} 
+              {...treeNode}
+            />
+          )
         })}
         </ul>
       )
@@ -57,8 +68,8 @@ const TreeNode = React.createClass({
       <li className={classnames({open: isOpen})}>
         <Icon style={{visibility: hasChildren ? 'visible' : 'hidden'}} type={isOpen ? 'minus-square' : 'plus-square'} onClick={this.handleToggle} className="toggle"/>
         {beforeNodeRender ? beforeNodeRender(this) : null}
-        <Icon type={icon} className="toggle-icon" />
-        <div className="node-content">{data.name}</div>
+        <Icon type={getIcon ? getIcon(data) : icon} className="toggle-icon" />
+        <div className="node-content">{render ? render(data) : data.name}</div>
         {Children}
       </li>
     )
@@ -67,11 +78,10 @@ const TreeNode = React.createClass({
 
 TreeNode.propTypes = {
   onChange: PropTypes.func.isRequired,
-  parent: PropTypes.instanceOf(TreeNode),
   parentData: PropTypes.array,
+  render: PropTypes.func,
   index: PropTypes.number,
-  data: PropTypes.object,
-  beforeNode: PropTypes.func
+  data: PropTypes.object
 }
 
 export default TreeNode

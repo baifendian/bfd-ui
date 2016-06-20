@@ -9,7 +9,7 @@ const Editable = React.createClass({
     return {
       value,
       changedValue: value,
-      isEditing: false
+      isEditing: this.props.defaultEditing || false
     }
   },
 
@@ -18,6 +18,12 @@ const Editable = React.createClass({
       value: nextProps.value,
       changedValue: nextProps.value
     })  
+  },
+
+  componentDidMount() {
+    if (this.state.isEditing) {
+      this.refs.input.select()
+    }
   },
 
   handleEdit() {
@@ -79,6 +85,7 @@ const Editable = React.createClass({
 Editable.propTypes = {
   value: PropTypes.string,
   defaultValue: PropTypes.string,
+  defaultEditing: PropTypes.bool,
   onChange: PropTypes.func,
   customProp({ value, onChange }) {
     if (value && !onChange) {

@@ -63,9 +63,13 @@ const Modal = React.createClass({
     this.setState({isOpen: true})
   },
 
+  handleClose() {
+    this.close()
+  },
+
   close(callback) {
     this.setState({isOpen: false})
-    setTimeout(callback, this.closeTimeout)
+    callback && setTimeout(callback, this.closeTimeout)
   },
 
   render() {

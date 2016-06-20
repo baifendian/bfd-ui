@@ -67,7 +67,7 @@ const Form = React.createClass({
         warning(this.props.action, 'No `action` provided, check the Form component you save.')
       }
       xhr({
-        type: 'post',
+        type: 'POST',
         url: this.props.action,
         data: data || this.props.data,
         success: data => {
@@ -97,12 +97,7 @@ Form.propTypes = {
   rules: PropTypes.object,
   labelWidth: PropTypes.number,
   action: PropTypes.string,
-  onSuccess: PropTypes.func,
-  customProp({ data, onChange }) {
-    if (data && !onChange) {
-      return new Error('You provided a `data` prop without an `onChange` handler.')
-    }
-  }
+  onSuccess: PropTypes.func
 }
 
 export default Form

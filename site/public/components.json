@@ -1,109 +1,127 @@
 [{
-  "name": "LineChart",
-  "cn": "线图"
+  "type": "基础组件",
+  "list": [{
+    "name": "Button",
+    "cn": "按钮"
+  }, {
+    "name": "Icon",
+    "cn": "图标"
+  }, {
+    "name": "Radio",
+    "cn": "单选框"
+  }, {
+    "name": "Checkbox",
+    "cn": "复选框"
+  }, {
+    "name": "Select",
+    "cn": "下拉框"
+  }, {
+    "name": "Select2",
+    "cn": "选择列表"
+  }, {
+    "name": "Form",
+    "cn": "表单"
+  }, {
+    "name": "Form2",
+    "cn": "表单2"
+  }, {
+    "name": "Tabs",
+    "cn": "选项卡"
+  }, {
+    "name": "Modal",
+    "cn": "模态框"
+  }, {
+    "name": "DatePicker",
+    "cn": "日期选择"
+  }, {
+    "name": "DataTable",
+    "cn": "数据表格&分页"
+  }, {
+    "name": "SearchInput",
+    "cn": "搜索框"
+  }, {
+    "name": "MultipleSelect",
+    "cn": "多选列表"
+  }, {
+    "name": "confirm",
+    "cn": "确认提示"
+  }, {
+    "name": "message",
+    "cn": "全局提示"
+  }, {
+    "name": "Switch",
+    "cn": "开关"
+  }, {
+    "name": "Upload",
+    "cn": "上传"
+  }]
 }, {
-  "name": "ColumnChart",
-  "cn": "柱状图"
+  "type": "交互进阶",
+  "list": [{
+    "name": "AutoComplete",
+    "cn": "自动完成"
+  }, {
+    "name": "SearchSelect",
+    "cn": "查询下拉框"
+  }, {
+    "name": "Dropdown",
+    "cn": "下拉菜单"
+  }, {
+    "name": "Tree",
+    "cn": "树"
+  }, {
+    "name": "ClearableInput",
+    "cn": "可清空的输入框"
+  }, {
+    "name": "Slider",
+    "cn": "拖动条"
+  }, {
+    "name": "Editable",
+    "cn": "可编辑的"
+  }, {
+    "name": "TextOverflow",
+    "cn": "文字溢出"
+  }]
 }, {
-  "name": "StackedColumnChart",
-  "cn": "堆叠图"
+  "type": "业务定制",
+  "list": [{
+    "name": "Nav",
+    "cn": "导航"
+  }, {
+    "name": "Fetch",
+    "cn": "AJAX加载管理"
+  }, {
+    "name": "Transfer",
+    "cn": "穿梭框"
+  }, {
+    "name": "Steps",
+    "cn": "步骤条"
+  }]
 }, {
-  "name": "PieChart",
-  "cn": "饼图"
+  "type": "数据图表",
+  "list": [{
+    "name": "LineChart",
+    "cn": "线图"
+  }, {
+    "name": "ColumnChart",
+    "cn": "柱状图"
+  }, {
+    "name": "StackedColumnChart",
+    "cn": "堆叠图"
+  }, {
+    "name": "PieChart",
+    "cn": "饼图"
+  }, {
+    "name": "BubbleChart",
+    "cn": "气泡图"
+  }, {
+    "name": "Percentage",
+    "cn": "环形百分比"
+  }]
 }, {
-  "name": "BubbleChart",
-  "cn": "气泡图"
-}, {
-  "name": "Percentage",
-  "cn": "环形百分比"
-}, {
-  "name": "Modal",
-  "cn": "模态框"
-}, {
-  "name": "DatePicker",
-  "cn": "日期选择"
-}, {
-  "name": "Nav",
-  "cn": "导航"
-}, {
-  "name": "Tabs",
-  "cn": "选项卡"
-}, {
-  "name": "message",
-  "cn": "全局提示"
-}, {
-  "name": "DataTable",
-  "cn": "数据表格&分页"
-}, {
-  "name": "Form",
-  "cn": "表单"
-}, {
-  "name": "Form2",
-  "cn": "表单2"
-}, {
-  "name": "Radio",
-  "cn": "单选框"
-}, {
-  "name": "Checkbox",
-  "cn": "复选框"
-}, {
-  "name": "Switch",
-  "cn": "开关"
-}, {
-  "name": "Select",
-  "cn": "下拉框"
-}, {
-  "name": "Select2",
-  "cn": "选择列表"
-}, {
-  "name": "MultipleSelect",
-  "cn": "多选列表"
-}, {
-  "name": "AutoComplete",
-  "cn": "自动完成"
-}, {
-  "name": "SearchSelect",
-  "cn": "查询下拉框"
-}, {
-  "name": "Fetch",
-  "cn": "AJAX加载管理"
-}, {
-  "name": "Dropdown",
-  "cn": "下拉菜单"
-}, {
-  "name": "Transfer",
-  "cn": "穿梭框"
-}, {
-  "name": "Tree",
-  "cn": "树"
-}, {
-  "name": "ClearableInput",
-  "cn": "可清空的输入框"
-}, {
-  "name": "confirm",
-  "cn": "确认提示"
-}, {
-  "name": "xhr",
-  "cn": "AJAX请求"
-}, {
-  "name": "Steps",
-  "cn": "步骤条"
-}, {
-  "name": "SearchInput",
-  "cn": "搜索框"
-}, {
-  "name": "Slider",
-  "cn": "拖动条"
-}, {
-  "name": "Editable",
-  "cn": "可编辑的"
-}, {
-  "name": "Upload",
-  "cn": "上传"
-}, {
-  "name": "TextOverflow",
-  "cn": "文字溢出"
-}, {
-  "name": "Icon",
-  "cn": "图标"
+  "type": "工具模块",
+  "list": [{
+    "name": "xhr",
+    "cn": "AJAX请求"
+  }]
 }]

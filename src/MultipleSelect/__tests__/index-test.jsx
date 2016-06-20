@@ -22,4 +22,11 @@ describe('MultipleSelect', () => {
     })
     expect(handleChange).toBeCalledWith(['1', '2', '0'])
   })
+
+  it('empty children is ok', () => {
+    TestUtils.renderIntoDocument(
+      <MultipleSelect>
+        {null}
+      </MultipleSelect>)
+  })
 })

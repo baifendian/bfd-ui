@@ -5,6 +5,20 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.3.1" date="2016-06-17">
+        <p>新增组件: </p>
+        <ul>
+          <li>按钮: Button</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>修复 MultipleSelect children 为空时错误的问题</li>
+          <li>修复 Modal 关闭时报错的问题</li>
+          <li>Tree 新增 render、getIcon 属性，实现自定义节点、图标</li>
+          <li>Select2 新增 size 属性，设置控件尺寸</li>
+          <li>Editable 新增 defaultEditing 属性，控制默认编辑状态</li>
+        </ol>
+      </Version>
       <Version version="0.2.2" date="2016-06-13">
         <ol>
           <li>Switch 新增 labelOn、labelOff 属性，作为辅助提示信息</li>
@@ -24,7 +38,7 @@ function ChangeLog() {
             <Pre>{
 `{
   test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
-  loader: 'file-loader?name=files/[hash].[ext]'
+  loader: 'file?name=files/[hash].[ext]'
 }`}</Pre>
           </li>
         </ul>

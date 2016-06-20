@@ -17,7 +17,8 @@ if (!isProduction) {
   app.use(webpackDevMiddleware(webpack(WebpackConfig), {
     publicPath: '/dist/',
     stats: {
-      colors: true
+      colors: true,
+      profile: true
     }
   }))
 }
