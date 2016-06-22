@@ -38,6 +38,9 @@ export default () => {
         <Prop name="onChange" type="function">
           <p>编辑完确定的回调，参数为修改后的值</p>
         </Prop>
+        <Prop name="onCancel" type="function">
+          <p>取消后的回调</p>
+        </Prop>
         <Prop name="defaultEditing" type="boolean">
           <p>默认是否处于编辑状态</p>
         </Prop>

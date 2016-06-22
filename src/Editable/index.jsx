@@ -57,6 +57,7 @@ const Editable = React.createClass({
     this.setState({
       isEditing: false
     })
+    this.props.onCancel && this.props.onCancel()
   },
 
   render() {
@@ -87,6 +88,7 @@ Editable.propTypes = {
   defaultValue: PropTypes.string,
   defaultEditing: PropTypes.bool,
   onChange: PropTypes.func,
+  onCancel: PropTypes.func,
   customProp({ value, onChange }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

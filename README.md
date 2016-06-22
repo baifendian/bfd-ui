@@ -1,25 +1,29 @@
-## 百分点 UI 组件库
+# 百分点 UI 组件库
 
 http://ui.baifendian.com
 
-### 开始编写一个组件
+## 开发者说明
+
+### 本地开发环境安装
 
 ```sh
-# 创建组件文件夹
-$ mkdir src/YourComponent
+$ git clone ...
 
-# 创建组件入口
-$ touch src/YourComponent/index.jsx
-```
-
-### 编写 Demo、文档
-
-```sh
-$ touch site/public/components/YourComponent.jsx
+$ npm install
 
 $ npm start
 ```
-查看 http://localhost:4001/components/YourComponent
+
+查看: http://localhost:4001
+
+
+### 编写一个新组件
+
+```sh
+$ npm run create MyComponent
+```
+
+查看: http://localhost:4001/components/YourComponent
 
 
 ### 开发规范

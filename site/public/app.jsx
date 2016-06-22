@@ -39,6 +39,9 @@ const App = React.createClass({
             <h2>BFD UI</h2>
             <span>v0.x</span>
           </Link>
+          <div className="pull-right">
+            <a href="http://git.baifendian.com/front-end/bfd-ui">GitLab</a>
+          </div>
         </div>
         <div id="body" className="clearfix">
           <div className="sidebar">
