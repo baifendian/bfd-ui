@@ -6,6 +6,7 @@ var chalk = require('chalk')
 
 var option = process.argv.slice(2)
 var name = option[0]
+
 if (name) {
   var dir = path.join(__dirname, '../src/' + name + '/')
   var template = path.join(__dirname, 'template/')
