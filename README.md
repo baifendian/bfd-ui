@@ -23,7 +23,7 @@ $ npm start
 $ npm run create MyComponent
 ```
 
-查看: http://localhost:4001/components/YourComponent
+查看: http://localhost:4001/components/MyComponent
 
 
 ### 开发规范
