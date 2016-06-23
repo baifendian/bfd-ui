@@ -112,7 +112,7 @@ $ npm run lint`}</Pre>
 
 $ npm run build -- jsp`}</Pre>
 
-        <p>完成后，myapp 下的文件发送给后台，如 Java web 项目下的 webapp 目录，使用 git、svn 方式更佳</p>
+        <p>完成后，myapp 下的 build 目录及 index.jsp 发送给后台即可，如 Java web 项目下的 webapp 目录</p>
         
         <h3>3.3、修改服务器配置（以 Java 为例）</h3>
         
