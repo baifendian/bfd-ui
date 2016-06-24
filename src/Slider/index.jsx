@@ -157,14 +157,14 @@ const Scale = React.createClass({
 
       const el = this.refs['t'+index]
       el.innerHTML = '<div></div>'+ parseInt(value)
-      const style = getComputedStyle(el)      
-      const textWidth = parseInt(style.width)
+      const style = getComputedStyle(el)
+
       if(index == 0) {
         el.style.left = tick + 'px'
       } else if(index == this.tickValue) {
-        el.style.left = parseInt(tick - textWidth/2) - 1 + 'px'
+        el.style.left = parseInt(tick) - 1 + 'px'
       } else {
-        el.style.left = tick - textWidth/2 + 'px'
+        el.style.left = tick + 'px'
       }
     })
   },
