@@ -183,9 +183,9 @@ const MultipleSelect = React.createClass({
 
     let inputSize
     if (labels.length) {
-      inputSize = searchValue.length || 1
+      inputSize = (searchValue || ' ').replace(/[\u4e00-\u9FA5]/g, '  ').length
     } else {
-      inputSize = placeholder.length
+      inputSize = placeholder.length * 2
     }
 
     this.Options = Options
@@ -208,7 +208,7 @@ const MultipleSelect = React.createClass({
           <input 
             ref="input"
             type="text"
-            style={{width: inputSize * 1.2 + 'em'}}
+            size={Math.min(inputSize, 45)}
             value={searchValue} 
             onChange={this.handleInput} 
             onKeyDown={this.handleKeyDown} 

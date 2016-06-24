@@ -3,6 +3,8 @@ import update from 'react-addons-update'
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
 import Icon from '../Icon'
+import Fetch from '../Fetch'
+import warning from 'warning'
 
 const TreeNode = React.createClass({
 
@@ -33,24 +35,27 @@ const TreeNode = React.createClass({
     })
   },
 
-  render() {
-    const { data, beforeNodeRender, render, getIcon, onChange } = this.props
-    const { ...treeNode } = { beforeNodeRender, render, getIcon }
-    const isOpen = this.state.open
+  handleLoad(data) {
+    this.set('children', data)
+  },
 
-    const hasChildren = data.children && data.children.length
-    let icon
+  render() {
+    const { beforeNodeRender, render, getIcon, getUrl, onChange } = this.props
+    const { ...treeNode } = { beforeNodeRender, render, getIcon, getUrl }
+    const { name, open, isParent, children } = this.state
+
+    const hasChildren = children && children.length
+    
     let Children
     if (hasChildren) {
-      icon = 'folder' + (isOpen ? '-open' : '')
       Children = (
         <ul>
-        {data.children.map((item, i) => {
+        {children.map((item, i) => {
           return (
             <TreeNode 
               key={i}
               parent={this} 
-              parentData={data.children} 
+              parentData={children} 
               index={i} 
               data={item} 
               onChange={onChange} 
@@ -61,15 +66,32 @@ const TreeNode = React.createClass({
         </ul>
       )
     } else {
-      icon = 'file'
+      if (isParent && getUrl && open) {
+        Children = <Fetch url={getUrl(this.state)} onSuccess={this.handleLoad} />
+      }
+    }
+
+    let icon
+    if (getIcon) {
+      icon = getIcon(this.state)
+    } else {
+      if (hasChildren || isParent) {
+        icon = 'folder' + (open ? '-open' : '')
+      } else {
+        icon = 'file'
+      }
     }
 
     return (
-      <li className={classnames({open: isOpen})}>
-        <Icon style={{visibility: hasChildren ? 'visible' : 'hidden'}} type={isOpen ? 'minus-square' : 'plus-square'} onClick={this.handleToggle} className="toggle"/>
+      <li className={classnames({ open })}>
+        <Icon 
+          style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
+          type={open ? 'minus-square' : 'plus-square'} 
+          onClick={this.handleToggle} className="toggle"
+        />
         {beforeNodeRender ? beforeNodeRender(this) : null}
-        <Icon type={getIcon ? getIcon(data) : icon} className="toggle-icon" />
-        <div className="node-content">{render ? render(data) : data.name}</div>
+        <Icon type={icon} className="toggle-icon" />
+        <div className="node-content">{render ? render(this.state) : name}</div>
         {Children}
       </li>
     )

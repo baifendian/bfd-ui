@@ -86,7 +86,7 @@ $ npm start`}</Pre>
 `$ npm start -p 4001`}</Pre>
 
         <Warn>
-          <p>1、直接修改 index.tpl，以便生成不同服务器环境下的模板文件</p>
+          <p>1、直接修改 index.tpl，以便自动生成开发、线上环境下的模板文件</p>
           <p>2、数据接口请允许跨域（CORS），接口的命名规则见下方服务器配置，防止和单页面冲突</p>
         </Warn>
 
@@ -105,39 +105,168 @@ $ npm run lint`}</Pre>
           <a href="http://git.baifendian.com/front-end/style-guide">http://git.baifendian.com/front-end/style-guide</a>
         </p>
 
-        <h3>3.2、生成线上代码</h3>
+        <h3>3.2、生成线上代码（以 Java 为例）</h3>
+
+        <Warn>
+          <p>1、默认生成 jsp 模版，文件后缀可以在 webpack.config 里直接修改</p>
+          <p>2、模板中线上环境代码直接写在 index.tpl 里 isProduction 条件下</p>
+          <p>3、检查 src/env.js 线上环境配置</p>
+        </Warn>
 
         <Pre lang="sh">{
 `$ cd myapp
 
-$ npm run build -- jsp`}</Pre>
+$ npm run build`}</Pre>
 
         <p>完成后，myapp 下的 build 目录及 index.jsp 发送给后台即可，如 Java web 项目下的 webapp 目录</p>
         
-        <h3>3.3、修改服务器配置（以 Java 为例）</h3>
+        <h3>3.3、修改服务器配置（以 Java SpringMVC 为例）</h3>
         
-        <h5>3.3.1、配置数据接口匹配规则，防止和下面的单页面功能冲突修改 web.xml，增加 servlet 节点</h5>
-        
+        <h5>3.3.1、在web.xml中配置拦截器，非数据接口和静态资源交由index.jsp处理，数据接口和静态资源根据请求路径前缀区分</h5>
+
         <Pre lang="markup">{
-`<servlet> 
-  <servlet-name>dispatcher</servlet-name> 
-  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class> 
-  <init-param> 
-    <param-name>contextConfigLocation</param-name> 
-    <param-value>classpath*:/springmvc-context.xml</param-value> 
-  </init-param> 
-  <load-on-startup>1</load-on-startup> 
-</servlet> 
-<servlet-mapping> 
-  <servlet-name>dispatcher</servlet-name> 
-  <url-pattern>正则，用于拦截数据接口请求，eg：*.do</url-pattern> 
+`package com.bfd.filter;
+
+import java.io.IOException;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * 拦截所有请求，对非数据接口和静态资源地址转发到index.jsp
+ */
+public class DispFilter implements Filter {
+
+  private String restPath;
+  
+  private String staticPath;
+
+  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    // 请求路径 不包含项目名
+    String reqStr = ((HttpServletRequest) request).getServletPath();
+    // 判断为非数据接口和静态资源
+    if (!reqStr.startsWith(restPath) && !reqStr.startsWith(staticPath)) {
+      // 跳转到index.jsp
+      request.getRequestDispatcher("/index.jsp").forward(request, response);
+      return;
+    }
+    chain.doFilter(request, response);
+  }
+
+  public void init(FilterConfig fConfig) throws ServletException {
+    restPath = fConfig.getInitParameter("restPath");
+    staticPath = fConfig.getInitParameter("staticPath");
+  }
+
+  public void destroy() {
+
+  }
+}
+`}</Pre>
+
+        <Pre lang="markup">{
+`<filter>
+  <!-- 拦截器名称 -->
+  <filter-name>DispFilter</filter-name>
+  <!-- 拦截器类路径 -->
+  <filter-class>com.bfd.filter.DispFilter</filter-class>
+  <!-- 数据接口前缀配置 -->
+  <init-param>
+    <param-name>restPath</param-name>
+    <param-value>/api</param-value>
+  </init-param>
+  <!-- 静态文件前缀配置 -->
+  <init-param>
+    <param-name>staticPath</param-name>
+    <param-value>/build</param-value>
+  </init-param>
+</filter>
+<filter-mapping>
+  <filter-name>DispFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping>`}</Pre>
+
+      <h5>3.3.2、在web.xml中配置SpringMVC，数据接口前缀保持和filter中数据接口前缀配置一致</h5>  
+
+      <Pre lang="markup">{
+`<servlet>
+  <servlet-name>dispatcher</servlet-name>
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  <init-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:/springmvc-context.xml</param-value>
+  </init-param>
+  <load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+  <servlet-name>dispatcher</servlet-name>
+  <!-- 数据接口所需拦截地址 -->
+  <url-pattern>/api/*</url-pattern>
 </servlet-mapping>`}</Pre>
-        <h5>3.3.2、配置单页面功能，除数据接口外，所有 URL 均渲染 index.jsp，修改 web.xml，增加 welcome-file</h5>
-        <Pre lang="markup">{
-`<welcome-file-list>
-  <welcome-file>index.jsp</welcome-file>
-</welcome-file-list>`}</Pre>
-        <h5>3.3.3、设置 tomcat 启用 gzip 压缩</h5>
+
+      <h5>3.3.3、数据接口</h5>
+      <Pre lang="markup">{
+`package com.bfd.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+public class BasicAction {
+
+  protected HttpServletRequest request;
+
+  @ExceptionHandler(Exception.class)
+  public void exceptionHandler(Exception ex, HttpServletResponse response,
+      HttpServletRequest request) {
+    ex.printStackTrace();
+  }
+
+  /**
+   * 注入request
+   * 
+   * @param request
+   */
+  @Autowired
+  public void setRequest(HttpServletRequest request) {
+    this.request = request;
+  }
+}
+`}</Pre>
+      
+      <Pre lang="markup">{
+`package com.bfd.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.alibaba.fastjson.JSONObject;
+
+@Controller
+@RequestMapping("demo")
+public class DemoController extends BasicAction {
+
+  @ResponseBody
+  @RequestMapping("hello")
+  public String helloWorld() {
+    return "hello world";
+  }
+}
+
+`}</Pre>
+        
+      <h5>3.3.4、设置 tomcat 启用 gzip 压缩，修改 server.xml 如下：</h5>
+      <Pre lang="markup">{
+`<Connector URIEncoding="UTF-8" connectionTimeout="20000"
+      port="8080" protocol="HTTP/1.1" redirectPort="8443" compression="on"
+      compressionMinSize="1024" noCompressionUserAgents="gozilla,traviata"
+      compressableMimeType="text/html,text/xml,text/javascript,application/x-javascript,application/javascript,text/css,text/plain" />
+`}</Pre>
       </div>
     )
   }

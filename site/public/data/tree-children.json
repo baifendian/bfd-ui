@@ -1,0 +1,7 @@
+[{
+  "name": "子节点1",
+  "isParent": true
+}, {
+  "name": "子节点2",
+  "isParent": true
+}]

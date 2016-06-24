@@ -29,12 +29,12 @@ function xhr(option) {
     }
   }
 
-  request.open(option.type, option.url)
+  request.open(option.type, option.url, true)
 
   let sendData = option.data
   if (option.type === 'POST') {
-    if (FormData && sendData instanceof FormData) {} else {
-      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    if (typeof sendData === 'object') {
       sendData = []
       const data = option.data
       if (data) {

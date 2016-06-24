@@ -22,8 +22,8 @@ const Tree = React.createClass({
   },
 
   render() {
-    const { className, beforeNodeRender, render, getIcon, ...other } = this.props
-    const { ...treeNode } = { beforeNodeRender, render, getIcon }
+    const { className, beforeNodeRender, render, getIcon, getUrl, ...other } = this.props
+    const { ...treeNode } = { beforeNodeRender, render, getIcon, getUrl }
     const data = this.state.data
     return (
       <div className={classnames('bfd-tree', className)} {...other}>
@@ -51,7 +51,8 @@ Tree.propTypes = {
   defaultData: PropTypes.array,
   onChange: PropTypes.func,
   render: PropTypes.func,
-  getIcon: PropTypes.func
+  getIcon: PropTypes.func,
+  getUrl: PropTypes.func
 }
 
 export default Tree

@@ -41,6 +41,8 @@ const App = React.createClass({
           </Link>
           <div className="pull-right">
             <a href="http://git.baifendian.com/front-end/bfd-ui">GitLab</a>
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">提交bug</a>
           </div>
         </div>
         <div id="body" className="clearfix">
@@ -55,9 +57,6 @@ const App = React.createClass({
           <div className="content">{this.props.children}</div>
         </div>
         <div id="footer">
-          <div className="pull-left">
-            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">提交bug</a>
-          </div>
           <div className="pull-right">Copyright©2016 Baifendian Corporation All Rights Reserved.</div>
         </div>
       </div>

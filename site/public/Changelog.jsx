@@ -5,6 +5,17 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.3.2" date="2016-06-24">
+        <ol>
+          <li>Editable 新增 onCancel 属性</li>
+          <li>修复 ClearableInput 为 disabled 时仍然可以清空的问题</li>
+          <li>修复 MultipleSelect 搜索内容过长时溢出的问题</li>
+          <li>Tree 新增 getUrl 属性，支持动态加载</li>
+          <li>修复 Slider 刻度显示的问题</li>
+          <li>修复 xhr 无法跨域发送 PUT、DELETE 请求的问题</li>
+        </ol>
+      </Version>
+      
       <Version version="0.3.1" date="2016-06-17">
         <p>新增组件: </p>
         <ul>
