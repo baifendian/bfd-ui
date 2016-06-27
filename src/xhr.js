@@ -33,8 +33,10 @@ function xhr(option) {
 
   let sendData = option.data
   if (option.type === 'POST') {
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-    if (typeof sendData === 'object') {
+    if (sendData instanceof FormData) {
+
+    } else if (typeof sendData === 'object') {
+      request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
       sendData = []
       const data = option.data
       if (data) {
