@@ -3,9 +3,9 @@
  */
 
 import 'bfd-bootstrap'
-import './main.less'
 import React from 'react'
 import classnames from 'classnames'
+import './main.less'
 
 export default React.createClass({
   isDown: false,
@@ -31,16 +31,14 @@ export default React.createClass({
       let left = event.pageX - this.offsetLeft
       if(left <= 0) {
         left = 0
-        slider.style.left = left + 'px'
         selectedBar.style.width = left + 'px'
       } else if(left >= (this.width - this.sliderWidth/2)) {
-
         left = this.width - this.sliderWidth/2
         selectedBar.style.width = this.width + 'px'
-      } else {
-        slider.style.left = left + 'px'        
+      } else { 
         selectedBar.style.width = left + 'px'
       }
+      slider.style.left = left + 'px'
       const text = this.getValue(parseInt(selectedBar.style.width, 10))
       this.refs.msg.innerHTML = text + (this.props.suffix || '')
       if(typeof this.props.onSliding == 'function') {
@@ -99,8 +97,6 @@ export default React.createClass({
     selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
     
     this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
-
-    
   },
   componentWillUnmount() {
     
@@ -157,10 +153,8 @@ const Scale = React.createClass({
 
       const el = this.refs['t'+index]
       el.innerHTML = '<div></div>'+ parseInt(value)
-      const style = getComputedStyle(el)
-
       if(index == 0) {
-        el.style.left = tick + 'px'
+        el.style.left = 4 + 'px'
       } else if(index == this.tickValue) {
         el.style.left = parseInt(tick) - 1 + 'px'
       } else {
