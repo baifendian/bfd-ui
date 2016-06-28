@@ -2,10 +2,6 @@ import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import Tabs from './Tabs'
 
-const contextTypes = {
-  tabs: PropTypes.instanceOf(Tabs)
-}
-
 /**
  * 内容节点
  */
@@ -27,9 +23,7 @@ const TabPanel = React.createClass({
 
   render() {
     if (this.context.tabs.state.activeKey) {
-      if (!this.props.activeKey) {
-        throw new Error('既然 Tabs 采用 activeKey 方式，请给 TabPanel 组件 绑定 activeKey')
-      }
+      warning(this.props.activeKey, 'No `activeKey`')
     }
     let isActive
     if (this.props.activeKey) {
@@ -37,10 +31,16 @@ const TabPanel = React.createClass({
     } else {
       isActive = this.state.index === this.context.tabs.state.activeIndex
     }
-    return <div className={classNames('tab-panel', {active: isActive})}>{this.props.children}</div>
+    return (
+      <div className={classNames('tab-panel', {active: isActive})}>
+        {this.props.children}
+      </div>
+    )
   }
 })
 
-TabPanel.contextTypes = contextTypes
+TabPanel.contextTypes = {
+  tabs: PropTypes.instanceOf(Tabs)
+}
 
 export default TabPanel

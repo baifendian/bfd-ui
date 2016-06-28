@@ -9,6 +9,7 @@ function formControlValue(formControl) {
   const data = form.props.data[name]
 
   return {
+    
     get() {
       if (!formItem.props.multiple) {
         return data

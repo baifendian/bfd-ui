@@ -17,7 +17,11 @@ const FormSelect = React.createClass({
       onChange && onChange(value)
     }
     
-    return <Select className={classnames('bfd-form-select', className)} {...other}>{children}</Select>
+    return (
+      <Select className={classnames('bfd-form-select', className)} {...other}>
+        {children}
+      </Select>
+    )
   }
 })
 

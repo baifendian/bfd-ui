@@ -3,21 +3,6 @@ import classnames from 'classnames'
 import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import './less/calendar.less'
 
-const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-
-const propTypes = {
-  date: checkDateTime,
-  min: checkDateTime,
-  max: checkDateTime,
-  onSelect: PropTypes.func
-}
-
-// For DateRange
-const contextTypes = {
-  getStart: PropTypes.func,
-  getEnd: PropTypes.func
-}
-
 const Calendar = React.createClass({
 
   getInitialState() {
@@ -160,9 +145,10 @@ const Calendar = React.createClass({
     
     // DateRange
     let start, end
-    if (this.context.getStart) {
-      start = new Date(this.context.getStart()).setHours(0, 0, 0, 0) || 0
-      end = new Date(this.context.getEnd()).setHours(0, 0, 0, 0) || 0
+    const dateRange = this.context.dateRange
+    if (dateRange) {
+      start = new Date(dateRange.state.start).setHours(0, 0, 0, 0) || 0
+      end = new Date(dateRange.state.end).setHours(0, 0, 0, 0) || 0
     }
 
     return (
@@ -203,7 +189,18 @@ const Calendar = React.createClass({
   }
 })
 
-Calendar.propTypes = propTypes
-Calendar.contextTypes = contextTypes
+const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+
+Calendar.propTypes = {
+  date: checkDateTime,
+  min: checkDateTime,
+  max: checkDateTime,
+  onSelect: PropTypes.func
+}
+
+// For DateRange
+Calendar.contextTypes = {
+  dateRange: PropTypes.object
+}
 
 export default Calendar

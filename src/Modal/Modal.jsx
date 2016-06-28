@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import classnames from 'classnames'
+import ModalHeader from './ModalHeader'
 import 'bfd-bootstrap'
 import './modal.less'
 
@@ -24,14 +25,6 @@ const Modal = React.createClass({
     }
   },
 
-  getChildContext() {
-    return {
-      modal: this
-    }
-  },
-
-  closeTimeout: 150,
-
   componentWillUpdate(nextProps, nextState) {
     const body = document.body
     const bodyClassName = body.className
@@ -53,6 +46,8 @@ const Modal = React.createClass({
     }
   },
 
+  closeTimeout: 150,
+
   handleModalClick(e) {
     if (!this.props.lock && e.target.className === 'modal') {
       this.close()  
@@ -63,10 +58,6 @@ const Modal = React.createClass({
     this.setState({isOpen: true})
   },
 
-  handleClose() {
-    this.close()
-  },
-
   close(callback) {
     this.setState({isOpen: false})
     callback && setTimeout(callback, this.closeTimeout)
@@ -74,6 +65,18 @@ const Modal = React.createClass({
 
   render() {
     const { className, children, ...other } = this.props
+
+    const childrenWithProps = React.Children.map(children, instance => {
+      if (instance.type === ModalHeader) {
+        return React.cloneElement(instance, {
+          onClose: () => {
+            this.close()
+          }
+        })
+      }
+      return instance
+    })
+
     return (
       <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={this.closeTimeout}>
         {this.state.isOpen ? (
@@ -82,7 +85,7 @@ const Modal = React.createClass({
             <div className="modal" onClick={this.handleModalClick}>
               <div className="modal-dialog">
                 <div className="modal-content">
-                  {children}
+                  {childrenWithProps}
                 </div>
               </div>
             </div>
@@ -95,10 +98,6 @@ const Modal = React.createClass({
 
 Modal.propTypes = {
   lock: PropTypes.bool
-},
-
-Modal.childContextTypes = {
-  modal: PropTypes.instanceOf(Modal)
 }
 
 export default Modal
