@@ -59,19 +59,32 @@ export default React.createClass({
         <h1>模态框 @hai.jiang</h1>
         <Pre>{ModalDemoCode}</Pre>
         <ModalDemo></ModalDemo>
-        <h2>this.refs.modal</h2>
+        <h2>Modal</h2>
         <Props>
-          <Prop name="open" type="function">
-            <p>打开</p>
+          <Prop name="lock" type="boolean">
+            <p>是否锁定，锁定后，点击遮罩层不会关闭 Modal</p>
           </Prop>
-          <Prop name="close" type="function">
+        </Props>
+        <h3>组件方法</h3>
+        <ul>
+          <li>
+            <p>
+              <strong>open( )</strong>
+            </p>
+            <p>打开</p>
+          </li>
+          <li>
+            <p>
+              <strong>close( )</strong>
+            </p>
             <p>关闭，支持回调参数</p>
             <Pre>{
 `this.refs.modal.close(() => {
   message.success('保存成功!')
-})`}</Pre>
-          </Prop>
-        </Props>
+})`}
+            </Pre>
+          </li>
+        </ul>
       </div>
     )
   }

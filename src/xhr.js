@@ -32,21 +32,20 @@ function xhr(option) {
   request.open(option.type, option.url, true)
 
   let sendData = option.data
-  if (option.type === 'POST') {
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
-    if (typeof sendData === 'object') {
-      sendData = []
-      const data = option.data
-      if (data) {
-        for (const k in data) {
-          if (typeof data[k] === 'object' && data[k]) {
-            data[k] = JSON.stringify(data[k])
-          }
-          sendData.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
+  if (Object.prototype.toString.call(sendData) === '[object Object]') {
+    sendData = []
+    const data = option.data
+    if (data) {
+      for (const k in data) {
+        if (typeof data[k] === 'object' && data[k]) {
+          data[k] = JSON.stringify(data[k])
         }
+        sendData.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
       }
-      sendData = sendData.join('&')
     }
+    sendData = sendData.join('&')
+
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
   }
 
   option.beforeSend && option.beforeSend(request)

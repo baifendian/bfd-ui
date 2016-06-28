@@ -54,7 +54,7 @@ const Modal = React.createClass({
   },
 
   handleModalClick(e) {
-    if (e.target.className === 'modal') {
+    if (!this.props.lock && e.target.className === 'modal') {
       this.close()  
     }
   },
@@ -92,6 +92,10 @@ const Modal = React.createClass({
     )
   }
 })
+
+Modal.propTypes = {
+  lock: PropTypes.bool
+},
 
 Modal.childContextTypes = {
   modal: PropTypes.instanceOf(Modal)

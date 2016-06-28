@@ -12,7 +12,7 @@ export default React.createClass({
         </blockquote>
 
         <Pre>
-{`import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
+{`import DatePicker from 'bfd-ui/lib/DatePicker'
 
 const DatePickerDemo = React.createClass({
   
@@ -34,7 +34,7 @@ const DatePickerDemo = React.createClass({
         
         <Pre lang="sh">{`$ npm install bfd-ui --save`}</Pre>
 
-        <p>webpack 环境额外配置</p>
+        <p>webpack 额外配置</p>
         <Pre>
 {`var autoprefixer = require('autoprefixer')
 var config = {

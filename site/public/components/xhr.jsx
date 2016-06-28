@@ -18,7 +18,7 @@ const xhrUsage = `xhr({
   url: '/user/5', // 请求 URL 地址
   data: {
     key: value
-  }, // 提交的数据，支持 FormData。POST 请求时，value 如果为对象，自动 JSON.stringify
+  }, // 提交的数据，支持 FormData（IE10+）
   beforeSend(xhr) {}, // 请求发送前操作，如 setRequestHeader、定义 onprogress 事件等
   success(data) {},
   error() {},

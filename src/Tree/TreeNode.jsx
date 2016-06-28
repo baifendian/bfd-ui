@@ -18,14 +18,18 @@ const TreeNode = React.createClass({
 
   shouldComponentUpdate,
 
+  componentDidMount() {
+    this.state.active && this.active()  
+  },
+
   handleToggle() {
     this.set('open', !this.state.open)
     this.props.onChange()
   },
 
-  set(key, value) {
-    this.setState({[key]: value})
+  set(key, value, callback) {
     this.updateParentValue(key, value)
+    this.setState({[key]: value}, callback)
   },
 
   updateParentValue(key, value) {
@@ -39,10 +43,14 @@ const TreeNode = React.createClass({
     this.set('children', data)
   },
 
+  active() {
+    this.props.onActive && this.props.onActive(this)
+  },
+
   render() {
-    const { beforeNodeRender, render, getIcon, getUrl, onChange } = this.props
+    const { beforeNodeRender, render, getIcon, getUrl } = this.props
     const { ...treeNode } = { beforeNodeRender, render, getIcon, getUrl }
-    const { name, open, isParent, children } = this.state
+    const { name, open, isParent, active, children } = this.state
 
     const hasChildren = children && children.length
     
@@ -58,7 +66,8 @@ const TreeNode = React.createClass({
               parentData={children} 
               index={i} 
               data={item} 
-              onChange={onChange} 
+              onChange={this.props.onChange}
+              onActive={this.props.onActive} 
               {...treeNode}
             />
           )
@@ -85,13 +94,19 @@ const TreeNode = React.createClass({
     return (
       <li className={classnames({ open })}>
         <Icon 
+          className="toggle"
           style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
           type={open ? 'minus-square' : 'plus-square'} 
-          onClick={this.handleToggle} className="toggle"
+          onClick={this.handleToggle} 
         />
-        {beforeNodeRender ? beforeNodeRender(this) : null}
-        <Icon type={icon} className="toggle-icon" />
-        <div className="node-content">{render ? render(this.state) : name}</div>
+        <div 
+          className={classnames('node', { active })} 
+          onClick={this.active}
+        >
+          {beforeNodeRender ? beforeNodeRender(this) : null}
+          <Icon type={icon} className="toggle-icon" />
+          {render ? render(this.state) : name}
+        </div>
         {Children}
       </li>
     )

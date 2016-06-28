@@ -97,15 +97,7 @@ const AutoComplete = React.createClass({
 })
 
 AutoComplete.propTypes = {
-  source: PropTypes.array.isRequired,
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  onChange: PropTypes.func,
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
-      return new Error('You provided a `value` prop without an `onChange` handler')
-    }
-  }
+  source: PropTypes.array.isRequired
 }
 
 export default AutoComplete

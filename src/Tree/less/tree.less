@@ -1,28 +1,9 @@
 .bfd-tree {
-  > ul {
-    > li:first-child {
-      margin-top: 0;
-      &:after {
-        top: 8px;
-      }
-    }
-    ul {
-      margin-left: 21px;
-    }
-    .bfd-fetch {
-      margin-left: 46px;
-      height: 20px;
-      .state {
-        left: 0;
-      }
-    }
-  }
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
     li {
-      margin-top: 10px;
       position: relative;
       > .toggle {
         color: #42a5f5;
@@ -31,14 +12,17 @@
         position: relative;
         z-index: 1;
       }
-      > .toggle-icon {
-        margin: 0 10px;
-        color: #42a5f5;
-      }
-      
-      > .node-content {
-        position: relative;
+      > .node {
         display: inline-block;
+        position: relative;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 5px;
+        margin-left: 5px;
+        > .toggle-icon {
+          margin-right: 10px;
+          color: #42a5f5;
+        }
         &:before {
           position: absolute;
           top: 50%;
@@ -46,7 +30,8 @@
           width: 11px;
           height: 0px;
           border-top: 1px dotted #999;
-          left: -36px;
+          left: -9px;
+          margin-top: -1px;
         }
       }
       > ul {
@@ -54,20 +39,25 @@
       }
       &:after {
         position: absolute;
-        top: -12px;
+        top: -3px;
         left: 6px;
         bottom: 3px;
         content: '';
         width: 0px;
         border-right: 1px dotted #999;
       }
+      &:first-child {
+        &:after {
+          top: -6px;
+        }
+      }
       &:last-child {
         &:after {
-          bottom: 8px;
+          bottom: 12px;
         }
         &:first-child {
           &:after {
-            bottom: 8px;
+            bottom: 12px;
           }
         }
       }
@@ -79,6 +69,40 @@
         }
         > ul {
           display: block;
+        }
+      }
+    }
+  }
+  > ul {
+    > li:first-child {
+      &:after {
+        top: 8px;
+      }
+    }
+    ul {
+      margin-left: 22px;
+    }
+    .bfd-fetch {
+      margin-left: 46px;
+      height: 20px;
+      .state {
+        left: 0;
+      }
+    }
+  }
+  &.activeable {
+    li {
+      .node {
+        border: 1px solid transparent;
+        border-radius: 2px;
+        cursor: default;
+        &:hover {
+          border-color: #bbdefb;
+          background-color: #e3f2fd;
+        }
+        &.active {
+          border-color: #90caf9;
+          background-color: #bbdefb;
         }
       }
     }

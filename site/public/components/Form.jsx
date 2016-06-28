@@ -1,472 +1,227 @@
 import React from 'react'
 import { Form, FormItem } from 'c/Form'
-import { CheckboxGroup, Checkbox } from 'c/Checkbox'
-import { Select, Option} from 'c/Select'
+import FormInput from 'c/FormInput'
+import FormTextarea from 'c/FormTextarea'
+import { FormSelect, Option } from 'c/FormSelect'
+import message from 'c/message'
+import { DatePicker } from 'c/DatePicker'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+import Panel from '../Panel'
 
-
-let isSuccess;
-const Demo = React.createClass({ 
-  //初始化表单数据。
-  getInitialState() {
-    return { 
-      validateState:false,        
-      task: '',
-      desc: '',
-      train: ['apple','huawei'],
-      fields: ['apple', 'mi']
-    }
-  },
-  //submit按钮提交操作
-  handleSubmit(e) { 
-    this.setState({validateState:true}); 
-    const obj = Form.handleData(this.state, isSuccess);
-    if (obj.isPass) {    //验证通过
-      console.log('表单验证通过');
-      console.log(JSON.stringify(obj.data));
-    } else {              //验证失败
-      console.log('表单验证失败');
-    }
-    e.preventDefault();
-  },
-
-  //获取验证是否通过状态，并存放到isSuccess数组中。
-  isSuccess(flag){   
-    isSuccess.push(flag);
-  },
-  /*
-   *设置表单字段值。
-   */
-  taskChange(e){
-    this.setState({task:e.target.value});  
-  },
-  descCahnge(e){
-     this.setState({desc:e.target.value});   
-  },
-  fieldsChange(selects) {
-    this.setState({ selects});   
-  },
-  trainChange(selected,text){
-    this.setState({ train:selected});  
-  },
-
-  render() {  
-
-    isSuccess = [];  
-    const validates = [
-    {
-      validateVal: this.state.task,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称';
-        } else if (this.validateVal.length > 10) {
-          s = '字符长度不能超过10个';
-        } else {
-          s = 'success'
-        }
-        return s;
-      }
-    }, {
-      validateVal: this.state.desc,
-      handle: function() {
-        let s;
-        if (this.validateVal.length > 20) {
-          s = '字符长度不能超过20个';
-        } else {
-          s = 'success'
-        }
-        return s;
-      }
-    }, {
-      validateVal: this.state.fields,     
-      handle: function() {
-        let s;
-        if (this.validateVal.length == 0) {
-          s = '请设置字段';
-        } else {
-          s = 'success';
-        }
-        return s;
-      }
-    }];  
-
-    return (        
-      <div style={{border:'1px solid #ddd',padding:'20px 10px'}}>
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>              
-          <FormItem label="任务名称：" validate={validates[0]} required>
-            <input type="text" className="form-control" onChange={this.taskChange}/>        
-          </FormItem>
-          <FormItem label="任务描述："  validate={validates[1]}>
-            <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
-          </FormItem>
-          <FormItem label="训练数据：">
-            <Select selected={this.state.train} onChange={this.trainChange} multiple>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-            </Select>
-          </FormItem>
-          <FormItem label="字段设置：" validate={validates[2]} required>
-            <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
-              <Checkbox value="apple">苹果</Checkbox>
-              <Checkbox value="mi">小米</Checkbox>
-              <Checkbox value="samsung">三星</Checkbox>
-              <Checkbox value="huawei">华为</Checkbox>
-            </CheckboxGroup>
-          </FormItem>
-          <FormItem submit>
-            <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
-            <button type="button" className="btn  bfd-cancel-btn">取消</button>
-          </FormItem>
-        </Form>
-      </div>            
-    );
-  }
-
-});
-
-let isSuccess2;
-const Demo2 = React.createClass({ 
-
-  //初始化表单数据。
-  getInitialState() {
-    return { 
-      validateState:false,  
-      username:'',
-      tel:''
-    }
-  },
-
-  //submit按钮提交操作
-  handleSubmit(e) { 
-    this.setState({validateState:true}); 
-    const obj = Form.handleData(this.state, isSuccess2);
-    if (obj.isPass) {    //验证通过
-      console.log('表单验证通过');
-      console.log(JSON.stringify(obj.data));
-    } else {              //验证失败
-      console.log('表单验证失败');
-    }
-    e.preventDefault();
-  },
-
-  //获取验证是否通过状态，并存放到isSuccess数组中。
-  isSuccess(flag){   
-    isSuccess2.push(flag);
-  },
-
-  /*
-   *设置表单字段值。
-   */
-  usernameChange(e){
-      this.setState({username:e.target.value}); 
-  },
-  telChange(e){
-      this.setState({tel:e.target.value}); 
-  },
-
-  render() {   
-
-    isSuccess2 = [];  
-    const validates = [
-    {
-      validateVal: this.state.username,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名';
-        }else {
-          s = 'success'
-        }
-        return s;
-      }
-    },{
-      validateVal: this.state.tel,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写手机号';
-        }else {
-          s = 'success'
-        }
-        return s;
-      }
-    }];   
-
-    return (        
-      <div style={{border:'1px solid #ddd',padding:'20px 10px',marginTop:'40px'}}>
-        <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>           
-          <div className="row">
-              <div className="col-md-6">
-                 <FormItem label="用户名：" validate={validates[0]} inline required>
-                  <input type="text" className="form-control" onChange={this.usernameChange}/>                      
-                </FormItem>
-              </div>
-              <div className="col-md-6">
-                <FormItem label="手机：" validate={validates[1]} inline required>
-                  <input type="text" className="form-control"  onChange={this.telChange}/>        
-                </FormItem>
-              </div>                          
-          </div>        
-          <FormItem submit>
-            <button type="submit" className="btn  bfd-submit-btn">提交任务</button>
-            <button type="button" className="btn  bfd-cancel-btn">取消</button>
-          </FormItem>           
-        </Form>
-      </div>         
-    );
-  }
-
-});
-
-
-
+const codeBasic = `import { Form, FormItem } from 'bfd-ui/lib/Form'
+import FormInput from 'bfd-ui/lib/FormInput'
+import FormTextarea from 'bfd-ui/lib/FormTextarea'
+import { FormSelect, Option } from 'bfd-ui/lib/FormSelect'
+import message from 'bfd-ui/lib/message'
 
 export default React.createClass({
+
+  getInitialState() {
+    this.rules = {
+      name(v) {
+        if (!v) return '请填写用户群'
+      },
+      date(v) {
+        if (!v) return '日期不能为空'
+      }
+    }
+    return {
+      formData: {
+        brand: 0
+      }
+    }
+  },
+
+  handleDateSelect(date) {
+    const formData = this.state.formData
+    formData.date = date
+    this.setState({ formData })
+  },
+
+  handleSave() {
+    console.log(this.state.formData)
+    this.refs.form.save()
+  },
+
+  handleSuccess(res) {
+    console.log(res)
+    message.success('保存成功！')
+  },
+
   render() {
+    const { formData } = this.state
     return (
-      <div>
-        <h1>表单@zhangyu</h1>
-        
-        <Pre>
-{`
-import { Form, FormItem } from 'bfd-ui/lib/Form'
-import { CheckboxGroup, Checkbox } from 'bfd-ui/lib/Checkbox'
-import { Select ,Option} from 'bfd-ui/lib/Select'
+      <Form 
+        ref="form" 
+        action="/api/form" 
+        data={formData} 
+        rules={this.rules} 
+        onSuccess={this.handleSuccess}
+      >
+        <FormItem label="用户群" required name="name" help="5个字符以内">
+          <FormInput style={{width: '200px'}}></FormInput>
+        </FormItem>
+        <FormItem label="品牌偏好" name="brand">
+          <FormSelect style={{width: '200px'}}>
+            <Option>请选择</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
+          </FormSelect>
+        </FormItem>
+        <FormItem label="选择日期" required name="date">
+          <DatePicker style={{marginRight: '10px'}} date={formData.date} onSelect={this.handleDateSelect} />
+        </FormItem>
+        <FormItem label="描述" name="desc" help="500个字符以内">
+          <FormTextarea></FormTextarea>
+        </FormItem>
+        <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
+      </Form>
+    )
+  }
+})`
 
-let isSuccess;
-const Demo = React.createClass({ 
-  //初始化表单数据。
+const Basic = React.createClass({
+
   getInitialState() {
-    return { 
-      validateState:false,        
-      task: '',
-      desc: '',
-      train: ['apple','huawei'],
-      fields: ['apple', 'mi']
+    this.rules = {
+      name(v) {
+        if (!v) return '请填写用户群'
+      },
+      date(v) {
+        if (!v) return '日期不能为空'
+      }
+    }
+    return {
+      formData: {
+        brand: 0
+      }
     }
   },
-  //submit按钮提交操作
-  handleSubmit(e) { 
-    this.setState({validateState:true}); 
-    const obj = Form.handleData(this.state, isSuccess);
-    if (obj.isPass) {    //验证通过
-      console.log('表单验证通过');
-      console.log(JSON.stringify(obj.data));
-    } else {              //验证失败
-      console.log('表单验证失败');
-    }
-    e.preventDefault();
+
+  handleDateSelect(date) {
+    const formData = this.state.formData
+    formData.date = date
+    this.setState({ formData })
   },
-  //获取验证是否通过状态，并存放到isSuccess数组中。
-  isSuccess(flag){   
-    isSuccess.push(flag);
+
+  handleSave() {
+    console.log(this.state.formData)
+    this.refs.form.save()
   },
-  /*
-   *设置表单字段值。
-   */
-  taskChange(e){
-    this.setState({task:e.target.value});  
+
+  handleSuccess(res) {
+    console.log(res)
+    message.success('操作成功！')
   },
-  descCahnge(e){
-     this.setState({desc:e.target.value});   
-  },
-  fieldsChange(selects) {
-    this.setState({ selects});   
-  },
-  trainChange(selected,text){
-    this.setState({ train:selected});  
-  },
+
   render() {
-    isSuccess = [];  
-    const validates = [{
-      validateVal: this.state.task,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称请填写任务名称';
-        } else if (this.validateVal.length > 10) {
-          s = '字符长度不能超过10个';
-        } else {
-          s = 'success'
-        }
-        return s;
-      }
-    }, {
-      validateVal: this.state.desc,
-      handle: function() {
-        let s;
-        if (this.validateVal.length > 20) {
-          s = '字符长度不能超过20个';
-        } else {
-          s = 'success'
-        }
-        return s;
-      }
-    }, {
-      validateVal: this.state.fields,     
-      handle: function() {
-        let s;
-        if (this.validateVal.length == 0) {
-          s = '请设置字段';
-        } else {
-          s = 'success';
-        }
-        return s;
-      }
-    }];  
-    return (    
-      <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>              
-        <FormItem label="任务名称：" validate={validates[0]} required>
-          <input type="text" className="form-control" onChange={this.taskChange}/>        
+    const { formData } = this.state
+    return (
+      <Form 
+        ref="form" 
+        action="/api/form" 
+        data={formData} 
+        rules={this.rules} 
+        onSuccess={this.handleSuccess}
+      >
+        <FormItem label="用户群" required name="name" help="5个字符以内">
+          <FormInput style={{width: '200px'}}></FormInput>
         </FormItem>
-        <FormItem label="任务描述："  validate={validates[1]}>
-          <textarea  rows="4" className="form-control" onChange={this.descCahnge}/>        
+        <FormItem label="品牌偏好" name="brand">
+          <FormSelect style={{width: '200px'}}>
+            <Option>请选择</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
+          </FormSelect>
         </FormItem>
-        <FormItem label="训练数据：">
-          <Select selected={this.state.train} onChange={this.trainChange} multiple>
-            <Option value="apple">苹果</Option>
-            <Option value="mi">小米</Option>
-            <Option value="samsung">三星</Option>
-            <Option value="huawei">华为</Option>
-          </Select>
+        <FormItem label="选择日期" required name="date">
+          <DatePicker style={{marginRight: '10px'}} date={formData.date} onSelect={this.handleDateSelect} />
         </FormItem>
-        <FormItem label="字段设置：" validate={validates[2]} required>
-          <CheckboxGroup selects = {this.state.fields} onChange={this.fieldsChange}>
-            <Checkbox value="apple">苹果</Checkbox>
-            <Checkbox value="mi">小米</Checkbox>
-            <Checkbox value="samsung">三星</Checkbox>
-            <Checkbox value="huawei">华为</Checkbox>
-          </CheckboxGroup>
+        <FormItem label="描述" name="desc" help="500个字符以内">
+          <FormTextarea></FormTextarea>
         </FormItem>
-        <FormItem submit>
-          <button type="submit" className="btn btn-default">登录</button>
-        </FormItem>
-      </Form>             
-    );
-  }
-});
-
-
-
-
-let isSuccess2;
-const Demo2 = React.createClass({   
-  getInitialState() {
-    return { 
-      validateState:false,  
-      username:'',
-      tel:''
-    }
-  }, 
-  handleSubmit(e) { 
-    this.setState({validateState:true}); 
-    const obj = Form.handleData(this.state, isSuccess2);
-    if (obj.isPass) {    //验证通过
-      console.log('表单验证通过');
-      console.log(JSON.stringify(obj.data));
-    } else {              //验证失败
-      console.log('表单验证失败');
-    }
-    e.preventDefault();
-  },
-  isSuccess(flag){   
-    isSuccess2.push(flag);
-  },  
-  usernameChange(e){
-      this.setState({username:e.target.value}); 
-  },
-  telChange(e){
-      this.setState({tel:e.target.value}); 
-  },
-  render() {  
-    isSuccess2 = [];  
-    const validates = [{
-      validateVal: this.state.username,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名请填写用户名';
-        }else {
-          s = 'success'
-        }
-        return s;
-      }
-    },{
-      validateVal: this.state.tel,
-      handle: function() {
-        let s;
-        if (!this.validateVal) {
-          s = '请填写手机号';
-        }else {
-          s = 'success'
-        }
-        return s;
-      }
-    }]; 
-    return (     
-      <Form horizontal onSubmit={this.handleSubmit} isSuccess={this.isSuccess} sibmitStatus={this.state.validateState}>           
-        <div className="row">
-            <div className="col-md-6">
-               <FormItem label="用户名：" validate={validates[0]} inline required>
-                <input type="text" className="form-control" onChange={this.usernameChange}/>                      
-              </FormItem>
-            </div>
-            <div className="col-md-6">
-              <FormItem label="手机：" validate={validates[1]} inline required>
-                <input type="text" className="form-control"  onChange={this.telChange}/>        
-              </FormItem>
-            </div>                          
-        </div>        
-        <FormItem submit>
-          <button type="submit" className="btn btn-default">登录</button>
-        </FormItem>           
-      </Form>           
-    );
-  }
-});
-`}
-        </Pre>
-        <h2>Form1</h2>
-        <Demo/>  
-        <h2>Form2</h2>
-        <Demo2/> 
-        <h3>Form 属性</h3>
-        <Props>
-          <Prop name="onSubmit" type="Function" required>
-            <p>表单提交按钮</p>           
-          </Prop>
-          <Prop name="isSuccess" type="Function" required>
-            <p>获取每个FormItem是否验证通过</p>
-          </Prop>
-          <Prop name="sibmitStatus" type="Boolean">
-            <p>设置提交按钮状态。设置为true则一开始就验证，设置为false则点了提交按钮才验证。</p>            
-          </Prop>
-        </Props>
-        <h3>FormItem 属性</h3>
-        <Props>
-          <Prop name="label" type="String" required>
-            <p>表单字段名称</p>    
-          </Prop>
-
-          <Prop name="validate" type="Object" required>
-            <p>验证条件</p>    
-          </Prop>
-          <Prop name="required" type="Boolean">
-            <p>是否必须</p>    
-          </Prop>
-          <Prop name="inline" type="Boolean">
-            <p>存在inline时表示FormItem是否可以在一排</p>    
-          </Prop>
-          <Prop name="submit" type="Boolean">
-            <p>表示是submit提交按钮</p>    
-          </Prop>
-        </Props>
-
-    </div>
+        <button type="button" style={{marginLeft: '100px'}} className="btn btn-primary" onClick={this.handleSave}>保存</button>
+      </Form>
     )
   }
 })
+
+export default () => {
+  return (
+    <div>
+      <h1>表单 @hai.jiang</h1>
+
+      <Panel title="基础功能" code={codeBasic}>
+        <Basic />
+      </Panel>
+
+      <h2>Form</h2>
+      <Props>
+        <Prop name="data" type="object">
+          <p>表单数据对象，rules 各属性 及 FormItem 的 name 值与其属性一一对应</p>
+          <p>FormItem 如果声明为 multiple, 则 data 相应的属性值必须为数组, 形成对应关系</p>
+        </Prop>
+        <Prop name="onChange" type="function">
+          <p>表单数据改变（用户输入）后的回调，参数为整个表单数据，让 Form 组件重绘</p>
+        </Prop>
+        <Prop name="rules" type="object">
+          <p>表单验证规则，与 data 字段对应，返回非空字符串（错误提示信息）代表验证失败</p>
+        </Prop>
+        <Prop name="labelWidth" type="number">
+          <p>label 的宽度，默认 100</p>
+        </Prop>
+        <Prop name="action" type="string">
+          <p>POST 提交地址</p>
+        </Prop>
+        <Prop name="onSuccess" type="function">
+          <p>提交成功后的回调，参数为服务器返回的 data 的值</p>
+        </Prop>
+      </Props>
+
+      <h3>组件方法</h3>
+      <ul>
+        <li>
+          <p>
+            <strong>validate( [data] )</strong>
+          </p>
+          <p>表单整体验证，验证当前 DOM 节点上存在的 FormItem 关联的数据，默认验证 data 属性的数据，可以自定义传入。验证失败返回 false, 成功返回 true</p>
+        </li>
+        <li>
+          <p>
+            <strong>save( [data] )</strong>
+          </p>
+          <p>表单提交，提交地址为 action 属性, 默认提交 data 属性数据，可以自定义传入。发送请求前会进行表单验证, 提交成功会响应 onSuccess</p>
+        </li>
+      </ul>
+      <hr/>
+      <h2>FormItem</h2>
+      <Props>
+        <Prop name="label" type="string">
+          <p>label 显示名称</p>
+        </Prop>
+        <Prop name="required" type="boolean">
+          <p>是否必须，如果必须，则 label 前带 * 的标识</p>
+        </Prop>
+        <Prop name="name" type="string" rquired>
+          <p>关联的数据字段</p>
+        </Prop>
+        <Prop name="help" type="string">
+          <p>帮助信息</p>
+        </Prop>
+        <Prop name="multiple" type="boolean">
+          <p>是否为多条数据，默认单个。多个的话对应的数据应为数组</p>
+        </Prop>
+      </Props>
+      <h3>组件方法</h3>
+      <ul>
+        <li>
+          <p>
+            <strong>validate( data )</strong>
+          </p>
+          <p>验证 FormItem 自身, 数据手动传入。验证失败返回 false, 成功返回 true</p>
+        </li>
+      </ul>
+    </div>
+  )
+}

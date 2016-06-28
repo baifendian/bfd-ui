@@ -21,12 +21,24 @@ const Tree = React.createClass({
     this.props.onChange && this.props.onChange(this.state.data)
   },
 
+  handleNodeActive(instance) {
+    this.lastNode && this.lastNode.set('active', false)
+    instance.set('active', true, () => {
+      const dataPath = [instance.props.data]
+      while (instance = instance.props.parent) {
+        dataPath.unshift(instance.props.data)
+      }
+      this.props.onActive && this.props.onActive(dataPath)
+    })
+    this.lastNode = instance
+  },
+
   render() {
     const { className, beforeNodeRender, render, getIcon, getUrl, ...other } = this.props
     const { ...treeNode } = { beforeNodeRender, render, getIcon, getUrl }
     const data = this.state.data
     return (
-      <div className={classnames('bfd-tree', className)} {...other}>
+      <div className={classnames('bfd-tree', className, {activeable: other.onActive})} {...other}>
         <ul>
           {data.map((item, i) => {
             return (
@@ -35,7 +47,8 @@ const Tree = React.createClass({
                 parentData={data} 
                 index={i} 
                 data={item} 
-                onChange={this.handleNodeChange} 
+                onChange={this.handleNodeChange}
+                onActive={this.handleNodeActive} 
                 {...treeNode}
               />
             )
@@ -50,6 +63,7 @@ Tree.propTypes = {
   data: PropTypes.array,
   defaultData: PropTypes.array,
   onChange: PropTypes.func,
+  onActive: PropTypes.func,
   render: PropTypes.func,
   getIcon: PropTypes.func,
   getUrl: PropTypes.func
