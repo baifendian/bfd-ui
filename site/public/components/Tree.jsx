@@ -408,7 +408,9 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
-        <p>其他属性同 Tree</p>
+        <Prop name="{ ...Tree }">
+          <p>支持所有 Tree 属性</p>
+        </Prop>
       </Props>
     </div>
   )

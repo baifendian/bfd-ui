@@ -67,19 +67,25 @@ const Dropdown = React.createClass({
   render() {
     const { className, children, ...other } = this.props
     return (
-      <div onClick={this.stopPropagation} className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})} {...other}>{children}</div>
+      <div 
+        className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})}
+        onClick={this.stopPropagation}  
+        {...other}
+      >
+        {children}
+      </div>
     )
   }
 })
+
+Dropdown.childContextTypes = {
+  dropdown: PropTypes.instanceOf(Dropdown)
+}
 
 Dropdown.propTypes = {
   disabled: PropTypes.bool,
   open: PropTypes.bool,
   onToggle: PropTypes.func
-}
-
-Dropdown.childContextTypes = {
-  dropdown: PropTypes.instanceOf(Dropdown)
 }
 
 export default Dropdown

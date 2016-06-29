@@ -39,16 +39,13 @@ export default React.createClass({
           <Prop name="url" type="String" required>
             <p>数据源 URL，返回格式要求：</p>
             <Pre>
-{`{
-  "code": 200,
-  "data": [{
-    "x": 234,
-    "name": "苹果"
-  }, {
-    "x": 499,
-    "name": "华为"
-  }]
-}`}
+{`[{
+  "x": 234,
+  "name": "苹果"
+}, {
+  "x": 499,
+  "name": "华为"
+}]`}
             </Pre>
           </Prop>
         </Props>

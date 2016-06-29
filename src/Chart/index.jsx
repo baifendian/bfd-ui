@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Fetch from './Fetch'
+import Fetch from '../Fetch'
 import classnames from 'classnames'
 import './index.less'
 

@@ -1,0 +1,30 @@
+.bfd-nav-item {
+  > a {
+    > .bfd-icon {
+      &:first-child {
+        width: 1em;
+        margin-left: 5px;
+        margin-right: 15px;  
+      }
+      &:last-child {
+        float: right;
+        cursor: pointer;
+        transition: transform .2s;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+    &:hover {
+      color: #333;
+    }
+  }
+  &.open {
+    > a {
+      > .bfd-icon {
+        &:last-child {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+}
