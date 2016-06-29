@@ -1,23 +1,115 @@
 /**
  * Created by BFD_270 on 2016-02-19.
+ * Update by jiangtl on 2016-6-28.
  */
 import  'bfd-bootstrap'
 import  './main.less'
-import  React from 'react'
+import  React, { PropTypes } from 'react'
 import  Fetch from '../Fetch'
 import Paging from '../Paging'
+import { Checkbox } from '../Checkbox'
+
+const Rows = React.createClass({
+
+  handleCheckboxChange(row) {
+    row.isSelect = !row.isSelect
+    this.setState({
+      t: +new Date
+    })
+
+    let selectRow = []
+    this.props.rows.map((item, j) => {
+      if(item.isSelect) {
+        selectRow.push(item)
+      }
+    })
+
+    this.props.onCheckboxChange(row.isSelect, row, selectRow)
+  },
+
+  render() {
+    const rows = this.props.rows
+    const column = this.props.column
+    const currentPage = this.props.currentPage
+    const pageSize = this.props.pageSize
+    return (
+      <tbody>
+      {
+        rows.length > 0 ?
+        rows.map((item, j) => {
+          let isSelect = item.isSelect || false
+          let isDisabled = item.disabled || false
+          let checkboxTd = this.props.rowSelection 
+            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
+            : null
+          return (
+            <tr key={j} >
+              {checkboxTd}
+              {
+                column.map((columns,i) => {
+                  for (let col in columns) {
+                    //序号
+                    if (columns[col] === 'sequence') {
+                      return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
+                    }
+                    //操作
+                    if (columns[col] == 'operation') {
+                      return <td key = { String( i ) + j }> { columns['render'] ( item, this ) } </td>
+                    }
+                    //正常非字段编辑列
+                    if (columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
+                      if (typeof columns['render'] === 'function') {
+                        return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item ) } </td>
+                      } else {
+                        return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
+                      }
+                    }
+                  }
+                })
+              }
+            </tr>
+          )
+        }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
+      }
+      </tbody>
+    )
+  }
+})
 
 export default React.createClass({
+  items: [],
+  propTypes: {
+    data: PropTypes.array,
+    url: PropTypes.string,
+    customProp({ data, url }) {
+      if (data && url) {
+        return new Error('data属性和url属性不能同时使用！')
+      }
+    }
+  },
   getInitialState: function () {
     return {
       order: '',
-      url: this.props.url,
+      url: this.props.url || '',
+      isSelectAll: false,
       items: {
         totalList: [],
         totalPageNum: 0,
         refresh: false
       },
-      currentPage: 1
+      currentPage: this.props.currentPage || 1
+    }
+  },
+
+  componentWillMount() {
+    if(this.props.data) {
+      this.setState({
+        items: {
+          totalList: this.props.data.totalList || [],
+          totalPageNum: this.props.data.totalPageNum || 0,
+          refresh: false
+        }
+      })
     }
   },
 
@@ -71,34 +163,52 @@ export default React.createClass({
     this.setState({refresh: true })
   },
 
+  handleCheckboxAllChange() {
+    const isAll = !this.state.isSelectAll
+    this.setState({
+      isSelectAll: isAll
+    })
+
+    let changeRows = []
+    const rows = this.state.items.totalList
+    rows.map((item, j) => {
+      if(item.isSelect !== isAll && !item.disabled) {
+        item.isSelect = isAll
+        changeRows.push(item)
+      }
+    })
+
+    const selectAllFn = this.props.rowSelection.onSelectAll
+    const changeFn = this.props.rowSelection.onChange
+    changeFn && changeFn(changeRows)
+    selectAllFn && selectAllFn(isAll, isAll ? rows : [], changeRows)
+  },
+
+  handleCheckboxChange(checked, row, rows) {
+    const selectFn = this.props.rowSelection.onSelect
+    const changeFn = this.props.rowSelection.onChange
+    changeFn && changeFn(rows)
+    selectFn && selectFn(checked, row, rows)
+    if(!checked) {
+      this.setState({
+        isSelectAll: false
+      })
+    }
+  },
+
+  getRowsValue(key, rows) {
+
+  },
+
   render: function () {
+    const self = this
     let column = this.props.column
-    let items = []
     let totalPageNum = 0,
     currentPage = parseInt( this.state.currentPage ),
-    _this = this,
     url = this.props.url,
-    /****
-     * 新增自动分页功能
-     * @type {Number}
-     */
-    pageSize = parseInt( this.props.howRow )
-    if (this.props.data) {
-      let data_ = this.props.data.totalList
-      //检查是否有totalPageNum，否则就取 totalList的个数
-      if (this.props.data.totalPageNum && this.props.data.totalPageNum >0 ) {
-        totalPageNum = this.props.data.totalPageNum
-      } else {
-        totalPageNum = this.props.data.totalList.length
-      }
-      if (data_ && data_.length > 0 && typeof data_ === 'object' && data_.length > pageSize) {
-        let start = currentPage === 1 ? currentPage -1 : ( currentPage-1 ) * pageSize
-        let end = currentPage === 1 ? pageSize : start + pageSize
-        items = data_.slice( start, end )
-      } else {
-        items = data_
-      }
-    }
+    //新增自动分页功能 
+    pageSize = parseInt(this.props.howRow)
+
     //如果是传入url查询数据就附带参数查询
     if (url && url !== '') {
       if( url.indexOf('?') < 0 ) {
@@ -107,68 +217,51 @@ export default React.createClass({
       if( url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1 ) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
-      //通过url查询后返回的回调函数重新渲染的数据
-      if (this.state.items && this.state.items.totalList.length > 0) {
-        items = this.state.items.totalList
-        if (this.state.items.totalPageNum > 0) {
-          totalPageNum = this.state.items.totalPageNum
-        } else {
-          totalPageNum = this.state.items.totalList.length
-        }
-        //服务端是否返回currentPage
-        if (this.state.items.currentPage) {
-          currentPage = this.state.items.currentPage
-        }
-      }
     }
+
+    const checkboxTh = this.props.rowSelection 
+      ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> 
+      : null
     return (
       <div>
-        { url != "" ? <Fetch url={ url } onSuccess = { this.handleSuccess } ></Fetch> : null }
+        {url != "" ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
+        
         <table className = "table" >
           <thead>
             <tr>
+              {checkboxTh}
               {
-                column.map ( function ( head_column, i ) {
-                  return <th key = { head_column['title'] } ref = { i } onClick = { _this.orderClick.bind( _this, head_column, i ) }    title = { head_column['order'] === true ? head_column['title'] + '排序' : '' } className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
+                column.map (( head_column, i ) => {
+                  return <th key = { head_column['title'] } ref = { i } onClick = {self.orderClick.bind( self, head_column, i)}    title = { head_column['order'] === true ? head_column['title'] + '排序' : '' } className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
                 })
               }
             </tr>
           </thead>
-          <tbody>
-            {
-              items.length > 0 ?
-              items.map( function ( item, j ) {
-                return (
-                  <tr key= { j } >
-                    {
-                      column.map(function(columns,i) {
-                        for (let col in columns) {
-                          //序号
-                          if (columns[col] === 'sequence') {
-                            return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
-                          }
-                          //操作
-                          if (columns[col] == 'operation') {
-                            return <td key = { String( i ) + j }> { columns['render'] ( item, _this ) } </td>
-                          }
-                          //正常非字段编辑列
-                          if (columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
-                            if (typeof columns['render'] === 'function') {
-                              return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item ) } </td>
-                            } else {
-                              return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
-                            }
-                          }
-                        }
-                      })
-                    }
-                  </tr>
-                )
-              }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
-            }
-          </tbody>
+
+          <Rows 
+            rows={this.state.items.totalList} 
+            rowSelection={this.props.rowSelection}
+            column={this.props.column}
+            currentPage={currentPage}
+            pageSize={pageSize}
+            onCheckboxChange={this.handleCheckboxChange}
+          >
+          </Rows>
         </table>
-        { items.length > 0 ?this.props.showPage == 'true' ? <Paging currentPage={ currentPage } onPageChange={ this.onPageChange } totalPageNum={ totalPageNum } pageSize={ this.props.howRow } onChange={ this.onChange }></Paging> : '' : ''}
+
+        {
+          this.state.items.totalList.length > 0 
+            ? this.props.showPage == 'true' 
+              ? <Paging 
+                  currentPage={this.state.items.currentPage}                   
+                  totalPageNum={this.state.items.totalPageNum} 
+                  pageSize={this.props.howRow} 
+                  onPageChange={this.onPageChange} 
+                  onChange={this.onChange}>
+                </Paging> 
+              : '' 
+            : ''}
+      
       </div>
     )
   }

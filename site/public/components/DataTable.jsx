@@ -68,9 +68,21 @@ export default React.createClass({
   },
 
   render() {
+    const rowSelection = {
+      onChange(selectedRows) {
+        console.log('selectedRows: ', selectedRows);
+      },
+      onSelect(selected, record, selectedRows) {
+        console.log(record, selected, selectedRows);
+      },
+      onSelectAll(selected, selectedRows, changeRows) {
+        console.log(selected, selectedRows, changeRows);
+      }
+    };
+
     return (
       <div>
-        <h1>DataTable&分页@houyi.li</h1>
+        <h1>DataTable&分页@tenglong.jiang</h1>
         <Pre>
 {
 `
@@ -124,12 +136,38 @@ const App = React.createClass({
      //TODO
   },
   render() {
-    return <DataTable url= { this.state.url } data={} onPageChange= { this.onPageChange } showPage = "true" column= { this.state.column } howRow={ 13 }></DataTable>
+    const rowSelection = {
+      onChange(selectedRows) {
+        console.log('selectedRows: ', selectedRows);
+      },
+      onSelect(selected, record, selectedRows) {
+        console.log(record, selected, selectedRows);
+      },
+      onSelectAll(selected, selectedRows, changeRows) {
+        console.log(selected, selectedRows, changeRows);
+      }
+    };
+
+    return 
+      <DataTable 
+        url={this.state.url} 
+        onPageChange={this.onPageChange} 
+        showPage="true" 
+        column={this.state.column} 
+        howRow={8}
+        rowSelection={rowSelection} >
+      </DataTable>
   }
 })`
 }
         </Pre>
-        <DataTable url = { this.state.url }   showPage = "true" data = ""  column = { this.state.column } howRow = { 8 } />
+        <DataTable 
+          url={this.state.url}
+          showPage="true"
+          column={this.state.column} 
+          howRow={8} 
+          rowSelection={rowSelection} 
+        />
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
           <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名称"></Prop>
@@ -184,6 +222,40 @@ const App = React.createClass({
  render() {
    return <DataTable url="this.state.url" data={dataJson} onPageChange={this.onPageChange} showPage="true" column={this.state.column} howRow={ 10 }></DataTable>
  }
+`
+}
+          </Pre>
+          <Prop name="rowSelection" type="Object" optional children="通过 rowSelection 对象表明需要行选择"></Prop>
+          <Pre>
+{
+`
+/**
+ * 复选框发生变化的回调函数
+ * @param selectedRows 已选择的行对象
+ */
+ onChange(selectedRows) {
+   //TODO
+ },
+
+/**
+ * 复选框点击事件
+ * @param selected 选中状态
+ * @param record 当前行对象
+ * @param selectedRows 已选择的行对象
+ */
+ onSelect(selected, record, selectedRows) {
+   //TODO
+ },
+
+ /**
+ * 全选复选框点击事件
+ * @param selected 选中状态
+ * @param selectedRows 已选择的行对象
+ * @param changeRows 发生状态变化的行对象
+ */
+ onSelectAll(selected, selectedRows, changeRows) {
+   //TODO
+ },
 `
 }
           </Pre>
