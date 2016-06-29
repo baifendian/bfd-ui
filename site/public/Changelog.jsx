@@ -23,10 +23,11 @@ import Tree from 'bfd-ui/lib/Tree'
           </li>
           <li>Tree 新增 onActive 属性，响应节点点中后的处理</li>
           <li>Modal 新增 lock 属性，控制遮罩层点击后是否关闭</li>
-          <li>Checkbox 新增 defaultChecked 属性；修复无文本时的样式问题</li>
+          <li>Checkbox 新增 defaultChecked 属性；修复无文本时的样式问题；添加全选功能</li>
           <li>当 CheckboxGroup 定义 selects 属性时，取消强制定义 onChange 属性；定义 block 属性时，Checkbox 自动为 block 模式，无需单独定义</li>
           <li>Radio value 属性支持 number 类型</li>
           <li>RadioGroup 新增 defaultValue 属性；value、defaultValue 支持 number 类型</li>
+          <li>DataTable 新增</li>
         </ol>
       </Version>
 

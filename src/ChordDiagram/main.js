@@ -1,12 +1,12 @@
 import './main.css'
 import d3 from 'd3'
-import defaultColors from '../colors'
+// import defaultColors from '../colors'
 
 export default class {
 
   constructor(config) {
 
-    config.colors || (config.colors = defaultColors)
+    // config.colors || (config.colors = defaultColors)
 
     const {container, data, colors} = config
 

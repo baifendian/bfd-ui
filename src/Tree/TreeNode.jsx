@@ -105,7 +105,7 @@ const TreeNode = React.createClass({
         >
           {beforeNodeRender ? beforeNodeRender(this) : null}
           <Icon type={icon} className="toggle-icon" />
-          {render ? render(this.state) : name}
+          <div className="node-content">{render ? render(this.state) : name}</div>
         </div>
         {Children}
       </li>
