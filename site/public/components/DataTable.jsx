@@ -65,22 +65,13 @@ export default React.createClass({
   handleSearch(data){
 
   },
-  onPageChange( page) {
+  onPageChange(page) {
     this.setState({url:"../data/table.json?num="+page})
   },
-
+  handleCheckboxSelect(selectedRows) {
+    console.log('rows:', selectedRows)
+  },
   render() {
-    const rowSelection = {
-      onChange(selectedRows) {
-        console.log('selectedRows: ', selectedRows);
-      },
-      onSelect(selected, record, selectedRows) {
-        console.log(record, selected, selectedRows);
-      },
-      onSelectAll(selected, selectedRows, changeRows) {
-        console.log(selected, selectedRows, changeRows);
-      }
-    };
 
     return (
       <div>
@@ -147,18 +138,7 @@ const App = React.createClass({
      //TODO
   },
   render() {
-    const rowSelection = {
-      onChange(selectedRows) {
-        console.log('selectedRows: ', selectedRows);
-      },
-      onSelect(selected, record, selectedRows) {
-        console.log(record, selected, selectedRows);
-      },
-      onSelectAll(selected, selectedRows, changeRows) {
-        console.log(selected, selectedRows, changeRows);
-      }
-    };
-
+    
     return 
       <DataTable 
         url={this.state.url} 
@@ -166,7 +146,7 @@ const App = React.createClass({
         showPage="true" 
         column={this.state.column} 
         howRow={8}
-        rowSelection={rowSelection} >
+        onCheckboxSelect={this.handleCheckboxSelect} >
       </DataTable>
   }
 })`
@@ -175,9 +155,9 @@ const App = React.createClass({
         <DataTable 
           url={this.state.url}
           showPage="true"
-          column={this.state.column} 
-          howRow={8} 
-          rowSelection={rowSelection} 
+          column={this.state.column}
+          howRow={8}
+          onCheckboxSelect={this.handleCheckboxSelect}
         />
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
@@ -237,40 +217,7 @@ const App = React.createClass({
 `
 }
           </Pre>
-          <Prop name="rowSelection" type="Object" optional children="通过 rowSelection 对象表明需要行选择"></Prop>
-          <Pre>
-{
-`
-/**
- * 复选框发生变化的回调函数
- * @param selectedRows 已选择的行对象
- */
- onChange(selectedRows) {
-   //TODO
- },
-
-/**
- * 复选框点击事件
- * @param selected 选中状态
- * @param record 当前行对象
- * @param selectedRows 已选择的行对象
- */
- onSelect(selected, record, selectedRows) {
-   //TODO
- },
-
- /**
- * 全选复选框点击事件
- * @param selected 选中状态
- * @param selectedRows 已选择的行对象
- * @param changeRows 发生状态变化的行对象
- */
- onSelectAll(selected, selectedRows, changeRows) {
-   //TODO
- },
-`
-}
-          </Pre>
+          <Prop name="onCheckboxSelect" type="Function" optional children="复选框点击事件，返回被选中的行记录"></Prop>
         </Props>
       </div>
     )
