@@ -20,9 +20,12 @@ const App = React.createClass({
       current: value
     })
   },
+  handleStepClick(index, title) {
+    console.log("step:", index, title)
+  },
   render() {
     return 
-      <Steps height={70} current={this.state.current}>
+      <Steps onStepClick={this.handleStepClick} height={70} current={this.state.current}>
         <Step title="配置推荐栏" />
         <Step title="配置推荐策略" />
         <Step title="配置算法" />
@@ -48,6 +51,9 @@ export default React.createClass({
       current: value
     })
   },
+  handleStepClick(index, title) {
+    console.log("step:", index, title)
+  },
   render() {
     const arr = [{name:"step1"}, {name:"step2"}];
     return (
@@ -55,7 +61,7 @@ export default React.createClass({
         <h1>步骤条 @tenglong.jiang</h1>
         <Pre>{code}</Pre>
         
-        <Steps height={70} current={this.state.current} >
+        <Steps onStepClick={this.handleStepClick} height={70} current={this.state.current} >
           <Step title="配置推荐栏" />
           <Step title="配置推荐策略" />
           <Step title="配置算法" />
@@ -74,6 +80,9 @@ export default React.createClass({
           </Prop>
           <Prop name="current" type="Number" required>
             <p>指定当前步骤，从 0 开始记数</p>
+          </Prop>
+          <Prop name="onStepClick" type="Function" required>
+            <p>点击事件，参数返回索引值和名称</p>
           </Prop>
         </Props>
         <h1>Step</h1>

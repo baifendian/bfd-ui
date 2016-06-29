@@ -73,6 +73,11 @@ const Title = React.createClass({
 })
 
 const Circle = React.createClass({
+  handleClick() {
+    const index = this.props.index
+    const title = this.props.title
+    this.props.onStep && this.props.onStep(index, title)
+  },
   render() {
     const width = this.props.width
     const height = this.props.height
@@ -100,7 +105,7 @@ const Circle = React.createClass({
       className = "circle_wait";
     }
 
-    return (<div style={style} className={classnames('circle', className)}>{index + 1}</div>)
+    return (<div style={style} onClick={this.handleClick} className={classnames('circle', className)}>{index + 1}</div>)
   }
 })
 
@@ -140,7 +145,9 @@ const Steps = React.createClass({
         max={items.length}
         width={this.state.width} 
         height={this.state.height} 
-        title={item.props.title || ''}/>)
+        title={item.props.title || ''}
+        onStep={this.props.onStepClick}
+        />)
     })
     
     return (
