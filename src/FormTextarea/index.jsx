@@ -16,7 +16,11 @@ const FormTextarea = React.createClass({
       onChange && onChange(e)
     }
     
-    return <textarea className={classnames('form-control bfd-form-textarea', className)} {...other} />
+    return (
+      <textarea className={classnames('form-control bfd-form-textarea', className)} 
+        {...other} 
+      />
+    )
   }
 })
 

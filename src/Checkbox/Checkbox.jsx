@@ -2,45 +2,63 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import './less/checkbox.less'
 
-function Checkbox(props, { checkboxGroup }) {
+const Checkbox = React.createClass({
 
-  const { className, value, checked, disabled, children, block, onChange, ...other } = props
-  const {...inputProps} = { value, checked, disabled, onChange }
-
-  if (checkboxGroup) {
-
-    const selects = checkboxGroup.getSelects()
-    if (selects.length) {
-      inputProps.checked = selects.indexOf(value) > -1
+  getInitialState() {
+    return {
+      checked: this.props.defaultChecked || this.props.checked     
     }
-    
-    inputProps.onChange = e => {
-      e.stopPropagation()
-      checkboxGroup[(e.target.checked ? 'add' : 'remove') + 'Select'](value)
-    }
+  },
+
+  componentWillReceiveProps(nextProps) {
+    'checked' in nextProps && this.setState({checked: nextProps.checked})  
+  },
+
+  handleChange(e) {
+    e.stopPropagation()
+    this.setState({checked: e.target.checked})
+    this.props.onChange && this.props.onChange(e)
+  },
+
+  render() {
+    const { className, value, disabled, block, children, ...other } = this.props
+    return (
+      <div 
+        className={classnames('bfd-checkbox', {
+            checkbox: block, 
+            disabled: disabled,
+            'checkbox-inline': !block
+          }, className)} 
+        {...other}
+      >
+        <label>
+          <input 
+            type="checkbox" 
+            value={value} 
+            checked={this.state.checked}
+            disabled={disabled} 
+            onChange={this.handleChange}
+          />
+          <span className="status"></span>
+          {children ? <span>{children}</span> : null}
+        </label>
+      </div>
+    )
   }
-
-  return (
-    <div className={classnames('bfd-checkbox', {checkbox: block, 'checkbox-inline': !block, disabled: disabled}, className)} {...other}>
-      <label>
-        <input type="checkbox" {...inputProps} />
-        <span className="status"></span>
-        {children ? <span>{children}</span> : null}
-      </label>
-    </div>
-  )
-}
+})
 
 Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  block: PropTypes.bool
-}
-
-Checkbox.contextTypes = {
-  checkboxGroup: PropTypes.object
+  block: PropTypes.bool,
+  customProp(props) {
+    if ('checked' in props && !props.onChange) {
+      return new Error('You provided a `checked` prop without an `onChange` handler')
+    }
+  }
 }
 
 export default Checkbox

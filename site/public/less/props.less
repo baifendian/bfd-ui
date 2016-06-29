@@ -1,5 +1,25 @@
 .props {
+  width: 100%;
   margin-top: 15px;
+  td {
+    vertical-align: top;
+    &.name {
+      color: #ce3333;
+      &.deprecated {
+        color: #aaa;
+      }
+      &.required {
+        &:after {
+          content: '*';
+          font-weight: bold;
+          margin-left: 5px;
+        }
+      }
+    }
+    &.type {
+      color: #1976d2;
+    }
+  }
   > ul {
     padding: 0;
     list-style: none;

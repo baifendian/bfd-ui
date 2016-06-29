@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react'
 import classNames from 'classnames'
+import warning from 'warning'
 import Tabs from './Tabs'
-
-const contextTypes = {
-  tabs: PropTypes.instanceOf(Tabs)
-}
 
 /**
  * 选项卡自身节点
@@ -44,9 +41,7 @@ const Tab = React.createClass({
 
   render() {
     if (this.context.tabs.state.activeKey) {
-      if (!this.props.activeKey) {
-        throw new Error('既然 Tabs 采用 activeKey 方式，请给 Tab 组件 绑定 activeKey')
-      }
+      warning(this.props.activeKey, 'No `activeKey`')
     }
     let isActive
     if (this.props.activeKey) {
@@ -58,13 +53,19 @@ const Tab = React.createClass({
       <li className={classNames({active: isActive})}>
         <a href="" onClick={this.handleClick}>
           {this.props.children}
-          {this.context.tabs.props.dynamic && !this.props.abolishClose ? <button type="button" onClick={this.handleClose}>x</button> : null}
+          {
+            this.context.tabs.props.dynamic && !this.props.abolishClose ? 
+            <button type="button" onClick={this.handleClose}>x</button> : 
+            null
+          }
         </a>
       </li>
     )
   }
 })
 
-Tab.contextTypes = contextTypes
+Tab.contextTypes = {
+  tabs: PropTypes.instanceOf(Tabs)
+}
 
 export default Tab

@@ -124,7 +124,7 @@ $ npm run build`}</Pre>
         
         <h5>3.3.1、在web.xml中配置拦截器，非数据接口和静态资源交由index.jsp处理，数据接口和静态资源根据请求路径前缀区分</h5>
 
-        <Pre lang="markup">{
+        <Pre lang="java">{
 `package com.bfd.filter;
 
 import java.io.IOException;
@@ -209,7 +209,7 @@ public class DispFilter implements Filter {
 </servlet-mapping>`}</Pre>
 
       <h5>3.3.3、数据接口</h5>
-      <Pre lang="markup">{
+      <Pre lang="java">{
 `package com.bfd.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -239,7 +239,7 @@ public class BasicAction {
 }
 `}</Pre>
       
-      <Pre lang="markup">{
+      <Pre lang="java">{
 `package com.bfd.controller;
 
 import org.springframework.stereotype.Controller;
@@ -262,10 +262,17 @@ public class DemoController extends BasicAction {
         
       <h5>3.3.4、设置 tomcat 启用 gzip 压缩，修改 server.xml 如下：</h5>
       <Pre lang="markup">{
-`<Connector URIEncoding="UTF-8" connectionTimeout="20000"
-      port="8080" protocol="HTTP/1.1" redirectPort="8443" compression="on"
-      compressionMinSize="1024" noCompressionUserAgents="gozilla,traviata"
-      compressableMimeType="text/html,text/xml,text/javascript,application/x-javascript,application/javascript,text/css,text/plain" />
+`<Connector 
+  URIEncoding="UTF-8" 
+  connectionTimeout="20000"
+  port="8080" 
+  protocol="HTTP/1.1" 
+  redirectPort="8443" 
+  compression="on"
+  compressionMinSize="1024" 
+  noCompressionUserAgents="gozilla,traviata"
+  compressableMimeType="text/html,text/xml,text/javascript,application/x-javascript,application/javascript,text/css,text/plain" 
+/>
 `}</Pre>
       </div>
     )

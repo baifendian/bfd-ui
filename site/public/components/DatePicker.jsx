@@ -1,8 +1,7 @@
 import React from 'react'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
-import DatePicker from 'c/DatePicker/DatePicker'
-import DateRange from 'c/DatePicker/DateRange'
+import { DatePicker, DateRange } from 'c/DatePicker'
 
 const DatePickerDemo = React.createClass({
 
@@ -15,7 +14,7 @@ const DatePickerDemo = React.createClass({
   }
 })
 
-const DatePickeDemoCode = `import DatePicker from 'bfd-ui/lib/DatePicker/DatePicker'
+const DatePickeDemoCode = `import DatePicker from 'bfd-ui/lib/DatePicker'
 
 export default React.createClass({
   
@@ -39,7 +38,7 @@ const DateRangeDemo = React.createClass({
   }
 })
 
-const DateRangeDemoCode = `import DateRange from 'bfd-ui/lib/DatePicker/DateRange'
+const DateRangeDemoCode = `import { DateRange } from 'bfd-ui/lib/DatePicker'
 
 export default React.createClass({
 

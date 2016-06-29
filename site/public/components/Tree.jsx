@@ -1,6 +1,5 @@
 import React from 'react'
-import Tree from 'c/Tree'
-import SelectTree from 'c/Tree/SelectTree'
+import Tree, { SelectTree } from 'c/Tree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import Warn from '../Warn'
@@ -53,7 +52,7 @@ const data = [{
 
 // =======================================================================
 
-const codeBasic = `import Tree from 'bfd-ui/lib/Tree/Tree'
+const codeBasic = `import Tree from 'bfd-ui/lib/Tree'
 
 export default React.createClass({
 
@@ -84,7 +83,7 @@ const Basic = React.createClass({
 
 // =======================================================================
 
-const codeCustomRender = `import Tree from 'bfd-ui/lib/Tree/Tree'
+const codeCustomRender = `import Tree from 'bfd-ui/lib/Tree'
 
 export default React.createClass({
 
@@ -115,7 +114,7 @@ const CustomRender = React.createClass({
 
 // =======================================================================
 
-const codeCustomIcon = `import Tree from 'bfd-ui/lib/Tree/Tree'
+const codeCustomIcon = `import Tree from 'bfd-ui/lib/Tree'
 
 export default React.createClass({
 
@@ -146,7 +145,7 @@ const CustomIcon = React.createClass({
 
 // =======================================================================
 
-const codeDynamic = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
+const codeDynamic = `import Tree from 'bfd-ui/lib/Tree'
 
 export default React.createClass({
   
@@ -190,7 +189,88 @@ const Dynamic = React.createClass({
 
 // =======================================================================
 
-const codeSelectable = `import SelectTree from 'bfd-ui/lib/Tree/SelectTree'
+const codeActiveable = `import Tree from 'bfd-ui/lib/Tree'
+
+export default React.createClass({
+
+  getInitialState() {
+    return {
+      data: [{
+        name: '数据工厂',
+        open: true,
+        children: [{
+          name: 'adsdsd',
+          active: true
+        }, {
+          name: 'ioio'
+        }, {
+          name: 'tutrut',
+          children: [{
+            name: 'dasd'
+          }]
+        }]
+      }, {
+        name: '配置中心',
+      }, {
+        name: '配置中心2',
+        children: [{
+          name: 'dsads'
+        }]
+      }]
+    }
+  },
+
+  handleActive(data) {
+    console.log(data)
+  },
+
+  render() {
+    return <Tree data={this.state.data} onActive={this.handleActive} />
+  }
+})`
+
+const Activeable = React.createClass({
+
+  getInitialState() {
+    return {
+      data: [{
+        name: '数据工厂',
+        open: true,
+        children: [{
+          name: 'adsdsd',
+          active: true
+        }, {
+          name: 'ioio'
+        }, {
+          name: 'tutrut',
+          children: [{
+            name: 'dasd'
+          }]
+        }]
+      }, {
+        name: '配置中心',
+      }, {
+        name: '配置中心2',
+        children: [{
+          name: 'dsads'
+        }]
+      }]
+    }
+  },
+
+  handleActive(data) {
+    console.log(data)
+  },
+
+  render() {
+    return <Tree data={this.state.data} onActive={this.handleActive} />
+  }
+})
+
+
+// =======================================================================
+
+const codeSelectable = `import { SelectTree } from 'bfd-ui/lib/Tree'
 
 export default React.createClass({
   
@@ -267,7 +347,12 @@ export default () => {
         <Dynamic />
       </Panel>
 
-      <Panel title="节点可选择" code={codeSelectable}>
+      <Panel title="节点可点中（单节点）" code={codeActiveable}>
+        <p>点中一个节点做一些操作，指定 onActive 属性即可激活此功能，默认点中可指定 active 字段，整个 Tree 同时只有一个节点处于点中状态</p>
+        <Activeable  />
+      </Panel>
+
+      <Panel title="节点可勾选" code={codeSelectable}>
         <Selectable />
       </Panel>
 
@@ -303,6 +388,10 @@ export default () => {
           </Pre>
           <p>返回格式同 data 属性</p>
           <Warn>动态加载方式需同时指定 isParent 字段以及 getUrl 属性</Warn>
+        </Prop>
+        <Prop name="onActive" type="function">
+          <p>点中一个节点后的回调，参数为节点路径下数据集合</p>
+          <Warn>默认点中状态可指定 active 字段，整个 Tree 同时只有一个节点处于点中状态</Warn>
         </Prop>
       </Props>
 

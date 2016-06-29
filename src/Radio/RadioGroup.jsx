@@ -4,38 +4,54 @@ import './less/radioGroup.less'
 
 const RadioGroup = React.createClass({
 
-  getChildContext() {
+  getInitialState() {
     return {
-      radioGroup: this
+      value: this.props.defaultValue || this.props.value       
     }
   },
 
-  componentWillMount() {
-    this.radioName = Math.random().toString(16).slice(2)
+  componentWillReceiveProps(nextProps) {
+    'value' in nextProps && this.setState({value: nextProps.value})  
   },
 
-  handleChange(e) {
-    this.props.onChange && this.props.onChange(e.target.value)
+  handleChange(value) {
+    this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
   },
   
   render() {
-    const { className, onChange, ...other } = this.props
-    return <div className={classnames('radios bfd-radio-group', className)} {...other}>{this.props.children}</div>
+    const { className, children, onChange, ...other } = this.props
+    const radiosWithProps = React.Children.map(children, (Radio, i) => {
+      const value = Radio.props.value
+      return React.cloneElement(Radio, {
+        key: i,
+        checked: this.state.value === value,
+        onChange: e => {
+          e.stopPropagation()
+          this.handleChange(value)
+        }
+      })
+    })
+    return (
+      <div 
+        className={classnames('radios bfd-radio-group', className)} 
+        {...other}
+      >
+       {radiosWithProps}
+      </div>
+    ) 
   }
 })
 
 RadioGroup.propTypes = {
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
+  customProp(props) {
+    if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
   }
-}
-
-RadioGroup.childContextTypes = {
-  radioGroup: PropTypes.instanceOf(RadioGroup)
 }
 
 export default RadioGroup

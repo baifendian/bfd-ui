@@ -55,7 +55,12 @@ ReactDOM.render((
         <h2>Nav</h2>
         <Props>
           <Prop name="href" type="string">
-            <p>基础 URL </p>
+            <p>基础 URL, 可继承给 NavItem href 属性</p>
+            
+            <Pre>{
+`<Nav href="/">
+  <NavItem href="users" icon="users" title="人群管理" />
+</Nav>`}</Pre>
           </Prop>
           <Prop name="onItemClick" type="function">
             <p>单条菜单点击后的回调，参数为当前点击菜单的 props</p>
@@ -63,11 +68,19 @@ ReactDOM.render((
         </Props>
         <h2>NavItem</h2>
         <Props>
-          <Prop name="href" type="string" required>
-            <p>菜单 URL</p>
+          <Prop name="href" type="string">
+            <p>菜单 URL，可继承 Nav href 属性，但是内部无法继承</p>
+            <Pre>{
+`<Nav href="/">
+  <NavItem icon="home" title="首页" />
+  <NavItem href="users" icon="send" title="人群管理">
+    <NavItem href='users/list' title="人群列表" />
+    <NavItem href='users/task' title="任务管理" />
+  </NavItem>
+</Nav>`}</Pre>
           </Prop>
           <Prop name="icon" type="string">
-            <p>菜单图标，一级菜单配置，传入 Icon type</p>
+            <p>菜单图标，一级菜单配置，<a href="http://fontawesome.io/icons/">http://fontawesome.io/icons/</a></p>
           </Prop>
           <Prop name="title" type="string" required>
             <p>菜单名称</p>

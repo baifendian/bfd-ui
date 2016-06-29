@@ -1,156 +1,85 @@
 import React from 'react'
-import { Select, Option} from 'c/Select'
+import { Select, Option } from 'c/Select'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const App = React.createClass({
+const render = (item, i) => {
+  return <Option value={item.id}>{item.name}</Option>
+}
 
-  getInitialState() {
-    return {      
-      selected:'apple',
-      selected2: ['apple','mi'],
-      selected3:'mi',
-      }
-    },
-
-    handleChange(select,text) {
-      //console.log('value:' + select+',text:'+text);
-      this.setState({ selected: select });
-    },
-    handleChange2(select,text){
-      this.setState({ selected2: select });
-    },
-    handleChange3(select,text){
-      this.setState({ selected3: select });
-    },
-
+const SelectDemo = React.createClass({
   render() {
     return (
-      <div className="row">
-        <div className="col-md-4">
-          <h3>下拉框(单选)</h3>
-          <Select selected={this.state.selected} onChange={this.handleChange}>
-              <Option value="apple">苹果22222222222222222222222222222222222222222222222222222222222</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div>
-        <div className="col-md-4">
-          <h3>下拉框(多选)</h3>
-          <Select selected={this.state.selected2} onChange={this.handleChange2} multiple>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米3333333333333333333333333333333333</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div> 
-        <div className="col-md-4">
-          <h3>下拉框(disabled)</h3>
-          <Select selected={this.state.selected3} onChange={this.handleChange3} disabled>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div>              
-      </div>
+      <Select>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
     )
   }
-  
-});
+})
 
+const code = `import { Select, Option } from 'bfd-ui/lib/Select'
 
 export default React.createClass({
   render() {
     return (
-      <div>
-        <h1>下拉框@zhangyu</h1>
-        <Pre>
-{`
-import { Select ,Option} from 'bfd-ui/lib/Select'
-
-const Demo = React.createClass({
-  getInitialState() {
-    return {      
-      selected:'apple',
-      selected2: ['apple','mi','samsung','huawei'],
-      selected3:'mi',
-      }
-    },
-    handleChange(select,text) {
-      console.log('value:' + select+',text:'+text);
-      this.setState({ selected: select });
-    },
-    handleChange2(select,text){
-      this.setState({ selected2: select });
-    },
-    handleChange3(select,text){
-      this.setState({ selected3: select });
-    },
-  render() {
-    return (
-      <div className="row">
-        <div className="col-md-4">
-          <h3>下拉框(单选)</h3>
-          <Select selected={this.state.selected} onChange={this.handleChange}>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div>
-        <div className="col-md-4">
-          <h3>下拉框(多选)</h3>
-          <Select selected={this.state.selected2} onChange={this.handleChange2} multiple>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div> 
-        <div className="col-md-4">
-          <h3>下拉框(disabled)</h3>
-          <Select selected={this.state.selected3} onChange={this.handleChange3} disabled>
-              <Option value="apple">苹果</Option>
-              <Option value="mi">小米</Option>
-              <Option value="samsung">三星</Option>
-              <Option value="huawei">华为</Option>
-          </Select>
-        </div>              
-      </div>
-    )
-  }  
-});
-  const App = React.createClass({
-    render() {
-      return <Demo/>
-    }
-  })
-`}
-        </Pre>
-
-        <App/>  
-
-        <Props>
-          <Prop name="selected" required>
-            <p>选中的值</p>    
-          </Prop>
-          <Prop name="onChange" type="Function" required>
-            <p>选择后的回调</p>    
-          </Prop>
-          <Prop name="multiple" type="Boolean">
-            <p>true表示可以多选，flase表示单选。默认为单选。</p>    
-          </Prop>
-          <Prop name="disabled" type="Boolean">
-            <p>true表示禁用，默认为false.</p>    
-          </Prop>
-          <Prop name="value" required>
-            <p>下拉框值</p>    
-          </Prop>
-        </Props>    
-         
-      </div>
+      <Select>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
     )
   }
-})
+})`
+
+export default () => {
+  return (
+    <div>
+      <h1>选择列表 @hai.jiang</h1>
+      <Pre>{code}</Pre>
+      <SelectDemo />
+      <h2>Select</h2>
+      <Props>
+        <Prop name="value" type="string | number">
+          <p>选中的值</p>
+        </Prop>
+        <Prop name="defaultValue" type="string | number">
+          <p>选中的值</p>
+        </Prop>
+        <Prop name="onChange" type="function">
+          <p>切换选择后的回调，参数为选中的值</p>
+        </Prop>
+        <Prop name="placeholder" type="string">
+          <p>无选项匹配时显示的内容</p>
+        </Prop>
+        <Prop name="disabled" type="boolean">
+          <p>是否禁用</p>
+        </Prop>
+        <Prop name="size" type="string">
+          <p>其他尺寸，可选值：lg</p>
+        </Prop>
+        <Prop name="url" type="string">
+          <p>ajax 方式加载数据</p>
+        </Prop>
+        <Prop name="render" type="function">
+          <p>使用 url 方式时，自定义 Option 渲染逻辑</p>
+          <Pre>{`const render = item => <Option value={item.id}>{item.name}</Option>
+<Select url="/api/list" render={render} />`}</Pre>
+        </Prop>
+        <Prop name="defaultOption" type="React element">
+          <p>使用 url 方式时，自定义空值时的 Option</p>
+          <Pre>{`<Select url="/api/list" defaultOption={<Option>请选择</Option>} />`}</Pre>
+        </Prop>
+      </Props>
+      <h2>Option</h2>
+      <Props>
+        <Prop name="value" type="string | number">
+          <p>值</p>
+        </Prop>
+      </Props>
+    </div>
+  )
+}

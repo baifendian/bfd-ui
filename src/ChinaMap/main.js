@@ -2,7 +2,7 @@
  * China map based on d3.js
  */
 import d3 from 'd3'
-import json from './china.geo.json'
+// import json from './china.geo.json'
 
 export default class {
 

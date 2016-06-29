@@ -7,42 +7,53 @@ import './less/checkboxGroup.less'
 const CheckboxGroup = React.createClass({
 
   getInitialState() {
-    const state = {}
-    if (!this.props.selects) {
-      state.selects = []
-    }
-    return state
-  },
-
-  getChildContext() {
     return {
-      checkboxGroup: this
+      selects: this.props.selects || []
     }
-  },
-
-  getSelects() {
-    return this.props.selects || this.state.selects
   },
 
   addSelect(value) {
-    let selects = this.getSelects()
+    const selects = this.state.selects
     selects.push(value)
     this.props.onChange && this.props.onChange(selects)
   },
 
   removeSelect(value) {
-    let selects = this.getSelects()
+    const selects = this.state.selects
     selects.splice(selects.indexOf(value), 1)
     this.props.onChange && this.props.onChange(selects)
   },
 
   render() {
     const { className, values, children, block, ...other } = this.props
+
     let checkboxes
     if (values) {
-      checkboxes = values.map((value, i) => <Checkbox key={i} value={value} block={block}>{value}</Checkbox>)
+      checkboxes = values.map((value, i) => {
+        return <Checkbox key={i} value={value} block={block}>{value}</Checkbox>
+      })
+    } else {
+      checkboxes = React.Children.map(children, (Checkbox, i) => {
+        const props = Checkbox.props
+        const value = props.value
+        return React.cloneElement(Checkbox, {
+          key: i,
+          checked: this.state.selects.indexOf(value) !== -1,
+          block: props.block || block, 
+          onChange: e => {
+            this[(e.target.checked ? 'add' : 'remove') + 'Select'](value)
+          }
+        })
+      })
     }
-    return <div className={classnames('bfd-checkbox-group', className)} {...other}>{checkboxes || children}</div>
+    return (
+      <div 
+        className={classnames('bfd-checkbox-group', className)} 
+        {...other}
+      >
+        {checkboxes}
+      </div>
+    ) 
   }
 })
 
@@ -50,16 +61,7 @@ CheckboxGroup.propTypes = {
   selects: PropTypes.array,
   values: PropTypes.array,
   onChange: PropTypes.func,
-  block: PropTypes.bool,
-  customProp({ selects, onChange }) {
-    if (selects && !onChange) {
-      return new Error('You provided a `selects` prop without an `onChange` handler')
-    }
-  }
-}
-
-CheckboxGroup.childContextTypes = {
-  checkboxGroup: PropTypes.instanceOf(CheckboxGroup)
+  block: PropTypes.bool
 }
 
 export default CheckboxGroup

@@ -7,23 +7,17 @@
     "name": "Icon",
     "cn": "图标"
   }, {
-    "name": "Radio",
-    "cn": "单选框"
-  }, {
     "name": "Checkbox",
     "cn": "复选框"
   }, {
-    "name": "Select",
-    "cn": "下拉框"
+    "name": "Radio",
+    "cn": "单选框"
   }, {
-    "name": "Select2",
-    "cn": "选择列表"
+    "name": "Select",
+    "cn": "下拉选择"
   }, {
     "name": "Form",
     "cn": "表单"
-  }, {
-    "name": "Form2",
-    "cn": "表单2"
   }, {
     "name": "Tabs",
     "cn": "选项卡"
@@ -61,9 +55,6 @@
     "name": "AutoComplete",
     "cn": "自动完成"
   }, {
-    "name": "SearchSelect",
-    "cn": "查询下拉框"
-  }, {
     "name": "Dropdown",
     "cn": "下拉菜单"
   }, {
@@ -98,7 +89,7 @@
     "cn": "步骤条"
   }]
 }, {
-  "type": "数据图表",
+  "type": "可视化",
   "list": [{
     "name": "LineChart",
     "cn": "线图"

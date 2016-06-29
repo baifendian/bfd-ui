@@ -33,7 +33,9 @@ export default React.createClass({
           <Prop name="onChange" type="function">
             <p>输入框值改变后的回调，包括清空动作。参数为改变后的值</p>
           </Prop>
-          <p>input 其他属性均支持</p>
+          <Prop name="{ ...input }">
+            <p>input 属性均支持</p>
+          </Prop>
         </Props>
       </div>
     )

@@ -1,20 +1,7 @@
 import React, { PropTypes } from 'react'
 import Fetch from './Fetch'
 import classnames from 'classnames'
-import './chart.less'
-
-const propTypes = {
-  url: PropTypes.string,
-  data: PropTypes.array,
-  customProp({ url, data }) {
-    if (!url && !data) {
-      return new Error('url和data属性至少提供一个')
-    }
-    if (url && data) {
-      return new Error('url和data属性只能提供一个')
-    }
-  }
-}
+import './index.less'
 
 const Chart = React.createClass({
 
@@ -47,6 +34,17 @@ const Chart = React.createClass({
   }
 })
 
-Chart.propTypes = propTypes
+Chart.propTypes = {
+  url: PropTypes.string,
+  data: PropTypes.array,
+  customProp({ url, data }) {
+    if (!url && !data) {
+      return new Error('No `url` or `data` property.')
+    }
+    if (url && data) {
+      return new Error('`url` and `data` can\'t exist at the same time.')
+    }
+  }
+}
 
 export default Chart

@@ -1,25 +1,19 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import RadioGroup from './RadioGroup'
 import './less/radio.less'
 
-function Radio(props, { radioGroup }) {
+function Radio(props) {
 
-  if (!radioGroup) {
-    throw new Error('you use `<Radio>` without `<RadioGroup>`')
-  }
-
-  const { className, disabled, value, children, ...other } = props
-  const { ...inputProps } = { disabled, value }
-  
-  if (radioGroup.props.value) {
-    inputProps.checked = value === radioGroup.props.value
-  }
+  const { className, value, checked, disabled, onChange, children, ...other } = props
+  const { ...inputProps } = { value, checked, disabled, onChange }
   
   return (
-    <div className={classnames('bfd-radio radio-inline', className, { disabled })} {...other}>
+    <div 
+      className={classnames('bfd-radio radio-inline', className, { disabled })} 
+      {...other}
+    >
       <label>
-        <input name={'radio-' + radioGroup.radioName} type="radio" onChange={radioGroup.handleChange} {...inputProps} />
+        <input type="radio" {...inputProps} />
         <span className="status"></span>
         <span>{children}</span>
       </label>
@@ -28,12 +22,8 @@ function Radio(props, { radioGroup }) {
 }
 
 Radio.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   disabled: PropTypes.bool
-}
-
-Radio.contextTypes = {
-  radioGroup: PropTypes.instanceOf(RadioGroup)
 }
 
 export default Radio

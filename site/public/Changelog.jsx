@@ -5,6 +5,31 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.3.3" date="2016-06-29">
+        <ol>
+          <li>xhr 模块 data 属性支持所有类型请求（GET、HEAD 请求本身机制问题除外）</li>
+          <li>
+            <p>Select2、Form2 支持 Select、Form 镜像方式调用</p>
+            <Pre>{
+`import { Select, Option } from 'bfd-ui/lib/Select'
+import { Form, FormItem } from 'bfd-ui/lib/Form'`}</Pre>
+          </li>
+          <li>
+            <p>DatePicker、Tree 支持直接调用</p>
+            <Pre>{
+`import DatePicker from 'bfd-ui/lib/DatePicker'
+import Tree from 'bfd-ui/lib/Tree'
+`}</Pre>
+          </li>
+          <li>Tree 新增 onActive 属性，响应节点点中后的处理</li>
+          <li>Modal 新增 lock 属性，控制遮罩层点击后是否关闭</li>
+          <li>Checkbox 新增 defaultChecked 属性；修复无文本时的样式问题</li>
+          <li>当 CheckboxGroup 定义 selects 属性时，取消强制定义 onChange 属性；定义 block 属性时，Checkbox 自动为 block 模式，无需单独定义</li>
+          <li>Radio value 属性支持 number 类型</li>
+          <li>RadioGroup 新增 defaultValue 属性；value、defaultValue 支持 number 类型</li>
+        </ol>
+      </Version>
+
       <Version version="0.3.2" date="2016-06-24">
         <ol>
           <li>Editable 新增 onCancel 属性</li>
@@ -95,7 +120,7 @@ function ChangeLog() {
         <ol>
           <li>Select2 新增 url、render、defaultOption 属性，实现 ajax 数据源</li>
           <li>MultipleSelect 设计为复选框方式，且支持全选</li>
-          <li>Checkbox value 支持 number 类型</li>
+          <li>Checkbox value 属性支持 number 类型</li>
         </ol>
       </Version>
       <Version version="0.1.6" date="2016-05-20">
@@ -244,7 +269,6 @@ import SelectTree from 'bfd-ui/lib/Tree/SelectTree'`}</Pre>
           <li>下拉菜单: Dropdown, DropdownToggle, DropdownMenu</li>
           <li>穿梭框: Transfer</li>
           <li>树: Tree, SelectTree</li>
-          <li>查询下拉框: SearchSelect</li>
         </ul>
       </Version>
     </div>

@@ -79,6 +79,7 @@ FormItem.contextTypes = {
   form: PropTypes.object
 }
 
+// For formControlValue
 FormItem.childContextTypes = {
   formItem: PropTypes.instanceOf(FormItem)
 }
