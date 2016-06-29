@@ -2,6 +2,7 @@ import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
+import Nav from './Nav'
 import Icon from '../Icon'
 import './NavItem.less'
 
