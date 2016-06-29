@@ -137,6 +137,9 @@ const App = React.createClass({
   onPageChange(page) {
      //TODO
   },
+  handleCheckboxSelect(selectedRows) {
+    console.log('rows:', selectedRows)
+  },
   render() {
     
     return 
