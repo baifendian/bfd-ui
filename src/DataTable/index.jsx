@@ -24,7 +24,7 @@ const Rows = React.createClass({
       }
     })
 
-    this.props.onCheckboxChange(row.isSelect, row, selectRow)
+    this.props.onSelect(row.isSelect, row, selectRow)
   },
 
   render() {
@@ -39,7 +39,7 @@ const Rows = React.createClass({
         rows.map((item, j) => {
           let isSelect = item.isSelect || false
           let isDisabled = item.disabled || false
-          let checkboxTd = this.props.rowSelection 
+          let checkboxTd = this.props.onSelect 
             ? <td><Checkbox disabled={isDisabled} checked={isSelect} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
             : null
           return (
@@ -178,17 +178,14 @@ export default React.createClass({
       }
     })
 
-    const selectAllFn = this.props.rowSelection.onSelectAll
-    const changeFn = this.props.rowSelection.onChange
-    changeFn && changeFn(changeRows)
-    selectAllFn && selectAllFn(isAll, isAll ? rows : [], changeRows)
+    const selectAllFn = this.props.onCheckboxSelect
+
+    selectAllFn && selectAllFn(isAll ? rows : [])
   },
 
   handleCheckboxChange(checked, row, rows) {
-    const selectFn = this.props.rowSelection.onSelect
-    const changeFn = this.props.rowSelection.onChange
-    changeFn && changeFn(rows)
-    selectFn && selectFn(checked, row, rows)
+    const selectFn = this.props.onCheckboxSelect
+    selectFn && selectFn(rows)
     if(!checked) {
       this.setState({
         isSelectAll: false
@@ -204,7 +201,7 @@ export default React.createClass({
     const self = this
     let column = this.props.column
     let totalPageNum = 0,
-    currentPage = parseInt( this.state.currentPage ),
+    currentPage = parseInt(this.state.currentPage),
     url = this.props.url,
     //新增自动分页功能 
     pageSize = parseInt(this.props.howRow)
@@ -219,7 +216,7 @@ export default React.createClass({
       }
     }
 
-    const checkboxTh = this.props.rowSelection 
+    const checkboxTh = this.props.onCheckboxSelect 
       ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> 
       : null
     return (
@@ -232,11 +229,11 @@ export default React.createClass({
               {checkboxTh}
               {
                 column.map (( head_column, i ) => {
-                  const width = head_column.width ? {width: head_column.width} : {}
+                  const style = head_column.width ? {width: head_column.width} : {}
                   return <th 
                     key={head_column['title']} 
                     ref={i}
-                    style={width}
+                    style={style}
                     onClick={self.orderClick.bind( self, head_column, i)}
                     title = {head_column['order'] === true ? head_column['title'] + '排序' : ''} className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
                 })
@@ -246,11 +243,10 @@ export default React.createClass({
 
           <Rows 
             rows={this.state.items.totalList} 
-            rowSelection={this.props.rowSelection}
+            onSelect={this.handleCheckboxChange}
             column={this.props.column}
             currentPage={currentPage}
             pageSize={pageSize}
-            onCheckboxChange={this.handleCheckboxChange}
           >
           </Rows>
         </table>
