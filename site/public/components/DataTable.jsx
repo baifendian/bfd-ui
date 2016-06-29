@@ -14,8 +14,9 @@ export default React.createClass({
       }, {
         title: '姓名',
         order: true,
+        width: '100px',
         render: (text, item) => {
-          return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
+          return <a href="javascript:void(0);" onClick={this.handleClick.bind(this, item)}>{text}</a>
         },
         key: 'name'
       }, {
@@ -27,7 +28,7 @@ export default React.createClass({
         key: 'height',
         order: true,
         render: (text, item) => {
-          return <a href="javascript:void(0);" onClick = { () => { this.handleClick(item) } } > { text } </a>
+          return <a href="javascript:void(0);" onClick = {this.handleClick.bind(this, item)} > { text } </a>
         }
       }, {
         title: '体重',
@@ -35,7 +36,8 @@ export default React.createClass({
         order: true
       }, {
         title: '国家/地区',
-        key: 'country'
+        key: 'country',
+        width: '15%'
       }, {
         title: '学校',
         key: 'school'
@@ -51,7 +53,7 @@ export default React.createClass({
          * @returns {XML}  返回dom对象
          */
         render: (item, component)=> {
-          return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
+          return <a href = "javascript:void(0);" onClick = {this.handleClick.bind(this, item)}>编辑</a>
         },
         key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
       }]
@@ -97,6 +99,14 @@ const App = React.createClass({
         title:'序号',
         key:'sequence'
       }, {
+        title: '姓名',
+        order: true,
+        width: '100px',
+        render: (text, item) => {
+          return <a href="javascript:void(0);" onClick={this.handleClick.bind(this, item)}>{text}</a>
+        },
+        key: 'name'
+      }, {
         title: '年龄',
         key: 'age',
         order: true
@@ -106,7 +116,8 @@ const App = React.createClass({
         order: true
       }, {
         title: '国家/地区',
-        key: 'country'
+        key: 'country',
+        width: '15%'
       }, {
         title: '学校',
         key: 'school'
@@ -122,7 +133,7 @@ const App = React.createClass({
          * @returns {XML}  返回dom对象
          */
         render:(item, component)=> {
-          return <a href = "javascript:void(0);" onClick = { () => { this.handleClick(item) } }>编辑</a>
+          return <a href = "javascript:void(0);" onClick = {this.handleClick.bind(this, item)}>编辑</a>
         },
         key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
       }]
@@ -178,6 +189,7 @@ const App = React.createClass({
   {
     title: '姓名',  //列的名称
     key: 'name',  //数据库对应的属性字段
+    width: '100px', //列宽度，同时支持百分比
    /**
     * 此方法是用于渲染自定义样式的列
     * @param text 渲染的列名称

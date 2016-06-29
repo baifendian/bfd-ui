@@ -232,7 +232,13 @@ export default React.createClass({
               {checkboxTh}
               {
                 column.map (( head_column, i ) => {
-                  return <th key = { head_column['title'] } ref = { i } onClick = {self.orderClick.bind( self, head_column, i)}    title = { head_column['order'] === true ? head_column['title'] + '排序' : '' } className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
+                  const width = head_column.width ? {width: head_column.width} : {}
+                  return <th 
+                    key={head_column['title']} 
+                    ref={i}
+                    style={width}
+                    onClick={self.orderClick.bind( self, head_column, i)}
+                    title = {head_column['order'] === true ? head_column['title'] + '排序' : ''} className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
                 })
               }
             </tr>
