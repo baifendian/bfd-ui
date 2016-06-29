@@ -92,7 +92,7 @@ const CheckboxGroup = React.createClass({
         className={classnames('bfd-checkbox-group', className)} 
         {...other}
       >
-        <Checkbox checked={unSelects.length === 0} onChange={this.toggleAll}>全选</Checkbox>
+        <Checkbox block={block} checked={unSelects.length === 0} onChange={this.toggleAll}>全选</Checkbox>
         {checkboxes}
       </div>
     ) 

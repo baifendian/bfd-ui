@@ -27,7 +27,7 @@ import Tree from 'bfd-ui/lib/Tree'
           <li>当 CheckboxGroup 定义 selects 属性时，取消强制定义 onChange 属性；定义 block 属性时，Checkbox 自动为 block 模式，无需单独定义</li>
           <li>Radio value 属性支持 number 类型</li>
           <li>RadioGroup 新增 defaultValue 属性；value、defaultValue 支持 number 类型</li>
-          <li>DataTable 新增</li>
+          <li>DataTable 新增 onCheckboxSelect 属性，支持批量选择；修复页码赋值无效问题；增加列宽度配置</li>
         </ol>
       </Version>
 
