@@ -164,7 +164,7 @@ const App = React.createClass({
         />
         <Props>
           <Prop name = "url" type="String" optional  children="要请求数据的服务端地址。"></Prop>
-          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名称"></Prop>
+          <Prop name = "column" type="ArrayJson" required children = "数据表格表头列名称">
           <Pre>
             {
 `
@@ -187,9 +187,11 @@ const App = React.createClass({
 `
             }
           </Pre>
+          </Prop>
+          
           <Prop name="howRow" type="Integer" optional children="每页需要显示的条数"></Prop>
-          <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现。data支持一次性查询多条数据传入data属性中，不需要点击一次分页再发送一次ajax请求，此功能根据业务需求使用！"></Prop>
-          <Pre>
+          <Prop name="data" type="Array" optional children="DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现。data支持一次性查询多条数据传入data属性中，不需要点击一次分页再发送一次ajax请求，此功能根据业务需求使用！">
+<Pre>
 {
 `const data = {
   "totalList": [], //表格数据
@@ -200,10 +202,12 @@ const App = React.createClass({
 }
           </Pre>
 
+          </Prop>
+          
 
           <Prop name="showPage" type="boolean" optional children="是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置"></Prop>
-          <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】"></Prop>
-          <Pre>
+          <Prop name="onPageChange" type="Function" optional children="点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】">
+<Pre>
 {
 `
 /**
@@ -220,6 +224,8 @@ const App = React.createClass({
 `
 }
           </Pre>
+          </Prop>
+          
           <Prop name="onCheckboxSelect" type="Function" optional children="复选框点击事件，返回被选中的行记录"></Prop>
         </Props>
       </div>

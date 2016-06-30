@@ -39,7 +39,7 @@ const Rows = React.createClass({
         rows.map((item, j) => {
           let isSelect = item.isSelect || false
           let isDisabled = item.disabled || false
-          let checkboxTd = this.props.onSelect 
+          let checkboxTd = this.props.onCheckboxSelect 
             ? <td><Checkbox disabled={isDisabled} checked={isSelect} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
             : null
           return (
@@ -244,6 +244,7 @@ export default React.createClass({
           <Rows 
             rows={this.state.items.totalList} 
             onSelect={this.handleCheckboxChange}
+            onCheckboxSelect={this.props.onCheckboxSelect}
             column={this.props.column}
             currentPage={currentPage}
             pageSize={pageSize}
