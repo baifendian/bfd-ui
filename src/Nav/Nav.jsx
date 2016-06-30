@@ -37,6 +37,10 @@ Nav.contextTypes = {
   nav: PropTypes.object
 }
 
+Nav.defaultProps = {
+  href: ''
+}
+
 Nav.propTypes = {
   href: PropTypes.string,
   onItemClick: PropTypes.func

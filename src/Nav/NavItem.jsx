@@ -33,7 +33,7 @@ const NavItem = React.createClass({
     const { children, icon, title, ...other } = this.props
 
     const baseURL = this.context.nav.props.href
-    let href = baseURL + '/' + (this.props.href || '')
+    let href = baseURL + '/' + this.props.href
 
     href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
 
@@ -74,6 +74,10 @@ const NavItem = React.createClass({
 NavItem.contextTypes = {
   history: PropTypes.object.isRequired,
   nav: PropTypes.object
+}
+
+NavItem.defaultProps = {
+  href: ''
 }
 
 NavItem.propTypes = {
