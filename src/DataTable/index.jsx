@@ -197,6 +197,12 @@ export default React.createClass({
 
   },
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState({ items: nextProps.data })
+    }
+  },
+
   render: function () {
     const self = this
     let column = this.props.column
