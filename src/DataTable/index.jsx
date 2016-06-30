@@ -79,7 +79,7 @@ const Rows = React.createClass({
 export default React.createClass({
   items: [],
   propTypes: {
-    data: PropTypes.array,
+    data: PropTypes.object,
     url: PropTypes.string,
     customProp({ data, url }) {
       if (data && url) {
