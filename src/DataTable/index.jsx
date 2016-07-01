@@ -95,7 +95,8 @@ export default React.createClass({
       items: {
         totalList: [],
         totalPageNum: 0,
-        refresh: false
+        refresh: false,
+        currentPage: 1
       },
       currentPage: this.props.currentPage || 1
     }
@@ -107,7 +108,8 @@ export default React.createClass({
         items: {
           totalList: this.props.data.totalList || [],
           totalPageNum: this.props.data.totalPageNum || 0,
-          refresh: false
+          refresh: false,
+          currentPage: this.props.data.currentPage || 1
         }
       })
     }

@@ -7,7 +7,8 @@ import { Props, Prop } from '../Props'
 
 export default React.createClass({
   getInitialState: function () {
-    return {url: "../data/table.json",
+    return {
+      url: "../data/table.json",
       column: [{
         title:'序号',
         key:'sequence'
