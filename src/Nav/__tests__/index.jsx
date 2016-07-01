@@ -12,10 +12,20 @@ import { Nav, NavItem } from '../index'
 
 //   it('index is ok', () => {
 //     const nav = TestUtils.renderIntoDocument((
-//       <Nav href="/">
-//         <NavItem />
-//       </Nav>
+//       <Router>
+//         <Route component={NavTest}>
+//         </Route>
+//       <Router
 //     ))
+
+//     function NavTest() {
+//       return (
+//         <Nav href="/">
+//           <NavItem />
+//         </Nav>
+//       )
+//     }
+
 //     expect(TestUtils.scryRenderedDOMComponentsWithTag(nav, 'a')[0].href).toBe('/')
 //   })
 
