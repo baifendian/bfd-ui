@@ -5,6 +5,16 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.3.9" date="2016-07-05">
+        <ol>
+          <li>TabPanel 调整为激活时渲染，解决初始化渲染时因隐藏导致的一系列问题</li>
+          <li>NavItem 修改为默认折叠状态，增加 defaultOpen 来控制默认展开状态</li>
+          <li>message 添加 close 方法，关闭消息</li>
+          <li>Steps 新增 onStepClick 属性，响应单条步骤点击事件</li>
+          <li>修复 DataTable data 属性指定 currentPage 无效的问题</li>
+        </ol>
+      </Version>
+      
       <Version version="0.3.3" date="2016-06-29">
         <ol>
           <li>xhr 模块 data 属性支持所有类型请求（GET、HEAD 请求本身机制问题除外）</li>
