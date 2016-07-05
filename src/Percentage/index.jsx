@@ -17,18 +17,19 @@ const propTypes = {
 
 const Percentage = React.createClass({
   
-  renderChart() {
-    const config = {container: this.refs.container, ...this.props}  
+  renderChart(props) {
+    const config = {container: this.refs.container, ...props}  
     new PercentageChart(config)
   },
 
   componentDidMount() {
-    this.renderChart()
+    this.renderChart(this.props)
   },
 
   shouldComponentUpdate(nextProps) {
     if (this.props.percent !== nextProps.percent) {
-      this.renderChart()
+      this.renderChart(nextProps)
+      return false
     }
     return true
   },

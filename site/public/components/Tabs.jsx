@@ -1,5 +1,6 @@
 import React from 'react'
 import { Tabs, TabList, Tab, TabPanel } from 'c/Tabs'
+import Percentage from 'c/Percentage'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 

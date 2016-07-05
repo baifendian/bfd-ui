@@ -35,19 +35,35 @@ export default React.createClass({
         <h1>全局提示 @hai.jiang</h1>
         <Pre>{code}</Pre>
         <MessageDemo></MessageDemo>
-        <h2>message.success(message, duration)</h2>
-        <h2>message.danger(message, onClose)</h2>
-        <Props>
-          <Prop name="message" type="string | ReactElement" required>
-            <p>消息内容</p>
-          </Prop>
-          <Prop name="duration" type="number">
-            <p>持续时间，单位秒，默认 2 秒，danger类型无效（手动关闭）</p>
-          </Prop>
-          <Prop name="onClose" type="function">
-            <p>手动关闭后的回调</p>
-          </Prop>
-        </Props>
+
+        <h2>API</h2>
+
+        <h3>message.success(message, [duration])</h3>
+        <ul>
+          <li>
+            <h5>message</h5>
+            <p>string | reactElement, 消息内容</p>
+          </li>
+          <li>
+            <h5>duration</h5>
+            <p>number, 持续时间，单位秒，默认 2 秒</p>
+          </li>
+        </ul>
+
+        <h3>message.danger(message, [onClose])</h3>
+        <ul>
+          <li>
+            <h5>message</h5>
+            <p>同上</p>
+          </li>
+          <li>
+            <h5>onClose</h5>
+            <p>function, 手动关闭后的回调</p>
+          </li>
+        </ul>
+
+        <h3>message.close()</h3>
+        <p>关闭消息</p>
       </div>
     )
   }

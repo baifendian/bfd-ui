@@ -27,7 +27,7 @@ const App = React.createClass({
         </div>
         <div id="body" className="clearfix">
           <div className="sidebar">
-            <Nav>
+            <Nav href="/">
               <NavItem icon="home" title="首页" />
               <NavItem href="components" icon="th" title="组件" />
               <NavItem href="workflow" icon="hand-o-right" title="工作流" />

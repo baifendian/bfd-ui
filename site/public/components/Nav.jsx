@@ -85,6 +85,9 @@ ReactDOM.render((
           <Prop name="title" type="string" required>
             <p>菜单名称</p>
           </Prop>
+          <Prop name="defaultOpen" type="boolean">
+            <p>默认是否展开</p>
+          </Prop>
         </Props>
       </div>
     )

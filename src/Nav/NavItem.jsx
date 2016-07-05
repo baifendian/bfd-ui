@@ -10,8 +10,7 @@ const NavItem = React.createClass({
 
   getInitialState() {
     return {
-      // Todo: condition of isOpen
-      isOpen: !!this.props.children
+      isOpen: this.props.defaultOpen || false
     }
   },
 
@@ -83,7 +82,8 @@ NavItem.defaultProps = {
 NavItem.propTypes = {
   href: PropTypes.string,
   icon: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  defaultOpen: PropTypes.bool
 }
 
 export default NavItem

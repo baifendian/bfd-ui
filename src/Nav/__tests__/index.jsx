@@ -2,59 +2,110 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import { Router, Route, IndexRoute } from 'react-router'
+import { createHistory } from 'history'
 import { Nav, NavItem } from '../index'
 
-// TestUtils.renderIntoDocument({
-  
-// })
+describe('Nav', () => {
 
-// describe('Nav', () => {
+  it('index is ok', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem />
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'a')[0].href).toBe('/')
+  })
 
-//   it('index is ok', () => {
-//     const nav = TestUtils.renderIntoDocument((
-//       <Router>
-//         <Route component={NavTest}>
-//         </Route>
-//       <Router
-//     ))
+  it('child href is ok', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem href="test" />
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'a')[0].href).toBe('/test')
+  })
 
-//     function NavTest() {
-//       return (
-//         <Nav href="/">
-//           <NavItem />
-//         </Nav>
-//       )
-//     }
+  it('Nav no href is ok', () => {
+    function NavTest() {
+      return (
+        <Nav>
+          <NavItem href="/test" />
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'a')[0].href).toBe('/test')
+  })
 
-//     expect(TestUtils.scryRenderedDOMComponentsWithTag(nav, 'a')[0].href).toBe('/')
-//   })
+  it('child NavItem href is ok', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem href="test">
+            <NavItem href="test/aa" />
+          </NavItem>
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'a')[1].href).toBe('/test/aa')
+  })
 
-//   it('child href is ok', () => {
-//     const nav = TestUtils.renderIntoDocument((
-//       <Nav href="/">
-//         <NavItem href="test" />
-//       </Nav>
-//     ))
-//     expect(TestUtils.scryRenderedDOMComponentsWithTag(nav, 'a')[0].href).toBe('/test')
-//   })
+  it('NavItem close by default', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem href="test">
+            <NavItem href="test/aa" />
+          </NavItem>
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'li')[0].className).not.toContain('open')
+  })
 
-//   it('Nav no href is ok', () => {
-//     const nav = TestUtils.renderIntoDocument((
-//       <Nav>
-//         <NavItem href="/test" />
-//       </Nav>
-//     ))
-//     expect(TestUtils.scryRenderedDOMComponentsWithTag(nav, 'a')[0].href).toBe('/test')
-//   })
-
-//   it('child NavItem href is ok', () => {
-//     const nav = TestUtils.renderIntoDocument((
-//       <Nav href="/">
-//         <NavItem href="test">
-//           <NavItem href="test/aa" />
-//         </NavItem>
-//       </Nav>
-//     ))
-//     expect(TestUtils.scryRenderedDOMComponentsWithTag(nav, 'a')[1].href).toBe('/test/aa')
-//   })
-// })
+  it('NavItem defaultOpen is ok', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem href="test" defaultOpen>
+            <NavItem href="test/aa" />
+          </NavItem>
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'li')[0].className).toContain('open')
+  })
+})

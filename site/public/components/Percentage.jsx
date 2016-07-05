@@ -4,6 +4,12 @@ import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
 export default React.createClass({
+
+  getInitialState() {
+      return {
+          percent: 90  
+      };
+  },
   
   render() {
     return (
