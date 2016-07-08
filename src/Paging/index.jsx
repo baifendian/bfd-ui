@@ -68,6 +68,12 @@ export default React.createClass({
 
 		}
 	},
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.currentPage !== nextProps.currentPage) {
+      this.setState({ currentIndex: nextProps.currentPage })
+    }
+  },
 	 
   render() {
     //分页逻辑代码

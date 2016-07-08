@@ -14,7 +14,10 @@ export default React.createClass({
     onSearch: React.PropTypes.func.isRequired
   },
   handleChange(v) {
-    this.value = v;
+    this.value = v
+    if(!v) {
+      this.handleClick()
+    }
   },
   handleClick() {
     if(typeof this.props.onSearch == 'function') {

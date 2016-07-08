@@ -7,7 +7,9 @@
     "height": "185cm",
     "weight": "65kg",
     "school": "六安一中",
-    "birthday": "1990-03-16"
+    "birthday": "1990-03-16",
+	"isSelect": true,
+	"disabled": true
   }, {
     "id": "10",
     "name": "张柏仁",
