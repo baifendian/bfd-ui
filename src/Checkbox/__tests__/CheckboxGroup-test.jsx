@@ -35,9 +35,9 @@ describe('CheckboxGroup', () => {
       </CheckboxGroup>
     )
     const checkboxes = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')
-    expect(checkboxes[1].checked).toBe(true)
-    expect(checkboxes[2].checked).toBe(false)
-    expect(checkboxes[3].checked).toBe(true)
+    expect(checkboxes[0].checked).toBe(true)
+    expect(checkboxes[1].checked).toBe(false)
+    expect(checkboxes[2].checked).toBe(true)
   })
 
   it('should change if selects change', () => {
@@ -60,14 +60,13 @@ describe('CheckboxGroup', () => {
     const instance = TestUtils.renderIntoDocument(<Test />)
     instance.setState({selects: ['apple']})
     const checkboxes = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')
-    expect(checkboxes[3].checked).toBe(false)
+    expect(checkboxes[2].checked).toBe(false)
   })
 
   it('values is ok', () => {
     const instance = TestUtils.renderIntoDocument(<CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>)
     const checkboxes = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')
-    expect(checkboxes.length).toBe(5)
-    expect(checkboxes[1].value).toBe('苹果')
+    expect(checkboxes.length).toBe(4)
   })
 
   it('onChange is ok', () => {
@@ -79,7 +78,7 @@ describe('CheckboxGroup', () => {
         <Checkbox value="huawei">华为</Checkbox>
       </CheckboxGroup>
     )
-    TestUtils.Simulate.change(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')[1], {
+    TestUtils.Simulate.change(TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')[0], {
       target: {
         value: 'apple',
         checked: false,
