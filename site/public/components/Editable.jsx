@@ -36,7 +36,7 @@ export default () => {
           <p>待编辑的值</p>
         </Prop>
         <Prop name="onChange" type="function">
-          <p>编辑完确定的回调，参数为修改后的值</p>
+          <p>确定的回调，参数为当前值</p>
         </Prop>
         <Prop name="onCancel" type="function">
           <p>取消后的回调</p>

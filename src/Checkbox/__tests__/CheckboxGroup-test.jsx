@@ -40,6 +40,29 @@ describe('CheckboxGroup', () => {
     expect(checkboxes[3].checked).toBe(true)
   })
 
+  it('should change if selects change', () => {
+    const Test = React.createClass({
+      getInitialState() {
+        return {
+          selects: ['apple', 'huawei']  
+        }
+      },
+      render() {
+        return (
+          <CheckboxGroup selects={this.state.selects} onChange={jest.fn()}>
+            <Checkbox value="apple">苹果</Checkbox>
+            <Checkbox value="mi">小米</Checkbox>
+            <Checkbox value="huawei">华为</Checkbox>
+          </CheckboxGroup>
+        )
+      }
+    })
+    const instance = TestUtils.renderIntoDocument(<Test />)
+    instance.setState({selects: ['apple']})
+    const checkboxes = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')
+    expect(checkboxes[3].checked).toBe(false)
+  })
+
   it('values is ok', () => {
     const instance = TestUtils.renderIntoDocument(<CheckboxGroup values={['苹果', '小米', '三星', '华为']}/>)
     const checkboxes = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'input')

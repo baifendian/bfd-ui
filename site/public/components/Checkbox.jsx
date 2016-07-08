@@ -149,6 +149,9 @@ export default React.createClass({
           <Prop name="block" type="boolean">
             <p>是否垂直布局，默认 inline 模式</p>
           </Prop>
+          <Prop name="toggleable" type="boolean">
+            <p>是否开启全选功能，默认关闭</p>
+          </Prop>
         </Props>
       </div>
     )

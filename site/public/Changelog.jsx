@@ -5,6 +5,17 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+
+      <Version version="0.3.10" date="2016-07-08">
+        <ol>
+          <li>CheckboxGroup 新增 toggleable 属性，控制启用全选功能；修复 selects 属性改变后不更新的问题</li>
+          <li>修复 LineChart data 属性更新后未重绘、只有一条数据 tooltip 显示错误的问题</li>
+          <li>修改 Editable  onChange 触发规则，不再验证值是否改变</li>
+          <li>修复 DataTable 更新 currentPage 无效的问题</li>
+          <li>SearchInput 清空时，自动触发 onSearch</li>
+        </ol>
+      </Version>
+      
       <Version version="0.3.9" date="2016-07-05">
         <ol>
           <li>TabPanel 调整为激活时渲染，解决初始化渲染时因隐藏导致的一系列问题</li>
@@ -33,7 +44,7 @@ import Tree from 'bfd-ui/lib/Tree'
           </li>
           <li>Tree 新增 onActive 属性，响应节点点中后的处理</li>
           <li>Modal 新增 lock 属性，控制遮罩层点击后是否关闭</li>
-          <li>Checkbox 新增 defaultChecked 属性；修复无文本时的样式问题；添加全选功能</li>
+          <li>Checkbox 新增 defaultChecked 属性；修复无文本时的样式问题；</li>
           <li>当 CheckboxGroup 定义 selects 属性时，取消强制定义 onChange 属性；定义 block 属性时，Checkbox 自动为 block 模式，无需单独定义</li>
           <li>Radio value 属性支持 number 类型</li>
           <li>RadioGroup 新增 defaultValue 属性；value、defaultValue 支持 number 类型</li>

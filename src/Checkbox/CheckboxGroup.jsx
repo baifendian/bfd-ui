@@ -12,6 +12,10 @@ const CheckboxGroup = React.createClass({
     }
   },
 
+  componentWillReceiveProps(nextProps) {
+    nextProps.selects && this.setState({selects: nextProps.selects})  
+  },
+
   update(selects) {
     this.setState({ selects })
     this.props.onChange && this.props.onChange(selects)
@@ -44,7 +48,7 @@ const CheckboxGroup = React.createClass({
   },
 
   render() {
-    const { className, values, children, block, ...other } = this.props
+    const { className, values, children, block, toggleable, ...other } = this.props
     const selects = this.state.selects
     const unSelects = []
 
@@ -92,7 +96,17 @@ const CheckboxGroup = React.createClass({
         className={classnames('bfd-checkbox-group', className)} 
         {...other}
       >
-        <Checkbox block={block} checked={unSelects.length === 0} onChange={this.toggleAll}>全选</Checkbox>
+        {
+          toggleable && checkboxes && checkboxes.length > 1 ? 
+          <Checkbox 
+            block={block} 
+            checked={unSelects.length === 0} 
+            onChange={this.toggleAll}
+          >
+            全选
+          </Checkbox> : 
+          null
+        }
         {checkboxes}
       </div>
     ) 
@@ -103,7 +117,8 @@ CheckboxGroup.propTypes = {
   selects: PropTypes.array,
   values: PropTypes.array,
   onChange: PropTypes.func,
-  block: PropTypes.bool
+  block: PropTypes.bool,
+  toggleable: PropTypes.bool
 }
 
 export default CheckboxGroup

@@ -246,7 +246,7 @@ export default class {
      */
     function getXAxisIndex(eventTarget) {
       let xAxisIndex = (categories.length - 1) * (d3.mouse(eventTarget)[0] - xAxisPadding) / (width - xAxisPadding * 2)
-      return +xAxisIndex.toFixed(0)
+      return +xAxisIndex.toFixed(0) || 0
     }
 
     /**

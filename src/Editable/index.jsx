@@ -42,15 +42,12 @@ const Editable = React.createClass({
   },
 
   handleOk() {
-    const state = {
-      isEditing: false
-    }
     const changedValue = this.state.changedValue
-    if (changedValue !== this.state.value) {
-      state.value = changedValue
-      this.props.onChange && this.props.onChange(changedValue)
-    }
-    this.setState(state)
+    this.setState({
+      isEditing: false,
+      value: changedValue
+    })
+    this.props.onChange && this.props.onChange(changedValue)
   },
 
   handleCancel() {
