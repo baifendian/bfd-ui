@@ -33,7 +33,7 @@ const TabPanel = React.createClass({
     }
     return (
       <div className={classNames('tab-panel', {active: isActive})}>
-        {this.props.children}
+        {isActive ? this.props.children : null}
       </div>
     )
   }

@@ -2,6 +2,7 @@ import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
+import Nav from './Nav'
 import Icon from '../Icon'
 import './NavItem.less'
 
@@ -9,8 +10,7 @@ const NavItem = React.createClass({
 
   getInitialState() {
     return {
-      // Todo: condition of isOpen
-      isOpen: !!this.props.children
+      isOpen: this.props.defaultOpen || false
     }
   },
 
@@ -32,7 +32,7 @@ const NavItem = React.createClass({
     const { children, icon, title, ...other } = this.props
 
     const baseURL = this.context.nav.props.href
-    let href = baseURL + '/' + (this.props.href || '')
+    let href = baseURL + '/' + this.props.href
 
     href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
 
@@ -75,10 +75,15 @@ NavItem.contextTypes = {
   nav: PropTypes.object
 }
 
+NavItem.defaultProps = {
+  href: ''
+}
+
 NavItem.propTypes = {
   href: PropTypes.string,
   icon: PropTypes.string,
-  title: PropTypes.string
+  title: PropTypes.string,
+  defaultOpen: PropTypes.bool
 }
 
 export default NavItem

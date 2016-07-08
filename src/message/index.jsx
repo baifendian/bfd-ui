@@ -70,5 +70,9 @@ export default {
 
   danger(message, onClose) {
     showMessage('danger', message, onClose)
+  },
+
+  close() {
+    instance && instance.setState({show: false})
   }
 }

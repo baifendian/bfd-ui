@@ -5,13 +5,21 @@ import './index.less'
 
 const Chart = React.createClass({
 
-  renderChart(data) {
-    this.config = {container: this.refs.chart, ...this.props, data}
+  renderChart(data, props) {
+    this.config = {container: this.refs.chart, ...props, data}
     new this.props.type(this.config)
   },
 
   handleSuccess(res) {
-    this.renderChart(res)
+    this.renderChart(res, this.props)
+  },
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.data !== nextProps.data) {
+      this.renderChart(nextProps.data, nextProps)
+      return false
+    }
+    return true  
   },
 
   componentDidMount() {
@@ -20,15 +28,23 @@ const Chart = React.createClass({
       container.style.height = '100%'
     }
     if (this.props.data) {
-      this.renderChart(this.props.data)
+      this.renderChart(this.props.data, this.props)
     }
   },
 
   render() {
     const chart = <div style={{height: '100%'}} ref="chart"></div>
     return (
-      <div ref="container" className={classnames('bfd-chart', this.props.className)} style={this.props.style}>
-        {this.props.url ? <Fetch url={this.props.url} onSuccess={this.handleSuccess}>{chart}</Fetch> : chart}
+      <div 
+        ref="container" 
+        className={classnames('bfd-chart', this.props.className)} 
+        style={this.props.style}
+      >
+        {
+          this.props.url ? 
+          <Fetch url={this.props.url} onSuccess={this.handleSuccess}>{chart}</Fetch> : 
+          chart
+        }
       </div>
     )
   }
