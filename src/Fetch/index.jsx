@@ -22,10 +22,6 @@ export default React.createClass({
   },
   
   componentDidMount() {
-    const container = this.refs.container
-    if (!parseInt(getComputedStyle(container).height, 10)) {
-      container.style.height = '100%'
-    }
     this.props.url && this.fetch()
   },
 
@@ -60,8 +56,9 @@ export default React.createClass({
   },
 
   render() {
+    const { className, ...other } = this.props
     return (
-      <div className={classnames('bfd-fetch', this.props.className)} style={this.props.style} ref="container">
+      <div ref="container" className={classnames('bfd-fetch', className)} {...other}>
         {this.props.url && this.state.xhr !== 'success' ? (
           <div className="fetch-mask">
           {(() => {

@@ -1,51 +1,51 @@
 import React, { PropTypes } from 'react'
+import ReactDM from 'react-dom'
 import Fetch from '../Fetch'
 import classnames from 'classnames'
+import warning from 'warning'
 import './index.less'
 
 const Chart = React.createClass({
 
-  renderChart(data, props) {
-    this.config = {container: this.refs.chart, ...props, data}
-    new this.props.type(this.config)
+  renderChart(props) {
+    new this.props.type({
+      container: this.container,
+      ...props
+    })
   },
 
-  handleSuccess(res) {
-    this.renderChart(res, this.props)
+  handleSuccess(data) {
+    this.renderChart({
+      ...this.props,
+      data
+    })
   },
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.data !== nextProps.data) {
-      this.renderChart(nextProps.data, nextProps)
+      this.renderChart(nextProps)
       return false
     }
     return true  
   },
 
   componentDidMount() {
-    const container = this.refs.container
-    if (!parseInt(getComputedStyle(container).height, 10)) {
-      container.style.height = '100%'
-    }
+    this.container = ReactDM.findDOMNode(this)
     if (this.props.data) {
-      this.renderChart(this.props.data, this.props)
+      this.renderChart(this.props)
     }
   },
 
   render() {
-    const chart = <div style={{height: '100%'}} ref="chart"></div>
+    const { className, url, type, ...other } = this.props
     return (
-      <div 
-        ref="container" 
-        className={classnames('bfd-chart', this.props.className)} 
-        style={this.props.style}
-      >
-        {
-          this.props.url ? 
-          <Fetch url={this.props.url} onSuccess={this.handleSuccess}>{chart}</Fetch> : 
-          chart
-        }
-      </div>
+      <Fetch
+        ref="container"
+        className={classnames('bfd-chart', className)} 
+        url={url} 
+        onSuccess={this.handleSuccess} 
+        { ...other }
+      />
     )
   }
 })

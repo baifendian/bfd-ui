@@ -40,6 +40,7 @@ const TreeNode = React.createClass({
   },
 
   handleLoad(data) {
+    this.isloaded = true
     this.set('children', data)
   },
 
@@ -75,8 +76,10 @@ const TreeNode = React.createClass({
         </ul>
       )
     } else {
-      if (isParent && getUrl && open) {
+      if (isParent && getUrl && open && !this.isloaded) {
         Children = <Fetch url={getUrl(this.state)} onSuccess={this.handleLoad} />
+      } else {
+        Children = null
       }
     }
 
