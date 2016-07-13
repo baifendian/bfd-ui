@@ -6,6 +6,20 @@ function ChangeLog() {
   return (
     <div>
 
+      <Version version="0.4.0" date="2016-07-13">
+        <p>新增组件: </p>
+        <ul>
+          <li>表格树: TableTree</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>优化图表组件容器结构</li>
+          <li>修复 Tree getUrl 方式返回空时的问题；getUrl 回调参数添加当前节点路径下数据集合；整体样式调整；添加 defaultData 属性实现不可控特性</li>
+          <li>修复 wrapper 型组件遍历子组件时出现空值造成的问题</li>
+          <li>ClearableInput 添加 onClear 属性，响应清空事件</li>
+        </ol>
+      </Version>
+
       <Version version="0.3.10" date="2016-07-08">
         <ol>
           <li>CheckboxGroup 新增 toggleable 属性，控制启用全选功能；修复 selects 属性改变后不更新的问题</li>

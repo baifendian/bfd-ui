@@ -1,59 +1,48 @@
-import React, { PropTypes } from 'react'
-import update from 'react-addons-update'
-import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
 import warning from 'warning'
 
-const TreeNode = React.createClass({
+class TreeNode extends Component {
 
-  getInitialState() {
-    return this.props.data
-  },
+  componentWillMount() {
+    if (this.props.data.active) {
+      this.context.tree.activePath = this.props.path 
+    }
+  }
 
-  componentWillReceiveProps(nextProps) {
-    'data' in nextProps && this.setState(nextProps.data)
-  },
+  shouldComponentUpdate(nextProps) {
+    return this.props.data !== nextProps.data
+  }
+  
+  handleToggle(e) {
+    e.stopPropagation()
+    this.handleChange('open', !this.props.data.open)
+  }
 
-  shouldComponentUpdate,
+  handleNodeClick() {
+    this.context.tree.handleNodeActive(this.props.path)
+  }
 
-  componentDidMount() {
-    this.state.active && this.active()  
-  },
-
-  handleToggle() {
-    this.set('open', !this.state.open)
-    this.props.onChange()
-  },
-
-  set(key, value, callback) {
-    this.updateParentValue(key, value)
-    this.setState({[key]: value}, callback)
-  },
-
-  updateParentValue(key, value) {
-    const { parentData, index } = this.props
-    parentData[index] = update(parentData[index], {
-      [key]: {$set: value}
-    })
-  },
+  handleChange(key, value) {
+    this.context.tree.handleNodeChange(key, value, this.props.path)
+  }
 
   handleLoad(data) {
     this.isloaded = true
-    this.set('children', data)
-  },
-
-  active() {
-    this.props.onActive && this.props.onActive(this)
-  },
+    this.handleChange('children', data)
+  }
 
   render() {
-    const { beforeNodeRender, render, getIcon, getUrl } = this.props
-    const { ...treeNode } = { beforeNodeRender, render, getIcon, getUrl }
-    const { name, open, isParent, active, children } = this.state
-
+    const { beforeNodeRender, getIcon, getUrl } = this.context.tree.props
+    const { data, path } = this.props
+    const { name, open, isParent, active, children } = data
+    const tree = this.context.tree
     const hasChildren = children && children.length
+    const indent = {
+      paddingLeft: Math.floor(path.length / 2) * 20 + 'px'
+    }
     
     let Children
     if (hasChildren) {
@@ -63,13 +52,8 @@ const TreeNode = React.createClass({
           return (
             <TreeNode 
               key={i}
-              parent={this} 
-              parentData={children} 
-              index={i} 
               data={item} 
-              onChange={this.props.onChange}
-              onActive={this.props.onActive} 
-              {...treeNode}
+              path={this.props.path.concat('children', i)}
             />
           )
         })}
@@ -77,51 +61,41 @@ const TreeNode = React.createClass({
       )
     } else {
       if (isParent && getUrl && open && !this.isloaded) {
-        Children = <Fetch url={getUrl(this.state)} onSuccess={this.handleLoad} />
+        Children = (
+          <Fetch style={indent} url={getUrl(data, tree.getPathData(path))} onSuccess={this.handleLoad.bind(this)} />
+        )
       } else {
         Children = null
       }
     }
 
-    let icon
-    if (getIcon) {
-      icon = getIcon(this.state)
-    } else {
-      if (hasChildren || isParent) {
-        icon = 'folder' + (open ? '-open' : '')
-      } else {
-        icon = 'file'
-      }
-    }
+    let typeIcon = getIcon ? getIcon(data) : ''
 
     return (
       <li className={classnames({ open })}>
-        <Icon 
-          className="toggle"
-          style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
-          type={open ? 'minus-square' : 'plus-square'} 
-          onClick={this.handleToggle} 
-        />
         <div 
-          className={classnames('node', { active })} 
-          onClick={this.active}
+          style={indent}
+          className={classnames('node-content', { active })}
+          onClick={this.handleNodeClick.bind(this)}
         >
-          {beforeNodeRender ? beforeNodeRender(this) : null}
-          <Icon type={icon} className="toggle-icon" />
-          <div className="node-content">{render ? render(this.state) : name}</div>
+          <Icon 
+            className="icon-toggle"
+            style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
+            type="caret-right"
+            onClick={this.handleToggle.bind(this)} 
+          />
+          {beforeNodeRender ? beforeNodeRender(data) : null}
+          {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
+          {tree.props.render ? tree.props.render(data) : name}
         </div>
         {Children}
       </li>
     )
   }
-})
+}
 
-TreeNode.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  parentData: PropTypes.array,
-  render: PropTypes.func,
-  index: PropTypes.number,
-  data: PropTypes.object
+TreeNode.contextTypes = {
+  tree: PropTypes.object
 }
 
 export default TreeNode

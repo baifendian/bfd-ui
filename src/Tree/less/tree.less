@@ -4,73 +4,23 @@
     padding: 0;
     list-style: none;
     li {
-      position: relative;
-      > .toggle {
-        color: #42a5f5;
-        cursor: pointer;
-        background-color: #fff;
-        position: relative;
-        z-index: 1;
-        vertical-align: middle;
+      cursor: default;
+      .icon-toggle {
+        width: 16px;
+        text-align: center;
       }
-      > .node {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-        padding: 0 5px;
-        margin-left: 5px;
-        > .toggle-icon {
-          margin-right: 10px;
-          color: #42a5f5;
-          vertical-align: middle;
-        }
-        > .node-content {
-          display: inline-block;
-          vertical-align: middle;
-          line-height: 25px;
-        }
-        &:before {
-          position: absolute;
-          top: 50%;
-          content: '';
-          width: 13px;
-          height: 0px;
-          border-top: 1px dotted #999;
-          left: -10px;
-          margin-top: -1px;
-        }
+      .icon-type {
+        width: 20px;
+        text-align: center;
+        color: #42a5f5;
       }
       > ul {
         display: none;
       }
-      &:after {
-        position: absolute;
-        top: 4px;
-        left: 6px;
-        bottom: -3px;
-        content: '';
-        width: 0px;
-        border-right: 1px dotted #999;
-      }
-      &:first-child {
-        &:after {
-          top: -7px;
-        }
-      }
-      &:last-child {
-        &:after {
-          bottom: 12px;
-        }
-        &:first-child {
-          &:after {
-            bottom: 12px;
-          }
-        }
-      }
       &.open {
-        &:last-child {
-          &:after {
-            bottom: 100%;
+        > .node-content {
+          .icon-toggle {
+            transform: rotate(90deg);
           }
         }
         > ul {
@@ -80,38 +30,23 @@
     }
   }
   > ul {
-    > li:first-child {
-      &:after {
-        top: 12px;
-      }
-    }
-    ul {
-      margin-left: 22px;
-    }
-    .bfd-fetch {
-      margin-left: 46px;
-      .fetch-mask {
-        min-height: 20px;
-        .state {
-          left: 0;
-        }
+    .fetch-mask {
+      min-height: 20px;
+      .state {
+        left: 0;
       }
     }
   }
+  .node-content {
+    padding: 3px 0;
+  }
   &.activeable {
-    li {
-      .node {
-        border: 1px solid transparent;
-        border-radius: 2px;
-        cursor: default;
-        &:hover {
-          border-color: #bbdefb;
-          background-color: #e3f2fd;
-        }
-        &.active {
-          border-color: #90caf9;
-          background-color: #bbdefb;
-        }
+    .node-content {
+      &:hover {
+        background-color: #e3f2fd;
+      }
+      &.active {
+        background-color: #bbdefb;
       }
     }
   }

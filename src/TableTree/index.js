@@ -18,7 +18,9 @@ class TableTree extends Component {
   }
 
   handleChange() {
-    this.setState({data: this.state.data})
+    const data = this.state.data
+    this.setState({ data })
+    this.props.onChange && this.props.onChange(data)
   }
 
   loopLeaf(data, level, hidden) {

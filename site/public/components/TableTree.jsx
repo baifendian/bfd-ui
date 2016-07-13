@@ -58,10 +58,10 @@ export default () => {
       </Panel>
       <Props>
         <Prop name="columns" type="array" required>
-          <p>列配置</p>
+          <p>列配置，第一列为 tree 列</p>
           <Pre>{
 `{
-  open: '列标题显示内容',
+  title: '列标题显示内容',
   key: '对应的数据键，默认表格单元格渲染 item.key',
   render: '作为 key 的替代，自定义渲染单元格，回调参数为当前数据对象'
 }`}</Pre>

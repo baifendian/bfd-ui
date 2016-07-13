@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import Checkbox from './Checkbox'
-import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
 import classnames from 'classnames'
 import './less/checkboxGroup.less'
 
@@ -71,6 +70,7 @@ const CheckboxGroup = React.createClass({
       })
     } else {
       checkboxes = React.Children.map(children, (Checkbox, i) => {
+        if (!Checkbox) return
         const props = Checkbox.props
         const value = props.value
         
