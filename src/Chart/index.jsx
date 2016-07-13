@@ -31,6 +31,7 @@ const Chart = React.createClass({
 
   componentDidMount() {
     this.container = ReactDM.findDOMNode(this)
+    warning(this.container.clientWidth, 'The chart container `width` is `0`')
     if (this.props.data) {
       this.renderChart(this.props)
     }
