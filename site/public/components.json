@@ -64,6 +64,9 @@
     "name": "Tree",
     "cn": "树"
   }, {
+    "name": "TableTree",
+    "cn": "表格树"
+  }, {
     "name": "ClearableInput",
     "cn": "可清空的输入框"
   }, {

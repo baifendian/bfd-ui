@@ -22,6 +22,7 @@ const RadioGroup = React.createClass({
   render() {
     const { className, children, onChange, ...other } = this.props
     const radiosWithProps = React.Children.map(children, (Radio, i) => {
+      if (!Radio) return
       const value = Radio.props.value
       return React.cloneElement(Radio, {
         key: i,

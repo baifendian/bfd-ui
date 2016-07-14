@@ -17,8 +17,8 @@ export default class {
     const maxRadius = 80
       // separation between nodes
     const padding = 6
-    const width = container.parentNode.clientWidth
-    const height = container.parentNode.clientHeight || width * .5
+    const width = container.clientWidth
+    const height = container.clientHeight || width * .5
 
     const radiusMakerRange = d3.extent(data, d => d[radiusMaker])
 

@@ -8,7 +8,13 @@ const code = `import LineChart from 'bfd-ui/lib/LineChart'
 
 export default React.createClass({
   render() {
-    return <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json"/>
+    return（
+      <LineChart 
+        category="date" 
+        cols={{x: '用户', y: '销量'}} 
+        url="/data/lineChart.json"
+      />
+    ） 
   }
 })`
 
@@ -20,7 +26,11 @@ export default React.createClass({
         <Warn>暂停维护，建议使用 Echarts webpack 方式</Warn>
         <Pre>{code}</Pre>
         
-        <LineChart style={{height: 320}} category="date" cols={{x: '用户', y: '销量'}} url="/data/lineChart.json" />
+        <LineChart 
+          category="date" 
+          cols={{x: '用户', y: '销量'}} 
+          url="/data/lineChart.json" 
+        />
         
         <Props>
           <Prop name="cols" type="Object" required>
@@ -35,11 +45,18 @@ export default React.createClass({
           <Prop name="category" type="String" required>
             <p>x轴字段名，比如 'date'</p>
           </Prop>
+          <Prop name="colors" type="array">
+            <p>线的颜色值，数组的形式按顺序配置</p>
+          </Prop>
           <Prop name="yAxis" type="Object">
             <p>y轴相关配置</p>
             <Pre>
 {`{
-  format: '%', // Y字段值格式，默认千分符 's' 
+  /** 
+   * Y字段值格式，默认千分符 's', 
+   * 其他格式配置参考 https://github.com/d3/d3-format/blob/master/README.md#format 
+   */ 
+  format: '%', 
 }`}
             </Pre>
           </Prop>

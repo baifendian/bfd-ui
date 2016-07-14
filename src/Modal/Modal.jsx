@@ -67,6 +67,7 @@ const Modal = React.createClass({
     const { className, children, ...other } = this.props
 
     const childrenWithProps = React.Children.map(children, instance => {
+      if (!instance) return
       if (instance.type === ModalHeader) {
         return React.cloneElement(instance, {
           onClose: () => {

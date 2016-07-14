@@ -63,20 +63,18 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} />
+    return <Tree defaultData={this.state.data} />
   }
 })`
 
 const Basic = React.createClass({
 
   getInitialState() {
-    return {
-      data: data
-    }
+    return { data }
   },
 
   render() {
-    return <Tree data={this.state.data} />
+    return <Tree defaultData={this.state.data} />
   }
 })
 
@@ -94,7 +92,7 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
   }
 })`
 
@@ -107,7 +105,7 @@ const CustomRender = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
   }
 })
 
@@ -124,8 +122,12 @@ export default React.createClass({
     }
   },
 
+  getIcon(data) {
+    return data.open ? 'folder-open' : 'folder'
+  },
+
   render() {
-    return <Tree data={this.state.data} getIcon={data => 'tag'} />
+    return <Tree defaultData={this.state.data} getIcon={this.getIcon} />
   }
 })`
 
@@ -137,8 +139,12 @@ const CustomIcon = React.createClass({
     }
   },
 
+  getIcon(data) {
+    return data.open ? 'folder-open' : 'folder'
+  },
+
   render() {
-    return <Tree data={this.state.data} getIcon={data => 'tag'} />
+    return <Tree defaultData={this.state.data} getIcon={this.getIcon} />
   }
 })
 
@@ -152,9 +158,11 @@ export default React.createClass({
   getInitialState() {
     return {
       data: [{
+        pid: 0,
         name: '数据工厂',
         isParent: true
       }, {
+        pid: 1,
         name: '配置中心',
         isParent: true
       }]
@@ -162,7 +170,12 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} getUrl={data => '/data/tree-children.json'} />
+    return (
+      <Tree 
+        defaultData={this.state.data} 
+        getUrl={item => '/data/tree-children.json?pid=' + item.pid} 
+      />
+    ) 
   }
 })
 `
@@ -172,9 +185,11 @@ const Dynamic = React.createClass({
   getInitialState() {
     return {
       data: [{
+        pid: 0,
         name: '数据工厂',
         isParent: true
       }, {
+        pid: 1,
         name: '配置中心',
         isParent: true
       }]
@@ -182,7 +197,12 @@ const Dynamic = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} getUrl={data => '/data/tree-children.json'} />
+    return (
+      <Tree 
+        defaultData={this.state.data} 
+        getUrl={item => '/data/tree-children.json?pid=' + item.pid} 
+      />
+    ) 
   }
 })
 
@@ -225,7 +245,7 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} onActive={this.handleActive} />
+    return <Tree defaultData={this.state.data} onActive={this.handleActive} />
   }
 })`
 
@@ -263,7 +283,7 @@ const Activeable = React.createClass({
   },
 
   render() {
-    return <Tree data={this.state.data} onActive={this.handleActive} />
+    return <Tree defaultData={this.state.data} onActive={this.handleActive} />
   }
 })
 
@@ -295,7 +315,7 @@ export default React.createClass({
   },
 
   render() {
-    return <SelectTree data={this.state.data} />
+    return <SelectTree defaultData={this.state.data} />
   }
 })`
 
@@ -321,7 +341,7 @@ const Selectable = React.createClass({
   },
 
   render() {
-    return <SelectTree data={this.state.data} />
+    return <SelectTree defaultData={this.state.data} />
   }
 })
 
@@ -358,7 +378,7 @@ export default () => {
 
       <h2>Tree</h2>
       <Props>
-        <Prop name="data" type="array" required>
+        <Prop name="data" type="array">
           <p>数据源，固定字段格式如下</p>
           <Pre>
 {`[{
@@ -369,8 +389,11 @@ export default () => {
 }]`}
           </Pre>
         </Prop>
+        <Prop name="defaultData" type="array">
+          <p>数据源</p>
+        </Prop>
         <Prop name="onChange" type="function">
-          <p>状态改变后的回调</p>
+          <p>数据改变后的回调</p>
         </Prop>
         <Prop name="render" type="function">
           <p>节点渲染逻辑，参数为当前节点数据，默认渲染 data.name</p>
@@ -382,9 +405,9 @@ export default () => {
           </Pre>
         </Prop>
         <Prop name="getUrl" type="function">
-          <p>设置动态加载的数据源 URL，参数为当前节点数据，可动态判断</p>
+          <p>设置动态加载的数据源 URL，参数为当前节点数据以及节点路径下的数据集合，可动态判断</p>
           <Pre>
-{`<Tree getUrl={data => '/api/node?pid=' + data.id} />`}
+{`<Tree getUrl={(data, pathData) => '/api/node?pid=' + data.id} />`}
           </Pre>
           <p>返回格式同 data 属性</p>
           <Warn>动态加载方式需同时指定 isParent 字段以及 getUrl 属性</Warn>
@@ -397,8 +420,8 @@ export default () => {
 
       <h2>SelectTree</h2>
       <Props>
-        <Prop name="data" type="array">
-          <p>数据源，多一个 checked 字段，格式如下</p>
+        <Prop name="{ ...Tree }">
+          <p>支持所有 Tree 属性，data 格式多出 checked 字段</p>
           <Pre>
 {`[{
   name: '配置中心', // 显示的字符,
@@ -407,9 +430,6 @@ export default () => {
   children: [] //子节点
 }]`}
           </Pre>
-        </Prop>
-        <Prop name="{ ...Tree }">
-          <p>支持所有 Tree 属性</p>
         </Prop>
       </Props>
     </div>
