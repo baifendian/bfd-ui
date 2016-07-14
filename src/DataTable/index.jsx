@@ -158,7 +158,9 @@ export default React.createClass({
   },
 
   handleSuccess: function ( data ) {
-    this.setState({ items: data } )
+    this.setState({ 
+      items: data
+    })
   },
 
   refresh: function () {
@@ -254,7 +256,7 @@ export default React.createClass({
             onSelect={this.handleCheckboxChange}
             onCheckboxSelect={this.props.onCheckboxSelect}
             column={this.props.column}
-            currentPage={currentPage}
+            currentPage={this.state.items.currentPage || currentPage}
             pageSize={pageSize}
           >
           </Rows>

@@ -203,7 +203,7 @@ export default () => {
         <Prop name="required" type="boolean">
           <p>是否必须，如果必须，则 label 前带 * 的标识</p>
         </Prop>
-        <Prop name="name" type="string" rquired>
+        <Prop name="name" type="string" required>
           <p>关联的数据字段</p>
         </Prop>
         <Prop name="help" type="string">

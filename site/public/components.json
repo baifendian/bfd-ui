@@ -48,6 +48,9 @@
   }, {
     "name": "Upload",
     "cn": "上传"
+  }, {
+    "name": "SplitPanel",
+    "cn": "分栏"
   }]
 }, {
   "type": "交互进阶",

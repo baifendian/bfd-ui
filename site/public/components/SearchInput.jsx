@@ -27,11 +27,14 @@ const App = React.createClass({
 })`
         }
         </Pre>
-        <SearchInput placeholder="请输入任务名称" onSearch={this.handleClick} />
+        <SearchInput placeholder="请输入任务名称" label="查询" onSearch={this.handleClick} />
         <div className="clearfix"></div>
         <Props>
           <Prop name="placeholder" type="String">
             <p>搜索框提示信息</p>
+          </Prop>
+          <Prop name="label" type="String">
+            <p>搜索按钮名称，默认是搜索</p>
           </Prop>
           <Prop name="onSearch" type="function" required>
             <p>搜索按钮单击事件，value为搜索框输入值</p>

@@ -30,7 +30,7 @@ export default React.createClass({
         <ClearableInput onChange={this.handleChange} inline placeholder={this.props.placeholder || '' }/>
         <button className="btn btn-primary" type="button" onClick={this.handleClick}>
           <span className="glyphicon glyphicon-search"></span>
-          搜索 
+          {this.props.label || '搜索'} 
         </button>
       </div>
     )
