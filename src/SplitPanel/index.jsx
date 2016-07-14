@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { findAllByType } from '../util/ReactUtils'
 import classnames from 'classnames'
 import './index.less'
-const Panel = React.createClass({
+const SubSplitPanel = React.createClass({
   render() {
     const {children, className, ...other} = this.props
     return (
@@ -94,13 +94,14 @@ const SplitPanel = React.createClass({
   render() {
     const rows = []
     const {children, className, ...other} = this.props
-    const items = findAllByType(children, Panel)
+    const items = findAllByType(children, SubSplitPanel)
     const direct = this.props.direct
     const lineClassName = direct == 'ver' ? 'verline' : 'horline'
+    const topStyle = direct == 'ver' ? {float: 'left'} : {}
     const bottomStyle = direct == 'ver' ? {float: 'right'} : {}
     return (
       <div ref="container" className={classnames('bfd-split-panel', className)} {...other}>
-        <div ref="top" className="top">{items[0]}</div>
+        <div ref="top" style={topStyle} className="top">{items[0]}</div>
         <div ref="line" className={lineClassName} onMouseDown={this.handleMouseDown}></div>
         <div ref="bottom" style={bottomStyle} className="bottom">{items[1]}</div>
       </div>
@@ -108,7 +109,7 @@ const SplitPanel = React.createClass({
   },
 
   componentDidMount() {
-    const items = findAllByType(this.props.children, Panel)
+    const items = findAllByType(this.props.children, SubSplitPanel)
     const container = this.refs.container
     const top = this.refs.top
     const bottom = this.refs.bottom
@@ -116,22 +117,25 @@ const SplitPanel = React.createClass({
     const style = getComputedStyle(container)
     const lineStyle = getComputedStyle(line)
     const direct = this.props.direct
-    container.style.width = this.props.width + 'px'
-    container.style.height = this.props.height + 'px'
+    const containerHeight = container.offsetHeight
+    const containerWidth = container.offsetWidth
+    container.style.width = containerWidth + 'px'
+    container.style.height = containerHeight + 'px'
+
     if(direct == 'ver') {
       top.style.height = '100%'
       bottom.style.height = '100%'
-      const width = items[0].props.width || this.props.width / 2
+      const width = items[0].props.width || containerWidth / 2
       top.style.width = width + 'px'
       line.style.left = width + 'px'
-      bottom.style.width = this.props.width - width - parseInt(lineStyle.width) - parseInt(style.borderWidth) - 1 + 'px'
+      bottom.style.width = containerWidth - width - parseInt(lineStyle.width) - parseInt(style.borderWidth) - 1 + 'px'
     } else {
       top.style.width = '100%'
       bottom.style.width = '100%'
-      const height = items[0].props.height || this.props.height / 2
+      const height = items[0].props.height || containerHeight / 2
       top.style.height = height + 'px'
       line.style.top = height + 'px'
-      bottom.style.height = this.props.height - height - parseInt(lineStyle.height) - parseInt(style.borderWidth) + 'px'
+      bottom.style.height = containerHeight - height - parseInt(lineStyle.height) - parseInt(style.borderWidth) + 'px'
     }    
   }
 })
@@ -140,14 +144,14 @@ SplitPanel.propTypes = {
   direct: PropTypes.string,
   width: PropTypes.number,
   height: PropTypes.number,  
-  customProp({ direct, width, height }) {
-    if (!(direct && width && height)) {
-      return new Error('direct、width、height均为必填属性。')
+  customProp({direct}) {
+    if (!direct) {
+      return new Error('direct必填属性。')
     }
   }
 }
 
 export {
   SplitPanel,
-  Panel
+  SubSplitPanel
 }
