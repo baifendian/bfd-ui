@@ -31,13 +31,27 @@ const ClearableInput = React.createClass({
     this.props.onChange && this.props.onChange(value)
   },
 
+  focus() {
+    this.refs.input.focus()
+  },
+
   render() {
     const { size, inline, className, onChange, ...other } = this.props
     const value = this.state.value
     return (
       <div className={classnames('bfd-clearable-input', className, { inline })}>
-        <input {...other} value={value} className={'form-control' + (size ? ' input-' + size : '')} onChange={this.handleInputChange} />
-        {value && !other.disabled ? <Icon type="remove" className="clear" onClick={this.handleClear} /> : null}
+        <input 
+          ref="input"
+          value={value} 
+          className={'form-control' + (size ? ' input-' + size : '')} 
+          onChange={this.handleInputChange} 
+          {...other} 
+        />
+        {
+          value && !other.disabled ? 
+          <Icon type="remove" className="clear" onClick={this.handleClear} /> : 
+          null
+        }
       </div>
     )
   }

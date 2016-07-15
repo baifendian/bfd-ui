@@ -74,7 +74,7 @@ export default () => {
   ...
   // 配置字段说明
   open: '是否展开',
-  children: '字节点'
+  children: '子节点'
 }`}</Pre>
         </Prop>
         <Prop name="defaultData" type="array">

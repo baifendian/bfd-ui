@@ -132,7 +132,7 @@ const MultipleSelect = React.createClass({
 
     const { className, children, url, disabled, tagable, render, ...other } = this.props
     const placeholder = '请选择'
-    const searchValue = this.state.searchValue
+    const { searchValue, index } = this.state
 
     const OptionsMapper = {}
 
@@ -165,12 +165,15 @@ const MultipleSelect = React.createClass({
       }
     }
 
-    // 键盘上下切换样式
-    Options = Options.map((child, i) => {
-      return React.cloneElement(child, {
-        key: i,
-        className: classnames(child.className, {active: this.state.index === i})
-      })
+    // 键盘上下切换绑定样式
+    Options = Options.map((option, i) => {
+      if (index !== i) {
+        return option
+      } else {
+        return React.cloneElement(option, {
+          className: classnames(option.className, 'active')
+        })
+      }
     })
 
     const valueSet = new Set(this.state.values)
