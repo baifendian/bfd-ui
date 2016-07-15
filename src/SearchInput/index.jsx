@@ -25,10 +25,11 @@ export default React.createClass({
     }
   },
   render() {
+    const size = this.props.size || 'lg'
     return (
-      <div className={classnames('bfd-search_input', this.props.className)}>        
-        <ClearableInput onChange={this.handleChange} inline placeholder={this.props.placeholder || '' }/>
-        <button className="btn btn-primary" type="button" onClick={this.handleClick}>
+      <div className={classnames('bfd-search_input', this.props.className, size)}>        
+        <ClearableInput size={size} onChange={this.handleChange} inline placeholder={this.props.placeholder || '' }/>
+        <button className={classnames('btn btn-primary', size)} type="button" onClick={this.handleClick}>
           <span className="glyphicon glyphicon-search"></span>
           {this.props.label || '搜索'} 
         </button>
