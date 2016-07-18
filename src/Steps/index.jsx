@@ -1,5 +1,6 @@
 import 'bfd-bootstrap'
 import React from 'react'
+import Icon from '../Icon'
 import { findAllByType } from '../util/ReactUtils'
 import classnames from 'classnames'
 import './main.less'
@@ -78,11 +79,12 @@ const Circle = React.createClass({
     const title = this.props.title
     this.props.onStep && this.props.onStep(index, title)
   },
-  render() {
+  render() {    
     const width = this.props.width
     const height = this.props.height
     const index = this.props.index
     const current = this.props.current
+    const icon = this.props.icon    
     const w = width >= height ? height : width;
     const x = (width / 2) - (w / 4);
     const y = (height / 2) - (height / 4) - 10;
@@ -98,6 +100,11 @@ const Circle = React.createClass({
       lineHeight: (w / 2) + 'px'
     }
 
+    let NavIcon = index + 1
+    if (icon) {
+      NavIcon = <Icon type={icon} />
+    }
+
     let className = "circle_process"
     if(index < current) {
       className = "circle_finish"
@@ -105,7 +112,7 @@ const Circle = React.createClass({
       className = "circle_wait";
     }
 
-    return (<div style={style} onClick={this.handleClick} className={classnames('circle', className)}>{index + 1}</div>)
+    return (<div style={style} onClick={this.handleClick} className={classnames('circle', className)}>{NavIcon}</div>)
   }
 })
 
@@ -134,6 +141,7 @@ const Steps = React.createClass({
     }
   },
   render() {
+
     let rows = [];
     const { children } = this.props;
     const items = findAllByType(children, Step);
@@ -142,6 +150,7 @@ const Steps = React.createClass({
         key={index} 
         index={index}         
         current={this.props.current || 0}
+        icon = {item.props.icon}
         max={items.length}
         width={this.state.width} 
         height={this.state.height} 

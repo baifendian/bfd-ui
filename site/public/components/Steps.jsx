@@ -29,8 +29,8 @@ const App = React.createClass({
         <Step title="配置推荐栏" />
         <Step title="配置推荐策略" />
         <Step title="配置算法" />
-        <Step title="配置规则" />
-        <Step title="配置样式" />
+        <Step title="配置规则" icon="user" />
+        <Step title="配置样式" icon="cogs" />
       </Steps>
       <button type="button" className="btn btn-primary" onClick={this.handleClick}>下一步</button>
   }
@@ -62,11 +62,11 @@ export default React.createClass({
         <Pre>{code}</Pre>
         
         <Steps onStepClick={this.handleStepClick} height={70} current={this.state.current} >
-          <Step title="配置推荐栏" />
-          <Step title="配置推荐策略" />
+          <Step title="配置推荐栏"/>
+          <Step title="配置推荐策略"/>
           <Step title="配置算法" />
-          <Step title="配置规则" />
-          <Step title="配置样式" />
+          <Step title="配置规则" icon="user"/>
+          <Step title="配置样式" icon="cogs"/>
         </Steps>
         <p className="text-right" style={{marginTop:'30px', marginRight:'30px'}}>
           <button type="button" className="btn btn-primary" onClick={this.handleClick}>下一步</button>
@@ -91,6 +91,9 @@ export default React.createClass({
           <Prop name="title" type="String" optional>
             <p>标题</p>
             <p>如果不给出标题，默认为空</p>
+          </Prop>
+          <Prop name="icon" type="string">
+            <p>图标，<a href="http://fontawesome.io/icons/">http://fontawesome.io/icons/</a></p>
           </Prop>
         </Props>
       </div>
