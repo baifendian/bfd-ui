@@ -1,46 +1,82 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Select, Option } from 'c/Select'
+import Panel from '../Panel'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
+
+const codeBasic = `import { Select, Option } from 'bfd-ui/lib/Select
+
+class Basic extends Component {
+  render() {
+    return (
+      <Select>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
+    )
+  }
+}`
+
+class Basic extends Component {
+  render() {
+    return (
+      <Select>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
+    )
+  }
+}
+
+const codeSearchable = `import { Select, Option } from 'bfd-ui/lib/Select
+
+class Searchable extends Component {
+  render() {
+    return (
+      <Select searchable>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
+    )
+  }
+}`
+
+class Searchable extends Component {
+  render() {
+    return (
+      <Select searchable>
+        <Option>请选择</Option>
+        <Option value="0">苹果</Option>
+        <Option value="1">三星</Option>
+        <Option value="2">小米</Option>
+      </Select>
+    )
+  }
+}
 
 const render = (item, i) => {
   return <Option value={item.id}>{item.name}</Option>
 }
 
-const SelectDemo = React.createClass({
-  render() {
-    return (
-      <Select>
-        <Option>请选择</Option>
-        <Option value="0">苹果</Option>
-        <Option value="1">三星</Option>
-        <Option value="2">小米</Option>
-      </Select>
-    )
-  }
-})
-
-const code = `import { Select, Option } from 'bfd-ui/lib/Select'
-
-export default React.createClass({
-  render() {
-    return (
-      <Select>
-        <Option>请选择</Option>
-        <Option value="0">苹果</Option>
-        <Option value="1">三星</Option>
-        <Option value="2">小米</Option>
-      </Select>
-    )
-  }
-})`
-
 export default () => {
   return (
     <div>
       <h1>选择列表 @hai.jiang</h1>
-      <Pre>{code}</Pre>
-      <SelectDemo />
+
+      <Panel title="基础展示" code={codeBasic}>
+        <Basic />
+      </Panel>
+
+      <Panel title="可搜索的" code={codeSearchable}>
+        <Searchable />
+      </Panel>
+
       <h2>Select</h2>
       <Props>
         <Prop name="value" type="string | number">
@@ -58,6 +94,9 @@ export default () => {
         <Prop name="disabled" type="boolean">
           <p>是否禁用</p>
         </Prop>
+        <Prop name="searchable" type="boolean">
+          <p>可搜索的，搜索的范围包括 value 以及显示值</p>
+        </Prop>
         <Prop name="size" type="string">
           <p>其他尺寸，可选值：lg</p>
         </Prop>
@@ -70,7 +109,7 @@ export default () => {
 <Select url="/api/list" render={render} />`}</Pre>
         </Prop>
         <Prop name="defaultOption" type="React element">
-          <p>使用 url 方式时，自定义空值时的 Option</p>
+          <p>定义空值时的 Option</p>
           <Pre>{`<Select url="/api/list" defaultOption={<Option>请选择</Option>} />`}</Pre>
         </Prop>
       </Props>

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import update from 'react-addons-update'
 import classnames from 'classnames'
+import shouldComponentUpdate from '../shouldComponentUpdate'
 import TreeNode from './TreeNode'
 import './less/tree.less'
 
@@ -21,6 +22,10 @@ class Tree extends Component {
 
   componentWillReceiveProps(nextProps) {
     'data' in nextProps && this.setState({data: nextProps.data})
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return shouldComponentUpdate.call(this, ['data'], nextProps, nextState)
   }
 
   handleNodeChange(key, value, path) {

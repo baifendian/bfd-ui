@@ -3,12 +3,14 @@ import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import classnames from 'classnames'
 import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
+import ClearableInput from '../ClearableInput'
 import './Select.less'
 
 const Select = React.createClass({
 
   getInitialState() {
     return {
+      index: 0,
       value: 'value' in this.props ? this.props.value : this.props.defaultValue
     }
   },
@@ -23,64 +25,113 @@ const Select = React.createClass({
     this.setState({ list })
   },
 
+  select(value) {
+    this.refs.dropdown.close()
+    this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
+  },
+
   getOptionWithProps(child, i) {
 
     if (!child) return
 
     const { value, children } = child.props
-
-    // 搜索过滤
-    const searchValue = this.state.searchValue
-    if (searchValue) {
-      if (children.indexOf(searchValue) === -1) return
-    }
     
-    let isActive = false
+    let isSelect
     if (this.state.value === value) {
       this.title = children
-      isActive = true
+      isSelect = true
     }
     return React.cloneElement(child, {
       key: i,
-      active: isActive,
-      onClick: () => {
-        this.refs.dropdown.close()
-        this.setState({ value })
-        this.props.onChange && this.props.onChange(value)
-      }
+      select: isSelect,
+      onClick: this.select.bind(this, value)
     })
   },
 
-  handleSearch(e) {
-    const searchValue = e.target.value
-    this.setState({ searchValue })
+  handleKeyDown(e) {
+    const key = e.key
+    let index = this.state.index
+    const options = this.options
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+      if (key === 'ArrowDown') {
+        index++
+        if (index === options.length) index = 0
+      }
+      if (key === 'ArrowUp') {
+        e.preventDefault()
+        if (index === -1) index = options.length
+        else index--
+      }
+      this.setState({ index })
+    }
+    if (key === 'Enter') {
+      this.select(options[index].props.value)
+    }
+  },
+
+  handleSearch(searchValue) {
+    this.setState({
+      searchValue,
+      index: 0
+    })
+  },
+
+  handleDropToggle(open) {
+    this.props.searchable && setTimeout(() => {
+      open && this.refs.clearableInput.focus()  
+    }, 0)
   },
 
   render() {
     const { className, children, disabled, size, placeholder, searchable, url, render, defaultOption, ...other } = this.props
+    const { list, searchValue, index } = this.state
 
-    let OptionsWithProps
+    let optionsWithProps
     if (url) {
-      OptionsWithProps = (this.state.list || []).map((item, i) => {
+      optionsWithProps = (list || []).map((item, i) => {
         return this.getOptionWithProps(render.call(this, item, i), i)
       })
-      defaultOption && OptionsWithProps.unshift(this.getOptionWithProps(defaultOption, -1))
     } else {
-      OptionsWithProps = React.Children.map(children, this.getOptionWithProps)
+      optionsWithProps = React.Children.map(children, this.getOptionWithProps)
     }
 
-    let Search
-    if (searchable) {
-      Search = (
-        <div className="search-box">
-          <input className="form-control" value={this.state.searchValue} onChange={this.handleSearch} />
-          <span className="clear glyphicon glyphicon-remove" onClick={this.handleClear}></span>
-        </div>
-      )
+    // 搜索过滤
+    if (searchValue) {
+      optionsWithProps = optionsWithProps.filter(option => {
+        const { value, children } = option.props
+        if (!value) return false
+        return children.indexOf(searchValue) !== -1 || value.indexOf(searchValue) !== -1
+      })
     }
+
+    if (defaultOption && !searchValue) {
+      optionsWithProps.unshift(this.getOptionWithProps(defaultOption, -1))
+    }
+
+    // 上下切换绑定样式
+    if (searchable) {
+      optionsWithProps = optionsWithProps.map((option, i) => {
+        if (index !== i) {
+          return option
+        } else {
+          return React.cloneElement(option, {
+            className: classnames(option.className, 'active')
+          }) 
+        }
+      })
+    }
+
+    this.options = optionsWithProps
 
     return (
-      <Dropdown ref="dropdown" className={classnames('bfd-select2', { disabled }, className, size)} disabled={disabled} {...other}>
+      <Dropdown 
+        ref="dropdown" 
+        className={classnames('bfd-select2', { disabled }, className, size)} 
+        disabled={disabled} 
+        onToggle={this.handleDropToggle}
+        {...other}
+      >
         <DropdownToggle>
           <Fetch url={url} onSuccess={this.handleLoad}>
             <TextOverflow>
@@ -90,8 +141,15 @@ const Select = React.createClass({
           </Fetch>
         </DropdownToggle>
         <DropdownMenu>
-          {Search}
-          <ul>{OptionsWithProps}</ul>
+          {searchable ? (
+            <ClearableInput 
+              ref="clearableInput"
+              placeholder="请输入关键词搜索" 
+              onChange={this.handleSearch} 
+              onKeyDown={this.handleKeyDown}
+            />
+          ) : null}
+          <ul>{optionsWithProps}</ul>
         </DropdownMenu>
       </Dropdown>
     )
