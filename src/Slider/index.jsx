@@ -28,14 +28,14 @@ export default React.createClass({
     const selectedBar = this.refs.selectedBar
 
     if(this.isDown) {
-      let left = event.pageX - this.offsetLeft
+      let left = event.pageX - this.offsetLeft - this.sliderWidth/4
       if(left <= 0) {
         left = 0
         selectedBar.style.width = left + 'px'
       } else if(left >= (this.width - this.sliderWidth/2)) {
         left = this.width - this.sliderWidth/2
         selectedBar.style.width = this.width + 'px'
-      } else { 
+      } else {
         selectedBar.style.width = left + 'px'
       }
       slider.style.left = left + 'px'
