@@ -79,7 +79,11 @@ const Modal = React.createClass({
     })
 
     return (
-      <ReactCSSTransitionGroup transitionName="in" transitionEnterTimeout={200} transitionLeaveTimeout={this.closeTimeout}>
+      <ReactCSSTransitionGroup 
+        transitionName="in" 
+        transitionEnterTimeout={200} 
+        transitionLeaveTimeout={this.closeTimeout}
+      >
         {this.state.isOpen ? (
           <div className={classnames('bfd-modal', className)} {...other}>
             <div className="modal-backdrop"></div>

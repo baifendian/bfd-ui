@@ -40,6 +40,15 @@ export default React.createClass({
             <p>input 属性均支持</p>
           </Prop>
         </Props>
+        <h3>组件方法</h3>
+        <ul>
+          <li>
+            <p>
+              <strong>focus()</strong>
+            </p>
+            <p>控制 input focus 行为</p>
+          </li>
+        </ul>
       </div>
     )
   }

@@ -1,44 +1,79 @@
-import React from 'react'
+import React, { Component } from 'react'
+import Fetch from 'c/Fetch'
+import { Select, Option } from 'c/Select'
+import Panel from '../Panel'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
-import Fetch from 'c/Fetch'
 
-const App = React.createClass({
+const code = `import Fetch from 'bfd-ui/lib/Fetch'
 
-  getInitialState() {
-    return {
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
       url: '/data/loading.json',
       data: []
     }
-  },
+  }
 
-  handleChange(e) {
-    this.setState({url: '/data/loading.json?type=' + e.target.value})
-  },
-
-  handleSuccess(data) {
-    this.setState({data})
-  },
+  handleChange(value) {
+    this.setState({url: '/data/loading.json?type=' + value})
+  }
 
   render() {
     return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <select onChange={this.handleChange}>
-            <option value="0">昨天</option>
-            <option value="1">最近7天</option>
-            <option value="2">最近30天</option>
-          </select>
-        </div>
-        <div className="panel-body">
-          <Fetch style={{minHeight: 100}} url={this.state.url} onSuccess={this.handleSuccess} delay={1000}>
-            {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
-          </Fetch>
-        </div>
+      <div>
+        <Select defaultValue="0" onChange={this.handleChange.bind(this)}>
+          <Option value="0">昨天</Option>
+          <Option value="1">最近7天</Option>
+          <Option value="2">最近30天</Option>
+        </Select>
+        <Fetch 
+          style={{marginTop: '10px', minHeight: '100px'}} 
+          url={this.state.url} 
+          onSuccess={data => {this.setState({data})}}
+        >
+          {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+        </Fetch>
       </div>
     )
   }
-})
+}`
+
+class App extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      url: '/data/loading.json',
+      data: []
+    }
+  }
+
+  handleChange(value) {
+    this.setState({url: '/data/loading.json?type=' + value})
+  }
+
+  render() {
+    return (
+      <div>
+        <Select defaultValue="0" onChange={this.handleChange.bind(this)}>
+          <Option value="0">昨天</Option>
+          <Option value="1">最近7天</Option>
+          <Option value="2">最近30天</Option>
+        </Select>
+        <Fetch 
+          style={{marginTop: '10px', minHeight: '100px'}} 
+          url={this.state.url} 
+          onSuccess={data => {this.setState({data})}}
+        >
+          {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
+        </Fetch>
+      </div>
+    )
+  }
+}
 
 export default React.createClass({
   render() {
@@ -47,48 +82,10 @@ export default React.createClass({
         <h1>AJAX加载管理 @hai.jiang</h1>
         <p>动态请求数据渲染界面的场景非常多，渲染时也需要向用户反馈数据加载的状态，如加载中、加载失败、无数据等，使用本组件会自动帮您管理这些需求。</p>
         <p>bfd-ui 各个动态渲染的组件已内部集成，无需单独调用。</p>
-        <Pre>
-{`import Fetch from 'bfd-ui/lib/Fetch'
-
-export default React.createClass({
-
-  getInitialState() {
-    return {
-      url: '/data/loading.json',
-      data: []
-    }
-  },
-
-  handleChange(e) {
-    this.setState({url: '/data/loading.json?type=' + e.target.value})
-  },
-
-  handleSuccess(data) {
-    this.setState({data})
-  },
-
-  render() {
-    return (
-      <div className="panel panel-default">
-        <div className="panel-heading">
-          <select onChange={this.handleChange}>
-            <option value="0">昨天</option>
-            <option value="1">最近7天</option>
-            <option value="2">最近30天</option>
-          </select>
-        </div>
-        <div className="panel-body">
-          <Fetch style={{minHeight:100}} url={this.state.url} onSuccess={this.handleSuccess}>
-            {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
-          </Fetch>
-        </div>
-      </div>
-    )
-  }
-})`}
-        </Pre>
-
-        <App/>
+        
+        <Panel title="切换条件" code={code}>
+          <App />
+        </Panel>
         
         <Props>
           <Prop name="url" type="string">

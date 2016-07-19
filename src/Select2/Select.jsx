@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
 import ClearableInput from '../ClearableInput'
+import Icon from '../Icon'
 import './Select.less'
 
 const Select = React.createClass({
@@ -55,12 +56,12 @@ const Select = React.createClass({
     const options = this.options
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (key === 'ArrowDown') {
-        index++
-        if (index === options.length) index = 0
+        if (index === options.length - 1) index = 0
+        else index++
       }
       if (key === 'ArrowUp') {
         e.preventDefault()
-        if (index === -1) index = options.length
+        if (index === 0) index = options.length - 1
         else index--
       }
       this.setState({ index })
@@ -137,7 +138,7 @@ const Select = React.createClass({
             <TextOverflow>
               <div className="title">{this.title || placeholder}</div>
             </TextOverflow>
-            <span className="caret"></span>
+            <Icon type="angle-down" className="icon-caret" />
           </Fetch>
         </DropdownToggle>
         <DropdownMenu>

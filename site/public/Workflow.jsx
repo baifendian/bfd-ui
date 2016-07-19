@@ -13,11 +13,11 @@ export default React.createClass({
 
         <p>项目生成器有助于快速产生一个项目的脚手架，同时避免的不同项目间结构的混乱</p>
 
-        <p>安装 Node.js <a href="https://nodejs.org/en/" target="_blank">https://nodejs.org/en/</a></p>
+        <p>安装 Node.js (>= v6.3.0) <a href="https://nodejs.org/en/" target="_blank">https://nodejs.org/en/</a></p>
 
         <p>安装后会集成 npm 包管理工具</p>
 
-        <Warn>npm 版本要求 3.x+</Warn>
+        <Warn>npm config set registry https://registry.npm.taobao.org 设置成国内镜像，这样更快</Warn>
         
         <p>安装 yeoman 脚手架构建平台</p>
         

@@ -14,7 +14,7 @@ function ChangeLog() {
         <p>其他: </p>
         <ol>
           <li>Select 添加 searchable 属性，支持搜索</li>
-          <li>SearchInput 新增 label 属性，更改搜索按钮文本；新增 size 属性，设定组件高度</li>
+          <li>SearchInput 新增 label 属性，更改搜索按钮文本；新增 size 属性，设定组件尺寸</li>
           <li>修复 DataTable 序号列显示错误问题</li>
           <li>修复 Tabs 切回后 TabPanel 重新 Mount 的问题</li>
           <li>ClearableInput 添加 focus 方法，控制 input focus 行为</li>
