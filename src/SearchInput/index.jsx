@@ -15,9 +15,7 @@ export default React.createClass({
   },
   handleChange(v) {
     this.value = v
-    if(!v) {
-      this.handleClick()
-    }
+    this.props.onChange && this.props.onChange(v) 
   },
   handleClick() {
     if(typeof this.props.onSearch == 'function') {
