@@ -1,13 +1,13 @@
 {
   "name": "bfd-ui",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run unit",
     "lint": "eslint --ext .jsx,.js src || true",
     "unit": "jest || true",
-    "compile": "babel src -d lib --ignore '__tests__'",
+    "compile": "rm -rf lib && cp -r src lib && babel lib -d lib",
     "start": "node-dev site/server.js",
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
@@ -76,7 +76,11 @@
     "testPathDirs": [
       "<rootDir>/src"
     ],
-    "moduleFileExtensions": ["js"],
-    "testFileExtensions": ["js"]
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "testFileExtensions": [
+      "js"
+    ]
   }
 }
