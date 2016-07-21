@@ -12,7 +12,7 @@
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
     "create": "node bin/create.js",
-    "publish": "npm run unit && nom run compile && npm version patch && npm publish"
+    "release": "npm run unit && npm run compile && npm version patch && npm publish"
   },
   "author": "",
   "license": "ISC",
@@ -76,13 +76,7 @@
     "testPathDirs": [
       "<rootDir>/src"
     ],
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "testFileExtensions": [
-      "js",
-      "jsx"
-    ]
+    "moduleFileExtensions": ["js"],
+    "testFileExtensions": ["js"]
   }
 }
