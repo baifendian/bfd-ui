@@ -1,9 +1,12 @@
 var webpack = require('webpack')
 var path = require('path')
 var fs = require('fs')
+var rimraf = require('rimraf')
 var LiveReloadPlugin = require('webpack-livereload-plugin')
 var autoprefixer = require('autoprefixer')
 var isProduction = process.argv.slice(2)[0] === '-p'
+
+rimraf.sync(__dirname + '/public/dist')
 
 var config = {
   entry: {

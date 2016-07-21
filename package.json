@@ -7,11 +7,12 @@
     "test": "npm run lint && npm run unit",
     "lint": "eslint --ext .jsx,.js src || true",
     "unit": "jest || true",
-    "compile": "rm -rf lib && cp -r src lib && babel lib -d lib && find ./lib -name \\*.jsx -type f -delete",
+    "compile": "babel src -d lib --ignore '__tests__'",
     "start": "node-dev site/server.js",
-    "pack": "cd site && rm -rf public/dist && webpack -p --progress",
+    "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
-    "create": "node bin/create.js"
+    "create": "node bin/create.js",
+    "publish": "npm run unit && nom run compile && npm version patch && npm publish"
   },
   "author": "",
   "license": "ISC",
