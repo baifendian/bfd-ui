@@ -37,7 +37,7 @@ const Rows = React.createClass({
   },
 
   handleRowClick(item) {
-    console.log('row', item)
+    this.props.onRowClick && this.props.onRowClick(item)
   },
 
   render() {
@@ -223,6 +223,10 @@ export default React.createClass({
     }
   },
 
+  handleRowClick(row) {
+    this.props.onRowClick && this.props.onRowClick(row)
+  },
+
   getRowsValue(key, rows) {
 
   },
@@ -279,6 +283,7 @@ export default React.createClass({
 
           <Rows 
             rows={this.state.items.totalList} 
+            onRowClick={this.handleRowClick}
             onSelect={this.handleCheckboxChange}
             onCheckboxSelect={this.props.onCheckboxSelect}
             column={this.props.column}

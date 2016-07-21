@@ -79,6 +79,9 @@ export default React.createClass({
   handleCheckboxSelect(selectedRows) {
     console.log('rows:', selectedRows)
   },
+  handleRowClick(row) {
+    console.log('rowclick', row)
+  },
   render() {
 
     return (
@@ -157,6 +160,9 @@ const App = React.createClass({
   handleCheckboxSelect(selectedRows) {
     console.log('rows:', selectedRows)
   },
+  handleRowClick(row) {
+    console.log('rowclick', row)
+  },
   render() {
     
     return 
@@ -166,6 +172,7 @@ const App = React.createClass({
         showPage="true" 
         column={this.state.column} 
         howRow={8}
+        onRowClick={this.handleRowClick}
         onCheckboxSelect={this.handleCheckboxSelect} >
       </DataTable>
   }
@@ -177,6 +184,7 @@ const App = React.createClass({
           showPage="true"
           column={this.state.column}
           howRow={8}
+          onRowClick={this.handleRowClick}
           onCheckboxSelect={this.handleCheckboxSelect}
         />
         <Props>
@@ -244,6 +252,7 @@ const App = React.createClass({
           </Prop>
           
           <Prop name="onCheckboxSelect" type="Function" optional children="复选框点击事件，返回被选中的行记录"></Prop>
+          <Prop name="onRowClick" type="Function" optional children="行点击事件，返回被选中的行记录"></Prop>
         </Props>
       </div>
     )
