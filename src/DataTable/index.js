@@ -36,6 +36,7 @@ const Rows = React.createClass({
     event.stopPropagation();
   },
 
+
   handleRowClick(item) {
     this.props.onRowClick && this.props.onRowClick(item)
   },
