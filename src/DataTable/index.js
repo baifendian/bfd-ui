@@ -2,12 +2,16 @@
  * Created by BFD_270 on 2016-02-19.
  * Update by jiangtl on 2016-6-28.
  */
-import  'bfd-bootstrap'
-import  './main.less'
-import  React, { PropTypes } from 'react'
-import  Fetch from '../Fetch'
+import 'bfd-bootstrap'
+import './main.less'
+import React, {
+  PropTypes
+} from 'react'
+import Fetch from '../Fetch'
 import Paging from '../Paging'
-import { Checkbox } from '../Checkbox'
+import {
+  Checkbox
+} from '../Checkbox'
 
 const Rows = React.createClass({
 
@@ -19,12 +23,21 @@ const Rows = React.createClass({
 
     let selectRow = []
     this.props.rows.map((item, j) => {
-      if(item.isSelect) {
+      if (item.isSelect) {
         selectRow.push(item)
       }
     })
 
     this.props.onSelect(row.isSelect, row, selectRow)
+  },
+
+  handleCheckboxClick(event) {
+    event = event ? event : window.event;
+    event.stopPropagation();
+  },
+
+  handleRowClick(item) {
+    console.log('row', item)
   },
 
   render() {
@@ -40,10 +53,10 @@ const Rows = React.createClass({
           let isSelect = item.isSelect || false
           let isDisabled = item.disabled || false
           let checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
+            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
             : null
           return (
-            <tr key={j} >
+            <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
               {checkboxTd}
               {
                 column.map((columns,i) => {
@@ -81,13 +94,16 @@ export default React.createClass({
   propTypes: {
     data: PropTypes.object,
     url: PropTypes.string,
-    customProp({ data, url }) {
+    customProp({
+      data,
+      url
+    }) {
       if (data && url) {
         return new Error('data属性和url属性不能同时使用！')
       }
     }
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       order: '',
       url: this.props.url || '',
@@ -103,7 +119,7 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    if(this.props.data) {
+    if (this.props.data) {
       this.setState({
         items: {
           totalList: this.props.data.totalList || [],
@@ -115,7 +131,7 @@ export default React.createClass({
     }
   },
 
-  onChange: function (params, currentPage) {
+  onChange: function(params, currentPage) {
     //if( this.props.url ) {
     //  let url_ = this.props.url
     //  if(url_.indexOf('?') > -1 ) {
@@ -127,44 +143,54 @@ export default React.createClass({
     //}
   },
 
-  onPageChange(page){
-    if(this.props.onPageChange){
-      this.props.onPageChange( page )
+  onPageChange(page) {
+    if (this.props.onPageChange) {
+      this.props.onPageChange(page)
     }
-    this.setState({currentPage: page })
+    this.setState({
+      currentPage: page
+    })
   },
 
-  orderClick:function(column, i){
-    if(column.order ) {
-      if(this.refs[i].getAttribute('order') == null ) {
-        this.refs[i].className = 'sorting_asc'
-        this.refs[i].setAttribute('order','asc')
-        this.setState({order: '&key=' + column['key'] + '&sort=asc'})
-        return
-      }
-      if(this.refs[i].getAttribute('order') == 'asc' ) {
-        this.refs[i].className = 'sorting_desc'
-        this.refs[i].setAttribute('order', 'desc')
-        this.setState({order: '&key=' + column['key'] + '&sort=desc'})
-        return
-      }
-      if(this.refs[i].getAttribute('order') == 'desc' ) {
+  orderClick: function(column, i) {
+    if (column.order) {
+      if (this.refs[i].getAttribute('order') == null) {
         this.refs[i].className = 'sorting_asc'
         this.refs[i].setAttribute('order', 'asc')
-        this.setState({order:'&key=' + column['key'] + '&sort=asc'})
+        this.setState({
+          order: '&key=' + column['key'] + '&sort=asc'
+        })
+        return
+      }
+      if (this.refs[i].getAttribute('order') == 'asc') {
+        this.refs[i].className = 'sorting_desc'
+        this.refs[i].setAttribute('order', 'desc')
+        this.setState({
+          order: '&key=' + column['key'] + '&sort=desc'
+        })
+        return
+      }
+      if (this.refs[i].getAttribute('order') == 'desc') {
+        this.refs[i].className = 'sorting_asc'
+        this.refs[i].setAttribute('order', 'asc')
+        this.setState({
+          order: '&key=' + column['key'] + '&sort=asc'
+        })
         return
       }
     }
   },
 
-  handleSuccess: function ( data ) {
-    this.setState({ 
+  handleSuccess: function(data) {
+    this.setState({
       items: data
     })
   },
 
-  refresh: function () {
-    this.setState({refresh: true })
+  refresh: function() {
+    this.setState({
+      refresh: true
+    })
   },
 
   handleCheckboxAllChange() {
@@ -176,7 +202,7 @@ export default React.createClass({
     let changeRows = []
     const rows = this.state.items.totalList
     rows.map((item, j) => {
-      if(item.isSelect !== isAll && !item.disabled) {
+      if (item.isSelect !== isAll && !item.disabled) {
         item.isSelect = isAll
         changeRows.push(item)
       }
@@ -190,7 +216,7 @@ export default React.createClass({
   handleCheckboxChange(checked, row, rows) {
     const selectFn = this.props.onCheckboxSelect
     selectFn && selectFn(rows)
-    if(!checked) {
+    if (!checked) {
       this.setState({
         isSelectAll: false
       })
@@ -201,34 +227,34 @@ export default React.createClass({
 
   },
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
-      this.setState({ items: nextProps.data })
+      this.setState({
+        items: nextProps.data
+      })
     }
   },
 
-  render: function () {
+  render: function() {
     const self = this
     let column = this.props.column
     let totalPageNum = 0,
-    currentPage = parseInt(this.state.currentPage),
-    url = this.props.url,
-    //新增自动分页功能 
-    pageSize = parseInt(this.props.howRow)
+      currentPage = parseInt(this.state.currentPage),
+      url = this.props.url,
+      //新增自动分页功能 
+      pageSize = parseInt(this.props.howRow)
 
     //如果是传入url查询数据就附带参数查询
     if (url && url !== '') {
-      if( url.indexOf('?') < 0 ) {
+      if (url.indexOf('?') < 0) {
         url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
-      if( url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1 ) {
+      if (url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
       }
     }
 
-    const checkboxTh = this.props.onCheckboxSelect 
-      ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> 
-      : null
+    const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> : null
     return (
       <div>
         {url != "" ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}

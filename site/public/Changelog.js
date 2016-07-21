@@ -6,6 +6,18 @@ function ChangeLog() {
   return (
     <div>
 
+      <Version version="0.5.2" date="2016-07-21">
+        <ol>
+          <li>修复 NavItem 首次进入页面高亮时没有展开的问题</li>
+          <li>xhr 新增全局设置: error, timeout, onTimeout</li>
+          <li>修复 Select value 重置空值时 placeholder 不显示的问题；没有内容时的样式问题</li>
+          <li>修复 shouldComponentUpdate 算法 bug，解决组件状态不更新的问题</li>
+          <li>Steps 增加鼠标划过效果；Step 新增 icon 图标配置项</li>
+          <li>Slider 解决在移动过程中滑块有少许偏差的问题</li>
+          <li>SearchInput 新增 onChange 事件</li>
+        </ol>
+      </Version>
+
       <Version version="0.5.0" date="2016-07-15">
         <p>新增组件: </p>
         <ul>

@@ -3,15 +3,18 @@ import DataTable from 'c/DataTable'
 import SearchInput from 'c/SearchInput'
 import Paging from 'c/Paging'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
+import {
+  Props,
+  Prop
+} from '../Props'
 
 export default React.createClass({
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       url: "../data/table.json",
       column: [{
-        title:'序号',
-        key:'sequence'
+        title: '序号',
+        key: 'sequence'
       }, {
         title: '姓名',
         order: true,
@@ -53,21 +56,25 @@ export default React.createClass({
          * @param component 当前
          * @returns {XML}  返回dom对象
          */
-        render: (item, component)=> {
+        render: (item, component) => {
           return <a href = "javascript:void(0);" onClick = {this.handleClick.bind(this, item)}>编辑</a>
         },
-        key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
+        key: 'operation' //注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
       }]
     }
   },
-  handleClick (item) {
-   console.log(item)
+  handleClick(item, event) {
+    event = event ? event : window.event;
+    event.stopPropagation();
+    console.log(item)
   },
-  handleSearch(data){
+  handleSearch(data) {
 
   },
   onPageChange(page) {
-    this.setState({url:"../data/table.json?num="+page})
+    this.setState({
+      url: "../data/table.json?num=" + page
+    })
   },
   handleCheckboxSelect(selectedRows) {
     console.log('rows:', selectedRows)
@@ -130,6 +137,15 @@ const App = React.createClass({
         key: 'operation'//注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
       }]
     }
+  },
+  /**
+   * 列自定义点击事件
+   * @param item 行数据
+   */
+  handleClick(item, event) {
+    event = event ? event : window.event;
+    event.stopPropagation();
+    console.log(item)
   },
   /**
    * 此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性
