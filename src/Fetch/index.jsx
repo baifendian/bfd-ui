@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import classnames from 'classnames'
 import xhr from '../xhr'
 import './main.less'
@@ -30,7 +29,7 @@ class Fetch extends Component {
   }
 
   fetch() {
-    this.setState({xhr: 'fetch-start'})
+    // this.setState({xhr: 'fetch-start'})
     this.lazyFetch()
     this.props.onFetch && this.props.onFetch()
     setTimeout(() => {
@@ -87,15 +86,9 @@ class Fetch extends Component {
   render() {
     const { className, ...other } = this.props
     return (
-      <ReactCSSTransitionGroup
-        transitionName="in" 
-        transitionEnterTimeout={100} 
-        transitionLeaveTimeout={100}
-        className={classnames('bfd-fetch', className)} 
-        {...other}
-      > 
+      <div className={classnames('bfd-fetch', className)} {...other}>
         {(this.stateMap[this.state.xhr] || (() => null)).call(this)}
-      </ReactCSSTransitionGroup>
+      </div>
     )
   }
 }

@@ -108,4 +108,22 @@ describe('Nav', () => {
     ))
     expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'li')[0].className).toContain('open')
   })
+
+  it('should open if active', () => {
+    function NavTest() {
+      return (
+        <Nav href="/">
+          <NavItem>
+            <NavItem />
+          </NavItem>
+        </Nav>
+      )
+    }
+    const router = TestUtils.renderIntoDocument((
+      <Router history={createHistory()}>
+        <Route path="/" component={NavTest} />
+      </Router>
+    ))
+    expect(TestUtils.scryRenderedDOMComponentsWithTag(router, 'li')[0].className).toContain('open')
+  })
 })

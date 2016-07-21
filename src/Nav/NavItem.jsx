@@ -14,6 +14,16 @@ const NavItem = React.createClass({
     }
   },
 
+  componentWillMount() {
+    const baseURL = this.context.nav.props.href
+    let href = baseURL + '/' + this.props.href
+    href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
+    this.href = href
+    if (this.props.children && this.isActive(href, href === baseURL)) {
+      this.setState({isOpen: true})
+    }
+  },
+
   toggle(e) {
     this.setState({isOpen: !this.state.isOpen})
     e.preventDefault()
@@ -30,11 +40,8 @@ const NavItem = React.createClass({
   
   render() {
     const { children, icon, title, ...other } = this.props
-
     const baseURL = this.context.nav.props.href
-    let href = baseURL + '/' + this.props.href
-
-    href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
+    const href = this.href
 
     let Toggle
     if (children) {

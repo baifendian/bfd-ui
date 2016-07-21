@@ -67,6 +67,7 @@ class App extends Component {
           style={{marginTop: '10px', minHeight: '100px'}} 
           url={this.state.url} 
           onSuccess={data => {this.setState({data})}}
+          delay={500}
         >
           {this.state.data.map((item, i) => <p key={i}>{i + 1}: {item.event}</p>)}
         </Fetch>

@@ -17,9 +17,12 @@ const Select = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    'value' in nextProps && this.setState({
-      value: nextProps.value
-    })  
+    if ('value' in nextProps) {
+      this.title = null
+      this.setState({
+        value: nextProps.value
+      })
+    }
   },
 
   handleLoad(list) {
@@ -85,8 +88,10 @@ const Select = React.createClass({
   },
 
   render() {
-    const { className, children, disabled, size, placeholder, searchable, url, render, defaultOption, ...other } = this.props
+
+    const { className, children, size, placeholder, searchable, url, render, defaultOption, ...other } = this.props
     const { list, searchValue, index } = this.state
+    let disabled = this.props.disabled
 
     let optionsWithProps
     if (url) {
