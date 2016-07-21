@@ -7,7 +7,7 @@ var isProduction = process.argv.slice(2)[0] === '-p'
 
 var config = {
   entry: {
-    app: __dirname + '/public/app.jsx'
+    app: __dirname + '/public/app'
   },
   output: {
     path: __dirname + '/public/dist',
@@ -17,7 +17,7 @@ var config = {
   },
   module: {
     loaders: [{
-      test: /\jsx?$/,
+      test: /\js$/,
       loader: 'babel',
       exclude: /node_modules/,
       query: {
@@ -42,7 +42,7 @@ var config = {
     browsers: ['last 3 versions']
   })],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.js'],
     alias: {
       c: path.resolve(__dirname, '../src')
     }
