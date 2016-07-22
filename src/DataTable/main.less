@@ -1,24 +1,36 @@
+.bfd-datatable {
+	> tbody {
+		> tr {
+		background-color: #fff;
+		> td {
+			vertical-align: middle;
+		}
+	}
+		tr:nth-child(2n) {
+			background-color: #fafafa;
+		}
+	}
+	.icon span {
+		margin-right: 9px;
+		cursor: pointer;
+		font-weight: normal;
+	}
+	.sorting{
+		background:url('icon/sort_both.png') no-repeat center right;
+		cursor: pointer;
+	}
+	.sorting_asc{
+		background: url('icon/sort_asc.png') no-repeat center right;
+		cursor: pointer;
+	}
+	.sorting_desc {
+		background: url('icon/sort_desc.png') no-repeat center right;
+	}
+	.align-center {
+	  text-align: center;
+	  width: 100%;
+	  height: 100%;
+	}
+}
 
 
-.icon span {
-    margin-right: 9px;
-    cursor: pointer;
-    font-weight: normal;
-}
-.sorting{
-    background:url('icon/sort_both.png') no-repeat center right;
-    cursor: pointer;
-}
-.sorting_asc{
-    background: url('icon/sort_asc.png') no-repeat center right;
-    cursor: pointer;
-}
-.sorting_desc {
-    background: url('icon/sort_desc.png') no-repeat center right;
-}
-
-.align-center {
-  text-align: center;
-  width: 100%;
-  height: 100%;
-}

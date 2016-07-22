@@ -3,16 +3,16 @@
  * Update by jiangtl on 2016-6-28.
  */
 import 'bfd-bootstrap'
-import './main.less'
 import React, {
   PropTypes
 } from 'react'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
+import classnames from 'classnames'
 import {
   Checkbox
 } from '../Checkbox'
-
+import './main.less'
 const Rows = React.createClass({
 
   handleCheckboxChange(row) {
@@ -35,7 +35,6 @@ const Rows = React.createClass({
     event = event ? event : window.event;
     event.stopPropagation();
   },
-
 
   handleRowClick(item) {
     this.props.onRowClick && this.props.onRowClick(item)
@@ -242,10 +241,15 @@ export default React.createClass({
 
   render: function() {
     const self = this
-    let column = this.props.column
+    let {
+      className,
+      column,
+      url,
+      ...other
+    } = this.props
+
     let totalPageNum = 0,
       currentPage = parseInt(this.state.currentPage),
-      url = this.props.url,
       //新增自动分页功能 
       pageSize = parseInt(this.props.howRow)
 
@@ -264,7 +268,7 @@ export default React.createClass({
       <div>
         {url != "" ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
         
-        <table className = "table" >
+        <table className={classnames('table', "bfd-datatable", className)} >
           <thead>
             <tr>
               {checkboxTh}
