@@ -1,7 +1,13 @@
 import React from 'react'
-import { SplitPanel, SubSplitPanel } from 'c/SplitPanel'
+import {
+  SplitPanel,
+  SubSplitPanel
+} from 'c/SplitPanel'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
+import {
+  Props,
+  Prop
+} from '../Props'
 
 const code = `import { SplitPanel, SubSplitPanel } from 'bfd-ui/lib/SplitPanel'
 
@@ -12,7 +18,7 @@ export default React.createClass({
         <SubSplitPanel width={200}>
           <p>你好</p>
           <p>世界</p>
-        </Panel>
+        </SplitPanel>
         <SubSplitPanel>
           <div>hello</div>
           <div>world</div>
