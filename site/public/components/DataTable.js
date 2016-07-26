@@ -82,8 +82,10 @@ export default React.createClass({
   handleRowClick(row) {
     console.log('rowclick', row)
   },
+  handleOrder(name, sort) {
+    console.log(name, sort)
+  },
   render() {
-
     return (
       <div>
         <h1>DataTable&分页@tenglong.jiang</h1>
@@ -163,8 +165,10 @@ const App = React.createClass({
   handleRowClick(row) {
     console.log('rowclick', row)
   },
-  render() {
-    
+  handleOrder(name, sort) {
+    console.log(name, sort)
+  },
+  render() {    
     return 
       <DataTable 
         url={this.state.url} 
@@ -173,6 +177,7 @@ const App = React.createClass({
         column={this.state.column} 
         howRow={8}
         onRowClick={this.handleRowClick}
+        onOrder={this.handleOrder}
         onCheckboxSelect={this.handleCheckboxSelect} >
       </DataTable>
   }
@@ -185,6 +190,7 @@ const App = React.createClass({
           column={this.state.column}
           howRow={8}
           onRowClick={this.handleRowClick}
+          onOrder={this.handleOrder}
           onCheckboxSelect={this.handleCheckboxSelect}
         />
         <Props>
@@ -253,6 +259,7 @@ const App = React.createClass({
           
           <Prop name="onCheckboxSelect" type="Function" optional children="复选框点击事件，返回被选中的行记录"></Prop>
           <Prop name="onRowClick" type="Function" optional children="行点击事件，返回被选中的行记录"></Prop>
+          <Prop name="onOrder" type="Function" optional children="列名称点击排序事件，返回列名称和排序状态"></Prop>
         </Props>
       </div>
     )

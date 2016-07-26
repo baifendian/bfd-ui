@@ -160,6 +160,7 @@ export default React.createClass({
         this.setState({
           order: '&key=' + column['key'] + '&sort=asc'
         })
+        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
         return
       }
       if (this.refs[i].getAttribute('order') == 'asc') {
@@ -168,6 +169,7 @@ export default React.createClass({
         this.setState({
           order: '&key=' + column['key'] + '&sort=desc'
         })
+        this.props.onOrder && this.props.onOrder(column['key'], 'desc')
         return
       }
       if (this.refs[i].getAttribute('order') == 'desc') {
@@ -176,6 +178,7 @@ export default React.createClass({
         this.setState({
           order: '&key=' + column['key'] + '&sort=asc'
         })
+        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
         return
       }
     }
@@ -273,14 +276,14 @@ export default React.createClass({
             <tr>
               {checkboxTh}
               {
-                column.map (( head_column, i ) => {
+                column.map ((head_column, i) => {
                   const style = head_column.width ? {width: head_column.width} : {}
                   return <th 
                     key={head_column['title']} 
                     ref={i}
                     style={style}
-                    onClick={self.orderClick.bind( self, head_column, i)}
-                    title = {head_column['order'] === true ? head_column['title'] + '排序' : ''} className = { head_column['order'] === true ? 'sorting' : '' } >{ head_column['title']}</th>
+                    onClick={self.orderClick.bind(self, head_column, i)}
+                    title={head_column['order'] === true ? head_column['title'] + '排序' : ''} className = {head_column['order'] === true ? 'sorting' : ''} >{head_column['title']}</th>
                 })
               }
             </tr>
