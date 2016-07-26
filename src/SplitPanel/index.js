@@ -1,10 +1,18 @@
-import React, { PropTypes } from 'react'
-import { findAllByType } from '../util/ReactUtils'
+import React, {
+  PropTypes
+} from 'react'
+import {
+  findAllByType
+} from '../util/ReactUtils'
 import classnames from 'classnames'
 import './index.less'
 const SubSplitPanel = React.createClass({
   render() {
-    const {children, className, ...other} = this.props
+    const {
+      children,
+      className,
+      ...other
+    } = this.props
     return (
       <div className={classnames(className)} {...other}>
         {children}
@@ -22,13 +30,22 @@ const SplitPanel = React.createClass({
 
   offsetTop: 0,
 
-  clientX : 0,
+  clientX: 0,
 
-  clientY : 0,
-  getInitialState() {
-    return {
-          
-    }
+  clientY: 0,
+
+  oldSplit: {
+    width: 0,
+    height: 0,
+    width1: 0,
+    height1: 0
+  },
+
+  currSplit: {
+    width: 0,
+    height: 0,
+    width1: 0,
+    height1: 0
   },
 
   handleMouseDown(event) {
@@ -40,6 +57,12 @@ const SplitPanel = React.createClass({
     this.clientY = event.clientY
     line.left = line.offsetLeft
     line.top = line.offsetTop
+    const top = this.refs.top
+    const bottom = this.refs.bottom
+    this.oldSplit.width = parseInt(top.style.width)
+    this.oldSplit.height = parseInt(top.style.height)
+    this.oldSplit.width1 = parseInt(bottom.style.width)
+    this.oldSplit.height1 = parseInt(bottom.style.height)
     BODY.addEventListener('mousemove', direct == 'ver' ? this.handleMouseLRMove : this.handleMouseUDMove)
     BODY.addEventListener('mouseup', this.handleMouseUp)
   },
@@ -52,17 +75,17 @@ const SplitPanel = React.createClass({
     let scope = line.top + event.clientY - this.clientY
     const maxScope = container.clientHeight - line.offsetHeight
     line.style.margin = 0
-    if(scope < 0) {
+    if (scope < 0) {
       scope = 0
     }
-    if(scope > maxScope) {
+    if (scope > maxScope) {
       scope = maxScope
     }
     line.style.top = top.style.height = scope + 'px'
     bottom.style.height = container.clientHeight - parseInt(lineStyle.height) - scope + 'px'
     return false
   },
-  handleMouseLRMove(event) {    
+  handleMouseLRMove(event) {
     const container = this.refs.container
     const top = this.refs.top
     const bottom = this.refs.bottom
@@ -71,10 +94,10 @@ const SplitPanel = React.createClass({
     let scope = line.left + event.clientX - this.clientX
     const maxScope = container.clientWidth - line.offsetWidth
     line.style.margin = 0
-    if(scope < 0) {
+    if (scope < 0) {
       scope = 0
     }
-    if(scope > maxScope) {
+    if (scope > maxScope) {
       scope = maxScope
     }
     line.style.left = top.style.width = scope + 'px'
@@ -86,19 +109,41 @@ const SplitPanel = React.createClass({
     const BODY = document.body
     const line = this.refs.line
     line.setCapture && line.setCapture()
+    const top = this.refs.top
+    const bottom = this.refs.bottom
+    this.currSplit.width = parseInt(top.style.width)
+    this.currSplit.height = parseInt(top.style.height)
+    this.currSplit.width1 = parseInt(bottom.style.width)
+    this.currSplit.height1 = parseInt(bottom.style.height)
+    if (typeof this.props.onSplit == "function") {
+      const old = this.oldSplit
+      const curr = this.currSplit
+      if (direct == 'ver') {
+        typeof this.props.onSplit(old.width, old.width1, curr.width, curr.width1)
+      } else {
+        typeof this.props.onSplit(old.height, old.height1, curr.height, curr.height1)
+      }
+    }
     BODY.removeEventListener('mousemove', direct == 'ver' ? this.handleMouseLRMove : this.handleMouseUDMove)
     BODY.removeEventListener('mouseup', this.handleMouseUp)
     return false
   },
 
   render() {
-    const rows = []
-    const {children, className, ...other} = this.props
+    const {
+      children,
+      className,
+      ...other
+    } = this.props
     const items = findAllByType(children, SubSplitPanel)
     const direct = this.props.direct
     const lineClassName = direct == 'ver' ? 'verline' : 'horline'
-    const topStyle = direct == 'ver' ? {float: 'left'} : {}
-    const bottomStyle = direct == 'ver' ? {float: 'right'} : {}
+    const topStyle = direct == 'ver' ? {
+      float: 'left'
+    } : {}
+    const bottomStyle = direct == 'ver' ? {
+      float: 'right'
+    } : {}
     return (
       <div ref="container" className={classnames('bfd-split-panel', className)} {...other}>
         <div ref="top" style={topStyle} className="top">{items[0]}</div>
@@ -122,7 +167,7 @@ const SplitPanel = React.createClass({
     container.style.width = containerWidth + 'px'
     container.style.height = containerHeight + 'px'
 
-    if(direct == 'ver') {
+    if (direct == 'ver') {
       top.style.height = '100%'
       bottom.style.height = '100%'
       const width = items[0].props.width || containerWidth / 2
@@ -136,15 +181,17 @@ const SplitPanel = React.createClass({
       top.style.height = height + 'px'
       line.style.top = height + 'px'
       bottom.style.height = containerHeight - height - parseInt(lineStyle.height) - parseInt(style.borderWidth) + 'px'
-    }    
+    }
   }
 })
 
 SplitPanel.propTypes = {
   direct: PropTypes.string,
   width: PropTypes.number,
-  height: PropTypes.number,  
-  customProp({direct}) {
+  height: PropTypes.number,
+  customProp({
+    direct
+  }) {
     if (!direct) {
       return new Error('direct必填属性。')
     }

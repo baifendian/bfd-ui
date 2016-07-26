@@ -12,9 +12,12 @@ import {
 const code = `import { SplitPanel, SubSplitPanel } from 'bfd-ui/lib/SplitPanel'
 
 export default React.createClass({
+  handleSplit(oldWidth1, oldWidth2, width1, width2) {
+    console.log(oldWidth1, oldWidth2, width1, width2)
+  },
   render() {
     return (
-      <SplitPanel direct="ver" style={{border: '1px solid #000'}}>
+      <SplitPanel direct="ver" onSplit={this.handleSplit} style={{border: '1px solid #000'}}>
         <SubSplitPanel width={200}>
           <p>你好</p>
           <p>世界</p>
@@ -27,14 +30,17 @@ export default React.createClass({
     )
   }
 })`
-
-export default () => {
-  return (
-    <div>
+export default React.createClass({
+  handleSplit(oldWidth1, oldWidth2, width1, width2) {
+    console.log(oldWidth1, oldWidth2, width1, width2)
+  },
+  render() {
+    return (
+      <div>
       <h1></h1>
-      <h2>SplitPanel</h2>
+      <h2>SplitPanel @tenglong.jiang</h2>
       <Pre>{code}</Pre>
-      <SplitPanel direct="ver" style={{border: '1px solid #000'}}>
+      <SplitPanel direct="ver" onSplit={this.handleSplit} style={{border: '1px solid #000'}}>
         <SubSplitPanel width={200}>
           <p>你好</p>
           <p>世界</p>
@@ -50,6 +56,11 @@ export default () => {
         <Prop name="direct" type="string" required>
           <p>分栏方向，分为水平分栏（hor）和垂直分栏（ver）两种</p>
         </Prop>
+        <Prop name="onSplit" type="function">
+          <p>分栏拖动事件</p>
+          <p>当属性direct=ver，返回四个参数为oldWidth、oldWidth1（代表两栏原宽度）和width1、width2（代表两栏当前宽度</p>
+          <p>当属性direct=hor，返回四个参数为oldHeight、oldHeight2（代表两栏原高度）和height1、height2（代表两栏当前高度）</p>
+        </Prop>
       </Props>
       <h1>Panel</h1>
       <p>分栏面板</p>
@@ -62,5 +73,6 @@ export default () => {
         </Prop>
       </Props>
     </div>
-  )
-}
+    )
+  }
+})
