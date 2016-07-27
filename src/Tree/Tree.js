@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import update from '../update'
+import update from 'react-update'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import TreeNode from './TreeNode'
 import './less/tree.less'
