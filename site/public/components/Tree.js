@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
+import get from 'lodash/get'
+import update from 'react-update'
 import Tree, { SelectTree } from 'c/Tree'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
@@ -290,18 +292,29 @@ const Activeable = React.createClass({
 
 // =======================================================================
 
-const codeSelectable = `import { SelectTree } from 'bfd-ui/lib/Tree'
+const codeSelectable = `
+import update from 'react-update'
+import get from 'lodash/get'
+import { SelectTree } from 'bfd-ui/lib/Tree'
 
-export default React.createClass({
+class Selectable extends Component {
   
-  getInitialState() {
-    return {
+  constructor() {
+    super()
+    this.update = update.bind(this)
+    this.state = {
+      test: 1,
       data: [{
         name: '数据工厂',
         open: true,
         children: [{
           name: 'adsdsd',
-          checked: true
+          open: true,
+          children: [{
+            name: 'leaf'
+          }]
+        }, {
+          name: 'cssd'
         }]
       }, {
         name: '配置中心',
@@ -312,22 +325,65 @@ export default React.createClass({
         name: '配置中心2'
       }]
     }
-  },
+  }
+
+  updateChildren(item, path, checked) {
+    if (!item || !item.children) return
+    path = path = [...path, 'children']
+    item.children.forEach((item, i) => {
+      if (item.checked !== checked) {
+        this.update('set', [...path, i, 'checked'], checked)  
+      }
+      this.updateChildren(item, [...path, i], checked)
+    })
+  }
+
+  updateParent(data, path, checked) {
+    if (path.length <= 1) return
+    const parent = get(data, path.slice(1))
+    if (checked) {
+      checked = parent.children.filter(item => !item.checked).length === 0
+    }
+    data = this.update('set', [...path, 'checked'], checked)
+    this.updateParent(data, path.slice(0, -2), checked)
+  }
+
+  handleSelect(data, item, path, checked) {
+    // 所有子级节点是否选中
+    this.updateChildren(item, ['data', ...path], checked)
+    // 所有父级节点是否选中
+    this.updateParent(data, ['data', ...path.slice(0, -2)], checked)
+  }
 
   render() {
-    return <SelectTree defaultData={this.state.data} />
+    return (
+      <SelectTree 
+        data={this.state.data} 
+        onChange={data => this.update('set', 'data', data)} 
+        onSelect={this.handleSelect.bind(this)} 
+      />
+    )
   }
-})`
+}`
 
-const Selectable = React.createClass({
+class Selectable extends Component {
   
-  getInitialState() {
-    return {
+  constructor() {
+    super()
+    this.update = update.bind(this)
+    this.state = {
+      test: 1,
       data: [{
         name: '数据工厂',
         open: true,
         children: [{
-          name: 'adsdsd'
+          name: 'adsdsd',
+          open: true,
+          children: [{
+            name: 'leaf'
+          }]
+        }, {
+          name: 'cssd'
         }]
       }, {
         name: '配置中心',
@@ -338,12 +394,46 @@ const Selectable = React.createClass({
         name: '配置中心2'
       }]
     }
-  },
+  }
+
+  updateChildren(item, path, checked) {
+    if (!item || !item.children) return
+    path = path = [...path, 'children']
+    item.children.forEach((item, i) => {
+      if (item.checked !== checked) {
+        this.update('set', [...path, i, 'checked'], checked)  
+      }
+      this.updateChildren(item, [...path, i], checked)
+    })
+  }
+
+  updateParent(data, path, checked) {
+    if (path.length <= 1) return
+    const parent = get(data, path.slice(1))
+    if (checked) {
+      checked = parent.children.filter(item => !item.checked).length === 0
+    }
+    data = this.update('set', [...path, 'checked'], checked)
+    this.updateParent(data, path.slice(0, -2), checked)
+  }
+
+  handleSelect(data, item, path, checked) {
+    // 所有子级节点是否选中
+    this.updateChildren(item, ['data', ...path], checked)
+    // 所有父级节点是否选中
+    this.updateParent(data, ['data', ...path.slice(0, -2)], checked)
+  }
 
   render() {
-    return <SelectTree defaultData={this.state.data} />
+    return (
+      <SelectTree 
+        data={this.state.data} 
+        onChange={data => this.update('set', 'data', data)} 
+        onSelect={this.handleSelect.bind(this)} 
+      />
+    )
   }
-})
+}
 
 export default () => {
   return (
@@ -416,6 +506,9 @@ export default () => {
           <p>点中一个节点后的回调，参数为节点路径下数据集合</p>
           <Warn>默认点中状态可指定 active 字段，整个 Tree 同时只有一个节点处于点中状态</Warn>
         </Prop>
+        <Prop name="dataFilter" type="function">
+          <p>过滤 getUrl 方式返回数据并返回</p>
+        </Prop>
       </Props>
 
       <h2>SelectTree</h2>
@@ -430,6 +523,9 @@ export default () => {
   children: [] //子节点
 }]`}
           </Pre>
+        </Prop>
+        <Prop name="onSelect" type="function">
+          <p>复选框勾选后的回调</p>
         </Prop>
       </Props>
     </div>

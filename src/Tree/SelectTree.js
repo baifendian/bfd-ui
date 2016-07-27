@@ -1,28 +1,38 @@
 import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
 import Tree from './Tree'
 import { Checkbox } from '../Checkbox'
-import update from 'react-addons-update'
-import classnames from 'classnames'
 import './less/selectTree.less'
 
 class SelectTree extends Component {
 
-  handleSelect() {
-
+  handleSelect(item, path, checked) {
+    const data = this.refs.tree.updateData('set', ['data', ...path, 'checked'], checked)
+    this.props.onSelect && this.props.onSelect(data, item, path, checked)
   }
 
   render() {
     const { className, ...other } = this.props
-    other.beforeNodeRender = data => {
+    other.beforeNodeRender = (data, path) => {
       return (
         <Checkbox 
           checked={data.checked || false} 
-          onChange={this.handleSelect.bind(this)} 
+          onChange={e => this.handleSelect(data, path, e.target.checked)} 
         />
       )
     }
-    return <Tree className={classnames('bfd-select-tree', className)} {...other} />
+    return (
+      <Tree 
+        ref="tree" 
+        className={classnames('bfd-select-tree', className)} 
+        {...other} 
+      />
+    ) 
   }
+}
+
+SelectTree.propTypes = {
+  onSelect: PropTypes.func
 }
 
 export default SelectTree
