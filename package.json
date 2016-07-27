@@ -8,6 +8,7 @@
     "lint": "eslint --ext .jsx,.js src || true",
     "unit": "jest || true",
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib",
+	"compilewin": "xcopy .\\src .\\lib /s /y && babel lib -d lib",
     "start": "node-dev site/server.js",
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
