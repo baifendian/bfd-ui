@@ -6,6 +6,15 @@ function ChangeLog() {
   return (
     <div>
 
+      <Version version="0.5.4" date="2016-07-27">
+        <ol>
+          <li>Tree 新增 dataFilter 属性，过滤 getUrl 方式返回的数据</li>
+          <li>SelectTree 新增 onSelect 属性，用于处理复选框选中逻辑</li>
+          <li>DataTable 新增排序事件 onOrder</li>
+          <li>SplitPanel 新增拖拽事件 onSplit</li>
+        </ol>
+      </Version>
+      
       <Version version="0.5.2" date="2016-07-21">
         <ol>
           <li>修复 NavItem 首次进入页面高亮时没有展开的问题</li>

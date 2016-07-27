@@ -8,7 +8,7 @@
     "lint": "eslint --ext .jsx,.js src || true",
     "unit": "jest || true",
     "compile": "rm -rf lib && cp -r src lib && babel lib -d lib",
-	"compilewin": "xcopy .\\src .\\lib /s /y && babel lib -d lib",
+    "compilewin": "xcopy .\\src .\\lib /s /y && babel lib -d lib",
     "start": "node-dev site/server.js",
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
@@ -39,6 +39,7 @@
     "react-addons-update": "^0.14.8",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.2",
+    "react-update": "0.0.8",
     "sortablejs": "^1.4.2",
     "style-loader": "^0.13.0",
     "warning": "^2.1.0"
