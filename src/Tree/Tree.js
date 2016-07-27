@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
-import update from 'react-addons-update'
 import classnames from 'classnames'
+import update from '../update'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import TreeNode from './TreeNode'
 import './less/tree.less'
@@ -9,6 +9,7 @@ class Tree extends Component {
 
   constructor(props) {
     super(props)
+    this.update = update.bind(this)
     this.state = {
       data: props.defaultData || props.data  
     }
@@ -28,37 +29,24 @@ class Tree extends Component {
     return shouldComponentUpdate.call(this, ['data'], nextProps, nextState)
   }
 
-  handleNodeChange(key, value, path) {
-    const data = this.update(this.state.data, key, value, path)
-    this.handleChange(data)
-  }
-
-  update(source, key, value, path) {
-    const target = {}
-    let temp = target
-    path.forEach(key => {
-      temp[key] = {}
-      temp = temp[key]
-    })
-    temp[key] = {
-      $set: value
-    }
-    return update(source, target)
-  }
-
-  handleChange(data) {
-    this.setState({ data })
+  updateData(...args) {
+    const data = this.update(...args)
     this.props.onChange && this.props.onChange(data)
+    return data
+  }
+
+  handleNodeChange(key, value, path) {
+    this.updateData('set', ['data', ...path, key], value)
   }
 
   handleNodeActive(path) {
     if (!this.props.onActive) return
-    let data = this.state.data
+    const updates = []
     if (this.activePath) {
-      data = this.update(data, 'active', false, this.activePath)
+      updates.push(['set', ['data', ...this.activePath, 'active'], false])
     }
-    data = this.update(data, 'active', true, path)
-    this.handleChange(data)
+    updates.push(['set', ['data', ...path, 'active'], true])
+    const data = this.updateData(...updates)
     this.props.onActive && this.props.onActive(this.getPathData(path, data))
     this.activePath = path
   }
@@ -104,7 +92,8 @@ Tree.propTypes = {
   onActive: PropTypes.func,
   render: PropTypes.func,
   getIcon: PropTypes.func,
-  getUrl: PropTypes.func
+  getUrl: PropTypes.func,
+  dataFilter: PropTypes.func
 }
 
 export default Tree

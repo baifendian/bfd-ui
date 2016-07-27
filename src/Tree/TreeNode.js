@@ -31,6 +31,10 @@ class TreeNode extends Component {
 
   handleLoad(data) {
     this.isloaded = true
+    const filter = this.context.tree.props.dataFilter
+    if (filter) {
+      data = filter(data)
+    }
     this.handleChange('children', data)
   }
 
@@ -62,7 +66,11 @@ class TreeNode extends Component {
     } else {
       if (isParent && getUrl && open && !this.isloaded) {
         Children = (
-          <Fetch style={indent} url={getUrl(data, tree.getPathData(path))} onSuccess={this.handleLoad.bind(this)} />
+          <Fetch 
+            style={indent} 
+            url={getUrl(data, tree.getPathData(path))} 
+            onSuccess={this.handleLoad.bind(this)} 
+          />
         )
       } else {
         Children = null
@@ -84,7 +92,7 @@ class TreeNode extends Component {
             type="caret-right"
             onClick={this.handleToggle.bind(this)} 
           />
-          {beforeNodeRender ? beforeNodeRender(data) : null}
+          {beforeNodeRender ? beforeNodeRender(data, path) : null}
           {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
           {tree.props.render ? tree.props.render(data) : name}
         </div>
