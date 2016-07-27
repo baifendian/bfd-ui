@@ -41,12 +41,10 @@ class Tree extends Component {
 
   handleNodeActive(path) {
     if (!this.props.onActive) return
-    const updates = []
     if (this.activePath) {
-      updates.push(['set', ['data', ...this.activePath, 'active'], false])
+      this.updateData('set', ['data', ...this.activePath, 'active'], false)
     }
-    updates.push(['set', ['data', ...path, 'active'], true])
-    const data = this.updateData(...updates)
+    const data = this.updateData('set', ['data', ...path, 'active'], true)
     this.props.onActive && this.props.onActive(this.getPathData(path, data))
     this.activePath = path
   }
