@@ -28,24 +28,54 @@ export default React.createClass({
 export default () => {
   return (
     <div>
-      <Button>默认</Button>
-      <Button type="primary">主要</Button>
-      <Button type="primary" size="sm">小尺寸</Button>
+      <Button>主要</Button>
+      <Button type="minor">次要</Button>
+      <Button type="danger">危险</Button>
+      <Button icon="plus">带图标</Button>
+      <Button icon="plus" />
+      <Button icon="plus" size="sm" />
+      <Button icon="plus" size="sm" transparent />
+      <Button icon="plus" circle />
+      <Button icon="plus" size="sm" circle />
+      <Button circle>赞</Button>
+      <Button size="sm">小尺寸</Button>
+      <Button disabled>禁用</Button>
     </div>
   )
 }`}
         </Pre>
-        <Button>默认</Button>
-        <Button type="primary">主要</Button>
-        <Button type="primary" size="sm">小尺寸</Button>
+        <Button>主要</Button>
+        <Button type="minor">次要</Button>
+        <Button type="danger">危险</Button>
+        <Button icon="plus">带图标</Button>
+        <Button icon="plus" />
+        <Button icon="plus" size="sm" />
+        <Button icon="plus" size="sm" transparent />
+        <Button icon="plus" circle />
+        <Button icon="plus" size="sm" circle />
+        <Button circle>赞</Button>
+        <Button size="sm">小尺寸</Button>
+        <Button disabled>禁用</Button>
 
         <h2>Button</h2>
         <Props>
           <Prop name="type" type="string">
-            <p>按钮类型，可选值：primary</p>
+            <p>按钮类型，可选值: minor, danger, inverse（只针对 transparent 有效）</p>
           </Prop>
           <Prop name="size" type="string">
             <p>按钮尺寸，可选值：sm</p>
+          </Prop>
+          <Prop name="icon" type="string">
+            <p>按钮图标，同 Icon type</p>
+          </Prop>
+          <Prop name="circle" type="boolean">
+            <p>是否为圆形</p>
+          </Prop>
+          <Prop name="disabled" type="boolean">
+            <p>是否禁用</p>
+          </Prop>
+          <Prop name="transparent" type="boolean">
+            <p>背景是否为 transparent</p>
           </Prop>
         </Props>
       </div>

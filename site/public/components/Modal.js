@@ -16,7 +16,7 @@ const ModalDemo = React.createClass({
         <button className="btn btn-primary" onClick={this.handleOpen}>点击打开</button>
         <Modal ref="modal">
           <ModalHeader>
-            <h4 className="modal-title">test</h4>
+            <h4>test</h4>
           </ModalHeader>
           <ModalBody>
             内容
@@ -41,7 +41,7 @@ export default React.createClass({
         <button className="btn btn-primary" onClick={this.handleOpen}>点击打开</button>
         <Modal ref="modal">
           <ModalHeader>
-            <h4 className="modal-title">test</h4>
+            <h4>test</h4>
           </ModalHeader>
           <ModalBody>
             内容
@@ -63,6 +63,9 @@ export default React.createClass({
         <Props>
           <Prop name="lock" type="boolean">
             <p>是否锁定，锁定后，点击遮罩层不会关闭 Modal</p>
+          </Prop>
+          <Prop name="onClose" type="function">
+            <p>关闭后的回调，手动调用 close 且传入回调参数时，该属性无效</p>
           </Prop>
         </Props>
         <h3>组件方法</h3>

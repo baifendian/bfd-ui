@@ -1,5 +1,117 @@
+@color300: #64b5f6;
+@color400: #42a5f5;
+@color500: #2196f3;
+@color600: #1e88e5;
+
 .bfd-btn {
+  color: #fff;
+  background-color: @color400;
+  padding: 0 20px;
+  height: 30px;
+  border: 0;
+  border-radius: 2px;
+  &:hover {
+    background-color: @color500;
+  }
+  &:active {
+    background-color: @color600;
+  }
+  &:focus {
+    outline: none;
+  }
+  &[disabled] {
+    background-color: #eceff1;
+    border-color: #eceff1;
+    color: #9e9e9e;
+    cursor: not-allowed;
+  }
+  .bfd-icon {
+    margin-right: 5px;
+    vertical-align: text-bottom;
+  }
   +.bfd-btn {
     margin-left: 10px;
+  }
+}
+
+.bfd-btn--minor {
+  color: @color400;
+  background-color: #fff;
+  border: 1px solid @color400;
+  &:hover {
+    color: #fff;
+    background-color: @color400;
+  }
+  &:active {
+    color: #fff;
+    border-color: @color500;
+    background-color: @color500;
+  }
+}
+
+.bfd-btn--danger {
+  background-color: #ed5957;
+  &:hover {
+    background-color: #e84034;
+  }
+  &:active {
+    background-color: #e23f3b;
+  }
+}
+
+.bfd-btn--sm {
+  padding: 0 15px;
+  height: 22px;
+}
+
+.bfd-btn--icon,
+.bfd-btn--circle {
+  padding: 0;
+  width: 30px;
+  text-align: center;
+  &.bfd-btn--sm {
+    width: 22px;
+  }
+}
+
+.bfd-btn--icon {
+  .bfd-icon {
+    margin-right: 0;
+  }
+}
+
+.bfd-btn--circle {
+  border-radius: 50%;
+}
+
+.bfd-btn--transparent {
+  border: 0;
+  background-color: transparent;
+  color: @color400;
+  &:hover {
+    color: @color500;
+    background-color: transparent;
+  }
+  &:active {
+    color: @color600;
+    background-color: transparent;
+  }
+  &.bfd-btn--inverse {
+    color: #f1f1f1;
+    &:hover {
+      color: #f9f9f9;
+    }
+    &:active {
+      color: #fff;
+    }
+  }
+  &.bfd-btn--minor {
+    color: #aaa;
+    &:hover {
+      color: #999;
+    }
+    &:active {
+      color: #666;
+    }
   }
 }

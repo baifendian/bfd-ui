@@ -1,8 +1,7 @@
 import React from 'react'
-import 'bfd-bootstrap'
 
-function ModalBody(props) {
-  return <div className="modal-body">{props.children}</div>
+const ModalBody = props => {
+  return <div className="bfd-modal__modal-body">{props.children}</div>
 }
 
 export default ModalBody
