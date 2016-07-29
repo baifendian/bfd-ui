@@ -398,7 +398,7 @@ class Selectable extends Component {
 
   updateChildren(item, path, checked) {
     if (!item || !item.children) return
-    path = path = [...path, 'children']
+    path = [...path, 'children']
     item.children.forEach((item, i) => {
       if (item.checked !== checked) {
         this.update('set', [...path, i, 'checked'], checked)  
