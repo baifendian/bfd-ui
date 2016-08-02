@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import './index.less'
 
-const <%= name %> = React.createClass({
+class <%= name %> extends Component {
 
-  getInitialState() {
-    return {
-          
+  constructor() {
+    super()
+    this.state = {
+
     }
-  },
+  }
 
   render() {
     const { className, ...other} = this.props
@@ -18,7 +19,7 @@ const <%= name %> = React.createClass({
       </div>
     )
   }
-})
+}
 
 <%= name %>.propTypes = {
   test: PropTypes.string

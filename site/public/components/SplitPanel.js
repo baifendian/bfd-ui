@@ -21,7 +21,7 @@ export default React.createClass({
         <SubSplitPanel width={200}>
           <p>你好</p>
           <p>世界</p>
-        </SplitPanel>
+        </SubSplitPanel>
         <SubSplitPanel>
           <div>hello</div>
           <div>world</div>

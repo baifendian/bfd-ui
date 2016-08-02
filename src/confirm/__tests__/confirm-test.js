@@ -9,9 +9,9 @@ describe('confirm', () => {
     confirm('test', callback)
     
     const node = document.body.lastElementChild
-    expect(node.querySelector('.message').textContent).toBe('test')
+    expect(node.querySelector('.bfd-confirm__message').textContent).toBe('test')
 
-    TestUtils.Simulate.click(node.querySelector('.btn-primary'))
+    TestUtils.Simulate.click(node.querySelector('.bfd-confirm__operate .bfd-btn'))
     expect(callback).toBeCalled()
   })
 })

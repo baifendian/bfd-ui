@@ -185,9 +185,10 @@ const App = React.createClass({
 }
         </Pre>
         <DataTable 
-          url={this.state.url}
-          showPage="true"
-          column={this.state.column}
+          url={this.state.url} 
+          onPageChange={this.onPageChange} 
+          showPage="true" 
+          column={this.state.column} 
           howRow={8}
           onRowClick={this.handleRowClick}
           onOrder={this.handleOrder}

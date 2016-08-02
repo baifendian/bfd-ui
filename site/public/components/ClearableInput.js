@@ -1,7 +1,10 @@
 import React from 'react'
 import ClearableInput from 'c/ClearableInput'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
+import {
+  Props,
+  Prop
+} from '../Props'
 
 const code = `import ClearableInput from 'bfd-ui/lib/ClearableInput'
 

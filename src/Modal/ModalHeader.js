@@ -1,15 +1,24 @@
 import React, { PropTypes } from 'react'
-import 'bfd-bootstrap'
+import Button from '../Button'
 
-function ModalHeader(props) {
+const ModalHeader = (props, { modal }) => {
   return (
-    <div className="modal-header">
-      <button type="button" className="close" onClick={props.onClose}>
-        <span>&times;</span>
-      </button>
+    <div className="bfd-modal__modal-header">
       {props.children}
+      <Button 
+        className="bfd-modal__modal-header-close"
+        icon="remove" 
+        size="sm" 
+        type="inverse"
+        transparent 
+        onClick={() => modal.close()}
+      />
     </div>
   )
+}
+
+ModalHeader.contextTypes = {
+  modal: PropTypes.object
 }
 
 ModalHeader.propTypes = {

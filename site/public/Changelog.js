@@ -6,6 +6,18 @@ function ChangeLog() {
   return (
     <div>
 
+      <Version version="0.6.0" date="2016-07-29">
+        <p>新增组件: </p>
+        <ul>
+          <li>布局: Row, Col</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>Button 新增 icon、circle、transparent、disabled 属性；type 可选值更新</li>
+          <li>Modal 新增 onClose 属性</li>
+        </ol>
+      </Version>
+
       <Version version="0.5.4" date="2016-07-27">
         <ol>
           <li>Tree 新增 dataFilter 属性，过滤 getUrl 方式返回的数据</li>

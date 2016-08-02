@@ -1,9 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
-import { Router, Route, IndexRoute } from 'react-router'
-import { createHistory } from 'history'
-import { Nav, NavItem } from '../index'
+import {
+  Router,
+  Route,
+  IndexRoute
+} from 'react-router'
+import {
+  createHistory
+} from 'history'
+import {
+  Nav,
+  NavItem
+} from '../index'
 
 describe('Nav', () => {
 

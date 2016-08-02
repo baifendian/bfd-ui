@@ -1,49 +1,50 @@
-import React, { PropTypes } from 'react'
+import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
 import warning from 'warning'
 import classnames from 'classnames'
-import 'bfd-bootstrap'
-import './main.less'
+import Button from '../Button'
+import './index.less'
 
-const Confirm = React.createClass({
+class Confirm extends Component {
 
-  getInitialState() {
-    return {
-      message: null  
+  constructor() {
+    super()
+    this.state = {
+      message: null 
     }
-  },
+  }
   
   onConfirm() {
     this.callback()
     this.close()
-  },
+  }
 
   open() {
     this.refs.modal.open()
-  },
+  }
 
   close() {
     this.refs.modal.close()
-  },
+  }
 
   render() {
     return (
       <Modal className="bfd-confirm" ref="modal">
         <ModalHeader>
-          <h4 className="modal-title">确认提示</h4>
+          <h4>确认提示</h4>
         </ModalHeader>
         <ModalBody>
-          <div className="message">{this.state.message}</div>
-          <div className="operate">
-            <button type="button" className="btn btn-primary" onClick={this.onConfirm}>确定</button>
-            <button type="button" className="btn btn-default" onClick={this.close}>取消</button>
+          <div className="bfd-confirm__message">{this.state.message}</div>
+          <div className="bfd-confirm__operate">
+            <Button onClick={() => this.onConfirm()}>确定</Button>
+            <Button type="minor" onClick={() => this.close()}>取消</Button>
           </div>
         </ModalBody>
       </Modal>
     )
   }
-})
+}
 
 let instance
 

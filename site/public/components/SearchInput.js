@@ -1,6 +1,9 @@
 import React from 'react'
 import Pre from '../Pre'
-import { Props, Prop } from '../Props'
+import {
+  Props,
+  Prop
+} from '../Props'
 import SearchInput from 'c/SearchInput'
 
 
@@ -55,4 +58,4 @@ const App = React.createClass({
       </div>
     )
   }
-}) 
+})

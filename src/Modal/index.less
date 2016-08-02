@@ -1,0 +1,109 @@
+.bfd-modal--scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+.bfd-modal--open {
+  overflow: hidden;
+  .bfd-message {
+    top: 110px;
+  }
+}
+
+.bfd-modal--in-enter {
+  .bfd-modal__backdrop {
+    opacity: 0;
+  }
+  .bfd-modal__modal-dialog {
+    opacity: 0;
+    transform: translate(0, -25%);
+  }
+}
+
+.bfd-modal--in-enter-active {
+  .bfd-modal__backdrop {
+    opacity: .5;
+    transition: opacity .2s linear;
+  }
+  .bfd-modal__modal-dialog {
+    opacity: 1;
+    transform: translate(0, 0);
+    transition: all .2s ease-out;
+  }
+}
+
+.bfd-modal--in-leave,
+.bfd-modal--in-leave-active {
+  .bfd-modal__backdrop {
+    opacity: 0;
+    transition: opacity .15s linear;
+  }
+  .bfd-modal__modal-dialog {
+    opacity: 0;
+    transform: translate(0, -25%);
+    transition: all .15s ease-out;
+  }
+}
+
+.bfd-modal__backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  opacity: .5;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.bfd-modal__modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.bfd-modal__modal-dialog {
+  @media (min-width: 768px) {
+    width: 600px;
+    margin: 30px auto;
+  }
+}
+
+.bfd-modal__modal-content {
+  box-shadow: 0 0 2px rgba(0,0,0,.5);
+}
+
+.bfd-modal__modal-header {
+  background-color: #2196f3;
+  color: #fff;
+  padding: 15px 20px;
+  position: relative;
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 14px;
+  }
+}
+
+.bfd-modal__modal-header-close {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -11px;
+}
+
+.bfd-modal__modal-body {
+  padding: 20px;
+  background-color: #fff;
+}

@@ -14,14 +14,14 @@ if (name) {
   mkdirp.sync(dir)
 
   var files = [{
-    source: template + 'index.jsx',
-    target: dir + 'index.jsx'
+    source: template + 'index.js',
+    target: dir + 'index.js'
   }, {
     source: template + 'index.less',
     target: dir + 'index.less'
   }, {
-    source: template + 'doc.jsx',
-    target: path.join(__dirname, '../site/public/components/') + name + '.jsx'
+    source: template + 'doc.js',
+    target: path.join(__dirname, '../site/public/components/') + name + '.js'
   }]
 
   var context = {

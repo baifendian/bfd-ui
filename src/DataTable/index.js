@@ -43,8 +43,8 @@ const Rows = React.createClass({
   render() {
     const rows = this.props.rows
     const column = this.props.column
-    const currentPage = this.props.currentPage
-    const pageSize = this.props.pageSize
+    const currentPage = this.props.currentPage || 1
+    const pageSize = this.props.pageSize || 0
     return (
       <tbody>
       {
@@ -250,7 +250,6 @@ export default React.createClass({
       url,
       ...other
     } = this.props
-
     let totalPageNum = 0,
       currentPage = parseInt(this.state.currentPage),
       //新增自动分页功能 
@@ -271,7 +270,7 @@ export default React.createClass({
       <div>
         {url != "" ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
         
-        <table className={classnames('table', "bfd-datatable", className)} >
+        <table className={classnames('table', "bfd-datatable", className)} {...other} >
           <thead>
             <tr>
               {checkboxTh}

@@ -24,7 +24,7 @@ export default React.createClass({
     const files = el.files
     const self = this
     const arr = []
-    for(let i=0; i<files.length; i++) {
+    for (let i = 0; i < files.length; i++) {
       const file = files[i]
       arr.push({
         name: file.name,
@@ -33,7 +33,7 @@ export default React.createClass({
         state: 0
       });
 
-      (function(self, file, index){
+      (function(self, file, index) {
         const fd = new FormData()
         fd.append('files', file)
         xhr({
@@ -49,15 +49,19 @@ export default React.createClass({
               const list = self.state.list.slice(0)
               const f = list[index]
               f.percent = per
-              self.setState({list})
+              self.setState({
+                list
+              })
             }
-          }, 
+          },
           success(data) {
             const list = self.state.list.slice(0)
             const f = list[index]
             f.state = 1
-            self.setState({list})
-            if(typeof self.props.onComplete == 'function') {
+            self.setState({
+              list
+            })
+            if (typeof self.props.onComplete == 'function') {
               self.props.onComplete(data)
             }
           },
@@ -65,13 +69,14 @@ export default React.createClass({
             const list = self.state.list.slice(0)
             const f = list[index]
             f.state = 2
-            self.setState({list})
-            if(typeof self.props.onComplete == 'function') {
+            self.setState({
+              list
+            })
+            if (typeof self.props.onComplete == 'function') {
               self.props.onComplete(msg)
             }
           },
-          complete() {
-          }
+          complete() {}
         })
       })(self, file, i)
     }
@@ -84,7 +89,7 @@ export default React.createClass({
     const self = this
     const arr = this.state.list.slice(0)
     arr.map((item, index) => {
-      if(item == currItem) {
+      if (item == currItem) {
         arr.splice(index, 1)
         self.setState({
           list: arr
@@ -94,8 +99,12 @@ export default React.createClass({
     })
   },
   render() {
+    const {
+      className,
+      ...other
+    } = this.props
     return (
-      <div className={classnames('bfd-upload', this.props.className)}>
+      <div className={classnames('bfd-upload', className)} {...other}>
         <input ref="file" onChange={this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
         <button className="btn btn-primary" type="button" onClick={this.handleClick}>
           {this.props.text || '文件上传'} 
@@ -107,4 +116,3 @@ export default React.createClass({
     )
   }
 })
-

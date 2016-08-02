@@ -4,7 +4,7 @@ import Panel from '../Panel'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 
-const codeBasic = `import { Select, Option } from 'bfd-ui/lib/Select
+const codeBasic = `import { Select, Option } from 'bfd-ui/lib/Select'
 
 class Basic extends Component {
   render() {
@@ -32,7 +32,7 @@ class Basic extends Component {
   }
 }
 
-const codeSearchable = `import { Select, Option } from 'bfd-ui/lib/Select
+const codeSearchable = `import { Select, Option } from 'bfd-ui/lib/Select'
 
 class Searchable extends Component {
   render() {

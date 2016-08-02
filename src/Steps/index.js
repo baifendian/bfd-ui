@@ -1,7 +1,9 @@
 import 'bfd-bootstrap'
 import React from 'react'
 import Icon from '../Icon'
-import { findAllByType } from '../util/ReactUtils'
+import {
+  findAllByType
+} from '../util/ReactUtils'
 import classnames from 'classnames'
 import './main.less'
 
@@ -31,18 +33,18 @@ const Line = React.createClass({
 
     let classNameLeft = 'line_wait'
     let classNameRight = 'line_wait'
-    if(index < current) {
+    if (index < current) {
       classNameLeft = 'line_finish'
       classNameRight = 'line_finish'
-    } else if(index == current) {
+    } else if (index == current) {
       classNameLeft = 'line_finish'
       classNameRight = 'line_wait'
     }
 
-    if(index == 0) {
+    if (index == 0) {
       classNameLeft = 'line_hide'
     }
-    if(index == max - 1) {
+    if (index == max - 1) {
       classNameRight = 'line_hide'
     }
 
@@ -64,9 +66,9 @@ const Title = React.createClass({
     const y = (height / 2) - (height / 4) - 10
     const top = y * 2 + 'px'
     let className = 'title_process'
-    if(index < current) {
+    if (index < current) {
       className = "title_finish"
-    } else if(index > current) {
+    } else if (index > current) {
       className = "title_wait";
     }
     return (<div style={{top: top}} className={classnames('title', className)}>{title}</div>)
@@ -79,12 +81,12 @@ const Circle = React.createClass({
     const title = this.props.title
     this.props.onStep && this.props.onStep(index, title)
   },
-  render() {    
+  render() {
     const width = this.props.width
     const height = this.props.height
     const index = this.props.index
     const current = this.props.current
-    const icon = this.props.icon    
+    const icon = this.props.icon
     const w = width >= height ? height : width;
     const x = (width / 2) - (w / 4);
     const y = (height / 2) - (height / 4) - 10;
@@ -106,9 +108,9 @@ const Circle = React.createClass({
     }
 
     let className = "circle_process"
-    if(index < current) {
+    if (index < current) {
       className = "circle_finish"
-    } else if(index > current) {
+    } else if (index > current) {
       className = "circle_wait";
     }
 
@@ -143,7 +145,10 @@ const Steps = React.createClass({
   render() {
 
     let rows = [];
-    const { children } = this.props;
+    const {
+      children,
+      ...other
+    } = this.props;
     const items = findAllByType(children, Step);
     items.map((item, index) => {
       rows.push(<Step 
@@ -158,12 +163,12 @@ const Steps = React.createClass({
         onStep={this.props.onStepClick}
         />)
     })
-    
+
     return (
       <div 
         ref='container' 
         style={{height:this.props.height+'px'}} 
-        className={classnames('bfd-steps', this.props.className)}>
+        className={classnames('bfd-steps', this.props.className)} {...other}>
         {rows}
       </div>
     )
@@ -176,11 +181,13 @@ const Steps = React.createClass({
 
     const width = this.refs.container.clientWidth
     const height = this.refs.container.clientHeight
-    const { children } = this.props;
+    const {
+      children
+    } = this.props;
     const items = findAllByType(children, Step);
     this.setState({
-      width : width / items.length,
-      height : height
+      width: width / items.length,
+      height: height
     })
   }
 })

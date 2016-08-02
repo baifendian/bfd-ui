@@ -27,13 +27,13 @@ export default React.createClass({
     const slider = this.refs.slider
     const selectedBar = this.refs.selectedBar
 
-    if(this.isDown) {
-      let left = event.pageX - this.offsetLeft - this.sliderWidth/4
-      if(left <= 0) {
+    if (this.isDown) {
+      let left = event.pageX - this.offsetLeft - this.sliderWidth / 4
+      if (left <= 0) {
         left = 0
         selectedBar.style.width = left + 'px'
-      } else if(left >= (this.width - this.sliderWidth/2)) {
-        left = this.width - this.sliderWidth/2
+      } else if (left >= (this.width - this.sliderWidth / 2)) {
+        left = this.width - this.sliderWidth / 2
         selectedBar.style.width = this.width + 'px'
       } else {
         selectedBar.style.width = left + 'px'
@@ -41,19 +41,19 @@ export default React.createClass({
       slider.style.left = left + 'px'
       const text = this.getValue(parseInt(selectedBar.style.width, 10))
       this.refs.msg.innerHTML = text + (this.props.suffix || '')
-      if(typeof this.props.onSliding == 'function') {
+      if (typeof this.props.onSliding == 'function') {
         this.props.onSliding(text)
       }
     }
   },
   handleMouseUp() {
     const selectedBar = this.refs.selectedBar
-    if(typeof selectedBar == 'undefined') {
+    if (typeof selectedBar == 'undefined') {
       return;
     }
     this.isDown = false
     const text = this.getValue(parseInt(selectedBar.style.width, 10))
-    if(typeof this.props.onSlid == 'function') {
+    if (typeof this.props.onSlid == 'function') {
       this.props.onSlid(text)
     }
 
@@ -68,7 +68,7 @@ export default React.createClass({
     const width = this.width
     const value = v * currWidth / width + start
     let digit = 0
-    if(end <= 10) {
+    if (end <= 10) {
       digit = 1
     }
     return value.toFixed(digit)
@@ -93,17 +93,21 @@ export default React.createClass({
     this.width = parseInt(style.width, 10)
     this.sliderWidth = parseInt(sliderStyle.width, 10)
     this.offsetLeft = bar.offsetLeft + this.marginLeft
-    slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width)/2 + 'px'
+    slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
     selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
-    
+
     this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
   },
   componentWillUnmount() {
-    
+
   },
   render() {
+    const {
+      className,
+      ...other
+    } = this.props
     return (
-      <div ref="container" className={classnames('bfd-seekbar', this.props.className)}>
+      <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
         <div ref="bar" className="bar">
           <div ref="slider" className="slider" onMouseDown={this.handleMouseDown}>
             <div ref="tip" className="tooltips">
@@ -123,9 +127,9 @@ const Scale = React.createClass({
   componentWillMount() {
     this.tickValue = this.props.tickValue || 5
   },
-  render() {    
+  render() {
     const rows = []
-    for(let i=0; i<=(this.tickValue); i++) {
+    for (let i = 0; i <= (this.tickValue); i++) {
       rows.push(<div key={i} ref={'t'+i} className="tick"><div></div>{i}</div>)
     }
     return (
@@ -144,18 +148,18 @@ const Scale = React.createClass({
     const arr = this.getTick(this.tickValue)
     arr.map((tick, index) => {
       let value = scope / width * tick + this.props.start
-      if(index == 0) {
+      if (index == 0) {
         value = this.props.start
       }
-      if(index == arr.length - 1) {
+      if (index == arr.length - 1) {
         value = this.props.end
       }
 
-      const el = this.refs['t'+index]
-      el.innerHTML = '<div></div>'+ parseInt(value)
-      if(index == 0) {
+      const el = this.refs['t' + index]
+      el.innerHTML = '<div></div>' + parseInt(value)
+      if (index == 0) {
         el.style.left = 4 + 'px'
-      } else if(index == this.tickValue) {
+      } else if (index == this.tickValue) {
         el.style.left = parseInt(tick) - 1 + 'px'
       } else {
         el.style.left = tick + 'px'
@@ -166,7 +170,7 @@ const Scale = React.createClass({
     const arr = []
     num = !num ? 1 : num
     const w = this.width / num
-    for(let i=0; i<num; i++) {     
+    for (let i = 0; i < num; i++) {
       arr.push(i * w)
     }
     arr.push(this.width)
