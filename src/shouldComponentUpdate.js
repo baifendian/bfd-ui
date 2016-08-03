@@ -1,13 +1,13 @@
 function shouldComponentUpdate(keys, nextProps, nextState) {
-  return keys.every(key => {
-    let shouldUpdate = false
+  return !keys.every(key => {
+    let isEqual = true
     if (key in nextProps) {
-      if (this.props[key] !== nextProps[key]) shouldUpdate = true
+      if (this.props[key] !== nextProps[key]) isEqual = false
     }
-    if (!shouldUpdate && key in nextState) {
-      if (this.state[key] !== nextState[key]) shouldUpdate = true
+    if (isEqual && key in nextState) {
+      if (this.state[key] !== nextState[key]) isEqual = false
     }
-    return shouldUpdate
+    return isEqual
   })
 }
 

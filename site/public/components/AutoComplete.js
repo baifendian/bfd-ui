@@ -6,7 +6,7 @@ import { Props, Prop } from '../Props'
 
 const AutoCompleteDemo = React.createClass({
   render() {
-    return <AutoComplete source={['test', 'test2']} />
+    return <AutoComplete source={['test', 'test2']} onChange={v => console.log(v)} />
   }
 })
 
@@ -14,7 +14,7 @@ const code = `import AutoComplete from 'bfd-ui/lib/AutoComplete'
 
 export default React.createClass({
   render() {
-    return <AutoComplete source={['test', 'test2']} />
+    return <AutoComplete source={['test', 'test2']} onChange={v => console.log(v)} />
   }
 })`
 

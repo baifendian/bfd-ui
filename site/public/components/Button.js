@@ -35,6 +35,7 @@ export default () => {
       <Button icon="plus" />
       <Button icon="plus" size="sm" />
       <Button icon="plus" size="sm" transparent />
+      <Button icon="plus" size="sm" type="minor" transparent />
       <Button icon="plus" circle />
       <Button icon="plus" size="sm" circle />
       <Button circle>赞</Button>
@@ -51,6 +52,7 @@ export default () => {
         <Button icon="plus" />
         <Button icon="plus" size="sm" />
         <Button icon="plus" size="sm" transparent />
+        <Button icon="plus" size="sm" type="minor" transparent />
         <Button icon="plus" circle />
         <Button icon="plus" size="sm" circle />
         <Button circle>赞</Button>

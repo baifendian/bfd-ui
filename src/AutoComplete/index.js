@@ -8,7 +8,7 @@ const AutoComplete = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: false,
+      open: false,
       index: -1,
       value: this.props.defaultValue || this.props.value || '',
       result: []
@@ -21,18 +21,17 @@ const AutoComplete = React.createClass({
 
   handleChange(value) {
     const state = { value }
-    this.props.onChange && this.props.onChange(value)
     if (!value) {
-      state.isOpen = false
+      state.open = false
       return this.setState(state)
     }
     const result = this.props.source.filter(item => item.indexOf(value) > -1)
     if (result.length) {
       result[-1] = value
-      state.isOpen = true
+      state.open = true
       state.result = result
     } else {
-      state.isOpen = false
+      state.open = false
     }
     state.index = -1
     this.setState(state)
@@ -41,7 +40,7 @@ const AutoComplete = React.createClass({
   handleSelect(value) {
     this.setState({
       value,
-      isOpen: false
+      open: false
     })
     this.props.onChange && this.props.onChange(value)
   },
@@ -49,7 +48,7 @@ const AutoComplete = React.createClass({
   handleKeyDown(e) {
     const input = e.target
     const key = e.key
-    if (this.state.isOpen) {
+    if (this.state.open) {
       let index = this.state.index
       const result = this.state.result
       if (key === 'ArrowDown' || key === 'ArrowUp') {
@@ -67,7 +66,6 @@ const AutoComplete = React.createClass({
           index,
           value
         })
-        this.props.onChange && this.props.onChange(value)
       }
       if (key === 'Enter') {
         this.handleSelect(result[index])
@@ -78,17 +76,37 @@ const AutoComplete = React.createClass({
 
   handleFocus() {
     if (!this.state.result.length) return
-    this.setState({isOpen: true})
+    this.setState({open: true})
   },
 
   render() {
-    const { className, ...other } = this.props
+    const { className, onFocus, onKeyDown, value, onChange, ...other } = this.props
     return (
-      <Dropdown open={this.state.isOpen} className={classnames('bfd-auto-complete', className)}>
-        <ClearableInput onFocus={this.handleFocus} onKeyDown={this.handleKeyDown} value={this.state.value} onChange={this.handleChange} {...other} />
+      <Dropdown 
+        open={this.state.open} 
+        className={classnames('bfd-auto-complete', className)}
+      >
+        <ClearableInput 
+          value={this.state.value}
+          onFocus={this.handleFocus} 
+          onKeyDown={this.handleKeyDown} 
+          onChange={value => {
+            this.handleChange(value)
+            onChange && onChange(value)
+          }}
+          {...other} 
+        />
         <DropdownMenu>
           <ul className="result">
-          {this.state.result.map((item, i) => <li className={classnames({active: this.state.index === i})} key={i} onClick={this.handleSelect.bind(this, item)}>{item}</li>)}
+          {this.state.result.map((item, i) => (
+            <li 
+              key={i}
+              className={classnames({active: this.state.index === i})} 
+              onClick={this.handleSelect.bind(this, item)}
+            >
+              {item}
+            </li>
+          ))}
           </ul>
         </DropdownMenu>
       </Dropdown>

@@ -61,6 +61,9 @@ export default React.createClass({
         <ModalDemo></ModalDemo>
         <h2>Modal</h2>
         <Props>
+          <Prop name="open" type="boolean">
+            <p>是否打开</p>
+          </Prop>
           <Prop name="lock" type="boolean">
             <p>是否锁定，锁定后，点击遮罩层不会关闭 Modal</p>
           </Prop>

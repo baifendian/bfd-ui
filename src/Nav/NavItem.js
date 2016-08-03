@@ -10,22 +10,12 @@ const NavItem = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: this.props.defaultOpen || false
-    }
-  },
-
-  componentWillMount() {
-    const baseURL = this.context.nav.props.href
-    let href = baseURL + '/' + this.props.href
-    href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
-    this.href = href
-    if (this.props.children && this.isActive(href, href === baseURL)) {
-      this.setState({isOpen: true})
+      open: this.props.defaultOpen || false
     }
   },
 
   toggle(e) {
-    this.setState({isOpen: !this.state.isOpen})
+    this.setState({open: !this.state.open})
     e.preventDefault()
   },
 
@@ -39,9 +29,19 @@ const NavItem = React.createClass({
   },
   
   render() {
+    
     const { children, icon, title, ...other } = this.props
     const baseURL = this.context.nav.props.href
-    const href = this.href
+    let open = this.state.open
+    let href = baseURL + '/' + this.props.href
+    let active
+    
+    href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
+    active = this.isActive(href, href === baseURL)
+
+    if (children && active) {
+      open = true
+    }
 
     let Toggle
     if (children) {
@@ -60,14 +60,10 @@ const NavItem = React.createClass({
       Item = <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
     }
 
-    const computedClassNames = {
-      open: this.state.isOpen,
-      active: this.isActive(href, href === baseURL)
-    }
     return (
       <li 
         onClick={this.handleClick} 
-        className={classnames('bfd-nav-item', computedClassNames)} 
+        className={classnames('bfd-nav-item', { open, active })} 
         {...other}
       >
         {Item}

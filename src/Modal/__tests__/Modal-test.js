@@ -32,6 +32,6 @@ describe('Modal', () => {
     const instance = TestUtils.renderIntoDocument(<Modal className="test"/>)
     instance.open()
     instance.close()
-    expect(instance.state.isOpen).toBe(false)
+    expect(instance.state.open).toBe(false)
   })
 })

@@ -16,10 +16,10 @@ const scrollbarWidth = (() => {
 
 class Modal extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      isOpen: false
+      open: props.open || false
     }
   }
 
@@ -29,16 +29,20 @@ class Modal extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    'open' in nextProps && this.setState({open: nextProps.open})  
+  }
+
   componentWillUpdate(nextProps, nextState) {
     const body = document.body
     const bodyClassName = body.className
     const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
 
-    if (nextState.isOpen && !this.state.isOpen) {
+    if (nextState.open && !this.state.open) {
       this.scrollbarWidth = body.scrollHeight > window.innerHeight ? scrollbarWidth : 0
       body.className = bodyClassName + ' bfd-modal--open'
       body.style.paddingRight = bodyPaddingRight + this.scrollbarWidth + 'px'
-    } else if (!nextState.isOpen && this.state.isOpen) {
+    } else if (!nextState.open && this.state.open) {
       setTimeout(() => {
         body.className = bodyClassName.replace(' bfd-modal--open', '')
         if (bodyPaddingRight) {
@@ -59,11 +63,11 @@ class Modal extends Component {
   }
 
   open() {
-    this.setState({isOpen: true})
+    this.setState({open: true})
   }
 
   close(callback = this.props.onClose) {
-    this.setState({isOpen: false})
+    this.setState({open: false})
     callback && setTimeout(callback, this.closeTimeout)
   }
 
@@ -75,7 +79,7 @@ class Modal extends Component {
         transitionEnterTimeout={200} 
         transitionLeaveTimeout={this.closeTimeout}
       >
-        {this.state.isOpen && (
+        {this.state.open && (
           <div className={classnames('bfd-modal', className)} {...other}>
             <div className="bfd-modal__backdrop"></div>
             <div className="bfd-modal__modal" onClick={e => this.handleModalClick(e)}>
@@ -97,7 +101,9 @@ Modal.childContextTypes = {
 }
 
 Modal.propTypes = {
-  lock: PropTypes.bool
+  open: PropTypes.bool,
+  lock: PropTypes.bool,
+  onClose: PropTypes.func
 }
 
 export default Modal
