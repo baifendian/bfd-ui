@@ -5,6 +5,12 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.6.1" date="2016-08-03">
+        <ol>
+          <li>修复 NavItem href 未更新的问题</li>
+          <li>Modal 新增 open 属性，控制打开状态</li>
+        </ol>
+      </Version>
 
       <Version version="0.6.0" date="2016-07-29">
         <p>新增组件: </p>
