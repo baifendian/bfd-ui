@@ -1,10 +1,8 @@
-import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
 import Nav from './Nav'
 import Icon from '../Icon'
-import './NavItem.less'
 
 const NavItem = React.createClass({
 
@@ -63,7 +61,7 @@ const NavItem = React.createClass({
     return (
       <li 
         onClick={this.handleClick} 
-        className={classnames('bfd-nav-item', { open, active })} 
+        className={classnames('bfd-nav__item', { open, active })} 
         {...other}
       >
         {Item}

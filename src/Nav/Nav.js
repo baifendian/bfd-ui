@@ -1,4 +1,3 @@
-import 'bfd-bootstrap'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 
@@ -21,7 +20,7 @@ const Nav = React.createClass({
   render() {
     const { className, children, ...other } = this.props
     return (
-      <ul className={classnames('nav nav-pills nav-stacked bfd-nav', className)} {...other}>
+      <ul className={classnames('bfd-nav', className)} {...other}>
         {children}
       </ul>
     )
