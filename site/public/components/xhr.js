@@ -78,6 +78,13 @@ export default () => {
       <h3>xhr.error(res, option)</h3>
       <p>与 success 同理</p>
 
+      <h3>xhr.header</h3>
+      <p>全局请求头设置</p>
+      <Pre>{`
+xhr.header = {
+  token: 'YUSDDS12SD'  
+}`}</Pre>
+
       <h3>xhr.timeout</h3>
       <p>请求超时全局配置，单位毫秒</p>
       <Pre>xhr.timeout = 5000</Pre>

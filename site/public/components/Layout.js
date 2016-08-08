@@ -52,6 +52,26 @@ const Gutter = () => {
   )
 }
 
+const codeRight = `import { Row, Col } from 'bfd-ui/lib/Layout'
+
+const Right = () => {
+  return (
+    <Row>
+      <Col col="md-4" style={{backgroundColor: '#e3f2fd'}}>md-4</Col>
+      <Col right style={{backgroundColor: '#bbdefb'}}>right</Col>
+    </Row>
+  )
+}`
+
+const Right = () => {
+  return (
+    <Row>
+      <Col col="md-4" style={{backgroundColor: '#e3f2fd'}}>md-4</Col>
+      <Col right style={{backgroundColor: '#bbdefb'}}>right</Col>
+    </Row>
+  )
+}
+
 export default () => {
   return (
     <div>
@@ -66,6 +86,10 @@ export default () => {
         <Gutter />
       </Panel>
 
+      <Panel title="右浮动" code={codeRight}>
+        <Right />
+      </Panel>
+
       <h2>Row</h2>
       <Props>
         <Prop name="gutter" type="boolean">
@@ -78,6 +102,9 @@ export default () => {
         <Prop name="col" type="string">
           <p>布局规则，支持响应式，详细参考 <a href="http://v3.bootcss.com/css/#grid-options" target="_blank">bootstrap</a> 布局用法</p>
           <Pre>{'<Col col="md-6 sm-8">hello</Col>'}</Pre>
+        </Prop>
+        <Prop name="right" type="boolean">
+          <p>是否右浮动，右对齐时无需指定 col 属性</p>
         </Prop>
       </Props>
     </div>

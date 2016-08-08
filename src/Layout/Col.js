@@ -1,18 +1,23 @@
+import './Col.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './Col.less'
 
 const Col = props => {
-  const { children, className, col, ...other} = props
-  return (
-    <div className={classnames('bfd-col', col, className)} {...other}>
-      {children}
-    </div>
+  const { children, className, col, left, right, ...other} = props
+  const classNames = classnames(
+    'bfd-col',
+    col && col.split(' ').map(v => 'bfd-col--' + v),
+    {
+      'bfd-col--right': right
+    },
+    className
   )
+  return <div className={classNames} {...other}>{children}</div>
 }
 
 Col.propTypes = {
-  col: PropTypes.string   
+  col: PropTypes.string,
+  right: PropTypes.bool
 }
 
 export default Col
