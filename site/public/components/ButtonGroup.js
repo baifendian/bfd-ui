@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react'
+import React from 'react'
 import ButtonGroup from 'c/ButtonGroup'
 import Button from 'c/Button'
 import Panel from '../Panel'
@@ -32,11 +30,11 @@ export default React.createClass({
 })
 
 `
-class Basic extends Component {
+const Basic = React.createClass({
 
   handleClick(value) {
     console.log(value)
-  }
+  },
 
   render() {
     return (
@@ -49,7 +47,7 @@ class Basic extends Component {
       </ButtonGroup>
     )
   }
-}
+})
 
 export default () => {
 
