@@ -5,6 +5,23 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.7.1" date="2016-08-08">
+        <p>新增组件: </p>
+        <ul>
+          <li>输入框: Input</li>
+          <li>按钮组: ButtonGroup</li>
+        </ul>
+        <p>其他: </p>
+        <ol>
+          <li>Nav 组件多级菜单样式调整</li>
+          <li>Button size 属性新增 lg 类型</li>          
+          <li>Col 新增 right 属性，实现右浮动</li>
+          <li>修复 Select value 重置后搜索框不重置的问题</li>
+          <li>xhr 新增全局 header 配置，设置所有请求的请求头</li>          
+          <li>SearchInput 新增 defaultValue属性，设定默认值</li>
+        </ol>
+      </Version>
+      
       <Version version="0.7.0" date="2016-08-08">
         <p>新增组件: </p>
         <ul>
