@@ -57,6 +57,9 @@
   }, {
     "name": "SplitPanel",
     "cn": "分栏"
+  }, {
+    "name": "ButtonGroup",
+    "cn": "按钮组"
   }]
 }, {
   "type": "交互进阶",
