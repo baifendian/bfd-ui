@@ -258,7 +258,9 @@ export default React.createClass({
     //如果是传入url查询数据就附带参数查询
     if (url && url !== '') {
       if (url.indexOf('?') < 0) {
-        url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
+        if (this.props.showPage == 'true') {
+          url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
+        }
       }
       if (url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1) {
         url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage

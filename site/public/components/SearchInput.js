@@ -53,7 +53,10 @@ const App = React.createClass({
           </Prop> 
           <Prop name="size" type="string">
             <p>输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm，默认lg</p>
-          </Prop>     
+          </Prop>
+          <Prop name="defalutValue" type="String">
+            <p>输入框默认值</p>
+          </Prop>
         </Props>
       </div>
     )
