@@ -1,7 +1,8 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import Input from '../Input'
 import Icon from '../Icon'
-import './index.less'
 
 const ClearableInput = React.createClass({
 
@@ -36,14 +37,13 @@ const ClearableInput = React.createClass({
   },
 
   render() {
-    const { size, inline, className, onChange, ...other } = this.props
+    const { size, className, onChange, ...other } = this.props
     const value = this.state.value
     return (
-      <div className={classnames('bfd-clearable-input', className, { inline })}>
-        <input 
+      <div className={classnames('bfd-clearable-input', className)}>
+        <Input 
           ref="input"
           value={value} 
-          className={'form-control' + (size ? ' input-' + size : '')} 
           onChange={this.handleInputChange} 
           {...other} 
         />
@@ -61,7 +61,6 @@ ClearableInput.propTypes = {
   value: PropTypes.string,
   defaultValue: PropTypes.string,
   size: PropTypes.string,
-  inline: PropTypes.bool,
   onChange: PropTypes.func,
   onClear: PropTypes.func,
   customProp({ value, onChange }) {
@@ -69,10 +68,6 @@ ClearableInput.propTypes = {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
   }
-}
-
-ClearableInput.defaultProps = {
-  type: 'text'
 }
 
 export default ClearableInput

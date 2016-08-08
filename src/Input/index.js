@@ -1,17 +1,19 @@
 import './index.less'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 
-const Input = props => {
-  const { className, size, ...other } = props
-  const classNames = classnames(
-    'bfd-input', 
-    {
-      [`bfd-input--${size}`]: size,
-    },
-    className
-  )
-  return <input className={classNames} { ...other } />
+class Input extends Component {
+  render() {
+    const { className, size, ...other } = this.props
+    const classNames = classnames(
+      'bfd-input', 
+      {
+        [`bfd-input--${size}`]: size,
+      },
+      className
+    )
+    return <input className={classNames} { ...other } />
+  }
 }
 
 Input.propTypes = {
