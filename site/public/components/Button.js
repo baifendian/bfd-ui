@@ -32,15 +32,14 @@ export default () => {
       <Button type="minor">次要</Button>
       <Button type="danger">危险</Button>
       <Button icon="plus">带图标</Button>
-      <Button icon="plus" />
       <Button icon="plus" size="sm" />
       <Button icon="plus" size="sm" transparent />
       <Button icon="plus" size="sm" type="minor" transparent />
-      <Button icon="plus" circle />
       <Button icon="plus" size="sm" circle />
       <Button circle>赞</Button>
       <Button size="sm">小尺寸</Button>
-      <Button disabled>禁用</Button>
+      <Button size="lg">大尺寸</Button>
+      <Button disabled>不可用</Button>
     </div>
   )
 }`}
@@ -49,15 +48,14 @@ export default () => {
         <Button type="minor">次要</Button>
         <Button type="danger">危险</Button>
         <Button icon="plus">带图标</Button>
-        <Button icon="plus" />
         <Button icon="plus" size="sm" />
         <Button icon="plus" size="sm" transparent />
         <Button icon="plus" size="sm" type="minor" transparent />
-        <Button icon="plus" circle />
         <Button icon="plus" size="sm" circle />
         <Button circle>赞</Button>
         <Button size="sm">小尺寸</Button>
-        <Button disabled>禁用</Button>
+        <Button size="lg">大尺寸</Button>
+        <Button disabled>不可用</Button>
 
         <h2>Button</h2>
         <Props>
@@ -73,11 +71,11 @@ export default () => {
           <Prop name="circle" type="boolean">
             <p>是否为圆形</p>
           </Prop>
-          <Prop name="disabled" type="boolean">
-            <p>是否禁用</p>
-          </Prop>
           <Prop name="transparent" type="boolean">
             <p>背景是否为 transparent</p>
+          </Prop>
+          <Prop name="{...button}">
+            <p>button 其它标签属性均支持</p>
           </Prop>
         </Props>
       </div>

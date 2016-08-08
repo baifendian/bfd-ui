@@ -55,6 +55,12 @@ function xhr(option) {
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
   }
 
+  if (xhr.header) {
+    Object.keys(xhr.header).forEach(key => {
+      request.setRequestHeader(key, xhr.header[key])
+    })
+  }
+
   option.beforeSend && option.beforeSend(request)
 
   request.send(sendData)

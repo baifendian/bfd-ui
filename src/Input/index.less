@@ -1,0 +1,31 @@
+@color400: #42a5f5;
+
+.bfd-input {
+  border: 1px solid #ececec;
+  border-radius: 2px;
+  padding: 0 10px;
+  height: 30px;
+  background-color: #fff;
+  &:focus {
+    border-color: @color400;
+    outline: none;
+  }
+  &[disabled] {
+    background-color: #eceff1;
+    border-color: #eceff1;
+    color: #9e9e9e;
+    cursor: not-allowed;
+  }
+}
+
+.bfd-input--sm {
+  height: 22px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.bfd-input--lg {
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 15px;
+}

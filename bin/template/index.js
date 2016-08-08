@@ -1,6 +1,6 @@
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import './index.less'
 
 class <%= name %> extends Component {
 

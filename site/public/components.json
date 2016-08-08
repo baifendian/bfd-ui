@@ -4,6 +4,9 @@
     "name": "Button",
     "cn": "按钮"
   }, {
+    "name": "Input",
+    "cn": "输入框"
+  }, {
     "name": "Icon",
     "cn": "图标"
   }, {

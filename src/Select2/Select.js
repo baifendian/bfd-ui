@@ -17,12 +17,14 @@ const Select = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
+    const state = {
+      searchValue: null
+    }
     if ('value' in nextProps) {
       this.title = null
-      this.setState({
-        value: nextProps.value
-      })
+      state.value = nextProps.value
     }
+    this.setState(state)
   },
 
   handleLoad(list) {
@@ -150,6 +152,7 @@ const Select = React.createClass({
           {searchable ? (
             <ClearableInput 
               ref="clearableInput"
+              value={searchValue}
               placeholder="请输入关键词搜索" 
               onChange={this.handleSearch} 
               onKeyDown={this.handleKeyDown}
