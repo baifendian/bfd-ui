@@ -44,7 +44,7 @@ class Chart extends Component {
         ref="container"
         className={classnames('bfd-chart', className)} 
         url={url} 
-        onSuccess={this.handleSuccess} 
+        onSuccess={::this.handleSuccess} 
         { ...other }
       />
     )

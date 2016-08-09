@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import './less/checkbox.less'
+import './checkbox.less'
 
 class Checkbox extends Component {
 
@@ -22,26 +22,27 @@ class Checkbox extends Component {
   }
 
   render() {
+
     const { className, value, disabled, block, children, ...other } = this.props
+    
     const classNames = classnames('bfd-checkbox', {
-      checkbox: block, 
-      disabled: disabled,
-      'checkbox-inline': !block
+      [`bfd-checkbox--disabled`]: disabled,
+      [`bfd-checkbox--block}`]: block
     }, className)
+    
     return (
-      <div className={classNames} {...other}>
-        <label>
-          <input 
-            type="checkbox" 
-            value={value} 
-            checked={this.state.checked}
-            disabled={disabled} 
-            onChange={this.handleChange}
-          />
-          <span className="status"></span>
-          {children ? <span>{children}</span> : null}
-        </label>
-      </div>
+      <label className={classNames} {...other}>
+        <input 
+          type="checkbox" 
+          className="bfd-checkbox__input"
+          value={value} 
+          checked={this.state.checked}
+          disabled={disabled} 
+          onChange={::this.handleChange}
+        />
+        <span className="bfd-checkbox__status" />
+        {children && <span className="bfd-checkbox__text">{children}</span>}
+      </label>
     )
   }
 }

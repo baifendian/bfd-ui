@@ -1,23 +1,24 @@
-import React, { PropTypes } from 'react'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import ClearableInput from '../ClearableInput'
-import './index.less'
 
-const AutoComplete = React.createClass({
+class AutoComplete extends Component {
 
-  getInitialState() {
-    return {
+  constructor(props) {
+    super()
+    this.state = {
       open: false,
       index: -1,
-      value: this.props.defaultValue || this.props.value || '',
+      value: props.defaultValue || props.value || '',
       result: []
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     'value' in nextProps && this.setState({value: nextProps.value})  
-  },
+  }
 
   handleChange(value) {
     const state = { value }
@@ -35,7 +36,7 @@ const AutoComplete = React.createClass({
     }
     state.index = -1
     this.setState(state)
-  },
+  }
 
   handleSelect(value) {
     this.setState({
@@ -43,7 +44,7 @@ const AutoComplete = React.createClass({
       open: false
     })
     this.props.onChange && this.props.onChange(value)
-  },
+  }
 
   handleKeyDown(e) {
     const input = e.target
@@ -72,12 +73,12 @@ const AutoComplete = React.createClass({
         input.blur()
       }
     }
-  },
+  }
 
   handleFocus() {
     if (!this.state.result.length) return
     this.setState({open: true})
-  },
+  }
 
   render() {
     const { className, onFocus, onKeyDown, value, onChange, ...other } = this.props
@@ -112,7 +113,7 @@ const AutoComplete = React.createClass({
       </Dropdown>
     )
   }
-})
+}
 
 AutoComplete.propTypes = {
   source: PropTypes.array.isRequired

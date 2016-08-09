@@ -25,9 +25,7 @@ class Tree extends Component {
     'data' in nextProps && this.setState({data: nextProps.data})
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shouldComponentUpdate.call(this, ['data'], nextProps, nextState)
-  }
+  shouldComponentUpdate = shouldComponentUpdate
 
   updateData(...args) {
     const data = this.update(...args)

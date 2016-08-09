@@ -1,50 +1,47 @@
-import React, { PropTypes } from 'react'
-import Checkbox from './Checkbox'
+import './checkboxGroup.less'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import './less/checkboxGroup.less'
+import update from 'react-update'
+import Checkbox from './Checkbox'
+import shouldComponentUpdate from '../shouldComponentUpdate'
 
-const CheckboxGroup = React.createClass({
+class CheckboxGroup extends Component {
 
-  getInitialState() {
-    return {
-      selects: this.props.selects || []
+  constructor(props) {
+    super()
+    this.update = update.bind(this)
+    this.state = {
+      selects: props.selects || []
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.selects && this.setState({selects: nextProps.selects})  
-  },
+    nextProps.selects && this.update('set', 'selects', nextProps.selects)
+  }
 
-  update(selects) {
-    this.setState({ selects })
+  shouldComponentUpdate = shouldComponentUpdate
+
+  change(...args) {
+    const selects = this.update(args)
     this.props.onChange && this.props.onChange(selects)
-  },
+  }
 
   addSelect(value) {
-    const selects = this.state.selects
-    selects.push(value)
-    this.update(selects)
-  },
+    this.change('push', 'selects', value)
+  }
 
   removeSelect(value) {
-    const selects = this.state.selects
-    selects.splice(selects.indexOf(value), 1)
-    this.update(selects)
-  },
+    this.change('splice', 'selects', this.state.selects.indexOf(value))
+  }
 
   toggleAll(e) {
-    const selects = this.state.selects
-    if (e.target.checked) {
-      Array.prototype.push.apply(selects, this.unSelects)
-    } else {
-      selects.length = 0
-    }
-    this.update(selects)
-  },
+    const selects = e.target.checked ? this.state.selects.concat(this.unSelects) : []
+    this.change('set', { selects })
+  }
 
   handleCheckboxChange(value, e) {
     this[(e.target.checked ? 'add' : 'remove') + 'Select'](value)
-  },
+  }
 
   render() {
     const { className, values, children, block, toggleable, ...other } = this.props
@@ -96,22 +93,20 @@ const CheckboxGroup = React.createClass({
         className={classnames('bfd-checkbox-group', className)} 
         {...other}
       >
-        {
-          toggleable && checkboxes && checkboxes.length > 1 ? 
+        {toggleable && checkboxes && checkboxes.length > 1 && (
           <Checkbox 
             block={block} 
             checked={unSelects.length === 0} 
-            onChange={this.toggleAll}
+            onChange={::this.toggleAll}
           >
             全选
-          </Checkbox> : 
-          null
-        }
+          </Checkbox>
+        )}
         {checkboxes}
       </div>
     ) 
   }
-})
+}
 
 CheckboxGroup.propTypes = {
   selects: PropTypes.array,

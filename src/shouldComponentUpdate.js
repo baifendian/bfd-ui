@@ -1,14 +1,19 @@
-function shouldComponentUpdate(keys, nextProps, nextState) {
-  return !keys.every(key => {
+// ShadowEqual except function props.
+function isEqual(source, target) {
+  if (!source) return true
+  return Object.keys(source).every(key => {
     let isEqual = true
-    if (key in nextProps) {
-      if (this.props[key] !== nextProps[key]) isEqual = false
-    }
-    if (isEqual && key in nextState) {
-      if (this.state[key] !== nextState[key]) isEqual = false
+    const prop = source[key]
+    if (typeof prop !== 'function' && target[key] !== source[key]) {
+      isEqual = false
     }
     return isEqual
   })
+}
+
+function shouldComponentUpdate(nextProps, nextState) {
+  if (nextProps.children) return true
+  return !(isEqual(nextState, this.state) && isEqual(nextProps, this.props))
 }
 
 export default shouldComponentUpdate
