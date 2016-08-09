@@ -1,12 +1,7 @@
-import React, {
-  Component,
-  PropTypes
-} from 'react'
-import {
-  findAllByType
-} from '../util/ReactUtils'
+import React, { Component, PropTypes } from 'react'
+import { findAllByType } from '../util/ReactUtils'
 import classnames from 'classnames'
-import Button from '../Button';
+import Button from '../Button'
 import './index.less'
 
 class ButtonGroup extends Component {
@@ -20,7 +15,7 @@ class ButtonGroup extends Component {
 
   handleClick(value) {
     this.setState({
-      value: value
+      value
     })
     this.props.onClick && this.props.onClick(value)
   }
@@ -32,11 +27,9 @@ class ButtonGroup extends Component {
   }
 
   render() {
-    let rows = [];
     const {
       className,
       children,
-      defaultValue,
       ...other
     } = this.props
     const items = findAllByType(children, Button)
