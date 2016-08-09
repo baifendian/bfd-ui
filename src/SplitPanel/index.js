@@ -115,7 +115,7 @@ const SplitPanel = React.createClass({
     this.currSplit.height = parseInt(top.style.height)
     this.currSplit.width1 = parseInt(bottom.style.width)
     this.currSplit.height1 = parseInt(bottom.style.height)
-    if (typeof this.props.onSplit == "function") {
+    if (typeof this.props.onSplit == 'function') {
       const old = this.oldSplit
       const curr = this.currSplit
       if (direct == 'ver') {

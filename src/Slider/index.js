@@ -49,7 +49,7 @@ export default React.createClass({
   handleMouseUp() {
     const selectedBar = this.refs.selectedBar
     if (typeof selectedBar == 'undefined') {
-      return;
+      return
     }
     this.isDown = false
     const text = this.getValue(parseInt(selectedBar.style.width, 10))
