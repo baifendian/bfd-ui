@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router'
 import ClearableInput from 'c/ClearableInput'
 import Pre from '../Pre'
 import {
@@ -14,6 +15,7 @@ export default React.createClass({
 })`
 
 export default React.createClass({
+
   render() {
     return (
       <div>
@@ -21,26 +23,14 @@ export default React.createClass({
         <Pre>{code}</Pre>
         <ClearableInput />
         <Props>
-          <Prop name="value" type="String">
-            <p>输入框值</p>
-          </Prop>
-          <Prop name="defalutValue" type="String">
-            <p>输入框值</p>
-          </Prop>
-          <Prop name="size" type="string">
-            <p>输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm</p>
-          </Prop>
-          <Prop name="inline" type="boolean">
-            <p>是否为行内模式(display: inline-block)</p>
-          </Prop>
           <Prop name="onChange" type="function">
             <p>输入框值改变后的回调，包括清空动作。参数为改变后的值</p>
           </Prop>
           <Prop name="onClear" type="function">
             <p>清空后的回调</p>
           </Prop>
-          <Prop name="{ ...input }">
-            <p>input 属性均支持</p>
+          <Prop name="{ ...Input }">
+            <p><Link to="/components/Input">Input</Link> 属性均支持</p>
           </Prop>
         </Props>
         <h3>组件方法</h3>

@@ -3,6 +3,12 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 
 class Input extends Component {
+
+  // @public
+  focus() {
+    this.refs.input.focus()
+  }
+
   render() {
     const { className, size, ...other } = this.props
     const classNames = classnames(
@@ -12,7 +18,7 @@ class Input extends Component {
       },
       className
     )
-    return <input className={classNames} { ...other } />
+    return <input ref="input" className={classNames} { ...other } />
   }
 }
 

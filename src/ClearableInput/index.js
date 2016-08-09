@@ -2,7 +2,7 @@ import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import Input from '../Input'
-import Icon from '../Icon'
+import Button from '../Button'
 
 const ClearableInput = React.createClass({
 
@@ -32,12 +32,13 @@ const ClearableInput = React.createClass({
     this.props.onChange && this.props.onChange(value)
   },
 
+  // @public
   focus() {
     this.refs.input.focus()
   },
 
   render() {
-    const { size, className, onChange, ...other } = this.props
+    const { className, onChange, ...other } = this.props
     const value = this.state.value
     return (
       <div className={classnames('bfd-clearable-input', className)}>
@@ -47,20 +48,21 @@ const ClearableInput = React.createClass({
           onChange={this.handleInputChange} 
           {...other} 
         />
-        {
-          value && !other.disabled ? 
-          <Icon type="remove" className="clear" onClick={this.handleClear} /> : 
-          null
-        }
+        {value && !other.disabled && (
+          <Button 
+            icon="remove" 
+            type="minor"
+            transparent
+            className="bfd-clearable-input__clear" 
+            onClick={this.handleClear} 
+          />
+        )}
       </div>
     )
   }
 })
 
 ClearableInput.propTypes = {
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
-  size: PropTypes.string,
   onChange: PropTypes.func,
   onClear: PropTypes.func,
   customProp({ value, onChange }) {

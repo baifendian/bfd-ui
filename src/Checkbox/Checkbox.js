@@ -1,36 +1,35 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import './less/checkbox.less'
 
-const Checkbox = React.createClass({
+class Checkbox extends Component {
 
-  getInitialState() {
-    return {
-      checked: this.props.defaultChecked || this.props.checked     
+  constructor(props) {
+    super()
+    this.state = {
+      checked: props.defaultChecked || props.checked
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     'checked' in nextProps && this.setState({checked: nextProps.checked})  
-  },
+  }
 
   handleChange(e) {
     e.stopPropagation()
     this.setState({checked: e.target.checked})
     this.props.onChange && this.props.onChange(e)
-  },
+  }
 
   render() {
     const { className, value, disabled, block, children, ...other } = this.props
+    const classNames = classnames('bfd-checkbox', {
+      checkbox: block, 
+      disabled: disabled,
+      'checkbox-inline': !block
+    }, className)
     return (
-      <div 
-        className={classnames('bfd-checkbox', {
-            checkbox: block, 
-            disabled: disabled,
-            'checkbox-inline': !block
-          }, className)} 
-        {...other}
-      >
+      <div className={classNames} {...other}>
         <label>
           <input 
             type="checkbox" 
@@ -45,7 +44,7 @@ const Checkbox = React.createClass({
       </div>
     )
   }
-})
+}
 
 Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

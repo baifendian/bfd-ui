@@ -1,21 +1,14 @@
 .bfd-clearable-input {
   position: relative;
   display: inline-block;
-  &.inline {
-    display: inline-block;
-  }
-  input {
+  .bfd-input {
     padding-right: 25px;
+    width: 100%;
   }
-  .clear {
-    color: #999;
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    margin-top: -7px;
-    cursor: pointer;
-    &:hover {
-      color: #666;
-    }
-  }
+}
+
+.bfd-clearable-input__clear {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

@@ -1,25 +1,25 @@
-import React, { PropTypes } from 'react'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
 import ReactDM from 'react-dom'
-import Fetch from '../Fetch'
 import classnames from 'classnames'
 import warning from 'warning'
-import './index.less'
+import Fetch from '../Fetch'
 
-const Chart = React.createClass({
+class Chart extends Component {
 
   renderChart(props) {
     new this.props.type({
       container: this.container,
       ...props
     })
-  },
+  }
 
   handleSuccess(data) {
     this.renderChart({
       ...this.props,
       data
     })
-  },
+  }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.data !== nextProps.data) {
@@ -27,15 +27,15 @@ const Chart = React.createClass({
       return false
     }
     return true  
-  },
+  }
 
   componentDidMount() {
     this.container = ReactDM.findDOMNode(this)
-    warning(this.container.clientWidth, 'The chart container `width` is `0`')
+    warning(this.container.clientWidth, 'Chart container `width` is `0`')
     if (this.props.data) {
       this.renderChart(this.props)
     }
-  },
+  }
 
   render() {
     const { className, url, type, ...other } = this.props
@@ -49,7 +49,7 @@ const Chart = React.createClass({
       />
     )
   }
-})
+}
 
 Chart.propTypes = {
   url: PropTypes.string,
