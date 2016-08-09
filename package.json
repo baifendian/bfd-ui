@@ -24,6 +24,7 @@
     "classnames": "^2.2.3",
     "css-loader": "^0.23.0",
     "d3": "^3.5.11",
+    "dateformat": "^1.0.12",
     "file-loader": "^0.8.5",
     "font-awesome": "^4.6.3",
     "history": "^1.17.0",

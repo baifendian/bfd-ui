@@ -1,0 +1,30 @@
+.bfd-dropdown {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.bfd-dropdown__toggle {
+  cursor: pointer;
+}
+
+.bfd-dropdown__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 160px;
+  margin-top: 2px;
+  padding: 10px;
+  border-radius: 2px;
+  border: 1px solid #ececec;
+  background-color: #fff;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.014);
+  z-index: 1000;
+  display: none;
+}
+
+.bfd-dropdown--open {
+  .bfd-dropdown__menu {
+    display: block;
+  }
+}

@@ -8,11 +8,11 @@ class AutoComplete extends Component {
 
   constructor(props) {
     super()
+    this.result = []
     this.state = {
       open: false,
       index: -1,
-      value: props.defaultValue || props.value || '',
-      result: []
+      value: props.defaultValue || props.value || ''
     }
   }
 
@@ -20,22 +20,21 @@ class AutoComplete extends Component {
     'value' in nextProps && this.setState({value: nextProps.value})  
   }
 
-  handleChange(value) {
+  handleInput(value) {
+    this.lastValue = value
     const state = { value }
     if (!value) {
+      this.result = []
       state.open = false
-      return this.setState(state)
-    }
-    const result = this.props.source.filter(item => item.indexOf(value) > -1)
-    if (result.length) {
-      result[-1] = value
-      state.open = true
-      state.result = result
+      this.setState(state)
     } else {
-      state.open = false
+      // reset tab index
+      state.index = -1
+      this.result = this.props.source.filter(item => item.indexOf(value) > -1)
+      state.open = !!this.result.length
+      this.setState(state)
     }
-    state.index = -1
-    this.setState(state)
+    this.props.onChange && this.props.onChange(value)
   }
 
   handleSelect(value) {
@@ -47,11 +46,11 @@ class AutoComplete extends Component {
   }
 
   handleKeyDown(e) {
-    const input = e.target
-    const key = e.key
     if (this.state.open) {
-      let index = this.state.index
-      const result = this.state.result
+      const input = e.target
+      const key = e.key
+      const { result } = this
+      let { index } = this.state
       if (key === 'ArrowDown' || key === 'ArrowUp') {
         if (key === 'ArrowDown') {
           index++
@@ -62,10 +61,9 @@ class AutoComplete extends Component {
           if (index === -1) index = result.length - 1
           else index--
         }
-        const value = result[index]
         this.setState({
-          index,
-          value
+          index, 
+          value: result[index] || this.lastValue
         })
       }
       if (key === 'Enter') {
@@ -76,33 +74,31 @@ class AutoComplete extends Component {
   }
 
   handleFocus() {
-    if (!this.state.result.length) return
+    if (!this.result.length) return
     this.setState({open: true})
   }
 
   render() {
-    const { className, onFocus, onKeyDown, value, onChange, ...other } = this.props
+    const { open, index, value } = this.state
+    const { className, onFocus, onKeyDown, onChange, ...other } = this.props
     return (
       <Dropdown 
-        open={this.state.open} 
+        open={open} 
         className={classnames('bfd-auto-complete', className)}
       >
         <ClearableInput 
-          value={this.state.value}
-          onFocus={this.handleFocus} 
-          onKeyDown={this.handleKeyDown} 
-          onChange={value => {
-            this.handleChange(value)
-            onChange && onChange(value)
-          }}
+          value={value}
+          onFocus={::this.handleFocus} 
+          onKeyDown={::this.handleKeyDown} 
+          onChange={::this.handleInput}
           {...other} 
         />
         <DropdownMenu>
-          <ul className="result">
-          {this.state.result.map((item, i) => (
+          <ul className="bfd-auto-complete__result">
+          {this.result.map((item, i) => (
             <li 
               key={i}
-              className={classnames({active: this.state.index === i})} 
+              className={classnames({active: index === i})} 
               onClick={this.handleSelect.bind(this, item)}
             >
               {item}

@@ -26,8 +26,8 @@ class Checkbox extends Component {
     const { className, value, disabled, block, children, ...other } = this.props
     
     const classNames = classnames('bfd-checkbox', {
-      [`bfd-checkbox--disabled`]: disabled,
-      [`bfd-checkbox--block}`]: block
+      'bfd-checkbox--disabled': disabled,
+      'bfd-checkbox--block': block
     }, className)
     
     return (

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
-import Option from '../Select2/Option'
+import Option from '../Select/Option'
 import { CheckboxGroup, Checkbox } from '../Checkbox'
 import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'

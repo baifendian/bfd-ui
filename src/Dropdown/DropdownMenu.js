@@ -1,11 +1,11 @@
-/**
- * 下拉框内容
- */
 import React from 'react'
-import 'bfd-bootstrap'
+import classnames from 'classnames'
 
-function DropdownMenu(props) {
-  return <div className="dropdown-menu">{props.children}</div>
+const DropdownMenu = props => {
+  const { className, children, ...other } = props
+  return (
+    <div className={classnames('bfd-dropdown__menu', className)} {...other}>{children}</div>
+  )
 }
 
 export default DropdownMenu
