@@ -9,7 +9,7 @@ export default class {
     this.color = ['#E6EE9C', '#FFAB91', '#EF9A9A', '#9FA8DA', '#80CBC4', '#FFF59D', '#F48FB1', '#90CAF9', '#A5D6A7', '#FCE68D', '#CE93D8', '#81D4FA', '#C5E1A5', '#FFCC80', '#B39DDB', '#80DEEA']
     this.scope = this.getScope(type)
 
-    if (!!this.scope) {
+    if (this.scope) {
       this.index = this.scope.start
     }
   }
@@ -21,15 +21,15 @@ export default class {
    */
   getColor(index, colors) {
     index = index || this.index++
-      if (index > this.color.length) {
-        const number = index % this.color.length
-        return this.color[number]
-      }
+    if (index > this.color.length) {
+      const number = index % this.color.length
+      return this.color[number]
+    }
     const color = this.color[index]
     if (colors) {
       if (this.valid(color, colors)) {
         this.index++
-          return this.getColor(this.index, colors)
+        return this.getColor(this.index, colors)
       } else {
         return color
       }

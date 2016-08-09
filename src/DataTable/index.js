@@ -187,13 +187,10 @@ export default React.createClass({
   },
 
   handleCheckboxAllChange() {
-    console.log('-------------')
     const isAll = !this.state.isSelectAll
-    console.log('1------')
     this.setState({
       isSelectAll: isAll
     })
-    console.log('2------')
     const changeRows = []
     const rows = this.state.items.totalList
     rows.map((item) => {
