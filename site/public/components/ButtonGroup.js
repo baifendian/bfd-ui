@@ -7,6 +7,7 @@ import {
   Props,
   Prop
 } from '../Props'
+
 const codeBasic = `import ButtonGroup from 'bfd-ui/lib/ButtonGroup'
 import Button from 'bfd-ui/lib/Button'
 
