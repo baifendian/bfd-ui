@@ -14,7 +14,7 @@ export default class {
    * 获取Y轴最大最小值区间
    */
   getDomain(series) {
-    let maxs = []
+    const maxs = []
     series.forEach((serie) => {
       maxs.push(d3.max(serie.data))
     })
@@ -31,22 +31,20 @@ export default class {
       data
     } = config
 
-    //画布周边的空白
+    // 画布周边的空白
     const padding = {
       left: 45,
       right: 10,
       top: 50,
       bottom: 30
-    };
-    const color = new Color('C2');
-    const width = container.clientWidth - padding.left - padding.right;
-    const height = (container.clientHeight || width * .5) - padding.top - padding.bottom;
-    const dataset = config.data || [];
+    }
+    const color = new Color('C2')
+    const width = container.clientWidth - padding.left - padding.right
+    const height = (container.clientHeight || width * .5) - padding.top - padding.bottom
 
-    //const colors = "#FF0F00 #FF6600 #FF9E01 #FCD202 #F8FF01 #B0DE09 #04D215 #0D8ECF #0D52D1 #2A0CD0 #8A0CCF #CD0D74 #754DEB #DDDDDD #999999 #333333 #000000 #57032A #CA9726 #990000 #4B0C25".split(" ");
-    config.width = width;
-    config.height = height;
-    config.padding = padding;
+    config.width = width
+    config.height = height
+    config.padding = padding
 
     /**
      * tooltip 浮层对象节点
@@ -94,45 +92,44 @@ export default class {
       })
     })
 
-    //x轴的比例尺
-    let xScale = d3.scale.ordinal()
+    // x轴的比例尺
+    const xScale = d3.scale.ordinal()
       .domain(categories)
       .rangeRoundBands([0, width])
 
-    //y轴的比例尺
-    let yScale = d3.scale.linear()
+    // y轴的比例尺
+    const yScale = d3.scale.linear()
       .domain(this.getDomain(series))
       .range([height, 0])
-      .nice();
+      .nice()
 
-    config.series = series;
-    config.categories = categories;
-    config.xScale = xScale;
-    config.yScale = yScale;
+    config.series = series
+    config.categories = categories
+    config.xScale = xScale
+    config.yScale = yScale
 
     const svg = new Svg(config).create({
       highBg: 1
-    });
-    const xItemLen = width / dataset.length;
+    })
 
-    let rect = new Rect({
+    const rect = new Rect({
       div: tooltipElement,
-      arrow: arrow,
+      arrow,
       svg: svg.getSvg(),
-      height: height,
-      padding: padding,
-      xScale: xScale,
-      yScale: yScale
-    });
+      height,
+      padding,
+      xScale,
+      yScale
+    })
 
     series.map((serie, index) => {
       rect.create(serie, categories, series.length, index)
     })
 
-    const _this = this;
+    const _this = this
     const _series = [...series]
-    const legend = new Legend(config).create(_series, function(index, isDisabled) {
-      //onClickCallback
+    new Legend(config).create(_series, function() {
+      // onClickCallback
       series = _series.filter(serie => !serie.disabled)
 
       yScale.domain(_this.getDomain(series)).nice()
@@ -140,7 +137,7 @@ export default class {
       svg.setYScale(yScale)
       svg.setSeries(series)
 
-      svg.getSvg().selectAll("rect.MyRect").remove()
+      svg.getSvg().selectAll('rect.MyRect').remove()
 
       rect.resetYScale(yScale)
 
@@ -149,5 +146,4 @@ export default class {
       })
     })
   }
-
 }

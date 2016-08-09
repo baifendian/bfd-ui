@@ -20,16 +20,16 @@ export default class {
    * colors 颜色值数组，返回值color值不能在这个范围值内，可选
    */
   getColor(index, colors) {
-    index = index || this.index++;
-    if (index > this.color.length) {
-      const number = index % this.color.length
-      return this.color[number]
-    }
+    index = index || this.index++
+      if (index > this.color.length) {
+        const number = index % this.color.length
+        return this.color[number]
+      }
     const color = this.color[index]
     if (colors) {
       if (this.valid(color, colors)) {
-        this.index++;
-        return this.getColor(this.index, colors)
+        this.index++
+          return this.getColor(this.index, colors)
       } else {
         return color
       }

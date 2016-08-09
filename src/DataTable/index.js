@@ -21,8 +21,8 @@ const Rows = React.createClass({
       t: +new Date
     })
 
-    let selectRow = []
-    this.props.rows.map((item, j) => {
+    const selectRow = []
+    this.props.rows.map((item) => {
       if (item.isSelect) {
         selectRow.push(item)
       }
@@ -32,8 +32,8 @@ const Rows = React.createClass({
   },
 
   handleCheckboxClick(event) {
-    event = event ? event : window.event;
-    event.stopPropagation();
+    event = event ? event : window.event
+    event.stopPropagation()
   },
 
   handleRowClick(item) {
@@ -50,31 +50,31 @@ const Rows = React.createClass({
       {
         rows.length > 0 ?
         rows.map((item, j) => {
-          let isSelect = item.isSelect || false
-          let isDisabled = item.disabled || false
-          let checkboxTd = this.props.onCheckboxSelect 
+          const isSelect = item.isSelect || false
+          const isDisabled = item.disabled || false
+          const checkboxTd = this.props.onCheckboxSelect 
             ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
             : null
           return (
             <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
               {checkboxTd}
               {
-                column.map((columns,i) => {
-                  for (let col in columns) {
-                    //序号
+                column.map((columns, i) => {
+                  for (const col in columns) {
+                    // 序号
                     if (columns[col] === 'sequence') {
-                      return <td key = { String( i ) + j } > { (( currentPage-1) * pageSize ) + ( j + 1 ) }</td>
+                      return <td key={String(i) + j} >{((currentPage-1) * pageSize) + (j + 1)}</td>
                     }
-                    //操作
+                    // 操作
                     if (columns[col] == 'operation') {
-                      return <td key = { String( i ) + j }> { columns['render'] ( item, this ) } </td>
+                      return <td key={String( i ) + j}>{columns['render'](item, this)}</td>
                     }
-                    //正常非字段编辑列
-                    if (columns[col] !== 'operation' && columns[col] !== 'sequence' && col == 'key') {
+                    // 正常非字段编辑列
+                    if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
                       if (typeof columns['render'] === 'function') {
-                        return <td key = { String( i ) + j }> { columns['render'] ( item[columns[col]],item ) } </td>
+                        return <td key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
                       } else {
-                        return <td key = { String( i ) + j }>{ item[columns[col]] }</td>
+                        return <td key={String(i) + j}>{item[columns[col]]}</td>
                       }
                     }
                   }
@@ -103,7 +103,7 @@ export default React.createClass({
       }
     }
   },
-  getInitialState: function() {
+  getInitialState() {
     return {
       order: '',
       url: this.props.url || '',
@@ -131,17 +131,7 @@ export default React.createClass({
     }
   },
 
-  onChange: function(params, currentPage) {
-    //if( this.props.url ) {
-    //  let url_ = this.props.url
-    //  if(url_.indexOf('?') > -1 ) {
-    //    url_ += '&' + params
-    //  }else {
-    //    url_ += '?' + params
-    //  }
-    //  this.setState( { currentPage: currentPage,url: url_  } )
-    //}
-  },
+  onChange() {},
 
   onPageChange(page) {
     if (this.props.onPageChange) {
@@ -152,7 +142,7 @@ export default React.createClass({
     })
   },
 
-  orderClick: function(column, i) {
+  orderClick(column, i) {
     if (column.order) {
       if (this.refs[i].getAttribute('order') == null) {
         this.refs[i].className = 'sorting_asc'
@@ -184,27 +174,29 @@ export default React.createClass({
     }
   },
 
-  handleSuccess: function(data) {
+  handleSuccess(data) {
     this.setState({
       items: data
     })
   },
 
-  refresh: function() {
+  refresh() {
     this.setState({
       refresh: true
     })
   },
 
   handleCheckboxAllChange() {
+    console.log('-------------')
     const isAll = !this.state.isSelectAll
+    console.log('1------')
     this.setState({
       isSelectAll: isAll
     })
-
-    let changeRows = []
+    console.log('2------')
+    const changeRows = []
     const rows = this.state.items.totalList
-    rows.map((item, j) => {
+    rows.map((item) => {
       if (item.isSelect !== isAll && !item.disabled) {
         item.isSelect = isAll
         changeRows.push(item)
@@ -230,32 +222,30 @@ export default React.createClass({
     this.props.onRowClick && this.props.onRowClick(row)
   },
 
-  getRowsValue(key, rows) {
-
-  },
-
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
       this.setState({
-        items: nextProps.data
+        items: nextProps.data,
+        isSelectAll: false
       })
     }
   },
 
-  render: function() {
+  handleChange() {},
+
+  render() {
     const self = this
-    let {
+    let url = this.props.url
+    const {
       className,
       column,
-      url,
       ...other
     } = this.props
-    let totalPageNum = 0,
-      currentPage = parseInt(this.state.currentPage),
-      //新增自动分页功能 
+    const currentPage = parseInt(this.state.currentPage),
+      // 新增自动分页功能 
       pageSize = parseInt(this.props.howRow)
 
-    //如果是传入url查询数据就附带参数查询
+    // 如果是传入url查询数据就附带参数查询
     if (url && url !== '') {
       if (url.indexOf('?') < 0) {
         if (this.props.showPage == 'true') {
@@ -270,21 +260,25 @@ export default React.createClass({
     const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> : null
     return (
       <div>
-        {url != "" ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
+        {url != '' ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
         
-        <table className={classnames('table', "bfd-datatable", className)} {...other} >
+        <table className={classnames('table', 'bfd-datatable', className)} {...other} >
           <thead>
             <tr>
               {checkboxTh}
               {
-                column.map ((head_column, i) => {
-                  const style = head_column.width ? {width: head_column.width} : {}
-                  return <th 
-                    key={head_column['title']} 
-                    ref={i}
-                    style={style}
-                    onClick={self.orderClick.bind(self, head_column, i)}
-                    title={head_column['order'] === true ? head_column['title'] + '排序' : ''} className = {head_column['order'] === true ? 'sorting' : ''} >{head_column['title']}</th>
+                column.map ((head, i) => {
+                  const style = head.width ? {width: head.width} : {}
+                  return (
+                    <th 
+                      key={head['title']}
+                      ref={i}
+                      style={style}
+                      onClick={self.orderClick.bind(self, head, i)}
+                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'sorting' : ''}>
+                      {head['title']}
+                    </th>
+                    )
                 })
               }
             </tr>
@@ -305,16 +299,16 @@ export default React.createClass({
         {
           this.state.items.totalList.length > 0 
             ? this.props.showPage == 'true' 
-              ? <Paging 
+              ? (<Paging 
                   currentPage={this.state.items.currentPage}                   
                   totalPageNum={this.state.items.totalPageNum} 
                   pageSize={this.props.howRow} 
                   onPageChange={this.onPageChange} 
                   onChange={this.onChange}>
-                </Paging> 
+              </Paging>)
               : '' 
-            : ''}
-      
+            : ''
+        }
       </div>
     )
   }

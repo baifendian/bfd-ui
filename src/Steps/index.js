@@ -13,7 +13,7 @@ const Line = React.createClass({
     const height = this.props.height
     const index = this.props.index
     const current = this.props.current
-    const max = this.props.max;
+    const max = this.props.max
     const w = width >= height ? height : width
     const y = (height / 2) - (height / 4) - 10
     const radius = w / 4
@@ -67,11 +67,11 @@ const Title = React.createClass({
     const top = y * 2 + 'px'
     let className = 'title_process'
     if (index < current) {
-      className = "title_finish"
+      className = 'title_finish'
     } else if (index > current) {
-      className = "title_wait";
+      className = 'title_wait'
     }
-    return (<div style={{top: top}} className={classnames('title', className)}>{title}</div>)
+    return (<div style={{top}} className={classnames('title', className)}>{title}</div>)
   }
 })
 
@@ -87,11 +87,11 @@ const Circle = React.createClass({
     const index = this.props.index
     const current = this.props.current
     const icon = this.props.icon
-    const w = width >= height ? height : width;
-    const x = (width / 2) - (w / 4);
-    const y = (height / 2) - (height / 4) - 10;
-    const radius = w / 4;
-    const fontSize = radius;
+    const w = width >= height ? height : width
+    const x = (width / 2) - (w / 4)
+    const y = (height / 2) - (height / 4) - 10
+    const radius = w / 4
+    const fontSize = radius
     const style = {
       width: (w / 2) + 'px',
       height: (w / 2) + 'px',
@@ -107,11 +107,11 @@ const Circle = React.createClass({
       NavIcon = <Icon type={icon} />
     }
 
-    let className = "circle_process"
+    let className = 'circle_process'
     if (index < current) {
-      className = "circle_finish"
+      className = 'circle_finish'
     } else if (index > current) {
-      className = "circle_wait";
+      className = 'circle_wait'
     }
 
     return (<div style={style} onClick={this.handleClick} className={classnames('circle', className)}>{NavIcon}</div>)
@@ -124,14 +124,14 @@ const Step = React.createClass({
       width: this.props.width + 'px',
       height: this.props.height + 'px'
     }
-    const index = this.props.index
-    const max = this.props.max
 
-    return <div style={style} className='box'>
-      <Line {...this.props} />
-      <Circle {...this.props} />
-      <Title {...this.props} />
-    </div>
+    return (
+      <div style={style} className="box">
+        <Line {...this.props} />
+        <Circle {...this.props} />
+        <Title {...this.props} />
+      </div>
+    )
   }
 })
 
@@ -144,18 +144,18 @@ const Steps = React.createClass({
   },
   render() {
 
-    let rows = [];
+    const rows = []
     const {
       children,
       ...other
-    } = this.props;
-    const items = findAllByType(children, Step);
+    } = this.props
+    const items = findAllByType(children, Step)
     items.map((item, index) => {
       rows.push(<Step 
         key={index} 
         index={index}         
         current={this.props.current || 0}
-        icon = {item.props.icon}
+        icon={item.props.icon}
         max={items.length}
         width={this.state.width} 
         height={this.state.height} 
@@ -166,8 +166,8 @@ const Steps = React.createClass({
 
     return (
       <div 
-        ref='container' 
-        style={{height:this.props.height+'px'}} 
+        ref="container"
+        style={{height: this.props.height+'px'}} 
         className={classnames('bfd-steps', this.props.className)} {...other}>
         {rows}
       </div>
@@ -183,11 +183,11 @@ const Steps = React.createClass({
     const height = this.refs.container.clientHeight
     const {
       children
-    } = this.props;
-    const items = findAllByType(children, Step);
+    } = this.props
+    const items = findAllByType(children, Step)
     this.setState({
       width: width / items.length,
-      height: height
+      height
     })
   }
 })
