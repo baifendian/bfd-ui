@@ -1,19 +1,20 @@
-import React, { PropTypes } from 'react'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
-import './less/calendar.less'
+import shouldComponentUpdate from '../../shouldComponentUpdate'
+import Button from '../../Button'
 
-const Calendar = React.createClass({
+class Calendar extends Component {
 
-  getInitialState() {
-    return this.getDateState(this.props.date)
-  },
-
-  shouldComponentUpdate,
+  constructor(props) {
+    super()
+    this.shouldComponentUpdate = shouldComponentUpdate
+    this.state = this.getDateState(props.date)
+  }
 
   componentWillReceiveProps(nextProps) {
     'date' in nextProps && this.setState(this.getDateState(nextProps.date))
-  },
+  }
 
   getDateState(date) {
     const d = date ? new Date(date) : new Date()
@@ -21,15 +22,17 @@ const Calendar = React.createClass({
     const month = d.getMonth()
     const day = d.getDate()
     return {
-      year,
-      month,
-      day,
+      // 选中的年月日
+      year: date ? year : null,
+      month: date ? month : null,
+      day: date ? day : null,
+      // 切换后的年月
       currentYear: year,
       currentMonth: month
     }
-  },
+  }
 
-  dayNames: ['一', '二', '三', '四', '五', '六', '日'],
+  dayNames = ['一', '二', '三', '四', '五', '六', '日']
 
   // 切换年月
   handleToggle(change, type) {
@@ -46,7 +49,7 @@ const Calendar = React.createClass({
         currentMonth: d.getMonth()
       })
     }
-  },
+  }
 
   handleDaySelect(date) {
     const { year, month, day } = date
@@ -58,48 +61,53 @@ const Calendar = React.createClass({
       currentMonth: month
     })
     this.props.onSelect && this.props.onSelect(new Date(year, month, day).setHours(0, 0, 0, 0))
-  },
+  }
 
   getZeroTimestrap(date) {
     return new Date(date).setHours(0, 0, 0, 0)
-  },
+  }
 
   disabledComparer() {
-    const min = this.props.min && this.getZeroTimestrap(this.props.min)
-    const max = this.props.max && this.getZeroTimestrap(this.props.max)
-    if (min || max) {
+    const { min, max } = this.props
+    let _min = min && this.getZeroTimestrap(min)
+    let _max = max && this.getZeroTimestrap(max)
+    if (_min || _max) {
       return date => {
         const timestrap = new Date(date.year, date.month, date.day).getTime()
-        return timestrap < min || timestrap > max
+        return timestrap < _min || timestrap > _max
       }
     } else {
       return () => false
     }
-  },
+  }
 
   // 样式高亮，是否是今天、开始、结束、区间内、当月外、日期范围外
   getDateClassNames(date, start, end) {
+
+    const { year, month, day } = this.state
     const timestrap = new Date(date.year, date.month, date.day).getTime()
     const isStart = timestrap === start
     const isEnd = timestrap === end
-
-    return classnames({
-      today: timestrap === new Date().setHours(0, 0, 0, 0),
-      exclude: date.notThisMonth,
-      start: isStart,
-      end: isEnd,
-      active: timestrap === new Date(this.state.year, this.state.month, this.state.day).getTime() || isStart || isEnd,
-      inside: start && end ? timestrap > start && timestrap < end : false
+    const prefix = 'bfd-calendar__day--'
+    
+    return classnames('bfd-calendar__day', {
+      [`${prefix}today`]: timestrap === new Date().setHours(0, 0, 0, 0),
+      [`${prefix}exclude`]: date.notThisMonth,
+      [`${prefix}start`]: isStart,
+      [`${prefix}end`]: isEnd,
+      [`${prefix}active`]: timestrap === new Date(year, month, day).getTime(),
+      [`${prefix}inside`]: start && end ? timestrap > start && timestrap < end : false
     })
-  },
+  }
 
   // 当前月各天的时间状态
   getDates() {
-    let d
+    const { currentYear, currentMonth } = this.state
     const dates = []
-    
+    let d
+
     // 上月
-    d = new Date(this.state.currentYear, this.state.currentMonth, 1)
+    d = new Date(currentYear, currentMonth, 1)
     let dayInWeek = d.getDay() || 7
     if (dayInWeek > 1) {
       d.setDate(0)
@@ -115,7 +123,7 @@ const Calendar = React.createClass({
     }
 
     // 本月
-    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 0)
+    d = new Date(currentYear, currentMonth + 1, 0)
     const thisMonthDaysCount = d.getDate()
     for (let i = 0; i < thisMonthDaysCount; i++) {
       dates.push({
@@ -126,7 +134,7 @@ const Calendar = React.createClass({
     }
 
     // 下月
-    d = new Date(this.state.currentYear, this.state.currentMonth + 1, 1)
+    d = new Date(currentYear, currentMonth + 1, 1)
     const _len = dates.length
     for (let i = 0, len = (_len <= 35 ? 35 : 42) - _len; i < len; i++) {
       dates.push({
@@ -137,31 +145,52 @@ const Calendar = React.createClass({
       })
     }
     return dates
-  },
+  }
   
   render() {
+
+    const { currentYear, currentMonth } = this.state
+    const { start, end } = this.props
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
-    
-    // DateRange
-    let start, end
-    const dateRange = this.context.dateRange
-    if (dateRange) {
-      start = new Date(dateRange.state.start).setHours(0, 0, 0, 0) || 0
-      end = new Date(dateRange.state.end).setHours(0, 0, 0, 0) || 0
-    }
+
+    let _start, _end
+    start && (_start = new Date(start).setHours(0, 0, 0, 0) || 0)
+    end && (_end = new Date(end).setHours(0, 0, 0, 0) || 0)
 
     return (
       <div className="bfd-calendar">
-        <div className="calendar-header">
-          <div className="pull-left">
-            <span className="toggle" onClick={this.handleToggle.bind(this, -1, 'year')}>«</span>
-            <span className="toggle" onClick={this.handleToggle.bind(this, -1)}>‹</span>
+        <div className="bfd-calendar__header">
+          <div className="bfd-calendar__header-left">
+            <Button 
+              size="sm"
+              icon="angle-double-left"
+              transparent
+              onClick={this.handleToggle.bind(this, -1, 'year')}
+            />
+            <Button 
+              size="sm"
+              icon="angle-left"
+              transparent
+              onClick={this.handleToggle.bind(this, -1)}
+            />
           </div>
-          <span className="result">{this.state.currentYear}年 {this.state.currentMonth + 1}月</span>
-          <div className="pull-right">
-            <span className="toggle" onClick={this.handleToggle.bind(this, 1)}>›</span>
-            <span className="toggle" onClick={this.handleToggle.bind(this, 1, 'year')}>»</span>
+          <span className="bfd-calendar__result">
+            {currentYear}年 {currentMonth + 1}月
+          </span>
+          <div className="bfd-calendar__header-right">
+            <Button 
+              size="sm"
+              icon="angle-right"
+              transparent
+              onClick={this.handleToggle.bind(this, 1)}
+            />
+            <Button 
+              size="sm"
+              icon="angle-double-right"
+              transparent
+              onClick={this.handleToggle.bind(this, 1, 'year')}
+            />
           </div>
         </div>
         <table>
@@ -176,7 +205,13 @@ const Calendar = React.createClass({
                   const date = dates[index]
                   return (
                     <td key={index}>
-                      <button disabled={getComparerResult(date)} className={this.getDateClassNames(date, start, end)} onClick={this.handleDaySelect.bind(this, date)}>{date.day}</button>
+                      <button 
+                        disabled={getComparerResult(date)} 
+                        className={this.getDateClassNames(date, _start, _end)} 
+                        onClick={this.handleDaySelect.bind(this, date)}
+                      >
+                        {date.day}
+                      </button>
                     </td>
                   )
                 })}</tr>
@@ -187,7 +222,7 @@ const Calendar = React.createClass({
       </div>
     )
   }
-})
+}
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
@@ -195,12 +230,9 @@ Calendar.propTypes = {
   date: checkDateTime,
   min: checkDateTime,
   max: checkDateTime,
+  start: checkDateTime,
+  end: checkDateTime,
   onSelect: PropTypes.func
-}
-
-// For DateRange
-Calendar.contextTypes = {
-  dateRange: PropTypes.object
 }
 
 export default Calendar

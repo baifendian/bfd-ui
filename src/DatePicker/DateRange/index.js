@@ -1,27 +1,22 @@
-import React, { PropTypes } from 'react'
-import DatePicker from './DatePicker'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import './less/dateRange.less'
+import DatePicker from '../DatePicker'
 
-const DateRange = React.createClass({
+class DateRange extends Component {
 
-  getInitialState() {
-    return {
-      start: this.props.defaultStart || this.props.start,
-      end: this.props.defaultEnd || this.props.end
+  constructor(props) {
+    super()
+    this.state = {
+      start: props.defaultStart || props.start,
+      end: props.defaultEnd || props.end
     }
-  },
-
-  getChildContext() {
-    return {
-      dateRange: this
-    }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     'start' in nextProps && this.setState({start: nextProps.start})  
     'end' in nextProps && this.setState({end: nextProps.end})  
-  },
+  }
 
   handleSelect(type, date) {
     let range
@@ -33,20 +28,34 @@ const DateRange = React.createClass({
       range = [this.state.start, date]
     }
     this.props.onSelect && this.props.onSelect.apply(this, range)
-  },
+  }
 
   render() {
     const { className, onSelect, min, max, ...other } = this.props
     const { start, end } = this.state
     return (
       <div className={classnames('bfd-daterange', className)} {...other}>
-        <DatePicker date={start} min={min} max={end} onSelect={this.handleSelect.bind(this, 'start')} />
-        <span className="seperator">至</span>
-        <DatePicker date={end} min={start} max={max} onSelect={this.handleSelect.bind(this, 'end')} />
+        <DatePicker 
+          date={start} 
+          min={min} 
+          max={end}
+          start={start} 
+          end={end}
+          onSelect={this.handleSelect.bind(this, 'start')} 
+        />
+        <span className="bfd-daterange__seperator">至</span>
+        <DatePicker 
+          date={end} 
+          min={start} 
+          max={max}
+          start={start} 
+          end={end}
+          onSelect={this.handleSelect.bind(this, 'end')} 
+        />
       </div>
     )
   }
-})
+}
 
 const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
@@ -63,10 +72,6 @@ DateRange.propTypes = {
       return new Error('You provided a `start` or `end` prop without an `onSelect` handler')
     }
   }
-}
-
-DateRange.childContextTypes = {
-  dateRange: PropTypes.instanceOf(DateRange)
 }
 
 export default DateRange
