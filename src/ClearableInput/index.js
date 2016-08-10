@@ -1,41 +1,42 @@
 import './index.less'
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Input from '../Input'
 import Button from '../Button'
 
-const ClearableInput = React.createClass({
+class ClearableInput extends Component {
 
-  getInitialState() {
-    return {
-      value: this.props.defaultValue || this.props.value || ''
+  constructor(props) {
+    super()
+    this.state = {
+      value: props.defaultValue || props.value || ''
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     'value' in nextProps && this.setState({value: nextProps.value})
-  },
+  }
 
   handleClear(e) {
     e.stopPropagation()
     this.props.onClear && this.props.onClear()
     this.handleChange('')
-  },
+  }
 
-  handleInputChange(e) {
+  handleInput(e) {
     e.stopPropagation()
     this.handleChange(e.target.value)
-  },
+  }
 
   handleChange(value) {
     this.setState({ value })
     this.props.onChange && this.props.onChange(value)
-  },
+  }
 
   // @public
   focus() {
     this.refs.input.focus()
-  },
+  }
 
   render() {
     const { className, onChange, ...other } = this.props
@@ -45,7 +46,7 @@ const ClearableInput = React.createClass({
         <Input 
           ref="input"
           value={value} 
-          onChange={this.handleInputChange} 
+          onChange={::this.handleInput} 
           {...other} 
         />
         {value && !other.disabled && (
@@ -54,13 +55,13 @@ const ClearableInput = React.createClass({
             type="minor"
             transparent
             className="bfd-clearable-input__clear" 
-            onClick={this.handleClear} 
+            onClick={::this.handleClear} 
           />
         )}
       </div>
     )
   }
-})
+}
 
 ClearableInput.propTypes = {
   onChange: PropTypes.func,

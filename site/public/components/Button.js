@@ -1,9 +1,10 @@
 import React from 'react'
 import BubbleChart from 'c/BubbleChart'
+import Button from 'c/Button'
 import Pre from '../Pre'
 import { Props, Prop } from '../Props'
 import Panel from '../Panel'
-import Button from 'c/Button'
+import Warn from '../Warn'
 
 const codeBasic = `import Button from 'bfd-ui/lib/Button'
 
@@ -50,7 +51,6 @@ export default () => {
         <Button icon="plus">带图标</Button>
         <Button icon="plus" size="sm" />
         <Button icon="plus" size="sm" transparent />
-        <Button icon="plus" size="sm" type="minor" transparent />
         <Button icon="plus" size="sm" circle />
         <Button circle>赞</Button>
         <Button size="sm">小尺寸</Button>
@@ -60,7 +60,8 @@ export default () => {
         <h2>Button</h2>
         <Props>
           <Prop name="type" type="string">
-            <p>按钮类型，可选值: minor, danger, inverse（只针对 transparent 有效）</p>
+            <p>按钮类型，可选值: minor, danger, inverse</p>
+            <Warn>inverse 仅针对 transparent 模式时有效</Warn>
           </Prop>
           <Prop name="size" type="string">
             <p>按钮尺寸，可选值：sm</p>

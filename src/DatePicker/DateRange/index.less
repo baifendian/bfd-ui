@@ -1,30 +1,31 @@
 .bfd-daterange {
   display: inline-block;
   vertical-align: middle;
-  .seperator {
-    width: 30px;
-    height: 30px;
-    line-height: 28px;
-    text-align: center;
-    display: inline-block;
-    background-color: #fcfcfc;
-    border-top: 1px solid #ececec;
-    border-bottom: 1px solid #ececec;
-  }
   .bfd-datepicker {
     &:first-child {
       float: left;
-      .dropdown-toggle > input {
+      .bfd-datepicker__input {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
       }
     }
     &:last-child {
       float: right;
-      .dropdown-toggle > input {
+      .bfd-datepicker__input {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
       }
     }
   }
+}
+
+.bfd-daterange__seperator {
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  text-align: center;
+  display: inline-block;
+  background-color: #fcfcfc;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
 }
