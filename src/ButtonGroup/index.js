@@ -17,7 +17,7 @@ class ButtonGroup extends Component {
     this.setState({
       value
     })
-    this.props.onClick && this.props.onClick(value)
+    this.props.onChange && this.props.onChange(value)
   }
 
   componentWillReceiveProps(nextProps) {
