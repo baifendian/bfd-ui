@@ -1,9 +1,5 @@
-import React, {
-  PropTypes
-} from 'react'
-import {
-  findAllByType
-} from '../util/ReactUtils'
+import React, { PropTypes } from 'react'
+import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import './index.less'
 const SubSplitPanel = React.createClass({

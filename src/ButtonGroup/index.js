@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import { findAllByType } from '../util/ReactUtils'
+import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import Button from '../Button'
 import './index.less'

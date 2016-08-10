@@ -1,5 +1,5 @@
 /**
- * Created by tenglong.jiang on 2016-05-17.
+ * Created by tenglong.jiang on 2016-08-10.
  * 通用方法
  */
 import React from 'react'
@@ -8,7 +8,7 @@ function isArray(v) {
   return Object.prototype.toString.call(v) === '[object Array]'
 }
 
-export const getDisplayName = (Comp) => {
+const getDisplayName = (Comp) => {
   if (!Comp) {
     return ''
   }
@@ -22,7 +22,7 @@ export const getDisplayName = (Comp) => {
  * Find and return all matched children by type. `type` can be a React element class or
  * string
  */
-export const findAllByType = (children, type) => {
+const findAllByType = (children, type) => {
   const result = []
   let types = []
 
@@ -41,12 +41,5 @@ export const findAllByType = (children, type) => {
 
   return result
 }
-/*
- * Return the first matched child by type, return null otherwise.
- * `type` can be a React element class or string.
- */
-export const findChildByType = (children, type) => {
-  const result = findAllByType(children, type)
-  
-  return result && result[0]
-}
+
+export default findAllByType

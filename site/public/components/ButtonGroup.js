@@ -19,7 +19,7 @@ export default React.createClass({
 
   render() {
     return (
-      <ButtonGroup defaultValue="2" onClick={this.handleChange}>
+      <ButtonGroup defaultValue="2" onChange={this.handleChange}>
         <Button value="1">按钮一</Button>
         <Button value="2">按钮二</Button>
         <Button value="3">按钮三</Button>
