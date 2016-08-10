@@ -13,13 +13,13 @@ import Button from 'bfd-ui/lib/Button'
 
 export default React.createClass({
 
-  handleClick(value) {
+  handleChange(value) {
     console.log(value)
   },
 
   render() {
     return (
-      <ButtonGroup defaultValue="2" onClick={this.handleClick}>
+      <ButtonGroup defaultValue="2" onClick={this.handleChange}>
         <Button value="1">按钮一</Button>
         <Button value="2">按钮二</Button>
         <Button value="3">按钮三</Button>
@@ -33,13 +33,13 @@ export default React.createClass({
 `
 const Basic = React.createClass({
 
-  handleClick(value) {
+  handleChange(value) {
     console.log(value)
   },
 
   render() {
     return (
-      <ButtonGroup defaultValue="2" onClick={this.handleClick}>
+      <ButtonGroup defaultValue="2" onChange={this.handleChange}>
         <Button value="1">按钮一</Button>
         <Button value="2">按钮二</Button>
         <Button value="3">按钮三</Button>
@@ -63,8 +63,8 @@ export default () => {
         <Prop name="defalutValue" type="string | number">
           <p>默认值</p>
         </Prop>
-        <Prop name="onClick" type="Function">
-          <p>点击事件，参数返回被选中的值</p> 
+        <Prop name="onChange" type="Function">
+          <p>选中事件，参数返回被选中的值</p> 
         < /Prop>
       </Props>
     </div>
