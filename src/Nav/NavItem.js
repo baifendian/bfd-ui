@@ -1,30 +1,31 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
 import Nav from './Nav'
 import Icon from '../Icon'
 
-const NavItem = React.createClass({
+class NavItem extends Component {
 
-  getInitialState() {
-    return {
-      open: this.props.defaultOpen || false
+  constructor(props) {
+    super()
+    this.state = {
+      open: props.defaultOpen || false
     }
-  },
+  }
 
   toggle(e) {
     this.setState({open: !this.state.open})
     e.preventDefault()
-  },
+  }
 
   isActive(href, indexOnly) {
     return this.context.history.isActive(href, this.props.query, indexOnly)
-  },
+  }
 
   handleClick(e) {
     this.props.onClick && this.props.onClick(e)
     this.context.nav.handleItemClick(this.props, e)
-  },
+  }
   
   render() {
     
@@ -32,35 +33,25 @@ const NavItem = React.createClass({
     const baseURL = this.context.nav.props.href
     let open = this.state.open
     let href = baseURL + '/' + this.props.href
-    let active
     
     href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
-    active = this.isActive(href, href === baseURL)
+
+    const active = this.isActive(href, href === baseURL)
 
     if (children && active) {
       open = true
     }
 
-    let Toggle
-    if (children) {
-      Toggle = <Icon type="angle-right" />
-    }
+    const Toggle = children && <Icon type="angle-right" />
+    const NavIcon = icon && <Icon type={icon} />
 
-    let NavIcon
-    if (icon) {
-      NavIcon = <Icon type={icon} />
-    }
-
-    let Item
-    if (children) {
-      Item = <a href={href} onClick={this.toggle}>{NavIcon}{title}{Toggle}</a>
-    } else {
-      Item = <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
-    }
+    const Item = children ?
+      <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a> :
+      <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
 
     return (
       <li 
-        onClick={this.handleClick} 
+        onClick={::this.handleClick} 
         className={classnames('bfd-nav__item', { open, active })} 
         {...other}
       >
@@ -69,7 +60,7 @@ const NavItem = React.createClass({
       </li>
     )
   }
-})
+}
 
 NavItem.contextTypes = {
   history: PropTypes.object.isRequired,

@@ -21,7 +21,7 @@ export default React.createClass({
       <div>
         <h1>可清空的输入框 @hai.jiang</h1>
         <Pre>{code}</Pre>
-        <ClearableInput />
+        <ClearableInput size="lg" />
         <Props>
           <Prop name="onChange" type="function">
             <p>输入框值改变后的回调，包括清空动作。参数为改变后的值</p>

@@ -1,188 +1,139 @@
-import React, { PropTypes } from 'react'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select/Option'
 import { CheckboxGroup, Checkbox } from '../Checkbox'
 import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
-import classnames from 'classnames'
-import './index.less'
+import Button from '../Button'
+import action from './action'
 
-const MultipleSelect = React.createClass({
+class MultipleSelect extends Component {
 
-  getInitialState() {
-    return {
-      values: this.props.values || this.props.defaultValues || [],
+  constructor(props) {
+    super()
+    this.options = []
+    this.state = {
+      data: props.data || [],
+      values: props.values || props.defaultValues || [],
       searchValue: '',
       index: -1
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     nextProps.values && this.setState({values: nextProps.values})  
-  },
+  }
 
-  addValue(value) {
-    this.valueSet.add(value)
-    this.handleChange([...this.valueSet])
-  },
-
-  removeValue(value) {
-    this.valueSet.delete(value)
-    this.handleChange([...this.valueSet])
-  },
-
-  handleChange(values) {
+  change(values) {
     this.setState({ 
       values,
       searchValue: ''
     })
     this.refs.input.focus()
     this.props.onChange && this.props.onChange(values)
-  },
-
-  handleRemove(value, e) {
-    e.stopPropagation()
-    this.removeValue(value)
-  },
-
-  handleCheckboxGroupChange(values) {
-    this.handleChange(values)
-  },
-
-  handleToggleAll(e) {
-    e.stopPropagation()
-    this.toggleAll(e.target.checked)
-  },
+  }
 
   toggleAll(checked) {
-    this.Options.forEach(Option => {
-      this.valueSet[checked ? 'add' : 'delete'](Option.props.value)
+    this.options.forEach(option => {
+      this.valueSet[checked ? 'add' : 'delete'](option.props.value)
     })
-    this.handleChange([...this.valueSet])
-  },
+    this.change([...this.valueSet])
+  }
 
-  handleLoad(list) {
-    this.setState({ list })
-  },
+  addValue(value) {
+    this.valueSet.add(value)
+    this.change([...this.valueSet])
+  }
 
-  handleToggle(isOpen) {
-    if (isOpen) {
-      this.refs.input.focus()
-    } else {
-      this.refs.input.blur()
-    }
-  },
+  removeValue(value) {
+    this.valueSet.delete(value)
+    this.change([...this.valueSet])
+  }
 
-  handleInput(e) {
-    e.stopPropagation()
-    const value = e.target.value
-    this.setState({
-      searchValue: value,
-      index: 0
-    })
-  },
-
-  handleKeyDown(e) {
-    const key = e.key
-    let index = this.state.index
-    const options = this.Options
-    if (key === 'ArrowDown' || key === 'ArrowUp') {
-      if (key === 'ArrowDown') {
-        index++
-        if (index === options.length + 1) index = 0
-      }
-      if (key === 'ArrowUp') {
-        e.preventDefault()
-        if (index === -1 || index === 0) index = options.length
-        else index--
-      }
-      this.setState({
-        index
-      })
-    }
-    if (key === 'Enter' && index > -1) {
-      if (index < options.length) {
-        const value = options[index].props.value
-        if (this.valueSet.has(value)) {
-          this.removeValue(value)
-        } else {
-          this.addValue(value)
-        }
-      } else {
-        this.toggleAll(!this.isAll)
-      }
-    }
-    if (key === 'Backspace' && !this.state.searchValue) {
-      const value = this.state.values.pop()
-      value && this.removeValue(value)
-    }
-  },
-
-  optionsMap(callback) {
-    if (this.props.url) {
-      return (this.state.list || []).map((item, i) => {
-        return callback.call(this, this.props.render.call(this, item, i), i)
+  traverseOptions(callback) {
+    const { children, render } = this.props
+    if (children) {
+      React.Children.forEach(children, (option, i) => {
+        if (!option) return
+        callback(option, i)
       })
     } else {
-      return React.Children.map(this.props.children, callback)
+      this.state.data.forEach((item, i) => {
+        callback(render.call(this, item, i), i)
+      })
     }
-  },
+  }
+
+  getCheckbox(value, children) {
+    return (
+      <Checkbox 
+        block
+        value={value}
+        checked={this.valueSet.has(value)}
+        onChange={action.handleOptionCheck.bind(this, value)}
+      >
+        {children}
+      </Checkbox>
+    )
+  }
+
+  // 选中的标签
+  getLabels(optionsMapper) {
+    const labels = []
+    this.state.values.forEach(key => {
+      if (optionsMapper[key] || this.props.tagable) {
+        labels.push({
+          key,
+          value: optionsMapper[key] || key
+        })
+      }
+    })
+    return labels
+  }
+
+  // 上下切换
+  getWrapperOptions(options) {
+    return options.map((option, i) => {
+      return (
+        <li key={i} className={classnames({
+          'bfd-multiple-select__option--active': this.state.index === i
+        })}>
+          {option}
+        </li>
+      )
+    })
+  }
 
   render() {
 
-    const { className, children, url, disabled, tagable, render, ...other } = this.props
+    const { className, children, url, disabled, tagable, ...other } = this.props
     const placeholder = '请选择'
-    const { searchValue, index } = this.state
+    const { searchValue, index, values } = this.state
+    const valueSet = this.valueSet = new Set(values)
+    const optionsMapper = {}
+    const options = []
 
-    const OptionsMapper = {}
-
-    let Options = this.optionsMap((child, i) => {
-      if (!child) return
-      const { value, children } = child.props
-      OptionsMapper[value || children] = children
-      return <Checkbox key={i} value={value || children} block>{children}</Checkbox>
-    }) || []
-
-    // 选中的标签
-    const labels = []
-    this.state.values.forEach(key => {
-      if (OptionsMapper[key] || tagable) {
-        labels.push({
-          key,
-          value: OptionsMapper[key] || key
-        })
+    this.traverseOptions((option, i) => {
+      const { value, children } = option.props
+      optionsMapper[value || children] = children
+      // 搜索过滤
+      const { searchValue } = this.state
+      if (searchValue && children.indexOf(searchValue) === -1 && (value ? value.indexOf(searchValue) === -1 : true)) {
+        return
       }
+      options.push(this.getCheckbox(value || children, children))
     })
-    
-    // 搜索
-    if (searchValue) {
-      Options = Options.filter((child, i) => {
-        return child && child.props.children.indexOf(searchValue) > -1
-      })
-      // 自定义输入(tagable)，并防止重复
-      if (tagable && (!Options[0] || Options[0].props.children !== searchValue)) {
-        Options.unshift(<Checkbox key={-1} value={searchValue} block>{searchValue}</Checkbox>)
-      }
+
+    // 自定义标签模式，防止重复
+    if (tagable && searchValue && (!options[0] || options[0].props.children !== searchValue)) {
+      options.unshift(this.getCheckbox(searchValue, searchValue))
     }
 
-    // 键盘上下切换绑定样式
-    Options = Options.map((option, i) => {
-      if (index !== i) {
-        return option
-      } else {
-        return React.cloneElement(option, {
-          className: classnames(option.className, 'active')
-        })
-      }
-    })
-
-    const valueSet = new Set(this.state.values)
-
-    const isAll = Options.filter(Option => {
-      return valueSet.has(Option.props.value)
-    }).length === Options.length
-
-    const isEmpty = !Options.length
+    const labels = this.getLabels(optionsMapper)
+    const wrapperOptions = this.getWrapperOptions(options)
+    const isAll = options.filter(option => !valueSet.has(option.props.value)).length === 0
 
     let inputSize
     if (labels.length) {
@@ -191,19 +142,31 @@ const MultipleSelect = React.createClass({
       inputSize = placeholder.length * 2
     }
 
-    this.Options = Options
-    this.valueSet = valueSet
+    this.options = options
     this.isAll = isAll
+
+    const classNames = classnames(
+      'bfd-multiple-select', 
+      {
+        'bfd-multiple-select--disabled': disabled
+      },
+      className
+    )
 
     const Header = (
       <ul>
         {labels.map((item, i) => {
           return (
-            <li key={i} className="tag">
+            <li key={i} className="bfd-multiple-select__tag">
               <TextOverflow>
-                <span className="label-name">{item.value}</span>
+                <span className="bfd-multiple-select__tag-name">{item.value}</span>
               </TextOverflow>
-              <span className="remove" onClick={e => {this.handleRemove(item.key, e)}}>&times;</span>
+              <Button 
+                icon="remove" 
+                transparent 
+                size="sm" 
+                onClick={action.handleLabelRemove.bind(this, item.key)}
+              />
             </li>
           )
         })}
@@ -213,8 +176,8 @@ const MultipleSelect = React.createClass({
             type="text"
             size={Math.min(inputSize, 45)}
             value={searchValue} 
-            onChange={this.handleInput} 
-            onKeyDown={this.handleKeyDown} 
+            onChange={action.handleInput.bind(this)} 
+            onKeyDown={action.handleKeyDown.bind(this)} 
             placeholder={labels.length ? '' : placeholder} />
         </li>
       </ul>
@@ -222,37 +185,43 @@ const MultipleSelect = React.createClass({
 
     return (
       <Dropdown 
-        onToggle={this.handleToggle} 
-        className={classnames('bfd-multiple-select', { disabled }, className)} 
+        onToggle={action.handleDropdownToggle.bind(this)}
+        className={classNames} 
         disabled={disabled} 
         {...other}>
         <DropdownToggle>
-          {
-            url ?
-            <Fetch url={url} onSuccess={this.handleLoad}>
-              {Header}
-            </Fetch> : 
-            Header
-          }
+          <Fetch 
+            style={{minHeight: '30px'}} 
+            url={url} 
+            onSuccess={action.handleLoad.bind(this)}
+          >
+            {Header}
+          </Fetch>
         </DropdownToggle>
         <DropdownMenu>
           {
-            Options.length ? 
-            <div>
-              <CheckboxGroup selects={this.state.values} onChange={this.handleCheckboxGroupChange}>{Options}</CheckboxGroup>
-              <Checkbox 
-                className={classnames({active: this.state.index === Options.length})}
-                checked={isAll} 
-                block 
-                onChange={this.handleToggleAll}>全选</Checkbox>
-            </div> : 
-            <div className="empty">无匹配选项</div>
+            options.length ? 
+            <ul>
+              {wrapperOptions}
+              <li className={classnames({
+                'bfd-multiple-select__option--active': index === options.length
+              })}>
+                <Checkbox 
+                  checked={isAll} 
+                  block 
+                  onChange={action.handleToggleAll.bind(this)}
+                >
+                  全选
+                </Checkbox>
+              </li>
+            </ul> : 
+            <div className="bfd-multiple-select__empty">无匹配选项</div>
           }
         </DropdownMenu>
       </Dropdown>
     )
   }
-})
+}
 
 MultipleSelect.propTypes = {
   values: PropTypes.array,
@@ -260,6 +229,7 @@ MultipleSelect.propTypes = {
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
   tagable: PropTypes.bool,
+  data: PropTypes.array,
   url: PropTypes.string,
   render: PropTypes.func,
   customProp({ values, onChange, url, render }) {

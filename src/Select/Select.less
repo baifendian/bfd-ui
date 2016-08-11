@@ -26,6 +26,22 @@
       margin: 0;
     }
   }
+  &.bfd-dropdown--open {
+    .bfd-dropdown__toggle {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-color: #42a5f5;
+      border-bottom-color: #ececec;
+    }
+    .bfd-select__caret {
+      color: #42a5f5;
+    }
+    .bfd-dropdown__menu {
+      border-color: #42a5f5;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
 }
 
 .bfd-select__title {
@@ -47,24 +63,6 @@
     background-color: #eceff1;
     cursor: default;
     color: #999;
-  }
-}
-
-.bfd-select--open {
-  .bfd-dropdown__toggle {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    border-color: #42a5f5;
-    border-bottom-color: #ececec;
-    
-  }
-  .bfd-select__caret {
-    color: #42a5f5;
-  }
-  .bfd-dropdown__menu {
-    border-color: #42a5f5;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
   }
 }
 

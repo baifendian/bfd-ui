@@ -17,14 +17,10 @@ class Select extends Component {
     this.shouldComponentUpdate = shouldComponentUpdate
     this.state = {
       data: props.data || [],
-      index: 0,
+      index: -1,
       value: 'value' in props ? props.value : props.defaultValue,
       searchValue: null
     }
-  }
-
-  componentWillMount() {
-    this.optionsWithProps = this.getOptionsWithProps()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,12 +32,51 @@ class Select extends Component {
     this.setState(state)
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    debugger
-    this.optionsWithProps = this.getOptionsWithProps(nextProps, nextState)
+  handleLoad(data) {
+    this.setState({ data })
   }
 
-  getOptionsWithProps(props, state) {
+  handleSelect(value) {
+    this.refs.dropdown.close()
+    this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
+  }
+
+  handleKeyDown(e) {
+    const key = e.key
+    const { optionsWithProps } = this
+    let { index } = this.state
+    if (key === 'ArrowDown' || key === 'ArrowUp') {
+      if (key === 'ArrowDown') {
+        if (index === optionsWithProps.length - 1) index = 0
+        else index++
+      }
+      if (key === 'ArrowUp') {
+        e.preventDefault()
+        if (index === 0) index = optionsWithProps.length - 1
+        else index--
+      }
+      this.setState({ index })
+    }
+    if (key === 'Enter') {
+      this.handleSelect(optionsWithProps[index].props.value)
+    }
+  }
+
+  handleSearch(searchValue) {
+    this.setState({
+      searchValue,
+      index: -1
+    })
+  }
+
+  handleDropToggle(open) {
+    this.props.searchable && open && setTimeout(() => {
+      this.refs.clearableInput.focus()  
+    }, 0)
+  }
+
+  getOptionsWithProps() {
     this.title = null
     const { children, render, defaultOption } = this.props
     let res
@@ -73,64 +108,30 @@ class Select extends Component {
     })
   }
 
-  handleLoad(data) {
-    this.setState({ data })
-  }
-
-  handleSelect(value) {
-    this.refs.dropdown.close()
-    this.setState({ value })
-    this.props.onChange && this.props.onChange(value)
-  }
-
-  handleKeyDown(e) {
-    const key = e.key
-    const { optionsWithProps } = this
-    let { index } = this.state
-    if (key === 'ArrowDown' || key === 'ArrowUp') {
-      if (key === 'ArrowDown') {
-        if (index === optionsWithProps.length - 1) index = 0
-        else index++
-      }
-      if (key === 'ArrowUp') {
-        e.preventDefault()
-        if (index === 0) index = optionsWithProps.length - 1
-        else index--
-      }
-      this.optionsWithProps = optionsWithProps.map((option, i) => {
-        return React.cloneElement(option, {
-          active: index === i
-        })
-      })
-      this.setState({ index })
-    }
-    if (key === 'Enter') {
-      this.handleSelect(optionsWithProps[index].props.value)
-    }
-  }
-
-  handleSearch(searchValue) {
-    this.optionsWithProps = this.optionsWithProps.filter(option => {
-      const { value, children } = option.props
-      if (!value) return false
-      return children.indexOf(searchValue) !== -1 || value.indexOf(searchValue) !== -1
-    })
-    this.setState({
-      searchValue,
-      index: 0
-    })
-  }
-
-  handleDropToggle(open) {
-    this.props.searchable && setTimeout(() => {
-      open && this.refs.clearableInput.focus()  
-    }, 0)
-  }
-
   render() {
     
     const { list, searchValue, index } = this.state
     const { className, children, size, disabled, placeholder, searchable, url, ...other } = this.props
+
+    let optionsWithProps = this.getOptionsWithProps()
+
+    if (searchValue) {
+      optionsWithProps = optionsWithProps.filter(option => {
+        const { value, children } = option.props
+        if (!value) return false
+        return children.indexOf(searchValue) !== -1 || value.indexOf(searchValue) !== -1
+      })
+    }
+
+    if (searchable) {
+      optionsWithProps = optionsWithProps.map((option, i) => {
+        return React.cloneElement(option, {
+          active: index === i
+        })
+      })
+    }
+
+    this.optionsWithProps = optionsWithProps
 
     const classNames = classnames(
       'bfd-select', 
@@ -167,7 +168,7 @@ class Select extends Component {
               onKeyDown={::this.handleKeyDown}
             />
           )}
-          <ul>{this.optionsWithProps}</ul>
+          <ul>{optionsWithProps}</ul>
         </DropdownMenu>
       </Dropdown>
     )

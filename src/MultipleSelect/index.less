@@ -1,57 +1,23 @@
 .bfd-multiple-select {
   width: 300px;
-  .dropdown-toggle {
+  .bfd-dropdown__toggle {
     background-color: #fff;
     position: relative;
     min-height: 30px;
     border: 1px solid #ececec;
     border-radius: 2px;
     cursor: text;
-    > .bfd-fetch,
-    > ul {
-      padding: 0px 0px 4px 6px;
-    }
-    > .bfd-fetch {
-      > ul {
-        padding: 0;
-      }
-    }
     ul {
+      padding: 0px 0px 3px 6px;
       margin: 0;
       list-style: none;
       li {
         display: inline-block;
-        line-height: 20px;
-        height: 20px;
-        margin-top: 4px;
+        margin-top: 3px;
         margin-right: 6px;
-        &.tag {
-          border-radius: 2px;
-          background-color: #f3f3f3;
-          padding: 0 5px;
-          padding-right: 16px;
-          cursor: default;
-          position: relative;
-          .label-name {
-            display: inline-block;
-            max-width: 100px;
-            vertical-align: top;
-          }
-          .remove {
-            position: absolute;
-            line-height: 1;
-            right: 2px;
-            top: 2px;
-            padding: 0 2px;
-            cursor: pointer;
-            font-size: 14px;
-            &:hover {
-              color: #000;
-            }
-          }
-        }
+        vertical-align: middle;
         input {
-          height: 20px;
+          height: 22px;
           border: none;
           outline: none;
           vertical-align: top;
@@ -59,7 +25,7 @@
       }
     }
   }
-  .dropdown-menu {
+  .bfd-dropdown__menu {
     max-height: 204px;
     overflow: auto;
     padding: 0;
@@ -68,36 +34,59 @@
     box-shadow: none;
     border: 1px solid #ececec;
     border-top: 0;
-    .empty {
-      padding: 0 7px;
-      line-height: 30px;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
   }
-  &.disabled {
-    .dropdown-toggle {
-      background-color: #eceff1;
-      cursor: default;
-      color: #999;
-      pointer-events: none;
-    }
-  }
-  &.open {
-    .dropdown-toggle {
+  &.bfd-dropdown--open {
+    .bfd-dropdown__toggle {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
       border-color: #42a5f5;
       border-bottom-color: #ececec;
     }
-    .dropdown-menu {
+    .bfd-dropdown__menu {
       border-color: #42a5f5;
       border-top-right-radius: 0;
       border-top-left-radius: 0;
       .bfd-checkbox {
-        padding: 0 7px;
-        &.active {
-          background-color: #e3f2fd;  
-        }
+        margin: 0 7px;
       }
     }
   }
+}
+
+.bfd-multiple-select__tag {
+  border-radius: 2px;
+  background-color: #f3f3f3;
+  padding-left: 5px;
+  cursor: default;
+  position: relative;
+}
+
+.bfd-multiple-select__tag-name {
+  display: inline-block;
+  max-width: 100px;
+  vertical-align: middle;
+  line-height: 22px;
+}
+
+.bfd-multiple-select__empty {
+  padding: 0 7px;
+  line-height: 30px;
+}
+
+.bfd-multiple-select--disabled {
+  .bfd-dropdown__toggle {
+    background-color: #eceff1;
+    cursor: default;
+    color: #999;
+    pointer-events: none;
+  }
+}
+
+.bfd-multiple-select__option--active {
+  background-color: #e3f2fd;
 }

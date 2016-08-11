@@ -52,6 +52,7 @@ class ClearableInput extends Component {
         {value && !other.disabled && (
           <Button 
             icon="remove" 
+            size="sm"
             type="minor"
             transparent
             className="bfd-clearable-input__clear" 
