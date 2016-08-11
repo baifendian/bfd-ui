@@ -1,9 +1,7 @@
 import 'bfd-bootstrap'
 import React from 'react'
 import Icon from '../Icon'
-import {
-  findAllByType
-} from '../util/ReactUtils'
+import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import './main.less'
 
