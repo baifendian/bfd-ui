@@ -100,11 +100,14 @@ export default () => {
         <Prop name="size" type="string">
           <p>其他尺寸，可选值：lg</p>
         </Prop>
+        <Prop name="data" type="array">
+          <p>数据源</p>
+        </Prop>
         <Prop name="url" type="string">
-          <p>ajax 方式加载数据</p>
+          <p>ajax 数据源</p>
         </Prop>
         <Prop name="render" type="function">
-          <p>使用 url 方式时，自定义 Option 渲染逻辑</p>
+          <p>使用 data 或 url 方式时，自定义 Option 渲染逻辑</p>
           <Pre>{`const render = item => <Option value={item.id}>{item.name}</Option>
 <Select url="/api/list" render={render} />`}</Pre>
         </Prop>

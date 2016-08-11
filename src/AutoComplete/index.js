@@ -53,8 +53,8 @@ class AutoComplete extends Component {
       let { index } = this.state
       if (key === 'ArrowDown' || key === 'ArrowUp') {
         if (key === 'ArrowDown') {
-          index++
-          if (index === result.length) index = -1
+          if (index === result.length - 1) index = -1
+          else index++
         }
         if (key === 'ArrowUp') {
           e.preventDefault()
@@ -98,7 +98,7 @@ class AutoComplete extends Component {
           {this.result.map((item, i) => (
             <li 
               key={i}
-              className={classnames({active: index === i})} 
+              className={classnames({'bfd-auto-complete__option--active': index === i})} 
               onClick={this.handleSelect.bind(this, item)}
             >
               {item}

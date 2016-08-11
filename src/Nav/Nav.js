@@ -1,13 +1,13 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 
-const Nav = React.createClass({
+class Nav extends Component {
 
   getChildContext() {
     return {
       nav: this
     }
-  },
+  }
 
   handleItemClick(props, e) {
     if (!this.context.nav) {
@@ -15,7 +15,7 @@ const Nav = React.createClass({
     } else {
       this.context.nav.handleItemClick(props, e)
     }
-  },
+  }
   
   render() {
     const { className, children, ...other } = this.props
@@ -25,7 +25,7 @@ const Nav = React.createClass({
       </ul>
     )
   }
-})
+}
 
 Nav.childContextTypes = {
   nav: PropTypes.instanceOf(Nav)

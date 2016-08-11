@@ -6,6 +6,8 @@ import Button from '../../Button'
 
 class Calendar extends Component {
 
+  static dayNames = ['一', '二', '三', '四', '五', '六', '日']
+
   constructor(props) {
     super()
     this.shouldComponentUpdate = shouldComponentUpdate
@@ -31,8 +33,6 @@ class Calendar extends Component {
       currentMonth: month
     }
   }
-
-  dayNames = ['一', '二', '三', '四', '五', '六', '日']
 
   // 切换年月
   handleToggle(change, type) {
@@ -195,12 +195,12 @@ class Calendar extends Component {
         </div>
         <table>
           <thead>
-            <tr>{this.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
+            <tr>{Calendar.dayNames.map((name, i) => <th key={i}>{name}</th>)}</tr>
           </thead>
           <tbody>
             {Array(dates.length / 7 + 1).join(0).split('').map((v, i) => {
               return (
-                <tr key={i}>{this.dayNames.map((name, j) => {
+                <tr key={i}>{Calendar.dayNames.map((name, j) => {
                   const index = i * 7 + j
                   const date = dates[index]
                   return (
