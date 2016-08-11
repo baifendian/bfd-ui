@@ -2,15 +2,16 @@
  * Created by tenglong.jiang on 2016-03-30.
  */
 
+import React, { Component, PropTypes } from 'react'
 import 'bfd-bootstrap'
 import './main.less'
-import React from 'react'
 
-export default React.createClass({
-  handleChange() {
-    const v = this.refs.filterTextInput.value
-    this.props.onUserInput(v)
-  },
+class SearchBar extends Component {
+
+  constructor(props) {
+    super()
+  }
+  
   render() {
     return (
       <div>
@@ -18,8 +19,15 @@ export default React.createClass({
         <input 
           placeholder="请输入搜索内容"
           ref="filterTextInput"
-          onChange={this.handleChange} />
+          onChange={::this.handleChange} />
       </div>
     )
   }
-})
+
+  handleChange() {
+    const v = this.refs.filterTextInput.value
+    this.props.onUserInput(v)
+  }
+}
+
+export default SearchBar

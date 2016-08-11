@@ -4,17 +4,36 @@
 
 import 'bfd-bootstrap'
 import './main.less'
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 
-const Row = React.createClass({
+class Row extends Component {
+  
+  render() {
+    return (
+      <a 
+        id={this.props.id}
+        key={this.props.id}
+        href="#"
+        onClick={::this.handleClick}
+        onDoubleClick={::this.handleDbClick}
+        onKeyDown={::this.handleKeyDown}
+        onKeyUp={::this.handleKeyUp}
+        className="bfd-row">
+      {this.props.label}
+      </a>
+    )
+  }
+
   handleClick(e) {
     e.preventDefault()
     this.props.onClick()
-  },
+  }
+
   handleDbClick() {
     this.props.onDoubleClick()
-  },
+  }
+
   handleKeyDown(e) {
     e.preventDefault()    
     const code = e.keyCode  // code 17->ctrl  16->shift
@@ -23,7 +42,8 @@ const Row = React.createClass({
     } else if(code == 17) {
       this.props.onKeyDown('isCtrl', 1)
     }
-  },
+  }
+
   handleKeyUp(e) {
     e.preventDefault()
     const code = e.keyCode
@@ -34,28 +54,42 @@ const Row = React.createClass({
       this.isCtrl = 0
       this.props.onKeyUp('isCtrl', 0)
     }
-  },
+  }
+}
+
+class SelectTable extends Component {
+
+  constructor() {
+    super()
+    this.isCtrl = 0
+    this.isShift = 0
+    this.items = {}
+  }
+
   render() {
-    return (
-      <a 
-        id={this.props.id}
-        key={this.props.id}
-        href="#"
-        onClick={this.handleClick}
-        onDoubleClick={this.handleDbClick}
+    const rows = []
+    this.props.data.map((item, index) => {
+      rows.push(<Row
+        key={index}
+        id={item.id}
+        label={this.props.render ? this.props.render(item) : item.label}
+        ref={item.id}
+        onClick={this.handleClick.bind(this, item)}
+        onDoubleClick={this.handleDbClick.bind(this, item)}
         onKeyDown={this.handleKeyDown}
         onKeyUp={this.handleKeyUp}
-        className="bfd-row">
-      {this.props.label}
-      </a>
+      />)
+    })
+
+    return (
+      <div style={{height: this.props.height + 'px'}} className="bfd-table">
+        <div className="list-group bfd-table-conent">
+          {rows}
+        </div>
+      </div>
     )
   }
-})
 
-const SelectTable = React.createClass({
-  isCtrl: 0,
-  isShift: 0,
-  items: {},
   getNode(nodes, id) {
     for(let i=0; i<nodes.length; i++) {
       const node = nodes[i]
@@ -64,7 +98,8 @@ const SelectTable = React.createClass({
       }
     }
     return null
-  },
+  }
+
   getMaxDT(nodes, currNode) {
     const len = nodes.length
     let maxNode = { dt: 0 }
@@ -81,7 +116,8 @@ const SelectTable = React.createClass({
     } else {
       return currNode
     }
-  },
+  }
+
   getScopeEl(lastEl, el) {
     if(lastEl == el) {
       return [el]
@@ -118,14 +154,16 @@ const SelectTable = React.createClass({
       scopeEl = [el]
     }
     return scopeEl
-  },
+  }
+
   resetCss(els) {
     for(let i=0; i<els.length; i++) {
       const el = els[i]
       const className = el.className || ''  
       el.className = className.replace('selected', '').trim()
     }
-  },
+  }
+
   setElCheckedCss(els, selectedEls) {
     if(!selectedEls) {
       return
@@ -144,7 +182,8 @@ const SelectTable = React.createClass({
         }
       }
     }
-  },
+  }
+
   handleClick(item) {
     const parentNode = ReactDOM.findDOMNode(this)
     const els = parentNode.children[0].getElementsByTagName('a')
@@ -180,14 +219,17 @@ const SelectTable = React.createClass({
       ids.push(p)
     }
     this.props.onFoucsItem(ids)
-  },
+  }
+
   handleDbClick(item) {
     this.props.onFoucsItem(item.id)
     this.props.onTransfer(this.props.direct)
-  },
+  }
+
   handleKeyDown(key, value) {
     this[key] = value
-  },
+  }
+
   handleKeyUp(key, value) {
     this[key] = value
     if(key == 'isShift') {
@@ -198,30 +240,7 @@ const SelectTable = React.createClass({
         delete el.dt
       }
     }
-  },
-  render() {
-    const rows = []
-    this.props.data.map((item, index) => {
-      rows.push(<Row
-        key={index}
-        id={item.id}
-        label={this.props.render ? this.props.render(item) : item.label}
-        ref={item.id}
-        onClick={this.handleClick.bind(this, item)}
-        onDoubleClick={this.handleDbClick.bind(this, item)}
-        onKeyDown={this.handleKeyDown}
-        onKeyUp={this.handleKeyUp}
-      />)
-    })
-
-    return (
-      <div style={{height: this.props.height + 'px'}} className="bfd-table">
-        <div className="list-group bfd-table-conent">
-          {rows}
-        </div>
-      </div>
-    )
   }
-})
+}
 
 export default SelectTable

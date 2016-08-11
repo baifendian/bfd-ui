@@ -3,42 +3,13 @@
  * Update by jiangtl on 2016-6-28.
  */
 import 'bfd-bootstrap'
-import React, {
-  PropTypes
-} from 'react'
+import React, { Component, PropTypes } from 'react'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
-import {
-  Checkbox
-} from '../Checkbox'
+import { Checkbox } from '../Checkbox'
 import './main.less'
-const Rows = React.createClass({
-
-  handleCheckboxChange(row) {
-    row.isSelect = !row.isSelect
-    this.setState({
-      t: +new Date
-    })
-
-    const selectRow = []
-    this.props.rows.map((item) => {
-      if (item.isSelect) {
-        selectRow.push(item)
-      }
-    })
-
-    this.props.onSelect(row.isSelect, row, selectRow)
-  },
-
-  handleCheckboxClick(event) {
-    event = event ? event : window.event
-    event.stopPropagation()
-  },
-
-  handleRowClick(item) {
-    this.props.onRowClick && this.props.onRowClick(item)
-  },
+class Rows extends Component {
 
   render() {
     const rows = this.props.rows
@@ -53,7 +24,7 @@ const Rows = React.createClass({
           const isSelect = item.isSelect || false
           const isDisabled = item.disabled || false
           const checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
+            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
             : null
           return (
             <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
@@ -87,26 +58,41 @@ const Rows = React.createClass({
       </tbody>
     )
   }
-})
 
-export default React.createClass({
-  items: [],
-  propTypes: {
-    data: PropTypes.object,
-    url: PropTypes.string,
-    customProp({
-      data,
-      url
-    }) {
-      if (data && url) {
-        return new Error('data属性和url属性不能同时使用！')
+  handleCheckboxChange(row) {
+    row.isSelect = !row.isSelect
+    this.setState({
+      t: +new Date
+    })
+
+    const selectRow = []
+    this.props.rows.map((item) => {
+      if (item.isSelect) {
+        selectRow.push(item)
       }
-    }
-  },
-  getInitialState() {
-    return {
+    })
+
+    this.props.onSelect(row.isSelect, row, selectRow)
+  }
+
+  handleCheckboxClick(event) {
+    event = event ? event : window.event
+    event.stopPropagation()
+  }
+
+  handleRowClick(item) {
+    this.props.onRowClick && this.props.onRowClick(item)
+  }
+}
+
+class DataTable extends Component {
+
+  constructor(props) {
+    super()
+    this.items = []
+    this.state = {
       order: '',
-      url: this.props.url || '',
+      url: props.url || '',
       isSelectAll: false,
       items: {
         totalList: [],
@@ -114,9 +100,9 @@ export default React.createClass({
         refresh: false,
         currentPage: 1
       },
-      currentPage: this.props.currentPage || 1
+      currentPage: props.currentPage || 1
     }
-  },
+  }
 
   componentWillMount() {
     if (this.props.data) {
@@ -129,9 +115,94 @@ export default React.createClass({
         }
       })
     }
-  },
+  }
 
-  onChange() {},
+  componentWillReceiveProps(nextProps) {
+    if (this.props.data !== nextProps.data) {
+      this.setState({
+        items: nextProps.data,
+        isSelectAll: false
+      })
+    }
+  }
+
+  render() {
+    const self = this
+    let url = this.props.url
+    const { className, column, ...other } = this.props
+    const currentPage = parseInt(this.state.currentPage),
+      // 新增自动分页功能 
+      pageSize = parseInt(this.props.howRow)
+
+    // 如果是传入url查询数据就附带参数查询
+    if (url && url !== '') {
+      if (url.indexOf('?') < 0) {
+        if (this.props.showPage == 'true') {
+          url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
+        }
+      }
+      if (url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1) {
+        url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
+      }
+    }
+
+    const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></th> : null
+    return (
+      <div>
+        {url != '' ? <Fetch url={url} onSuccess={::this.handleSuccess} ></Fetch> : null}
+        
+        <table className={classnames('table', 'bfd-datatable', className)} {...other} >
+          <thead>
+            <tr>
+              {checkboxTh}
+              {
+                column.map ((head, i) => {
+                  const style = head.width ? {width: head.width} : {}
+                  return (
+                    <th 
+                      key={head['title']}
+                      ref={i}
+                      style={style}
+                      onClick={self.orderClick.bind(self, head, i)}
+                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'sorting' : ''}>
+                      {head['title']}
+                    </th>
+                    )
+                })
+              }
+            </tr>
+          </thead>
+
+          <Rows 
+            rows={this.state.items.totalList} 
+            onRowClick={::this.handleRowClick}
+            onSelect={::this.handleCheckboxChange}
+            onCheckboxSelect={::this.props.onCheckboxSelect}
+            column={this.props.column}
+            currentPage={this.state.items.currentPage || currentPage}
+            pageSize={pageSize}
+          >
+          </Rows>
+        </table>
+
+        {
+          this.state.items.totalList.length > 0 
+            ? this.props.showPage == 'true' 
+              ? (<Paging 
+                  currentPage={this.state.items.currentPage}                   
+                  totalPageNum={this.state.items.totalPageNum} 
+                  pageSize={this.props.howRow} 
+                  onPageChange={::this.onPageChange} 
+                  onChange={::this.onChange}>
+              </Paging>)
+              : '' 
+            : ''
+        }
+      </div>
+    )
+  }
+
+  onChange() {}
 
   onPageChange(page) {
     if (this.props.onPageChange) {
@@ -140,7 +211,7 @@ export default React.createClass({
     this.setState({
       currentPage: page
     })
-  },
+  }
 
   orderClick(column, i) {
     if (column.order) {
@@ -172,19 +243,19 @@ export default React.createClass({
         return
       }
     }
-  },
+  }
 
   handleSuccess(data) {
     this.setState({
       items: data
     })
-  },
+  }
 
   refresh() {
     this.setState({
       refresh: true
     })
-  },
+  }
 
   handleCheckboxAllChange() {
     const isAll = !this.state.isSelectAll
@@ -203,7 +274,7 @@ export default React.createClass({
     const selectAllFn = this.props.onCheckboxSelect
 
     selectAllFn && selectAllFn(isAll ? rows : [])
-  },
+  }
 
   handleCheckboxChange(checked, row, rows) {
     const selectFn = this.props.onCheckboxSelect
@@ -213,100 +284,26 @@ export default React.createClass({
         isSelectAll: false
       })
     }
-  },
+    if(rows.length == this.state.items.totalList.length) {
+      this.setState({
+        isSelectAll: true
+      })
+    }
+  }
 
   handleRowClick(row) {
     this.props.onRowClick && this.props.onRowClick(row)
-  },
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.data !== nextProps.data) {
-      this.setState({
-        items: nextProps.data,
-        isSelectAll: false
-      })
-    }
-  },
-
-  handleChange() {},
-
-  render() {
-    const self = this
-    let url = this.props.url
-    const {
-      className,
-      column,
-      ...other
-    } = this.props
-    const currentPage = parseInt(this.state.currentPage),
-      // 新增自动分页功能 
-      pageSize = parseInt(this.props.howRow)
-
-    // 如果是传入url查询数据就附带参数查询
-    if (url && url !== '') {
-      if (url.indexOf('?') < 0) {
-        if (this.props.showPage == 'true') {
-          url += '?pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
-        }
-      }
-      if (url.indexOf('pageSize') < 0 && url.indexOf('currentPage') < 0 && url.indexOf('?') > -1) {
-        url += '&pageSize=' + pageSize + '&currentPage=' + this.state.currentPage
-      }
-    }
-
-    const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={this.handleCheckboxAllChange}></Checkbox></th> : null
-    return (
-      <div>
-        {url != '' ? <Fetch url={url} onSuccess={this.handleSuccess} ></Fetch> : null}
-        
-        <table className={classnames('table', 'bfd-datatable', className)} {...other} >
-          <thead>
-            <tr>
-              {checkboxTh}
-              {
-                column.map ((head, i) => {
-                  const style = head.width ? {width: head.width} : {}
-                  return (
-                    <th 
-                      key={head['title']}
-                      ref={i}
-                      style={style}
-                      onClick={self.orderClick.bind(self, head, i)}
-                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'sorting' : ''}>
-                      {head['title']}
-                    </th>
-                    )
-                })
-              }
-            </tr>
-          </thead>
-
-          <Rows 
-            rows={this.state.items.totalList} 
-            onRowClick={this.handleRowClick}
-            onSelect={this.handleCheckboxChange}
-            onCheckboxSelect={this.props.onCheckboxSelect}
-            column={this.props.column}
-            currentPage={this.state.items.currentPage || currentPage}
-            pageSize={pageSize}
-          >
-          </Rows>
-        </table>
-
-        {
-          this.state.items.totalList.length > 0 
-            ? this.props.showPage == 'true' 
-              ? (<Paging 
-                  currentPage={this.state.items.currentPage}                   
-                  totalPageNum={this.state.items.totalPageNum} 
-                  pageSize={this.props.howRow} 
-                  onPageChange={this.onPageChange} 
-                  onChange={this.onChange}>
-              </Paging>)
-              : '' 
-            : ''
-        }
-      </div>
-    )
   }
-})
+}
+
+DataTable. propTypes = {
+  data: PropTypes.object,
+  url: PropTypes.string,
+  customProp({ data, url }) {
+    if (data && url) {
+      return new Error('data属性和url属性不能同时使用！')
+    }
+  }
+}
+
+export default DataTable

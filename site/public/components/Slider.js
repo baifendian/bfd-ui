@@ -36,22 +36,22 @@ const App = React.createClass({
         <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSliding={this.handleSliding} onSlid={this.handleSlid} />
         <div className="clearfix"></div>
         <Props>
-          <Prop name="defaultValue" type="String">
+          <Prop name="defaultValue" type="Number">
             <p>默认值</p>
           </Prop>
-          <Prop name="tickValue" type="String">
+          <Prop name="tickValue" type="Number">
             <p>标尺刻度数量，默认5</p>
           </Prop>
-          <Prop name="start" type="String">
+          <Prop name="start" type="Number">
             <p>起始值，默认值为0</p>
           </Prop>
-          <Prop name="end" type="String" required>
+          <Prop name="end" type="Number" required>
             <p>结束值</p>
           </Prop>
           <Prop name="suffix" type="String" required>
             <p>后缀</p>
           </Prop>
-          <Prop name="onSliding" type="function" required>
+          <Prop name="onSliding" type="function">
             <p>滑块拖动进行时事件，value为拖动条当前值</p>
           </Prop>
           <Prop name="onSlid" type="function" required>

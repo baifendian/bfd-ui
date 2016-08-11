@@ -1,11 +1,11 @@
 import 'bfd-bootstrap'
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import Icon from '../Icon'
 import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import './main.less'
 
-const Line = React.createClass({
+class Line extends Component {
   render() {
     const width = this.props.width
     const height = this.props.height
@@ -53,9 +53,9 @@ const Line = React.createClass({
       </div>
     )
   }
-})
+}
 
-const Title = React.createClass({
+class Title extends Component {
   render() {
     const title = this.props.title
     const index = this.props.index
@@ -71,14 +71,10 @@ const Title = React.createClass({
     }
     return (<div style={{top}} className={classnames('title', className)}>{title}</div>)
   }
-})
+}
 
-const Circle = React.createClass({
-  handleClick() {
-    const index = this.props.index
-    const title = this.props.title
-    this.props.onStep && this.props.onStep(index, title)
-  },
+class Circle extends Component {
+  
   render() {
     const width = this.props.width
     const height = this.props.height
@@ -112,11 +108,17 @@ const Circle = React.createClass({
       className = 'circle_wait'
     }
 
-    return (<div style={style} onClick={this.handleClick} className={classnames('circle', className)}>{NavIcon}</div>)
+    return (<div style={style} onClick={::this.handleClick} className={classnames('circle', className)}>{NavIcon}</div>)
   }
-})
 
-const Step = React.createClass({
+  handleClick() {
+    const index = this.props.index
+    const title = this.props.title
+    this.props.onStep && this.props.onStep(index, title)
+  }
+}
+
+class Step extends Component {
   render() {
     const style = {
       width: this.props.width + 'px',
@@ -131,15 +133,17 @@ const Step = React.createClass({
       </div>
     )
   }
-})
+}
 
-const Steps = React.createClass({
-  getInitialState() {
-    return {
+class Steps extends Component {
+  constructor() {
+    super()
+    this.state = {
       width: 0,
       height: 0
     }
-  },
+  }
+
   render() {
 
     const rows = []
@@ -170,7 +174,8 @@ const Steps = React.createClass({
         {rows}
       </div>
     )
-  },
+  }
+
   componentDidMount() {
     const container = this.refs.container
     if (!parseInt(getComputedStyle(container).height, 10)) {
@@ -188,7 +193,18 @@ const Steps = React.createClass({
       height
     })
   }
-})
+}
+
+Steps.PropTypes = {
+  height: PropTypes.number,
+  current: PropTypes.number.isRequired,
+  onStepClick: PropTypes.func.isRequired
+}
+
+Step.PropTypes = {
+  title: PropTypes.string,
+  icon: PropTypes.string
+}
 
 export {
   Steps,
