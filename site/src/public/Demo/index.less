@@ -1,0 +1,37 @@
+.demo {
+  border-radius: 2px;
+  border: 1px solid #ececec;
+  margin-top: 20px;
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.demo__title {
+  margin: 20px;
+}
+
+.demo__content {
+  margin: 20px;
+}
+
+.demo__desc {
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.demo__toggle {
+  border-top: 1px solid #ececec;
+  text-align: right;
+}
+
+.demo__code {
+  display: none;
+  margin-top: -10px;
+}
+
+.demo--open {
+  .demo__code {
+    display: block;
+  }
+}

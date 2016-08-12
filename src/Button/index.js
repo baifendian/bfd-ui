@@ -1,7 +1,7 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import Icon from '../Icon';
-import './index.less'
 
 const Button = props => {
   const { className, type, size, icon, circle, transparent, children, ...other } = props

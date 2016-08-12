@@ -63,6 +63,7 @@
     "lodash": "^4.14.0",
     "mkdirp": "^0.5.1",
     "node-dev": "^2.7.1",
+    "normalize.css": "^4.2.0",
     "pm2": "^1.0.2",
     "react-addons-test-utils": "^0.14.8",
     "react-update": "0.0.8",

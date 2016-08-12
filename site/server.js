@@ -6,7 +6,7 @@ var fs = require('fs')
 
 var app = express()
 app.use(compression())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, './')))
 
 var isProduction = process.argv.slice(2)[0] === '-production'
 
@@ -15,7 +15,7 @@ if (!isProduction) {
   var webpackDevMiddleware = require('webpack-dev-middleware')
   var WebpackConfig = require('./webpack.config')
   app.use(webpackDevMiddleware(webpack(WebpackConfig), {
-    publicPath: '/dist/',
+    publicPath: '/build/',
     stats: {
       colors: true,
       profile: true
