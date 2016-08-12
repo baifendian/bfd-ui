@@ -2,23 +2,43 @@
  * Created by tenglong.jiang on 2016-05-26.
  */
 
-import 'bfd-bootstrap'
-import './main.less'
-import React from 'react'
+
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import xhr from '../xhr'
 import FileList from './FileList'
+import 'bfd-bootstrap'
+import './main.less'
 
-export default React.createClass({
-  getInitialState() {
-    return {
+class Upload extends Component {
+
+  constructor() {
+    super()
+    this.state = {
       list: []
     }
-  },
+  }
+
+  render() {
+    const { className, ...other } = this.props
+    return (
+      <div className={classnames('bfd-upload', className)} {...other}>
+        <input ref="file" onChange={::this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
+        <button className="btn btn-primary" type="button" onClick={::this.handleClick}>
+          {this.props.text || '文件上传'} 
+        </button>
+        <div className="listbox">
+          <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
+        </div>
+      </div>
+    )
+  }
+
   handleClick() {
     const fileEl = this.refs.file
     fileEl.click()
-  },
+  }
+
   handleChange(event) {
     const el = event.target
     const files = el.files
@@ -31,7 +51,7 @@ export default React.createClass({
         size: file.size,
         type: file.type,
         state: 0
-      });
+      })
 
       (function(self, file, index) {
         const fd = new FormData()
@@ -84,7 +104,8 @@ export default React.createClass({
     this.setState({
       list: arr
     })
-  },
+  }
+
   handleRemove(currItem) {
     const self = this
     const arr = this.state.list.slice(0)
@@ -97,22 +118,11 @@ export default React.createClass({
         return
       }
     })
-  },
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    return (
-      <div className={classnames('bfd-upload', className)} {...other}>
-        <input ref="file" onChange={this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
-        <button className="btn btn-primary" type="button" onClick={this.handleClick}>
-          {this.props.text || '文件上传'} 
-        </button>
-        <div className="listbox">
-          <FileList data={this.state.list} onRemove={this.handleRemove}></FileList>
-        </div>
-      </div>
-    )
   }
-})
+}
+
+Upload.propTypes = {
+  action: PropTypes.string.isRequired
+}
+
+export default Upload

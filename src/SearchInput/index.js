@@ -1,47 +1,46 @@
 /**
  * Created by tenglong.jiang on 2016-05-13.
  */
-
-import 'bfd-bootstrap'
-import './main.less'
-import React from 'react'
+ 
+import React, { Component, PropTypes } from 'react'
+import Button from '../Button'
 import ClearableInput from '../ClearableInput'
 import classnames from 'classnames'
+import './main.less'
 
-export default React.createClass({
+class SearchInput extends Component {
 
-  value: '',
+  constructor(props) {
+    super()
+    this.value = ''
+  }
 
-  propTypes: {
-    onSearch: React.PropTypes.func.isRequired
-  },
+  render() {
+    const { className, ...other } = this.props
+    const size = this.props.size || 'lg'
+    this.value = this.props.defaultValue || ''
+    return (
+      <div className={classnames('bfd-search_input', className, size)} {...other}>        
+        <ClearableInput defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
+        <Button size={size} onClick={::this.handleClick} icon="search">{this.props.label || '搜索'}</Button>
+      </div>
+    )
+  }
 
   handleChange(v) {
     this.value = v
     this.props.onChange && this.props.onChange(v)
-  },
+  }
 
   handleClick() {
     if (typeof this.props.onSearch == 'function') {
       this.props.onSearch(this.value)
     }
-  },
-
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    const size = this.props.size || 'lg'
-    this.value = this.props.defaultValue || ''
-    return (
-      <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput defaultValue={this.value} size={size} onChange={this.handleChange} inline placeholder={this.props.placeholder || ''}/>
-        <button className={classnames('btn btn-primary', size)} type="button" onClick={this.handleClick}>
-          <span className="glyphicon glyphicon-search"></span>
-          {this.props.label || '搜索'} 
-        </button>
-      </div>
-    )
   }
-})
+}
+
+SearchInput.propTypes = {
+  onSearch: React.PropTypes.func.isRequired
+}
+
+export default SearchInput

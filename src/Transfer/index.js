@@ -4,38 +4,100 @@
 
 import 'bfd-bootstrap'
 import './main.less'
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import SearchBar from './SearchBar'
 import SelectTable from './SelectTable'
 
 const SourceTable = SelectTable
 const TargetTable = SelectTable
-const TransferPanel = React.createClass({
-  handleS2T() {
-    this.props.onTransfer('s2t')
-  },
-  handleT2S() {
-    this.props.onTransfer('t2s')
-  },
+class TransferPanel extends Component {
+  
   render() {
     return (
       <div>
-        <div style={{marginTop: this.props.height/2 + 'px'}}>
-          <a href="javascrip:" onClick={this.handleS2T}>添加 >></a>
+        <div style={{marginTop: this.props.height / 2 + 'px'}}>
+          <a href="javascrip:" onClick={::this.handleS2T}>添加 >></a>
           <br/><br/>
-          <a href="javascrip:" onClick={this.handleT2S}>{'<<'} 移除</a>
+          <a href="javascrip:" onClick={::this.handleT2S}>{'<<'} 移除</a>
         </div>
       </div>
     )
   }
-})
+
+  handleS2T() {
+    this.props.onTransfer('s2t')
+  }
+
+  handleT2S() {
+    this.props.onTransfer('t2s')
+  }
+}
 
 /**
  * Transfer
  */
-export default React.createClass({
-  sid: [],
-  tid: [],
+class Transfer extends Component {
+  
+  constructor(props) {
+    super(props)
+    this.sid = []
+    this.tid = []
+    this.state = {
+      filterText: '',
+      searchData: props.sdata || []
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.sdata != this.props.sdata) {
+      this.setState({
+        sdata: nextProps.sdata,
+        searchData: nextProps.sdata
+      })
+    }
+    if(nextProps.tdata != this.props.tdata) {
+      this.setState({
+        tdata: nextProps.tdata
+      })
+    }
+  }
+
+  render() {
+    return (
+      <div className="bfd-transfer">
+        <div className="col-xs-4">
+          <SearchBar onUserInput={::this.handleUserInput}/>
+          <SourceTable 
+            onTransfer={::this.handleTransfer} 
+            onFoucsItem={::this.handleSourceFouceItem} 
+            data={this.state.searchData} 
+            height={this.props.height || 200} 
+            direct="s2t"
+            render={this.props.render}
+            />
+        </div>
+        <div className="col-xs-2 bfd-pannel">
+          <TransferPanel 
+            onTransfer={::this.handleTransfer} 
+            height={this.props.height || 200} />
+        </div>
+        <div className="col-xs-4">
+          <div style={{height: '34px', lineHeight: '34px'}} >
+            <span>{this.props.title || '已选项'}</span>
+          </div>
+          <TargetTable 
+            onTransfer={::this.handleTransfer} 
+            onFoucsItem={::this.handleTargetFouceItem} 
+            data={this.props.tdata} 
+            height={this.props.height || 200} 
+            direct="t2s"
+            render={this.props.render}
+            />
+        </div>
+      </div>
+    )
+  }
+
   handleUserInput(filterText) {
     const arr = []
     for (let i = 0, len = this.props.sdata.length; i < len; i++) {
@@ -55,7 +117,8 @@ export default React.createClass({
       filterText,
       searchData: arr
     })
-  },
+  }
+  
   handleSourceFouceItem(sid) {
     if(!sid) {
       return
@@ -65,7 +128,8 @@ export default React.createClass({
     } else {
       this.sid = [sid]
     }
-  },
+  }
+
   handleTargetFouceItem(tid) {
     if(!tid) {
       return
@@ -75,7 +139,8 @@ export default React.createClass({
     } else {
       this.tid = [tid]
     }
-  },
+  }
+
   handleTransfer(direct) {
     if (direct == 's2t') {  //  s->t
       if(!this.sid || this.sid.length == 0) {
@@ -89,7 +154,8 @@ export default React.createClass({
       }
       this.transferData(this.tid, this.props.tdata, this.props.sdata, direct)
     }
-  },
+  }
+
   transferData(ids, source, target, option) {
     let flag = 0
     if(!ids || ids.length == 0) {
@@ -122,59 +188,7 @@ export default React.createClass({
       ids.shift() //  删除第一个id
       this.transferData(ids, source, target, option)
     }
-  },
-  getInitialState() {
-    return {
-      filterText: '',
-      searchData: this.props.sdata || []
-    }
-  },
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.sdata != this.props.sdata) {
-      this.setState({
-        sdata: nextProps.sdata,
-        searchData: nextProps.sdata
-      })
-    }
-    if(nextProps.tdata != this.props.tdata) {
-      this.setState({
-        tdata: nextProps.tdata
-      })
-    }
-  },
-  render() {
-    return (
-      <div className="bfd-transfer">
-        <div className="col-xs-4">
-          <SearchBar onUserInput={this.handleUserInput}/>
-          <SourceTable 
-            onTransfer={this.handleTransfer} 
-            onFoucsItem={this.handleSourceFouceItem} 
-            data={this.state.searchData} 
-            height={this.props.height || 200} 
-            direct="s2t"
-            render={this.props.render}
-            />
-        </div>
-        <div className="col-xs-2 bfd-pannel">
-          <TransferPanel 
-            onTransfer={this.handleTransfer} 
-            height={this.props.height || 200} />
-        </div>
-        <div className="col-xs-4">
-          <div style={{height: '34px', lineHeight: '34px'}} >
-            <span>{this.props.title || '已选项'}</span>
-          </div>
-          <TargetTable 
-            onTransfer={this.handleTransfer} 
-            onFoucsItem={this.handleTargetFouceItem} 
-            data={this.props.tdata} 
-            height={this.props.height || 200} 
-            direct="t2s"
-            render={this.props.render}
-            />
-        </div>
-      </div>
-    )
   }
-})
+}
+
+export default Transfer

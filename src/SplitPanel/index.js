@@ -1,48 +1,53 @@
-import React, { PropTypes } from 'react'
+/**
+ * Created by tenglong.jiang on 2016-05-13.
+ */
+
+import React, { Component, PropTypes } from 'react'
 import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import './index.less'
-const SubSplitPanel = React.createClass({
+
+class SubSplitPanel extends Component {
+
+  constructor(props) {
+    super()
+  }
+
   render() {
-    const {
-      children,
-      className,
-      ...other
-    } = this.props
+    const { children, className, ...other } = this.props
     return (
       <div className={classnames(className)} {...other}>
         {children}
       </div>
     )
   }
-})
-const SplitPanel = React.createClass({
+}
 
-  width: 0,
+class SplitPanel extends Component {
 
-  height: 0,
-
-  offsetLeft: 0,
-
-  offsetTop: 0,
-
-  clientX: 0,
-
-  clientY: 0,
-
-  oldSplit: {
-    width: 0,
-    height: 0,
-    width1: 0,
-    height1: 0
-  },
-
-  currSplit: {
-    width: 0,
-    height: 0,
-    width1: 0,
-    height1: 0
-  },
+  constructor(props) {
+    super()
+    this.width = 0
+    this.height = 0
+    this.offsetLeft = 0
+    this.offsetTop = 0
+    this.clientX = 0
+    this.clientY = 0
+    this.oldSplit= {
+      width: 0,
+      height: 0,
+      width1: 0,
+      height1: 0
+    }
+    this.currSplit= {
+      width: 0,
+      height: 0,
+      width1: 0,
+      height1: 0
+    }
+    this.mouseMoveFn = null
+    this.mouseUpFn = null
+  }
 
   handleMouseDown(event) {
     event.stopPropagation()
@@ -59,9 +64,17 @@ const SplitPanel = React.createClass({
     this.oldSplit.height = parseInt(top.style.height)
     this.oldSplit.width1 = parseInt(bottom.style.width)
     this.oldSplit.height1 = parseInt(bottom.style.height)
-    BODY.addEventListener('mousemove', direct == 'ver' ? this.handleMouseLRMove : this.handleMouseUDMove)
-    BODY.addEventListener('mouseup', this.handleMouseUp)
-  },
+
+    if(direct == 'ver') {
+      this.mouseMoveFn = ::this.handleMouseLRMove
+    } else {
+      this.mouseMoveFn = ::this.handleMouseLRMove
+    }
+    this.mouseUpFn = ::this.handleMouseUp
+    BODY.addEventListener('mousemove', this.mouseMoveFn)
+    BODY.addEventListener('mouseup', this.mouseUpFn)
+  }
+
   handleMouseUDMove(event) {
     const container = this.refs.container
     const top = this.refs.top
@@ -80,7 +93,8 @@ const SplitPanel = React.createClass({
     line.style.top = top.style.height = scope + 'px'
     bottom.style.height = container.clientHeight - parseInt(lineStyle.height) - scope + 'px'
     return false
-  },
+  }
+
   handleMouseLRMove(event) {
     const container = this.refs.container
     const top = this.refs.top
@@ -99,7 +113,8 @@ const SplitPanel = React.createClass({
     line.style.left = top.style.width = scope + 'px'
     bottom.style.width = container.clientWidth - scope - parseInt(lineStyle.width) + 'px'
     return false
-  },
+  }
+
   handleMouseUp() {
     const direct = this.props.direct
     const BODY = document.body
@@ -120,10 +135,12 @@ const SplitPanel = React.createClass({
         typeof this.props.onSplit(old.height, old.height1, curr.height, curr.height1)
       }
     }
-    BODY.removeEventListener('mousemove', direct == 'ver' ? this.handleMouseLRMove : this.handleMouseUDMove)
-    BODY.removeEventListener('mouseup', this.handleMouseUp)
+
+    BODY.removeEventListener('mousemove', this.mouseMoveFn)
+    BODY.removeEventListener('mouseup', this.mouseUpFn)
+
     return false
-  },
+  }
 
   render() {
     const {
@@ -143,11 +160,11 @@ const SplitPanel = React.createClass({
     return (
       <div ref="container" className={classnames('bfd-split-panel', className)} {...other}>
         <div ref="top" style={topStyle} className="top">{items[0]}</div>
-        <div ref="line" className={lineClassName} onMouseDown={this.handleMouseDown}></div>
+        <div ref="line" className={lineClassName} onMouseDown={::this.handleMouseDown}></div>
         <div ref="bottom" style={bottomStyle} className="bottom">{items[1]}</div>
       </div>
     )
-  },
+  }
 
   componentDidMount() {
     const items = findAllByType(this.props.children, SubSplitPanel)
@@ -179,10 +196,10 @@ const SplitPanel = React.createClass({
       bottom.style.height = containerHeight - height - parseInt(lineStyle.height) - parseInt(style.borderWidth) + 'px'
     }
   }
-})
+}
 
 SplitPanel.propTypes = {
-  direct: PropTypes.string,
+  direct: PropTypes.string.isRequired,
   width: PropTypes.number,
   height: PropTypes.number,
   customProp({
@@ -192,6 +209,11 @@ SplitPanel.propTypes = {
       return new Error('direct必填属性。')
     }
   }
+}
+
+SubSplitPanel.propTypes = {
+  width: PropTypes.number,
+  height: PropTypes.number
 }
 
 export {

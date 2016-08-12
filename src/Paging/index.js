@@ -1,81 +1,20 @@
 /**
  * Created by BFD_270 on 2016-02-22.
+ * Update by tenglong.jiang on 2016-08-11
  */
 import 'bfd-bootstrap'
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import './main.less'
 
-export default React.createClass({
-  getInitialState() {
-    return {
-      currentIndex: this.props.currentPage,
+class Paging extends Component {
+
+  constructor(props) {
+    super()
+    this.state = {
+      currentIndex: props.currentPage,
       showPage: 4
     }
-  },
-
-  handleClick(i) {
-    this.setState({
-      currentIndex: i
-    })
-    if (this.props.onPageChange) {
-      this.props.onPageChange(i)
-    }
-    if (this.props.onChange) {
-      this.props.onChange('currentPage=' + i + '&pageSize=' + this.props.pageSize, i)
-    }
-  },
-
-  handleGoPage() {
-    const number = this.refs.inputNumber.value
-    const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    if (number <= pageNum && number > 0) {
-      this.setState({
-        currentIndex: parseInt(this.refs.inputNumber.value)
-      })
-      if (this.props.onPageChange) {
-        this.props.onPageChange(parseInt(this.refs.inputNumber.value))
-      }
-    } else {
-      this.refs.inputNumber.value = ''
-    }
-  },
-
-  checkNumber() {
-    const number = /^\+?[1-9][0-9]*$/
-    if (!number.test(this.refs.inputNumber.value)) {
-      this.refs.inputNumber.value = ''
-    }
-  },
-
-  handleLaquoClick() {
-    if (this.state.currentIndex > 1) {
-      if (this.props.onChange) {
-        this.props.onChange('currentPage=' + (this.state.currentIndex - 1) + '&pageSize=' + this.props.pageSize, this.state.currentIndex - 1)
-      }
-      this.setState({
-        currentIndex: this.state.currentIndex - 1
-      })
-      if (this.props.onPageChange) {
-        this.props.onPageChange(parseInt(this.state.currentIndex - 1))
-      }
-    }
-  },
-
-  handleRaquoClick() {
-    const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    if (this.state.currentIndex < pageNum) {
-      if (this.props.onChange) {
-        this.props.onChange('currentPage=' + (this.state.currentIndex + 1) + '&pageSize=' + this.props.pageSize, this.state.currentIndex + 1)
-      }
-
-      this.setState({
-        currentIndex: this.state.currentIndex + 1
-      })
-      if (this.props.onPageChange) {
-        this.props.onPageChange(parseInt(this.state.currentIndex + 1))
-      }
-    }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.currentPage !== nextProps.currentPage) {
@@ -83,7 +22,7 @@ export default React.createClass({
         currentIndex: nextProps.currentPage
       })
     }
-  },
+  }
 
   render() {
     // 分页逻辑代码
@@ -143,17 +82,83 @@ export default React.createClass({
         </div>
         <div className="pull-right layout-right">
           <ul className="pagination">
-            <li><a onClick={this.handleLaquoClick} className={'prev '+ (currentIndex === 1 ? 'frist' : '')}>上一页</a></li>
+            <li><a onClick={::this.handleLaquoClick} className={'prev '+ (currentIndex === 1 ? 'frist' : '')}>上一页</a></li>
               {liArr}
-            <li><a onClick={this.handleRaquoClick} className={'next '+ (currentIndex === pageNum ? 'end' : '')}>下一页</a></li>
+            <li><a onClick={::this.handleRaquoClick} className={'next '+ (currentIndex === pageNum ? 'end' : '')}>下一页</a></li>
           </ul>
           <div className="layout-div form-inline">
             <label className="label-font">跳转到：</label>
-            <input onKeyUp={this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
-            <button onClick={this.handleGoPage} className="btn btn-primary">GO</button>
+            <input onKeyUp={::this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
+            <button onClick={::this.handleGoPage} className="btn btn-primary">GO</button>
           </div>
         </div>
       </div>
     )
   }
-})
+
+  handleClick(i) {
+    this.setState({
+      currentIndex: i
+    })
+    if (this.props.onPageChange) {
+      this.props.onPageChange(i)
+    }
+    if (this.props.onChange) {
+      this.props.onChange('currentPage=' + i + '&pageSize=' + this.props.pageSize, i)
+    }
+  }
+
+  handleGoPage() {
+    const number = this.refs.inputNumber.value
+    const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
+    if (number <= pageNum && number > 0) {
+      this.setState({
+        currentIndex: parseInt(this.refs.inputNumber.value)
+      })
+      if (this.props.onPageChange) {
+        this.props.onPageChange(parseInt(this.refs.inputNumber.value))
+      }
+    } else {
+      this.refs.inputNumber.value = ''
+    }
+  }
+
+  checkNumber() {
+    const number = /^\+?[1-9][0-9]*$/
+    if (!number.test(this.refs.inputNumber.value)) {
+      this.refs.inputNumber.value = ''
+    }
+  }
+
+  handleLaquoClick() {
+    if (this.state.currentIndex > 1) {
+      if (this.props.onChange) {
+        this.props.onChange('currentPage=' + (this.state.currentIndex - 1) + '&pageSize=' + this.props.pageSize, this.state.currentIndex - 1)
+      }
+      this.setState({
+        currentIndex: this.state.currentIndex - 1
+      })
+      if (this.props.onPageChange) {
+        this.props.onPageChange(parseInt(this.state.currentIndex - 1))
+      }
+    }
+  }
+
+  handleRaquoClick() {
+    const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
+    if (this.state.currentIndex < pageNum) {
+      if (this.props.onChange) {
+        this.props.onChange('currentPage=' + (this.state.currentIndex + 1) + '&pageSize=' + this.props.pageSize, this.state.currentIndex + 1)
+      }
+
+      this.setState({
+        currentIndex: this.state.currentIndex + 1
+      })
+      if (this.props.onPageChange) {
+        this.props.onPageChange(parseInt(this.state.currentIndex + 1))
+      }
+    }
+  }
+}
+
+export default Paging

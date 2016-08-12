@@ -1,3 +1,7 @@
+/**
+ * Created by tenglong.jiang on 2016-08-08.
+ */
+ 
 import React, { Component, PropTypes } from 'react'
 import findAllByType from '../findAllByType'
 import classnames from 'classnames'
@@ -13,13 +17,6 @@ class ButtonGroup extends Component {
     }
   }
 
-  handleClick(value) {
-    this.setState({
-      value
-    })
-    this.props.onChange && this.props.onChange(value)
-  }
-
   componentWillReceiveProps(nextProps) {
     'value' in nextProps && this.setState({
       value: nextProps.value
@@ -27,11 +24,7 @@ class ButtonGroup extends Component {
   }
 
   render() {
-    const {
-      className,
-      children,
-      ...other
-    } = this.props
+    const { className, children, ...other } = this.props
     const items = findAllByType(children, Button)
     const buttons = items.map((item, index) => {
       if (!item) return
@@ -49,6 +42,13 @@ class ButtonGroup extends Component {
         {buttons}
       </div>
     )
+  }
+
+  handleClick(value) {
+    this.setState({
+      value
+    })
+    this.props.onChange && this.props.onChange(value)
   }
 }
 

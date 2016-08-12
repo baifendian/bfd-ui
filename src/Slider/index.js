@@ -3,26 +3,73 @@
  */
 
 import 'bfd-bootstrap'
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import './main.less'
 
-export default React.createClass({
-  isDown: false,
-  width: 0,
-  offsetLeft: 0,
-  marginLeft: 0,
-  sliderWidth: 0,
-  propTypes: {
-    end: React.PropTypes.number.isRequired
-  },
+class Slider extends Component {
+
+  constructor(props) {
+    super()
+    this.isDown = false
+    this.width = 0
+    this.offsetLeft = 0
+    this.marginLeft = 0
+    this.sliderWidth = 0
+    this.mouseMoveFn = null
+    this.mouseUpFn = null
+  }
+
+  componentDidMount() {
+    const bar = this.refs.bar
+    const selectedBar = this.refs.selectedBar
+    const slider = this.refs.slider
+
+    const style = getComputedStyle(bar)
+    const sliderStyle = getComputedStyle(slider)
+    const defaultValue = this.props.defaultValue || this.props.start || 0
+
+    this.width = parseInt(style.width, 10)
+    this.sliderWidth = parseInt(sliderStyle.width, 10)
+    this.offsetLeft = bar.offsetLeft + this.marginLeft
+    slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
+    selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
+
+    this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
+  }
+
+  componentWillUnmount() {
+
+  }
+
+  render() {
+    const { className, ...other } = this.props
+    return (
+      <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
+        <div ref="bar" className="bar">
+          <div ref="slider" className="slider" onMouseDown={::this.handleMouseDown}>
+            <div ref="tip" className="tooltips">
+              <span ref="msg" className="text">0{this.props.suffix || ''}</span>
+              <div className="arrow-down"></div>
+            </div>
+          </div>
+          <div ref="selectedBar" className="selected"></div>
+          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>       
+        </div>
+      </div>
+    )
+  }
+
   handleMouseDown(event) {
     event.stopPropagation()
     this.isDown = true
     const BODY = document.body
-    BODY.addEventListener('mousemove', this.handleMouseMove)
-    BODY.addEventListener('mouseup', this.handleMouseUp)
-  },
+    this.mouseMoveFn = ::this.handleMouseMove
+    this.mouseUpFn = ::this.handleMouseUp
+    BODY.addEventListener('mousemove', this.mouseMoveFn)
+    BODY.addEventListener('mouseup', this.mouseUpFn)
+  }
+
   handleMouseMove(event) {
     const slider = this.refs.slider
     const selectedBar = this.refs.selectedBar
@@ -45,7 +92,8 @@ export default React.createClass({
         this.props.onSliding(text)
       }
     }
-  },
+  }
+
   handleMouseUp() {
     const selectedBar = this.refs.selectedBar
     if (typeof selectedBar == 'undefined') {
@@ -58,9 +106,10 @@ export default React.createClass({
     }
 
     const BODY = document.body
-    BODY.removeEventListener('mousemove', this.handleMouseMove)
-    BODY.removeEventListener('mouseup', this.handleMouseUp)
-  },
+    BODY.removeEventListener('mousemove', this.mouseMoveFn)
+    BODY.removeEventListener('mouseup', this.mouseUpFn)
+  }
+
   getValue(currWidth) {
     const end = this.props.end
     const start = this.props.start || 0
@@ -72,7 +121,8 @@ export default React.createClass({
       digit = 1
     }
     return value.toFixed(digit)
-  },
+  }
+
   getTickValue(value) {
     const end = this.props.end
     const start = this.props.start || 0
@@ -80,64 +130,36 @@ export default React.createClass({
     v == 0 ? 1 : v
     const width = this.width
     return width / v * value
-  },
-  componentDidMount() {
-    const bar = this.refs.bar
-    const selectedBar = this.refs.selectedBar
-    const slider = this.refs.slider
-
-    const style = getComputedStyle(bar)
-    const sliderStyle = getComputedStyle(slider)
-    const defaultValue = this.props.defaultValue || this.props.start || 0
-
-    this.width = parseInt(style.width, 10)
-    this.sliderWidth = parseInt(sliderStyle.width, 10)
-    this.offsetLeft = bar.offsetLeft + this.marginLeft
-    slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
-    selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
-
-    this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
-  },
-  componentWillUnmount() {
-
-  },
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    return (
-      <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
-        <div ref="bar" className="bar">
-          <div ref="slider" className="slider" onMouseDown={this.handleMouseDown}>
-            <div ref="tip" className="tooltips">
-              <span ref="msg" className="text">0{this.props.suffix || ''}</span>
-              <div className="arrow-down"></div>
-            </div>
-          </div>
-          <div ref="selectedBar" className="selected"></div>
-          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>       
-        </div>
-      </div>
-    )
   }
-})
+}
 
-const Scale = React.createClass({
+Slider.propTypes = {
+  end: React.PropTypes.number.isRequired
+}
+
+class Scale extends Component {
+
+  constructor(props) {
+    super()
+  }
+
   componentWillMount() {
     this.tickValue = this.props.tickValue || 5
-  },
+  }
+
   render() {
-    const rows = []
-    for (let i = 0; i <= (this.tickValue); i++) {
+    const rows = []    
+    for (let i = 0; i <= this.tickValue; i++) {
       rows.push(<div key={i} ref={'t'+i} className="tick"><div></div>{i}</div>)
     }
+
     return (
       <div ref="container" className={classnames('bfd-scale', this.props.className)}>
         {rows}
       </div>
     )
-  },
+  }
+
   componentDidMount() {
     const container = this.refs.container
     const containerStyle = getComputedStyle(container)
@@ -165,7 +187,8 @@ const Scale = React.createClass({
         el.style.left = tick + 'px'
       }
     })
-  },
+  }
+
   getTick(num) {
     const arr = []
     num = !num ? 1 : num
@@ -174,6 +197,19 @@ const Scale = React.createClass({
       arr.push(i * w)
     }
     arr.push(this.width)
+
     return arr
   }
-})
+}
+
+Slider.propTypes = {
+  defaultValue: PropTypes.number,
+  tickValue: PropTypes.number,
+  start: PropTypes.number,
+  end: PropTypes.number.isRequired,
+  suffix: PropTypes.string.isRequired,
+  onSliding: PropTypes.func,
+  onSlid: PropTypes.func.isRequired
+}
+
+export default Slider
