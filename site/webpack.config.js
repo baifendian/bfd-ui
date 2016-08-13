@@ -4,6 +4,8 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var LiveReloadPlugin = require('webpack-livereload-plugin')
 var autoprefixer = require('autoprefixer')
+var beautify = require('code-beautify')
+
 var isProduction = process.argv.slice(2)[0] === '-p'
 
 rimraf.sync(__dirname + '/build')
@@ -39,7 +41,21 @@ var config = {
     }, {
       test: /\.less$/,
       loader: 'style!css!less!postcss'
+    }, {
+      test: /\.md$/,
+      loader: 'html!markdown'
+    }, {
+      test: /\.doc$/,
+      loader: 'babel!doc'
     }]
+  },
+  resolveLoader: {
+    alias: {
+      'doc': path.join(__dirname, './loaders/doc')
+    }
+  },
+  markdownLoader: {
+    highlight: (code, lang) => beautify(code, lang)
   },
   postcss: [autoprefixer({
     browsers: ['last 3 versions']

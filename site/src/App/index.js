@@ -29,6 +29,12 @@ class App extends Component {
               <li>
                 <Link to="/components">组件</Link>
               </li>
+              <li>
+                <Link to="/scaffolding">脚手架</Link>
+              </li>
+              <li>
+                <Link to="/changelog">更新日志</Link>
+              </li>
             </ul>
           </Col>
           <Col right>

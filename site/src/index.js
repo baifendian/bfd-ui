@@ -21,14 +21,14 @@ render((
         <Route path=":cat">
           <Route path=":component" getComponent={(location, cb) => {
             require.ensure([], require => {
-              cb(null, require('./Components/components/' + location.pathname.split('/').pop()).default)
+              cb(null, require('./Components/components/' + location.pathname.split('/').pop() + '.doc').default)
             })
           }} />
         </Route>
       </Route>
-      <Route path="workflow" getComponent={(location, cb) => {
+      <Route path="scaffolding" getComponent={(location, cb) => {
         require.ensure([], require => {
-          cb(null, require('./Workflow').default)
+          cb(null, require('./Scaffolding').default)
         })
       }}/>
       <Route path="Changelog" getComponent={(location, cb) => {

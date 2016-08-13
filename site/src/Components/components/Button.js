@@ -148,7 +148,6 @@ const ButtonInverse = () => {
 export default () => {
   return (
     <div>
-      <h1>按钮 Button</h1>
       <Row gutter>
         <Col col="md-6">
           <Demo title="按钮类型" code={codeButtonType} desc="inverse 类型参考反色按钮 DEMO">
@@ -177,7 +176,7 @@ export default () => {
         </Col>
       </Row>
 
-      <Props title="Button">
+      <Props tag="Button">
         <Prop name="type" type="string">
           <p>按钮类型，可选值: minor, inverse，inverse 仅针对 transparent 模式时有效</p>
         </Prop>

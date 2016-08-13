@@ -1,6 +1,7 @@
 import React from 'react'
 import Pre from 'public/Pre'
 import Warn from 'public/Warn'
+import doc from './index.md'
 
 export default React.createClass({
 

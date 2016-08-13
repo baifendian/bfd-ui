@@ -5,7 +5,7 @@ import './index.less'
 const Props = props => {
   return (
     <div className="props">
-      <h2>{props.title}</h2>
+      <h2>{'<' + props.tag + ' />'}</h2>
       <table>
         <thead>
           <tr>

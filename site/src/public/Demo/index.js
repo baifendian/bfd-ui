@@ -39,7 +39,7 @@ class Demo extends Component {
           </Button>
         </div>
         <div className="demo__code" ref="pre">
-          <Pre>{code}</Pre>
+          <Pre transparent>{code}</Pre>
         </div>
       </div>
     )
