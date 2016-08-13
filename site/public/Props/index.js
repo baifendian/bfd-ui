@@ -29,7 +29,7 @@ const Prop = props => {
       })}>
         {name}
       </td>
-      <td className="props__prop-type">{type.toLowerCase()}</td>
+      <td className="props__prop-type">{type}</td>
       <td>{children}</td>
     </tr>
   )

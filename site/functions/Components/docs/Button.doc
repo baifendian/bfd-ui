@@ -1,0 +1,104 @@
+/**
+ * @title 按钮类型
+ * @desc inverse 类型参考反色按钮 DEMO
+ */
+import Button from 'bfd/Button'
+
+const ButtonType = () => {
+  return (
+    <div>
+      <Button>默认</Button>
+      <Button type="minor">次要</Button>
+    </div>
+  )
+}
+
+/**
+ * @title 按钮尺寸
+ */
+import Button from 'bfd/Button'
+
+const ButtonSize = () => {
+  return (
+    <div>
+      <Button size="lg">大尺寸</Button>
+      <Button>默认</Button>
+      <Button size="sm">小尺寸</Button>
+    </div>
+  )
+}
+
+/**
+ * @title 图标按钮
+ * @desc 如果需要自定义图标位置，结合使用 Icon 组件
+ */
+import Button from 'bfd/Button'
+
+const ButtonIcon = () => {
+  return (
+    <div>
+      <Button icon="plus">添加</Button>
+      <Button icon="align-left" />
+    </div>
+  )
+}
+
+/**
+ * @title 圆形按钮
+ */
+import Button from 'bfd/Button'
+
+const ButtonCircle = () => {
+  return (
+    <div>
+      <Button icon="plus" circle />
+      <Button circle>赞</Button>
+    </div>
+  )
+}
+
+/**
+ * @title 透明背景
+ */
+import Button from 'bfd/Button'
+
+const ButtonTransparent = () => {
+  return (
+    <div>
+      <Button icon="plus" transparent />
+      <Button icon="angle-double-down" transparent>代码</Button>
+    </div>
+  )
+}
+
+/**
+ * @title 反色按钮
+ * @desc 针对深色背景的场景
+ */
+import Button from 'bfd/Button'
+
+const ButtonInverse = () => {
+  return (
+    <div style={{backgroundColor: '#42a5f5'}}>
+      <Button type="inverse" icon="remove" transparent />
+    </div>
+  )
+}
+
+/**
+ * @title 不可用的
+ */
+import Button from 'bfd/Button'
+
+const ButtonDisabled = () => {
+  return (
+    <div>
+      <Button disabled>不可用</Button>
+      <Button icon="plus" disabled />
+    </div>
+  )
+}
+
+/**
+ * @component Button
+ */

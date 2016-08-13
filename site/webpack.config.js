@@ -12,7 +12,7 @@ rimraf.sync(__dirname + '/build')
 
 var config = {
   entry: {
-    app: __dirname + '/src'
+    app: __dirname + '/index'
   },
   output: {
     path: __dirname + '/build',
@@ -64,7 +64,7 @@ var config = {
     extensions: ['', '.js'],
     alias: {
       'bfd': path.resolve(__dirname, '../src'),
-      'public': path.resolve(__dirname, './src/public')
+      'public': path.resolve(__dirname, './public')
     }
   },
   plugins: []

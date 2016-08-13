@@ -2,19 +2,24 @@
  * bfd-ui DEMO、文档生成器，以 webpack loader 的方式动态编译
  */
 
-module.exports = function (source) {
+'use strict'
 
-  this.cacheable()
+const fs = require('fs')
+const path = require('path')
+
+module.exports = function (source) {
 
   // 依赖的模块
   const imports = [
     `import React from 'react'`,
     `import { Row, Col } from 'bfd/Layout'`,
+    `import { Props, Prop } from 'public/Props'`,
     `import Demo from 'public/Demo'`
   ]
 
   // 获取 DEMO、文档数据
   const demos = []
+  const docs = []
   const callbacks = [match => {
     demos.push({
       title: match
@@ -35,10 +40,38 @@ module.exports = function (source) {
       currentDemo.mainCode = currentDemo.code.replace(/import .*/g, '').trim()
     }
     currentDemo.name = currentDemo.mainCode.match(/(?:const|class)\s(\w+)/)[1]
+  }, match => {
+    // 文档
+    const doc = {
+      tag: match.split('/').slice(-1)[0],
+      props: []
+    }
+    let dir = path.join(__dirname, '../../src/' + match)
+    if (fs.statSync(dir).isFile()) {
+      dir += '.js'
+    } else {
+      dir += '/index.js'
+    }
+    const sourceCode = fs.readFileSync(dir, 'utf8')
+    match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
+    if (match) {
+      match = match[1]
+      const reg = /(\/\/[\s\S]+?)?(\w+):\s*PropTypes(.*)/g
+      let res
+      while (res = reg.exec(match)) {
+        doc.props.push({
+          name: res[2],
+          desc: (res[1] || '').replace('//', '').trim(),
+          types: res[3].match(/string|bool|number|object|array|func/g),
+          required: !!res[3].match(/isRequired/)
+        })
+      }
+    }
+    docs.push(doc)
   }]
   const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?)\/\*\*|@component\s(.+)/g
   source.replace(reg, (match, p1, p2, p3, p4) => {
-    [p1, p2, p3].forEach((match, i) => {
+    [p1, p2, p3, p4].forEach((match, i) => {
       match && callbacks[i](match)
     })    
   })
@@ -67,6 +100,18 @@ ${demo.mainCode}`
     </Row>
   `)
 
+  // 生成文档代码
+  const componentsProps = docs.map(doc => {
+    const props = doc.props.map(prop => {
+      return `<Prop name="${prop.name}" type="${prop.types}" required={${prop.required}}>${prop.desc}</Prop>`
+    })
+    return (`
+      <Props tag="${doc.tag}">
+        ${props.join('\r\n')}
+      </Props>
+    `)
+  })
+
   return `${imports.join('\r\n')} 
 
 ${codes.join('\r\n')}
@@ -75,6 +120,7 @@ export default () => {
   return (
     <div>
       ${layout}
+      ${componentsProps.join('\r\n')}
     </div>
   )
 }`
