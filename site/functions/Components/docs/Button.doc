@@ -99,6 +99,4 @@ const ButtonDisabled = () => {
   )
 }
 
-/**
- * @component Button
- */
+@component Button

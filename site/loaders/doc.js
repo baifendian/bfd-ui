@@ -69,7 +69,7 @@ module.exports = function (source) {
     }
     docs.push(doc)
   }]
-  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?)\/\*\*|@component\s(.+)/g
+  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?\n})|@component\s(.+)/g
   source.replace(reg, (match, p1, p2, p3, p4) => {
     [p1, p2, p3, p4].forEach((match, i) => {
       match && callbacks[i](match)

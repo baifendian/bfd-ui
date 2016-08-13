@@ -16,6 +16,7 @@ a {
 
 * {
   box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -57,7 +58,7 @@ body {
 
 .header__logo {
   display: block;
-  margin-right: 110px;
+  font-size: 18px;
   padding-left: 40px;
   background: url('~public/bfd-logo.png') left center no-repeat;
   background-size: 30px 30px;
@@ -65,11 +66,10 @@ body {
     background: url('~public/bfd-logo@2x.png') left center no-repeat;
     background-size: 30px 30px;
   }
-  h2 {
-    margin: 0;
-    line-height: 1;
-    display: inline-block;
-    margin-right: 10px;
+  sub {
+    margin-left: 3px;
+    bottom: 0px;
+    font-size: 50%;
   }
 }
 
@@ -78,6 +78,7 @@ body {
   display: inline-block;
   margin: 0;
   padding: 0;
+  vertical-align: top;
   li {
     display: inline-block;
     a {

@@ -59,6 +59,7 @@
     "eslint": "^1.10.3",
     "eslint-plugin-react": "^4.2.3",
     "express": "^4.13.3",
+    "fastclick": "^1.0.6",
     "html-loader": "^0.4.3",
     "jest-cli": "^0.10.0",
     "lodash": "^4.14.0",

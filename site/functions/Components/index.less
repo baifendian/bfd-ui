@@ -19,11 +19,10 @@
 
 .components__sidebar {
   width: @sidebar-width;
-  transition: left .2s;
+  transition: all .2s;
   @media (max-width: 768px) {
     position: absolute;
-    top: 0;
-    left: -@sidebar-width - 2px;
+    transform: translate(-@sidebar-width - 2px, 0);
     box-shadow: 2px 0 5px rgba(0, 0, 0, .2);
     height: 100%;
     background-color: #fff;
@@ -49,7 +48,7 @@
 
 .components--open {
   .components__sidebar {
-    left: 0;
+    transform: translate(0, 0);
   }
 }
 

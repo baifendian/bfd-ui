@@ -6,22 +6,23 @@ import { Link } from 'react-router'
 import { Row, Col } from 'bfd/Layout'
 import { Nav, NavItem } from 'bfd/Nav'
 import pace from './pace'
+import fastclick from 'fastclick'
 
 pace.start()
+fastclick.attach(document.body)
 
 class App extends Component {
   render() {
     const { children } = this.props
     return (
       <div className="wrapper">
-        <Row className="header" fluid>
-          <Col>
+        <Row className="header">
+          <Col col="md-2 sm-3">
             <Link to="/" className="header__logo">
-              <h2>BFD UI</h2>
-              <span>v0.x</span>
+              BFD UI <sub>v0.x</sub>
             </Link>
           </Col>
-          <Col>
+          <Col col="md-3 sm-5 xs-9">
             <ul className="header__nav">
               <li>
                 <Link to="/">首页</Link>
@@ -39,8 +40,6 @@ class App extends Component {
           </Col>
           <Col right>
             <a href="http://git.baifendian.com/front-end/bfd-ui">GitLab</a>
-            &nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="http://git.baifendian.com/front-end/bfd-ui/issues/new">提交bug</a>
           </Col>
         </Row>
         <div className="body">{children}</div>
