@@ -2,7 +2,6 @@
  * Created by tenglong.jiang on 2016-05-26.
  */
 
-
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import xhr from '../xhr'
@@ -43,7 +42,7 @@ class Upload extends Component {
     const el = event.target
     const files = el.files
     const self = this
-    const arr = []
+    let arr = []
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       arr.push({
@@ -53,7 +52,7 @@ class Upload extends Component {
         state: 0
       })
 
-      (function(self, file, index) {
+      ;(function(self, file, index) {
         const fd = new FormData()
         fd.append('files', file)
         xhr({

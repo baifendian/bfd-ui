@@ -18,10 +18,11 @@ class SearchInput extends Component {
   render() {
     const { className, ...other } = this.props
     const size = this.props.size || 'lg'
+    const width = this.props.width || '300px'
     this.value = this.props.defaultValue || ''
     return (
       <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
+        <ClearableInput style={{width: width}} defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
         <Button size={size} onClick={::this.handleClick} icon="search">{this.props.label || '搜索'}</Button>
       </div>
     )

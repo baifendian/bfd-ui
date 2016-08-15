@@ -11,6 +11,10 @@ import { Checkbox } from '../Checkbox'
 import './main.less'
 class Rows extends Component {
 
+  constructor(props) {
+    super()
+  }
+  
   render() {
     const rows = this.props.rows
     const column = this.props.column
