@@ -41,7 +41,27 @@ class SearchInput extends Component {
 }
 
 SearchInput.propTypes = {
-  onSearch: React.PropTypes.func.isRequired
+
+  // 搜索框提示信息
+  placeholder: PropTypes.string,
+
+  // 搜索按钮名称，默认为“搜索”
+  label: PropTypes.string,
+
+  // 搜索按钮单击事件，value为搜索框输入值
+  onSearch: PropTypes.func.isRequired,
+
+  // 搜索框值改变事件，value为搜索框输入值
+  onChange: PropTypes.func,
+
+  // 输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm，默认为lg
+  size: PropTypes.string,
+
+  // 输入框默认值
+  defalutValue: PropTypes.string,
+
+  // 输入框宽度，默认为300px
+  width: PropTypes.string,
 }
 
 export default SearchInput

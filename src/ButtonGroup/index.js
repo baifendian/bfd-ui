@@ -53,10 +53,15 @@ class ButtonGroup extends Component {
 }
 
 ButtonGroup.propTypes = {
+
+  // 默认值
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onClick: PropTypes.func,
+
+  // 选中事件，参数返回被选中的值
+  onChange: PropTypes.func,
+  
   customProp(props) {
-    if ('value' in props && !props.onClick) {
+    if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onClick` handler')
     }
   }

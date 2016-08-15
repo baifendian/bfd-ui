@@ -3,16 +3,25 @@ import classnames from 'classnames'
 import './Row.less'
 
 const Row = props => {
-  const { children, gutter, className, ...other} = props
+  const { children, className, gutter, fluid, ...other} = props
+  const classNames = classnames(
+    'bfd-row', 
+    {
+      'bfd-row--gutter': gutter,
+      'bfd-row--fluid': fluid
+    },
+    className
+  )
   return (
-    <div className={classnames('bfd-row', { gutter }, className)} {...other}>
+    <div className={classNames} {...other}>
       {children}
     </div>
   )
 }
 
 Row.propTypes = {
-  gutter: PropTypes.bool   
+  gutter: PropTypes.bool,   
+  fluid: PropTypes.bool   
 }
 
 export default Row

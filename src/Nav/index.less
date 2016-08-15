@@ -1,4 +1,4 @@
-@padding-left: 43px;
+@padding-left: 36px;
 @border-color: #f0f0f0;
 @color400: #42a5f5;
 @color500: #2196f3;
@@ -6,150 +6,85 @@
 .bfd-nav {
   margin: 0;
   padding: 0;
-  .open {
-    > a {
-      border-color: @border-color;
-      background-color: transparent;
-      &:focus {
-        border-color: @border-color;
-        background-color: transparent;
-      }
-      &:hover {
-        border-color: @border-color;
-        background-color: #fafafa;
-      }
+  background-color: #fff;
+  list-style: none;
+}
+
+.bfd-nav__item {
+  border-left: 5px solid #eaeaea;
+  border-right: 1px solid #eaeaea;
+  &:hover {
+    border-left-color: @color400;
+  }
+  > a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    position: relative;
+    padding: 10px 15px;
+    border-bottom: 1px solid @border-color;
+    border-radius: 0;
+    &:hover {
+      background-color: #fafafa;
     }
-    > ul {
-      display: block;
+    &:focus {
+      background-color: #fafafa;
     }
   }
-  > li {
-    border-left: 5px solid #eaeaea;
-    border-right: 1px solid #eaeaea;
-    &:hover {
-      border-left-color: @color400;
-    }
-    &.active {
-      border-left-color: @color500;
-      > a {
-        color: #333;
-        background-color: #f5f5f5;
-        &:hover,
-        &:focus {
-          color: #333;
-          background-color: #f5f5f5;
-        }
-      }
-    }
-    &:first-child {
-      > a {
-        border-top: 1px solid @border-color;
-      }
-    }
+  > .bfd-nav {
+    display: none;
+  }
+  .bfd-nav__icon {
+    margin-right: 10px; 
+  }
+  .bfd-nav__icon-toggle {
+    float: right;
+    transition: transform .2s;
+  }
+  .bfd-nav__item {
+    border-left: 0;
+    border-right: 0;
     > a {
-      display: block;
-      color: #333;
-      text-decoration: none;
-      position: relative;
-      padding: 10px 15px;
-      border-bottom: 1px solid @border-color;
-      border-radius: 0;
-      &:hover {
-        background-color: #fafafa;
-      }
-      &:focus {
-        background-color: #fafafa;
-      }
+      padding-left: @padding-left;
     }
-    + li {
-      margin-top: 0;
-    }
-    > ul {
-      display: none;
-      > li {
-        &:first-child {
-          > a {
-            border-top: 0;
-          }
-        }
-        border-left: 0;
-        border-right: 0;
-        > a {
-          padding-left: @padding-left;
-          &:before,
-          &:after {
-            position: absolute;
-            content: '';
-            left: 25px;
-          }
-          &:before {
-            width: 1px;
-            top: 0;
-            bottom: 0;
-            background-color: #e2e2e2;
-          }
-          &:after {
-            top: 50%;
-            margin-left: -2px;
-            margin-top: -2px;
-            width: 5px;
-            height: 4px;
-            background-color: #fff;
-            border: 1px solid #e2e2e2;
-          }
-        }
-        > ul {
-          > li {
-            &.active {
-              > a {
-                background-color: #e0e0e0;
-                &:hover {
-                  background-color: #e0e0e0;
-                }
-              }
-            }
-            > a {
-              padding-left: 71px;
-              &:before {
-                left: 53px;
-              }
-              &:after {
-                left: 53px;
-              }
-            }
-          }          
-        }
+    .bfd-nav__item {
+      > a {
+        padding-left: @padding-left * 2;
       }
     }
   }
 }
 
-.bfd-nav__item {
+.bfd-nav__item--open {
   > a {
-    > .bfd-icon {
-      &:first-child {
-        width: 1em;
-        margin-right: 15px;  
-      }
-      &:last-child {
-        float: right;
-        cursor: pointer;
-        transition: transform .2s;
-        margin-left: 0;
-        margin-right: 0;
-      }
+    border-color: @border-color;
+    background-color: transparent;
+    &:focus {
+      border-color: @border-color;
+      background-color: transparent;
     }
     &:hover {
-      color: #333;
+      border-color: @border-color;
+      background-color: #fafafa;
     }
   }
-  &.open {
-    > a {
-      > .bfd-icon {
-        &:last-child {
-          transform: rotate(90deg);
-        }
-      }
+  > .bfd-nav {
+    display: block;
+  }
+  .bfd-nav__icon-toggle {
+    transform: rotate(90deg);
+  }
+}
+
+.bfd-nav__item--active {
+  border-left-color: @color500;
+  > a {
+    color: #333;
+    background-color: #f5f5f5;
+    &:hover,
+    &:focus {
+      color: #333;
+      background-color: #f5f5f5;
     }
   }
 }

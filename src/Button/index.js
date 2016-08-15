@@ -1,7 +1,7 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import Icon from '../Icon';
-import './index.less'
 
 const Button = props => {
   const { className, type, size, icon, circle, transparent, children, ...other } = props
@@ -25,10 +25,20 @@ const Button = props => {
 }
 
 Button.propTypes = {
+  
+  // 按钮类型，除默认外可选值: minor / inverse。inverse 仅针对 transparent 模式时有效
   type: PropTypes.string,
+  
+  // 按钮尺寸，除默认外可选值：sm / lg
   size: PropTypes.string,
+  
+  // 按钮图标，支持 fontawaresome 图标
   icon: PropTypes.string,
+  
+  // 是否为圆形
   circle: PropTypes.bool,
+
+  // 背景是否为 transparent
   transparent: PropTypes.bool,
 }
 

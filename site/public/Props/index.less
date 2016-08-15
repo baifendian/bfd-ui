@@ -1,0 +1,42 @@
+.props {
+  border: 1px solid #ececec;
+  border-radius: 2px;
+  padding: 20px;
+  margin-top: 20px;
+  > h2 {
+    margin-top: 0;
+    font-size: 14px;
+  }
+  table {
+    width: 100%;
+    border-spacing: 0;
+    th {
+      text-align: left;
+      font-weight: normal;
+      color: #333;
+      border-bottom: 2px solid #ececec;
+      padding: 12px 0;
+      padding-right: 20px;
+    }
+    td {
+      padding: 10px 0;
+      border-top: 1px solid #ececec;
+      padding-right: 20px;
+      vertical-align: top;
+    }
+  }
+}
+
+.props__prop-name {
+  color: #c82829;
+}
+
+.props__prop-name--required {
+  &:after {
+    content: ' *'
+  }
+}
+
+.props__prop-type {
+  color: #1976d2;
+}

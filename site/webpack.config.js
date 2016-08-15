@@ -4,19 +4,21 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var LiveReloadPlugin = require('webpack-livereload-plugin')
 var autoprefixer = require('autoprefixer')
+var beautify = require('code-beautify')
+
 var isProduction = process.argv.slice(2)[0] === '-p'
 
-rimraf.sync(__dirname + '/public/dist')
+rimraf.sync(__dirname + '/build')
 
 var config = {
   entry: {
-    app: __dirname + '/public/app'
+    app: __dirname + '/index'
   },
   output: {
-    path: __dirname + '/public/dist',
+    path: __dirname + '/build',
     filename: '[name]' + (isProduction ? '.[hash]' : '') + '.js',
     chunkFilename: '[id]' + (isProduction ? '.[hash]' : '') + '.js',
-    publicPath: '/dist/'
+    publicPath: '/build/'
   },
   module: {
     loaders: [{
@@ -39,7 +41,21 @@ var config = {
     }, {
       test: /\.less$/,
       loader: 'style!css!less!postcss'
+    }, {
+      test: /\.md$/,
+      loader: 'html!markdown'
+    }, {
+      test: /\.doc$/,
+      loader: 'babel!doc'
     }]
+  },
+  resolveLoader: {
+    alias: {
+      'doc': path.join(__dirname, './loaders/doc')
+    }
+  },
+  markdownLoader: {
+    highlight: (code, lang) => beautify(code, lang)
   },
   postcss: [autoprefixer({
     browsers: ['last 3 versions']
@@ -47,7 +63,8 @@ var config = {
   resolve: {
     extensions: ['', '.js'],
     alias: {
-      c: path.resolve(__dirname, '../src')
+      'bfd': path.resolve(__dirname, '../src'),
+      'public': path.resolve(__dirname, './public')
     }
   },
   plugins: []

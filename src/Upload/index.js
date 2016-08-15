@@ -121,7 +121,18 @@ class Upload extends Component {
 }
 
 Upload.propTypes = {
-  action: PropTypes.string.isRequired
+  
+  // 上传的地址
+  action: PropTypes.string.isRequired,
+
+  // 上传按钮文本内容，默认为文件上传
+  text: PropTypes.string,
+
+  // 可选参数, 是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。
+  multiple: PropTypes.bool,
+
+  // 上传文件完成时的回调函数
+  onComplete: PropTypes.func
 }
 
 export default Upload

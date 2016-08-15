@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import classnames from 'classnames'
 import Nav from './Nav'
 import Icon from '../Icon'
+import TextOverflow from '../TextOverflow'
 
 class NavItem extends Component {
 
@@ -13,50 +14,71 @@ class NavItem extends Component {
     }
   }
 
+  componentWillMount() {
+    // 首次加载后，active 状态保持 open 状态
+    const baseURL = this.context.nav.props.href
+    const href = this.getHref(baseURL)
+    if (this.props.children && this.isActive(href, href === baseURL)) {
+      this.setState({open: true})
+    }
+  }
+
   toggle(e) {
-    this.setState({open: !this.state.open})
     e.preventDefault()
+    this.setState({open: !this.state.open})
   }
 
   isActive(href, indexOnly) {
-    return this.context.history.isActive(href, this.props.query, indexOnly)
+    if (indexOnly && href === location.pathname) return true
+    return location.href.indexOf(href) !== -1
+    // history.isActive is expensive
+    // return this.context.history.isActive(href, this.props.query, indexOnly)
   }
 
   handleClick(e) {
     this.props.onClick && this.props.onClick(e)
-    this.context.nav.handleItemClick(this.props, e)
+    !this.props.children && this.context.nav.handleItemClick(this.props, e)
+  }
+
+  getHref(baseURL) {
+    let href = baseURL + '/' + this.props.href
+    return href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
   }
   
   render() {
-    
-    const { children, icon, title, ...other } = this.props
+
+    const { open } = this.state
+    const { children, className, icon, title, href, ...other } = this.props
+
     const baseURL = this.context.nav.props.href
-    let open = this.state.open
-    let href = baseURL + '/' + this.props.href
-    
-    href = href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
+    const _href = this.getHref(baseURL)
+    const active = this.isActive(_href, _href === baseURL)
 
-    const active = this.isActive(href, href === baseURL)
-
-    if (children && active) {
-      open = true
-    }
-
-    const Toggle = children && <Icon type="angle-right" />
-    const NavIcon = icon && <Icon type={icon} />
+    const NavIcon = icon && <Icon type={icon} className="bfd-nav__icon" />
+    const Toggle = children && <Icon type="angle-right" className="bfd-nav__icon-toggle" />
 
     const Item = children ?
-      <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a> :
-      <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
+      <a href={_href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a> :
+      <Link to={_href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
 
+    const classNames = classnames(
+      'bfd-nav__item', 
+      {
+        'bfd-nav__item--open': open,
+        'bfd-nav__item--active': active
+      },
+      className
+    )
+
+    // 收起状态时不再渲染子节点
     return (
       <li 
         onClick={::this.handleClick} 
-        className={classnames('bfd-nav__item', { open, active })} 
+        className={classNames}
         {...other}
       >
         {Item}
-        {children ? <Nav href={baseURL}>{children}</Nav> : null}
+        {open && children ? <Nav href={baseURL}>{children}</Nav> : null}
       </li>
     )
   }

@@ -196,13 +196,23 @@ class Steps extends Component {
 }
 
 Steps.PropTypes = {
+
+  // 步骤条高度
   height: PropTypes.number,
+
+  // 指定当前步骤，从 0 开始记数
   current: PropTypes.number.isRequired,
+
+  // 点击事件，参数返回索引值和名称
   onStepClick: PropTypes.func.isRequired
 }
 
 Step.PropTypes = {
+
+  // 标题
   title: PropTypes.string,
+
+  // 图标，http://fontawesome.io/icons/
   icon: PropTypes.string
 }
 
