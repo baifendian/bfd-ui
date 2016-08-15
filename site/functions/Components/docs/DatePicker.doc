@@ -1,0 +1,12 @@
+/**
+ * @title 单选日期
+ */
+import { DatePicker } from 'bfd/DatePicker'
+
+const AutoCompleteBasic = () => {
+  return (
+    <AutoComplete placeholder="请输入关键字" source={['test', 'test2']} />
+  )
+}
+
+@component AutoComplete

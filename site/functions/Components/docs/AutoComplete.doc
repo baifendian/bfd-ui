@@ -1,0 +1,12 @@
+/**
+ * @title 基本功能
+ */
+import AutoComplete from 'bfd/AutoComplete'
+
+const AutoCompleteBasic = () => {
+  return (
+    <AutoComplete placeholder="请输入关键字" source={['test', 'test2']} />
+  )
+}
+
+@component AutoComplete

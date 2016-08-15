@@ -7,15 +7,50 @@
 const fs = require('fs')
 const path = require('path')
 
+// 智能添加依赖，自动规避重复声明
+const imports = {
+  
+  list: [],
+
+  variables: [],
+  
+  add(item) {
+    let match = item.match(/import \{?(.*?)\}? from/)
+    if (match) {
+      const variables = match[1].split(',').map(v => v.trim())
+      const newVariables = variables.reduce((prev, next) => {
+        if (imports.variables.indexOf(next) === -1) {
+          imports.variables.push(next)
+          prev.push(next)
+        }
+        return prev
+      }, [])
+      if (newVariables.length) {
+        item = item.replace(/(import \{?).*?(\}? from)/, '$1' + newVariables.join(',') + '$2')
+        imports.list.push(item)
+      }
+    }
+  },
+
+  getAll() {
+    return imports.list
+  },
+
+  reset() {
+    imports.list = []
+    imports.variables = []
+  }
+}
+
 module.exports = function (source) {
 
-  // 依赖的模块
-  const imports = [
-    `import React from 'react'`,
-    `import { Row, Col } from 'bfd/Layout'`,
-    `import { Props, Prop } from 'public/Props'`,
-    `import Demo from 'public/Demo'`
-  ]
+  imports.reset()
+
+  // 依赖的公共模块
+  imports.add(`import React from 'react'`)
+  imports.add(`import { Row, Col } from 'bfd/Layout'`)
+  imports.add(`import { Props, Prop } from 'public/Props'`)
+  imports.add(`import Demo from 'public/Demo'`)
 
   // 获取 DEMO、文档数据
   const demos = []
@@ -32,10 +67,7 @@ module.exports = function (source) {
     const _imports = match.match(/import .*/g)
     if (_imports) {
       _imports.forEach(item => {
-        item = item.trim()
-        if (imports.indexOf(item) === -1) {
-          imports.push(item)
-        }
+        imports.add(item.trim())
       })
       currentDemo.mainCode = currentDemo.code.replace(/import .*/g, '').trim()
     }
@@ -78,7 +110,8 @@ module.exports = function (source) {
 
   // 提前声明
   const codes = demos.map(demo => {
-    return `const code${demo.name} = \`${demo.code}\`
+    const code = demo.code.replace(/`/g, '\\\`').replace(/\$\{/g, '\\\${')
+    return `const code${demo.name} = \`${code}\`
 ${demo.mainCode}`
   })
 
@@ -112,7 +145,7 @@ ${demo.mainCode}`
     `)
   })
 
-  return `${imports.join('\r\n')} 
+  return `${imports.getAll().join('\r\n')} 
 
 ${codes.join('\r\n')}
 

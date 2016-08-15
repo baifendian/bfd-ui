@@ -1,9 +1,9 @@
-import './checkboxGroup.less'
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import update from 'react-update'
-import Checkbox from './Checkbox'
-import shouldComponentUpdate from '../shouldComponentUpdate'
+import Checkbox from '../Checkbox'
+import shouldComponentUpdate from '../../shouldComponentUpdate'
 
 class CheckboxGroup extends Component {
 
@@ -11,7 +11,7 @@ class CheckboxGroup extends Component {
     super()
     this.update = update.bind(this)
     this.state = {
-      selects: props.selects || []
+      selects: props.selects || props.defaultSelects || []
     }
   }
 
@@ -44,9 +44,12 @@ class CheckboxGroup extends Component {
   }
 
   render() {
-    const { className, values, children, block, toggleable, ...other } = this.props
-    const selects = this.state.selects
+    const { children, className, values, block, toggleable, ...other } = this.props
+    const { selects } = this.state
     const unSelects = []
+
+    delete other.selects
+    delete other.defaultSelects
 
     let checkboxes
     if (values) {
@@ -79,7 +82,7 @@ class CheckboxGroup extends Component {
 
         return React.cloneElement(Checkbox, {
           key: i,
-          checked: selects.indexOf(value) !== -1,
+          checked,
           block: props.block || block, 
           onChange: this.handleCheckboxChange.bind(this, value)
         })
@@ -109,11 +112,30 @@ class CheckboxGroup extends Component {
 }
 
 CheckboxGroup.propTypes = {
+
+  // 选中的值
   selects: PropTypes.array,
-  values: PropTypes.array,
+
+  // 初始选中的值（不可控）
+  defaultSelects: PropTypes.array,
+
+  // 更改选择后的回调，参数为选中的值
   onChange: PropTypes.func,
+  
+  // 针对 value 和 label 相同时快速创建复选框组，无需再调用 Checkbox
+  values: PropTypes.array,
+  
+  // 是否垂直排列
   block: PropTypes.bool,
-  toggleable: PropTypes.bool
+
+  // 是否开启全选功能
+  toggleable: PropTypes.bool,
+
+  customProp({ selects, onChange }) {
+    if (selects && !onChange) {
+      return new Error('You provided a `selects` prop without an `onChange` handler')
+    }
+  }
 }
 
 export default CheckboxGroup
