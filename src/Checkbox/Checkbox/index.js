@@ -1,13 +1,13 @@
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import './checkbox.less'
 
 class Checkbox extends Component {
 
   constructor(props) {
     super()
     this.state = {
-      checked: props.defaultChecked || props.checked
+      checked: props.defaultChecked || props.checked || false
     }
   }
 
@@ -48,14 +48,27 @@ class Checkbox extends Component {
 }
 
 Checkbox.propTypes = {
+
+  // 值
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 是否选中
   checked: PropTypes.bool,
+
+  // 初始是否选中（不可控）
   defaultChecked: PropTypes.bool,
-  disabled: PropTypes.bool,
+
+  // 切换选中后的回调，参数为 event 对象
   onChange: PropTypes.func,
+
+  // 是否禁用
+  disabled: PropTypes.bool,
+  
+  // 是否块级布局
   block: PropTypes.bool,
-  customProp(props) {
-    if ('checked' in props && !props.onChange) {
+  
+  customProp({ checked, onChange }) {
+    if (checked && !onChange) {
       return new Error('You provided a `checked` prop without an `onChange` handler')
     }
   }

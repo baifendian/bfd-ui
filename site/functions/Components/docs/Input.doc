@@ -1,0 +1,32 @@
+/**
+ * @title 尺寸
+ * @desc inverse 类型参考反色按钮 DEMO
+ */
+import Input from 'bfd/Input'
+
+const InputSize = () => {
+  return (
+    <div>
+      <Input placeholder="大尺寸" size="lg" />
+      <br/><br/>
+      <Input placeholder="正常" />
+      <br/><br/>
+      <Input placeholder="小尺寸" size="sm" />
+    </div>
+  )
+}
+
+/**
+ * @title 不可用的
+ */
+import Input from 'bfd/Input'
+
+const InputDisabled = () => {
+  return (
+    <div>
+      <Input placeholder="不可用" disabled />
+    </div>
+  )
+}
+
+@component Input

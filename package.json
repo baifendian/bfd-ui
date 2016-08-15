@@ -34,7 +34,7 @@
     "less-loader": "^2.2.2",
     "npm": "^3.9.5",
     "postcss-loader": "^0.8.2",
-    "react": "^0.14.3",
+    "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.7",
     "react-addons-update": "^0.14.8",

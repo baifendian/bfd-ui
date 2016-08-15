@@ -2,8 +2,15 @@ import React from 'react'
 import Chart from '../Chart'
 import BubbleChart from './main'
 
-export default React.createClass({
+export default props => {
   render() {
-    return <Chart type={BubbleChart} className="bubble-chart" {...this.props} />
+    const { className, ...other } = props
+    return (
+      <Chart 
+        type={BubbleChart} 
+        className={classnames('bfd-bubble-chart', className)} 
+        {...other} 
+      />
+    )
   }
-})
+}
