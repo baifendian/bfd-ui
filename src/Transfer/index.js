@@ -191,4 +191,28 @@ class Transfer extends Component {
   }
 }
 
+Transfer.propTypes = {
+
+  // 两个传输框高度，默认200px
+  height: PropTypes.number,
+
+  // 右侧传输框上方标题
+  title: PropTypes.string,
+
+  // 源数据，包含id、label属性
+  sdata: PropTypes.array,
+
+  // 目标数据，包含id、label属性
+  tdata: PropTypes.array,
+
+  // 传输框值改变后的回调函数。参数为改变后的值, 第一个参数：sdata, 第二个参数：tdata
+  onChange: PropTypes.func,
+
+  // 搜索框关键词与列表数据匹配规则函数, 第一个参数为列表项数据, 第二个参数为搜索关键词
+  onSearch: PropTypes.func,
+
+  // 每行数据渲染函数
+  render: PropTypes.func
+}
+
 export default Transfer
