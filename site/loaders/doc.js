@@ -15,19 +15,22 @@ const imports = {
   variables: [],
   
   add(item) {
-    let match = item.match(/import \{?(.*?)\}? from/)
+    let match = item.match(/import (.*)+ from(.*)/)
     if (match) {
-      const variables = match[1].split(',').map(v => v.trim())
-      const newVariables = variables.reduce((prev, next) => {
-        if (imports.variables.indexOf(next) === -1) {
-          imports.variables.push(next)
-          prev.push(next)
+      const variables = match[1].split(/,|\{|\}/).map(v => v.trim())
+      let hasNewVariate = false
+      variables.forEach(v => {
+        if (!v) return
+        if (imports.variables.indexOf(v) === -1) {
+          hasNewVariate = true
+          imports.variables.push(v)
+        } else {
+          match[1] = match[1].replace(new RegExp(`\\b${v}\\b`), '')
         }
-        return prev
-      }, [])
-      if (newVariables.length) {
-        item = item.replace(/(import \{?).*?(\}? from)/, '$1' + newVariables.join(',') + '$2')
-        imports.list.push(item)
+      })
+      if (hasNewVariate) {
+        match[1] = match[1].replace(/^\s*,|\{\s*,|,\s*\}/g, '')
+        imports.list.push(`import ${match[1]} from${match[2]}`)
       }
     }
   },
@@ -43,6 +46,8 @@ const imports = {
 }
 
 module.exports = function (source) {
+
+  this.cacheable()
 
   imports.reset()
 
@@ -79,11 +84,16 @@ module.exports = function (source) {
       props: []
     }
     let dir = path.join(__dirname, '../../src/' + match)
-    if (fs.statSync(dir).isFile()) {
+    try {
+      if (fs.statSync(dir).isDirectory()) {
+        dir += '/index.js'
+      } else {
+        dir += '.js'
+      }
+    } catch(e) {
       dir += '.js'
-    } else {
-      dir += '/index.js'
     }
+    
     const sourceCode = fs.readFileSync(dir, 'utf8')
     match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
     if (match) {

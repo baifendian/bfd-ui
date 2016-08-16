@@ -70,16 +70,29 @@ class DatePicker extends Component {
   }
 }
 
-const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-
 DatePicker.propTypes = {
-  date: checkDateTime,
-  defaultDate: checkDateTime,
-  min: checkDateTime,
-  max: checkDateTime,
-  start: checkDateTime,
-  end: checkDateTime,
+
+  // 指定日期
+  date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 初始化指定的日期（不可控）
+  defaultDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 日期选择后的回调，参数为选中的日期时间戳
   onSelect: PropTypes.func,
+  
+  // 可选日期范围最小值
+  min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 可选日期范围最大值
+  max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 区间模式，日期区间开始值
+  start: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 区间模式，日期区间结束值
+  end: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
   customProp({ date, onSelect }) {
     if (date && !onSelect) {
       return new Error('You provided a `date` prop without an `onSelect` handler')

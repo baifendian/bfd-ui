@@ -47,12 +47,18 @@ class Components extends Component {
         <Col className="components__sidebar">
           <Nav href="/components" onItemClick={::this.handleNavItemClick}>
             {components.map((item, i) => (
-              <NavItem key={i} href={item.category} icon={item.icon} title={item.cn}>
+              <NavItem 
+                key={item.category} 
+                href={item.category} 
+                icon={item.icon} 
+                title={item.cn}
+                defaultOpen
+              >
                 {item.components.map((component, i) => {
                   this.componentsMap[component.name] = component
                   return (
                     <NavItem
-                      key={i}
+                      key={component.name}
                       href={item.category + '/' + component.name} 
                       title={component.cn + ' ' + component.name}
                     />

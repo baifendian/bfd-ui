@@ -62,10 +62,14 @@ class Dropdown extends Component {
 
   render() {
     const { open } = this.state
-    const { className, children, ...other } = this.props
+    const { className, children, disabled, ...other } = this.props
+    const classNames = classnames('bfd-dropdown', {
+      'bfd-dropdown--open': open,
+      'bfd-dropdown--disabled': disabled
+    }, className)
     return (
       <div 
-        className={classnames('bfd-dropdown', {'bfd-dropdown--open': open}, className)}
+        className={classnames(classNames)}
         onClick={e => e.stopPropagation()}  
         {...other}
       >
@@ -80,9 +84,15 @@ Dropdown.childContextTypes = {
 }
 
 Dropdown.propTypes = {
-  disabled: PropTypes.bool,
+
+  // 是否展开
   open: PropTypes.bool,
-  onToggle: PropTypes.func
+
+  // 切换 open 状态后的回调，参数为切换后的 open 状态
+  onToggle: PropTypes.func,
+  
+  // 是否禁用
+  disabled: PropTypes.bool
 }
 
 export default Dropdown

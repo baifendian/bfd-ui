@@ -10,13 +10,14 @@ class Calendar extends Component {
 
   constructor(props) {
     super()
-    this.shouldComponentUpdate = shouldComponentUpdate
     this.state = this.getDateState(props.date)
   }
 
   componentWillReceiveProps(nextProps) {
     'date' in nextProps && this.setState(this.getDateState(nextProps.date))
   }
+
+  shouldComponentUpdate = shouldComponentUpdate
 
   getDateState(date) {
     const d = date ? new Date(date) : new Date()

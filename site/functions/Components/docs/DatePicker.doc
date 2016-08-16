@@ -1,12 +1,24 @@
 /**
  * @title 单选日期
  */
-import { DatePicker } from 'bfd/DatePicker'
+import DatePicker from 'bfd/DatePicker'
 
-const AutoCompleteBasic = () => {
+const DatePickerBasic = () => {
   return (
-    <AutoComplete placeholder="请输入关键字" source={['test', 'test2']} />
+    <DatePicker onSelect={date => console.log(date)} />
   )
 }
 
-@component AutoComplete
+/**
+ * @title 日期区间
+ */
+import { DateRange } from 'bfd/DatePicker'
+
+const DateRangeBasic = () => {
+  return (
+    <DateRange onSelect={(start, end) => console.log(start, end)} />
+  )
+}
+
+@component DatePicker/DatePicker
+@component DatePicker/DateRange

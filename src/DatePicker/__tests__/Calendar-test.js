@@ -1,45 +1,47 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import Calendar from '../Calendar'
 
 describe('Calendar', () => {
 
-  it('date is ok', () => {
+  it('should date works', () => {
     const instance = TestUtils.renderIntoDocument(<Calendar date="2016-01-01" />)
-    const resultNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'result')
-    expect(resultNode.children[0].textContent).toBe('2016')
-    expect(resultNode.children[2].textContent).toBe('1')
-    expect(TestUtils.findRenderedDOMComponentWithClass(instance, 'active').textContent).toBe('1')
+    const container = findDOMNode(instance)
+    expect(container.querySelector('.bfd-calendar__result').children[0].textContent).toBe('2016')
+    expect(container.querySelector('.bfd-calendar__result').children[2].textContent).toBe('1')
+    expect(container.querySelector('.bfd-calendar__day--active').textContent).toBe('1')
   })
 
-  it('toggle is ok', () => {
+  it('should toggle works', () => {
     const instance = TestUtils.renderIntoDocument(<Calendar date="2016-01-01" />)
-    const leftNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'pull-left')
-    const rightNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'pull-right')
-    const resultNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'result')
+    const container = findDOMNode(instance)
+
+    const header = container.querySelector('.bfd-calendar__header')
+
+    const buttons = header.querySelectorAll('button')
+    const result = header.querySelector('.bfd-calendar__result')
     
-    TestUtils.Simulate.click(leftNode.children[0])
-    expect(resultNode.children[0].textContent).toBe('2015')
-    TestUtils.Simulate.click(leftNode.children[1])
-    expect(resultNode.children[2].textContent).toBe('12')
+    TestUtils.Simulate.click(buttons[0])
+    expect(result.children[0].textContent).toBe('2015')
+    TestUtils.Simulate.click(buttons[1])
+    expect(result.children[2].textContent).toBe('12')
 
-    TestUtils.Simulate.click(rightNode.children[0])
-    expect(resultNode.children[2].textContent).toBe('1')
-    TestUtils.Simulate.click(rightNode.children[1])
-    expect(resultNode.children[0].textContent).toBe('2016')
+    TestUtils.Simulate.click(buttons[2])
+    expect(result.children[2].textContent).toBe('1')
+    TestUtils.Simulate.click(buttons[3])
+    expect(result.children[0].textContent).toBe('2016')
   })
 
-  it('today is ok', () => {
+  it('should today works', () => {
     const instance = TestUtils.renderIntoDocument(<Calendar />)
-    expect(TestUtils.findRenderedDOMComponentWithClass(instance, 'today').textContent).toBe(String(new Date().getDate()))
+    expect(findDOMNode(instance).querySelector('.bfd-calendar__day--today').textContent).toBe(String(new Date().getDate()))
   })
 
-  it('onSelect is ok', () => {
+  it('should onSelect works', () => {
     const handleSelect = jest.fn()
     const instance = TestUtils.renderIntoDocument(<Calendar date="2016-01-01" onSelect={handleSelect} />)
-    const buttons = TestUtils.scryRenderedDOMComponentsWithTag(instance, 'button')
-    TestUtils.Simulate.click(buttons[0])
+    TestUtils.Simulate.click(findDOMNode(instance).querySelector('tbody button'))
     expect(handleSelect).toBeCalled()
   })
 })

@@ -1,7 +1,7 @@
 /**
  * @title 基本的 Checkbox
  */
-import { Checkbox } from 'bfd/Checkbox'
+import Checkbox from 'bfd/Checkbox'
 
 const CheckboxBasic = () => {
   return (
@@ -12,7 +12,7 @@ const CheckboxBasic = () => {
 /**
  * @title 基本的 CheckboxGroup
  */
-import { CheckboxGroup, Checkbox } from 'bfd/Checkbox'
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
 
 const CheckboxGroupBasic = () => {
   return (
@@ -39,7 +39,7 @@ const CheckboxGroupValues = () => {
 /**
  * @title CheckboxGroup 垂直排列
  */
-import { CheckboxGroup, Checkbox } from 'bfd/Checkbox'
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
 
 const CheckboxGroupBlock = () => {
   return (

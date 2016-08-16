@@ -57,16 +57,29 @@ class DateRange extends Component {
   }
 }
 
-const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-
 DateRange.propTypes = {
-  start: checkDateTime,
-  defaultStart: checkDateTime,
-  end: checkDateTime,
-  defaultEnd: checkDateTime,
-  min: checkDateTime,
-  max: checkDateTime,
+
+  // 指定开始日期
+  start: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 初始化指定的开始日期（不可控）
+  defaultStart: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 指定结束日期
+  end: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 初始化指定的结束日期（不可控）
+  defaultEnd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 日期选择后的回调，参数分别为开始、结束时间
   onSelect: PropTypes.func,
+  
+  // 可选日期范围最小值
+  min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  
+  // 可选日期范围最大值
+  max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
   customProp({ start, end, onSelect }) {
     if ((start || end) && !onSelect) {
       return new Error('You provided a `start` or `end` prop without an `onSelect` handler')

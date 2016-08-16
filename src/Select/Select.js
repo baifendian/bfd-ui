@@ -136,7 +136,6 @@ class Select extends Component {
     const classNames = classnames(
       'bfd-select', 
       {
-        'bfd-select-disabled': disabled,
         [`bfd-select-${size}`]: size
       },
       className
