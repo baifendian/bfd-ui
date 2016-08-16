@@ -86,15 +86,17 @@ class TreeNode extends Component {
           className={classnames('node-content', { active })}
           onClick={this.handleNodeClick.bind(this)}
         >
-          <Icon 
-            className="icon-toggle"
-            style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
-            type="caret-right"
-            onClick={this.handleToggle.bind(this)} 
-          />
-          {beforeNodeRender ? beforeNodeRender(data, path) : null}
-          {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
-          {tree.props.render ? tree.props.render(data) : name}
+          <div className="node-assist">
+            <Icon 
+              className="icon-toggle"
+              style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
+              type="caret-right"
+              onClick={this.handleToggle.bind(this)} 
+            />
+            {beforeNodeRender ? beforeNodeRender(data, path) : null}
+            {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
+          </div>
+          {tree.props.render ? tree.props.render(data) : <div>{name}</div>}
         </div>
         {Children}
       </li>
