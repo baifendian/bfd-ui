@@ -6,7 +6,6 @@ import {
 } from 'public/Props'
 import SearchInput from 'bfd/SearchInput'
 
-
 export default React.createClass({
   handleClick(value) {
     console.log(value);
@@ -31,12 +30,12 @@ const App = React.createClass({
     console.log("change:", value)
   },
   render() {    
-    return <SearchInput placeholder="请输入任务名称" onSearch={this.handleClick}  onChange={this.handleChange} />
+    return <SearchInput width="280px" placeholder="请输入任务名称" onSearch={this.handleClick}  onChange={this.handleChange} />
   }
 })`
         }
         </Pre>
-        <SearchInput size="lg" placeholder="请输入任务名称" label="查询" onSearch={this.handleClick} onChange={this.handleChange} />
+        <SearchInput width="280px" placeholder="请输入任务名称" label="查询" onSearch={this.handleClick} onChange={this.handleChange} />
         <div className="clearfix"></div>
         <Props>
           <Prop name="placeholder" type="String">
@@ -56,6 +55,9 @@ const App = React.createClass({
           </Prop>
           <Prop name="defalutValue" type="String">
             <p>输入框默认值</p>
+          </Prop>
+          <Prop name="width" type="String">
+            <p>输入框宽度，默认300px</p>
           </Prop>
         </Props>
       </div>

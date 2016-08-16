@@ -203,12 +203,26 @@ class Scale extends Component {
 }
 
 Slider.propTypes = {
+
+  // 默认值
   defaultValue: PropTypes.number,
+
+  // 标尺刻度数量，默认5
   tickValue: PropTypes.number,
+
+  // 起始值，默认值为0
   start: PropTypes.number,
+
+  // 结束值
   end: PropTypes.number.isRequired,
+
+  // 后缀
   suffix: PropTypes.string.isRequired,
+
+  // 滑块拖动进行时事件，value为拖动条当前值
   onSliding: PropTypes.func,
+
+  // 滑块拖动完成时事件，即鼠标抬起后执行，value为拖动条当前值
   onSlid: PropTypes.func.isRequired
 }
 

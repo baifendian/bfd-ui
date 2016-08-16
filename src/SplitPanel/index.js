@@ -68,7 +68,7 @@ class SplitPanel extends Component {
     if(direct == 'ver') {
       this.mouseMoveFn = ::this.handleMouseLRMove
     } else {
-      this.mouseMoveFn = ::this.handleMouseLRMove
+      this.mouseMoveFn = ::this.handleMouseUDMove
     }
     this.mouseUpFn = ::this.handleMouseUp
     BODY.addEventListener('mousemove', this.mouseMoveFn)
@@ -199,9 +199,12 @@ class SplitPanel extends Component {
 }
 
 SplitPanel.propTypes = {
+
+  // 分栏方向，分为水平分栏（hor）和垂直分栏（ver）两种
   direct: PropTypes.string.isRequired,
-  width: PropTypes.number,
-  height: PropTypes.number,
+
+  // 分栏拖动事件，当属性direct=ver，返回四个参数为oldWidth、oldWidth1（代表两栏原宽度）和width1、width2（代表两栏当前宽度），当属性direct=hor，返回四个参数为oldHeight、oldHeight2（代表两栏原高度）和height1、height2（代表两栏当前高度）
+  onSplit: PropTypes.func,
   customProp({
     direct
   }) {
@@ -212,7 +215,11 @@ SplitPanel.propTypes = {
 }
 
 SubSplitPanel.propTypes = {
+
+  // 左栏宽度，当容器属性direct=ver时有效
   width: PropTypes.number,
+
+  // 上栏高度，当容器属性direct=hor时有效
   height: PropTypes.number
 }
 
