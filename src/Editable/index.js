@@ -1,91 +1,106 @@
-import React, { PropTypes } from 'react'
-import classnames from 'classnames'
 import './index.less'
+import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
+import Input from '../Input'
+import Button from '../Button'
 
-const Editable = React.createClass({
+class Editable extends Component {
 
-  getInitialState() {
-    const value = 'value' in this.props ? this.props.value : this.props.defaultValue
-    return {
+  constructor(props) {
+    super()
+    const value = 'value' in props ? props.value : props.defaultValue
+    this.state = {
       value,
       changedValue: value,
-      isEditing: this.props.defaultEditing || false
+      editing: props.defaultEditing || false
     }
-  },
+  }
 
   componentWillReceiveProps(nextProps) {
     'value' in nextProps && this.setState({
       value: nextProps.value,
       changedValue: nextProps.value
     })  
-  },
+  }
 
   componentDidMount() {
-    if (this.state.isEditing) {
+    if (this.state.editing) {
       this.refs.input.select()
     }
-  },
+  }
 
   handleEdit() {
     this.setState({
-      isEditing: true
+      editing: true
     }, () => {
       this.refs.input.focus()
     })
-  },
+  }
 
   handleInput(e) {
     e.stopPropagation()
     this.setState({
       changedValue: e.target.value
     })
-  },
+  }
 
   handleOk() {
     const changedValue = this.state.changedValue
     this.setState({
-      isEditing: false,
+      editing: false,
       value: changedValue
     })
     this.props.onChange && this.props.onChange(changedValue)
-  },
+  }
 
   handleCancel() {
     this.setState({
-      isEditing: false
+      editing: false
     })
     this.props.onCancel && this.props.onCancel()
-  },
+  }
 
   render() {
     const { className, ...other } = this.props
-    const { isEditing, value, changedValue } = this.state
+    const { editing, value, changedValue } = this.state
     return (
       <div className={classnames('bfd-editable', className)} {...other}>
-      {isEditing ? (
-        <div className="editing">
-          <input ref="input" type="text" className="form-control" value={changedValue} onChange={this.handleInput} />
-          <button type="button" onClick={this.handleOk}>
-            <span className="ok glyphicon glyphicon-ok"></span>
-          </button>
-          <button type="button" onClick={this.handleCancel}>
-            <span className="cancel glyphicon glyphicon-remove"></span>
-          </button>
+      {editing ? (
+        <div className="bfd-editable__editing-container">
+          <Input ref="input" value={changedValue} onChange={::this.handleInput} />
+          <Button icon="check" onClick={::this.handleOk} />
+          <Button icon="close" type="minor" onClick={::this.handleCancel} />
         </div>
       ) : (
-        <div className="value" onClick={this.handleEdit}>{value}</div>
+        <div 
+          className="bfd-editable__normal-container" 
+          onClick={::this.handleEdit}
+        >
+          {value}
+        </div>
       )}
       </div>
     )
   }
-})
+}
 
 Editable.propTypes = {
+
+  // 待编辑的值
   value: PropTypes.string,
+  
+  // 初始化待编辑的值（不可控）
   defaultValue: PropTypes.string,
-  defaultEditing: PropTypes.bool,
+
+  // 确定后的回调，参数为当前值
   onChange: PropTypes.func,
+
+  // 取消后的回调
   onCancel: PropTypes.func,
+
+  // 初始化时是否处于编辑状态（不可控）
+  defaultEditing: PropTypes.bool,
+
   customProp({ value, onChange }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

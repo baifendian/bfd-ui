@@ -1,10 +1,9 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import { render } from 'react-dom'
 import warning from 'warning'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import classnames from 'classnames'
-import 'bfd-bootstrap'
-import './main.less'
 
 const Message = React.createClass({
 

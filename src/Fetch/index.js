@@ -1,8 +1,8 @@
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import xhr from '../xhr'
-import './main.less'
 
 class Fetch extends Component {
 
@@ -29,17 +29,15 @@ class Fetch extends Component {
   }
 
   fetch() {
-    // this.setState({xhr: 'fetch-start'})
     this.lazyFetch()
-    this.props.onFetch && this.props.onFetch()
     setTimeout(() => {
       xhr({
         url: this.props.url,
         complete: () => {
           clearTimeout(this.loadingTimer)
         },
-        success: this.handleSuccess.bind(this),
-        error: this.handleError.bind(this)
+        success: ::this.handleSuccess,
+        error: ::this.handleError
       })
     }, this.props.delay || 0)
   }
@@ -65,8 +63,8 @@ class Fetch extends Component {
     },
     loading() {
       return (
-        <div className="fetch-mask">
-          <div className="state loading">
+        <div className="bfd-fetch__mask">
+          <div className="bfd-fetch__state bfd-fetch__state-loading">
             <div></div>
             <div></div>
             <div></div>
@@ -76,8 +74,8 @@ class Fetch extends Component {
     },
     error() {
       return (
-        <div className="fetch-mask">
-          <div className="state error">{this.state.msg}</div>
+        <div className="bfd-fetch__mask">
+          <div className="bfd-fetch__state bfd-fetch__state-error">{this.state.msg}</div>
         </div>
       )
     }
@@ -94,8 +92,15 @@ class Fetch extends Component {
 }
 
 Fetch.propTypes = {
-  url: PropTypes.string,   
-  onSuccess: PropTypes.func  
+
+  // 数据源 URL，内部调用 xhr 模块
+  url: PropTypes.string,
+
+  // 成功后的回调，参数为返回的数据。error 时会直接显示在对应的容器内
+  onSuccess: PropTypes.func,
+
+  // 请求延迟，单位毫米，主要用于测试，正式环境不要使用
+  delay: PropTypes.number
 }
 
 export default Fetch

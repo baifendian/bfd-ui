@@ -9,6 +9,11 @@ class Input extends Component {
     this.refs.input.focus()
   }
 
+  // @public
+  select() {
+    this.refs.input.select()
+  }
+
   render() {
     const { className, size, ...other } = this.props
     const classNames = classnames(

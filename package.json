@@ -41,7 +41,7 @@
     "react-addons-update": "^0.14.8",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.2",
-    "react-update": "^0.1.0",
+    "react-update": "^0.3.7",
     "sortablejs": "^1.4.2",
     "style-loader": "^0.13.0",
     "warning": "^2.1.0"

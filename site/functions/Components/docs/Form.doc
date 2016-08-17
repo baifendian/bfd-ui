@@ -1,0 +1,84 @@
+/**
+ * @title 基本功能
+ * @desc 为了方便，FormInput、FormSelect、FormTextarea 自动绑定最近的 FormItem name 属性对应的数据
+ */
+import update from 'react-update'
+import { Form, FormItem, FormInput, FormSelect, Option, FormTextarea } from 'bfd/Form'
+import DatePicker from 'bfd/DatePicker'
+import Button from 'bfd/Button'
+import message from 'bfd/message'
+
+class FormBasic extends Component {
+
+  constructor(props) {
+    super()
+    this.update = update.bind(this)
+    this.rules = {
+      name(v) {
+        if (!v) return '请填写用户群'
+      },
+      date(v) {
+        if (!v) return '日期不能为空'
+      }
+    }
+    this.state = {
+      formData: {
+        brand: 0
+      }
+    }
+  }
+
+  handleDateSelect(date) {
+    this.update('set', 'formData.date', date)
+  }
+
+  handleSave() {
+    console.log(this.state.formData)
+    this.refs.form.save()
+  }
+
+  handleSuccess(res) {
+    console.log(res)
+    message.success('操作成功！')
+  }
+
+  render() {
+    const { formData } = this.state
+    return (
+      <Form 
+        ref="form" 
+        action="/api/form" 
+        data={formData} 
+        onChange={formData => this.update('set', { formData })}
+        rules={this.rules} 
+        onSuccess={::this.handleSuccess}
+      >
+        <FormItem label="用户群" required name="name" help="5个字符以内">
+          <FormInput />
+        </FormItem>
+        <FormItem label="品牌偏好" name="brand">
+          <FormSelect>
+            <Option>请选择</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
+          </FormSelect>
+        </FormItem>
+        <FormItem label="选择日期" required name="date">
+          <DatePicker date={formData.date} onSelect={::this.handleDateSelect} />
+        </FormItem>
+        <FormItem label="描述" name="desc" help="500个字符以内">
+          <FormTextarea />
+        </FormItem>
+        <Button 
+          style={{marginLeft: '100px'}} 
+          onClick={() => this.refs.form.save()}
+        >
+          保存
+        </Button>
+      </Form>
+    )
+  }
+}
+
+@component Form/Form
+@component Form/FormItem

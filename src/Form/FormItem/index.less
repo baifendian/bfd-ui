@@ -1,0 +1,37 @@
+.bfd-form__item {
+  margin-bottom: 15px;
+}
+
+.bfd-form__item-label {
+  line-height: 30px;
+  height: 30px;
+  text-align: right;
+  float: left;
+}
+
+.bfd-form__item-label--required {
+  &:before {
+    content: '* ';
+    color: #d9534f;
+    font-size: 14px;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+}
+
+.bfd-form__item-tip {
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+  display: inline-block;
+  color: #999;
+  > .bfd-icon {
+    margin-right: 3px;
+  }
+}
+
+.bfd-form__item--error {
+  .bfd-form__item-tip {
+    color: #cf7f7f; 
+  }
+}

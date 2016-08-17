@@ -52,7 +52,7 @@ module.exports = function (source) {
   imports.reset()
 
   // 依赖的公共模块
-  imports.add(`import React from 'react'`)
+  imports.add(`import React, { Component } from 'react'`)
   imports.add(`import { Row, Col } from 'bfd/Layout'`)
   imports.add(`import { Props, Prop } from 'public/Props'`)
   imports.add(`import Demo from 'public/Demo'`)

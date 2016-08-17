@@ -1,27 +1,15 @@
 .bfd-editable {
   display: inline-block;
-  line-height: 30px;
+}
+
+.bfd-editable__editing-container {
+  .bfd-btn {
+    margin-left: 5px;
+  }
+}
+
+.bfd-editable__normal-container {
   height: 30px;
-  .editing {
-    .form-control {
-      display: inline-block;
-      width: auto;
-      vertical-align: middle; 
-    }
-    button {
-      margin-left: 5px;
-      border: 0;
-      background: none;
-      height: 30px;
-      vertical-align: middle;
-      color: #999;
-      outline: none;
-      &:hover {
-        color: #666;
-      }
-    }
-  }
-  .value {
-    cursor: pointer;
-  }
+  line-height: 30px;
+  cursor: pointer;
 }
