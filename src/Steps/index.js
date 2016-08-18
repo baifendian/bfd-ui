@@ -148,7 +148,9 @@ const Steps = React.createClass({
     const {
       children,
       ...other
-    } = this.props;
+    } = this.props
+    delete other.current
+    delete other.onStepClick
     const items = findAllByType(children, Step);
     items.map((item, index) => {
       rows.push(<Step 

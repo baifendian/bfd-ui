@@ -103,6 +103,7 @@ export default React.createClass({
       className,
       ...other
     } = this.props
+    delete other.onComplete
     return (
       <div className={classnames('bfd-upload', className)} {...other}>
         <input ref="file" onChange={this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
