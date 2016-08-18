@@ -1,0 +1,63 @@
+/**
+ * @title 基本功能
+ */
+import { Row, Col } from 'bfd/Layout'
+
+const LayoutBasic = () => {
+  return (
+    <Row>
+      <Col col="md-4" style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</Col>
+      <Col col="md-8" style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-8</Col>
+    </Row>
+  )
+}
+
+/**
+ * @title 带间隔
+ */
+import { Row, Col } from 'bfd/Layout'
+
+const LayoutGutter = () => {
+  return (
+    <Row gutter>
+      <Col col="md-4">
+        <div style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</div>
+      </Col>
+      <Col col="md-8">
+        <div style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-4</div>
+      </Col>
+    </Row>
+  )
+}
+
+/**
+ * @title 右浮动
+ */
+import { Row, Col } from 'bfd/Layout'
+
+const LayoutRight = () => {
+  return (
+    <Row>
+      <Col col="md-4" style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</Col>
+      <Col right style={{padding: '20px', backgroundColor: '#e3f2fd'}}>right</Col>
+    </Row>
+  )
+}
+
+/**
+ * @title 流式布局
+ * @desc 按 Col 的宽度自左向右自上而下自适应
+ */
+import { Row, Col } from 'bfd/Layout'
+
+const LayoutFluid = () => {
+  return (
+    <Row fluid>
+      <Col style={{padding: '20px', backgroundColor: '#bbdefb'}}>hello</Col>
+      <Col style={{padding: '20px', backgroundColor: '#e3f2fd'}}>I am fluid layout!</Col>
+    </Row>
+  )
+}
+
+@component Layout/Row
+@component Layout/Col

@@ -28,6 +28,7 @@ class Input extends Component {
 }
 
 Input.propTypes = {
+  // 尺寸，除默认外可选值 sm、lg
   size: PropTypes.string
 }
 

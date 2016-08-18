@@ -1,23 +1,22 @@
 /**
  * @title 尺寸
- * @desc inverse 类型参考反色按钮 DEMO
  */
 import Input from 'bfd/Input'
 
 const InputSize = () => {
   return (
     <div>
-      <Input placeholder="大尺寸" size="lg" />
+      <Input placeholder="小尺寸" size="sm" />
       <br/><br/>
       <Input placeholder="正常" />
       <br/><br/>
-      <Input placeholder="小尺寸" size="sm" />
+      <Input placeholder="大尺寸" size="lg" />
     </div>
   )
 }
 
 /**
- * @title 不可用的
+ * @title 不可用
  */
 import Input from 'bfd/Input'
 

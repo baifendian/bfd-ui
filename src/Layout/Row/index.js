@@ -1,6 +1,6 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './Row.less'
 
 const Row = props => {
   const { children, className, gutter, fluid, ...other} = props
@@ -20,7 +20,11 @@ const Row = props => {
 }
 
 Row.propTypes = {
+
+  // 是否带间隔
   gutter: PropTypes.bool,   
+  
+  // 是否流式布局，按内容自适应自左向右布局
   fluid: PropTypes.bool   
 }
 
