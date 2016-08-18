@@ -26,7 +26,7 @@ const Button = props => {
 
 Button.propTypes = {
   
-  // 按钮类型，除默认外可选值: minor / inverse。inverse 仅针对 transparent 模式时有效
+  // 按钮类型，除默认外可选值: minor / inverse
   type: PropTypes.string,
   
   // 按钮尺寸，除默认外可选值：sm / lg
@@ -38,7 +38,7 @@ Button.propTypes = {
   // 是否为圆形
   circle: PropTypes.bool,
 
-  // 背景是否为 transparent
+  // 文字颜色是否继承，背景是否透明
   transparent: PropTypes.bool,
 }
 

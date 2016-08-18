@@ -224,14 +224,31 @@ class MultipleSelect extends Component {
 }
 
 MultipleSelect.propTypes = {
+
+  // 选中的值
   values: PropTypes.array,
+
+  // 初始化时选中的值（不可控）
   defaultValues: PropTypes.array,
+
+  // 切换选择后的回调，参数为选中的值
   onChange: PropTypes.func,
+
+  // 是否禁用
   disabled: PropTypes.bool,
+
+  // 是否开启自定义标签输入功能
   tagable: PropTypes.bool,
+
+  // Option 数据源，结合 render 使用
   data: PropTypes.array,
+
+  // 数据源 URL，直接请求服务器，内部调用 xhr 模块
   url: PropTypes.string,
+
+  // data / url 方式 Option 渲染逻辑
   render: PropTypes.func,
+  
   customProp({ values, onChange, url, render }) {
     if (values && !onChange) {
       return new Error('You provided a `values` prop without an `onChange` handler')

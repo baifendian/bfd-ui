@@ -4,9 +4,14 @@ import { render } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import warning from 'warning'
 import classnames from 'classnames'
-import Button from 'bfd/Button'
+import Button from '../Button'
 
 class Message extends Component {
+
+  constructor() {
+    super()
+    this.state = {}
+  }
 
   handleRemove() {
     this.setState({show: false})
@@ -62,16 +67,37 @@ const showMessage = (type, message, duration = 2) => {
 }
 
 const message = {
+
+  /**
+   * @public
+   * @name message.success
+   * @description 成功信息，默认 2 秒后自动关闭
+   * @param  {string | element} message message 内容，支持 React 元素
+   * @param  {number} [duration] 持续时间，单位毫秒
+   */
   success(message, duration) {
     showMessage('success', message, duration)
   },
 
+  /**
+   * @public
+   * @name message.danger
+   * @description 危险/错误类信息，不会自动关闭
+   * @param  {string | element} message message 内容，支持 React 元素
+   * @param  {function} [onClose] 关闭后的回调
+   */
   danger(message, onClose) {
     showMessage('danger', message, onClose)
   },
 
+  /**
+   * @public
+   * @description 关闭 message 信息
+   * @name message.close
+   */
   close() {
     instance && instance.setState({show: false})
   }
 }
+
 export default message
