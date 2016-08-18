@@ -23,21 +23,22 @@ class TableTree extends Component {
     this.props.onChange && this.props.onChange(data)
   }
 
-  loopLeaf(data, level, hidden) {
+  loopLeaf(data, path, hidden) {
     if (!data) return
     data.forEach((item, i) => {
+      const _path = [...path, i]
       const row = (
         <Row
-          key={level + String(i)}
+          key={_path.join('')}
           data={item}
           hidden={hidden}
-          level={level} 
+          path={_path} 
           columns={this.props.columns} 
           onChange={this.handleChange.bind(this)}
         />
       )
       this.rows.push(row)
-      this.loopLeaf(item.children, level + 1, hidden || !item.open)
+      this.loopLeaf(item.children, _path, hidden || !item.open)
     })
   }
 
@@ -48,7 +49,7 @@ class TableTree extends Component {
   render() {
     const { className, columns, url, data, ...other} = this.props
     this.rows = []
-    this.loopLeaf(this.state.data, 0)
+    this.loopLeaf(this.state.data, [])
     return (
       <Fetch 
         className={classnames('bfd-table-tree', className)}
