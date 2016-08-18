@@ -12,7 +12,7 @@ class Row extends Component {
   }
 
   render() {
-    const { data, hidden, level, columns } = this.props
+    const { data, hidden, path, columns } = this.props
     const hasChildren = data.children && data.children.length
     const classNames = classnames('bfd-table-tree-row', {
       hidden,
@@ -21,7 +21,7 @@ class Row extends Component {
     return (
       <tr className={classNames}>
         <td>
-          <div className="tree-node" style={{marginLeft: level * 20 + 'px'}}>
+          <div className="tree-node" style={{marginLeft: (path.length - 1) * 20 + 'px'}}>
             <Icon 
               style={{visibility: hasChildren ? 'visible' : 'hidden'}}
               className="icon-toggle"
