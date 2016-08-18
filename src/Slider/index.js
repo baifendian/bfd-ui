@@ -45,15 +45,15 @@ class Slider extends Component {
   render() {
     const { className, ...other } = this.props
     return (
-      <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
-        <div ref="bar" className="bar">
-          <div ref="slider" className="slider" onMouseDown={::this.handleMouseDown}>
-            <div ref="tip" className="tooltips">
-              <span ref="msg" className="text">0{this.props.suffix || ''}</span>
-              <div className="arrow-down"></div>
+      <div ref="container" className={classnames('bfd-slider', className)} {...other}>
+        <div ref="bar" className="bfd-slider__bar">
+          <div ref="slider" className="bfd-slider__slider" onMouseDown={::this.handleMouseDown}>
+            <div ref="tip" className="bfd-slider__tooltips">
+              <span ref="msg" className="bfd-slider__tooltips__text">0{this.props.suffix || ''}</span>
+              <div className="bfd-slider__tooltips__arrow-down"></div>
             </div>
           </div>
-          <div ref="selectedBar" className="selected"></div>
+          <div ref="selectedBar" className="bfd-slider__bar--selected"></div>
           <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>       
         </div>
       </div>
@@ -150,7 +150,7 @@ class Scale extends Component {
   render() {
     const rows = []    
     for (let i = 0; i <= this.tickValue; i++) {
-      rows.push(<div key={i} ref={'t'+i} className="tick"><div></div>{i}</div>)
+      rows.push(<div key={i} ref={'t'+i} className="bfd-scale__tick"><div></div>{i}</div>)
     }
 
     return (
