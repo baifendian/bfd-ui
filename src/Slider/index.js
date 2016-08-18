@@ -106,6 +106,10 @@ export default React.createClass({
       className,
       ...other
     } = this.props
+    delete other.tickValue
+    delete other.suffix
+    delete other.onSliding
+    delete other.onSlid
     return (
       <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
         <div ref="bar" className="bar">

@@ -32,6 +32,7 @@ export default React.createClass({
       className,
       ...other
     } = this.props
+    delete other.onSearch
     const size = this.props.size || 'lg'
     this.value = this.props.defaultValue || ''
     return (

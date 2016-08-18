@@ -3,15 +3,11 @@
  * Update by jiangtl on 2016-6-28.
  */
 import 'bfd-bootstrap'
-import React, {
-  PropTypes
-} from 'react'
+import React, { PropTypes } from 'react'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
-import {
-  Checkbox
-} from '../Checkbox'
+import { Checkbox } from '../Checkbox'
 import './main.less'
 const Rows = React.createClass({
 
@@ -94,10 +90,7 @@ export default React.createClass({
   propTypes: {
     data: PropTypes.object,
     url: PropTypes.string,
-    customProp({
-      data,
-      url
-    }) {
+    customProp({data, url}) {
       if (data && url) {
         return new Error('data属性和url属性不能同时使用！')
       }
@@ -244,12 +237,13 @@ export default React.createClass({
 
   render: function() {
     const self = this
-    let {
-      className,
-      column,
-      url,
-      ...other
-    } = this.props
+    let { className, column, url, ...other } = this.props
+    delete other.howRow
+    delete other.showPage
+    delete other.onRowClick
+    delete other.onOrder
+    delete other.onPageChange
+    delete other.onCheckboxSelect
     let totalPageNum = 0,
       currentPage = parseInt(this.state.currentPage),
       //新增自动分页功能 

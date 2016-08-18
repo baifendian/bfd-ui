@@ -1,9 +1,5 @@
-import React, {
-  PropTypes
-} from 'react'
-import {
-  findAllByType
-} from '../util/ReactUtils'
+import React, { PropTypes } from 'react'
+import { findAllByType } from '../util/ReactUtils'
 import classnames from 'classnames'
 import './index.less'
 const SubSplitPanel = React.createClass({
@@ -135,6 +131,8 @@ const SplitPanel = React.createClass({
       className,
       ...other
     } = this.props
+    delete other.direct
+    delete other.onSplit
     const items = findAllByType(children, SubSplitPanel)
     const direct = this.props.direct
     const lineClassName = direct == 'ver' ? 'verline' : 'horline'
