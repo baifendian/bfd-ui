@@ -15,7 +15,7 @@ const imports = {
   variables: [],
   
   add(item) {
-    let match = item.match(/import (.*)+ from(.*)/)
+    let match = item.match(/import (.*?) from(.*)/)
     if (match) {
       const variables = match[1].split(/,|\{|\}/).map(v => v.trim())
       let hasNewVariate = false

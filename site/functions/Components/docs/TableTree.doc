@@ -1,0 +1,194 @@
+/**
+ * @title 左右分栏
+ */
+import TableTree from 'bfd/TableTree'
+
+class Basic extends Component {
+
+  constructor() {
+    super()
+    this.columns = [{
+      title: '资源名称',
+      key: 'name'
+    }, {
+      title: '授权状态',
+      render: item => item.status === 1 ? '已授权' : '未授权'
+    }, {
+      title: '授权用户',
+      render: item => <a href="">查看用户</a>
+    }]
+    this.defaultData = [{
+      "id": "102",
+      "name": "数据工厂",
+      "open": false,
+      "checked": true,
+      "authStatus": 2,
+      "children": [{
+        "id": "29",
+        "name": "9527",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "30",
+        "name": "test",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "31",
+        "name": "modelProjcet",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "34",
+        "name": "test123",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "35",
+        "name": "chengjia",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "36",
+        "name": "chengjia",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "38",
+        "name": "wlr",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "39",
+        "name": "iiiiiiiiii",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "40",
+        "name": "a",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "41",
+        "name": "zhongxia",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "42",
+        "name": "dataaudit",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "43",
+        "name": "test111",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "44",
+        "name": "shujugognc",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "45",
+        "name": "别删除",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "46",
+        "name": "测试使用",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }]
+    }, {
+      "id": "103",
+      "name": "服务中心",
+      "open": false,
+      "checked": true,
+      "authStatus": 2,
+      "children": [{
+        "id": "10301",
+        "name": "文件接入",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "10302",
+        "name": "服务",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }, {
+        "id": "10303",
+        "name": "任务",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }]
+    }, {
+      "id": "105",
+      "name": "配置中心",
+      "open": false,
+      "checked": true,
+      "authStatus": 2,
+      "children": [{
+        "id": "10501",
+        "name": "资源管理",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": [{
+          "id": "37",
+          "name": "test111",
+          "open": false,
+          "checked": true,
+          "authStatus": 2,
+          "children": []
+        }]
+      }, {
+        "id": "10502",
+        "name": "消息提醒",
+        "open": false,
+        "checked": true,
+        "authStatus": 2,
+        "children": []
+      }]
+    }]
+  }
+
+  render() {
+    return <TableTree defaultData={this.defaultData} columns={this.columns} />
+  }
+}
