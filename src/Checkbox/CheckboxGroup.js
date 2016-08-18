@@ -51,6 +51,8 @@ const CheckboxGroup = React.createClass({
     const selects = this.state.selects
     const unSelects = []
 
+    delete other.selects
+
     let checkboxes
     if (values) {
       checkboxes = values.map((value, i) => {

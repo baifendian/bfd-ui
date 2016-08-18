@@ -66,6 +66,10 @@ const Dropdown = React.createClass({
 
   render() {
     const { className, children, ...other } = this.props
+
+    delete other.onToggle
+    delete other.open
+    
     return (
       <div 
         className={classnames('bfd-dropdown dropdown', className, {open: this.state.isOpen})}

@@ -131,6 +131,10 @@ const MultipleSelect = React.createClass({
   render() {
 
     const { className, children, url, disabled, tagable, render, ...other } = this.props
+
+    delete other.values
+    delete other.defaultValues
+    
     const placeholder = '请选择'
     const { searchValue, index } = this.state
 

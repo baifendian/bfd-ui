@@ -19,6 +19,10 @@ const Nav = React.createClass({
   
   render() {
     const { className, children, ...other } = this.props
+
+    delete other.href
+    delete other.onItemClick
+    
     return (
       <ul className={classnames('bfd-nav', className)} {...other}>
         {children}
