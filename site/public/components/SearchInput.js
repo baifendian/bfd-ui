@@ -36,7 +36,7 @@ const App = React.createClass({
 })`
         }
         </Pre>
-        <SearchInput size="lg" placeholder="请输入任务名称" label="查询" onSearch={this.handleClick} onChange={this.handleChange} />
+        <SearchInput size="lg" placeholder="请输入任务名称" onSearch={this.handleClick} onChange={this.handleChange} />
         <div className="clearfix"></div>
         <Props>
           <Prop name="placeholder" type="String">
