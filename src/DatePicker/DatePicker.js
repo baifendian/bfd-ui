@@ -3,6 +3,7 @@ import Calendar from './Calendar'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import ClearableInput from '../ClearableInput'
 import classnames from 'classnames'
+import format from 'dateformat'
 import 'bfd-bootstrap'
 import './less/datePicker.less'
 
@@ -35,7 +36,7 @@ const DatePicker = React.createClass({
     let value
     let placeholder
     if (date) {
-      value = new Date(date).toLocaleDateString()
+      value = format(date, 'yyyy-mm-dd')
     } else {
       placeholder = '请选择日期'
     }
