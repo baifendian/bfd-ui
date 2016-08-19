@@ -38,7 +38,7 @@ class TableTree extends Component {
         />
       )
       this.rows.push(row)
-      this.loopLeaf(item.children, _path, hidden || !item.open)
+      this.loopLeaf(item.children, [..._path, 'children'], hidden || !item.open)
     })
   }
 

@@ -96,7 +96,7 @@ class TreeNode extends Component {
             {beforeNodeRender ? beforeNodeRender(data, path) : null}
             {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
           </div>
-          {tree.props.render ? tree.props.render(data) : <div>{name}</div>}
+          {tree.props.render ? tree.props.render(data, path) : <div>{name}</div>}
         </div>
         {Children}
       </li>

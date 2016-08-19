@@ -94,7 +94,7 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={(data, path) => <a href="">{data.name}</a>} />
   }
 })`
 
@@ -107,7 +107,7 @@ const CustomRender = React.createClass({
   },
 
   render() {
-    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={(data, path) => <a href="">{data.name}</a>} />
   }
 })
 
