@@ -120,7 +120,8 @@ class MultipleSelect extends Component {
       optionsMapper[value || children] = children
       // 搜索过滤
       const { searchValue } = this.state
-      if (searchValue && children.indexOf(searchValue) === -1 && (value ? value.indexOf(searchValue) === -1 : true)) {
+      if (searchValue && children.indexOf(searchValue) === -1 
+          && (String(value) ? String(value).indexOf(searchValue) === -1 : true)) {
         return
       }
       options.push(this.getCheckbox(value || children, children))
@@ -144,14 +145,6 @@ class MultipleSelect extends Component {
 
     this.options = options
     this.isAll = isAll
-
-    const classNames = classnames(
-      'bfd-multiple-select', 
-      {
-        'bfd-multiple-select--disabled': disabled
-      },
-      className
-    )
 
     const Header = (
       <ul>
@@ -186,7 +179,7 @@ class MultipleSelect extends Component {
     return (
       <Dropdown 
         onToggle={action.handleDropdownToggle.bind(this)}
-        className={classNames} 
+        className={classnames('bfd-multiple-select', className)} 
         disabled={disabled} 
         {...other}>
         <DropdownToggle>
