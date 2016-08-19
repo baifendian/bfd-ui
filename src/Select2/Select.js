@@ -92,6 +92,11 @@ const Select = React.createClass({
   render() {
 
     const { className, children, size, placeholder, searchable, url, render, defaultOption, ...other } = this.props
+
+    delete other.value
+    delete other.defaultValue
+    delete other.onChange
+
     const { list, searchValue, index } = this.state
     let disabled = this.props.disabled
 

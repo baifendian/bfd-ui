@@ -8,8 +8,7 @@ describe('Calendar', () => {
   it('date is ok', () => {
     const instance = TestUtils.renderIntoDocument(<Calendar date="2016-01-01" />)
     const resultNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'result')
-    expect(resultNode.children[0].textContent).toBe('2016')
-    expect(resultNode.children[2].textContent).toBe('1')
+    expect(resultNode.textContent).toBe('2016年 1月')
     expect(TestUtils.findRenderedDOMComponentWithClass(instance, 'active').textContent).toBe('1')
   })
 
@@ -20,14 +19,14 @@ describe('Calendar', () => {
     const resultNode = TestUtils.findRenderedDOMComponentWithClass(instance, 'result')
     
     TestUtils.Simulate.click(leftNode.children[0])
-    expect(resultNode.children[0].textContent).toBe('2015')
+    expect(resultNode.textContent).toBe('2015年 1月')
     TestUtils.Simulate.click(leftNode.children[1])
-    expect(resultNode.children[2].textContent).toBe('12')
+    expect(resultNode.textContent).toBe('2014年 12月')
 
     TestUtils.Simulate.click(rightNode.children[0])
-    expect(resultNode.children[2].textContent).toBe('1')
+    expect(resultNode.textContent).toBe('2015年 1月')
     TestUtils.Simulate.click(rightNode.children[1])
-    expect(resultNode.children[0].textContent).toBe('2016')
+    expect(resultNode.textContent).toBe('2016年 1月')
   })
 
   it('today is ok', () => {

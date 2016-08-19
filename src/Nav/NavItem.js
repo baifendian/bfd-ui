@@ -29,6 +29,10 @@ const NavItem = React.createClass({
   render() {
     
     const { children, icon, title, ...other } = this.props
+    
+    delete other.href
+    delete other.defaultOpen
+    
     const baseURL = this.context.nav.props.href
     let open = this.state.open
     let href = baseURL + '/' + this.props.href

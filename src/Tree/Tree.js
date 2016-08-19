@@ -64,6 +64,16 @@ class Tree extends Component {
   render() {
     const { className, onActive, ...other } = this.props
     const data = this.state.data || []
+
+    delete other.data
+    delete other.defaultData
+    delete other.beforeNodeRender
+    delete other.onChange
+    delete other.render
+    delete other.getIcon
+    delete other.getUrl
+    delete other.dataFilter
+
     return (
       <div 
         className={classnames('bfd-tree', className, {activeable: onActive})} 

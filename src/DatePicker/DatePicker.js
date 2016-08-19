@@ -31,6 +31,13 @@ const DatePicker = React.createClass({
 
   render() {
     const { className, onSelect, ...other } = this.props
+
+    delete other.date
+    delete other.defaultDate
+    delete other.min
+    delete other.max
+    delete other.onSelect
+
     const date = this.state.date
     let value
     let placeholder

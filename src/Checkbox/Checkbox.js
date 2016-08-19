@@ -6,7 +6,7 @@ const Checkbox = React.createClass({
 
   getInitialState() {
     return {
-      checked: this.props.defaultChecked || this.props.checked     
+      checked: this.props.defaultChecked || this.props.checked || false   
     }
   },
 
