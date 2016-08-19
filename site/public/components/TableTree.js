@@ -63,7 +63,7 @@ export default () => {
 `{
   title: '列标题显示内容',
   key: '对应的数据键，默认表格单元格渲染 item.key',
-  render: '作为 key 的替代，自定义渲染单元格，回调参数为当前数据对象'
+  render: '作为 key 的替代，自定义渲染单元格，回调参数为当前数据对象、path'
 }`}</Pre>
         </Prop>
         <Prop name="data" type="array">
