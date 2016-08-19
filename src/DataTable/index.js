@@ -179,7 +179,8 @@ export default React.createClass({
 
   handleSuccess: function(data) {
     this.setState({
-      items: data
+      items: data,
+      isSelectAll: false
     })
   },
 
@@ -215,6 +216,11 @@ export default React.createClass({
     if (!checked) {
       this.setState({
         isSelectAll: false
+      })
+    }
+    if(rows.length == this.state.items.totalList.length) {
+      this.setState({
+        isSelectAll: true
       })
     }
   },
