@@ -5,6 +5,7 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import xhr from '../xhr'
+import Button from '../Button'
 import FileList from './FileList'
 import 'bfd-bootstrap'
 import './main.less'
@@ -23,10 +24,10 @@ class Upload extends Component {
     return (
       <div className={classnames('bfd-upload', className)} {...other}>
         <input ref="file" onChange={::this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
-        <button className="btn btn-primary" type="button" onClick={::this.handleClick}>
-          {this.props.text || '文件上传'} 
-        </button>
-        <div className="listbox">
+        <Button onClick={::this.handleClick}>
+          {this.props.text || '文件上传'}
+        </Button>
+        <div className="bfd-upload__listbox">
           <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
         </div>
       </div>

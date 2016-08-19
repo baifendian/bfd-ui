@@ -17,11 +17,11 @@ export default React.createClass({
   },
   render() {
     return (
-      <div className="filelist">
+      <div className="bfd-upload__filelist">
       {
         this.props.data.map((item, index) => {
           return (
-            <div key={index} className="row">
+            <div key={index} className="bfd-upload__filelist__row">
               <span>{item.name}</span>
               <span>{item.percent}%</span>
               <span style={{display: item.state == 0 ? '' : 'none'}} className="glyphicon glyphicon-upload"></span>

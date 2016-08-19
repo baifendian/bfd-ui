@@ -45,12 +45,14 @@ class SplitPanel extends Component {
       width1: 0,
       height1: 0
     }
+    this.down = false
     this.mouseMoveFn = null
     this.mouseUpFn = null
   }
 
   handleMouseDown(event) {
     event.stopPropagation()
+    this.down = true
     const direct = this.props.direct
     const line = this.refs.line
     const BODY = document.body
@@ -76,6 +78,9 @@ class SplitPanel extends Component {
   }
 
   handleMouseUDMove(event) {
+    if(!this.down) {
+      return
+    }
     const container = this.refs.container
     const top = this.refs.top
     const bottom = this.refs.bottom
@@ -96,6 +101,9 @@ class SplitPanel extends Component {
   }
 
   handleMouseLRMove(event) {
+    if(!this.down) {
+      return
+    }
     const container = this.refs.container
     const top = this.refs.top
     const bottom = this.refs.bottom
@@ -135,7 +143,7 @@ class SplitPanel extends Component {
         typeof this.props.onSplit(old.height, old.height1, curr.height, curr.height1)
       }
     }
-
+    this.down = false
     BODY.removeEventListener('mousemove', this.mouseMoveFn)
     BODY.removeEventListener('mouseup', this.mouseUpFn)
 
@@ -150,7 +158,7 @@ class SplitPanel extends Component {
     } = this.props
     const items = findAllByType(children, SubSplitPanel)
     const direct = this.props.direct
-    const lineClassName = direct == 'ver' ? 'verline' : 'horline'
+    const lineClassName = direct == 'ver' ? 'bfd-split-panel__verline' : 'bfd-split-panel__horline'
     const topStyle = direct == 'ver' ? {
       float: 'left'
     } : {}
@@ -159,9 +167,9 @@ class SplitPanel extends Component {
     } : {}
     return (
       <div ref="container" className={classnames('bfd-split-panel', className)} {...other}>
-        <div ref="top" style={topStyle} className="top">{items[0]}</div>
+        <div ref="top" style={topStyle} className="bfd-split-panel--top">{items[0]}</div>
         <div ref="line" className={lineClassName} onMouseDown={::this.handleMouseDown}></div>
-        <div ref="bottom" style={bottomStyle} className="bottom">{items[1]}</div>
+        <div ref="bottom" style={bottomStyle} className="bfd-split-panel--bottom">{items[1]}</div>
       </div>
     )
   }

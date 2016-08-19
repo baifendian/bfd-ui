@@ -1,5 +1,5 @@
 /**
- * @title 搜索框
+ * @title 表格
  */
 import { Component } from 'react'
 import DataTable from 'bfd/DataTable'

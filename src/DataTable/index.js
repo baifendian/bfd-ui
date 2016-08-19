@@ -168,7 +168,7 @@ class DataTable extends Component {
                       ref={i}
                       style={style}
                       onClick={self.orderClick.bind(self, head, i)}
-                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'sorting' : ''}>
+                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'bfd-datatable--sorting' : ''}>
                       {head['title']}
                     </th>
                     )
@@ -220,7 +220,7 @@ class DataTable extends Component {
   orderClick(column, i) {
     if (column.order) {
       if (this.refs[i].getAttribute('order') == null) {
-        this.refs[i].className = 'sorting_asc'
+        this.refs[i].className = 'bfd-datatable--sorting_asc'
         this.refs[i].setAttribute('order', 'asc')
         this.setState({
           order: '&key=' + column['key'] + '&sort=asc'
@@ -229,7 +229,7 @@ class DataTable extends Component {
         return
       }
       if (this.refs[i].getAttribute('order') == 'asc') {
-        this.refs[i].className = 'sorting_desc'
+        this.refs[i].className = 'bfd-datatable--sorting_desc'
         this.refs[i].setAttribute('order', 'desc')
         this.setState({
           order: '&key=' + column['key'] + '&sort=desc'
@@ -238,7 +238,7 @@ class DataTable extends Component {
         return
       }
       if (this.refs[i].getAttribute('order') == 'desc') {
-        this.refs[i].className = 'sorting_asc'
+        this.refs[i].className = 'bfd-datatable--sorting_asc'
         this.refs[i].setAttribute('order', 'asc')
         this.setState({
           order: '&key=' + column['key'] + '&sort=asc'
