@@ -14,17 +14,19 @@ const Row = props => {
     <tr className={classNames}>
       <td>
         <div 
-          className="bfd-table-tree__row-tree-node" 
+          className="bfd-table-tree__node" 
           style={{marginLeft: (path.length - 1) / 2 * 20 + 'px'}}>
           <Button 
             style={{visibility: hasChildren ? 'visible' : 'hidden'}}
-            className="bfd-table-tree__row-toggle"
+            className="bfd-table-tree__node-toggle"
             icon="caret-right" 
             size="sm"
             transparent
-            onClick={() => onChange('set', path, !data.open)} 
+            onClick={() => onChange('set', [...path, 'open'], !data.open)} 
           />
-          {columns[0].render ? columns[0].render(data) : data[columns[0].key]}
+          <div className="bfd-table-tree__node-content">
+            {columns[0].render ? columns[0].render(data) : data[columns[0].key]}
+          </div>
         </div>
       </td>
       {columns.slice(1).map((column, i) => {
