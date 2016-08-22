@@ -8,7 +8,7 @@ import Paging from '../Paging'
 import classnames from 'classnames'
 import { Checkbox } from '../Checkbox'
 import './main.less'
-import '../bfd-table.less'
+import '../table.less'
 class Rows extends Component {
 
   constructor(props) {
