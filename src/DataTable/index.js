@@ -2,13 +2,13 @@
  * Created by BFD_270 on 2016-02-19.
  * Update by jiangtl on 2016-6-28.
  */
-import 'bfd-bootstrap'
 import React, { Component, PropTypes } from 'react'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
 import { Checkbox } from '../Checkbox'
 import './main.less'
+import '../bfd-table.less'
 class Rows extends Component {
 
   constructor(props) {
@@ -155,7 +155,7 @@ class DataTable extends Component {
       <div>
         {url != '' ? <Fetch url={url} onSuccess={::this.handleSuccess} ></Fetch> : null}
         
-        <table className={classnames('table', 'bfd-datatable', className)} {...other} >
+        <table className={classnames('bfd-datatable', 'bfd-table', className)} {...other} >
           <thead>
             <tr>
               {checkboxTh}
