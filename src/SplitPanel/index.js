@@ -126,8 +126,6 @@ class SplitPanel extends Component {
   handleMouseUp() {
     const direct = this.props.direct
     const BODY = document.body
-    const line = this.refs.line
-    line.setCapture && line.setCapture()
     const top = this.refs.top
     const bottom = this.refs.bottom
     this.currSplit.width = parseInt(top.style.width)
