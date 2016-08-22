@@ -42,7 +42,7 @@ class TableTree extends Component {
         />
       )
       this.rows.push(row)
-      this.loopLeaf(item.children, _path, hidden || !item.open)
+      this.loopLeaf(item.children, [..._path, 'children'], hidden || !item.open)
     })
   }
 
@@ -55,7 +55,7 @@ class TableTree extends Component {
       <Fetch 
         className={classnames('bfd-table-tree', className)}
         url={url} 
-        onSuccess={data => this.setState(data)}
+        onSuccess={data => this.setState({ data })}
         {...other}
       >
         <table className="bfd-table">

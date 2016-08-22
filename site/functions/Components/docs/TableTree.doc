@@ -1,9 +1,9 @@
 /**
- * @title 左右分栏
+ * @title 基本功能
  */
 import TableTree from 'bfd/TableTree'
 
-class Basic extends Component {
+class TableTreeBasic extends Component {
 
   constructor() {
     super()
@@ -23,3 +23,5 @@ class Basic extends Component {
     return <TableTree url="/data/tableTree.json" columns={this.columns} />
   }
 }
+
+@component TableTree
