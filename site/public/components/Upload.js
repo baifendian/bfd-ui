@@ -11,7 +11,8 @@ export default React.createClass({
     const props = {
       action: '/upload.do',
       onComplete: this.handleComplete,
-      multiple: true
+      multiple: true,
+      showFileList: true
     }
     return (
       <div>
@@ -47,10 +48,13 @@ const App = React.createClass({
             <p>上传按钮文本内容，默认为文件上传</p>
           </Prop>
           <Prop name="multiple" type="Boolean">
-            <p>可选参数, 是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。</p>
+            <p>是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。</p>
           </Prop>          
           <Prop name="onComplete" type="function">
             <p>上传文件完成时的回调函数</p>
+          </Prop>
+          <Prop name="showFileList" type="Boolean">
+            <p>是否显示上传的文件列表，默认为true</p>
           </Prop>       
         </Props>
       </div>
