@@ -3,6 +3,7 @@
   .bfd-dropdown__toggle {
     background-color: #fff;
     height: 30px;
+    line-height: 28px;
     position: relative;
     border: 1px solid #ececec;
     border-radius: 2px;
@@ -45,8 +46,6 @@
 }
 
 .bfd-select__title {
-  line-height: 28px;
-  height: 28px;
   margin-left: 10px;
   margin-right: 24px;
 }
@@ -55,14 +54,19 @@
   position: absolute;
   right: 10px;
   top: 50%;
-  margin-top: -7px;
+  margin-top: -6px;
+}
+
+.bfd-select--sm {
+  .bfd-dropdown__toggle {
+    height: 22px;
+    line-height: 20px;
+  }
 }
 
 .bfd-select--lg {
   .bfd-dropdown__toggle {
     height: 40px;
-  }
-  .bfd-select__title {
     line-height: 38px;
   }
 }

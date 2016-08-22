@@ -1,12 +1,12 @@
-import './Select.less'
+import './index.less'
 import React, { Component, PropTypes } from 'react'
-import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import classnames from 'classnames'
-import shouldComponentUpdate from '../shouldComponentUpdate'
-import TextOverflow from '../TextOverflow'
-import Fetch from '../Fetch'
-import ClearableInput from '../ClearableInput'
-import Icon from '../Icon'
+import shouldComponentUpdate from '../../shouldComponentUpdate'
+import { Dropdown, DropdownToggle, DropdownMenu } from '../../Dropdown'
+import TextOverflow from '../../TextOverflow'
+import Fetch from '../../Fetch'
+import ClearableInput from '../../ClearableInput'
+import Icon from '../../Icon'
 
 class Select extends Component {
 
@@ -14,7 +14,6 @@ class Select extends Component {
     super()
     this.optionsWithProps = []
     this.title = null
-    this.shouldComponentUpdate = shouldComponentUpdate
     this.state = {
       data: props.data || [],
       index: -1,
@@ -31,6 +30,8 @@ class Select extends Component {
     'data' in nextProps && (state.data = nextProps.data)
     this.setState(state)
   }
+
+  shouldComponentUpdate: shouldComponentUpdate
 
   handleLoad(data) {
     this.setState({ data })
@@ -133,13 +134,9 @@ class Select extends Component {
 
     this.optionsWithProps = optionsWithProps
 
-    const classNames = classnames(
-      'bfd-select', 
-      {
-        [`bfd-select-${size}`]: size
-      },
-      className
-    )
+    const classNames = classnames('bfd-select', {
+      [`bfd-select--${size}`]: size
+    }, className)
 
     return (
       <Dropdown 
@@ -154,7 +151,7 @@ class Select extends Component {
             <TextOverflow>
               <div className="bfd-select__title">{this.title || placeholder}</div>
             </TextOverflow>
-            <Icon type="angle-down" className="bfd-select__caret" />
+            <Icon type="caret-down" className="bfd-select__caret" />
           </Fetch>
         </DropdownToggle>
         <DropdownMenu>
@@ -175,17 +172,40 @@ class Select extends Component {
 }
 
 Select.propTypes = {
+
+  // 选中的值
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 初始化时选中的值（不可控）
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 切换选择后的回调，参数为选中的值
   onChange: PropTypes.func,
+
+  // 数据源，结合 render 属性定义 Option 渲染逻辑
   data: PropTypes.array,
-  placeholder: PropTypes.string,
-  searchable: PropTypes.bool,
-  disabled: PropTypes.bool,
-  size: PropTypes.string,
+  
+  // URL 数据源
   url: PropTypes.string,
+
+  // data 或 url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
+
+  // data 或 url 方式时默认的 Option，通常针对空值时的选项
   defaultOption: PropTypes.element,
+
+  // 无选项对应时 Select 显示的内容
+  placeholder: PropTypes.string,
+
+  // 是否可搜索，搜索范围为 Option 的 value 和 children
+  searchable: PropTypes.bool,
+
+  // 是否禁用
+  disabled: PropTypes.bool,
+
+  // 尺寸，除默认值外可选值 sm、lg
+  size: PropTypes.string,
+  
   customProp({ value, onChange, url, render }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

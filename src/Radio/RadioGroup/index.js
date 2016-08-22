@@ -1,6 +1,6 @@
+import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import './less/radioGroup.less'
 
 const RadioGroup = React.createClass({
 
@@ -45,9 +45,16 @@ const RadioGroup = React.createClass({
 })
 
 RadioGroup.propTypes = {
+
+  // 选中的值
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 初始化时选中的值（不可控）
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 切换选择后的回调。参数为选中的值
   onChange: PropTypes.func,
+  
   customProp(props) {
     if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

@@ -125,7 +125,7 @@ AutoComplete.propTypes = {
   // 输入改变、选择后的回调，参数为当前输入框的值
   onChange: PropTypes.func,
 
-  // 输入框大小，除默认外可选值：sm / lg
+  // 输入框大小，除默认外可选值：sm、lg
   size: PropTypes.string,
 
   // 是否禁用

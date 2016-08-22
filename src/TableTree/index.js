@@ -1,13 +1,16 @@
+import '../table.less'
 import React, { Component, PropTypes } from 'react'
+import update from 'react-update'
 import classnames from 'classnames'
+import shouldComponentUpdate from '../shouldComponentUpdate'
 import Fetch from '../Fetch'
 import Row from './Row'
-import 'bfd-bootstrap'
 
 class TableTree extends Component {
 
   constructor(props) {
     super(props)
+    this.update = update.bind(this)
     this.state = {
       data: props.defaultData || props.data
     }
@@ -17,10 +20,11 @@ class TableTree extends Component {
     nextProps.data && this.setState({data: nextProps.data})  
   }
 
-  handleChange() {
-    const data = this.state.data
-    this.setState({ data })
-    this.props.onChange && this.props.onChange(data)
+  shouldComponentUpdate: shouldComponentUpdate
+
+  handleRowChange(type, path, value) {
+    const nextData = this.update(type, ['data', ...path], value)
+    this.props.onChange && this.props.onChange(nextData)
   }
 
   loopLeaf(data, path, hidden) {
@@ -34,7 +38,7 @@ class TableTree extends Component {
           hidden={hidden}
           path={_path} 
           columns={this.props.columns} 
-          onChange={this.handleChange.bind(this)}
+          onChange={::this.handleRowChange}
         />
       )
       this.rows.push(row)
@@ -42,22 +46,19 @@ class TableTree extends Component {
     })
   }
 
-  handleLoad(data) {
-    this.setState({ data })
-  }
-
   render() {
-    const { className, columns, url, data, ...other} = this.props
+    const { className, columns, url, ...other} = this.props
+    const { data } = this.state
     this.rows = []
-    this.loopLeaf(this.state.data, [])
+    this.loopLeaf(data, [])
     return (
       <Fetch 
         className={classnames('bfd-table-tree', className)}
         url={url} 
-        onSuccess={this.handleLoad.bind(this)}
+        onSuccess={data => this.setState(data)}
         {...other}
       >
-        <table className="table">
+        <table className="bfd-table">
           <thead>
             <tr>
               {columns.map((item, i) => <th key={i}>{item.title}</th>)}
@@ -73,10 +74,20 @@ class TableTree extends Component {
 }
 
 TableTree.propTypes = {
+
+  // 字段配置
   columns: PropTypes.array.isRequired,
+
+  // 数据源
   data: PropTypes.array,
+
+  // 初始化数据源（不可控）
   defaultData: PropTypes.array,
+
+  // 数据改变后的回调，参数为改变后的数据
   onChange: PropTypes.func,
+
+  // URL 数据源
   url: PropTypes.string
 }
 

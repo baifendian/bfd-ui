@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import TableTree from '../index'
 
-describe('Checkbox', () => {
+describe('TableTree', () => {
 
   const columns = [{
     title: '资源名称',
@@ -48,14 +48,14 @@ describe('Checkbox', () => {
     )
     const container = findDOMNode(instance)
     
-    TestUtils.Simulate.click(container.querySelectorAll('.icon-toggle')[1])
-    expect(container.querySelectorAll('tbody tr')[2].className).not.toContain('hidden')
+    TestUtils.Simulate.click(container.querySelectorAll('.bfd-table-tree__row-toggle')[1])
+    expect(container.querySelectorAll('.bfd-table-tree__row')[2].className).not.toContain('hidden')
     
-    TestUtils.Simulate.click(container.querySelectorAll('.icon-toggle')[0])
-    expect(container.querySelectorAll('tbody tr')[4].className).toContain('hidden')
+    TestUtils.Simulate.click(container.querySelectorAll('.bfd-table-tree__row-toggle')[0])
+    expect(container.querySelectorAll('.bfd-table-tree__row')[4].className).toContain('hidden')
     
-    TestUtils.Simulate.click(container.querySelectorAll('.icon-toggle')[0])
-    expect(container.querySelectorAll('tbody tr')[2].className).not.toContain('hidden')
+    TestUtils.Simulate.click(container.querySelectorAll('.bfd-table-tree__row-toggle')[0])
+    expect(container.querySelectorAll('.bfd-table-tree__row')[2].className).not.toContain('hidden')
   })
 
   it('should col render works', () => {
@@ -67,14 +67,18 @@ describe('Checkbox', () => {
   })
 
   it('should onChange works', () => {
-    let open
+    let isOpen = jest.fn()
     const instance = TestUtils.renderIntoDocument(
-      <TableTree defaultData={data} columns={columns} onChange={data => {
-        open = data[0].open
-      }} />
+      <TableTree 
+        columns={columns}
+        defaultData={data} 
+        onChange={data => {
+          isOpen(data[0].open)
+        }}
+      />
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelectorAll('.icon-toggle')[0])
-    expect(open).toBe(false)
+    TestUtils.Simulate.click(container.querySelectorAll('.bfd-table-tree__row-toggle')[0])
+    expect(isOpen).toBeCalledWith(false)
   })
 })

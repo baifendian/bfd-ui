@@ -37,9 +37,14 @@
 
 .bfd-checkbox__status {
   pointer-events: none;
-  &:before {
+  &:before,
+  &:after {
     content: '';
     position: absolute;
+    border-radius: 2px;
+    box-sizing: border-box;
+  }
+  &:before {
     background-color: #fff;
     left: 0;
     top: 50%;
@@ -47,11 +52,8 @@
     width: 16px;
     height: 16px;
     border: 1px solid #9e9e9e;
-    border-radius: 2px;
   }
   &:after {
-    content: '';
-    position: absolute;
     left: 6px;
     top: 50%;
     width: 4px;
@@ -62,7 +64,6 @@
     border-left: 0;
     transform: rotate(45deg);
     display: none;
-    border-radius: 2px;
   }
 }
 

@@ -13,7 +13,7 @@ function isEqual(source, target) {
 
 function shouldComponentUpdate(nextProps, nextState) {
   if (nextProps.children) return true
-  return !(isEqual(nextState, this.state) && isEqual(nextProps, this.props))
+  return !(isEqual(nextProps, this.props) && isEqual(nextState, this.state))
 }
 
 export default shouldComponentUpdate

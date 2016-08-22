@@ -16,7 +16,7 @@ const TextOverflow = React.createClass({
         if (target.offsetWidth < target.scrollWidth) {
           this.timer = setTimeout(() => {
             tooltip(children.props.children, target)
-          }, 100)
+          }, 200)
         }
       },
       onMouseLeave: () => {

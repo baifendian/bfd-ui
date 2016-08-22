@@ -101,13 +101,13 @@ module.exports = function (source) {
     match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
     if (match) {
       match = match[1]
-      const reg = /(\/\/[\s\S]+?)?(\w+):\s*PropTypes(.*)/g
+      const reg = /(\/\/[\s\S]+?)(\w+):\s*PropTypes(.*)/g
       let res
       while (res = reg.exec(match)) {
         doc.props.push({
           name: res[2],
           desc: (res[1] || '').replace('//', '').trim(),
-          types: res[3].match(/string|bool|number|object|array|func/g),
+          types: res[3].match(/string|bool|number|object|array|func|element/g),
           required: !!res[3].match(/isRequired/)
         })
       }
