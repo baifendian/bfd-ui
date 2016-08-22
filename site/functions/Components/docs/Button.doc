@@ -1,6 +1,5 @@
 /**
  * @title 按钮类型
- * @desc inverse 类型参考反色按钮 DEMO
  */
 import Button from 'bfd/Button'
 
@@ -58,7 +57,8 @@ const ButtonCircle = () => {
 }
 
 /**
- * @title 透明背景
+ * @title transparent
+ * @desc 文字颜色继承父级，背景透明
  */
 import Button from 'bfd/Button'
 
@@ -67,20 +67,6 @@ const ButtonTransparent = () => {
     <div>
       <Button icon="plus" transparent />
       <Button icon="angle-double-down" transparent>代码</Button>
-    </div>
-  )
-}
-
-/**
- * @title 反色按钮
- * @desc 针对深色背景的场景
- */
-import Button from 'bfd/Button'
-
-const ButtonInverse = () => {
-  return (
-    <div style={{backgroundColor: '#42a5f5'}}>
-      <Button type="inverse" icon="remove" transparent />
     </div>
   )
 }

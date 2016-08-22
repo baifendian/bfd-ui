@@ -54,8 +54,8 @@ module.exports = function (source) {
   // 依赖的公共模块
   imports.add(`import React, { Component } from 'react'`)
   imports.add(`import { Row, Col } from 'bfd/Layout'`)
-  imports.add(`import { Props, Prop } from 'public/Props'`)
   imports.add(`import Demo from 'public/Demo'`)
+  imports.add(`import Doc from 'public/Doc'`)
 
   // 获取 DEMO、文档数据
   const demos = []
@@ -80,8 +80,9 @@ module.exports = function (source) {
   }, match => {
     // 文档
     const doc = {
-      tag: match.split('/').slice(-1)[0],
-      props: []
+      name: match.split('/').slice(-1)[0],
+      props: [],
+      apis: []
     }
     let dir = path.join(__dirname, '../../src/' + match)
     try {
@@ -95,6 +96,8 @@ module.exports = function (source) {
     }
     
     const sourceCode = fs.readFileSync(dir, 'utf8')
+
+    // 组件 props
     match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
     if (match) {
       match = match[1]
@@ -109,6 +112,46 @@ module.exports = function (source) {
         })
       }
     }
+
+    // API、组件对外的方法
+    const apiReg = /\* @public([\s\S]+?)\*\//g
+    while(match = apiReg.exec(sourceCode)) {
+      match = match[1]
+      const reg = /\* @([a-z]+)\s+(.*)/g
+      let res
+      const api = {}
+      const handleMap = {
+        name: res => {
+          api.name = res
+        },
+        type: res => {
+          api.type = res
+        },
+        description: res => {
+          api.desc = res
+        },
+        param: res => {
+          const param = {}
+          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+(.*)/)
+          param.type = res[1]
+          param.name = res[2]
+          param.desc = res[3].trim()
+          ;(api.params || (api.params = [])).push(param)
+        },
+        'return': res => {
+          res = res.match(/(.*?\})\s*(.*)/)
+          api.return = {
+            type: res[1],
+            desc: res[2].trim()
+          }
+        }
+      }
+      while (res = reg.exec(match)) {
+        handleMap[res[1]] && handleMap[res[1]](res[2].trim())
+      }
+      doc.apis.push(api)
+    }
+
     docs.push(doc)
   }]
   const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?\n})|@component\s(.+)/g
@@ -144,26 +187,21 @@ ${demo.mainCode}`
   `)
 
   // 生成文档代码
-  const componentsProps = docs.map(doc => {
-    const props = doc.props.map(prop => {
-      return `<Prop name="${prop.name}" type="${prop.types}" required={${prop.required}}>${prop.desc}</Prop>`
-    })
-    return (`
-      <Props tag="${doc.tag}">
-        ${props.join('\r\n')}
-      </Props>
-    `)
+  const componentsDocs = docs.map(doc => {
+    return `<Doc key="${doc.name}" {...${doc}} />`
   })
 
   return `${imports.getAll().join('\r\n')} 
 
 ${codes.join('\r\n')}
 
+const docs = ${JSON.stringify(docs)}
+
 export default () => {
   return (
     <div>
       ${layout}
-      ${componentsProps.join('\r\n')}
+      {docs.map(doc => <Doc key={doc.name} {...doc} />)}
     </div>
   )
 }`

@@ -16,9 +16,8 @@ class NavItem extends Component {
 
   componentWillMount() {
     // 首次加载后，active 状态保持 open 状态
-    const baseURL = this.context.nav.props.href
-    const href = this.getHref(baseURL)
-    if (this.props.children && this.isActive(href, href === baseURL)) {
+    const href = this.getHref()
+    if (this.props.children && this.isActive(href, this.isIndex(href))) {
       this.setState({open: true})
     }
   }
@@ -28,9 +27,17 @@ class NavItem extends Component {
     this.setState({open: !this.state.open})
   }
 
+  isIndex(href) {
+    const baseURL = (this.context.nav.props.href || '').replace(/\//g, '')
+    return baseURL === href.replace(/\//g, '')
+  }
+
   isActive(href, indexOnly) {
-    if (indexOnly && href === location.pathname) return true
-    return location.href.indexOf(href) !== -1
+    if (indexOnly) {
+      return href === (location.pathname || '/')
+    } else {
+      return location.href.indexOf(href) !== -1
+    }
     // history.isActive is expensive
     // return this.context.history.isActive(href, this.props.query, indexOnly)
   }
@@ -40,26 +47,26 @@ class NavItem extends Component {
     !this.props.children && this.context.nav.handleItemClick(this.props, e)
   }
 
-  getHref(baseURL) {
-    let href = baseURL + '/' + this.props.href
-    return href.replace(/\/\//g, '/').replace(/(.+)\/$/, '$1')
+  getHref() {
+    const baseURL = this.context.nav.props.href || ''
+    let href = baseURL + '/' + (this.props.href || '')
+    return href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
   }
   
   render() {
 
     const { open } = this.state
-    const { children, className, icon, title, href, ...other } = this.props
+    const { children, className, icon, title, ...other } = this.props
 
-    const baseURL = this.context.nav.props.href
-    const _href = this.getHref(baseURL)
-    const active = this.isActive(_href, _href === baseURL)
+    const href = this.getHref()
+    const active = this.isActive(href, this.isIndex(href))
 
-    const NavIcon = icon && <Icon type={icon} className="bfd-nav__icon" />
-    const Toggle = children && <Icon type="angle-right" className="bfd-nav__icon-toggle" />
+    const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
+    const Toggle = children && <Icon type="angle-right" className="bfd-nav__item-toggle" />
 
-    const Item = children ?
-      <a href={_href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a> :
-      <Link to={_href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
+    const Item = children
+      ? <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a>
+      : <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
 
     const classNames = classnames(
       'bfd-nav__item', 
@@ -78,25 +85,28 @@ class NavItem extends Component {
         {...other}
       >
         {Item}
-        {open && children ? <Nav href={baseURL}>{children}</Nav> : null}
+        {open && children && <ul>{children}</ul>}
       </li>
     )
   }
 }
 
 NavItem.contextTypes = {
-  history: PropTypes.object.isRequired,
   nav: PropTypes.object
 }
 
-NavItem.defaultProps = {
-  href: ''
-}
-
 NavItem.propTypes = {
+
+  // 当前菜单 href，非叶子节点也需要指定，与路由对应
   href: PropTypes.string,
+
+  // 菜单图标，参考 Icon 组件 type 属性
   icon: PropTypes.string,
+
+  // 菜单标题
   title: PropTypes.string,
+
+  // 初始化是否展开（不可控），用于非叶子节点
   defaultOpen: PropTypes.bool
 }
 

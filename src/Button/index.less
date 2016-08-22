@@ -86,22 +86,16 @@
 .bfd-btn--transparent {
   border: 0;
   background-color: transparent;
-  color: #999;
+  color: inherit;
+  opacity: .7;
   &:hover {
-    color: @color400;
+    color: inherit;
     background-color: transparent;
+    opacity: .85;
   }
   &:active {
-    color: @color500;
+    color: inherit;
     background-color: transparent;
-  }
-  &.bfd-btn--inverse {
-    color: #f1f1f1;
-    &:hover {
-      color: #f9f9f9;
-    }
-    &:active {
-      color: #fff;
-    }
+    opacity: 1;
   }
 }

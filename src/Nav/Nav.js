@@ -10,19 +10,15 @@ class Nav extends Component {
   }
 
   handleItemClick(props, e) {
-    if (!this.context.nav) {
-      this.props.onItemClick && this.props.onItemClick(props, e)
-    } else {
-      this.context.nav.handleItemClick(props, e)
-    }
+    this.props.onItemClick && this.props.onItemClick(props, e)
   }
   
   render() {
     const { className, children, href, ...other } = this.props
     return (
-      <ul className={classnames('bfd-nav', className)} {...other}>
-        {children}
-      </ul>
+      <div className={classnames('bfd-nav', className)} {...other}>
+        <ul>{children}</ul>
+      </div>
     )
   }
 }
@@ -31,17 +27,12 @@ Nav.childContextTypes = {
   nav: PropTypes.instanceOf(Nav)
 }
 
-// Nested <Nav>
-Nav.contextTypes = {
-  nav: PropTypes.object
-}
-
-Nav.defaultProps = {
-  href: ''
-}
-
 Nav.propTypes = {
+
+  // 所有 NavItem 的基础 href
   href: PropTypes.string,
+
+  // 叶子节点 NavItem 点击事件，参数为当前 NavItem 的 props 以及 event 对象
   onItemClick: PropTypes.func
 }
 

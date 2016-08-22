@@ -120,7 +120,8 @@ class MultipleSelect extends Component {
       optionsMapper[value || children] = children
       // 搜索过滤
       const { searchValue } = this.state
-      if (searchValue && children.indexOf(searchValue) === -1 && (value ? value.indexOf(searchValue) === -1 : true)) {
+      if (searchValue && children.indexOf(searchValue) === -1 
+          && (String(value) ? String(value).indexOf(searchValue) === -1 : true)) {
         return
       }
       options.push(this.getCheckbox(value || children, children))
@@ -144,14 +145,6 @@ class MultipleSelect extends Component {
 
     this.options = options
     this.isAll = isAll
-
-    const classNames = classnames(
-      'bfd-multiple-select', 
-      {
-        'bfd-multiple-select--disabled': disabled
-      },
-      className
-    )
 
     const Header = (
       <ul>
@@ -186,7 +179,7 @@ class MultipleSelect extends Component {
     return (
       <Dropdown 
         onToggle={action.handleDropdownToggle.bind(this)}
-        className={classNames} 
+        className={classnames('bfd-multiple-select', className)} 
         disabled={disabled} 
         {...other}>
         <DropdownToggle>
@@ -224,14 +217,31 @@ class MultipleSelect extends Component {
 }
 
 MultipleSelect.propTypes = {
+
+  // 选中的值
   values: PropTypes.array,
+
+  // 初始化时选中的值（不可控）
   defaultValues: PropTypes.array,
+
+  // 切换选择后的回调，参数为选中的值
   onChange: PropTypes.func,
+
+  // 是否禁用
   disabled: PropTypes.bool,
+
+  // 是否开启自定义标签输入功能
   tagable: PropTypes.bool,
+
+  // Option 数据源，结合 render 使用
   data: PropTypes.array,
+
+  // 数据源 URL，直接请求服务器，内部调用 xhr 模块
   url: PropTypes.string,
+
+  // data / url 方式 Option 渲染逻辑
   render: PropTypes.func,
+  
   customProp({ values, onChange, url, render }) {
     if (values && !onChange) {
       return new Error('You provided a `values` prop without an `onChange` handler')

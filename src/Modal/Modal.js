@@ -62,12 +62,25 @@ class Modal extends Component {
     }
   }
 
+  /**
+   * @public
+   * @name open
+   * @description 打开模态框
+   */
   open() {
     this.setState({open: true})
+    this.props.onToggle && this.props.onToggle(true)
   }
 
+  /**
+   * @public
+   * @name close
+   * @param {function} [callback] 关闭后的回调，动画结束后执行
+   * @description 关闭模态框
+   */
   close(callback = this.props.onClose) {
     this.setState({open: false})
+    this.props.onToggle && this.props.onToggle(false)
     callback && setTimeout(callback, this.closeTimeout)
   }
 
@@ -101,8 +114,17 @@ Modal.childContextTypes = {
 }
 
 Modal.propTypes = {
+
+  // 是否打开
   open: PropTypes.bool,
+
+  // 切换 open 状态后的回调，参数为切换后的 open 状态，立刻执行，不会等到动画结束后
+  onToggle: PropTypes.func,
+
+  // 是否锁定，锁定后点击背景无法关闭
   lock: PropTypes.bool,
+
+  // 关闭后的回调，动画结束后执行。如果 close 方法传入回调，则此属性不会触发
   onClose: PropTypes.func
 }
 
