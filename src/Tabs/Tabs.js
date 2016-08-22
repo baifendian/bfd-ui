@@ -9,10 +9,7 @@ class Tabs extends Component {
   constructor(props) {
     super()
     this.state = {
-      tabCount: 0,
-      panelCount: 0,
-      activeIndex: props.activeIndex || 0,
-      activeKey: props.activeKey
+      activeIndex: props.activeIndex || 0
     }
   }
 
@@ -23,12 +20,14 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'activeIndex' in this.props && this.setState({activeIndex: nextProps.activeIndex})
-    'activeKey' in this.props && this.setState({activeKey: nextProps.activeKey})
+    if ('activeIndex' in this.props) {
+      this.setState({activeIndex: nextProps.activeIndex})
+    }
   }
 
   render() {
     const { className, children, dynamic, ...other } = this.props
+    this.tabCount = this.panelCount = 0
     return (
       <div className={classNames('bfd-tabs', {
         'bfd-tabs--dynamic': dynamic

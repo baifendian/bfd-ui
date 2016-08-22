@@ -8,48 +8,34 @@ import Button from '../Button'
  */
 class Tab extends Component {
 
-  constructor(props, context) {
-    super()
-    this.state = {
-      index: context.tabs.state.tabCount
-    }
-  }
-
-  componentWillMount() {
-    this.context.tabs.state.tabCount++
-  }
-
-  componentWillUnmount() {
-    this.context.tabs.state.tabCount--
-  }
-
-  handleClick(e) {
+  handleClick(index, e) {
     e.preventDefault()
     const tabs = this.context.tabs
-    tabs.setState({activeIndex: this.state.index})
+    tabs.setState({activeIndex: index})
     if (this.props.activeKey) {
       tabs.setState({activeKey: this.props.activeKey})
     }
-    tabs.props.onChange && tabs.props.onChange(this.state.index, this.props.activeKey)
+    tabs.props.onChange && tabs.props.onChange(index, this.props.activeKey)
   }
 
-  handleClose(e) {
+  handleClose(index, e) {
     e.preventDefault()
     e.stopPropagation()
     const _handleClose = this.context.tabs.props.handleClose
-    _handleClose && _handleClose(this.state.index, this.props.activeKey)
+    _handleClose && _handleClose(index, this.props.activeKey)
   }
 
   render() {
-    const { className, children, activeKey, abolishClose, ...other } = this.props
-    const { index } = this.state
+    const { className, children, activeKey, activeIndex, abolishClose, ...other } = this.props
     const tabs = this.context.tabs
-    if (tabs.state.activeKey) {
+    const index = tabs.tabCount++
+    
+    if (tabs.props.activeKey) {
       warning(activeKey, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
     }
     let isActive
     if (activeKey) {
-      isActive = activeKey === tabs.state.activeKey
+      isActive = activeKey === tabs.props.activeKey
     } else {
       isActive = index === tabs.state.activeIndex
     }
@@ -57,7 +43,7 @@ class Tab extends Component {
       <li className={classNames('bfd-tabs__tab', {
         'bfd-tabs__tab--active': isActive
       }, className)} {...other}>
-        <a href="" onClick={::this.handleClick}>
+        <a href="" onClick={this.handleClick.bind(this, index)}>
           <span className="bfd-tabs__tab-content">{children}</span>
           {
             tabs.props.dynamic && !abolishClose &&
@@ -66,7 +52,7 @@ class Tab extends Component {
               icon="remove" 
               size="sm"
               className="bfd-tabs__tab-close" 
-              onClick={::this.handleClose} 
+              onClick={this.handleClose.bind(this, index)} 
             />
           }
         </a>

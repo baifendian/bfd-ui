@@ -5,32 +5,17 @@ import classNames from 'classnames'
  * 内容节点
  */
 class TabPanel extends Component {
-
-  constructor(props, context) {
-    super()
-    this.state = {
-      index: context.tabs.state.panelCount
-    }
-  }
-
-  componentWillMount() {
-    this.context.tabs.state.panelCount++
-  }
-
-  componentWillUnmount() {
-    this.context.tabs.state.panelCount--
-  }
-
   render() {
-    const { className, children, activeKey, ...other } = this.props
-    const { index } = this.state
+    const { className, children, activeKey, activeIndex, ...other } = this.props
     const tabs = this.context.tabs
-    if (tabs.state.activeKey) {
+    const index = tabs.panelCount++
+
+    if (tabs.props.activeKey) {
       warning(activeKey, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
     }
     let isActive
     if (activeKey) {
-      isActive = activeKey === tabs.state.activeKey
+      isActive = activeKey === tabs.props.activeKey
     } else {
       isActive = index === tabs.state.activeIndex
     }

@@ -64,10 +64,14 @@ class TabsDynamic extends Component {
         onChange={activeIndex => this.setState({ activeIndex })}
       >
         <TabList>
-          {tabs.map(item => <Tab key={item.id}>{item.name}</Tab>)}
+          {tabs.map((item, i) => (
+            <Tab key={item.id}>{item.name}</Tab>)
+          )}
           <Button transparent icon="plus" onClick={::this.handleAdd} />
         </TabList>
-        {tabs.map(item => <TabPanel key={item.id}>{`我是${item.name}`}</TabPanel>)}
+        {tabs.map((item, i) => (
+          <TabPanel key={item.id}>{`我是${item.name}`}</TabPanel>
+        ))}
       </Tabs>
     )
   }
