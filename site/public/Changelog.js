@@ -5,6 +5,13 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.7.7" date="2016-08-23">
+        <ol>
+          <li>修复 Slider 拖动时出现偏差的问题</li>
+          <li>Upload 新增 showFileList 属性，设置是否显示文件列表</li>
+        </ol>
+      </Version>
+
       <Version version="0.7.6" date="2016-08-19">
         <ol>
           <li>修复分页显示的问题</li>
