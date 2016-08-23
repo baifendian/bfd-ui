@@ -20,6 +20,7 @@ export default React.createClass({
     event.stopPropagation()
     this.isDown = true
     const BODY = document.body
+    BODY.style.cursor = 'default'
     BODY.addEventListener('mousemove', this.handleMouseMove)
     BODY.addEventListener('mouseup', this.handleMouseUp)
   },
@@ -58,6 +59,7 @@ export default React.createClass({
     }
 
     const BODY = document.body
+    BODY.style.cursor = ''
     BODY.removeEventListener('mousemove', this.handleMouseMove)
     BODY.removeEventListener('mouseup', this.handleMouseUp)
   },
@@ -85,21 +87,24 @@ export default React.createClass({
     const bar = this.refs.bar
     const selectedBar = this.refs.selectedBar
     const slider = this.refs.slider
-
     const style = getComputedStyle(bar)
     const sliderStyle = getComputedStyle(slider)
     const defaultValue = this.props.defaultValue || this.props.start || 0
-
     this.width = parseInt(style.width, 10)
     this.sliderWidth = parseInt(sliderStyle.width, 10)
-    this.offsetLeft = bar.offsetLeft + this.marginLeft
+    this.offsetLeft = this.getOffsetLeft(bar) + this.marginLeft
     slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
     selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
-
     this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
   },
-  componentWillUnmount() {
-
+  getOffsetLeft(el) {
+    let left = 0;
+    let offsetParent = el;
+    while (offsetParent != null && offsetParent != document.body) {
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent;
+    }
+    return left
   },
   render() {
     const {
