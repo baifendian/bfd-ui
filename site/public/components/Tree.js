@@ -94,7 +94,7 @@ export default React.createClass({
   },
 
   render() {
-    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={(data, path) => <a href="">{data.name}</a>} />
   }
 })`
 
@@ -107,7 +107,7 @@ const CustomRender = React.createClass({
   },
 
   render() {
-    return <Tree defaultData={this.state.data} render={data => <a href="">{data.name}</a>} />
+    return <Tree defaultData={this.state.data} render={(data, path) => <a href="">{data.name}</a>} />
   }
 })
 
@@ -486,7 +486,7 @@ export default () => {
           <p>数据改变后的回调</p>
         </Prop>
         <Prop name="render" type="function">
-          <p>节点渲染逻辑，参数为当前节点数据，默认渲染 data.name</p>
+          <p>节点渲染逻辑，参数为当前节点数据、path，默认渲染 data.name</p>
         </Prop>
         <Prop name="getIcon" type="function">
           <p>设置图标，参数为当前节点数据，可动态判断</p>

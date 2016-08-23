@@ -5,6 +5,17 @@ import Pre from './Pre'
 function ChangeLog() {
   return (
     <div>
+      <Version version="0.7.6" date="2016-08-19">
+        <ol>
+          <li>修复分页显示的问题</li>
+          <li>修复 DataTable 切换分页后复选框的问题</li>
+          <li>修复 IE 下 DatePicker 日期异常的问题</li>          
+          <li>去除 IE 下 input 默认的清空标识</li>
+          <li>Tree render 回调添加 path 参数，方便操作数据</li>
+          <li>TableTree columns 配置 render 回调添加 path 参数，方便操作数据</li>
+        </ol>
+      </Version>
+
       <Version version="0.7.0" date="2016-08-08">
         <p>新增组件: </p>
         <ul>
