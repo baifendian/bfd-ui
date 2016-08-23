@@ -103,6 +103,7 @@ export default React.createClass({
       className,
       ...other
     } = this.props
+    delete other.text
     delete other.onComplete
     delete other.showFileList
     const isShow = this.props.showFileList
