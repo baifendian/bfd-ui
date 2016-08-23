@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
+import warning from 'warning'
 
 /**
  * 内容节点

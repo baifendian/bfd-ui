@@ -51,7 +51,7 @@ class Tab extends Component {
               transparent 
               icon="remove" 
               size="sm"
-              className="bfd-tabs__tab-close" 
+              className="bfd-tabs__tab-remove" 
               onClick={this.handleClose.bind(this, index)} 
             />
           }

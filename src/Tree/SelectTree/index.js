@@ -1,8 +1,8 @@
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import Tree from './Tree'
-import { Checkbox } from '../Checkbox'
-import './less/selectTree.less'
+import Tree from '../Tree'
+import Checkbox from '../../Checkbox'
 
 class SelectTree extends Component {
 
@@ -32,6 +32,7 @@ class SelectTree extends Component {
 }
 
 SelectTree.propTypes = {
+  // 复选框勾选后的回调，参数为(data, item, path, checked)
   onSelect: PropTypes.func
 }
 

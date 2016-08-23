@@ -1,0 +1,12 @@
+/**
+ * @title 基本功能
+ */
+import TextOverflow from 'bfd/TextOverflow'
+
+const TextOverflowBasic = () => {
+  return (
+    <TextOverflow>
+      <p style={{width: '100px'}}>我是很长的一段文字，鼠标滑过可显示全部</p>
+    </TextOverflow>
+  )
+}

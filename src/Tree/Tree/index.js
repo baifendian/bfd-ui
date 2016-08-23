@@ -1,9 +1,9 @@
+import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import update from 'react-update'
-import shouldComponentUpdate from '../shouldComponentUpdate'
+import shouldComponentUpdate from '../../shouldComponentUpdate'
 import TreeNode from './TreeNode'
-import './less/tree.less'
 
 class Tree extends Component {
 
@@ -64,7 +64,9 @@ class Tree extends Component {
     const data = this.state.data || []
     return (
       <div 
-        className={classnames('bfd-tree', className, {activeable: onActive})} 
+        className={classnames('bfd-tree', {
+          'bfd-tree--activeable': onActive
+        }, className)} 
         {...other}
       >
         <ul>
@@ -82,13 +84,29 @@ Tree.childContextTypes = {
 }
 
 Tree.propTypes = {
+
+  // 数据源
   data: PropTypes.array,
+
+  // 初始化时数据源（不可控）
   defaultData: PropTypes.array,
+
+  // 数据改变后的回调，参数为整个数据源
   onChange: PropTypes.func,
-  onActive: PropTypes.func,
+
+  // 节点渲染逻辑，参数为当前节点数据、path，默认渲染 data.name
   render: PropTypes.func,
+
+  // 设置图标，参数为当前节点数据，可动态判断
   getIcon: PropTypes.func,
+
+  // 按需动态加载数据源 URL，当 isParent 为 true 时，执行请求。参数为当前节点数据以及节点路径下的数据集合
   getUrl: PropTypes.func,
+
+  // 点中一个节点后的回调，参数为节点路径下数据集合
+  onActive: PropTypes.func,
+  
+  // 过滤 getUrl 方式返回的数据，处理后请将数据返回
   dataFilter: PropTypes.func
 }
 

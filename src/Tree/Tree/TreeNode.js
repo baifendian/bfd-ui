@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import Icon from '../Icon'
-import Fetch from '../Fetch'
 import warning from 'warning'
+import Button from '../../Button'
+import Icon from '../../Icon'
+import Fetch from '../../Fetch'
 
 class TreeNode extends Component {
 
@@ -80,21 +81,25 @@ class TreeNode extends Component {
     let typeIcon = getIcon ? getIcon(data) : ''
 
     return (
-      <li className={classnames({ open })}>
+      <li className={classnames('bfd-tree__node', {'bfd-tree__node--open': open})}>
         <div 
           style={indent}
-          className={classnames('node-content', { active })}
+          className={classnames('bfd-tree__node-content', {
+            'bfd-tree__node-content--active': active
+          })}
           onClick={this.handleNodeClick.bind(this)}
         >
-          <div className="node-assist">
-            <Icon 
-              className="icon-toggle"
+          <div className="bfd-tree__node-assist">
+            <Button 
+              className="bfd-tree__node-toggle"
               style={{visibility: hasChildren || isParent ? 'visible' : 'hidden'}} 
-              type="caret-right"
-              onClick={this.handleToggle.bind(this)} 
+              icon="caret-right"
+              size="sm"
+              transparent
+              onClick={::this.handleToggle} 
             />
-            {beforeNodeRender ? beforeNodeRender(data, path) : null}
-            {typeIcon ? <Icon type={typeIcon} className="icon-type" /> : null}
+            {beforeNodeRender && beforeNodeRender(data, path)}
+            {typeIcon && <Icon type={typeIcon} className="bfd-tree__node-type" />}
           </div>
           {tree.props.render ? tree.props.render(data) : <div>{name}</div>}
         </div>

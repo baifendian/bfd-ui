@@ -81,7 +81,7 @@
     "cn": "表格树"
   }, {
     "name": "ClearableInput",
-    "cn": "可清空的输入框"
+    "cn": "清空输入框"
   }, {
     "name": "Slider",
     "cn": "拖动条"
