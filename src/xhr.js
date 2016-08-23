@@ -1,3 +1,33 @@
+/**
+ * @public
+ * @name xhr
+ * @description ajax 请求
+ * @param {object} option 请求配置
+ * ```js
+ * {
+ *   // 请求类型，支持所有 HTTP 请求类型
+ *   type: 'DELETE', 
+ *
+ *   // URL 地址
+ *   url: '/user/5', 
+ *   
+ *   // 提交的数据，支持 FormData（IE10+）
+ *   data: {
+ *     key: 'value' 
+ *   }, 
+ *
+ *   // 请求发送前操作，如 setRequestHeader、定义 onprogress 事件等
+ *   beforeSend: xhr => {
+ *     // xhr.setRequestHeader()
+ *   }, 
+ *
+ *   // 各个状态的回调，如果设置了全局回调，则不会自动执行
+ *   success: data => {},
+ *   error: msg => {},
+ *   complete: () => {}
+ * }
+ * ```
+ */
 function xhr(option) {
 
   const request = new window.XMLHttpRequest()

@@ -2,7 +2,7 @@ import 'normalize.css'
 import './index.less'
 import './pace.less'
 import React, { Component } from 'react'
-import { Link } from 'react-router'
+import { Link, IndexLink } from 'react-router'
 import { Row, Col } from 'bfd/Layout'
 import { Nav, NavItem } from 'bfd/Nav'
 import pace from './pace'
@@ -25,16 +25,19 @@ class App extends Component {
           <Col col="md-3 sm-5 xs-9">
             <ul className="header__nav">
               <li>
-                <Link to="/">首页</Link>
+                <IndexLink to="/" activeClassName="active">首页</IndexLink>
               </li>
               <li>
-                <Link to="/components">组件</Link>
+                <Link to="/guide" activeClassName="active">指南</Link>
               </li>
               <li>
-                <Link to="/scaffolding">脚手架</Link>
+                <Link to="/components" activeClassName="active">组件</Link>
               </li>
               <li>
-                <Link to="/changelog">更新日志</Link>
+                <Link to="/scaffolding" activeClassName="active">脚手架</Link>
+              </li>
+              <li>
+                <Link to="/changelog" activeClassName="active">更新日志</Link>
               </li>
             </ul>
           </Col>

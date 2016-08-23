@@ -12,6 +12,11 @@ render((
           cb(null, require('./functions/Home').default)
         })
       }}/>
+      <Route path="guide" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./functions/Guide').default)
+        })
+      }}/>
       <Route path="components" getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./functions/Components').default)
@@ -22,7 +27,7 @@ render((
           <Route path=":component" getComponent={(location, cb) => {
             const Component = location.pathname.split('/').pop()
             require.ensure([], require => {
-              cb(null, require(`./functions/Components/docs/${Component}.doc`).default)
+              cb(null, require(`./functions/Components/docs/xhr.doc`).default)
             })
           }} />
         </Route>

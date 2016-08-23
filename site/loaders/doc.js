@@ -6,6 +6,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const marked = require('marked')
 
 // 智能添加依赖，自动规避重复声明
 const imports = {
@@ -117,8 +118,6 @@ module.exports = function (source) {
     const apiReg = /\* @public([\s\S]+?)\*\//g
     while(match = apiReg.exec(sourceCode)) {
       match = match[1]
-      const reg = /\* @([a-z]+)\s+(.*)/g
-      let res
       const api = {}
       const handleMap = {
         name: res => {
@@ -132,10 +131,11 @@ module.exports = function (source) {
         },
         param: res => {
           const param = {}
-          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+(.*)/)
+          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([\s\S]*)/)
           param.type = res[1]
           param.name = res[2]
-          param.desc = res[3].trim()
+          console.log(res[3])
+          param.desc = marked(res[3].replace(/\r?\n?\s?\*\s?/g, '\n'))
           ;(api.params || (api.params = [])).push(param)
         },
         'return': res => {
@@ -146,9 +146,12 @@ module.exports = function (source) {
           }
         }
       }
-      while (res = reg.exec(match)) {
-        handleMap[res[1]] && handleMap[res[1]](res[2].trim())
-      }
+      const reg = /([a-z]+)\s+([\s\S]*)/
+      match = match.split(/(\r?\n?) \* @/).slice(1)
+      match.forEach(v => {
+        v = v.match(reg)
+        v && handleMap[v[1]] && handleMap[v[1]](v[2])
+      })
       doc.apis.push(api)
     }
 

@@ -10,11 +10,12 @@
   > ul {
     display: none;
   }
-  .bfd-fetch__mask {
+  .bfd-fetch {
     min-height: 20px;
   }
   .bfd-fetch__state {
-    left: 0;
+    left: 40px;
+    top: 10px;
   }
 }
 
@@ -33,17 +34,17 @@
   position: relative;
   > :last-child {
     display: block;
-    padding: 3px 0;
+    line-height: 22px;
   }
 }
 
 .bfd-tree__node-assist {
   float: left;
-  margin-top: 3px;
 } 
 
 .bfd-tree__node-type {
   color: #42a5f5;
+  margin-right: 5px;
 }
 
 .bfd-tree--activeable {
@@ -51,8 +52,12 @@
     &:hover {
       background-color: #e3f2fd;
     }
-    &.active {
-      background-color: #bbdefb;
-    }
+  }
+}
+
+.bfd-tree__node-content--active {
+  background-color: #bbdefb;
+  &:hover {
+    background-color: #bbdefb!important;
   }
 }

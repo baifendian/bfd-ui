@@ -94,7 +94,7 @@ Tree.propTypes = {
   // 数据改变后的回调，参数为整个数据源
   onChange: PropTypes.func,
 
-  // 节点渲染逻辑，参数为当前节点数据、path，默认渲染 data.name
+  // 节点渲染回调，参数(item, path)，默认渲染 data.name
   render: PropTypes.func,
 
   // 设置图标，参数为当前节点数据，可动态判断
@@ -107,7 +107,13 @@ Tree.propTypes = {
   onActive: PropTypes.func,
   
   // 过滤 getUrl 方式返回的数据，处理后请将数据返回
-  dataFilter: PropTypes.func
+  dataFilter: PropTypes.func,
+
+  customProp({ data, onChange }) {
+    if (data && !onChange) {
+      return new Error('You provided a `data` prop without an `onChange` handler')
+    }
+  }
 }
 
 export default Tree

@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router'
 import Pre from 'public/Pre'
+import Button from 'bfd/Button'
 
-export default React.createClass({
-  render() {
-    return (
-      <div className="home">
-        <h1>百分点 UI 组件库</h1>
-        <blockquote>
-          <footer>不仅仅是一个组件库，更是一种开发模式。</footer>
-        </blockquote>
+export default () => {
+  return (
+    <div className="home">
+      <h1>BFD UI</h1>
+      <h2>企业级前端整体解决方案</h2>
+      <Button>安装 v1.0</Button>
+      <Button>开始</Button>
 
-        <Pre>
-{`import DatePicker from 'bfd-ui/lib/DatePicker'
+      <Pre>
+{`import DatePicker from 'bfd/DatePicker'
 
 const DatePickerDemo = React.createClass({
   
@@ -24,46 +24,27 @@ const DatePickerDemo = React.createClass({
     return <DatePicker onSelect={this.handleSelect} />
   }
 })`}
-        </Pre>
+      </Pre>
 
-        <h2>如何开始</h2>
-        
-        <p>如果你对 Node.js、npm、React、webpack 等不熟悉，直接按 <Link to="/workflow">工作流</Link> 方式开始使用，各种环境、配置都不用操心了。</p>
+      <dl>
+        <dt>组件</dt>
+        <dd>基于 React 组件化思想开发，简单高效</dd>
+      </dl>
 
-        <p>如果已经有相关环境，想单独用组件库的话：</p>
-        
-        <Pre lang="sh">{`$ npm install bfd-ui --save`}</Pre>
+      <dl>
+        <dt>全面</dt>
+        <dd>基础组件，高级交互，甚至可视化都可以搞定</dd>
+      </dl>
 
-        <p>webpack 额外配置</p>
-        <Pre>
-{`var autoprefixer = require('autoprefixer')
-var config = {
-  module: {
-    loaders: [{
-      test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
-      loader: 'file?name=files/[hash].[ext]'
-    }, {
-      test: /\\.less$/,
-      loader: 'style!css!less!postcss'
-    }]
-  },
-  postcss: [autoprefixer({ browsers: ['last 3 versions'] })]
+      <dl>
+        <dt>环境</dt>
+        <dd>配套的前端脚手架模板相结合，摆脱繁琐的环境配置，避免重复的基础工作，飞一般的开发体验</dd>
+      </dl>
+
+      <dl>
+        <dt>免费</dt>
+        <dd>基于 BSD 协议，免费开源</dd>
+      </dl>
+    </div>
+  )
 }
-module.exports = config`}
-        </Pre>
-
-        <h2>浏览器支持</h2>
-        <p>Chrome、Firefox、Safari、IE9+</p>
-
-        <h2>特性</h2>
-        <ol>
-          <li>组件化开发，简单、清晰。</li>
-          <li>基于 bootstrap、React、D3 等库，业务开发也更简单。</li>
-          <li>集成数据可视化图表库，方便快速的制作各类报表系统。</li>
-          <li>可根据业务需求补充各类组件，形成良性循环。</li>
-          <li>按需使用，并非大而全的库。</li>
-        </ol>
-      </div>
-    )
-  }
-})

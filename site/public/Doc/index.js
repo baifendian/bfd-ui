@@ -1,6 +1,7 @@
 import './index.less'
 import React from 'react'
 import classnames from 'classnames'
+import Markdown from 'public/Markdown'
 
 const Doc = props => {
   return (
@@ -37,11 +38,12 @@ const Doc = props => {
             <dt>
               {name}{type ? null : '( ' + (params || []).map(v => v.name).join(', ') + ' )'}
             </dt>
-            {params && (
-              <dd className="doc__api-args">
-                {params.map(param => <div key={param.name}>{param.type} {param.name} {param.desc}</div>)}
+            {params && params.map(param => (
+              <dd key={param.name}>
+                参数：{param.name} {param.type} 
+                <Markdown html={param.desc} />
               </dd>
-            )}
+            ))}
             {type && (
               <dd className="doc__api-args">{type}</dd>
             )}

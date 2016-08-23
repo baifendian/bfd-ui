@@ -1,5 +1,6 @@
 /**
  * @title 基本功能
+ * @desc open 字段控制打开状态；默认节点渲染 name 字段
  */
 import Tree from 'bfd/Tree'
 
@@ -84,6 +85,7 @@ const TreeDynamic = () => {
 
 /**
  * @title 可选中的
+ * @desc active 字段控制是否选中
  */
 import Tree from 'bfd/Tree'
 
@@ -92,7 +94,8 @@ const TreeActiveable = () => {
     name: '数据工厂',
     open: true,
     children: [{
-      name: 'kafka'
+      name: 'kafka',
+      active: true
     }, {
       name: 'HBase'
     }]
@@ -104,6 +107,7 @@ const TreeActiveable = () => {
 
 /**
  * @title 可勾选的
+ * @desc SelectTree 支持所有 Tree 组件属性，checked 字段控制勾选状态
  */
 import update from 'react-update'
 import get from 'lodash/get'
@@ -119,7 +123,8 @@ class SelectTreeBasic extends Component {
         name: '数据工厂',
         open: true,
         children: [{
-          name: 'kafka'
+          name: 'kafka',
+          checked: true
         }, {
           name: 'HBase'
         }]

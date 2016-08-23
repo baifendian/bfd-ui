@@ -1,0 +1,19 @@
+/**
+ * @title 基本功能
+ */
+import xhr from 'bfd/xhr'
+import Button from 'bfd/Button'
+
+const MessageSuccess = () => {
+  return (
+    <Button onClick={() => xhr({
+      type: 'DELETE',
+      url: '/user/5',
+      success(data) {
+        console.log(data)
+      }
+    })}>删除</Button>
+  )
+}
+
+@component xhr

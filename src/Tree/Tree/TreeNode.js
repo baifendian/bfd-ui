@@ -101,7 +101,7 @@ class TreeNode extends Component {
             {beforeNodeRender && beforeNodeRender(data, path)}
             {typeIcon && <Icon type={typeIcon} className="bfd-tree__node-type" />}
           </div>
-          {tree.props.render ? tree.props.render(data) : <div>{name}</div>}
+          {tree.props.render ? tree.props.render(data, path) : <div>{name}</div>}
         </div>
         {Children}
       </li>

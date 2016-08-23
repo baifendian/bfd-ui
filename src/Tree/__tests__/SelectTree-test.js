@@ -1,30 +1,29 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import SelectTree from '../SelectTree'
 
 describe('SelectTree', () => {
 
-  describe('basic', () => {
-
-    const data = []
-    function handleChange() {}
-
-    it('className is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={handleChange} className="test" />)
-      expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('test')
+  it('should onSelect works', () => {
+    const data = [{
+      name: 'a'
+    }]
+    const handleSelect = jest.fn()
+    const instance = TestUtils.renderIntoDocument(
+      <SelectTree defaultData={data} onSelect={handleSelect} />
+    )
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.change(container.querySelector('.bfd-checkbox input'), {
+      target: {
+        checked: true
+      }
     })
-
-    it('style is ok', () => {
-      const instance = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={handleChange} style={{color: 'red'}} />)
-      expect(ReactDOM.findDOMNode(instance).style.color).toBe('red')
-    })
-
-    it('onClick is ok', () => {
-      const handleClick = jest.fn()
-      const instance = TestUtils.renderIntoDocument(<SelectTree data={data} onChange={handleChange} onClick={handleClick} />)
-      TestUtils.Simulate.click(ReactDOM.findDOMNode(instance))
-      expect(handleClick).toBeCalled()
-    })
+    expect(handleSelect).toBeCalledWith([{
+      name: 'a',
+      checked: true
+    }], {
+      name: 'a'
+    }, [0], true)
   })
 })

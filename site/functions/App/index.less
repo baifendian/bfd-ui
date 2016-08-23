@@ -81,9 +81,17 @@ body {
   vertical-align: top;
   li {
     display: inline-block;
+    vertical-align: top;
     a {
       display: block;
+      height: 50px;
       padding: 0 10px;
+      border-bottom: 4px solid transparent;
+      transition: all .3s;
+      &:hover,
+      &.active {
+        border-bottom-color: #90caf9;
+      }
     }
   }
 }
