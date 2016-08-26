@@ -64,7 +64,7 @@ class Modal extends Component {
 
   /**
    * @public
-   * @name open
+   * @name this.refs.modal.open
    * @description 打开模态框
    */
   open() {
@@ -74,7 +74,7 @@ class Modal extends Component {
 
   /**
    * @public
-   * @name close
+   * @name this.refs.modal.close
    * @param {function} [callback] 关闭后的回调，动画结束后执行
    * @description 关闭模态框
    */

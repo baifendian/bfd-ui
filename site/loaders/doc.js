@@ -99,23 +99,28 @@ module.exports = function (source) {
     const sourceCode = fs.readFileSync(dir, 'utf8')
 
     // 组件 props
-    match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
+    match = sourceCode.match(/\.propTypes = ({[^]+\n})/)
     if (match) {
       match = match[1]
-      const reg = /(\/\/[\s\S]+?)(\w+):\s*PropTypes(.*)/g
+      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*PropTypes(.*)/g
       let res
       while (res = reg.exec(match)) {
+        let desc = res[2] || ''
+        if (desc) {
+          desc = desc.trim().replace(/\*\/$/, '')
+          desc = marked(desc.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
+        }
         doc.props.push({
-          name: res[2],
-          desc: (res[1] || '').replace('//', '').trim(),
-          types: res[3].match(/string|bool|number|object|array|func|element/g),
-          required: !!res[3].match(/isRequired/)
+          name: res[3],
+          desc: desc,
+          types: res[4].match(/string|bool|number|object|array|func|element/g),
+          required: !!res[4].match(/isRequired/)
         })
       }
     }
 
     // API、组件对外的方法
-    const apiReg = /\* @public([\s\S]+?)\*\//g
+    const apiReg = /\* @public([^]+?)\*\//g
     while(match = apiReg.exec(sourceCode)) {
       match = match[1]
       const api = {}
@@ -127,15 +132,14 @@ module.exports = function (source) {
           api.type = res
         },
         description: res => {
-          api.desc = res
+          api.desc = marked(res.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
         },
         param: res => {
           const param = {}
-          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([\s\S]*)/)
+          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([^]*)/)
           param.type = res[1]
           param.name = res[2]
-          console.log(res[3])
-          param.desc = marked(res[3].replace(/\r?\n?\s?\*\s?/g, '\n'))
+          param.desc = marked(res[3].replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
           ;(api.params || (api.params = [])).push(param)
         },
         'return': res => {
@@ -146,7 +150,7 @@ module.exports = function (source) {
           }
         }
       }
-      const reg = /([a-z]+)\s+([\s\S]*)/
+      const reg = /([a-z]+)\s+([^]*)/
       match = match.split(/(\r?\n?) \* @/).slice(1)
       match.forEach(v => {
         v = v.match(reg)
@@ -157,7 +161,7 @@ module.exports = function (source) {
 
     docs.push(doc)
   }]
-  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?\n})|@component\s(.+)/g
+  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [^]+?\n})|@component\s(.+)/g
   source.replace(reg, (match, p1, p2, p3, p4) => {
     [p1, p2, p3, p4].forEach((match, i) => {
       match && callbacks[i](match)

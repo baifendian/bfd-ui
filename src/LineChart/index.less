@@ -1,0 +1,88 @@
+.bfd-line-chart {
+  .tick {
+    fill: #93979a;
+    font-size: 12px;
+    line {
+      fill: none;
+      stroke: #e6e6e6;
+      stroke-dasharray: 5 2;
+      shape-rendering: crispEdges;
+    }
+  }
+  .axis-x path.domain {
+    shape-rendering: crispEdges;
+    fill: none;
+    stroke: #607d8b;
+  }
+
+  .axis-y path.domain {
+    fill: none;
+    stroke: none;
+  }
+
+  .active-line {
+    stroke: #607d8b;
+  }
+
+  .active-circle {
+    fill: #607d8b;
+  }
+}
+
+.bfd-line-chart__legend {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #555;
+  font-size: 12px;
+  > div {
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+    &.disabled {
+      color: #ccc;
+      .line {
+        background-color: #ccc!important;
+      }
+      .circle {
+        border-color: #ccc!important;
+      }
+    }
+    .line {
+      margin-right: 3px;
+      display: inline-block;
+      width: 30px;
+      height: 2px;
+      vertical-align: middle;
+    }
+    .circle {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      margin-top: -4px;
+      background-color: #fff;
+      width: 8px;
+      height: 8px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+    }
+    .text {
+      vertical-align: middle;
+    }
+  }
+}
+
+.bfd-line-chart__tooltip {
+  white-space: nowrap;
+  min-width: 80px;
+  background-color: #607d8b;
+  color: #fff;
+  border-radius: 2px;
+  padding: 6px 10px;
+  font-size: 12px;
+  z-index: 9999;
+  h2 {
+    margin: 5px 0;
+    font-size: 12px;
+  }
+}

@@ -25,7 +25,9 @@ const Doc = props => {
                   {prop.name}
                 </td>
                 <td className="doc__prop-type">{prop.types.join(' | ')}</td>
-                <td>{prop.desc}</td>
+                <td>
+                  <Markdown html={prop.desc} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -38,16 +40,36 @@ const Doc = props => {
             <dt>
               {name}{type ? null : '( ' + (params || []).map(v => v.name).join(', ') + ' )'}
             </dt>
-            {params && params.map(param => (
-              <dd key={param.name}>
-                参数：{param.name} {param.type} 
-                <Markdown html={param.desc} />
+            {params && (
+              <dd>
+                <h2>参数</h2>
+                <ul>
+                  {params.map(param => (
+                    <li key={param.name}>
+                      {param.name} {param.type}
+                      <Markdown html={param.desc} />
+                    </li>
+                  ))}
+                </ul>
               </dd>
-            ))}
-            {type && (
-              <dd className="doc__api-args">{type}</dd>
             )}
-            <dd>{desc}</dd>
+            {api['return'] && (
+              <dd>
+                <h2>返回</h2>
+                {api['return'].type}
+                {api['return'].desc}
+              </dd>
+            )}
+            {type && (
+              <dd>
+                <h2>类型</h2>
+                {type}
+              </dd>
+            )}
+            <dd>
+              <h2>描述</h2>
+              <Markdown html={desc} />
+            </dd>
           </dl>
         )
       })}

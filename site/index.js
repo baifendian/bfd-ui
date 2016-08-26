@@ -25,9 +25,9 @@ render((
         <IndexRedirect to="/components/base/Button" />
         <Route path=":cat">
           <Route path=":component" getComponent={(location, cb) => {
-            const Component = location.pathname.split('/').pop()
+            const component = location.pathname.split('/').pop()
             require.ensure([], require => {
-              cb(null, require(`./functions/Components/docs/xhr.doc`).default)
+              cb(null, require(`./functions/Components/docs/${component}.doc`).default)
             })
           }} />
         </Route>
