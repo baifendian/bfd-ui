@@ -29,17 +29,6 @@ export default class LineChart {
     this.startAnimation()
   }
 
-  resize() {
-    const { container } = this.config
-    const [left, right] = this.padding
-    this.innerWidth = container.clientWidth - left - right
-    this.updateXAxis()
-    const groups = this.container.selectAll('.serie-group')
-    groups.each((d, i) => {
-      d3.select(groups[0][i])
-    })
-  }
-
   /**
    * 获取 data 与 cols 关联后的数据
    */
@@ -121,18 +110,18 @@ export default class LineChart {
     return 20 / (this.innerWidth / this.categories.length)
   }
 
-  // drawXAxis() {
-  //   this.xScale.rangePoints([0, this.innerWidth], this.getXAxisPaddingScale())
-  //   this.xAxis.scale(this.xScale)
+  drawXAxis() {
+    this.xScale.rangePoints([0, this.innerWidth], this.getXAxisPaddingScale())
+    this.xAxis.scale(this.xScale)
 
-  //   // 处理x轴数据节点过多的问题
-  //   const interval = Math.ceil(this.categories.join('').length / (this.innerWidth / 10))
-  //   this.xAxis.tickValues(this.xScale.domain().filter((d, i) => !(i % interval)))
+    // 处理x轴数据节点过多的问题
+    const interval = Math.ceil(this.categories.join('').length / (this.innerWidth / 10))
+    this.xAxis.tickValues(this.xScale.domain().filter((d, i) => !(i % interval)))
     
-  //   this.container.select('.axis-x')
-  //     .attr('transform', `translate(0, ${this.innerHeight})`)
-  //     .call(this.xAxis)
-  // }
+    this.container.select('.axis-x')
+      .attr('transform', `translate(0, ${this.innerHeight})`)
+      .call(this.xAxis)
+  }
 
   /**
    * 绘制坐标轴
@@ -140,27 +129,20 @@ export default class LineChart {
   createAxis() {
 
     const { yAxis } = this.config
-
-    this.xAxis = new XAxis({
-      container: this.container,
-      length: this.innerWidth,
-      top: this.innerHeight,
-      categories: this.categories
-    })
     
-    // this.xScale = d3.scale
-    //   .ordinal()
-    //   .domain(this.categories)
+    this.xScale = d3.scale
+      .ordinal()
+      .domain(this.categories)
 
     this.yScale = d3.scale
       .linear()
       .domain(this.getYDomain(this.series))
       .range([this.innerHeight, 0])
 
-    // this.xAxis = d3.svg.axis()
-    //   .orient('bottom')
-    //   .tickSize(0, 0)
-    //   .tickPadding(10)
+    this.xAxis = d3.svg.axis()
+      .orient('bottom')
+      .tickSize(0, 0)
+      .tickPadding(10)
 
     const format = d3.format(yAxis.format || '.2s')
     this.yAxis = d3.svg.axis()
@@ -174,9 +156,9 @@ export default class LineChart {
       .attr('class', 'axis-y')
       .call(this.yAxis)
 
-    // this.container.append('g')
-    //   .attr('class', 'axis-x')
-    // this.drawXAxis()
+    this.container.append('g')
+      .attr('class', 'axis-x')
+    this.drawXAxis()
   }
 
   /**
@@ -193,11 +175,11 @@ export default class LineChart {
 
     this.linePathGenerator = d3.svg.line()
       .interpolate(INTERPOLATE)
-      .x(d => this.xAxis.getPosition(d[category]))
+      .x(d => this.xScale(d[category]))
 
     this.areaPathGenerator = d3.svg.area()
       .interpolate(INTERPOLATE)
-      .x(d => this.xAxis.getPosition(d[category]))
+      .x(d => this.xScale(d[category]))
       .y0(this.innerHeight)
 
     this.series.forEach(({ key }, i) => {
@@ -340,7 +322,7 @@ export default class LineChart {
     this.lastxAxisIndex = xAxisIndex
 
     // x 轴坐标
-    const x = this.xAxis.getPositionByIndex(xAxisIndex)
+    const x = this.xScale(this.categories[xAxisIndex])
 
     // 绘制参考线
     this.activeLine
@@ -405,7 +387,7 @@ export default class LineChart {
         .append('g')
         .attr('class', 'marker')
         .attr('transform', d => {
-          return `translate(${this.xAxis.getPosition(d[category])}, ${this.yScale(d[key])})`
+          return `translate(${this.xScale(d[category])}, ${this.yScale(d[key])})`
         })
 
       gEnter.append('circle')
@@ -479,7 +461,7 @@ export default class LineChart {
           const markerGroup = this.container.select(`.marker-group-${key}`).transition(t)
           markerGroup.selectAll('.marker')
             .attr('transform', d => {
-              return `translate(${this.xAxis.getPosition(d[category])}, ${this.yScale(d[key])})`
+              return `translate(${this.xScale(d[category])}, ${this.yScale(d[key])})`
             })
         })
       })

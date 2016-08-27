@@ -135,7 +135,8 @@ class Select extends Component {
     this.optionsWithProps = optionsWithProps
 
     const classNames = classnames('bfd-select', {
-      [`bfd-select--${size}`]: size
+      [`bfd-select--${size}`]: size,
+      [`bfd-select--searchable`]: searchable
     }, className)
 
     return (
@@ -164,7 +165,7 @@ class Select extends Component {
               onKeyDown={::this.handleKeyDown}
             />
           )}
-          <ul>{optionsWithProps}</ul>
+          <ul className="bfd-select__options">{optionsWithProps}</ul>
         </DropdownMenu>
       </Dropdown>
     )

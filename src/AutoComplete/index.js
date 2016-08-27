@@ -8,10 +8,10 @@ class AutoComplete extends Component {
 
   constructor(props) {
     super()
-    this.result = []
     this.state = {
       open: false,
       index: -1,
+      result: props.source,
       value: props.defaultValue || props.value || ''
     }
   }
@@ -24,13 +24,13 @@ class AutoComplete extends Component {
     this.lastValue = value
     const state = { value }
     if (!value) {
-      this.result = []
       state.open = false
+      state.result = this.props.source
       this.setState(state)
     } else {
       // reset tab index
       state.index = -1
-      this.result = this.props.source.filter(item => item.indexOf(value) > -1)
+      state.result = this.props.source.filter(item => item.indexOf(value) > -1)
       state.open = !!this.result.length
       this.setState(state)
     }
@@ -46,10 +46,10 @@ class AutoComplete extends Component {
   }
 
   handleKeyDown(e) {
-    if (this.state.open) {
+    const { open, result } = this.state
+    if (open) {
       const input = e.target
       const key = e.key
-      const { result } = this
       let { index } = this.state
       if (key === 'ArrowDown' || key === 'ArrowUp') {
         if (key === 'ArrowDown') {
@@ -74,13 +74,12 @@ class AutoComplete extends Component {
   }
 
   handleFocus() {
-    if (!this.result.length) return
     this.setState({open: true})
   }
 
   render() {
-    const { open, index, value } = this.state
-    const { className, onFocus, onKeyDown, onChange, ...other } = this.props
+    const { open, index, result, value } = this.state
+    const { className, source, onFocus, onKeyDown, onChange, ...other } = this.props
     return (
       <Dropdown 
         open={open} 
@@ -95,7 +94,7 @@ class AutoComplete extends Component {
         />
         <DropdownMenu>
           <ul className="bfd-auto-complete__result">
-          {this.result.map((item, i) => (
+          {result.map((item, i) => (
             <li 
               key={i}
               className={classnames({'bfd-auto-complete__option--active': index === i})} 

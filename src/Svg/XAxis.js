@@ -1,32 +1,31 @@
 import d3 from 'd3'
+import Axis from './Axis'
 
-export default class XAxis {
+export default class XAxis extends Axis {
   
   constructor(options) {
-    
-    Object.assign(this, options)
+
+    super(options)
 
     this.scale = d3.scale.ordinal()
       .domain(this.categories)
       .rangePoints([0, this.length])
 
-    this.axis = d3.svg.axis()
-      .orient('bottom')
+    this.axis.orient('bottom')
       .scale(this.scale)
       .tickSize(0, 0)
       .tickPadding(10)
 
-    this.container.append('g')
-      .attr('class', 'axis-x')
+    this.container.attr('class', 'axis-x')
       .attr('transform', `translate(0, ${this.top})`)
       .call(this.axis)
   }
 
-  getPosition(value) {
-    return this.scale(value)
+  getPaddingScale() {
+    return 20 / (this.length / this.categories.length)
   }
 
   getPositionByIndex(index) {
-    return this.scale(this.categories[index])
+    return this.getPosition(this.categories[index])
   }
 }

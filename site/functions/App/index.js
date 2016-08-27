@@ -22,7 +22,7 @@ class App extends Component {
               BFD UI <sub>v0.x</sub>
             </Link>
           </Col>
-          <Col col="md-3 sm-5 xs-9">
+          <Col col="md-4 sm-5 xs-10">
             <ul className="header__nav">
               <li>
                 <IndexLink to="/" activeClassName="active">首页</IndexLink>
@@ -46,9 +46,7 @@ class App extends Component {
           </Col>
         </Row>
         <div className="body">{children}</div>
-        <Row className="footer">
-          <Col right>Copyright©2016 Baifendian Corporation All Rights Reserved.</Col>
-        </Row>
+        <div className="footer">百分点前端研发部及 UI 视觉部联合出品</div>
       </div>
     )
   }

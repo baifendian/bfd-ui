@@ -1,0 +1,11 @@
+/**
+ * @title 基本功能
+ */
+
+import Percentage from 'bfd/Percentage'
+
+const PercentageBasic = () => {
+  return <Percentage percent={80} style={{width: '150px'}}></Percentage>
+}
+
+@component Percentage

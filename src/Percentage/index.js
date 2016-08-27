@@ -1,45 +1,106 @@
-import React, { PropTypes } from 'react'
-import PercentageChart from './main'
+import './index.less'
+import React, { Component, PropTypes } from 'react'
+import { findDOMNode } from 'react-dom'
 import classnames from 'classnames'
-import './main.less'
+import shouldComponentUpdate from '../shouldComponentUpdate'
 
-const propTypes = {
-  percent: PropTypes.number.isRequired,
-  foreColor: PropTypes.string,
-  backColor: PropTypes.string,
-  textColor: PropTypes.string,
-  customProp({ percent }) {
-    if (percent < 0 || percent > 100) {
-      return new Error('percent 必须为 0 到 100 之间的数字')
-    }
+class Percentage extends Component {
+
+  constructor() {
+    super()
+    this.state = {}
   }
-}
 
-const Percentage = React.createClass({
-  
-  renderChart(props) {
-    const config = {container: this.refs.container, ...props}  
-    new PercentageChart(config)
-  },
+  shouldComponentUpdate = shouldComponentUpdate
 
   componentDidMount() {
-    this.renderChart(this.props)
-  },
+    this.setState({size: findDOMNode(this).clientWidth})
+  }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.percent !== nextProps.percent) {
-      this.renderChart(nextProps)
-      return false
+  componentDidUpdate() {
+    const { percent } = this.props
+    const circle = this.refs.foreCircle
+    circle.clientWidth
+    circle.style.strokeDashoffset = this.dash * (1 - (percent / 100))
+  }
+
+  renderSvg() {
+    const { percent, foreColor, backColor, textColor } = this.props
+    const { size } = this.state
+    if (!size) return
+    const strokeWidth = size / 20
+    const radius = size / 2 - strokeWidth / 2
+    const fontSize = size * .25
+    const shareProps = {
+      r: radius,
+      fill: 'none',
+      strokeWidth,
+      cx: size / 2,
+      cy: size / 2
     }
-    return true
-  },
+    this.dash = Math.PI * radius * 2
+    return (
+      <svg width={size} height={size}>
+        <circle stroke={backColor} {...shareProps} />
+        <circle 
+          ref="foreCircle"
+          stroke={foreColor} 
+          style={{
+            transition: 'stroke-dashoffset 1s ease-out',
+            'strokeDasharray': this.dash,
+            'strokeDashoffset': this.dash
+          }}
+          {...shareProps}
+        />
+        <text 
+          textAnchor="middle" 
+          fontSize={fontSize} 
+          fill={textColor} 
+          x={size / 2} 
+          y={size / 2} 
+          dy=".3em"
+        >
+          {percent + '%'}
+        </text>
+      </svg>
+    )
+  }
 
   render() {
     const { className, ...other } = this.props
-    return <div ref="container" className={classnames('bfd-percentage', className)} {...other}></div>
+    return (
+      <div className={classnames('bfd-percentage', className)} {...other}>
+        {this.renderSvg()}
+      </div>
+    )
   }
-})
+}
 
-Percentage.propTypes = propTypes
+Percentage.defaultProps = {
+  backColor: '#f5f5f5',
+  foreColor: '#2196f3',
+  textColor: '#2196f3'
+}
+
+Percentage.propTypes = {
+
+  // 百分比数值
+  percent: PropTypes.number.isRequired,
+
+  // 前景色，默认主色调颜色
+  foreColor: PropTypes.string,
+
+  // 背景色，默认 #f5f5f5
+  backColor: PropTypes.string,
+
+  // 文字颜色，默认主色调颜色
+  textColor: PropTypes.string,
+
+  customProp({ percent }) {
+    if (percent < 0 || percent > 100) {
+      return new Error('`percent` should in domain [0, 100]')
+    }
+  }
+}
 
 export default Percentage
