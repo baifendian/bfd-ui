@@ -38,12 +38,21 @@ class App extends Component {
                 <Link to="/changelog" activeClassName="active">更新日志</Link>
               </li>
               <li>
-                <Link to="/scaffolding" activeClassName="active">脚手架</Link>
+                <a 
+                  href="https://github.com/baifendian/generator-bfd" 
+                  target="_blank"
+                >
+                  脚手架
+                </a>
               </li>
             </ul>
           </Col>
           <Col right>
-            <a href="https://github.com/baifendian/bfd-ui" className="header__github">
+            <a 
+              href="https://github.com/baifendian/bfd-ui" 
+              target="_blank" 
+              className="header__github"
+            >
               <Icon type="github" />
             </a>
           </Col>

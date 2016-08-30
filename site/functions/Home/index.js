@@ -34,11 +34,11 @@ class App {
               <em>当前版本：v1.0</em>
               <h1>百分点 UI</h1>
               <h2>企业级前端整体解决方案</h2>
-              <Link to="/guide#install">
+              <Link to="/guide#install" className="home__banner-install">
                 <Button>安装 v1.0</Button>
               </Link>
-              <Link to="/guide">
-                <Button className="home__banner-start">开始</Button>
+              <Link to="/guide" className="home__banner-start">
+                <Button>开始</Button>
               </Link>
             </Col>
           </Row>

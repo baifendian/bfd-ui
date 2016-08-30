@@ -1,12 +1,9 @@
-.home {
-}
-
 .home__banner {
+  background-color: #fafafa;
   > .center {
-    margin-top: 124px;
-    margin-bottom: 153px;
+    padding-top: 124px;
+    padding-bottom: 153px;
     overflow: hidden;
-
   }
 }
 
@@ -14,10 +11,16 @@
   img {
     width: 100%;
   }
+  @media (max-width: 1120px) {
+    display: none;
+  }
 }
 
 .home__banner-info {
   float: right;
+  @media (max-width: 1120px) {
+    float: none;
+  }
   em {
     font-style: normal;
     color: #999;
@@ -44,9 +47,17 @@
   }
 }
 
+.home__banner-install {
+  margin: 10px 30px 10px 0;
+  display: inline-block;
+}
+
 .home__banner-start {
-  background-color: #ff6285!important;
-  margin-left: 30px!important;
+  margin-top: 10px;
+  display: inline-block;
+  .bfd-btn {
+    background-color: #ff6285;
+  }
 }
 
 .home__middle {
@@ -62,6 +73,10 @@
   padding-right: 100px;
   padding-bottom: 10px;
   color: #fff;
+  @media (max-width: 992px) {
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
   h2 {
     font-size: 40px;
     color: #fff;

@@ -21,7 +21,7 @@ if (name) {
     target: dir + 'index.less'
   }, {
     source: template + 'doc.js',
-    target: path.join(__dirname, '../site/public/components/') + name + '.js'
+    target: path.join(__dirname, '../site/functions/components/docs/') + name + '.doc'
   }]
 
   var context = {

@@ -30,11 +30,6 @@ render((
           })
         }} />
       </Route>
-      <Route path="scaffolding" getComponent={(location, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./functions/Scaffolding').default)
-        })
-      }} />
       <Route path="Changelog" getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./functions/Changelog').default)

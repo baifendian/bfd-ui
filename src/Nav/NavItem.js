@@ -16,12 +16,6 @@ class NavItem extends Component {
     }
   }
 
-  getChildContext() {
-    return {
-      navItem: this
-    }
-  }
-
   componentWillMount() {
     this.prepareComponentState(this.props)
   }
@@ -69,7 +63,6 @@ class NavItem extends Component {
   }
   
   render() {
-    console.log('render')
     const { href, open, active } = this.state
     const { children, className, icon, title, ...other } = this.props
 
@@ -106,14 +99,9 @@ class NavItem extends Component {
   }
 }
 
-NavItem.childContextTypes = {
-  navItem: PropTypes.instanceOf(NavItem)
-}
-
 NavItem.contextTypes = {
   history: PropTypes.object,
-  nav: PropTypes.object,
-  navItem: PropTypes.object
+  nav: PropTypes.object
 }
 
 NavItem.propTypes = {
