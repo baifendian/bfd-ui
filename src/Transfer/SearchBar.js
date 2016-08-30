@@ -3,8 +3,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import 'bfd-bootstrap'
-import './main.less'
+import Icon from '../Icon'
 
 class SearchBar extends Component {
 
@@ -15,8 +14,9 @@ class SearchBar extends Component {
   render() {
     return (
       <div>
-        <span className="search glyphicon glyphicon-search"></span>
+        <Icon type="search" className="bfd-transfer__search" />
         <input 
+          className="bfd-transfer__input"
           placeholder="请输入搜索内容"
           ref="filterTextInput"
           onChange={::this.handleChange} />

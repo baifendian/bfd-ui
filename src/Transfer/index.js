@@ -2,15 +2,19 @@
  * Created by tenglong.jiang on 2016-03-28.
  */
 
-import 'bfd-bootstrap'
-import './main.less'
 import React, { Component, PropTypes } from 'react'
+import { Row, Col } from '../Layout'
 import SearchBar from './SearchBar'
 import SelectTable from './SelectTable'
+import './main.less'
 
 const SourceTable = SelectTable
 const TargetTable = SelectTable
 class TransferPanel extends Component {
+
+  constructor(props) {
+    super()
+  }
   
   render() {
     return (
@@ -65,7 +69,7 @@ class Transfer extends Component {
   render() {
     return (
       <div className="bfd-transfer">
-        <div className="col-xs-4">
+        <Col col="md-4">
           <SearchBar onUserInput={::this.handleUserInput}/>
           <SourceTable 
             onTransfer={::this.handleTransfer} 
@@ -75,13 +79,13 @@ class Transfer extends Component {
             direct="s2t"
             render={this.props.render}
             />
-        </div>
-        <div className="col-xs-2 bfd-pannel">
+        </Col>
+        <Col col="md-2" className="bfd-transfer__bfd-pannel">
           <TransferPanel 
             onTransfer={::this.handleTransfer} 
             height={this.props.height || 200} />
-        </div>
-        <div className="col-xs-4">
+        </Col>
+        <Col col="md-4">
           <div style={{height: '34px', lineHeight: '34px'}} >
             <span>{this.props.title || '已选项'}</span>
           </div>
@@ -93,7 +97,7 @@ class Transfer extends Component {
             direct="t2s"
             render={this.props.render}
             />
-        </div>
+        </Col>
       </div>
     )
   }
