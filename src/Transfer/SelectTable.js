@@ -2,12 +2,14 @@
  * Created by tenglong.jiang on 2016-03-30.
  */
 
-import 'bfd-bootstrap'
-import './main.less'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 
 class Row extends Component {
+
+  constructor(props) {
+    super()
+  }
   
   render() {
     return (
@@ -82,8 +84,8 @@ class SelectTable extends Component {
     })
 
     return (
-      <div style={{height: this.props.height + 'px'}} className="bfd-table">
-        <div className="list-group bfd-table-conent">
+      <div style={{height: this.props.height + 'px'}} className="bfd-transfer__bfd-table">
+        <div className="bfd-transfer__list-group bfd-transfer__bfd-table-conent">
           {rows}
         </div>
       </div>
