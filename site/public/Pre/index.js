@@ -1,4 +1,4 @@
-import './index.less'
+import '../pre.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import beautify from 'code-beautify'

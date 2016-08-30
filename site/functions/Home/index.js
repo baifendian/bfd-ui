@@ -26,17 +26,22 @@ class App {
     <div className="home">
       <div className="home__banner">
         <Center>
-          <div className="home__banner-info">
-            <em>当前版本：v1.0</em>
-            <h1>百分点 UI</h1>
-            <h2>企业级前端整体解决方案</h2>
-            <Link to="/guide#install">
-              <Button>安装 v1.0</Button>
-            </Link>
-            <Link to="/guide">
-              <Button className="home__banner-start">开始</Button>
-            </Link>
-          </div>
+          <Row>
+            <Col col="md-6" className="home__banner-left">
+              <img src={require('./img/banner.png')} />
+            </Col>
+            <Col className="home__banner-info" right>
+              <em>当前版本：v1.0</em>
+              <h1>百分点 UI</h1>
+              <h2>企业级前端整体解决方案</h2>
+              <Link to="/guide#install">
+                <Button>安装 v1.0</Button>
+              </Link>
+              <Link to="/guide">
+                <Button className="home__banner-start">开始</Button>
+              </Link>
+            </Col>
+          </Row>
         </Center>
       </div>
 

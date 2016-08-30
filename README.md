@@ -1,17 +1,37 @@
-# 百分点 UI 组件库
+# BFD UI
 
-http://ui.baifendian.com
+[![build status](https://img.shields.io/travis/baifendian/bfd-ui.svg)](https://travis-ci.org/baifendian/bfd-ui)
 
-## 开发者说明
+[![npm package](https://img.shields.io/npm/v/bfd-ui.svg?style=flat-square)](https://www.npmjs.org/package/bfd-ui) 
 
-### 本地开发环境安装
+[![NPM downloads](http://img.shields.io/npm/dm/bfd-ui.svg?style=flat-square)](https://npmjs.org/package/bfd-ui)
+
+企业级前端整体解决方案 [http://ui.baifendian.com](http://ui.baifendian.com)
+
+## 安装
 
 ```sh
-$ git clone ...
+npm install bfd-ui --save
+```
 
-$ npm install
+## 使用
 
-$ npm start
+```jsx
+import DatePicker from 'bfd-u/lib/DatePicker'
+
+ReactDOM.render(<DatePicker />, mountNode)
+```
+
+## 贡献代码
+
+### 安装开发环境
+
+```sh 
+git clone
+
+npm install
+
+npm start
 ```
 
 查看: http://localhost:4001
@@ -20,7 +40,7 @@ $ npm start
 ### 编写一个新组件
 
 ```sh
-$ npm run create MyComponent
+npm run create MyComponent
 ```
 
 查看: http://localhost:4001/components/MyComponent

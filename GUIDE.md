@@ -30,7 +30,9 @@ var config = {
 module.exports = config
 ```
 
-## 受控／非受控组件
+## 受控 / 不受控组件
+
+组件支持不受控的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)
 
 ## 都支持哪些浏览器？
 

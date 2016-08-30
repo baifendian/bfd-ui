@@ -123,8 +123,8 @@ class Select extends Component {
     if (searchValue) {
       optionsWithProps = optionsWithProps.filter(option => {
         const { value, children } = option.props
-        if (!value) return false
-        return children.indexOf(searchValue) !== -1 || value.indexOf(searchValue) !== -1
+        if (!String(value)) return false
+        return children.indexOf(searchValue) !== -1 || String(value).indexOf(searchValue) !== -1
       })
     }
 

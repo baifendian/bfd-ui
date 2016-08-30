@@ -35,10 +35,10 @@ class App extends Component {
                 <Link to="/components" activeClassName="active">组件</Link>
               </li>
               <li>
-                <Link to="/scaffolding" activeClassName="active">脚手架</Link>
+                <Link to="/changelog" activeClassName="active">更新日志</Link>
               </li>
               <li>
-                <Link to="/changelog" activeClassName="active">更新日志</Link>
+                <Link to="/scaffolding" activeClassName="active">脚手架</Link>
               </li>
             </ul>
           </Col>

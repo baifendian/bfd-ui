@@ -1,5 +1,12 @@
 import React from 'react'
+import Center from 'public/Center'
 import Markdown from 'public/Markdown'
-import html from './index.md'
+import html from '../../../GUIDE.md'
 
-export default () => <Markdown html={html} />
+export default () => {
+  return (
+    <Center>
+      <Markdown html={html} />
+    </Center>
+  )
+}

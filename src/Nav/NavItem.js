@@ -10,16 +10,52 @@ class NavItem extends Component {
   constructor(props) {
     super()
     this.state = {
-      open: props.defaultOpen || false
+      href: null,
+      open: props.defaultOpen || false,
+      active: false
+    }
+  }
+
+  getChildContext() {
+    return {
+      navItem: this
     }
   }
 
   componentWillMount() {
-    // 首次加载后，active 状态保持 open 状态
+    this.prepareComponentState(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.prepareComponentState(nextProps)
+  }
+
+  prepareComponentState(props) {
     const href = this.getHref()
-    if (this.props.children && this.isActive(href, this.isIndex(href))) {
-      this.setState({open: true})
+    const active = this.isActive(href)
+    this.setState({ href, active })
+  }
+
+  getHref() {
+    const { href, children } = this.props
+    if (!href && children) return ''
+    const baseURL = this.context.nav.props.href || ''
+    let _href = baseURL + '/' + (href || '')
+    return _href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
+  }
+
+  isActive(href) {
+    if (this.isIndex(href)) {
+      return href === (location.pathname || '/')
+    } else {
+      return href && location.href.indexOf(href) !== -1
     }
+  }
+
+  isIndex(href) {
+    if (this.props.children) return false
+    const baseURL = (this.context.nav.props.href || '').replace(/\//g, '')
+    return baseURL === href.replace(/\//g, '')
   }
 
   toggle(e) {
@@ -27,41 +63,18 @@ class NavItem extends Component {
     this.setState({open: !this.state.open})
   }
 
-  isIndex(href) {
-    const baseURL = (this.context.nav.props.href || '').replace(/\//g, '')
-    return baseURL === href.replace(/\//g, '')
-  }
-
-  isActive(href, indexOnly) {
-    if (indexOnly) {
-      return href === (location.pathname || '/')
-    } else {
-      return location.href.indexOf(href) !== -1
-    }
-    // history.isActive is expensive
-    // return this.context.history.isActive(href, this.props.query, indexOnly)
-  }
-
   handleClick(e) {
     this.props.onClick && this.props.onClick(e)
     !this.props.children && this.context.nav.handleItemClick(this.props, e)
   }
-
-  getHref() {
-    const baseURL = this.context.nav.props.href || ''
-    let href = baseURL + '/' + (this.props.href || '')
-    return href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
-  }
   
   render() {
-    const { open } = this.state
+    console.log('render')
+    const { href, open, active } = this.state
     const { children, className, icon, title, ...other } = this.props
 
     delete other.href
     delete other.defaultOpen
-
-    const href = this.getHref()
-    const active = this.isActive(href, this.isIndex(href))
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
     const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />
@@ -93,9 +106,14 @@ class NavItem extends Component {
   }
 }
 
+NavItem.childContextTypes = {
+  navItem: PropTypes.instanceOf(NavItem)
+}
+
 NavItem.contextTypes = {
   history: PropTypes.object,
-  nav: PropTypes.object
+  nav: PropTypes.object,
+  navItem: PropTypes.object
 }
 
 NavItem.propTypes = {

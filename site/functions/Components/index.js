@@ -49,7 +49,6 @@ class Components extends Component {
             {components.map((item, i) => (
               <NavItem 
                 key={item.category} 
-                href={item.category} 
                 icon={item.icon} 
                 title={item.cn}
                 defaultOpen
@@ -59,7 +58,7 @@ class Components extends Component {
                   return (
                     <NavItem
                       key={component.name}
-                      href={item.category + '/' + component.name} 
+                      href={component.name} 
                       title={component.cn + ' ' + component.name}
                     />
                   )
