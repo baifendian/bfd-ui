@@ -31,11 +31,11 @@ class App {
               <img src={require('./img/banner.png')} />
             </Col>
             <Col className="home__banner-info" right>
-              <em>当前版本：v1.0</em>
+              <em>当前版本：v0.8.0</em>
               <h1>百分点 UI</h1>
               <h2>企业级前端整体解决方案</h2>
               <Link to="/guide#install" className="home__banner-install">
-                <Button>安装 v1.0</Button>
+                <Button>安装</Button>
               </Link>
               <Link to="/guide" className="home__banner-start">
                 <Button>开始</Button>

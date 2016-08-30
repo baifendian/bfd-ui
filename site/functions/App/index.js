@@ -20,7 +20,7 @@ class App extends Component {
         <Row className="header" fluid>
           <Col>
             <Link to="/" className="header__logo">
-              BFD UI <sub>v1.0</sub>
+              BFD UI <sub>v0.8.0</sub>
             </Link>
           </Col>
           <Col>
