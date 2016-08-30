@@ -31,8 +31,15 @@ class DateRange extends Component {
   }
 
   render() {
-    const { className, onSelect, min, max, ...other } = this.props
     const { start, end } = this.state
+    const { className, onSelect, min, max, ...other } = this.props
+    
+    delete other.start
+    delete other.defaultStart
+    delete other.end
+    delete other.defaultEnd
+    delete other.onSelect
+
     return (
       <div className={classnames('bfd-daterange', className)} {...other}>
         <DatePicker 

@@ -114,6 +114,10 @@ class Select extends Component {
     const { list, searchValue, index } = this.state
     const { className, children, size, disabled, placeholder, searchable, url, ...other } = this.props
 
+    delete other.value
+    delete other.defaultValue
+    delete other.onChange
+
     let optionsWithProps = this.getOptionsWithProps()
 
     if (searchValue) {

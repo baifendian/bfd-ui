@@ -54,9 +54,11 @@ class NavItem extends Component {
   }
   
   render() {
-
     const { open } = this.state
     const { children, className, icon, title, ...other } = this.props
+
+    delete other.href
+    delete other.defaultOpen
 
     const href = this.getHref()
     const active = this.isActive(href, this.isIndex(href))

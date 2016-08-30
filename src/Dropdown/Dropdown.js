@@ -67,6 +67,10 @@ class Dropdown extends Component {
       'bfd-dropdown--open': open,
       'bfd-dropdown--disabled': disabled
     }, className)
+
+    delete other.onToggle
+    delete other.open
+
     return (
       <div 
         className={classnames(classNames)}

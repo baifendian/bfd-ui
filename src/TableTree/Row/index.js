@@ -25,12 +25,14 @@ const Row = props => {
             onClick={() => onChange('set', [...path, 'open'], !data.open)} 
           />
           <div className="bfd-table-tree__node-content">
-            {columns[0].render ? columns[0].render(data) : data[columns[0].key]}
+            {columns[0].render ? columns[0].render(data, path) : data[columns[0].key]}
           </div>
         </div>
       </td>
       {columns.slice(1).map((column, i) => {
-        return <td key={i}>{column.render ? column.render(data) : data[column.key]}</td>
+        return (
+          <td key={i}>{column.render ? column.render(data, path) : data[column.key]}</td>
+        )
       })}
     </tr>
   )

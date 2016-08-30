@@ -47,8 +47,11 @@ class TableTree extends Component {
   }
 
   render() {
-    const { className, columns, url, ...other} = this.props
-    const { data } = this.state
+    const { className, columns, url, data, ...other} = this.props
+
+    delete other.defaultData
+    delete other.onChange
+
     this.rows = []
     this.loopLeaf(data, [])
     return (

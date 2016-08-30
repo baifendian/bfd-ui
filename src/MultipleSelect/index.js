@@ -112,6 +112,10 @@ class MultipleSelect extends Component {
   render() {
 
     const { className, children, url, disabled, tagable, ...other } = this.props
+    
+    delete other.values
+    delete other.defaultValues
+
     const placeholder = '请选择'
     const { searchValue, index, values } = this.state
     const valueSet = this.valueSet = new Set(values)
