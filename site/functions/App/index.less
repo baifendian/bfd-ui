@@ -44,7 +44,6 @@ body {
 .header {
   background-color: #2196f3;
   padding: 0px 20px;
-  line-height: 60px;
   color: #fff;
   a {
     color: #fff;
@@ -62,6 +61,10 @@ body {
   padding-left: 40px;
   background: url('~public/bfd-logo.png') left center no-repeat;
   background-size: 30px 30px;
+  height: 30px;
+  line-height: 30px;
+  margin-top: 15px;
+  margin-right: 40px;
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
     background: url('~public/bfd-logo@2x.png') left center no-repeat;
     background-size: 30px 30px;
@@ -76,6 +79,7 @@ body {
 .header__nav {
   font-size: 14px;
   display: inline-block;
+  line-height: 60px;
   margin: 0;
   padding: 0;
   vertical-align: top;
@@ -94,6 +98,13 @@ body {
       }
     }
   }
+}
+
+.header__github {
+  display: block;
+  font-size: 22px;
+  line-height: 0px;
+  margin-top: 19px;
 }
 
 .body {

@@ -44,7 +44,8 @@
     "react-update": "^0.3.7",
     "sortablejs": "^1.4.2",
     "style-loader": "^0.13.0",
-    "warning": "^2.1.0"
+    "warning": "^2.1.0",
+    "wowjs": "^1.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.3.17",

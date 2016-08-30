@@ -92,6 +92,7 @@ class NavItem extends Component {
 }
 
 NavItem.contextTypes = {
+  history: PropTypes.object,
   nav: PropTypes.object
 }
 

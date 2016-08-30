@@ -24,15 +24,18 @@ class App {
 
   return (
     <div className="home">
-
       <div className="home__banner">
         <Center>
           <div className="home__banner-info">
-            <em>当前版本：V1.0</em>
+            <em>当前版本：v1.0</em>
             <h1>百分点 UI</h1>
             <h2>企业级前端整体解决方案</h2>
-            <Button>安装</Button>
-            <Button className="home__banner-start">开始</Button>
+            <Link to="/guide#install">
+              <Button>安装 v1.0</Button>
+            </Link>
+            <Link to="/guide">
+              <Button className="home__banner-start">开始</Button>
+            </Link>
           </div>
         </Center>
       </div>
@@ -54,16 +57,16 @@ class App {
       <div className="home__features">
         <Center>
           <Row>
-            <Feature title="组件化" icon={require('./feature_0.png')}>
+            <Feature title="组件化" icon={require('./img/feature_0.png')}>
               基于 React 组件开发思想，简单、灵活、高效
             </Feature>
-            <Feature title="覆盖广" icon={require('./feature_1.png')}>
+            <Feature title="覆盖广" icon={require('./img/feature_1.png')}>
               覆盖基础组件，高级交互，以及计划推出的数据可视化组件
             </Feature>
-            <Feature title="生态完整" icon={require('./feature_2.png')}>
+            <Feature title="生态完整" icon={require('./img/feature_2.png')}>
               搭配脚手架，摆脱繁琐的环境配置、重复的基础工作
             </Feature>
-            <Feature title="完全免费" icon={require('./feature_3.png')}>
+            <Feature title="完全免费" icon={require('./img/feature_3.png')}>
               基于 BSD 协议，免费开源
             </Feature>
           </Row>
