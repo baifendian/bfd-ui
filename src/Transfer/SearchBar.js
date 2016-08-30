@@ -4,6 +4,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import Icon from '../Icon'
+import Input from '../Input'
 
 class SearchBar extends Component {
 
@@ -15,7 +16,7 @@ class SearchBar extends Component {
     return (
       <div>
         <Icon type="search" className="bfd-transfer__search" />
-        <input 
+        <Input 
           className="bfd-transfer__input"
           placeholder="请输入搜索内容"
           ref="filterTextInput"

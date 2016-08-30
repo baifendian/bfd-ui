@@ -68,7 +68,7 @@ class Transfer extends Component {
 
   render() {
     return (
-      <div className="bfd-transfer">
+      <Row className="bfd-transfer">
         <Col col="md-4">
           <SearchBar onUserInput={::this.handleUserInput}/>
           <SourceTable 
@@ -98,7 +98,7 @@ class Transfer extends Component {
             render={this.props.render}
             />
         </Col>
-      </div>
+      </Row>
     )
   }
 
