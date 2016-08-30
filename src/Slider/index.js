@@ -38,10 +38,6 @@ class Slider extends Component {
     this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
   }
 
-  componentWillUnmount() {
-
-  }
-
   render() {
     const { className, ...other } = this.props
     return (
@@ -64,19 +60,13 @@ class Slider extends Component {
     event.stopPropagation()
     this.isDown = true
     const BODY = document.body
-<<<<<<< HEAD
+    BODY.style.cursor = 'default'
     this.mouseMoveFn = ::this.handleMouseMove
     this.mouseUpFn = ::this.handleMouseUp
     BODY.addEventListener('mousemove', this.mouseMoveFn)
     BODY.addEventListener('mouseup', this.mouseUpFn)
   }
 
-=======
-    BODY.style.cursor = 'default'
-    BODY.addEventListener('mousemove', this.handleMouseMove)
-    BODY.addEventListener('mouseup', this.handleMouseUp)
-  },
->>>>>>> 0.7.x
   handleMouseMove(event) {
     const slider = this.refs.slider
     const selectedBar = this.refs.selectedBar
@@ -113,17 +103,11 @@ class Slider extends Component {
     }
 
     const BODY = document.body
-<<<<<<< HEAD
+    BODY.style.cursor = ''
     BODY.removeEventListener('mousemove', this.mouseMoveFn)
     BODY.removeEventListener('mouseup', this.mouseUpFn)
   }
 
-=======
-    BODY.style.cursor = ''
-    BODY.removeEventListener('mousemove', this.handleMouseMove)
-    BODY.removeEventListener('mouseup', this.handleMouseUp)
-  },
->>>>>>> 0.7.x
   getValue(currWidth) {
     const end = this.props.end
     const start = this.props.start || 0
@@ -144,7 +128,6 @@ class Slider extends Component {
     v == 0 ? 1 : v
     const width = this.width
     return width / v * value
-<<<<<<< HEAD
   }
 }
 
@@ -156,55 +139,6 @@ class Scale extends Component {
 
   constructor(props) {
     super()
-=======
-  },
-  componentDidMount() {
-    const bar = this.refs.bar
-    const selectedBar = this.refs.selectedBar
-    const slider = this.refs.slider
-    const style = getComputedStyle(bar)
-    const sliderStyle = getComputedStyle(slider)
-    const defaultValue = this.props.defaultValue || this.props.start || 0
-    this.width = parseInt(style.width, 10)
-    this.sliderWidth = parseInt(sliderStyle.width, 10)
-    this.offsetLeft = this.getOffsetLeft(bar) + this.marginLeft
-    slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
-    selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
-    this.refs.msg.innerHTML = defaultValue + (this.props.suffix || '')
-  },
-  getOffsetLeft(el) {
-    let left = 0;
-    let offsetParent = el;
-    while (offsetParent != null && offsetParent != document.body) {
-      left += offsetParent.offsetLeft;
-      offsetParent = offsetParent.offsetParent;
-    }
-    return left
-  },
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    delete other.tickValue
-    delete other.suffix
-    delete other.onSliding
-    delete other.onSlid
-    return (
-      <div ref="container" className={classnames('bfd-seekbar', className)} {...other}>
-        <div ref="bar" className="bar">
-          <div ref="slider" className="slider" onMouseDown={this.handleMouseDown}>
-            <div ref="tip" className="tooltips">
-              <span ref="msg" className="text">0{this.props.suffix || ''}</span>
-              <div className="arrow-down"></div>
-            </div>
-          </div>
-          <div ref="selectedBar" className="selected"></div>
-          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>       
-        </div>
-      </div>
-    )
->>>>>>> 0.7.x
   }
 
   componentWillMount() {

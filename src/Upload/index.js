@@ -118,35 +118,6 @@ class Upload extends Component {
         return
       }
     })
-<<<<<<< HEAD
-=======
-  },
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    delete other.text
-    delete other.onComplete
-    delete other.showFileList
-    const isShow = this.props.showFileList
-    const isShowList = typeof isShow == 'undefined' ? true : isShow
-    return (
-      <div className={classnames('bfd-upload', className)} {...other}>
-        <input ref="file" onChange={this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
-        <button className="btn btn-primary" type="button" onClick={this.handleClick}>
-          {this.props.text || '文件上传'} 
-        </button>
-        {
-          isShowList ? 
-          <div className="listbox">
-            <FileList data={this.state.list} onRemove={this.handleRemove}></FileList> 
-          </div>
-          : ''
-        }
-      </div>
-    )
->>>>>>> 0.7.x
   }
 }
 

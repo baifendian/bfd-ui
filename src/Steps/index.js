@@ -151,13 +151,9 @@ class Steps extends Component {
       children,
       ...other
     } = this.props
-<<<<<<< HEAD
-    const items = findAllByType(children, Step)
-=======
     delete other.current
     delete other.onStepClick
-    const items = findAllByType(children, Step);
->>>>>>> 0.7.x
+    const items = findAllByType(children, Step)
     items.map((item, index) => {
       rows.push(<Step 
         key={index} 

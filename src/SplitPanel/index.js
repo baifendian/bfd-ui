@@ -1,14 +1,9 @@
-<<<<<<< HEAD
 /**
  * Created by tenglong.jiang on 2016-05-13.
  */
 
 import React, { Component, PropTypes } from 'react'
 import findAllByType from '../findAllByType'
-=======
-import React, { PropTypes } from 'react'
-import { findAllByType } from '../util/ReactUtils'
->>>>>>> 0.7.x
 import classnames from 'classnames'
 import './index.less'
 

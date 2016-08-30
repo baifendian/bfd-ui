@@ -37,28 +37,6 @@ class SearchInput extends Component {
     if (typeof this.props.onSearch == 'function') {
       this.props.onSearch(this.value)
     }
-<<<<<<< HEAD
-=======
-  },
-
-  render() {
-    const {
-      className,
-      ...other
-    } = this.props
-    delete other.onSearch
-    const size = this.props.size || 'lg'
-    this.value = this.props.defaultValue || ''
-    return (
-      <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput defaultValue={this.value} size={size} onChange={this.handleChange} inline placeholder={this.props.placeholder || '' }/>
-        <button className={classnames('btn btn-primary', size)} type="button" onClick={this.handleClick}>
-          <span className="glyphicon glyphicon-search"></span>
-          {this.props.label || '搜索'} 
-        </button>
-      </div>
-    )
->>>>>>> 0.7.x
   }
 }
 
