@@ -1,6 +1,7 @@
 import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import shouldComponentUpdate from '../shouldComponentUpdate'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select/Option'
 import { CheckboxGroup, Checkbox } from '../Checkbox'
@@ -25,6 +26,8 @@ class MultipleSelect extends Component {
   componentWillReceiveProps(nextProps) {
     nextProps.values && this.setState({values: nextProps.values})  
   }
+
+  shouldComponentUpdate: shouldComponentUpdate
 
   change(values) {
     this.setState({ 
@@ -109,6 +112,10 @@ class MultipleSelect extends Component {
   render() {
 
     const { className, children, url, disabled, tagable, ...other } = this.props
+    
+    delete other.values
+    delete other.defaultValues
+
     const placeholder = '请选择'
     const { searchValue, index, values } = this.state
     const valueSet = this.valueSet = new Set(values)
@@ -239,7 +246,7 @@ MultipleSelect.propTypes = {
   // 数据源 URL，直接请求服务器，内部调用 xhr 模块
   url: PropTypes.string,
 
-  // data / url 方式 Option 渲染逻辑
+  // data / url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
   
   customProp({ values, onChange, url, render }) {

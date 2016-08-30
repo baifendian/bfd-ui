@@ -47,8 +47,15 @@ class Form extends Component {
     this.items.splice(this.items.indexOf(item), 1)
   }
 
+  /**
+   * @public
+   * @name this.refs.form.validate
+   * @param  {object} [data] 验证的数据，默认验证表单当前的数据
+   * @return {boolean} 成功/失败
+   * @description 表单整体验证
+   */
   validate(data) {
-    data || (data = this.props.data)
+    data || (data = this.state.data)
     let isValid = true
     this.items.forEach(formItem => {
       const { name, multiple } = formItem.props
@@ -62,6 +69,13 @@ class Form extends Component {
     return isValid
   }
 
+  /**
+   * @public
+   * @name this.refs.form.save
+   * @param  {object} [data] 提交的数据，默认提交表单当前的数据
+   * @description 表单提交，提交地址为 action 属性, 默认提交 data 
+   * 属性数据，可以自定义传入。发送请求前会进行表单验证, 提交成功会响应 onSuccess
+   */
   save(data) {
     if (this.validate()) {
       if (process.env.NODE_ENV !== 'production') {
@@ -70,7 +84,7 @@ class Form extends Component {
       xhr({
         type: 'POST',
         url: this.props.action,
-        data: data || this.props.data,
+        data: data || this.state.data,
         success: data => {
           this.props.onSuccess && this.props.onSuccess(data)
         }

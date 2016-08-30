@@ -26,6 +26,13 @@ class FormItem extends Component {
     this.context.form.removeItem(this)
   }
 
+  /**
+   * @public
+   * @name this.refs.form.validate
+   * @param  {*} value 待验证字段的数据
+   * @return {boolean} 成功/失败
+   * @description 单个字段验证
+   */
   validate(value) {
     const rules = this.context.form.props.rules
     const rule = rules && rules[this.props.name]

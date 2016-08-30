@@ -29,7 +29,7 @@ Button.propTypes = {
   // 按钮类型，除默认外可选值: minor / inverse
   type: PropTypes.string,
   
-  // 按钮尺寸，除默认外可选值：sm / lg
+  // 按钮尺寸，除默认外可选值：sm、lg
   size: PropTypes.string,
   
   // 按钮图标，支持 fontawaresome 图标

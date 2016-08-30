@@ -30,6 +30,9 @@
     "name": "Tabs",
     "cn": "选项卡"
   }, {
+    "name": "ButtonGroup",
+    "cn": "按钮组"
+  }, {
     "name": "Modal",
     "cn": "模态框"
   }, {
@@ -54,14 +57,11 @@
     "name": "Switch",
     "cn": "开关"
   }, {
+    "name": "Percentage",
+    "cn": "环形百分比"
+  }, {
     "name": "Upload",
     "cn": "上传"
-  }, {
-    "name": "SplitPanel",
-    "cn": "分栏"
-  }, {
-    "name": "ButtonGroup",
-    "cn": "按钮组"
   }]
 }, {
   "category": "advance",
@@ -81,11 +81,11 @@
     "cn": "表格树"
   }, {
     "name": "ClearableInput",
-    "cn": "可清空的输入框"
+    "cn": "清空输入框"
   }, {
     "name": "Slider",
     "cn": "拖动条"
-  }, {
+  },  {
     "name": "Editable",
     "cn": "可编辑的"
   }, {
@@ -106,31 +106,11 @@
     "name": "Transfer",
     "cn": "穿梭框"
   }, {
+    "name": "SplitPanel",
+    "cn": "分栏"
+  }, {
     "name": "Steps",
     "cn": "步骤条"
-  }]
-}, {
-  "category": "visualization",
-  "cn": "可视化",
-  "icon": "bar-chart",
-  "components": [{
-    "name": "LineChart",
-    "cn": "线图"
-  }, {
-    "name": "ColumnChart",
-    "cn": "柱状图"
-  }, {
-    "name": "StackedColumnChart",
-    "cn": "堆叠图"
-  }, {
-    "name": "PieChart",
-    "cn": "饼图"
-  }, {
-    "name": "BubbleChart",
-    "cn": "气泡图"
-  }, {
-    "name": "Percentage",
-    "cn": "环形百分比"
   }]
 }, {
   "category": "tools",

@@ -7,8 +7,13 @@ import Fetch from '../Fetch'
 
 class Chart extends Component {
 
+  constructor() {
+    super()
+    this.handleResize = ::this.handleResize
+  }
+
   renderChart(props) {
-    new this.props.type({
+    this.chart = new this.props.type({
       container: this.container,
       ...props
     })
@@ -35,6 +40,16 @@ class Chart extends Component {
     if (this.props.data) {
       this.renderChart(this.props)
     }
+    // Enable responsive
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize() {
+    this.chart.resize && this.chart.resize()
   }
 
   render() {

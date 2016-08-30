@@ -1,0 +1,82 @@
+/**
+ * @title 基本功能
+ */
+import { Tabs, TabList, Tab, TabPanel } from 'bfd/Tabs'
+
+const TabsBasic = () => {
+  return (
+    <Tabs>
+      <TabList>
+        <Tab>群体特征报告</Tab>
+        <Tab>样例用户画像</Tab>
+      </TabList>
+      <TabPanel>我是群体特征报告</TabPanel>
+      <TabPanel>我是样例用户画像</TabPanel>
+    </Tabs>
+  )
+}
+
+/**
+ * @title 页签模式
+ */
+import { Tabs, TabList, Tab, TabPanel } from 'bfd/Tabs'
+import Button from 'bfd/Button'
+
+class TabsDynamic extends Component {
+
+  constructor(props) {
+    super()
+    this.state = {
+      tabs: [{
+        id: 'A',
+        name: '新建页签A'
+      }, {
+        id: 'B',
+        name: '新建页签B'
+      }]
+    }
+  }
+
+  handleClose(index) {
+    const tabs = this.state.tabs
+    tabs.splice(index, 1)
+    this.setState({ tabs, activeIndex: tabs.length - 1 })
+  }
+
+  handleAdd(e) {
+    e.preventDefault()
+    const tabs = this.state.tabs
+    const id = Math.random().toString(16).slice(2, 6)
+    tabs.push({
+      id,
+      name: `新建页签${id}`
+    })
+    this.setState({ tabs, activeIndex: tabs.length - 1 })
+  }
+
+  render() {
+    const { activeIndex, tabs } = this.state
+    return (
+      <Tabs 
+        dynamic 
+        activeIndex={activeIndex}
+        handleClose={::this.handleClose} 
+        onChange={activeIndex => this.setState({ activeIndex })}
+      >
+        <TabList>
+          {tabs.map((item, i) => (
+            <Tab key={item.id}>{item.name}</Tab>)
+          )}
+          <Button transparent icon="plus" onClick={::this.handleAdd} />
+        </TabList>
+        {tabs.map((item, i) => (
+          <TabPanel key={item.id}>{`我是${item.name}`}</TabPanel>
+        ))}
+      </Tabs>
+    )
+  }
+}
+
+@component Tabs/Tabs
+@component Tabs/Tab
+@component Tabs/TabPanel

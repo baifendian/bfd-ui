@@ -83,6 +83,11 @@ class Fetch extends Component {
 
   render() {
     const { className, ...other } = this.props
+
+    delete other.url
+    delete other.onSuccess
+    delete other.delay
+
     return (
       <div className={classnames('bfd-fetch', className)} {...other}>
         {(this.stateMap[this.state.xhr] || (() => null)).call(this)}

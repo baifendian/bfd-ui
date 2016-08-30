@@ -3,8 +3,8 @@ import React from 'react'
 /**
  * 选项组容器节点
  */
-function TabList(props) {
-  return <ul className="nav nav-tabs">{props.children}</ul>
+const TabList = props => {
+  return <ul className="bfd-tabs__list">{props.children}</ul>
 }
 
 export default TabList

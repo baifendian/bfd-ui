@@ -31,8 +31,15 @@ class DatePicker extends Component {
   }
 
   render() {
-    const { className, onSelect, min, max, start, end, ...other } = this.props
     const { date } = this.state
+    const { className, onSelect, min, max, start, end, ...other } = this.props
+
+    delete other.date
+    delete other.defaultDate
+    delete other.min
+    delete other.max
+    delete other.onSelect
+
     let value
     let placeholder
     if (date) {

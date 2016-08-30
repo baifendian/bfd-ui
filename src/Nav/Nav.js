@@ -14,7 +14,11 @@ class Nav extends Component {
   }
   
   render() {
-    const { className, children, href, ...other } = this.props
+    const { className, children, ...other } = this.props
+
+    delete other.href
+    delete other.onItemClick
+
     return (
       <div className={classnames('bfd-nav', className)} {...other}>
         <ul>{children}</ul>

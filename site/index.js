@@ -12,6 +12,11 @@ render((
           cb(null, require('./functions/Home').default)
         })
       }}/>
+      <Route path="guide" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./functions/Guide').default)
+        })
+      }}/>
       <Route path="components" getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./functions/Components').default)
@@ -20,9 +25,9 @@ render((
         <IndexRedirect to="/components/base/Button" />
         <Route path=":cat">
           <Route path=":component" getComponent={(location, cb) => {
-            const Component = location.pathname.split('/').pop()
+            const component = location.pathname.split('/').pop()
             require.ensure([], require => {
-              cb(null, require(`./functions/Components/docs/${Component}.doc`).default)
+              cb(null, require(`./functions/Components/docs/${component}.doc`).default)
             })
           }} />
         </Route>

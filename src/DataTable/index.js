@@ -2,7 +2,12 @@
  * Created by BFD_270 on 2016-02-19.
  * Update by jiangtl on 2016-6-28.
  */
+<<<<<<< HEAD
 import React, { Component, PropTypes } from 'react'
+=======
+import 'bfd-bootstrap'
+import React, { PropTypes } from 'react'
+>>>>>>> 0.7.x
 import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
@@ -62,6 +67,7 @@ class Rows extends Component {
       </tbody>
     )
   }
+<<<<<<< HEAD
 
   handleCheckboxChange(row) {
     row.isSelect = !row.isSelect
@@ -73,6 +79,18 @@ class Rows extends Component {
     this.props.rows.map((item) => {
       if (item.isSelect) {
         selectRow.push(item)
+=======
+})
+
+export default React.createClass({
+  items: [],
+  propTypes: {
+    data: PropTypes.object,
+    url: PropTypes.string,
+    customProp({data, url}) {
+      if (data && url) {
+        return new Error('data属性和url属性不能同时使用！')
+>>>>>>> 0.7.x
       }
     })
 
@@ -251,7 +269,8 @@ class DataTable extends Component {
 
   handleSuccess(data) {
     this.setState({
-      items: data
+      items: data,
+      isSelectAll: false
     })
   }
 
@@ -293,7 +312,11 @@ class DataTable extends Component {
         isSelectAll: true
       })
     }
+<<<<<<< HEAD
   }
+=======
+  },
+>>>>>>> 0.7.x
 
   handleRowClick(row) {
     this.props.onRowClick && this.props.onRowClick(row)
@@ -308,8 +331,24 @@ DataTable.propTypes = {
   // 数据表格表头列名称
   column: PropTypes.array.isRequired,
 
+<<<<<<< HEAD
   // 每页需要显示的条数
   howRow: PropTypes.number,
+=======
+  render: function() {
+    const self = this
+    let { className, column, url, ...other } = this.props
+    delete other.howRow
+    delete other.showPage
+    delete other.onRowClick
+    delete other.onOrder
+    delete other.onPageChange
+    delete other.onCheckboxSelect
+    let totalPageNum = 0,
+      currentPage = parseInt(this.state.currentPage),
+      //新增自动分页功能 
+      pageSize = parseInt(this.props.howRow)
+>>>>>>> 0.7.x
 
   // DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现。data支持一次性查询多条数据传入data属性中，不需要点击一次分页再发送一次ajax请求，此功能根据业务需求使用！
   data: PropTypes.object,

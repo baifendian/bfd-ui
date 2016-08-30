@@ -1,69 +1,84 @@
 import React from 'react'
 import { Link } from 'react-router'
+import Button from 'bfd/Button'
+import { Row, Col } from 'bfd/Layout'
+import Center from 'public/Center'
 import Pre from 'public/Pre'
+import Feature from './Feature'
+import './index.less'
 
-export default React.createClass({
-  render() {
-    return (
-      <div className="home">
-        <h1>百分点 UI 组件库</h1>
-        <blockquote>
-          <footer>不仅仅是一个组件库，更是一种开发模式。</footer>
-        </blockquote>
+export default () => {
 
-        <Pre>
-{`import DatePicker from 'bfd-ui/lib/DatePicker'
+  const code = `import DatePicker from 'bfd/DatePicker'
 
-const DatePickerDemo = React.createClass({
+class App {
   
   handleSelect(date) {
     console.log(date)
-  },
+  }
 
   render() {
     return <DatePicker onSelect={this.handleSelect} />
   }
-})`}
-        </Pre>
+}`
 
-        <h2>如何开始</h2>
-        
-        <p>如果你对 Node.js、npm、React、webpack 等不熟悉，直接按 <Link to="/workflow">工作流</Link> 方式开始使用，各种环境、配置都不用操心了。</p>
-
-        <p>如果已经有相关环境，想单独用组件库的话：</p>
-        
-        <Pre lang="sh">{`$ npm install bfd-ui --save`}</Pre>
-
-        <p>webpack 额外配置</p>
-        <Pre>
-{`var autoprefixer = require('autoprefixer')
-var config = {
-  module: {
-    loaders: [{
-      test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
-      loader: 'file?name=files/[hash].[ext]'
-    }, {
-      test: /\\.less$/,
-      loader: 'style!css!less!postcss'
-    }]
-  },
-  postcss: [autoprefixer({ browsers: ['last 3 versions'] })]
-}
-module.exports = config`}
-        </Pre>
-
-        <h2>浏览器支持</h2>
-        <p>Chrome、Firefox、Safari、IE9+</p>
-
-        <h2>特性</h2>
-        <ol>
-          <li>组件化开发，简单、清晰。</li>
-          <li>基于 bootstrap、React、D3 等库，业务开发也更简单。</li>
-          <li>集成数据可视化图表库，方便快速的制作各类报表系统。</li>
-          <li>可根据业务需求补充各类组件，形成良性循环。</li>
-          <li>按需使用，并非大而全的库。</li>
-        </ol>
+  return (
+    <div className="home">
+      <div className="home__banner">
+        <Center>
+          <div className="home__banner-info">
+            <em>当前版本：v1.0</em>
+            <h1>百分点 UI</h1>
+            <h2>企业级前端整体解决方案</h2>
+            <Link to="/guide#install">
+              <Button>安装 v1.0</Button>
+            </Link>
+            <Link to="/guide">
+              <Button className="home__banner-start">开始</Button>
+            </Link>
+          </div>
+        </Center>
       </div>
-    )
-  }
-})
+
+      <div className="home__middle">
+        <Center>
+          <Row>
+            <Col col="md-6" className="home__middle-left">
+              <h2>组件化开发</h2>
+              <p>百分点 UI 抛弃了传统的组件封装方式，基于 React 组件开发思想，语义化 UI 的同时可作为一种数据类型自由传递，无论需求多么复杂，场景多么奇特，我们都可以搞定。</p>
+            </Col>
+            <Col col="md-6">
+              <Pre className="home__middle-code">{code}</Pre>
+            </Col>
+          </Row>
+        </Center>
+      </div>
+
+      <div className="home__features">
+        <Center>
+          <Row>
+            <Feature title="组件化" icon={require('./img/feature_0.png')}>
+              基于 React 组件开发思想，简单、灵活、高效
+            </Feature>
+            <Feature title="覆盖广" icon={require('./img/feature_1.png')}>
+              覆盖基础组件，高级交互，以及计划推出的数据可视化组件
+            </Feature>
+            <Feature title="生态完整" icon={require('./img/feature_2.png')}>
+              搭配脚手架，摆脱繁琐的环境配置、重复的基础工作
+            </Feature>
+            <Feature title="完全免费" icon={require('./img/feature_3.png')}>
+              基于 BSD 协议，免费开源
+            </Feature>
+          </Row>
+        </Center>
+      </div>
+
+      <div className="home__bottom">
+        <Center>
+          <h1>站在巨人的肩膀上，无所不能</h1>
+          <p>百分点 UI 汲取了很多优秀的社区资源，通过开源的形式来回馈大家。</p>
+        </Center>
+      </div>
+    </div>
+  )
+}

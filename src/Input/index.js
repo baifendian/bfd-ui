@@ -4,12 +4,20 @@ import classnames from 'classnames'
 
 class Input extends Component {
 
-  // @public
+  /**
+   * @public
+   * @name this.refs.input.focus
+   * @description 同 HTMLInputElement.focus()
+   */
   focus() {
     this.refs.input.focus()
   }
 
-  // @public
+  /**
+   * @public
+   * @name this.refs.input.select
+   * @description 同 HTMLInputElement.select()
+   */
   select() {
     this.refs.input.select()
   }

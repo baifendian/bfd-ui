@@ -39,8 +39,14 @@ class ClearableInput extends Component {
   }
 
   render() {
+    const { value } = this.state
     const { className, onChange, ...other } = this.props
-    const value = this.state.value
+
+    delete other.value
+    delete other.defaultValue
+    delete other.onChange
+    delete other.onClear
+
     return (
       <div className={classnames('bfd-clearable-input', className)}>
         <Input 
@@ -78,7 +84,7 @@ ClearableInput.propTypes = {
   // 清空后的回调
   onClear: PropTypes.func,
 
-  // 输入框大小，除默认外可选值：sm / lg
+  // 输入框大小，除默认外可选值：sm、lg
   size: PropTypes.string,
 
   // 是否禁用

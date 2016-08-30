@@ -4,10 +4,11 @@ import classnames from 'classnames'
 import beautify from 'code-beautify'
 
 const Pre = props => {
-  const code = beautify(props.children, props.lang || 'js')
+  const { className, lang, transparent, children } = props
+  const code = beautify(children, lang || 'js')
   return (
     <pre 
-      className={classnames('pre', {'pre--transparent': props.transparent})}
+      className={classnames('pre', {'pre--transparent': transparent}, className)}
       dangerouslySetInnerHTML={{__html: code}}
     />
   )

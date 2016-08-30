@@ -1,0 +1,31 @@
+import d3 from 'd3'
+import Axis from './Axis'
+
+export default class XAxis extends Axis {
+  
+  constructor(options) {
+
+    super(options)
+
+    this.scale = d3.scale.ordinal()
+      .domain(this.categories)
+      .rangePoints([0, this.length])
+
+    this.axis.orient('bottom')
+      .scale(this.scale)
+      .tickSize(0, 0)
+      .tickPadding(10)
+
+    this.container.attr('class', 'axis-x')
+      .attr('transform', `translate(0, ${this.top})`)
+      .call(this.axis)
+  }
+
+  getPaddingScale() {
+    return 20 / (this.length / this.categories.length)
+  }
+
+  getPositionByIndex(index) {
+    return this.getPosition(this.categories[index])
+  }
+}

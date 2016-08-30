@@ -6,6 +6,7 @@
 
 const fs = require('fs')
 const path = require('path')
+const marked = require('marked')
 
 // 智能添加依赖，自动规避重复声明
 const imports = {
@@ -98,27 +99,30 @@ module.exports = function (source) {
     const sourceCode = fs.readFileSync(dir, 'utf8')
 
     // 组件 props
-    match = sourceCode.match(/\.propTypes = ({[\s\S]+\n})/)
+    match = sourceCode.match(/\.propTypes = ({[^]+\n})/)
     if (match) {
       match = match[1]
-      const reg = /(\/\/[\s\S]+?)?(\w+):\s*PropTypes(.*)/g
+      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*PropTypes(.*)/g
       let res
       while (res = reg.exec(match)) {
+        let desc = res[2] || ''
+        if (desc) {
+          desc = desc.trim().replace(/\*\/$/, '')
+          desc = marked(desc.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
+        }
         doc.props.push({
-          name: res[2],
-          desc: (res[1] || '').replace('//', '').trim(),
-          types: res[3].match(/string|bool|number|object|array|func/g),
-          required: !!res[3].match(/isRequired/)
+          name: res[3],
+          desc: desc,
+          types: res[4].match(/string|bool|number|object|array|func|element/g),
+          required: !!res[4].match(/isRequired/)
         })
       }
     }
 
     // API、组件对外的方法
-    const apiReg = /\* @public([\s\S]+?)\*\//g
+    const apiReg = /\* @public([^]+?)\*\//g
     while(match = apiReg.exec(sourceCode)) {
       match = match[1]
-      const reg = /\* @([a-z]+)\s+(.*)/g
-      let res
       const api = {}
       const handleMap = {
         name: res => {
@@ -128,14 +132,14 @@ module.exports = function (source) {
           api.type = res
         },
         description: res => {
-          api.desc = res
+          api.desc = marked(res.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
         },
         param: res => {
           const param = {}
-          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+(.*)/)
+          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([^]*)/)
           param.type = res[1]
           param.name = res[2]
-          param.desc = res[3].trim()
+          param.desc = marked(res[3].replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
           ;(api.params || (api.params = [])).push(param)
         },
         'return': res => {
@@ -146,15 +150,18 @@ module.exports = function (source) {
           }
         }
       }
-      while (res = reg.exec(match)) {
-        handleMap[res[1]] && handleMap[res[1]](res[2].trim())
-      }
+      const reg = /([a-z]+)\s+([^]*)/
+      match = match.split(/(\r?\n?) \* @/).slice(1)
+      match.forEach(v => {
+        v = v.match(reg)
+        v && handleMap[v[1]] && handleMap[v[1]](v[2])
+      })
       doc.apis.push(api)
     }
 
     docs.push(doc)
   }]
-  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [\s\S]+?\n})|@component\s(.+)/g
+  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [^]+?\n})|@component\s(.+)/g
   source.replace(reg, (match, p1, p2, p3, p4) => {
     [p1, p2, p3, p4].forEach((match, i) => {
       match && callbacks[i](match)

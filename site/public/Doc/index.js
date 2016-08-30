@@ -1,6 +1,7 @@
 import './index.less'
 import React from 'react'
 import classnames from 'classnames'
+import Markdown from 'public/Markdown'
 
 const Doc = props => {
   return (
@@ -24,7 +25,9 @@ const Doc = props => {
                   {prop.name}
                 </td>
                 <td className="doc__prop-type">{prop.types.join(' | ')}</td>
-                <td>{prop.desc}</td>
+                <td>
+                  <Markdown html={prop.desc} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -38,14 +41,35 @@ const Doc = props => {
               {name}{type ? null : '( ' + (params || []).map(v => v.name).join(', ') + ' )'}
             </dt>
             {params && (
-              <dd className="doc__api-args">
-                {params.map(param => <div key={param.name}>{param.type} {param.name} {param.desc}</div>)}
+              <dd>
+                <h2>参数</h2>
+                <ul>
+                  {params.map(param => (
+                    <li key={param.name}>
+                      {param.name} {param.type}
+                      <Markdown html={param.desc} />
+                    </li>
+                  ))}
+                </ul>
+              </dd>
+            )}
+            {api['return'] && (
+              <dd>
+                <h2>返回</h2>
+                {api['return'].type}
+                {api['return'].desc}
               </dd>
             )}
             {type && (
-              <dd className="doc__api-args">{type}</dd>
+              <dd>
+                <h2>类型</h2>
+                {type}
+              </dd>
             )}
-            <dd>{desc}</dd>
+            <dd>
+              <h2>描述</h2>
+              <Markdown html={desc} />
+            </dd>
           </dl>
         )
       })}

@@ -54,15 +54,17 @@ class NavItem extends Component {
   }
   
   render() {
-
     const { open } = this.state
     const { children, className, icon, title, ...other } = this.props
+
+    delete other.href
+    delete other.defaultOpen
 
     const href = this.getHref()
     const active = this.isActive(href, this.isIndex(href))
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
-    const Toggle = children && <Icon type="angle-right" className="bfd-nav__item-toggle" />
+    const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />
 
     const Item = children
       ? <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a>
@@ -92,6 +94,7 @@ class NavItem extends Component {
 }
 
 NavItem.contextTypes = {
+  history: PropTypes.object,
   nav: PropTypes.object
 }
 
