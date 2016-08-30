@@ -7,7 +7,6 @@ import classnames from 'classnames'
 import xhr from '../xhr'
 import Button from '../Button'
 import FileList from './FileList'
-import 'bfd-bootstrap'
 import './main.less'
 
 class Upload extends Component {

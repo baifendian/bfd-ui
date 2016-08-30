@@ -2,10 +2,10 @@
  * Created by tenglong.jiang on 2016-05-30.
  */
 
-import 'bfd-bootstrap'
-import './main.less'
 import React from 'react'
+import Icon from '../Icon'
 import confirm from '../confirm'
+import './main.less'
 
 export default React.createClass({
   handleClick(item) {
@@ -24,10 +24,10 @@ export default React.createClass({
             <div key={index} className="bfd-upload__filelist__row">
               <span>{item.name}</span>
               <span>{item.percent}%</span>
-              <span style={{display: item.state == 0 ? '' : 'none'}} className="glyphicon glyphicon-upload"></span>
-              <span style={{color: 'green', display: item.state == 1 ? '' : 'none'}} className="glyphicon glyphicon-ok-sign"></span>
-              <span title="上传失败" style={{color: 'red', display: item.state == 2 ? '' : 'none'}} className="glyphicon glyphicon-remove-sign"></span>
-              <span style={{color: 'gray', cursor: 'pointer'}} className="glyphicon glyphicon-trash" onClick={this.handleClick.bind(this, item)}></span>
+              <Icon type="upload" style={{display: item.state == 0 ? '' : 'none'}} />
+              <Icon type="check-circle" style={{paddingRight: '10px', color: 'green', display: item.state == 1 ? '' : 'none'}} />
+              <Icon title="上传失败" type="times-circle" style={{paddingRight: '10px', color: 'red', display: item.state == 2 ? '' : 'none'}} />
+              <Icon type="trash" style={{color: 'gray', cursor: 'pointer'}}  onClick={this.handleClick.bind(this, item)}/>
             </div>
           )          
         })
