@@ -2,7 +2,6 @@
  * Created by tenglong.jiang on 2016-05-13.
  */
 
-import 'bfd-bootstrap'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import './main.less'

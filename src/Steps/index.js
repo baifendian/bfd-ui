@@ -1,4 +1,3 @@
-import 'bfd-bootstrap'
 import React, { Component, PropTypes } from 'react'
 import Icon from '../Icon'
 import findAllByType from '../findAllByType'
