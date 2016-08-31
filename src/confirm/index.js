@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
 import warning from 'warning'
-import classnames from 'classnames'
 import Button from '../Button'
 import './index.less'
 

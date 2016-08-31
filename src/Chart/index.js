@@ -26,7 +26,7 @@ class Chart extends Component {
     })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (this.props.data !== nextProps.data) {
       this.renderChart(nextProps)
       return false

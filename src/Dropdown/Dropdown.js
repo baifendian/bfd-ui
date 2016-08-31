@@ -96,7 +96,13 @@ Dropdown.propTypes = {
   onToggle: PropTypes.func,
   
   // 是否禁用
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+
+  customProp({ open, onToggle }) {
+    if (open && !onToggle) {
+      return new Error('You provided a `open` prop without an `onToggle` handler')
+    }
+  }
 }
 
 export default Dropdown

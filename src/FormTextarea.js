@@ -1,3 +1,3 @@
-import FormTextarea  from './Form/FormTextarea'
+import FormTextarea from './Form/FormTextarea'
 
 export default FormTextarea

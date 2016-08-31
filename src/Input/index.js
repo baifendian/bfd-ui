@@ -27,7 +27,7 @@ class Input extends Component {
     const classNames = classnames(
       'bfd-input', 
       {
-        [`bfd-input--${size}`]: size,
+        [`bfd-input--${size}`]: size
       },
       className
     )

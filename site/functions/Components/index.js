@@ -1,14 +1,14 @@
 import './index.less'
 import React, { Component } from 'react'
 import classnames from 'classnames'
-import { Row, Col } from 'bfd/Layout'
 import { Nav, NavItem } from 'bfd/Nav'
 import Button from 'bfd/Button'
+import { Layout, LayoutSidebar, LayoutContent } from 'public/Layout'
 import components from './components.json'
 
 class Components extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
     this.componentsMap = {}
     this.state = {
@@ -16,20 +16,8 @@ class Components extends Component {
     }
   }
 
-  close() {
-    this.setState({open: false})
-  }
-
-  handleToggle() {
-    this.setState({open: !this.state.open})
-  }
-
-  handleNavItemClick() {
-    this.close()
-  }
-
-  handleContentClick() {
-    this.state.open && this.close()
+  toggle(open) {
+    this.setState({ open })
   }
 
   renderTitle(component) {
@@ -43,9 +31,9 @@ class Components extends Component {
     const { open } = this.state
     const { children, params } = this.props
     return (
-      <Row fluid className={classnames('components', {'components--open': open})}>
-        <Col className="components__sidebar">
-          <Nav href="/components" onItemClick={::this.handleNavItemClick}>
+      <Layout className="components" open={open} onToggle={open => this.toggle(open)}>
+        <LayoutSidebar>
+          <Nav href="/components" onItemClick={() => this.toggle(false)}>
             {components.map((item, i) => (
               <NavItem 
                 key={item.category} 
@@ -66,17 +54,12 @@ class Components extends Component {
               </NavItem>
             ))}
           </Nav>
-        </Col>
-        <Col className="components__content" onClick={::this.handleContentClick}>
-          <Button 
-            icon="bars" 
-            className="components__bar-toggle" 
-            onClick={::this.handleToggle}
-          />
+        </LayoutSidebar>
+        <LayoutContent>
           {this.renderTitle(params.component)}
           {children}
-        </Col>
-      </Row>
+        </LayoutContent>
+      </Layout>
     )
   }
 }

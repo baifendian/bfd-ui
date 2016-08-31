@@ -2,7 +2,6 @@
  * Line chart based on d3.js
  */
 import d3 from 'd3'
-import XAxis from '../Svg/XAxis'
 
 export default class LineChart {
 
@@ -303,7 +302,7 @@ export default class LineChart {
    * 获取鼠标在 X 轴上的索引
    */
   getMouseIndexInXAxis() {
-    let xAxisIndex = (this.categories.length - 1) * 
+    const xAxisIndex = (this.categories.length - 1) * 
       (d3.mouse(d3.event.currentTarget)[0] - this.xAxisPadding) / 
       (this.innerWidth - this.xAxisPadding * 2)
     return +xAxisIndex.toFixed(0) || 0
@@ -340,7 +339,7 @@ export default class LineChart {
 
     // Tooltip 浮层内容
     const format = d3.format(yAxis.format || '.2s')
-    const html = this.series.reduce((current, serie, i) => {
+    const html = this.series.reduce((current, serie) => {
       return current + (`
         <tr>
           <td>${serie.name}:</td>

@@ -73,25 +73,23 @@ class AutoComplete extends Component {
     }
   }
 
-  handleFocus() {
-    this.setState({open: true})
-  }
-
   render() {
     const { open, index, result, value } = this.state
     const { className, source, onFocus, onKeyDown, onChange, ...other } = this.props
     return (
       <Dropdown 
-        open={open} 
         className={classnames('bfd-auto-complete', className)}
+        open={open} 
+        onToggle={open => this.setState({ open })}
       >
-        <ClearableInput 
-          value={value}
-          onFocus={::this.handleFocus} 
-          onKeyDown={::this.handleKeyDown} 
-          onChange={::this.handleInput}
-          {...other} 
-        />
+        <DropdownToggle>
+          <ClearableInput 
+            value={value}
+            onKeyDown={::this.handleKeyDown} 
+            onChange={::this.handleInput}
+            {...other} 
+          />
+        </DropdownToggle>
         <DropdownMenu>
           <ul className="bfd-auto-complete__result">
           {result.map((item, i) => (
@@ -133,7 +131,7 @@ AutoComplete.propTypes = {
   // 同 input placeholder
   placeholder: PropTypes.string,
 
-  customProp({ value, onChange, url, render }) {
+  customProp({ value, onChange }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }

@@ -46,14 +46,15 @@ class Tab extends Component {
         <a href="" onClick={this.handleClick.bind(this, index)}>
           <span className="bfd-tabs__tab-content">{children}</span>
           {
-            tabs.props.dynamic && !abolishClose &&
-            <Button 
-              transparent 
-              icon="remove" 
-              size="sm"
-              className="bfd-tabs__tab-remove" 
-              onClick={this.handleClose.bind(this, index)} 
-            />
+            tabs.props.dynamic && !abolishClose && (
+              <Button 
+                transparent 
+                icon="remove" 
+                size="sm"
+                className="bfd-tabs__tab-remove" 
+                onClick={this.handleClose.bind(this, index)} 
+              />
+            )
           }
         </a>
       </li>

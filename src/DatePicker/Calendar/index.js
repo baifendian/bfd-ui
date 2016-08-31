@@ -70,8 +70,8 @@ class Calendar extends Component {
 
   disabledComparer() {
     const { min, max } = this.props
-    let _min = min && this.getZeroTimestrap(min)
-    let _max = max && this.getZeroTimestrap(max)
+    const _min = min && this.getZeroTimestrap(min)
+    const _max = max && this.getZeroTimestrap(max)
     if (_min || _max) {
       return date => {
         const timestrap = new Date(date.year, date.month, date.day).getTime()
@@ -109,7 +109,7 @@ class Calendar extends Component {
 
     // 上月
     d = new Date(currentYear, currentMonth, 1)
-    let dayInWeek = d.getDay() || 7
+    const dayInWeek = d.getDay() || 7
     if (dayInWeek > 1) {
       d.setDate(0)
       const lastMonthDaysCount = d.getDate()

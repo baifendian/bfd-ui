@@ -15,7 +15,6 @@ export default (form, formItem) => {
       }
     },
     set(value) {
-      const formData = form.state.data
       let nextData
       if (!formItem.props.multiple) {
         nextData = form.update('set', ['data', name], value)

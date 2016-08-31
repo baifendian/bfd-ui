@@ -5,7 +5,7 @@ import Icon from '../../Icon'
 
 class FormItem extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
     this.state = {
       error: null

@@ -2,7 +2,6 @@
  * Created by BFD_270 on 2016-02-22.
  * Update by tenglong.jiang on 2016-08-11
  */
-import 'bfd-bootstrap'
 import React, { Component, PropTypes } from 'react'
 import './main.less'
 

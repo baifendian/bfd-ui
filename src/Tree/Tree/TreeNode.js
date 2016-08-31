@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import warning from 'warning'
 import Button from '../../Button'
 import Icon from '../../Icon'
 import Fetch from '../../Fetch'
@@ -78,7 +77,7 @@ class TreeNode extends Component {
       }
     }
 
-    let typeIcon = getIcon ? getIcon(data) : ''
+    const typeIcon = getIcon ? getIcon(data) : ''
 
     return (
       <li className={classnames('bfd-tree__node', {'bfd-tree__node--open': open})}>

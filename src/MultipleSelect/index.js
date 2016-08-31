@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select/Option'
-import { CheckboxGroup, Checkbox } from '../Checkbox'
+import Checkbox from '../Checkbox'
 import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
 import Button from '../Button'
@@ -122,7 +122,7 @@ class MultipleSelect extends Component {
     const optionsMapper = {}
     const options = []
 
-    this.traverseOptions((option, i) => {
+    this.traverseOptions(option => {
       const { value, children } = option.props
       optionsMapper[value || children] = children
       // 搜索过滤
@@ -200,22 +200,22 @@ class MultipleSelect extends Component {
         </DropdownToggle>
         <DropdownMenu>
           {
-            options.length ? 
-            <ul>
-              {wrapperOptions}
-              <li className={classnames({
-                'bfd-multiple-select__option--active': index === options.length
-              })}>
-                <Checkbox 
-                  checked={isAll} 
-                  block 
-                  onChange={action.handleToggleAll.bind(this)}
-                >
-                  全选
-                </Checkbox>
-              </li>
-            </ul> : 
-            <div className="bfd-multiple-select__empty">无匹配选项</div>
+            options.length ? (
+              <ul>
+                {wrapperOptions}
+                <li className={classnames({
+                  'bfd-multiple-select__option--active': index === options.length
+                })}>
+                  <Checkbox 
+                    checked={isAll} 
+                    block 
+                    onChange={action.handleToggleAll.bind(this)}
+                  >
+                    全选
+                  </Checkbox>
+                </li>
+              </ul>
+            ) : <div className="bfd-multiple-select__empty">无匹配选项</div>
           }
         </DropdownMenu>
       </Dropdown>

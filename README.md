@@ -1,10 +1,8 @@
 # BFD UI
 
 [![build status](https://img.shields.io/travis/baifendian/bfd-ui.svg)](https://travis-ci.org/baifendian/bfd-ui)
-
-[![npm package](https://img.shields.io/npm/v/bfd-ui.svg?style=flat-square)](https://www.npmjs.org/package/bfd-ui) 
-
-[![NPM downloads](http://img.shields.io/npm/dm/bfd-ui.svg?style=flat-square)](https://npmjs.org/package/bfd-ui)
+[![npm package](https://img.shields.io/npm/v/bfd-ui.svg)](https://www.npmjs.org/package/bfd-ui) 
+[![NPM downloads](http://img.shields.io/npm/dm/bfd-ui.svg)](https://npmjs.org/package/bfd-ui)
 
 企业级前端整体解决方案 [http://ui.baifendian.com](http://ui.baifendian.com)
 

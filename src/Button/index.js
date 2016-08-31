@@ -1,7 +1,7 @@
 import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import Icon from '../Icon';
+import Icon from '../Icon'
 
 const Button = props => {
   const { className, type, size, icon, circle, transparent, children, ...other } = props
@@ -39,7 +39,7 @@ Button.propTypes = {
   circle: PropTypes.bool,
 
   // 文字颜色是否继承，背景是否透明
-  transparent: PropTypes.bool,
+  transparent: PropTypes.bool
 }
 
 export default Button

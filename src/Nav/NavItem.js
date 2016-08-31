@@ -1,40 +1,22 @@
 import React, { Component, PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
-import Nav from './Nav'
 import Icon from '../Icon'
-import TextOverflow from '../TextOverflow'
 
 class NavItem extends Component {
 
   constructor(props) {
     super()
     this.state = {
-      href: null,
       open: props.defaultOpen || false,
-      active: false
     }
-  }
-
-  componentWillMount() {
-    this.prepareComponentState(this.props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.prepareComponentState(nextProps)
-  }
-
-  prepareComponentState(props) {
-    const href = this.getHref()
-    const active = this.isActive(href)
-    this.setState({ href, active })
   }
 
   getHref() {
     const { href, children } = this.props
     if (!href && children) return ''
     const baseURL = this.context.nav.props.href || ''
-    let _href = baseURL + '/' + (href || '')
+    const _href = baseURL + '/' + (href || '')
     return _href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
   }
 
@@ -63,11 +45,14 @@ class NavItem extends Component {
   }
   
   render() {
-    const { href, open, active } = this.state
+    const { open } = this.state
     const { children, className, icon, title, ...other } = this.props
 
     delete other.href
     delete other.defaultOpen
+
+    const href = this.getHref()
+    const active = this.isActive(href)
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
     const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />
