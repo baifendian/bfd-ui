@@ -1,8 +1,5 @@
-import './index.less'
 import React, { Component } from 'react'
-import classnames from 'classnames'
 import { Nav, NavItem } from 'bfd/Nav'
-import Button from 'bfd/Button'
 import { Layout, LayoutSidebar, LayoutContent } from 'public/Layout'
 import components from './components.json'
 
@@ -23,7 +20,7 @@ class Components extends Component {
   renderTitle(component) {
     const { name, cn } = this.componentsMap[component]
     return (
-      <h1 className="components__title">{cn + ' ' + name}</h1>
+      <h2 className="components__title">{cn + ' ' + name}</h2>
     )
   }
 
@@ -31,7 +28,7 @@ class Components extends Component {
     const { open } = this.state
     const { children, params } = this.props
     return (
-      <Layout className="components" open={open} onToggle={open => this.toggle(open)}>
+      <Layout open={open} onToggle={open => this.toggle(open)}>
         <LayoutSidebar>
           <Nav href="/components" onItemClick={() => this.toggle(false)}>
             {components.map((item, i) => (

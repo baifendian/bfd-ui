@@ -30,7 +30,7 @@ var config = {
         plugins: ['transform-runtime']
       }
     }, {
-      test: /\.(eot|woff|woff2|ttf|svg|png|jpg)(\?v=[\d\.]+)?$/,
+      test: /\.(eot|woff|woff2|ttf|svg|png|jpg|jpeg)(\?v=[\d\.]+)?$/,
       loader: 'file-loader?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,
@@ -64,7 +64,8 @@ var config = {
     extensions: ['', '.js'],
     alias: {
       'bfd': path.resolve(__dirname, '../src'),
-      'public': path.resolve(__dirname, './public')
+      'public': path.resolve(__dirname, './public'),
+      'generator': path.resolve(__dirname, '../../generator-bfd')
     }
   },
   plugins: []

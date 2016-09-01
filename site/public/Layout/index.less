@@ -2,6 +2,7 @@
 
 .layout {
   position: relative;
+  min-height: 100vh;
   &:before {
     content: '';
     position: absolute;
@@ -34,9 +35,11 @@
 
 .layout__content {
   padding: 20px;
+  position: relative;
   width: calc(~"100%" - @sidebar-width);
   @media (max-width: 768px) {
     width: 100%;
+    padding-top: 70px;
   }
 }
 
@@ -44,6 +47,9 @@
   display: none;
   @media (max-width: 768px) {
     display: block;
+    position: absolute;
+    left: 20px;
+    top: 20px;
   }
 }
 
