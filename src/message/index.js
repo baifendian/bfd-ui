@@ -4,7 +4,7 @@ import { render } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import warning from 'warning'
 import classnames from 'classnames'
-import Button from '../Button'
+import Icon from '../Icon'
 
 class Message extends Component {
 
@@ -13,28 +13,17 @@ class Message extends Component {
     this.state = {}
   }
 
-  handleRemove() {
-    this.setState({show: false})
-    if (typeof this.state.duration === 'function') {
-      this.state.duration()
-    }
-  }
-
   render() {
     const { show, type, message } = this.state
     return (
       <ReactCSSTransitionGroup transitionName="bfd-message--in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {show && (
           <div className={classnames('bfd-message', {[`bfd-message--${type}`]: type})}>
+            <Icon 
+              className="bfd-message__symbol" 
+              type={type === 'success' ? 'check': 'warning'} 
+            />
             {message}
-            {type === 'danger' && (
-              <Button
-                transparent 
-                icon="remove" 
-                className="bfd-message__remove" 
-                onClick={::this.handleRemove} 
-              />
-            )}
           </div>
         )}
       </ReactCSSTransitionGroup>
@@ -44,7 +33,7 @@ class Message extends Component {
 
 let instance
 
-const showMessage = (type, message, duration = 2) => {
+const showMessage = (type, message, duration) => {
   if (process.env.NODE_ENV !== 'production') {
     warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of message.' + type)
   }
@@ -53,13 +42,13 @@ const showMessage = (type, message, duration = 2) => {
     document.body.appendChild(container)
     instance = render(<Message />, container)
   }
-  instance.state.show || instance.setState({
-    message,
-    type,
-    duration,
-    show: true
-  })
-  if (type !== 'danger') {
+  if (!instance.state.show) {
+    instance.setState({
+      message,
+      type,
+      duration,
+      show: true
+    })
     setTimeout(() => {
       instance.setState({show: false})
     }, duration * 1000)
@@ -76,18 +65,18 @@ const message = {
    * @description 成功信息，默认 2 秒后自动关闭
    */
   success(message, duration) {
-    showMessage('success', message, duration)
+    showMessage('success', message, duration = 2)
   },
 
   /**
    * @public
    * @name message.danger
    * @param  {string | element} message message 内容，支持 React 元素
-   * @param  {function} [onClose] 关闭后的回调
-   * @description 危险/错误类信息，不会自动关闭
+   * @param  {number} [duration] 持续时间，单位毫秒
+   * @description 失败信息，默认 3 秒后自动关闭
    */
-  danger(message, onClose) {
-    showMessage('danger', message, onClose)
+  danger(message, duration) {
+    showMessage('danger', message, duration = 3)
   },
 
   /**

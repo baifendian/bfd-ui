@@ -7,7 +7,13 @@ export default () => {
     <div>
       <h1>generator-bfd</h1>
       <p>基于 yeoman 平台的项目前端生成器</p>
-      <img src={require('generator/screenshot.jpeg')} width="600" alt="generator-bfd" />
+      <div style={{maxWidth: '600px'}}>
+        <img 
+          src={require('generator/screenshot.jpeg')} 
+          style={{maxWidth: '100%'}} 
+          alt="generator-bfd" 
+        />
+      </div>
       <p>
         <Link to="/scaffolding/workflow">工作流</Link>
         &nbsp;&nbsp;&nbsp;&nbsp;

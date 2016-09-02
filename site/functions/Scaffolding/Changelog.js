@@ -1,8 +1,7 @@
 import React from 'react'
-import Center from 'public/Center'
-import Markdown from 'public/Markdown'
+import Changelog from 'public/Changelog'
 import html from 'generator/CHANGELOG.md'
 
 export default () => {
-  return <Markdown html={html} />
+  return <Changelog html={html} />
 }

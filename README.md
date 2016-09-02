@@ -25,7 +25,12 @@ ReactDOM.render(<DatePicker />, mountNode)
 ### 安装开发环境
 
 ```sh 
-git clone
+git clone http://git.baifendian.com/front-end/bfd-ui.git
+
+# 脚手架文档与 bfd-ui 集成，所以依赖 generator-bfd 项目里的部分文件，与 bfd-ui clone 在同一目录下
+git clone http://git.baifendian.com/front-end/generator-bfd.git
+
+cd bfd-ui
 
 npm install
 

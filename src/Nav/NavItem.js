@@ -12,26 +12,36 @@ class NavItem extends Component {
     }
   }
 
-  getHref() {
-    const { href, children } = this.props
-    if (!href && children) return ''
-    const baseURL = this.context.nav.props.href || ''
-    const _href = baseURL + '/' + (href || '')
-    return _href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
+  componentWillMount() {
+    const href = this.getHref(this.props)
+    const active = this.isActive(this.props, href)
+    const state = { href, active }
+    if (this.props.children && active) {
+      state.open = true
+    }
+    this.setState(state)
   }
 
-  isActive(href) {
-    if (this.isIndex(href)) {
+  componentWillReceiveProps(nextProps) {
+    const href = this.getHref(nextProps)
+    const active = this.isActive(nextProps, href)
+    this.setState({ href, active })
+  }
+
+  getHref(props) {
+    let href = props.href
+    if (!props.index && !href) return ''
+    const baseURL = this.context.nav.props.href || ''
+    href = baseURL + '/' + (href || '')
+    return href.replace(/\/+/g, '/').replace(/(.+)\/$/, '$1')
+  }
+
+  isActive(props, href) {
+    if (props.index) {
       return href === (location.pathname || '/')
     } else {
       return href && location.href.indexOf(href) !== -1
     }
-  }
-
-  isIndex(href) {
-    if (this.props.children) return false
-    const baseURL = (this.context.nav.props.href || '').replace(/\//g, '')
-    return baseURL === href.replace(/\//g, '')
   }
 
   toggle(e) {
@@ -45,14 +55,11 @@ class NavItem extends Component {
   }
   
   render() {
-    const { open } = this.state
+    const { open, href, active } = this.state
     const { children, className, icon, title, ...other } = this.props
 
     delete other.href
     delete other.defaultOpen
-
-    const href = this.getHref()
-    const active = this.isActive(href)
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
     const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />
@@ -90,6 +97,8 @@ NavItem.contextTypes = {
 }
 
 NavItem.propTypes = {
+
+  index: PropTypes.bool,
 
   // 当前菜单 href，非叶子节点也需要指定，与路由对应
   href: PropTypes.string,

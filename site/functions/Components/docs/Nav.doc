@@ -2,15 +2,15 @@
  * @title 基本功能
  */
 
-import { Nav, NavItem } from 'bfd/Nav'
+import { Nav, IndexNavItem, NavItem } from 'bfd/Nav'
 
 const NavBasic = () => {
   return (
     <Nav href="/">
-      <NavItem icon="th" title="数据概况"></NavItem>
+      <IndexNavItem icon="th" title="数据概况" />
       <NavItem href="users" icon="users" title="人群管理" defaultOpen>
-        <NavItem href="users/list" title="人群列表"></NavItem>
-        <NavItem href="/users/task" title="任务管理"></NavItem>
+        <NavItem href="users/list" title="人群列表" />
+        <NavItem href="/users/task" title="任务管理" />
       </NavItem>
     </Nav>
   )
@@ -18,3 +18,4 @@ const NavBasic = () => {
 
 @component Nav/Nav
 @component Nav/NavItem
+@component Nav/IndexNavItem
