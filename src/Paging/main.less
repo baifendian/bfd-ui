@@ -1,140 +1,132 @@
-
-.bfd-paging{
-  .layout-div{
-    display: inline-block;
-    vertical-align: middle
-  }
-  .pagination li {
-    cursor: pointer;
-  }
-.pagination{
-  margin: 0;
+.bfd-paging__row {
+  margin-right: -15px;
+  margin-left: -15px;
 }
-  .layout-style{
-    padding-right: 0;
-    width: auto;
+.bfd-paging__total-size {
+  color: red;
+}
+.bfd-paging__total-name {
+  margin-left: 20px;
+  line-height: 32px;
+}
+.bfd-paging__layout-div {
+  display: inline-block;
+  vertical-align: middle;
+  float: left!important;
+}
+.bfd-paging__layout-right {
+    padding-right: 15px;
+    float: right!important;
   }
-  .pagination{
-    margin-right:10px ;
-    display: inline-block;
-    vertical-align: middle
+.bfd-paging__label-font {
+  font-weight: normal;
+}
+.bfd-paging__go {
+  display: inline-block;
+  vertical-align: middle
+}
+.bfd-paging__go-number {
+    width: 40px;
+    margin-right: 10px;
+}
+.bfd-paging__pagination {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 10px 0 0;
+  padding-left: 0;
+  border-radius: 4px;
+  li {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    display: inline;
+    span {
+      position: relative;
+      float: left;
+      margin-left: -1px;
+      color: #337ab7;
+      text-decoration: none;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 0;
+      width: 40px;
+      text-align: center;
+      line-height: 30px;
+      height: 30px;
+      cursor: default;
+      color: #666;
+    }
+    span:hover {
+       background: none;
+    }
+    a {
+      width: 40px;
+      height: 30px;
+      text-align: center;
+      padding: 0;
+      position: relative;
+      float: left;
+      line-height: 30px;
+      vertical-align: middle;
+      margin-left: -1px;
+      text-decoration: none;
+      border: 1px solid #ddd;
+      color: #666;
+    }
+    a:hover{
+      background: #90caf8;
+      color: #fff;
+      border-top: 1px solid #90caf8;
+      border-bottom: 1px solid #90caf8;
+      text-decoration: none;
+    } 
   }
-
-  .btn-go{
-    height: 31px;
-    margin-left: 6px;
-    background: #2196f3;
-    color: white;
-    outline: none;
-    border: 0;
-    width: 50px;
-    border-radius: 2px;
+  .bfd-paging__pagination-li--prev {
+    width: 63px;
+    height: 30px;
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
-  .label-font{
-    font-weight: normal;
+  .bfd-paging__pagination-li--next {
+    width: 63px;
+    height: 30px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
-  ._active a{
-    /*background: #2196f3!important;
-    border: 1px solid #2196f3;*/
+  .bfd-paging__pagination-li--frist {
+    background: #eceff1;
+    color: #999;
   }
-  .pull-right ._active a{
+  .bfd-paging__pagination-li--frist:hover{
+    cursor: default;
+    background: #eceff1;
+    color: #999;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .bfd-paging__pagination-li--end {
+    background: #eceff1;
+    color: #999;
+  }
+  .bfd-paging__pagination-li--end:hover {
+    cursor: default;
+    background: #eceff1;
+    color: #999;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+  }
+  .bfd-paging__pagination-li--active a{
     background: #2196f3;
     color: #fff;
     border-top: 1px solid #2196f3;
     border-bottom: 1px solid #2196f3;
-
   }
-  .pull-right ._active a:hover{
+  .bfd-paging__pagination-li--active a:hover{
     background: #2196f3;
-
-  }
-  .pull-right .prev{
-    border-radius: 2px 0 0 2px;
-  }
-  .number{
-    width: 40px;
-    margin-right: 10px;
-  }
-  .total-size{
-    color: red;
-  }
-  .total-name{
-    margin-left: 20px;
-    line-height: 32px;
-  }
-  .layout-right{
-    padding-right: 15px;
-  }
-  .pagination li a{
-    width: 40px;
-    height: 30px;
-    color: #666;
-    line-height: 30px;
-    text-align: center;
-    padding: 0;
-    /*border-right: 0;*/
-
-
-  }
-  .pagination li span{
-    padding: 0;
-    width: 40px;
-    text-align: center;
-    line-height: 30px;
-    height: 30px;
-    cursor: default;
-
-  }
-  .pagination li .prev{
-    width: 63px;
-    height: 30px;
-  }
-  .pagination li .next{
-    width: 63px;
-    height: 30px;
-  }
-  .pagination .page span:hover{
-     background: none;
-  }
-  .pagination li a:hover{
-    background: #90caf8;
-    color: #fff;
-    border-top: 1px solid #90caf8;
-    border-bottom: 1px solid #90caf8;
-
-  }
-  .pagination li .frist{
-    background: #eceff1;
-    color: #999;
-  }
-  .pagination li .frist:hover{
-    cursor: default;
-    background: #eceff1;
-    color: #999;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
-  .pagination li .end:hover{
-    cursor: default;
-    background: #eceff1;
-    color: #999;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
-  .pagination li .end{
-    background: #eceff1;
-    color: #999;
-  }
-  .pagination li{
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-
-    /*
-      Introduced in IE 10.
-      See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-    */
-    -ms-user-select: none;
-    user-select: none;
   }
 }

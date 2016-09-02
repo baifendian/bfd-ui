@@ -3,6 +3,9 @@
  * Update by tenglong.jiang on 2016-08-11
  */
 import React, { Component, PropTypes } from 'react'
+import { Row, Col } from '../Layout'
+import Button from '../Button'
+import Input from '../Input'
 import './main.less'
 
 class Paging extends Component {
@@ -32,17 +35,17 @@ class Paging extends Component {
     for (let i = 1; i <= pageNum; i++) {
       // 如果分页页数小于等于规定显示的分页页数就全部显示出来
       if (i <= showPage) {
-        liArr.push(<li key={i} className={currentIndex === i ? '_active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>)
+        liArr.push(<li key={i} className={currentIndex === i ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>)
       }
       // 当分页页数大于规定显示页数是出现....和最后页数
       if (pageNum > showPage) {
         if (i == showPage) {
-          liArr[i + 1] = <li key={i+1} className="page"><span>...</span></li>
+          liArr[i + 1] = <li key={i+1}><span>...</span></li>
         }
       }
       // 显示最后一页
       if (pageNum == i && pageNum > showPage) {
-        liArr[i] = <li key={i+1} className={currentIndex === i ? '_active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
+        liArr[i] = <li key={i+1} className={currentIndex === i ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
       }
       if (currentIndex + 1 > showPage && pageNum > showPage) {
         const index = currentIndex,
@@ -54,44 +57,48 @@ class Paging extends Component {
         for (let o = everpage; o <= index + 1; o++) {
           if (o <= pageNum) {
             k++
-            currentArr[k] = <li key={k} className={currentIndex === o ? '_active':''} onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
+            currentArr[k] = <li key={k} className={currentIndex === o ? 'bfd-paging__pagination-li--active':''} onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
           } else {
             lastPage = true
             break
           }
         }
-        liArr[0] = <li key="01" className={currentIndex === 1 ? '_active' : ''} onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
-        liArr[1] = <li key="0" className="page"><span>...</span></li>
+        liArr[0] = <li key="01" className={currentIndex === 1 ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
+        liArr[1] = <li key="0"><span>...</span></li>
         for (let p = 2; p <= currentArr.length + 1; p++) {
           liArr[p] = currentArr[p - 2]
         }
         if (!lastPage) {
           if (index < (pageNum - 1)) {
-            liArr[liArr.length] = <li key={liArr.length} className="page"><a>...</a></li>
-            liArr[liArr.length] = <li key={liArr.length} className={currentIndex===pageNum ? '_active' : ''} onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
+            liArr[liArr.length] = <li key={liArr.length}><span>...</span></li>
+            liArr[liArr.length] = <li key={liArr.length} className={currentIndex===pageNum ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
           }
         }
         break
       }
     }
     return (
-      <div className="bfd-paging row">
-        <div className="layout-div form-inline pull-left">
-          <span className="total-name">共有<span className="total-size">{parseInt(this.props.totalPageNum)}</span>条记录</span>
+      <Row>
+        <div className="bfd-paging__layout-div">
+          <span className="bfd-paging__total-name">共有<span className="bfd-paging__total-size">{parseInt(this.props.totalPageNum)}</span>条记录</span>
         </div>
-        <div className="pull-right layout-right">
-          <ul className="pagination">
-            <li><a onClick={::this.handleLaquoClick} className={'prev '+ (currentIndex === 1 ? 'frist' : '')}>上一页</a></li>
+        <div className="bfd-paging__layout-right">
+          <ul className="bfd-paging__pagination">
+            <li>
+              <a onClick={::this.handleLaquoClick} className={'bfd-paging__pagination-li--prev '+ (currentIndex === 1 ? 'bfd-paging__pagination-li--frist' : '')}>上一页</a>
+            </li>
               {liArr}
-            <li><a onClick={::this.handleRaquoClick} className={'next '+ (currentIndex === pageNum ? 'end' : '')}>下一页</a></li>
+            <li>
+              <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
+            </li>
           </ul>
-          <div className="layout-div form-inline">
-            <label className="label-font">跳转到：</label>
-            <input onKeyUp={::this.checkNumber} ref="inputNumber" className="form-control input-sm number"/>
-            <button onClick={::this.handleGoPage} className="btn btn-primary">GO</button>
+          <div className="bfd-paging__go">
+            <label className="bfd-paging__label-font">跳转到：</label>
+            <Input onKeyUp={::this.checkNumber} ref="inputNumber" className="bfd-paging__go-number"/>
+            <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
           </div>
         </div>
-      </div>
+      </Row>
     )
   }
 
