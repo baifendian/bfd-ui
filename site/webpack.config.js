@@ -30,11 +30,11 @@ var config = {
         plugins: ['transform-runtime']
       }
     }, {
-      test: /\.(eot|woff|woff2|ttf|svg|png|jpg|jpeg)(\?v=[\d\.]+)?$/,
-      loader: 'file-loader?name=files/[hash].[ext]'
+      test: /\.(eot|woff|woff2|svg|ttf|png|jpg|jpeg)(\?v=[\d\.]+)?$/,
+      loader: 'file?name=files/[hash].[ext]'
     }, {
       test: /\.json$/,
-      loader: 'json-loader'
+      loader: 'json'
     }, {
       test: /\.css$/,
       loader: 'style!css!postcss'

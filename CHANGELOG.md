@@ -7,3 +7,5 @@
 - CheckboxGroup、Form 新增 defaultSelects 属性
 - Switch 新增 defaultOn 属性
 - Row 新增 fluid 属性，流式布局
+- message.danger 修改为自动关闭
+- 导航组件新增 IndexNavItem，与 IndexRoute 对应

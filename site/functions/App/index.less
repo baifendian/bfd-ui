@@ -54,9 +54,10 @@ body {
 } 
 
 .header {
-  background-color: #2196f3;
-  padding: 0px 20px;
+  background-color: #42a5f6;
+  padding: 10px 20px;
   color: #fff;
+  transition: all .2s;
   a {
     color: #fff;
     text-decoration: none;
@@ -67,19 +68,28 @@ body {
   }
 }
 
+.header--index {
+  background-color: #fff;
+  color: #42a5f6;
+  a {
+    color: #42a5f6;
+    &:hover {
+      color: #42a5f6;
+    }
+  }
+}
+
 .header__logo {
   display: block;
   font-size: 18px;
-  padding-left: 40px;
-  background: url('~public/bfd-logo.png') left center no-repeat;
-  background-size: 30px 30px;
   height: 30px;
-  line-height: 30px;
-  margin-top: 15px;
   margin-right: 40px;
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) { 
-    background: url('~public/bfd-logo@2x.png') left center no-repeat;
-    background-size: 30px 30px;
+  svg {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+    fill: #fff;
   }
   sub {
     margin-left: 3px;
@@ -90,33 +100,87 @@ body {
 
 .header__nav {
   font-size: 14px;
-  display: inline-block;
-  line-height: 60px;
-  margin: 0;
-  padding: 0;
-  vertical-align: top;
-  li {
-    display: inline-block;
-    vertical-align: top;
+  margin-top: 2px;
+  @media (max-width: 670px) { 
+    display: none;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      display: inline-block;
+      margin-right: 6px;
+      a {
+        display: block;
+        padding: 0 18px;
+        line-height: 26px;
+        border-radius: 16px;
+        transition: all .2s;
+        &:hover,
+        &.active {
+          background-color: #fff;
+          color: #42a5f6;
+        }
+      }
+    }
+  }
+}
+
+.header--index {
+  .header__logo {
+    svg {
+      fill: #42a5f6;
+    }
+  }
+  .header__nav {
     a {
-      display: block;
-      height: 60px;
-      padding: 0 10px;
-      border-bottom: 4px solid transparent;
-      transition: all .3s;
       &:hover,
       &.active {
-        border-bottom-color: #90caf9;
+        background-color: #42a5f6;
+        color: #fff;
+      }
+    }
+  }
+}
+
+.header__nav-toggle {
+  display: none;
+  margin-right: 10px;
+  font-size: 14px;
+  @media (max-width: 670px) {
+    display: inline-block;
+  }
+  .bfd-dropdown__menu {
+    left: initial;
+    right: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      a {
+        display: block;
+        line-height: 30px;
+        padding: 0 14px;
+        transition: all .2s;
+        color: #42a5f6;
+        &:hover,
+        &.active {
+          background-color: #90caf9;
+          color: #fff;
+        }
       }
     }
   }
 }
 
 .header__github {
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   font-size: 22px;
-  line-height: 0px;
-  margin-top: 19px;
+  line-height: 30px;
 }
 
 .body {

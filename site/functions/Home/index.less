@@ -1,45 +1,22 @@
-.home__banner {
+.home {
   background-color: #fafafa;
-  > .center {
-    padding-top: 124px;
-    padding-bottom: 153px;
-    overflow: hidden;
+}
+
+.home__banner {
+  background: url('./img/banner.png') no-repeat center;
+  background-size: cover;
+  padding-top: 170px;
+  padding-bottom: 75px;
+  @media (max-width: 599px) {
+    padding-top: 200px;
   }
 }
 
-.home__banner-left {
-  img {
-    width: 100%;
-  }
-  @media (max-width: 1120px) {
-    display: none;
-  }
-}
-
-.home__banner-info {
-  float: right;
-  @media (max-width: 1120px) {
-    float: none!important;
-  }
-  em {
-    font-style: normal;
-    color: #999;
-    font-size: 14px;
-    margin-bottom: 10px;
-  }
-  h1 {
-    font-size: 48px;
-    color: #42a4f5;
-    margin: 10px 0;
-    font-weight: normal;
-  }
-  h2 {
-    font-size: 24px;
-    font-weight: normal;
-    color: #64b5f6;
-    margin: 0;
-    margin-bottom: 60px;
-  }
+.home__banner-center {
+  max-width: 500px;
+  margin: 0 auto;
+  color: #fff;
+  text-align: center;
   .bfd-btn {
     width: 200px;
     height: 60px;
@@ -47,22 +24,76 @@
   }
 }
 
-.home__banner-install {
-  margin: 10px 30px 10px 0;
+.home__banner-right {
+  text-align: right;
+  margin-bottom: 26px;
+  opacity: 0;
+  transform: translateX(-100%);
+  animation: fade-left .5s cubic-bezier(.455,.03,.515,.955) .25s forwards;
+  h1 {
+    font-size: 40px;
+    font-family: initial;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+  h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  em {
+    font-style: normal;
+    color: #99d0fc;
+    font-size: 16px;
+  }
+}
+
+@keyframes fade-left {
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+.home__banner-install,
+.home__banner-start {
   display: inline-block;
+  margin: 10px 30px;
+  transform: scale(0);
+  opacity: 0;
+  animation: scale-in .8s cubic-bezier(0.41, 0.07, 0.21, 1.46) .75s forwards;
+  transition: transform .2s;
+  &:hover {
+    transform: skew(-10deg);
+  }
+}
+
+@keyframes scale-in {
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.home__banner-install {
+  .bfd-btn {
+    background-color: #cee8f4;
+    color: #36a0e8;
+  }
 }
 
 .home__banner-start {
-  margin-top: 10px;
-  display: inline-block;
+  margin-left: 0;
+  @media (max-width: 598px) {
+    margin-left: 30px;
+  }
   .bfd-btn {
-    background-color: #ff6285;
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff;
   }
 }
 
 .home__middle {
-  background: url('./img/middle.png') no-repeat center;
-  background-size: cover;
   > .center {
     padding-top: 70px;
     padding-bottom: 70px;
@@ -72,21 +103,20 @@
 .home__middle-left {
   padding-right: 100px;
   padding-bottom: 10px;
-  color: #fff;
   @media (max-width: 992px) {
     padding-right: 0;
     padding-bottom: 20px;
   }
   h2 {
-    font-size: 40px;
-    color: #fff;
-    margin: 0;
-    line-height: 80px;
+    font-size: 36px;
+    line-height: 48px;
+    color: #42a5f6;
+    margin-top: 20px;
+    margin-bottom: 40px;
   }
   p {
     font-size: 20px;
     line-height: 30px;
-    color: #daedfd;
   }
 }
 
@@ -96,17 +126,46 @@
 }
 
 .home__features {
-  background-color: #fff;
-  padding: 120px 0;
+  background: url('./img/bottom.png') no-repeat center;
+  background-size: cover;
+  padding-top: 60px;
+  padding-bottom: 100px;
+}
+
+.home__features-head {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 60px;
+  h1 {
+    color: #333;
+    font-size: 38px;
+    margin: 20px 0;
+    position: relative;
+    &:after {
+      content: '';
+      width: 100px;
+      height: 2px;
+      background-color: #6cb6f5;
+      display: block;
+      margin-top: 5px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  p {
+    color: #8b97a5;
+    font-size: 16px;
+    line-height: 24px;
+  }
 }
 
 .home__bottom {
-  background: url('./img/bottom.png') no-repeat center;
-  background-size: cover;
   > .center {
     text-align: center;
-    padding-top: 120px;
-    padding-bottom: 120px;
+    padding-top: 80px;
+    padding-bottom: 110px;
     h1 {
       font-size: 40px;
       color: #666;

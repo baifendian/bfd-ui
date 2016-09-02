@@ -1,6 +1,6 @@
-import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import './index.less'
 
 const Markdown = props => {
   const { className, html, ...other } = props

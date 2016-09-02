@@ -26,22 +26,19 @@ class App {
     <div className="home">
       <div className="home__banner">
         <Center>
-          <Row>
-            <Col col="md-6" className="home__banner-left">
-              <img src={require('./img/banner.png')} />
-            </Col>
-            <Col className="home__banner-info" right>
+          <div className="home__banner-center">
+            <div className="home__banner-right">
+              <h2>百分点 UI 组件库——企业级前端整体解决方案</h2>
+              <h1>UI•BAIFENDIAN</h1>
               <em>当前版本：v0.8.0</em>
-              <h1>百分点 UI</h1>
-              <h2>企业级前端整体解决方案</h2>
-              <Link to="/guide#install" className="home__banner-install">
-                <Button>安装</Button>
-              </Link>
-              <Link to="/guide" className="home__banner-start">
-                <Button>开始</Button>
-              </Link>
-            </Col>
-          </Row>
+            </div>
+            <Link to="/guide#install" className="home__banner-install">
+              <Button>安装</Button>
+            </Link>
+            <Link to="/guide" className="home__banner-start">
+              <Button>开始</Button>
+            </Link>
+          </div>
         </Center>
       </div>
 
@@ -49,8 +46,8 @@ class App {
         <Center>
           <Row>
             <Col col="md-6" className="home__middle-left">
-              <h2>组件化开发</h2>
-              <p>百分点 UI 抛弃了传统的组件封装方式，基于 React 组件开发思想，语义化 UI 的同时可作为一种数据类型自由传递，无论需求多么复杂，场景多么奇特，我们都可以搞定。</p>
+              <h2>企业级前端整体解决方案</h2>
+              <p>BFD UI 结合 generator-bfd 脚手架可快速开发集单页面应用、组件化、可视化、大数据交互、权限管理、前后端分离等特性的企业级项目。</p>
             </Col>
             <Col col="md-6">
               <Pre className="home__middle-code">{code}</Pre>
@@ -61,6 +58,10 @@ class App {
 
       <div className="home__features">
         <Center>
+          <div className="home__features-head">
+            <h1>组件化开发</h1>
+            <p>BFD UI 抛弃了传统的组件封装方式，基于 React 组件开发思想，语义化 UI 的同时可作为一种数据类型自由传递，无论需求多么复杂，场景多么奇特，我们都可以搞定。</p>
+          </div>
           <Row>
             <Feature title="组件化" icon={require('./img/feature_0.png')}>
               基于 React 组件开发思想，简单、灵活、高效

@@ -1,51 +1,65 @@
 .bfd-message {
-	position: fixed;
-	z-index: 9999;
-	min-width: 600px;
-	max-width: 400px;
-	left: 50%;
-	transform: translate(-50%, 0);
-	top: 30px;
-	padding: 10px 20px;
-	border-radius: 2px;
-	border: 1px solid transparent;
-	word-wrap: break-word;
-	font-size: 14px;
+  position: fixed;
+  z-index: 9999;
+  min-width: 200px;
+  max-width: 400px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 10%;
+  padding: 30px 50px;
+  padding-left: 80px;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  word-wrap: break-word;
+  font-size: 14px;
+  background-color: #fff;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, .1);
+}
+
+.bfd-message__symbol {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  font-size: 30px;
+  transform: translateY(-50%);
 }
 
 .bfd-message--in-enter {
-	opacity: 0;
+  opacity: 0;
   transform: translate(-50%, -25%);
 }
 
 .bfd-message--in-enter-active {
-	opacity: 1;
+  opacity: 1;
   transform: translate(-50%, 0);
   transition: all .2s ease-out;
 }
 
 .bfd-message--in-leave,
 .bfd-message--in-leave-active {
-	opacity: 0;
+  opacity: 0;
   transform: translate(-50%, -25%);
   transition: all .15s ease-out;
 }
 
 .bfd-message__remove {
-	position: absolute;
-	top: 3px;
-	right: 3px;
+  position: absolute;
+  top: 3px;
+  right: 3px;
 }
 
 .bfd-message--success {
-	background-color: #e0f0d9;
-	border-color: #d6e8c7;
-	color: #48874a;
+  border-color: #c5f3cd;
+  background-color: #f5fff7;
+  .bfd-message__symbol {
+    color: #4cd964;
+  }
 }
 
 .bfd-message--danger {
-	background-color: #fff8f8;
-	border-color: #edd3d7;
-	color: #cf7f7f;
-	padding-right: 40px;
+  border-color: #ffd8d8;
+  background-color: #fffbfb;
+  .bfd-message__symbol {
+    color: #ff9494;
+  }
 }
