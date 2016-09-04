@@ -13,6 +13,7 @@
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
     "create": "node bin/create.js",
+    "banner": "file-banner src --ignore __tests__",
     "release": "npm run unit && npm run compile && npm version patch && npm publish"
   },
   "author": "",
@@ -58,6 +59,7 @@
     "eslint-plugin-react": "^4.2.3",
     "express": "^4.13.3",
     "fastclick": "^1.0.6",
+    "file-banner": "0.0.2",
     "html-loader": "^0.4.3",
     "jest-cli": "^0.10.0",
     "lodash": "^4.14.0",

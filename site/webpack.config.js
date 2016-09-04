@@ -68,7 +68,9 @@ var config = {
       'generator': path.resolve(__dirname, '../../generator-bfd')
     }
   },
-  plugins: []
+  plugins: [new webpack.DefinePlugin({
+    __DEV__: String(!isProduction)
+  })]
 }
 
 if (isProduction) {
@@ -82,20 +84,20 @@ if (isProduction) {
       comments: false
     }
   }))
-  config.plugins.push(function() {
-    this.plugin('done', function(statsData) {
-      var stats = statsData.toJson()
-      console.log(stats.errors)
-      var templateFile = 'index.html'
-      var template = fs.readFileSync(path.join(__dirname, templateFile), 'utf8')
-      template = template.replace(/app.*?.js/, 'app.' + stats.hash + '.js')
-      fs.writeFileSync(path.join(__dirname, templateFile), template)
-    })
-  })
 } else {
   config.plugins.push(new LiveReloadPlugin({
     appendScriptTag: true
   }))
 }
+
+config.plugins.push(function() {
+  this.plugin('done', function(statsData) {
+    var stats = statsData.toJson()
+    var html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8')
+    var distPath = config.output.publicPath + 'app.' + (isProduction ? stats.hash : '') + 'js'
+    html = html.replace(/(<script src=").*?(")/, '$1' + distPath + '$2')
+    fs.writeFileSync(path.join(__dirname, 'index.html'), html)
+  })
+})
 
 module.exports = config

@@ -78,7 +78,7 @@ class Form extends Component {
    */
   save(data) {
     if (this.validate()) {
-      if (process.env.NODE_ENV !== 'production') {
+      if (__DEV__) {
         warning(this.props.action, 'No `action` provided, check the Form component you save.')
       }
       xhr({

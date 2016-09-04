@@ -56,7 +56,7 @@ let instance
  */
 function confirm(message, callback) {
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
     warning(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
   }

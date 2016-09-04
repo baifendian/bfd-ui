@@ -8,7 +8,7 @@ const TextOverflow = props => {
 
   const { children } = props
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     warning(!children.length, 'Children should be single, check the children of TextOverflow')
   }
 

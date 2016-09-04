@@ -34,7 +34,7 @@ class Message extends Component {
 let instance
 
 const showMessage = (type, message, duration) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of message.' + type)
   }
   if (!instance) {
