@@ -13,7 +13,7 @@
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
     "server": "pm2 start site/server.js -- -production",
     "create": "node bin/create.js",
-    "banner": "file-banner src --ignore __tests__",
+    "banner": "file-banner src --ignore '__tests__|\\.png'",
     "release": "npm run unit && npm run compile && npm version patch && npm publish"
   },
   "author": "",

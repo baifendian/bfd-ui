@@ -1,33 +1,14 @@
 /**
- * @public
- * @name xhr
- * @description ajax 请求
- * @param {object} option 请求配置
- * ```js
- * {
- *   // 请求类型，支持所有 HTTP 请求类型
- *   type: 'DELETE', 
+ * Copyright 2016-present, Baifendian, Inc.
+ * All rights reserved.
  *
- *   // URL 地址
- *   url: '/user/5', 
- *   
- *   // 提交的数据，支持 FormData（IE10+）
- *   data: {
- *     key: 'value' 
- *   }, 
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  *
- *   // 请求发送前操作，如 setRequestHeader、定义 onprogress 事件等
- *   beforeSend: xhr => {
- *     // xhr.setRequestHeader()
- *   }, 
- *
- *   // 各个状态的回调，如果设置了全局回调，则不会自动执行
- *   success: data => {},
- *   error: msg => {},
- *   complete: () => {}
- * }
- * ```
+ * @providesModule src/xhr.js
  */
+
 function xhr(option) {
 
   const request = new window.XMLHttpRequest()

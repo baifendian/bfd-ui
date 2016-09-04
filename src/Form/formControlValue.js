@@ -1,6 +1,14 @@
 /**
- * 读取、设置当前 Form 组件的数据
+ * Copyright 2016-present, Baifendian, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule src/Form/formControlValue.js
  */
+
 export default (form, formItem) => {
   const name = formItem.props.name
   return {
