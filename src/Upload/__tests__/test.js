@@ -32,7 +32,7 @@ describe('Upload', () => {
       )
       const container = findDOMNode(instance)
       const button = container.querySelector('button')
-      expect(button.innerHTML).toEqual(text)
+      expect(button.innerHTML).toContain(text)
     })
   })
 })

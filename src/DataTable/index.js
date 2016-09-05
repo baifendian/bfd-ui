@@ -188,7 +188,7 @@ class DataTable extends Component {
             rows={this.state.items.totalList} 
             onRowClick={::this.handleRowClick}
             onSelect={::this.handleCheckboxChange}
-            onCheckboxSelect={::this.props.onCheckboxSelect}
+            onCheckboxSelect={this.props.onCheckboxSelect}
             column={this.props.column}
             currentPage={this.state.items.currentPage || currentPage}
             pageSize={pageSize}
