@@ -38,7 +38,7 @@ describe('Slider', () => {
         <Slider defaultValue={value} end={100} suffix={suffix} onSliding={handleSliding} onSlid={handleSlid} />
       )
       const container = findDOMNode(instance)
-      const text = container.querySelector('.bar .slider .tooltips .text')
+      const text = container.querySelector('.bfd-slider__tooltips-text')
       expect(text.innerHTML).toEqual(value + suffix)
     })
   })

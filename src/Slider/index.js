@@ -37,7 +37,7 @@ class Slider extends Component {
 
     this.width = parseInt(style.width, 10)
     this.sliderWidth = parseInt(sliderStyle.width, 10)
-    this.offsetLeft = bar.offsetLeft + this.marginLeft
+    this.offsetLeft = this.getOffsetLeft(bar) + this.marginLeft
     slider.style.left = this.getTickValue(defaultValue) - parseInt(sliderStyle.width) / 2 + 'px'
     selectedBar.style.width = this.getTickValue(defaultValue) + 'px'
 
@@ -51,8 +51,8 @@ class Slider extends Component {
         <div ref="bar" className="bfd-slider__bar">
           <div ref="slider" className="bfd-slider__slider" onMouseDown={::this.handleMouseDown}>
             <div ref="tip" className="bfd-slider__tooltips">
-              <span ref="msg" className="bfd-slider__tooltips__text">0{this.props.suffix || ''}</span>
-              <div className="bfd-slider__tooltips__arrow-down"></div>
+              <span ref="msg" className="bfd-slider__tooltips-text">0{this.props.suffix || ''}</span>
+              <div className="bfd-slider__tooltips-arrow-down"></div>
             </div>
           </div>
           <div ref="selectedBar" className="bfd-slider__bar--selected"></div>
@@ -114,6 +114,16 @@ class Slider extends Component {
     BODY.removeEventListener('mouseup', this.mouseUpFn)
   }
 
+  getOffsetLeft(el) {
+    let left = 0;
+    let offsetParent = el;
+    while (offsetParent != null && offsetParent != document.body) {
+      left += offsetParent.offsetLeft;
+      offsetParent = offsetParent.offsetParent;
+    }
+    return left
+  }
+  
   getValue(currWidth) {
     const end = this.props.end
     const start = this.props.start || 0

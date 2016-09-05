@@ -58,10 +58,10 @@ describe('ButtonGroup', () => {
   })
 
   describe('event test', () => {
-    it('click is ok', () => {
+    it('change is ok', () => {
       const handleClick = jest.fn()
       const instance = TestUtils.renderIntoDocument(
-        <ButtonGroup defaultValue="2" onClick={handleClick}>
+        <ButtonGroup defaultValue="2" onChange={handleClick}>
           <Button value="1">按钮一</Button>
           <Button value="2">按钮二</Button>
           <Button value="3">按钮三</Button>

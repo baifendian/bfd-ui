@@ -27,13 +27,14 @@ class SearchBar extends Component {
           className="bfd-transfer__input"
           placeholder="请输入搜索内容"
           ref="filterTextInput"
-          onChange={::this.handleChange} />
+          onChange={::this.handleChange} 
+        />
       </div>
     )
   }
 
-  handleChange() {
-    const v = this.refs.filterTextInput.value
+  handleChange(e) {
+    const v = e.target.value
     this.props.onUserInput(v)
   }
 }
