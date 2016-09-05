@@ -35,14 +35,14 @@ class AutoComplete extends Component {
     this.lastValue = value
     const state = { value }
     if (!value) {
-      state.open = false
+      state.open = true
       state.result = this.props.source
       this.setState(state)
     } else {
       // reset tab index
       state.index = -1
       state.result = this.props.source.filter(item => item.indexOf(value) > -1)
-      state.open = !!this.result.length
+      state.open = !!state.result.length
       this.setState(state)
     }
     this.props.onChange && this.props.onChange(value)

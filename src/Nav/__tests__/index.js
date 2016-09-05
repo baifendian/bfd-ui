@@ -3,7 +3,7 @@ import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import { Router, Route, IndexRoute } from 'react-router'
 import { createHistory } from 'history'
-import { Nav, NavItem } from '../index'
+import { Nav, NavItem, IndexNavItem } from '../index'
 
 describe('Nav', () => {
 
@@ -20,7 +20,6 @@ describe('Nav', () => {
       </Router>
     ))
     const container = findDOMNode(router)
-    expect(container.querySelector('a').href).toBe('/')
     expect(container.querySelectorAll('a')[1].href).toBe('/test')
 
     router = TestUtils.renderIntoDocument((
@@ -51,9 +50,9 @@ describe('Nav', () => {
       <Router history={createHistory()}>
         <Route path="/" component={() => (
           <Nav href="/">
-            <NavItem>
-              <NavItem href="aa" />
-            </NavItem>
+            <IndexNavItem>
+              <IndexNavItem />
+            </IndexNavItem>
           </Nav>
         )} />
       </Router>

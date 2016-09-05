@@ -80,6 +80,9 @@
     "webpack-livereload-plugin": "^0.8.1"
   },
   "jest": {
+    "globals": {
+      "__DEV__": true
+    },
     "scriptPreprocessor": "<rootDir>/jestPreproess",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules",

@@ -58,8 +58,10 @@ class TableTree extends Component {
   }
 
   render() {
-    const { className, columns, url, data, ...other} = this.props
+    const { data } = this.state
+    const { className, columns, url, ...other} = this.props
 
+    delete other.data
     delete other.defaultData
     delete other.onChange
 
