@@ -15,7 +15,7 @@ import Input from '../Input'
 
 class SearchBar extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
   }
   

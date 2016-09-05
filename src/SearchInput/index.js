@@ -17,7 +17,7 @@ import './main.less'
 
 class SearchInput extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
     this.value = ''
   }
