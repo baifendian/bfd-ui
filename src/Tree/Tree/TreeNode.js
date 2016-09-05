@@ -41,7 +41,6 @@ class TreeNode extends Component {
   }
 
   handleLoad(data) {
-    this.isloaded = true
     const filter = this.context.tree.props.dataFilter
     if (filter) {
       data = filter(data)
@@ -75,7 +74,7 @@ class TreeNode extends Component {
         </ul>
       )
     } else {
-      if (isParent && getUrl && open && !this.isloaded) {
+      if (isParent && getUrl && open) {
         Children = (
           <Fetch 
             style={indent} 

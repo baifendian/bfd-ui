@@ -5,7 +5,7 @@ import AutoComplete from 'bfd/AutoComplete'
 
 const AutoCompleteBasic = () => {
   return (
-    <AutoComplete placeholder="输入t" source={['test', 'test2']} />
+    <AutoComplete placeholder="输入关键词" source={['test', 'test2']} />
   )
 }
 

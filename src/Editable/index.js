@@ -71,6 +71,12 @@ class Editable extends Component {
     this.props.onCancel && this.props.onCancel()
   }
 
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      this.handleOk()
+    }
+  }
+
   render() {
     const { className, ...other } = this.props
     const { editing, value, changedValue } = this.state
@@ -78,7 +84,12 @@ class Editable extends Component {
       <div className={classnames('bfd-editable', className)} {...other}>
       {editing ? (
         <div className="bfd-editable__editing-container">
-          <Input ref="input" value={changedValue} onChange={::this.handleInput} />
+          <Input 
+            ref="input" 
+            value={changedValue} 
+            onChange={::this.handleInput} 
+            onKeyDown={::this.handleKeyDown}
+          />
           <Button icon="check" onClick={::this.handleOk} />
           <Button icon="close" type="minor" onClick={::this.handleCancel} />
         </div>
