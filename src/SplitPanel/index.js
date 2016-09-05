@@ -17,7 +17,7 @@ import './index.less'
 class SubSplitPanel extends Component {
 
   constructor(props) {
-    super()
+    super(props)
   }
 
   render() {
@@ -33,7 +33,7 @@ class SubSplitPanel extends Component {
 class SplitPanel extends Component {
 
   constructor(props) {
-    super()
+    super(props)
     this.width = 0
     this.height = 0
     this.offsetLeft = 0

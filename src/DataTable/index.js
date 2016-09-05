@@ -19,7 +19,7 @@ import '../table.less'
 class Rows extends Component {
 
   constructor(props) {
-    super()
+    super(props)
   }
   
   render() {

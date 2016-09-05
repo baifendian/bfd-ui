@@ -34,7 +34,7 @@ chart.propTypes = {
   url: PropTypes.string,
 
   // 数据源，格式与 url 方式返回的 data 格式一样
-  data: PropTypes.array,
+  data: PropTypes.array
 
 }
 

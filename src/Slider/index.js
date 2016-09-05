@@ -15,7 +15,7 @@ import './main.less'
 
 class Slider extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
     this.isDown = false
     this.width = 0
@@ -115,11 +115,11 @@ class Slider extends Component {
   }
 
   getOffsetLeft(el) {
-    let left = 0;
-    let offsetParent = el;
+    let left = 0
+    let offsetParent = el
     while (offsetParent != null && offsetParent != document.body) {
-      left += offsetParent.offsetLeft;
-      offsetParent = offsetParent.offsetParent;
+      left += offsetParent.offsetLeft
+      offsetParent = offsetParent.offsetParent
     }
     return left
   }
@@ -153,7 +153,7 @@ Slider.propTypes = {
 
 class Scale extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
   }
 

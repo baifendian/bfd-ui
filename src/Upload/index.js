@@ -49,7 +49,7 @@ class Upload extends Component {
     const el = event.target
     const files = el.files
     const self = this
-    let arr = []
+    const arr = []
     for (let i = 0; i < files.length; i++) {
       const file = files[i]
       arr.push({

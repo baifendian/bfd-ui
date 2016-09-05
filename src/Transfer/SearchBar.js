@@ -9,13 +9,13 @@
  * @providesModule src/Transfer/SearchBar.js
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import Icon from '../Icon'
 import Input from '../Input'
 
 class SearchBar extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
   }
   

@@ -17,7 +17,7 @@ import './main.less'
 
 class SearchInput extends Component {
 
-  constructor(props) {
+  constructor() {
     super()
     this.value = ''
   }
@@ -29,7 +29,7 @@ class SearchInput extends Component {
     this.value = this.props.defaultValue || ''
     return (
       <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput style={{width: width}} defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
+        <ClearableInput style={{width}} defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
         <Button size={size} onClick={::this.handleClick} icon="search">{this.props.label || '搜索'}</Button>
       </div>
     )
@@ -68,7 +68,7 @@ SearchInput.propTypes = {
   defalutValue: PropTypes.string,
 
   // 输入框宽度，默认为300px
-  width: PropTypes.string,
+  width: PropTypes.string
 }
 
 export default SearchInput
