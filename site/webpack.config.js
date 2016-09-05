@@ -80,6 +80,9 @@ if (isProduction) {
     }
   }))
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    },
     output: {
       comments: false
     }
@@ -94,7 +97,7 @@ config.plugins.push(function() {
   this.plugin('done', function(statsData) {
     var stats = statsData.toJson()
     var html = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8')
-    var distPath = config.output.publicPath + 'app.' + (isProduction ? stats.hash : '') + 'js'
+    var distPath = config.output.publicPath + 'app.' + (isProduction ? stats.hash + '.' : '') + 'js'
     html = html.replace(/(<script src=").*?(")/, '$1' + distPath + '$2')
     fs.writeFileSync(path.join(__dirname, 'index.html'), html)
   })

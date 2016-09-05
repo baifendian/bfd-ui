@@ -72,8 +72,6 @@
     "normalize.css": "^4.2.0",
     "pm2": "^1.0.2",
     "react-addons-test-utils": "^0.14.8",
-    "react-update": "0.0.8",
-    "underscore": "^1.8.3",
     "webpack": "^1.12.12",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.10.0",
