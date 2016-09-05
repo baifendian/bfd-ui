@@ -16,7 +16,7 @@ import './main.less'
 class Slider extends Component {
 
   constructor(props) {
-    super()
+    super(props)
     this.isDown = false
     this.width = 0
     this.offsetLeft = 0
@@ -115,11 +115,11 @@ class Slider extends Component {
   }
 
   getOffsetLeft(el) {
-    let left = 0;
-    let offsetParent = el;
+    let left = 0
+    let offsetParent = el
     while (offsetParent != null && offsetParent != document.body) {
-      left += offsetParent.offsetLeft;
-      offsetParent = offsetParent.offsetParent;
+      left += offsetParent.offsetLeft
+      offsetParent = offsetParent.offsetParent
     }
     return left
   }

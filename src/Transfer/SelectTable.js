@@ -9,13 +9,13 @@
  * @providesModule src/Transfer/SelectTable.js
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
 class Row extends Component {
 
   constructor(props) {
-    super()
+    super(props)
   }
   
   render() {

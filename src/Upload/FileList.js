@@ -34,7 +34,7 @@ export default React.createClass({
               <Icon type="upload" style={{display: item.state == 0 ? '' : 'none'}} />
               <Icon type="check-circle" style={{paddingRight: '10px', color: 'green', display: item.state == 1 ? '' : 'none'}} />
               <Icon title="上传失败" type="times-circle" style={{paddingRight: '10px', color: 'red', display: item.state == 2 ? '' : 'none'}} />
-              <Icon type="trash" style={{color: 'gray', cursor: 'pointer'}}  onClick={this.handleClick.bind(this, item)}/>
+              <Icon type="trash" style={{color: 'gray', cursor: 'pointer'}} onClick={this.handleClick.bind(this, item)}/>
             </div>
           )          
         })

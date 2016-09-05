@@ -9,8 +9,8 @@
  * @providesModule src/Paging/index.js
  */
 
-import React, { Component, PropTypes } from 'react'
-import { Row, Col } from '../Layout'
+import React, { Component } from 'react'
+import { Row } from '../Layout'
 import Button from '../Button'
 import Input from '../Input'
 import './main.less'

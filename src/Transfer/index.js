@@ -20,7 +20,7 @@ const TargetTable = SelectTable
 class TransferPanel extends Component {
 
   constructor(props) {
-    super()
+    super(props)
   }
   
   render() {
