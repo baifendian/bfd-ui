@@ -8,7 +8,7 @@ describe('Dropdown', () => {
 
   it('should open works', () => {
     const instance = TestUtils.renderIntoDocument(
-      <Dropdown open onChange={jest.fn()} />
+      <Dropdown open onToggle={jest.fn()} />
     )
     expect(findDOMNode(instance).className).toContain('open')
   })
