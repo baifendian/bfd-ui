@@ -11,73 +11,73 @@
 
 .bfd-steps {
 	width : 100%;
-	.box {
-		z-index: 9999;
-		float: left;
-		.circle {
-			position: relative;
-			text-align: center;
-			border: 1px solid;
-			vertical-align: middle;
-		}
-		.circle_finish{
-			color: #41A1F5;
-			background-color: #FFF;
-			border-color: #41A1F5;
-		}
-		.circle_process {
-			color: #FFF;
-			background-color: #41A1F5;
-			border-color: #41A1F5;
-			cursor: pointer;
-		}
-		.circle_wait {
-			color: #999;
-			background-color: #FFF;
-			border-color: #e0e0e0;
-		}
-		.title {
-			border: 0px;
-			text-align: center;
-			position: relative;
-			font-size: 12px;
-		}
-		.title_finish{
-			color: #41A1F5;
-		}
-		.title_process {
-			color: #41A1F5;
-		}
-		.title_wait {
-			color: #999;
-		}
-		.line {
-			position: relative;
-			height: 1px;
-		}
-		.line_finish{
-			background-color: #41A1F5;
-		}
-		.line_wait {
-			background-color: #e0e0e0;
-		}
-		.line_hide {
-			height: 0px;
-			display: none;
-		}
-		.bfd-icon {
-			font-size: 18px;
-		}
+	.bfd-icon {
+		font-size: 18px;
 	}
-	.box:hover {
-		.circle {
-			color: #FFF;
-			background-color: #41A1F5;
-			border-color: #41A1F5;
-			cursor: pointer;
-		}
-		.title {
-			color: #41A1F5;
-		}
+}
+.bfd-steps__box {
+	z-index: 9999;
+	float: left;
+}
+.bfd-steps__box--circle {
+	position: relative;
+	text-align: center;
+	border: 1px solid;
+	vertical-align: middle;
+}
+.bfd-steps__box--circle_finish{
+	color: #41A1F5;
+	background-color: #FFF;
+	border-color: #41A1F5;
+}
+.bfd-steps__box--circle_process {
+	color: #FFF;
+	background-color: #41A1F5;
+	border-color: #41A1F5;
+	cursor: pointer;
+}
+.bfd-steps__box--circle_wait {
+	color: #999;
+	background-color: #FFF;
+	border-color: #e0e0e0;
+}
+.bfd-steps__box--title {
+	border: 0px;
+	text-align: center;
+	position: relative;
+	font-size: 12px;
+}
+.bfd-steps__box--title_finish{
+	color: #41A1F5;
+}
+.bfd-steps__box--title_process {
+	color: #41A1F5;
+}
+.bfd-steps__box--title_wait {
+	color: #999;
+}
+.bfd-steps__box--line {
+	position: relative;
+	height: 1px;
+}
+.bfd-steps__box--line_finish{
+	background-color: #41A1F5;
+}
+.bfd-steps__box--line_wait {
+	background-color: #e0e0e0;
+}
+.bfd-steps__box--line_hide {
+	height: 0px;
+	display: none;
+}
+.bfd-steps__box:hover {
+	.bfd-steps__box--circle {
+		color: #FFF;
+		background-color: #41A1F5;
+		border-color: #41A1F5;
+		cursor: pointer;
 	}
- }
+	.bfd-steps__box--title {
+		color: #41A1F5;
+	}
+}

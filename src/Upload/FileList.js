@@ -28,7 +28,7 @@ export default React.createClass({
       {
         this.props.data.map((item, index) => {
           return (
-            <div key={index} className="bfd-upload__filelist__row">
+            <div key={index} className="bfd-upload__filelist_row">
               <span>{item.name}</span>
               <span>{item.percent}%</span>
               <Icon type="upload" style={{display: item.state == 0 ? '' : 'none'}} />

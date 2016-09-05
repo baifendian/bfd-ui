@@ -86,7 +86,7 @@ describe('Steps', () => {
         </Steps>
       )
       const container = findDOMNode(instance)
-      const circle = container.querySelectorAll('.circle')
+      const circle = container.querySelectorAll('.bfd-steps__box--circle')
 
       TestUtils.Simulate.click(circle[0])
       expect(handleClick).toBeCalled()

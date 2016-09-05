@@ -39,27 +39,27 @@ class Line extends Component {
       width: (width / 2) + 'px'
     }
 
-    let classNameLeft = 'line_wait'
-    let classNameRight = 'line_wait'
+    let classNameLeft = 'bfd-steps__box--line_wait'
+    let classNameRight = 'bfd-steps__box--line_wait'
     if (index < current) {
-      classNameLeft = 'line_finish'
-      classNameRight = 'line_finish'
+      classNameLeft = 'bfd-steps__box--line_finish'
+      classNameRight = 'bfd-steps__box--line_finish'
     } else if (index == current) {
-      classNameLeft = 'line_finish'
-      classNameRight = 'line_wait'
+      classNameLeft = 'bfd-steps__box--line_finish'
+      classNameRight = 'bfd-steps__box--line_wait'
     }
 
     if (index == 0) {
-      classNameLeft = 'line_hide'
+      classNameLeft = 'bfd-steps__box--line_hide'
     }
     if (index == max - 1) {
-      classNameRight = 'line_hide'
+      classNameRight = 'bfd-steps__box--line_hide'
     }
 
     return (
       <div>
-        <div style={leftLineStyle} className={classnames('line', classNameLeft)}></div>
-        <div style={rightLineStyle} className={classnames('line', classNameRight)}></div>
+        <div style={leftLineStyle} className={classnames('bfd-steps__box--line', classNameLeft)}></div>
+        <div style={rightLineStyle} className={classnames('bfd-steps__box--line', classNameRight)}></div>
       </div>
     )
   }
@@ -73,13 +73,13 @@ class Title extends Component {
     const height = this.props.height
     const y = (height / 2) - (height / 4) - 10
     const top = y * 2 + 'px'
-    let className = 'title_process'
+    let className = 'bfd-steps__box--title_process'
     if (index < current) {
-      className = 'title_finish'
+      className = 'bfd-steps__box--title_finish'
     } else if (index > current) {
-      className = 'title_wait'
+      className = 'bfd-steps__box--title_wait'
     }
-    return (<div style={{top}} className={classnames('title', className)}>{title}</div>)
+    return (<div style={{top}} className={classnames('bfd-steps__box--title', className)}>{title}</div>)
   }
 }
 
@@ -111,14 +111,14 @@ class Circle extends Component {
       NavIcon = <Icon type={icon} />
     }
 
-    let className = 'circle_process'
+    let className = 'bfd-steps__box--circle_process'
     if (index < current) {
-      className = 'circle_finish'
+      className = 'bfd-steps__box--circle_finish'
     } else if (index > current) {
-      className = 'circle_wait'
+      className = 'bfd-steps__box--circle_wait'
     }
 
-    return (<div style={style} onClick={::this.handleClick} className={classnames('circle', className)}>{NavIcon}</div>)
+    return (<div style={style} onClick={::this.handleClick} className={classnames('bfd-steps__box--circle', className)}>{NavIcon}</div>)
   }
 
   handleClick() {
@@ -136,7 +136,7 @@ class Step extends Component {
     }
 
     return (
-      <div style={style} className="box">
+      <div style={style} className="bfd-steps__box">
         <Line {...this.props} />
         <Circle {...this.props} />
         <Title {...this.props} />
