@@ -20,7 +20,7 @@ class Components extends Component {
   renderTitle(component) {
     const { name, cn } = this.componentsMap[component]
     return (
-      <h2 className="components__title">{cn + ' ' + name}</h2>
+      <h2 className="components__title" style={{marginTop: '0px'}}>{cn + ' ' + name}</h2>
     )
   }
 

@@ -75,8 +75,8 @@ const message = {
    * @param  {number} [duration] 持续时间，单位毫秒
    * @description 成功信息，默认 2 秒后自动关闭
    */
-  success(message, duration) {
-    showMessage('success', message, duration = 2)
+  success(message, duration = 2) {
+    showMessage('success', message, duration)
   },
 
   /**
@@ -86,8 +86,8 @@ const message = {
    * @param  {number} [duration] 持续时间，单位毫秒
    * @description 失败信息，默认 3 秒后自动关闭
    */
-  danger(message, duration) {
-    showMessage('danger', message, duration = 3)
+  danger(message, duration = 3) {
+    showMessage('danger', message, duration)
   },
 
   /**

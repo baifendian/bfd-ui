@@ -32,9 +32,9 @@ class App extends Component {
         <li>
           <Link to="/changelog" activeClassName="active">更新日志</Link>
         </li>
-        <li>
+        {/* <li>
           <Link to="/scaffolding" activeClassName="active">脚手架</Link>
-        </li>
+        </li> */}
       </ul>
     )
   }

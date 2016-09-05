@@ -186,12 +186,18 @@ ${demo.mainCode}`
     `)
     i % 2 === 0 ? leftCol.push(code) : rightCol.push(code)
   })
-  const layout = (`
-    <Row gutter>
-      <Col col="md-6">${leftCol.join('\r\n')}</Col>
-      <Col col="md-6">${rightCol.join('\r\n')}</Col>
-    </Row>
-  `)
+
+  let layout
+  if (rightCol.length) {
+    layout = (`
+      <Row gutter>
+        <Col col="md-6">${leftCol.join('\r\n')}</Col>
+        <Col col="md-6">${rightCol.join('\r\n')}</Col>
+      </Row>
+    `)
+  } else {
+    layout = leftCol[0]
+  }
 
   // 生成文档代码
   const componentsDocs = docs.map(doc => {

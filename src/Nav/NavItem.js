@@ -19,7 +19,7 @@ class NavItem extends Component {
   constructor(props) {
     super()
     this.state = {
-      open: props.defaultOpen || false,
+      open: props.defaultOpen || false
     }
   }
 
