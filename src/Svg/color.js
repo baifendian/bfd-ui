@@ -96,7 +96,7 @@ export default class {
   }
 
   getDefault(index) {
-    if (typeof index == 'undefiend') {
+    if (typeof index === 'undefined') {
       return this.scope.default
     } else {
       return this.scope ? this.scope.default[index] : null

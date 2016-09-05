@@ -9,8 +9,6 @@
  * @providesModule src/Svg/Markers.js
  */
 
-import d3 from 'd3'
-
 export default class Markers {
 
   constructor(options) {
