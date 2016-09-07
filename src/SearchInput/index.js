@@ -22,11 +22,14 @@ class SearchInput extends Component {
     this.value = ''
   }
 
-  render() {
-    const { className, ...other } = this.props
-    const size = this.props.size || 'lg'
-    const width = this.props.width || '300px'
+  componentWillMount() {
     this.value = this.props.defaultValue || ''
+  }
+
+  render() {
+    const { className, label, size, defaultValue, onSearch, onChange, ...other } = this.props
+    const width = this.props.width || '300px'
+
     return (
       <div className={classnames('bfd-search_input', className, size)} {...other}>        
         <ClearableInput style={{width}} defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
@@ -65,7 +68,7 @@ SearchInput.propTypes = {
   size: PropTypes.string,
 
   // 输入框默认值
-  defalutValue: PropTypes.string,
+  defaultValue: PropTypes.string,
 
   // 输入框宽度，默认为300px
   width: PropTypes.string

@@ -60,15 +60,22 @@ describe('SearchInput', () => {
   describe('event test', () => {
     it('onSearch is ok', () => {
       const handleClick = jest.fn()
+      const value = "abc"
       const instance = TestUtils.renderIntoDocument(
-        <SearchInput onSearch={handleClick} />
+        <SearchInput onSearch={handleClick} defaultValue={value} />
       )
+
       const container = findDOMNode(instance)
-      const button = container.querySelector('button')
+      const button = container.querySelectorAll('button')[1]
+      
       TestUtils.Simulate.click(button)
       expect(handleClick).toBeCalled()
       expect(handleClick.mock.calls.length).toBe(1)
-      expect(handleClick.mock.calls[0][0]).toEqual('')
+      expect(handleClick.mock.calls[0][0]).toEqual(value)
+      TestUtils.Simulate.click(button)
+      expect(handleClick).toBeCalled()
+      expect(handleClick.mock.calls.length).toBe(2)
+      expect(handleClick.mock.calls[1][0]).toEqual(value)
     })
     it('onChange is ok', () => {
       const handleClick = jest.fn()
@@ -78,18 +85,19 @@ describe('SearchInput', () => {
       )
       const container = findDOMNode(instance)
       const input = container.querySelector('input')
+      TestUtils.Simulate.change(input, {
+        target: {
+          value: 'abc'
+        }
+      })
+      expect(handleChange).toBeCalledWith('abc')
 
-      input.value = 'abc'
-      TestUtils.Simulate.change(input)
-      expect(handleChange).toBeCalled()
-      expect(handleChange.mock.calls.length).toBe(1)
-      expect(handleChange.mock.calls[0][0]).toEqual('abc')
-
-      input.value = '1'
-      TestUtils.Simulate.change(input)
-      expect(handleChange).toBeCalled()
-      expect(handleChange.mock.calls.length).toBe(2)
-      expect(handleChange.mock.calls[1][0]).toEqual('1')
+      TestUtils.Simulate.change(input, {
+        target: {
+          value: '1'
+        }
+      })
+      expect(handleChange).toBeCalledWith('1')
     })
   })
 })
