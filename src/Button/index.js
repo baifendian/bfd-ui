@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Button/index.js
  */
 
 import './index.less'
@@ -15,7 +13,7 @@ import classnames from 'classnames'
 import Icon from '../Icon'
 
 const Button = props => {
-  const { className, type, size, icon, circle, transparent, children, ...other } = props
+  const { children, className, type, size, icon, circle, transparent, ...other } = props
   const classNames = classnames(
     'bfd-btn', 
     {
@@ -28,7 +26,7 @@ const Button = props => {
     className
   )
   return (
-    <button className={classNames} { ...other }>
+    <button type="button" className={classNames} { ...other }>
       {icon && <Icon type={icon} />}
       {children}
     </button>

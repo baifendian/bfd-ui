@@ -5,11 +5,8 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Select/Select/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
@@ -18,6 +15,7 @@ import TextOverflow from '../../TextOverflow'
 import Fetch from '../../Fetch'
 import ClearableInput from '../../ClearableInput'
 import Icon from '../../Icon'
+import './index.less'
 
 class Select extends Component {
 
@@ -122,12 +120,13 @@ class Select extends Component {
 
   render() {
     
+    const { 
+      children, className, value, defaultValue, onChange, data, url, 
+      defaultOption, size, disabled, placeholder, searchable, ...other 
+    } = this.props
     const { searchValue, index } = this.state
-    const { className, children, size, disabled, placeholder, searchable, url, ...other } = this.props
 
-    delete other.value
-    delete other.defaultValue
-    delete other.onChange
+    delete other.render
 
     let optionsWithProps = this.getOptionsWithProps()
 

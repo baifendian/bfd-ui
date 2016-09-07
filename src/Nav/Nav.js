@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Nav/Nav.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -25,11 +23,7 @@ class Nav extends Component {
   }
   
   render() {
-    const { className, children, ...other } = this.props
-
-    delete other.href
-    delete other.onItemClick
-
+    const { children, className, href, onItemClick,  ...other } = this.props
     return (
       <div className={classnames('bfd-nav', className)} {...other}>
         <ul>{children}</ul>

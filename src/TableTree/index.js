@@ -5,17 +5,15 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/TableTree/index.js
  */
 
-import '../table.less'
 import React, { Component, PropTypes } from 'react'
 import update from 'react-update'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import Fetch from '../Fetch'
 import Row from './Row'
+import '../table.less'
 
 class TableTree extends Component {
 
@@ -58,12 +56,11 @@ class TableTree extends Component {
   }
 
   render() {
+
+    const { className, columns, defaultData, url, onChange, ...other} = this.props
     const { data } = this.state
-    const { className, columns, url, ...other} = this.props
 
     delete other.data
-    delete other.defaultData
-    delete other.onChange
 
     this.rows = []
     this.loopLeaf(data, [])

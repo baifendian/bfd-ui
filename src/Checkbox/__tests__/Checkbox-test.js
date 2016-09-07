@@ -6,17 +6,29 @@ import Checkbox from '../Checkbox'
 describe('Checkbox', () => {
 
   it('should value works', () => {
-    const instance = TestUtils.renderIntoDocument(<Checkbox value="test" />)
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox value="test" />
+      </div>
+    )
     expect(findDOMNode(instance).querySelector('input').value).toBe('test')
   })
 
   it('should checked works', () => {
-    const instance = TestUtils.renderIntoDocument(<Checkbox checked onChange={jest.fn()} />)
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox checked onChange={jest.fn()} />
+      </div>
+    )
     expect(findDOMNode(instance).querySelector('input').checked).toBe(true)
   })
 
   it('should defaultChecked works', () => {
-    const instance = TestUtils.renderIntoDocument(<Checkbox defaultChecked />)
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox defaultChecked />
+      </div>
+    )
     expect(findDOMNode(instance).querySelector('input').checked).toBe(true)
   })
 
@@ -25,7 +37,11 @@ describe('Checkbox', () => {
     const handleChange = e => {
       change(e.target.checked)
     }
-    const instance = TestUtils.renderIntoDocument(<Checkbox onChange={handleChange} />)
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox onChange={handleChange} />
+      </div>
+    )
     TestUtils.Simulate.change(findDOMNode(instance).querySelector('input'), {
       target: {
         checked: true
@@ -35,12 +51,20 @@ describe('Checkbox', () => {
   })
 
   it('should disabled works', () => {
-    const instance = TestUtils.renderIntoDocument(<Checkbox disabled />)
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox disabled />
+      </div>
+    )
     expect(findDOMNode(instance).querySelector('input').disabled).toBe(true)
   })
 
   it('should block works', () => {
-    const instance = TestUtils.renderIntoDocument(<Checkbox block />)
-    expect(findDOMNode(instance).className).toContain('block')
+    const instance = TestUtils.renderIntoDocument(
+      <div>
+        <Checkbox block />
+      </div>
+    )
+    expect(findDOMNode(instance).children[0].className).toContain('block')
   })
 })

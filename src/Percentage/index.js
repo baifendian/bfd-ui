@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Percentage/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
+import './index.less'
 
 class Percentage extends Component {
 
@@ -36,9 +34,12 @@ class Percentage extends Component {
   }
 
   renderSvg() {
-    const { percent, foreColor, backColor, textColor } = this.props
+
+    const { percent, foreColor, backColor, textColor, ...other } = this.props
     const { size } = this.state
+
     if (!size) return
+    
     const strokeWidth = size / 20
     const radius = size / 2 - strokeWidth / 2
     const fontSize = size * .25
@@ -49,9 +50,11 @@ class Percentage extends Component {
       cx: size / 2,
       cy: size / 2
     }
+
     this.dash = Math.PI * radius * 2
+
     return (
-      <svg width={size} height={size}>
+      <svg width={size} height={size} {...other}>
         <circle stroke={backColor} {...shareProps} />
         <circle 
           ref="foreCircle"

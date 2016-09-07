@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Form/FormInput/index.js
  */
 
 import React, { PropTypes } from 'react'
@@ -15,7 +13,7 @@ import ClearableInput from '../../ClearableInput'
 import formControlValue from '../formControlValue'
 
 const FormInput = (props, context) => {
-  const { className, children, onChange, ...other } = props
+  const { children, className, onChange, ...other } = props
   const control = formControlValue(context.form, context.formItem)
   other.value = control.get()
   other.onChange = value => {

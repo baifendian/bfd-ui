@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Nav/NavItem.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -66,11 +64,11 @@ class NavItem extends Component {
   }
   
   render() {
+  
     const { open, href, active } = this.state
-    const { children, className, icon, title, ...other } = this.props
+    const { children, className, index, defaultOpen, icon, title, ...other } = this.props
 
     delete other.href
-    delete other.defaultOpen
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
     const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />

@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/DatePicker/Calendar/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
 import Button from '../../Button'
+import './index.less'
 
 class Calendar extends Component {
 
@@ -163,6 +161,7 @@ class Calendar extends Component {
 
     const { currentYear, currentMonth } = this.state
     const { start, end } = this.props
+    
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
 

@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Tree/SelectTree/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Tree from '../Tree'
 import Checkbox from '../../Checkbox'
+import './index.less'
 
 class SelectTree extends Component {
 
@@ -23,7 +21,7 @@ class SelectTree extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
+    const { className, onSelect, ...other } = this.props
     other.beforeNodeRender = (data, path) => {
       return (
         <Checkbox 

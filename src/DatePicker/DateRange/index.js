@@ -5,14 +5,12 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/DatePicker/DateRange/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import DatePicker from '../DatePicker'
+import './index.less'
 
 class DateRange extends Component {
 
@@ -42,14 +40,12 @@ class DateRange extends Component {
   }
 
   render() {
+    
     const { start, end } = this.state
-    const { className, onSelect, min, max, ...other } = this.props
+    const { className, defaultStart, defaultEnd, onSelect, min, max, ...other } = this.props
     
     delete other.start
-    delete other.defaultStart
     delete other.end
-    delete other.defaultEnd
-    delete other.onSelect
 
     return (
       <div className={classnames('bfd-daterange', className)} {...other}>

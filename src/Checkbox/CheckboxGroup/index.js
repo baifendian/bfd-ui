@@ -5,16 +5,14 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Checkbox/CheckboxGroup/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import update from 'react-update'
 import Checkbox from '../Checkbox'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
+import './index.less'
 
 class CheckboxGroup extends Component {
 
@@ -55,12 +53,14 @@ class CheckboxGroup extends Component {
   }
 
   render() {
-    const { children, className, values, block, toggleable, ...other } = this.props
+    
+    const { 
+      children, className, defaultSelects, onChange, values, block, toggleable, ...other 
+    } = this.props
     const { selects } = this.state
+    
     const unSelects = []
-
     delete other.selects
-    delete other.defaultSelects
 
     let checkboxes
     if (values) {
@@ -103,10 +103,7 @@ class CheckboxGroup extends Component {
     this.unSelects = unSelects
 
     return (
-      <div 
-        className={classnames('bfd-checkbox-group', className)} 
-        {...other}
-      >
+      <div className={classnames('bfd-checkbox-group', className)} {...other}>
         {toggleable && checkboxes && checkboxes.length > 1 && (
           <Checkbox 
             block={block} 

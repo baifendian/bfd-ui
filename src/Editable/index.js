@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Editable/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Input from '../Input'
 import Button from '../Button'
+import './index.less'
 
 class Editable extends Component {
 
@@ -22,7 +20,7 @@ class Editable extends Component {
     const value = 'value' in props ? props.value : props.defaultValue
     this.state = {
       value,
-      changedValue: value,
+      changedValue: value || '',
       editing: props.defaultEditing || false
     }
   }
@@ -78,8 +76,14 @@ class Editable extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
+
+    const { 
+      className, defaultValue, onChange, onCancel, defaultEditing, ...other 
+    } = this.props
     const { editing, value, changedValue } = this.state
+    
+    delete other.value
+
     return (
       <div className={classnames('bfd-editable', className)} {...other}>
       {editing ? (

@@ -5,12 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Form/index.js
  */
 
 import Form from './Form'
 import FormItem from './FormItem'
+import FormSubmit from './FormSubmit'
 import FormInput from './FormInput'
 import { FormSelect, Option } from './FormSelect'
 import FormTextarea from './FormTextarea'
@@ -18,6 +17,7 @@ import FormTextarea from './FormTextarea'
 export { 
   Form, 
   FormItem, 
+  FormSubmit,
   FormInput, 
   FormSelect, 
   Option,

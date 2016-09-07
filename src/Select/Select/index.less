@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Select/Select/index.less
  */
 
 .bfd-select {
@@ -28,7 +26,8 @@
     border: 1px solid #ececec;
     border-top: 0;
     .bfd-clearable-input {
-      margin: 5px;
+      width: 100%;
+      padding: 5px;
     }
     > ul {
       list-style: none;
@@ -37,6 +36,9 @@
     }
   }
   &.bfd-dropdown--open {
+    &:before {
+      content: none;
+    }
     .bfd-dropdown__toggle {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;

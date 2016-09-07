@@ -5,18 +5,16 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Select/Option/index.js
  */
 
-import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import TextOverflow from '../../TextOverflow'
 import Icon from '../../Icon'
+import './index.less'
 
 const Option = props => {
-  const { className, children, selected, active, ...other } = props
+  const { children, className, value, selected, active, ...other } = props
   const classNames = classnames(
     'bfd-select__option', 
     {
@@ -39,6 +37,7 @@ Option.propTypes = {
 
   // 值，与 Select value 对应，数据类型也要一致
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
   selected: PropTypes.bool,
   active: PropTypes.bool
 }

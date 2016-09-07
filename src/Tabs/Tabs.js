@@ -5,16 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Tabs/Tabs.js
  */
 
 import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
 
-/**
- * 选项卡根节点
- */
 class Tabs extends Component {
 
   constructor(props) {
@@ -37,7 +32,9 @@ class Tabs extends Component {
   }
 
   render() {
-    const { className, children, dynamic, ...other } = this.props
+    const { 
+      children, className, activeIndex, activeKey, onChange, dynamic, handleClose, ...other 
+    } = this.props
     this.tabCount = this.panelCount = 0
     return (
       <div className={classNames('bfd-tabs', {

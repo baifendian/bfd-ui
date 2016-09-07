@@ -68,9 +68,7 @@ var config = {
       'generator': path.resolve(__dirname, '../../generator-bfd')
     }
   },
-  plugins: [new webpack.DefinePlugin({
-    __DEV__: String(!isProduction)
-  })]
+  plugins: []
 }
 
 if (isProduction) {

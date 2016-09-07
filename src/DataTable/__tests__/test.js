@@ -102,7 +102,6 @@ describe('DataTable', () => {
       )
       const container = findDOMNode(instance)
       const inputs = container.querySelectorAll('tbody input')
-      console.log(inputs[0])
       expect(inputs[0].checked).toBe(true)
       expect(inputs[1].checked).toBe(false)
     })

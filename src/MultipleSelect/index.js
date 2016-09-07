@@ -5,11 +5,8 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/MultipleSelect/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
@@ -20,6 +17,7 @@ import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
 import Button from '../Button'
 import action from './action'
+import './index.less'
 
 class MultipleSelect extends Component {
 
@@ -122,13 +120,15 @@ class MultipleSelect extends Component {
 
   render() {
 
-    const { className, children, url, disabled, tagable, ...other } = this.props
+    const { 
+      children, className, defaultValues, onChange, data, url, disabled, tagable, ...other 
+    } = this.props
+    const { searchValue, index, values } = this.state
     
     delete other.values
-    delete other.defaultValues
+    delete other.render
 
     const placeholder = '请选择'
-    const { searchValue, index, values } = this.state
     const valueSet = this.valueSet = new Set(values)
     const optionsMapper = {}
     const options = []

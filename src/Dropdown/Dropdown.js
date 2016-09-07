@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Dropdown/Dropdown.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -45,10 +43,20 @@ class Dropdown extends Component {
     window.removeEventListener('click', this.handleBodyClick)
   }
 
+  /**
+   * @public
+   * @name this.refs.dropdown.open
+   * @description 展开
+   */
   open() {
     this.setState({open: true})
   }
 
+  /**
+   * @public
+   * @name this.refs.dropdown.close
+   * @description 收起
+   */
   close() {
     this.setState({open: false})
   }
@@ -72,15 +80,16 @@ class Dropdown extends Component {
   }
 
   render() {
+    
     const { open } = this.state
-    const { className, children, disabled, ...other } = this.props
+    const { children, className, onToggle, disabled, ...other } = this.props
+
+    delete other.open
+
     const classNames = classnames('bfd-dropdown', {
       'bfd-dropdown--open': open,
       'bfd-dropdown--disabled': disabled
     }, className)
-
-    delete other.onToggle
-    delete other.open
 
     return (
       <div 

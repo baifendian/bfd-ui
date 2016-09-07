@@ -5,62 +5,37 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Checkbox/Checkbox/index.js
  */
 
-import './index.less'
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import './index.less'
 
-class Checkbox extends Component {
+const Checkbox = props => {
 
-  constructor(props) {
-    super()
-    this.state = {
-      checked: props.defaultChecked || props.checked || false
-    }
-  }
+  const { children, className, block, ...inputProps } = props
 
-  componentWillReceiveProps(nextProps) {
-    'checked' in nextProps && this.setState({checked: nextProps.checked})  
-  }
-
-  handleChange(e) {
-    e.stopPropagation()
-    this.setState({checked: e.target.checked})
-    this.props.onChange && this.props.onChange(e)
-  }
-
-  render() {
-
-    const { className, value, disabled, block, children, ...other } = this.props
-    
-    const classNames = classnames('bfd-checkbox', {
-      'bfd-checkbox--disabled': disabled,
-      'bfd-checkbox--block': block
-    }, className)
-    
-    return (
-      <label className={classNames} {...other}>
-        <input 
-          type="checkbox" 
-          className="bfd-checkbox__input"
-          value={value} 
-          checked={this.state.checked}
-          disabled={disabled} 
-          onChange={::this.handleChange}
-        />
-        <span className="bfd-checkbox__status" />
-        {children && <span className="bfd-checkbox__text">{children}</span>}
-      </label>
-    )
-  }
+  const classNames = classnames('bfd-checkbox', {
+    'bfd-checkbox--disabled': inputProps.disabled,
+    'bfd-checkbox--block': block
+  }, className)
+  
+  return (
+    <label className={classNames}>
+      <input 
+        type="checkbox" 
+        className="bfd-checkbox__input"
+        {...inputProps}
+      />
+      <span className="bfd-checkbox__status" />
+      {children && <span className="bfd-checkbox__text">{children}</span>}
+    </label>
+  )
 }
 
 Checkbox.propTypes = {
 
-  // 值
+  // 值，如果结合 ChecboxGroup 使用，与其选中的值相对应
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   
   // 是否选中
