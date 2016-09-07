@@ -21,7 +21,8 @@ class Paging extends Component {
     super()
     this.state = {
       currentIndex: props.currentPage,
-      showPage: props.maxSeries || 4
+      showPage: props.maxSeries || 4,
+      goPageNum: ''
     }
   }
 
@@ -102,7 +103,7 @@ class Paging extends Component {
           {!this.props.hideGo ? (
           <div className="bfd-paging__go">
             <label className="bfd-paging__label-font">跳转到：</label>
-            <Input onKeyUp={::this.checkNumber} ref="inputNumber" className="bfd-paging__go-number"/>
+            <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
             <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
           </div>
           ) : ''}
@@ -124,24 +125,33 @@ class Paging extends Component {
   }
 
   handleGoPage() {
-    const number = this.refs.inputNumber.value
+    let number = parseInt(this.state.goPageNum) || this.state.currentIndex
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    if (number <= pageNum && number > 0) {
-      this.setState({
-        currentIndex: parseInt(this.refs.inputNumber.value)
-      })
-      if (this.props.onPageChange) {
-        this.props.onPageChange(parseInt(this.refs.inputNumber.value))
-      }
-    } else {
-      this.refs.inputNumber.value = ''
+
+    if(number <= 0) {
+      num = 1
+    } else if(number > pageNum) {
+      number = pageNum
     }
+
+    this.setState({
+      currentIndex: number
+    })
+
+    number != this.state.currentIndex && this.props.onPageChange && this.props.onPageChange(number)
   }
 
-  checkNumber() {
-    const number = /^\+?[1-9][0-9]*$/
-    if (!number.test(this.refs.inputNumber.value)) {
-      this.refs.inputNumber.value = ''
+  checkNumber(e) {
+    const value = e.target.value
+    const numberReg = /^\+?[1-9][0-9]*$/
+    if (!numberReg.test(value)) {
+      this.setState({
+        goPageNum: ''
+      })
+    } else {
+      this.setState({
+        goPageNum: value
+      })
     }
   }
 
