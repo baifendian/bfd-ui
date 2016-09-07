@@ -9,7 +9,7 @@
  * @providesModule src/Paging/index.js
  */
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Row } from '../Layout'
 import Button from '../Button'
 import Input from '../Input'
@@ -21,7 +21,7 @@ class Paging extends Component {
     super()
     this.state = {
       currentIndex: props.currentPage,
-      showPage: 4
+      showPage: props.maxSeries || 4
     }
   }
 
@@ -99,11 +99,13 @@ class Paging extends Component {
               <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
             </li>
           </ul>
+          {!this.props.hideGo ? (
           <div className="bfd-paging__go">
             <label className="bfd-paging__label-font">跳转到：</label>
             <Input onKeyUp={::this.checkNumber} ref="inputNumber" className="bfd-paging__go-number"/>
             <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
           </div>
+          ) : ''}
         </div>
       </Row>
     )
@@ -172,6 +174,28 @@ class Paging extends Component {
       }
     }
   }
+}
+
+Paging.propTypes = {
+
+  // 当前页面
+  currentPage: PropTypes.number.isRequired,
+
+  // 总记录数
+  totalPageNum: PropTypes.number.isRequired,
+
+  // 每页显示条数
+  pageSize: PropTypes.number,
+
+  // 页码改变事件， 参数返回被选中的页码
+  onPageChange: PropTypes.func,
+
+  // 连续页码显示的最大个数，默认为4个
+  maxSeries: PropTypes.number,
+
+  // 隐藏页面跳转功能
+  hideGo: PropTypes.bool
+
 }
 
 export default Paging
