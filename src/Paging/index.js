@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Row } from '../Layout'
 import Button from '../Button'
 import Input from '../Input'
@@ -19,7 +19,8 @@ class Paging extends Component {
     super()
     this.state = {
       currentIndex: props.currentPage,
-      showPage: 4
+      showPage: props.maxSeries || 4,
+      goPageNum: ''
     }
   }
 
@@ -97,11 +98,13 @@ class Paging extends Component {
               <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
             </li>
           </ul>
+          {!this.props.hideGo ? (
           <div className="bfd-paging__go">
             <label className="bfd-paging__label-font">跳转到：</label>
-            <Input onKeyUp={::this.checkNumber} ref="inputNumber" className="bfd-paging__go-number"/>
+            <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
             <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
           </div>
+          ) : ''}
         </div>
       </Row>
     )
@@ -120,24 +123,33 @@ class Paging extends Component {
   }
 
   handleGoPage() {
-    const number = this.refs.inputNumber.value
+    let number = parseInt(this.state.goPageNum) || this.state.currentIndex
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    if (number <= pageNum && number > 0) {
-      this.setState({
-        currentIndex: parseInt(this.refs.inputNumber.value)
-      })
-      if (this.props.onPageChange) {
-        this.props.onPageChange(parseInt(this.refs.inputNumber.value))
-      }
-    } else {
-      this.refs.inputNumber.value = ''
+
+    if(number <= 0) {
+      num = 1
+    } else if(number > pageNum) {
+      number = pageNum
     }
+
+    this.setState({
+      currentIndex: number
+    })
+
+    number != this.state.currentIndex && this.props.onPageChange && this.props.onPageChange(number)
   }
 
-  checkNumber() {
-    const number = /^\+?[1-9][0-9]*$/
-    if (!number.test(this.refs.inputNumber.value)) {
-      this.refs.inputNumber.value = ''
+  checkNumber(e) {
+    const value = e.target.value
+    const numberReg = /^\+?[1-9][0-9]*$/
+    if (!numberReg.test(value)) {
+      this.setState({
+        goPageNum: ''
+      })
+    } else {
+      this.setState({
+        goPageNum: value
+      })
     }
   }
 
@@ -170,6 +182,28 @@ class Paging extends Component {
       }
     }
   }
+}
+
+Paging.propTypes = {
+
+  // 当前页面
+  currentPage: PropTypes.number.isRequired,
+
+  // 总记录数
+  totalPageNum: PropTypes.number.isRequired,
+
+  // 每页显示条数
+  pageSize: PropTypes.number,
+
+  // 页码改变事件， 参数返回被选中的页码
+  onPageChange: PropTypes.func,
+
+  // 连续页码显示的最大个数，默认为4个
+  maxSeries: PropTypes.number,
+
+  // 隐藏页面跳转功能
+  hideGo: PropTypes.bool
+
 }
 
 export default Paging

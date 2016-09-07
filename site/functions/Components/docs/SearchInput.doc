@@ -6,11 +6,9 @@ import SearchInput from 'bfd/SearchInput'
 
 class SearchInputDemo extends Component {
 
-
   render() {
     return (
-      <SearchInput width="280px" placeholder="请输入任务名称" onSearch={::this.handleClick} onChange={::this.handleChange} />
-        
+      <SearchInput width="280px" size="lg" placeholder="请输入任务名称" defaultValue="abc" onSearch={::this.handleClick} onChange={::this.handleChange} />
     )
   }
 
