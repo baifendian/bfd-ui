@@ -28,7 +28,7 @@ class FetchDemo extends Component {
           <Option value="2">最近30天</Option>
         </Select>
         <Fetch 
-          style={{minHeight: '70px'}} 
+          defaultHeight={70}
           url={url} 
           onSuccess={data => {this.setState({ data })}}
           delay={1000}

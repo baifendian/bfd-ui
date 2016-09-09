@@ -91,7 +91,13 @@ class Fetch extends Component {
   }
 
   render() {
-    const { className, url, onSuccess, delay, ...other } = this.props
+    const { className, url, onSuccess, defaultHeight, delay, ...other } = this.props
+    let style
+    if (defaultHeight) {
+      other.style = Object.assign(other.style || {}, {
+        minHeight: defaultHeight + 'px'
+      })
+    }
     return (
       <div className={classnames('bfd-fetch', className)} {...other}>
         {(this.stateMap[this.state.xhr] || (() => null)).call(this)}
@@ -107,6 +113,9 @@ Fetch.propTypes = {
 
   // 成功后的回调，参数为返回的数据。error 时会直接显示在对应的容器内
   onSuccess: PropTypes.func,
+
+  // 默认高度，单位像素
+  defaultHeight: PropTypes.number,
 
   delay: PropTypes.number
 }

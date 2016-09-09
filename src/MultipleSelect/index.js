@@ -33,7 +33,8 @@ class MultipleSelect extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.values && this.setState({values: nextProps.values})  
+    nextProps.values && this.setState({values: nextProps.values})
+    nextProps.data && this.setState({data: nextProps.data})
   }
 
   shouldComponentUpdate: shouldComponentUpdate
@@ -256,6 +257,9 @@ MultipleSelect.propTypes = {
 
   // 数据源 URL，直接请求服务器，内部调用 xhr 模块
   url: PropTypes.string,
+
+  // URL 数据源模式数据过滤，参数为服务器返回的数据，返回处理后的数据
+  dataFilter: PropTypes.func,
 
   // data / url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,

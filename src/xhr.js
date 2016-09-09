@@ -31,11 +31,27 @@ function xhr(option) {
 
   /**
    * @public
-   * @name xhr.baseUrl
-   * @type {string}
-   * @description 全局基础 URL，常用的场景是接口是另外的服务，方便统一设置路径
+   * @name xhr.getUrl
+   * @param {object} option 当前请求配置
+   * @description 实现动态 url
+   * ```js
+   * xhr.getUrl = option => '//192.168.11.13/' + option.url
+   * ```
+   * @return {string} 返回实际请求 url
    */
-  option.url = (xhr.baseUrl || '') + option.url
+  if (xhr.getUrl) {
+    option.url = xhr.getUrl(option)
+  } else {
+
+    /**
+     * @public
+     * @name xhr.baseUrl
+     * @type {string}
+     * @description 全局基础 URL，常用的场景是接口是另外的服务，方便统一设置路径
+     */
+    option.url = (xhr.baseUrl || '') + option.url
+  }
+  
   option.type = (option.type || 'get').toUpperCase()
 
   let timer

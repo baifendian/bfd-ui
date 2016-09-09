@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import warning from 'warning'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../../Dropdown'
 import TextOverflow from '../../TextOverflow'
@@ -43,6 +44,10 @@ class Select extends Component {
   shouldComponentUpdate: shouldComponentUpdate
 
   handleLoad(data) {
+    if (this.props.dataFilter) {
+      data = this.props.dataFilter(data)
+      warning(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
+    }
     this.setState({ data })
   }
 
@@ -122,7 +127,7 @@ class Select extends Component {
     
     const { 
       children, className, value, defaultValue, onChange, data, url, 
-      defaultOption, size, disabled, placeholder, searchable, ...other 
+      dataFilter, defaultOption, size, disabled, placeholder, searchable, ...other 
     } = this.props
     const { searchValue, index } = this.state
 
@@ -133,7 +138,7 @@ class Select extends Component {
     if (searchValue) {
       optionsWithProps = optionsWithProps.filter(option => {
         const { value, children } = option.props
-        if (!String(value)) return false
+        if (typeof value === 'undefined' || !String(value)) return false
         return children.indexOf(searchValue) !== -1 || String(value).indexOf(searchValue) !== -1
       })
     }
@@ -153,6 +158,20 @@ class Select extends Component {
       [`bfd-select--searchable`]: searchable
     }, className)
 
+    const ToggleView = [
+      <TextOverflow key="title">
+        <div className="bfd-select__title">{this.title || placeholder}</div>
+      </TextOverflow>,
+      <Icon key="caret" type="caret-down" className="bfd-select__caret" />
+    ]
+    const MenuView = (
+      <ul className="bfd-select__options">
+        {optionsWithProps && optionsWithProps.length ? optionsWithProps : (
+          <li className="bfd-select__option">无选项</li>
+        )}
+      </ul>
+    )
+
     return (
       <Dropdown 
         ref="dropdown" 
@@ -162,12 +181,9 @@ class Select extends Component {
         {...other}
       >
         <DropdownToggle>
-          <Fetch url={url} onSuccess={::this.handleLoad}>
-            <TextOverflow>
-              <div className="bfd-select__title">{this.title || placeholder}</div>
-            </TextOverflow>
-            <Icon type="caret-down" className="bfd-select__caret" />
-          </Fetch>
+          {this.title ? ToggleView : (
+            <Fetch url={url} onSuccess={::this.handleLoad}>{ToggleView}</Fetch>
+          )}
         </DropdownToggle>
         <DropdownMenu>
           {searchable && (
@@ -179,7 +195,11 @@ class Select extends Component {
               onKeyDown={::this.handleKeyDown}
             />
           )}
-          <ul className="bfd-select__options">{optionsWithProps}</ul>
+          {this.title ? (
+            <Fetch defaultHeight={30} url={url} onSuccess={::this.handleLoad}>
+              {MenuView}
+            </Fetch>
+          ) : MenuView}
         </DropdownMenu>
       </Dropdown>
     )
@@ -202,6 +222,9 @@ Select.propTypes = {
   
   // URL 数据源
   url: PropTypes.string,
+
+  // URL 数据源模式数据过滤，参数为服务器返回的数据，返回处理后的数据
+  dataFilter: PropTypes.func,
 
   // data 或 url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
