@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Modal/Modal.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -96,17 +94,22 @@ class Modal extends Component {
   }
 
   render() {
-    const { className, children, ...other } = this.props
+    
+    const { children, className, onToggle, lock, onClose, ...other } = this.props
+    const { open } = this.state
+
+    delete other.open
+
     return (
       <ReactCSSTransitionGroup 
         transitionName="bfd-modal--in" 
         transitionEnterTimeout={200} 
         transitionLeaveTimeout={this.closeTimeout}
       >
-        {this.state.open && (
+        {open && (
           <div className={classnames('bfd-modal', className)} {...other}>
             <div className="bfd-modal__backdrop"></div>
-            <div className="bfd-modal__modal" onClick={e => this.handleModalClick(e)}>
+            <div className="bfd-modal__modal" onClick={::this.handleModalClick}>
               <div className="bfd-modal__modal-dialog">
                 <div className="bfd-modal__modal-content">
                   {children}

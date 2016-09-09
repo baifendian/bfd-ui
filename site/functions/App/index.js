@@ -1,6 +1,9 @@
+import 'normalize.css'
+import './pace.less'
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
 import classnames from 'classnames'
+import classlist from 'classlist'
 import { Row, Col } from 'bfd/Layout'
 import { Nav, NavItem } from 'bfd/Nav'
 import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
@@ -8,9 +11,7 @@ import Button from 'bfd/Button'
 import Icon from 'bfd/Icon'
 import pace from './pace'
 import fastclick from 'fastclick'
-import 'normalize.css'
 import './index.less'
-import './pace.less'
 
 pace.start()
 fastclick.attach(document.body)
@@ -42,14 +43,14 @@ class App extends Component {
   render() {
     const { children } = this.props
     const isIndex = !this.props.routes[1].path
-    document.body.classList.toggle('index', isIndex)
+    classlist(document.body).toggle('index', isIndex)
     return (
       <div className="wrapper">
         <Row className={classnames('header', {'header--index': isIndex})} fluid>
           <Col>
             <Link to="/" className="header__logo">
               <svg dangerouslySetInnerHTML={{__html: '<use xlink:href="#logo"></use>'}} />
-              BFD UI <sub>v0.8.0</sub>
+              BFD UI <sub>v0.9.1</sub>
             </Link>
           </Col>
           <Col className="header__nav">

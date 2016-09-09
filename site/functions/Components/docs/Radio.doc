@@ -1,8 +1,18 @@
 /**
- * @title 基本功能
+ * @title 基本的 Radio
  */
 
-import { RadioGroup, Radio } from 'bfd/Radio'
+import Radio from 'bfd/Radio'
+
+const RadioBasic = () => {
+  return <Radio value="apple">苹果</Radio>
+}
+
+/**
+ * @title 基本的 RadioGroup
+ */
+
+import Radio, { RadioGroup } from 'bfd/Radio'
 
 const RadioGroupBasic = () => {
   return (

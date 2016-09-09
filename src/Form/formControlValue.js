@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Form/formControlValue.js
  */
 
 export default (form, formItem) => {
@@ -30,7 +28,6 @@ export default (form, formItem) => {
         nextData = form.update('set', ['data', name, form.multipleMap[formItem.uuid]], value)
       }
       form.props.onChange && form.props.onChange(nextData)
-      formItem.validate(value)
     }
   }
 }

@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Modal/index.less
  */
 
 .bfd-modal--scrollbar-measure {
@@ -17,11 +15,8 @@
   overflow: scroll;
 }
 
-.bfd-modal--open {
+body.bfd-modal--open {
   overflow: hidden;
-  .bfd-message {
-    top: 110px;
-  }
 }
 
 .bfd-modal--in-enter {
@@ -99,6 +94,8 @@
   color: #fff;
   padding: 15px 20px;
   position: relative;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -115,6 +112,8 @@
 }
 
 .bfd-modal__modal-body {
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   padding: 20px;
   background-color: #fff;
 }

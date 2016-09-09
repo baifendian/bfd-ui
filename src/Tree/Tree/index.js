@@ -5,16 +5,14 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Tree/Tree/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import update from 'react-update'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
 import TreeNode from './TreeNode'
+import './index.less'
 
 class Tree extends Component {
 
@@ -22,7 +20,7 @@ class Tree extends Component {
     super(props)
     this.update = update.bind(this)
     this.state = {
-      data: props.defaultData || props.data  
+      data: props.defaultData || props.data || []
     }
   }
 
@@ -71,17 +69,15 @@ class Tree extends Component {
   }
 
   render() {
-    const { className, onActive, ...other } = this.props
-    const data = this.state.data || []
+    
+    const { 
+      className, defaultData, beforeNodeRender, onChange, onActive, getIcon, 
+      getUrl, dataFilter, ...other 
+    } = this.props
+    const { data } = this.state
 
     delete other.data
-    delete other.defaultData
-    delete other.beforeNodeRender
-    delete other.onChange
     delete other.render
-    delete other.getIcon
-    delete other.getUrl
-    delete other.dataFilter
 
     return (
       <div 

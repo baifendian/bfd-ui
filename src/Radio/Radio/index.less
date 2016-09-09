@@ -5,21 +5,17 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Radio/Radio/index.less
  */
 
 .bfd-radio {
   font-weight: 400;
-  padding-left: 25px;
+  padding-left: 16px;
   position: relative;
   margin-bottom: 0;
   cursor: pointer;
+  min-height: 16px;
   line-height: 30px;
   display: inline-block;
-  > * {
-    pointer-events: none;
-  }
   &:hover {
     color: #2196f3;
     .bfd-radio__status {
@@ -87,4 +83,9 @@
     display: none;
     background-color: #2196f3;
   }
+}
+
+.bfd-radio__text {
+  pointer-events: none;
+  margin-left: 7px;
 }

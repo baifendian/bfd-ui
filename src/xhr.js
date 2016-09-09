@@ -5,21 +5,53 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/xhr.js
  */
 
+/**
+ * @public
+ * @name xhr
+ * @param {object} option 配置项
+ * ```js
+ * {
+ *   type: 'DELETE', // 请求类型，支持所有 HTTP 请求类型
+ *   url: '/user/5', // 请求地址
+ *   data: {}, // 发送的数据，如果是对象会被字符串化并设置请求头 Content-Type
+ *   beforeSend: request => {}, // 发送前处理逻辑，参数为当前 XMLHttpRequest 对象
+ *   success: () => {}, // 成功后的回调，是否调用以及参数是什么取决于全局 xhr.success 的处理
+ *   error: () => {}, // 失败后的回调，是否调用以及参数是什么取决于全局 xhr.error 的处理
+ *   complete: () => {} // 请求完成后的回调，无论是否成功
+ * }
+ * ```
+ * @return {object} 返回当前 XMLHttpRequest 对象
+ * @description ajax 请求
+ */
 function xhr(option) {
 
   const request = new window.XMLHttpRequest()
 
   /**
    * @public
-   * @name xhr.baseUrl
-   * @type {string}
-   * @description 全局基础 URL，常用的场景是接口是另外的服务，方便统一设置路径
+   * @name xhr.getUrl
+   * @param {object} option 当前请求配置
+   * @description 实现动态 url
+   * ```js
+   * xhr.getUrl = option => '//192.168.11.13/' + option.url
+   * ```
+   * @return {string} 返回实际请求 url
    */
-  option.url = (xhr.baseUrl || '') + option.url
+  if (xhr.getUrl) {
+    option.url = xhr.getUrl(option)
+  } else {
+
+    /**
+     * @public
+     * @name xhr.baseUrl
+     * @type {string}
+     * @description 全局基础 URL，常用的场景是接口是另外的服务，方便统一设置路径
+     */
+    option.url = (xhr.baseUrl || '') + option.url
+  }
+  
   option.type = (option.type || 'get').toUpperCase()
 
   let timer
@@ -155,6 +187,8 @@ function xhr(option) {
   option.beforeSend && option.beforeSend(request)
 
   request.send(sendData)
+
+  return request
 }
 
 export default xhr

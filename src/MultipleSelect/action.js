@@ -5,9 +5,9 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/MultipleSelect/action.js
  */
+
+import warning from 'warning'
 
 export default {
 
@@ -27,6 +27,10 @@ export default {
   },
 
   handleLoad(data) {
+    if (this.props.dataFilter) {
+      data = this.props.dataFilter(data)
+      warning(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
+    }
     this.setState({ data })
   },
 

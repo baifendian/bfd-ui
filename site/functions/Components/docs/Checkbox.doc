@@ -51,5 +51,20 @@ const CheckboxGroupBlock = () => {
   )
 }
 
+/**
+ * @title 全选
+ */
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
+
+const CheckboxGroupToggleable = () => {
+  return (
+    <CheckboxGroup toggleable>
+      <Checkbox value="apple">苹果</Checkbox>
+      <Checkbox value="samsung">三星</Checkbox>
+      <Checkbox value="mi">小米</Checkbox>
+    </CheckboxGroup>
+  )
+}
+
 @component Checkbox/Checkbox
 @component Checkbox/CheckboxGroup

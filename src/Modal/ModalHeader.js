@@ -5,17 +5,20 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Modal/ModalHeader.js
  */
 
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 import Button from '../Button'
 
-const ModalHeader = (props, { modal }) => {
+const ModalHeader = (props, context) => {
+
+  const { children, className, ...other } = props
+  const { modal } = context
+  
   return (
-    <div className="bfd-modal__modal-header">
-      {props.children}
+    <div className={classnames('bfd-modal__modal-header', className)} {...other}>
+      {children}
       <Button 
         className="bfd-modal__modal-header-close"
         icon="remove" 
@@ -30,10 +33,6 @@ const ModalHeader = (props, { modal }) => {
 
 ModalHeader.contextTypes = {
   modal: PropTypes.object
-}
-
-ModalHeader.propTypes = {
-  onClose: PropTypes.func
 }
 
 export default ModalHeader

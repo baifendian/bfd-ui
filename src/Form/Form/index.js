@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Form/Form/index.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -89,7 +87,7 @@ class Form extends Component {
    */
   save(data) {
     if (this.validate()) {
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         warning(this.props.action, 'No `action` provided, check the Form component you save.')
       }
       xhr({
@@ -103,11 +101,21 @@ class Form extends Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+    this.props.onSubmit && this.props.onSubmit(this.state.data)
+  }
+
   render() {
-    const { className, data, children, onChange, onSubmit, ...other } = this.props
+
+    const {
+      children, className, data, defaultData, onChange, onSubmit, onSuccess, 
+      rules, labelWidth, ...other
+    } = this.props
+    
     return (
       <form 
-        onSubmit={e => e.preventDefault()} 
+        onSubmit={::this.handleSubmit} 
         className={classnames('bfd-form', className)} 
         {...other}
       >
@@ -133,7 +141,7 @@ Form.propTypes = {
   // 表单数据源（不可控），同 data
   defaultData: PropTypes.object,
 
-  // 表单数据改变后的回调，参数为表单数据对象
+  // 表单数据改变后的回调，参数为当前表单的数据
   onChange: PropTypes.func,
 
   // 表单验证规则，需要验证的 key 与 data 对象一一对应
@@ -147,6 +155,9 @@ Form.propTypes = {
 
   // 成功后的回调，参数为服务器返回后的数据
   onSuccess: PropTypes.func,
+
+  // 表单提交回调，参数为当前表单的数据，自定义提交后的行为。如果不指定，表单提交后自动调用 save
+  onSubmit: PropTypes.func,
 
   customProp({ data, onChange }) {
     if (data && !onChange) {

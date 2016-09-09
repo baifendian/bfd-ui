@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Dropdown/index.less
  */
 
 .bfd-dropdown {
@@ -24,17 +22,38 @@
   top: 100%;
   left: 0;
   min-width: 160px;
-  margin-top: 2px;
+  margin-top: 8px;
   padding: 10px;
   border-radius: 2px;
-  border: 1px solid #ececec;
   background-color: #fff;
-  box-shadow: 0 2px 4px -1px rgba(0,0,0,.14),0 4px 5px 0 rgba(0,0,0,.098),0 1px 10px 0 rgba(0,0,0,.014);
+  border: 1px solid #dedede;
+  border-radius: 2px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
   z-index: 1000;
   display: none;
 }
 
+.bfd-dropdown__menu--right {
+  right: 0;
+  left: initial;
+}
+
 .bfd-dropdown--open {
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    margin-left: -4px;
+    margin-top: 4px;
+    transform: rotate(-45deg);
+    border-top: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+    z-index: 1001;
+  }
   .bfd-dropdown__menu {
     display: block;
   }
@@ -43,9 +62,9 @@
 .bfd-dropdown--disabled {
   .bfd-dropdown__toggle,
   .bfd-dropdown__toggle * {
-    background-color: #eceff1;
-    cursor: not-allowed;
-    color: #999;
-    pointer-events: none;
+    background-color: #eceff1!important;
+    cursor: not-allowed!important;
+    color: #999!important;
+    pointer-events: none!important;
   }
 }

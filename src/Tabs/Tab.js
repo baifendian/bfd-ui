@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Tabs/Tab.js
  */
 
 import React, { Component, PropTypes } from 'react'
@@ -14,9 +12,6 @@ import classNames from 'classnames'
 import warning from 'warning'
 import Button from '../Button'
 
-/**
- * 选项卡自身节点
- */
 class Tab extends Component {
 
   handleClick(index, e) {
@@ -37,7 +32,9 @@ class Tab extends Component {
   }
 
   render() {
-    const { className, children, activeKey, activeIndex, abolishClose, ...other } = this.props
+    const { 
+      children, className, activeKey, abolishClose, ...other 
+    } = this.props
     const tabs = this.context.tabs
     const index = tabs.tabCount++
     

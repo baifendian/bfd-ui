@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Fetch/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import xhr from '../xhr'
+import './index.less'
 
 class Fetch extends Component {
 
@@ -93,12 +91,12 @@ class Fetch extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
-
-    delete other.url
-    delete other.onSuccess
-    delete other.delay
-
+    const { className, url, onSuccess, defaultHeight, delay, ...other } = this.props
+    if (defaultHeight) {
+      other.style = Object.assign(other.style || {}, {
+        minHeight: defaultHeight + 'px'
+      })
+    }
     return (
       <div className={classnames('bfd-fetch', className)} {...other}>
         {(this.stateMap[this.state.xhr] || (() => null)).call(this)}
@@ -115,7 +113,9 @@ Fetch.propTypes = {
   // 成功后的回调，参数为返回的数据。error 时会直接显示在对应的容器内
   onSuccess: PropTypes.func,
 
-  // 请求延迟，单位毫米，主要用于测试，正式环境不要使用
+  // 默认高度，单位像素
+  defaultHeight: PropTypes.number,
+
   delay: PropTypes.number
 }
 

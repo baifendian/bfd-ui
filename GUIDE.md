@@ -30,6 +30,8 @@ var config = {
 module.exports = config
 ```
 
+强烈建议基于脚手架开发，省去很多繁琐的环境配置，基础的全局样式，整体前端结构及开发、部署工作流的处理
+
 ## 受控 / 不受控组件
 
 组件支持不受控的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)

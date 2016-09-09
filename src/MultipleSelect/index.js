@@ -5,11 +5,8 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/MultipleSelect/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
@@ -20,6 +17,7 @@ import TextOverflow from '../TextOverflow'
 import Fetch from '../Fetch'
 import Button from '../Button'
 import action from './action'
+import './index.less'
 
 class MultipleSelect extends Component {
 
@@ -35,7 +33,8 @@ class MultipleSelect extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.values && this.setState({values: nextProps.values})  
+    nextProps.values && this.setState({values: nextProps.values})
+    nextProps.data && this.setState({data: nextProps.data})
   }
 
   shouldComponentUpdate: shouldComponentUpdate
@@ -122,13 +121,15 @@ class MultipleSelect extends Component {
 
   render() {
 
-    const { className, children, url, disabled, tagable, ...other } = this.props
+    const { 
+      children, className, defaultValues, onChange, data, url, disabled, tagable, ...other 
+    } = this.props
+    const { searchValue, index, values } = this.state
     
     delete other.values
-    delete other.defaultValues
+    delete other.render
 
     const placeholder = '请选择'
-    const { searchValue, index, values } = this.state
     const valueSet = this.valueSet = new Set(values)
     const optionsMapper = {}
     const options = []
@@ -256,6 +257,9 @@ MultipleSelect.propTypes = {
 
   // 数据源 URL，直接请求服务器，内部调用 xhr 模块
   url: PropTypes.string,
+
+  // URL 数据源模式数据过滤，参数为服务器返回的数据，返回处理后的数据
+  dataFilter: PropTypes.func,
 
   // data / url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,

@@ -5,17 +5,15 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/DatePicker/DatePicker/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import format from 'dateformat'
 import Calendar from '../Calendar'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../../Dropdown'
 import ClearableInput from '../../ClearableInput'
+import './index.less'
 
 class DatePicker extends Component {
 
@@ -42,16 +40,13 @@ class DatePicker extends Component {
   }
 
   render() {
+    
+    const { className, defaultDate, onSelect, min, max, start, end, ...other } = this.props
     const { date } = this.state
-    const { className, onSelect, min, max, start, end, ...other } = this.props
 
     delete other.date
-    delete other.defaultDate
-    delete other.min
-    delete other.max
-    delete other.onSelect
 
-    let value
+    let value = ''
     let placeholder
     if (date) {
       value = format(date, 'yyyy-mm-dd')

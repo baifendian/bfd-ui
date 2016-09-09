@@ -5,13 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Switch/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import './index.less'
 
 class Switch extends Component {
 
@@ -33,8 +31,12 @@ class Switch extends Component {
   }
 
   render() {
-    const { className, labelOn, labelOff, ...other } = this.props
+    
+    const { className, defaultOn, onChange, labelOn, labelOff, ...other } = this.props
     const { on } = this.state
+
+    delete other.on
+    
     return (
       <label className={classnames('bfd-switch', className)} {...other}>
         <input type="checkbox" checked={on} onChange={::this.handleChange} />

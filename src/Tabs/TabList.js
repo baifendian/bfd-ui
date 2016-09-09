@@ -5,17 +5,14 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Tabs/TabList.js
  */
 
 import React from 'react'
+import classnames from 'classnames'
 
-/**
- * 选项组容器节点
- */
 const TabList = props => {
-  return <ul className="bfd-tabs__list">{props.children}</ul>
+  const { children, className, ...other } = props
+  return <ul className={classnames('bfd-tabs__list', className)} {...other}>{children}</ul>
 }
 
 export default TabList

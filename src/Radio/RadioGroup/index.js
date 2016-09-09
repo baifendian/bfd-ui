@@ -5,13 +5,11 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Radio/RadioGroup/index.js
  */
 
-import './index.less'
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import './index.less'
 
 const RadioGroup = React.createClass({
 
@@ -31,24 +29,26 @@ const RadioGroup = React.createClass({
   },
   
   render() {
-    const { className, children, onChange, ...other } = this.props
+    
+    const { children, className, defaultValue, onChange, ...other } = this.props
+    const { value } = this.state
+
+    delete other.value
+
     const radiosWithProps = React.Children.map(children, (Radio, i) => {
       if (!Radio) return
-      const value = Radio.props.value
+      const _value = Radio.props.value
       return React.cloneElement(Radio, {
         key: i,
-        checked: this.state.value === value,
+        checked: value === _value,
         onChange: e => {
           e.stopPropagation()
-          this.handleChange(value)
+          this.handleChange(_value)
         }
       })
     })
     return (
-      <div 
-        className={classnames('radios bfd-radio-group', className)} 
-        {...other}
-      >
+      <div className={classnames('radios bfd-radio-group', className)} {...other}>
        {radiosWithProps}
       </div>
     ) 

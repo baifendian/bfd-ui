@@ -79,7 +79,9 @@ describe('Select', () => {
         value: 'x'
       }
     })
-    expect(container.querySelectorAll('.bfd-select__option').length).toBe(0)
+    const options = container.querySelectorAll('.bfd-select__option')
+    expect(options.length).toBe(1)
+    expect(options[0].textContent).toBe('无选项')
   })
 
   it('should empty children works', () => {

@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/ClearableInput/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Input from '../Input'
 import Button from '../Button'
+import './index.less'
 
 class ClearableInput extends Component {
 
@@ -44,19 +42,30 @@ class ClearableInput extends Component {
     this.props.onChange && this.props.onChange(value)
   }
 
-  // @public
+  /**
+   * @public
+   * @name this.refs.clearableInput.focus
+   * @description 同 HTMLInputElement.focus()
+   */
   focus() {
     this.refs.input.focus()
   }
 
-  render() {
-    const { value } = this.state
-    const { className, onChange, ...other } = this.props
+  /**
+   * @public
+   * @name this.refs.clearableInput.select
+   * @description 同 HTMLInputElement.select()
+   */
+  select() {
+    this.refs.input.select()
+  }
 
-    delete other.value
-    delete other.defaultValue
-    delete other.onChange
-    delete other.onClear
+  render() {
+
+    const { className, defaultValue, onChange, onClear, ...inputProps } = this.props
+    const { value } = this.state
+
+    delete inputProps.value
 
     return (
       <div className={classnames('bfd-clearable-input', className)}>
@@ -64,9 +73,9 @@ class ClearableInput extends Component {
           ref="input"
           value={value} 
           onChange={::this.handleInput} 
-          {...other} 
+          {...inputProps} 
         />
-        {value && !other.disabled && (
+        {value && !inputProps.disabled && (
           <Button 
             icon="remove" 
             size="sm"

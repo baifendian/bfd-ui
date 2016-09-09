@@ -5,8 +5,6 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/confirm/index.js
  */
 
 import React, { Component } from 'react'
@@ -67,7 +65,7 @@ let instance
  */
 function confirm(message, callback) {
 
-  if (__DEV__) {
+  if (process.env.NODE_ENV !== 'production') {
     warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
     warning(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
   }

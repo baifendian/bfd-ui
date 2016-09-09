@@ -5,15 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Dropdown/DropdownToggle.js
  */
 
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 
 const DropdownToggle = (props, context) => {
-  const { className, children, ...other } = props
+  const { children, className, ...other } = props
   const { dropdown } = context
   return (
     <div 

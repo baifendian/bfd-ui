@@ -5,14 +5,13 @@
  * This source code is licensed under the BSD-style license found in the
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule src/Form/FormItem/index.js
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import Icon from '../../Icon'
+import formControlValue from '../formControlValue'
+import './index.less'
 
 class FormItem extends Component {
 
@@ -29,7 +28,17 @@ class FormItem extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+    const data = this.control.get()
+    if (this.data !== data) {
+      this.validate(data)
+      this.data = data
+    }
+  }
+
   componentWillMount() {
+    this.control = formControlValue(this.context.form, this)
+    this.data = this.control.get()
     this.context.form.addItem(this)
   }
 
@@ -39,7 +48,7 @@ class FormItem extends Component {
 
   /**
    * @public
-   * @name this.refs.form.validate
+   * @name this.refs.formItem.validate
    * @param  {*} value 待验证字段的数据
    * @return {boolean} 成功/失败
    * @description 单个字段验证
@@ -59,8 +68,12 @@ class FormItem extends Component {
   }
 
   render() {
+    
     const { error } = this.state
-    const { name, multiple, required, help, label, className, children, ...other } = this.props
+    const { 
+      children, className, name, multiple, required, help, label, ...other 
+    } = this.props
+
     const labelWidth = this.context.form.props.labelWidth
 
     const Help = help && (
@@ -82,7 +95,7 @@ class FormItem extends Component {
     }, className)
 
     return (
-      <div className={classNames} {...other} fluid>
+      <div className={classNames} {...other}>
         {label && (
           <div 
             className={classnames('bfd-form__item-label', {
@@ -93,7 +106,7 @@ class FormItem extends Component {
             {label}：
           </div>
         )}
-        <div style={{marginLeft: `${labelWidth}px`}}>
+        <div style={{marginLeft: `${labelWidth}px`}} className="bfd-form__item-content">
           {children}
           {Error || Help}
         </div>

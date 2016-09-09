@@ -8,8 +8,8 @@ describe('Calendar', () => {
   it('should date works', () => {
     const instance = TestUtils.renderIntoDocument(<Calendar date="2016-01-01" />)
     const container = findDOMNode(instance)
-    expect(container.querySelector('.bfd-calendar__result').children[0].textContent).toBe('2016')
-    expect(container.querySelector('.bfd-calendar__result').children[2].textContent).toBe('1')
+    expect(container.querySelector('.bfd-calendar__result').textContent).toContain('2016年')
+    expect(container.querySelector('.bfd-calendar__result').textContent).toContain('1月')
     expect(container.querySelector('.bfd-calendar__day--active').textContent).toBe('1')
   })
 
@@ -23,14 +23,14 @@ describe('Calendar', () => {
     const result = header.querySelector('.bfd-calendar__result')
     
     TestUtils.Simulate.click(buttons[0])
-    expect(result.children[0].textContent).toBe('2015')
+    expect(result.textContent).toContain('2015年')
     TestUtils.Simulate.click(buttons[1])
-    expect(result.children[2].textContent).toBe('12')
+    expect(result.textContent).toContain('12月')
 
     TestUtils.Simulate.click(buttons[2])
-    expect(result.children[2].textContent).toBe('1')
+    expect(result.textContent).toContain('1月')
     TestUtils.Simulate.click(buttons[3])
-    expect(result.children[0].textContent).toBe('2016')
+    expect(result.textContent).toContain('2016年')
   })
 
   it('should today works', () => {

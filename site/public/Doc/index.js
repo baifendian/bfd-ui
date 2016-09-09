@@ -56,8 +56,7 @@ const Doc = props => {
             {api['return'] && (
               <dd>
                 <h2>返回</h2>
-                {api['return'].type}
-                {api['return'].desc}
+                {api['return'].type + ' ' + api['return'].desc}
               </dd>
             )}
             {type && (

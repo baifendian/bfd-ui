@@ -5,16 +5,22 @@ import { Router, Route, IndexRoute } from 'react-router'
 import { createHistory } from 'history'
 import { Nav, NavItem, IndexNavItem } from '../index'
 
+Object.defineProperty(window.location, 'href', {
+  writable: true,
+  value: '/'
+})
+
 describe('Nav', () => {
 
   it('should href extends works', () => {
+
     let router = TestUtils.renderIntoDocument((
       <Router history={createHistory()}>
         <Route path="/" component={() => (
           <Nav href="/">
-            <NavItem defaultOpen>
+            <IndexNavItem defaultOpen>
               <NavItem href="test" />
-            </NavItem>
+            </IndexNavItem>
           </Nav>
         )} />
       </Router>
@@ -37,9 +43,9 @@ describe('Nav', () => {
   it('should defaultOpen works', () => {
     const instance = TestUtils.renderIntoDocument(
       <Nav href="/">
-        <NavItem defaultOpen>
-          <NavItem href="test" />
-        </NavItem>
+        <IndexNavItem defaultOpen>
+          <IndexNavItem href="test" />
+        </IndexNavItem>
       </Nav>
     )
     expect(findDOMNode(instance).querySelector('li').className).toContain('open')
