@@ -1,7 +1,8 @@
 import React from 'react'
 import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
-import { Router, browserHistory, Route, IndexRoute } from 'react-router'
+import { Router, Route, IndexRoute } from 'react-router'
+import { createHistory } from 'history'
 import { Nav, NavItem, IndexNavItem } from '../index'
 
 Object.defineProperty(window.location, 'href', {
@@ -14,7 +15,7 @@ describe('Nav', () => {
   it('should href extends works', () => {
 
     let router = TestUtils.renderIntoDocument((
-      <Router history={browserHistory}>
+      <Router history={createHistory()}>
         <Route path="/" component={() => (
           <Nav href="/">
             <IndexNavItem defaultOpen>
@@ -28,7 +29,7 @@ describe('Nav', () => {
     expect(container.querySelectorAll('a')[1].href).toBe('/test')
 
     router = TestUtils.renderIntoDocument((
-      <Router history={browserHistory}>
+      <Router history={createHistory()}>
         <Route path="/" component={() => (
           <Nav>
             <NavItem href="/aa" />
@@ -52,7 +53,7 @@ describe('Nav', () => {
 
   it('should open if active', () => {
     const router = TestUtils.renderIntoDocument((
-      <Router history={browserHistory}>
+      <Router history={createHistory()}>
         <Route path="/" component={() => (
           <Nav href="/">
             <IndexNavItem>
