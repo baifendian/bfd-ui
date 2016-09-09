@@ -86,10 +86,11 @@ class Rows extends Component {
                     }
                     // 正常非字段编辑列
                     if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
+                      const style = {display: columns.hide == true ? 'none' : ''}
                       if (typeof columns['render'] === 'function') {
-                        return <td key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
+                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
                       } else {
-                        return <td key={String(i) + j}>{item[columns[col]]}</td>
+                        return <td style={style} key={String(i) + j}>{item[columns[col]]}</td>
                       }
                     }
                   }
@@ -223,7 +224,14 @@ class DataTable extends Component {
               {checkboxTh}
               {
                 column.map ((head, i) => {
-                  const style = head.width ? {width: head.width} : {}
+                  let style = {}
+                  if(head.width) {
+                    style.width = head.width
+                  }
+                  if(head.hide === true) {
+                    style.display = 'none'
+                  }
+
                   return (
                     <th 
                       key={head['title']}
@@ -368,7 +376,22 @@ DataTable.propTypes = {
   // 要请求数据的服务端地址。
   url: PropTypes.string,
 
-  // 数据表格表头列名称
+  /**
+   * 数据表格表头列名称，目前支持的配置项如下：
+   * ```js
+   * {
+   *   title: '姓名', // 列头显示的文本
+   *   key: 'name', // 映射数据字段名称
+   *   primary: true, //主键标识，默认为false
+   *   width: '20%', // 列宽度设置
+   *   order: true, // 排序设置，与onOrder事件并用
+   *   // 列渲染的回调函数，可以自定义返回显示数据，text为默认的列值，item为当前行记录
+   *   render: (text, item) => {
+          return item.country + "/" + item.area
+        }
+   * }
+   * ```
+   */
   column: PropTypes.array.isRequired,
 
   // 每页需要显示的条数
