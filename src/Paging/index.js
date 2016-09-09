@@ -101,11 +101,11 @@ class Paging extends Component {
             </li>
           </ul>
           {!this.props.hideGo ? (
-          <div className="bfd-paging__go">
-            <label className="bfd-paging__label-font">跳转到：</label>
-            <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
-            <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
-          </div>
+            <div className="bfd-paging__go">
+              <label className="bfd-paging__label-font">跳转到：</label>
+              <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
+              <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
+            </div>
           ) : ''}
         </div>
       </Row>
@@ -129,7 +129,7 @@ class Paging extends Component {
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
 
     if(number <= 0) {
-      num = 1
+      number = 1
     } else if(number > pageNum) {
       number = pageNum
     }

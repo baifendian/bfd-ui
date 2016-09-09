@@ -36,6 +36,73 @@ app.post('/api/form', function(req, res) {
   })
 })
 
+function clone(obj) {
+  var o;
+  if (typeof obj == "object") {
+    if (obj === null) {  
+        o = null;
+    } else {
+        if (obj instanceof Array) {
+          o = [];
+          for (var i = 0, len = obj.length; i < len; i++) {
+              o.push(clone(obj[i]));
+          }
+        } else {
+            o = {};  
+            for (var j in obj) {  
+                o[j] = clone(obj[j]);
+            }
+        }
+    }
+  } else {
+      o = obj;
+  }  
+  return o;
+}  
+
+function getTableDate(page, size) {
+  var data = [
+    {id: 1, name: '张三', age: 28, gender: 'male', country: '中国', area: '北京', regdate: '2016-03-01' },
+    {id: 2, name: '李四', age: 25, gender: 'female', country: '中国', area: '杭州', regdate: '2016-04-11' },
+    {id: 3, name: '王五', age: 43, gender: 'male', country: '中国', area: '沈阳', regdate: '2016-05-06' },
+    {id: 4, name: '赵某某', age: 30, gender: 'female', country: '中国', area: '上海', regdate: '2016-03-09' },
+    {id: 5, name: '钱某某', age: 39, gender: 'male', country: '中国', area: '深圳', regdate: '2015-11-11' },
+    {id: 6, name: '孙某某', age: 50, gender: 'male', country: '中国', area: '石家庄', regdate: '2016-06-01' },
+    {id: 7, name: '周某某', age: 21, gender: 'female', country: '中国', area: '西安', regdate: '2016-08-13' },
+    {id: 8, name: '吴某某', age: 19, gender: 'female', country: '中国', area: '天津', regdate: '2016-02-22' },
+    {id: 9, name: '郑某某', age: 51, gender: 'male', country: '中国', area: '武汉', regdate: '2016-01-18' },
+    {id: 10, name: '冯某某', age: 24, gender: 'male', country: '中国', area: '广州', regdate: '2016-09-20' }
+  ]
+
+  if(page <= 1) {
+    return data
+  } else {
+    var index = page * size
+    var newData = []
+    for(var i=0; i<size && i<10; i++) {
+      var item = clone(data[i])
+      item.id = item.id + index;
+      item.name += item.id;
+      newData.push(item)
+    }
+    return newData
+  }
+}
+
+app.get('/api/table', function(req, res) {
+  var currentPage = req.query.currentPage || 1
+  var pageSize = req.query.pageSize || 10
+  var data = getTableDate(currentPage, pageSize)
+
+  res.json({
+    code: 200,
+    totalList: data,
+    currentPage: 1,
+    totalPageNum: 100
+  })
+
+})
+
 app.post('/upload.do', function(req, res) {
   var form = new multiparty.Form({uploadDir: './upload'});
   form.on('error', function(err) {

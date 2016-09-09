@@ -20,18 +20,53 @@ class Rows extends Component {
 
   constructor(props) {
     super(props)
+    this.column = {}
+    this.selectedRow = {}
   }
-  
+
+  componentWillMount() {
+    this.column.primary = this.getPrimaryKey(this.props.column)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.rows !== nextProps.rows) {
+      const selectRow = []
+      nextProps.rows.map((item) => {
+        if(this.column.primary) {
+          if(this.column.primary && item.isSelect) {
+            this.selectedRow[item[this.column.primary]] = item
+          }
+          if(this.selectedRow[item[this.column.primary]]) {
+            item.isSelect = true
+            selectRow.push(item)
+            if(selectRow.length == nextProps.rows.length) {
+              this.props.onCheckboxSelectAll && this.props.onCheckboxSelectAll(true)
+            }
+          }
+        }
+      })
+    }
+  }
+
   render() {
     const rows = this.props.rows
     const column = this.props.column
     const currentPage = this.props.currentPage || 1
     const pageSize = this.props.pageSize || 0
+    
     return (
       <tbody>
       {
         rows.length > 0 ?
         rows.map((item, j) => {
+          if(this.column.primary) {
+            if(item.isSelect) {
+              this.selectedRow[item[this.column.primary]] = item
+            } else {
+              delete this.selectedRow[item[this.column.primary]]
+            }
+          }
+          
           const isSelect = item.isSelect || false
           const isDisabled = item.disabled || false
           const checkboxTd = this.props.onCheckboxSelect 
@@ -70,17 +105,39 @@ class Rows extends Component {
     )
   }
 
-  handleCheckboxChange(row) {
-    row.isSelect = !row.isSelect
-    this.setState({
-      t: +new Date
+  getPrimaryKey(column) {
+    let key
+    column.map(item => {
+      if(item.primary === true) {
+        key = item.key
+      }
     })
+    return key
+  }
+
+  handleCheckboxClick(event) {
+    event = event ? event : window.event
+    event.stopPropagation()
+  }
+
+  handleCheckboxChange(row) {
+    const rowId = row[this.column.primary]
+    row.isSelect = !row.isSelect
+    if(row.isSelect) {
+      this.selectedRow[rowId] = row
+    } else {
+      delete this.selectedRow[rowId]
+    }
 
     const selectRow = []
     this.props.rows.map((item) => {
       if (item.isSelect) {
         selectRow.push(item)
       }
+    })
+
+    this.setState({
+      t: +new Date
     })
 
     this.props.onSelect(row.isSelect, row, selectRow)
@@ -178,7 +235,7 @@ class DataTable extends Component {
                       title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'bfd-datatable--sorting' : ''}>
                       {head['title']}
                     </th>
-                    )
+                  )
                 })
               }
             </tr>
@@ -189,6 +246,7 @@ class DataTable extends Component {
             onRowClick={::this.handleRowClick}
             onSelect={::this.handleCheckboxChange}
             onCheckboxSelect={this.props.onCheckboxSelect}
+            onCheckboxSelectAll={::this.setCheckboxAll}
             column={this.props.column}
             currentPage={this.state.items.currentPage || currentPage}
             pageSize={pageSize}
@@ -203,8 +261,7 @@ class DataTable extends Component {
                   currentPage={this.state.items.currentPage}                   
                   totalPageNum={this.state.items.totalPageNum} 
                   pageSize={this.props.howRow} 
-                  onPageChange={::this.onPageChange} 
-                  onChange={::this.onChange}>
+                  onPageChange={::this.onPageChange}>
               </Paging>)
               : '' 
             : ''
@@ -212,8 +269,6 @@ class DataTable extends Component {
       </div>
     )
   }
-
-  onChange() {}
 
   onPageChange(page) {
     if (this.props.onPageChange) {
@@ -271,21 +326,23 @@ class DataTable extends Component {
 
   handleCheckboxAllChange() {
     const isAll = !this.state.isSelectAll
-    this.setState({
-      isSelectAll: isAll
-    })
-    const changeRows = []
+    // const changeRows = []
     const rows = this.state.items.totalList
     rows.map((item) => {
       if (item.isSelect !== isAll && !item.disabled) {
         item.isSelect = isAll
-        changeRows.push(item)
+        // changeRows.push(item)
       }
     })
-
+    this.setCheckboxAll(isAll)
     const selectAllFn = this.props.onCheckboxSelect
-
     selectAllFn && selectAllFn(isAll ? rows : [])
+  }
+
+  setCheckboxAll(isAll) {
+    this.setState({
+      isSelectAll: isAll
+    })
   }
 
   handleCheckboxChange(checked, row, rows) {
