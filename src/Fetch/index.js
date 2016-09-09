@@ -92,7 +92,6 @@ class Fetch extends Component {
 
   render() {
     const { className, url, onSuccess, defaultHeight, delay, ...other } = this.props
-    let style
     if (defaultHeight) {
       other.style = Object.assign(other.style || {}, {
         minHeight: defaultHeight + 'px'
