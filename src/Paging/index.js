@@ -117,35 +117,8 @@ class Paging extends Component {
           pages.push(html)
         }
       }
-
-
     }
-
-
-
-      /*if(maxPage - showPage > 2) {
-        pages[0] = this.createPageEl(1)
-        pages[1] = <li key={"d1"}><span>...</span></li> 
-        if(currentPage - showPage < 4) {
-          for(let i = showPage; i <= 4; i++) {
-            let html = this.createPageEl(i)
-            pages.push(html)
-          }
-        }
-        
-      } else {
-        for(let i = 1; i <= maxPage; i++) {
-          let html = this.createPageEl(i)
-          pages.push(html)
-        }
-      }*/
-      //pages[0] = this.createPageEl(1)
-      //pages[1] = pages.push(dotsHtml)
-
-
-    
     return pages
-
   }
 
   createPageEl(num, key) {
