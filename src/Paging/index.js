@@ -93,7 +93,7 @@ class Paging extends Component {
             <li>
               <a onClick={::this.handleLaquoClick} className={'bfd-paging__pagination-li--prev '+ (currentIndex === 1 ? 'bfd-paging__pagination-li--frist' : '')}>上一页</a>
             </li>
-              {liArr}
+            {this.getPages(currentIndex, pageNum)}
             <li>
               <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
             </li>
@@ -108,6 +108,45 @@ class Paging extends Component {
         </div>
       </Row>
     )
+  }
+
+  getPages(currentPage, maxPage) {
+    let pages = []
+    const showPage = this.state.showPage
+    const active = 'bfd-paging__pagination-li--active'
+    console.log(currentPage, showPage)
+    for(let i = 1; i <= maxPage; i++) {
+      const isActive = currentPage == i ? active : ''
+      const html = <li key={i} className={isActive} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
+      const dotsHtml = <li key={i}><span>...</span></li>
+      if(i == 1) {
+        pages[0] = html
+        continue
+      } else {
+        if(i > showPage) {
+          if(i == maxPage) {
+            pages.push(html)
+            break
+          }
+          if(currentPage < showPage) {
+            pages.push(dotsHtml)
+            i = maxPage-1
+          }
+          
+        } else {
+          pages.push(html)
+        }
+      }
+
+      //pages.push(html)
+
+
+
+
+
+    }
+    return pages
+
   }
 
   handleClick(i) {

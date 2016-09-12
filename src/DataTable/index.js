@@ -379,17 +379,19 @@ DataTable.propTypes = {
   /**
    * 数据表格表头列名称，目前支持的配置项如下：
    * ```js
-   * {
-   *   title: '姓名', // 列头显示的文本
-   *   key: 'name', // 映射数据字段名称
-   *   primary: true, //主键标识，默认为false
-   *   width: '20%', // 列宽度设置
-   *   order: true, // 排序设置，与onOrder事件并用
-   *   // 列渲染的回调函数，可以自定义返回显示数据，text为默认的列值，item为当前行记录
-   *   render: (text, item) => {
-          return item.country + "/" + item.area
-        }
-   * }
+   * [{
+   *  title: '姓名', // 列头显示的文本
+   *  key: 'name', // 映射数据字段名称
+   *  primary: true, //主键标识，默认为false
+   *  width: '20%', // 列宽度设置
+   *  order: true, // 排序设置，与onOrder事件并用
+   *  // 列渲染的回调函数，可以自定义返回显示数据，text为默认的列值，item为当前行记录
+   *  render: (text, item) => {
+        return item.country + "/" + item.area
+      }
+   * },
+   * ...
+   * ]
    * ```
    */
   column: PropTypes.array.isRequired,

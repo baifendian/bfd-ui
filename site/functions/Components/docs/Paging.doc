@@ -15,9 +15,9 @@ class PagingDemo extends Component {
     return (
       <Paging 
         currentPage={1}             
-        totalPageNum={1000}
+        totalPageNum={200}
         pageSize={10}
-        maxSeries={5}
+        maxSeries={4}
         onPageChange={::this.onPageChange} >
       </Paging>
     )
