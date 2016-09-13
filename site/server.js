@@ -98,7 +98,7 @@ app.get('/api/table', function(req, res) {
     code: 200,
     totalList: data,
     currentPage: 1,
-    totalPageNum: 70
+    totalPageNum: 300
   })
 
 })

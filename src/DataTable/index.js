@@ -224,12 +224,20 @@ class DataTable extends Component {
               {checkboxTh}
               {
                 column.map ((head, i) => {
-                  let style = {}
+                  const style = {}
+                  let orderClassName = ''
                   if(head.width) {
                     style.width = head.width
                   }
                   if(head.hide === true) {
                     style.display = 'none'
+                  }
+                  if(head['order'] === true) {
+                    orderClassName = 'bfd-datatable--sorting'
+                  } else if(head['order'] === 'asc') {
+                    orderClassName = 'bfd-datatable--sorting_asc-default'
+                  } else if(head['order'] === 'desc') {
+                    orderClassName = 'bfd-datatable--sorting_desc-default'
                   }
 
                   return (
@@ -238,7 +246,7 @@ class DataTable extends Component {
                       ref={i}
                       style={style}
                       onClick={self.orderClick.bind(self, head, i)}
-                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'bfd-datatable--sorting' : ''}>
+                      title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>
                       {head['title']}
                     </th>
                   )
@@ -287,34 +295,74 @@ class DataTable extends Component {
 
   orderClick(column, i) {
     if (column.order) {
-      if (this.refs[i].getAttribute('order') == null) {
-        this.refs[i].className = 'bfd-datatable--sorting_asc'
-        this.refs[i].setAttribute('order', 'asc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=asc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+      const orderEl = this.refs[i]
+      const orderElAttr = this.getOrderAttribute(i)
+      if (orderElAttr == null || !orderElAttr) {
+        if(column.order === true) {
+          orderEl.className = 'bfd-datatable--sorting_asc'
+          orderEl.setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'asc') {
+          orderEl.className = 'bfd-datatable--sorting_asc'
+          orderEl.setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'desc') {
+          orderEl.className = 'bfd-datatable--sorting_desc'
+          orderEl.setAttribute('order', 'desc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=desc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+        }
         return
       }
-      if (this.refs[i].getAttribute('order') == 'asc') {
-        this.refs[i].className = 'bfd-datatable--sorting_desc'
-        this.refs[i].setAttribute('order', 'desc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=desc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+      if (orderElAttr == 'asc') {
+        if(column.order === true) {
+          this.refs[i].className = 'bfd-datatable--sorting_desc'
+          this.refs[i].setAttribute('order', 'desc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=desc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+        } else if(column.order === 'asc') {
+          this.refs[i].className = 'bfd-datatable--sorting_asc-default'
+          this.refs[i].setAttribute('order', '')
+          this.setState({
+            order: '&key=' + column['key']
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], '')
+        }
         return
       }
-      if (this.refs[i].getAttribute('order') == 'desc') {
-        this.refs[i].className = 'bfd-datatable--sorting_asc'
-        this.refs[i].setAttribute('order', 'asc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=asc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+      if (orderElAttr == 'desc') {
+        if(column.order === true) {
+          this.refs[i].className = 'bfd-datatable--sorting_asc'
+          this.refs[i].setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'desc') {
+          this.refs[i].className = 'bfd-datatable--sorting_desc-default'
+          this.refs[i].setAttribute('order', '')
+          this.setState({
+            order: '&key=' + column['key']
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], '')
+        }
         return
       }
     }
+  }
+
+  getOrderAttribute(refName) {
+    return this.refs[refName].getAttribute('order')
   }
 
   handleSuccess(data) {
@@ -384,7 +432,7 @@ DataTable.propTypes = {
    *  key: 'name', // 映射数据字段名称
    *  primary: true, //主键标识，默认为false
    *  width: '20%', // 列宽度设置
-   *  order: true, // 排序设置，与onOrder事件并用
+   *  order: true, // 排序设置,true: 支持升序和降序，asc: 只支持升序，desc: 只支持降序，与onOrder事件并用
    *  // 列渲染的回调函数，可以自定义返回显示数据，text为默认的列值，item为当前行记录
    *  render: (text, item) => {
         return item.country + "/" + item.area

@@ -35,7 +35,6 @@ class Paging extends Component {
   render() {
     // 分页逻辑代码
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    const showPage = this.state.showPage
     const currentIndex = this.state.currentIndex
     
     return (
@@ -66,21 +65,20 @@ class Paging extends Component {
   }
 
   getPages(currentPage, maxPage) {
-    let pages = []
-    let flag = true
+    const pages = []
     const showPage = this.state.showPage
 
     if(maxPage <= showPage + 2) {
       for(let i = 1; i <= maxPage; i++) {
-        let html = this.createPageEl(i)
+        const html = this.createPageEl(i)
         pages.push(html)
       }
     } else {
       if(currentPage <= showPage) {
         for(let i = 1; i <= showPage + 2 && i <= maxPage; i++) {
-          let html = this.createPageEl(i)
+          const html = this.createPageEl(i)
           if(i < maxPage - 1 && i == showPage + 1) {
-            const dotsHtml = <li key={"d"+i}><span>...</span></li> 
+            const dotsHtml = <li key={'d' + i}><span>...</span></li> 
             pages.push(dotsHtml)
           } else {
             if(i == showPage + 2) {
@@ -100,10 +98,10 @@ class Paging extends Component {
         
         let i = currentPage
         for(; i < currentPage + showPage; i++) {
-          let html = this.createPageEl(i)
+          const html = this.createPageEl(i)
           pages.push(html)
         }
-        pages.push(<li key={"d"+i}><span>...</span></li>)
+        pages.push(<li key={'d' + i}><span>...</span></li>)
         pages.push(this.createPageEl(maxPage))
       } else {
         pages[0] = this.createPageEl(1)
@@ -113,7 +111,7 @@ class Paging extends Component {
           i = currentPage - (showPage - 1 - (maxPage - currentPage))
         }
         for(; i <= maxPage; i++) {
-          let html = this.createPageEl(i)
+          const html = this.createPageEl(i)
           pages.push(html)
         }
       }

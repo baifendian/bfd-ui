@@ -24,16 +24,21 @@ class Upload extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
+    const { className, showFileList, ...other } = this.props
+    const isShowList = typeof showFileList == 'undefined' ? true : showFileList
     return (
       <div className={classnames('bfd-upload', className)} {...other}>
         <input ref="file" onChange={::this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
         <Button onClick={::this.handleClick}>
           {this.props.text || '文件上传'}
         </Button>
-        <div className="bfd-upload__listbox">
-          <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
-        </div>
+        {
+          isShowList ? 
+            <div className="bfd-upload__listbox">
+              <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
+            </div>
+          : ''
+        }        
       </div>
     )
   }
@@ -86,7 +91,7 @@ class Upload extends Component {
               list
             })
             if (typeof self.props.onComplete == 'function') {
-              self.props.onComplete(data)
+              self.props.onComplete(data, list)
             }
           },
           error(msg) {
@@ -97,7 +102,7 @@ class Upload extends Component {
               list
             })
             if (typeof self.props.onComplete == 'function') {
-              self.props.onComplete(msg)
+              self.props.onComplete(msg, list)
             }
           },
           complete() {}
@@ -137,7 +142,10 @@ Upload.propTypes = {
   multiple: PropTypes.bool,
 
   // 上传文件完成时的回调函数
-  onComplete: PropTypes.func
+  onComplete: PropTypes.func,
+
+  // 是否显示文件上传列表
+  showFileList: PropTypes.bool
 }
 
 export default Upload

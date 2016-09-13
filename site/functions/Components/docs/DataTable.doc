@@ -29,7 +29,7 @@ class DataTableDemo extends Component {
       }, {
         title: '年龄',
         key: 'age',
-        order: true
+        order: 'desc'
       }, {
         title: '国家/地区',
         key: 'country',
@@ -40,7 +40,7 @@ class DataTableDemo extends Component {
       }, {
         title: '注册日期',
         key: 'regdate',
-        order: true
+        order: 'asc'
       }, {
         title: '操作',
         /**

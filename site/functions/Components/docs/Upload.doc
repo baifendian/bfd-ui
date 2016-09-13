@@ -11,7 +11,8 @@ class UploadFile extends Component {
       method: 'post',
       action: '/upload.do',
       onComplete: ::this.handleComplete,
-      multiple: true
+      multiple: true,
+      showFileList: true
     }
     return (
       <div>
@@ -20,8 +21,8 @@ class UploadFile extends Component {
     )
   }
 
-  handleComplete(data) {
-    console.log('complete', data)
+  handleComplete(data, list) {
+    console.log('complete:', data, 'list:', list)
   }
 }
 
