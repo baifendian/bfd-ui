@@ -12,151 +12,16 @@ import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
 import { Checkbox } from '../Checkbox'
+import Rows from './Rows'
 import './main.less'
 import '../table.less'
-class Rows extends Component {
-
-  constructor(props) {
-    super(props)
-    this.column = {}
-    this.selectedRow = {}
-  }
-
-  componentWillMount() {
-    this.column.primary = this.getPrimaryKey(this.props.column)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.rows !== nextProps.rows) {
-      const selectRow = []
-      nextProps.rows.map((item) => {
-        if(this.column.primary) {
-          if(this.column.primary && item.isSelect) {
-            this.selectedRow[item[this.column.primary]] = item
-          }
-          if(this.selectedRow[item[this.column.primary]]) {
-            item.isSelect = true
-            selectRow.push(item)
-            if(selectRow.length == nextProps.rows.length) {
-              this.props.onCheckboxSelectAll && this.props.onCheckboxSelectAll(true)
-            }
-          }
-        }
-      })
-    }
-  }
-
-  render() {
-    const rows = this.props.rows
-    const column = this.props.column
-    const currentPage = this.props.currentPage || 1
-    const pageSize = this.props.pageSize || 0
-    
-    return (
-      <tbody>
-      {
-        rows.length > 0 ?
-        rows.map((item, j) => {
-          if(this.column.primary) {
-            if(item.isSelect) {
-              this.selectedRow[item[this.column.primary]] = item
-            } else {
-              delete this.selectedRow[item[this.column.primary]]
-            }
-          }
-          
-          const isSelect = item.isSelect || false
-          const isDisabled = item.disabled || false
-          const checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
-            : null
-          return (
-            <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
-              {checkboxTd}
-              {
-                column.map((columns, i) => {
-                  for (const col in columns) {
-                    // 序号
-                    if (columns[col] === 'sequence') {
-                      return <td key={String(i) + j} >{((currentPage-1) * pageSize) + (j + 1)}</td>
-                    }
-                    // 操作
-                    if (columns[col] == 'operation') {
-                      return <td key={String( i ) + j}>{columns['render'](item, this)}</td>
-                    }
-                    // 正常非字段编辑列
-                    if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
-                      const style = {display: columns.hide == true ? 'none' : ''}
-                      if (typeof columns['render'] === 'function') {
-                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
-                      } else {
-                        return <td style={style} key={String(i) + j}>{item[columns[col]]}</td>
-                      }
-                    }
-                  }
-                })
-              }
-            </tr>
-          )
-        }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
-      }
-      </tbody>
-    )
-  }
-
-  getPrimaryKey(column) {
-    let key
-    column.map(item => {
-      if(item.primary === true) {
-        key = item.key
-      }
-    })
-    return key
-  }
-
-  handleCheckboxClick(event) {
-    event = event ? event : window.event
-    event.stopPropagation()
-  }
-
-  handleCheckboxChange(row) {
-    const rowId = row[this.column.primary]
-    row.isSelect = !row.isSelect
-    if(row.isSelect) {
-      this.selectedRow[rowId] = row
-    } else {
-      delete this.selectedRow[rowId]
-    }
-
-    const selectRow = []
-    this.props.rows.map((item) => {
-      if (item.isSelect) {
-        selectRow.push(item)
-      }
-    })
-
-    this.setState({
-      t: +new Date
-    })
-
-    this.props.onSelect(row.isSelect, row, selectRow)
-  }
-
-  handleCheckboxClick(event) {
-    event = event ? event : window.event
-    event.stopPropagation()
-  }
-
-  handleRowClick(item) {
-    this.props.onRowClick && this.props.onRowClick(item)
-  }
-}
 
 class DataTable extends Component {
 
   constructor(props) {
     super()
     this.items = []
+    this.selectedRows = []
     this.state = {
       order: '',
       url: props.url || '',
@@ -380,17 +245,33 @@ class DataTable extends Component {
 
   handleCheckboxAllChange() {
     const isAll = !this.state.isSelectAll
-    // const changeRows = []
     const rows = this.state.items.totalList
+    const key = this.getPrimaryKey(this.props.column)
     rows.map((item) => {
       if (item.isSelect !== isAll && !item.disabled) {
         item.isSelect = isAll
-        // changeRows.push(item)
+      }
+      this.setCheckboxAll(isAll)
+      let addFlag = true
+
+
+      for(let i = 0, len = this.selectedRows.length; i < len; i++) {
+        const row = this.selectedRows[i]
+        if(key && row[key] == item[key]) {
+          addFlag = false
+          if(!isAll) {
+            this.selectedRows.splice(i, 1)
+          }
+          break
+        }
+      }
+      if(key && addFlag && isAll) {
+        this.selectedRows.push(item)
       }
     })
-    this.setCheckboxAll(isAll)
+    
     const selectAllFn = this.props.onCheckboxSelect
-    selectAllFn && selectAllFn(isAll ? rows : [])
+    selectAllFn && selectAllFn(isAll ? rows : [], this.selectedRows)
   }
 
   setCheckboxAll(isAll) {
@@ -399,9 +280,10 @@ class DataTable extends Component {
     })
   }
 
-  handleCheckboxChange(checked, row, rows) {
+  handleCheckboxChange(checked, row, rows, selectedRows) {
     const selectFn = this.props.onCheckboxSelect
-    selectFn && selectFn(rows)
+    this.selectedRows = selectedRows
+    selectFn && selectFn(rows, selectedRows)
     if (!checked) {
       this.setState({
         isSelectAll: false
@@ -416,6 +298,16 @@ class DataTable extends Component {
 
   handleRowClick(row) {
     this.props.onRowClick && this.props.onRowClick(row)
+  }
+
+  getPrimaryKey(column) {
+    let key
+    column.map(item => {
+      if(item.primary === true) {
+        key = item.key
+      }
+    })
+    return key
   }
 }
 
@@ -456,7 +348,7 @@ DataTable.propTypes = {
   // 点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】
   onPageChange: PropTypes.func,
 
-  // 复选框点击事件，返回被选中的行记录
+  // 复选框点击事件，返回被选中的行记录（本页），如果在column中设置主键，此函数第二个参数为已选的行记录（跨页）
   onCheckboxSelect: PropTypes.func,
 
   // 行点击事件，返回被选中的行记录

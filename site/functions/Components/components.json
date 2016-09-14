@@ -42,6 +42,9 @@
     "name": "DataTable",
     "cn": "数据表格"
   }, {
+    "name": "FixedTable",
+    "cn": "固定表格"
+  }, {
     "name": "Paging",
     "cn": "分页"
   }, {
