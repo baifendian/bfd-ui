@@ -53,11 +53,12 @@ class Upload extends Component {
     const files = el.files
     const onUplading = this.props.onUplading
     const onUpload = this.props.onUpload
-    onUplading && onUplading()
+    onUplading && onUplading(0)
     onUpload ? onUpload(files) : this.upload(files)
   }
 
   upload(files) {
+    const onUplading = this.props.onUplading
     const self = this
     const arr = []
     for (let i = 0; i < files.length; i++) {
@@ -85,6 +86,7 @@ class Upload extends Component {
               const list = self.state.list.slice(0)
               const f = list[index]
               f.percent = per
+              onUplading && onUplading(per)
               self.setState({
                 list
               })

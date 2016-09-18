@@ -22,8 +22,8 @@ class UploadFile extends Component {
     )
   }
 
-  handleUploading() {
-    console.log('uploading...')
+  handleUploading(pre) {
+    console.log('uploading...', pre)
     return
   }
 
