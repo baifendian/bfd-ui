@@ -2,12 +2,15 @@
 
 `2016-09-18`
 
-- 新增组件 Spinner、Panel
+- 新增组件 Spinner、Panel、FixedTable
 - FormSubmit 新增 toggleProcess 接口
 - 修复 Checkbox、Radio click 事件冒泡两次的问题
 - 修复 react 15.x 环境下未知属性错误提醒的问题
 - 预编译 less，不再依赖项目的 webpack less 相关配置
 - NavItem 新增 blank 属性，实现新窗口打开
+- DataTable 支持单个排序，支持复选框跨页选中记忆
+- 修复 Paging 页码省略号显示问题，跳转问题
+- Upload 新增 onUploading 上传进行中事件
 
 ## 0.9.1
 
