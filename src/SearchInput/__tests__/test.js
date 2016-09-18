@@ -41,7 +41,7 @@ describe('SearchInput', () => {
         <SearchInput onSearch={handleClick} label={text} />
       )
       const container = findDOMNode(instance)
-      const button = container.querySelector('button')
+      const button = container.querySelector('button span')
       expect(button.innerHTML).toContain(text)
     })
 
