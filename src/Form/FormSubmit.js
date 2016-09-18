@@ -60,7 +60,7 @@ class FormSubmit extends Component {
         disabled={process}
         {...other}
       >
-        {process ? <Spinner height={20} />  : children}
+        {process ? <Spinner height={20} /> : children}
       </Button>
     )
   }
