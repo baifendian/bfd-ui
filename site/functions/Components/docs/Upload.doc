@@ -10,8 +10,10 @@ class UploadFile extends Component {
     const props = {
       method: 'post',
       action: '/upload.do',
+      onUplading: ::this.handleUploading,
       onComplete: ::this.handleComplete,
-      multiple: true
+      multiple: true,
+      showFileList: true
     }
     return (
       <div>
@@ -20,8 +22,13 @@ class UploadFile extends Component {
     )
   }
 
-  handleComplete(data) {
-    console.log('complete', data)
+  handleUploading(pre) {
+    console.log('uploading...', pre)
+    return
+  }
+
+  handleComplete(data, list) {
+    console.log('complete:', data, 'list:', list)
   }
 }
 

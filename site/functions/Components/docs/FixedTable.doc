@@ -1,11 +1,10 @@
 /**
- * @title 表格
+ * @title 固定表格
  */
 import { Component } from 'react'
-import DataTable from 'bfd/DataTable'
+import FixedTable from 'bfd/FixedTable'
 
-class DataTableDemo extends Component {
-
+class FixedTableDemo extends Component {
   constructor(props) {
     super()
     this.state = {
@@ -52,22 +51,32 @@ class DataTableDemo extends Component {
           return <a href = "javascript:void(0);" onClick = {this.handleClick.bind(this, item)}>编辑</a>
         },
         key: 'operation' //注：operation 指定为操作选项和数据库内字段毫无关联，其他key 都必须与数据库内一致
-      }]
+      }],
+      data: [
+        {id: 1, name: '张三', age: 28, gender: 'male', country: '中国', area: '北京', regdate: '2016-03-01' },
+        {id: 2, name: '李四', age: 25, gender: 'female', country: '中国', area: '杭州', regdate: '2016-04-11' },
+        {id: 3, name: '王五', age: 43, gender: 'male', country: '中国', area: '沈阳', regdate: '2016-05-06' },
+        {id: 4, name: '赵某某', age: 30, gender: 'female', country: '中国', area: '上海', regdate: '2016-03-09' },
+        {id: 5, name: '钱某某', age: 39, gender: 'male', country: '中国', area: '深圳', regdate: '2015-11-11' },
+        {id: 6, name: '孙某某', age: 50, gender: 'male', country: '中国', area: '石家庄', regdate: '2016-06-01' },
+        {id: 7, name: '周某某', age: 21, gender: 'female', country: '中国', area: '西安', regdate: '2016-08-13' },
+        {id: 8, name: '吴某某', age: 19, gender: 'female', country: '中国', area: '天津', regdate: '2016-02-22' },
+        {id: 9, name: '郑某某', age: 51, gender: 'male', country: '中国', area: '武汉', regdate: '2016-01-18' },
+        {id: 10, name: '冯某某', age: 24, gender: 'male', country: '中国', area: '广州', regdate: '2016-09-20' }
+      ]
     }
   }
 
   render() {
     return (
-      <DataTable 
-        url={this.state.url} 
-        onPageChange={::this.onPageChange} 
-        showPage="true"
-        column={this.state.column} 
-        howRow={10}
+      <FixedTable 
+        height={200}
+        data={this.state.data}
+        column={this.state.column}
         onRowClick={::this.handleRowClick}
         onOrder={::this.handleOrder}
         onCheckboxSelect={::this.handleCheckboxSelect}
-      /> 
+      />
     )
   }
 
@@ -77,15 +86,8 @@ class DataTableDemo extends Component {
     console.log(item)
   }
 
-  onPageChange(page) {
-    this.setState({
-      url: "/api/table"
-    })
-  }
-
-  handleCheckboxSelect(selectedRows, allSelectedRows) {
+  handleCheckboxSelect(selectedRows) {
     console.log('rows:', selectedRows)
-    console.log('all:', allSelectedRows)
   }
 
   handleRowClick(row) {
@@ -97,4 +99,4 @@ class DataTableDemo extends Component {
   }
 }
 
-@component DataTable
+@component FixedTable

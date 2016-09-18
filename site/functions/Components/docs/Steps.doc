@@ -23,8 +23,8 @@ class StepsDemo extends Component {
           <Step title="配置规则" icon="user"/>
           <Step title="配置样式" icon="cogs"/>
         </Steps>
-        <p className="text-right" style={{marginTop:'30px', marginRight:'30px'}}>
-          <button type="button" className="btn btn-primary" onClick={::this.handleClick}>下一步</button>
+        <p style={{marginTop:'30px', marginRight:'30px', textAlign: 'right'}}>
+          <button type="button" className="bfd-btn btn-primary" onClick={::this.handleClick}>下一步</button>
         </p>
       </div>
     )
@@ -45,4 +45,5 @@ class StepsDemo extends Component {
   }
 }
 
-@component Steps
+@component Steps/Steps
+@component Steps/Step

@@ -29,7 +29,7 @@ class ButtonGroup extends Component {
   }
 
   render() {
-    const { className, children, ...other } = this.props
+    const { className, children, defaultValue, ...other } = this.props
     const items = findAllByType(children, Button)
     const buttons = items.map((item, index) => {
       if (!item) return

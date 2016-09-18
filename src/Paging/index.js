@@ -35,54 +35,9 @@ class Paging extends Component {
   render() {
     // 分页逻辑代码
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
-    const liArr = []
-    const showPage = this.state.showPage
     const currentIndex = this.state.currentIndex
-    for (let i = 1; i <= pageNum; i++) {
-      // 如果分页页数小于等于规定显示的分页页数就全部显示出来
-      if (i <= showPage) {
-        liArr.push(<li key={i} className={currentIndex === i ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>)
-      }
-      // 当分页页数大于规定显示页数是出现....和最后页数
-      if (pageNum > showPage) {
-        if (i == showPage) {
-          liArr[i + 1] = <li key={i+1}><span>...</span></li>
-        }
-      }
-      // 显示最后一页
-      if (pageNum == i && pageNum > showPage) {
-        liArr[i] = <li key={i+1} className={currentIndex === i ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, i)}><a>{i}</a></li>
-      }
-      if (currentIndex + 1 > showPage && pageNum > showPage) {
-        const index = currentIndex,
-          show_ = index + 1
-        const everpage = show_ - (showPage - 1)
-        const currentArr = []
-        let k = 0
-        let lastPage = false
-        for (let o = everpage; o <= index + 1; o++) {
-          if (o <= pageNum) {
-            k++
-            currentArr[k] = <li key={k} className={currentIndex === o ? 'bfd-paging__pagination-li--active':''} onClick={this.handleClick.bind(this, o)}><a>{o}</a></li>
-          } else {
-            lastPage = true
-            break
-          }
-        }
-        liArr[0] = <li key="01" className={currentIndex === 1 ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, 1)}><a>1</a></li>
-        liArr[1] = <li key="0"><span>...</span></li>
-        for (let p = 2; p <= currentArr.length + 1; p++) {
-          liArr[p] = currentArr[p - 2]
-        }
-        if (!lastPage) {
-          if (index < (pageNum - 1)) {
-            liArr[liArr.length] = <li key={liArr.length}><span>...</span></li>
-            liArr[liArr.length] = <li key={liArr.length} className={currentIndex===pageNum ? 'bfd-paging__pagination-li--active' : ''} onClick={this.handleClick.bind(this, pageNum)}><a>{pageNum}</a></li>
-          }
-        }
-        break
-      }
-    }
+    const { currentPage, totalPageNum, pageSize, onPageChange, maxSeries, hideGo, ...other } = this.props
+
     return (
       <Row>
         <div className="bfd-paging__layout-div">
@@ -93,21 +48,83 @@ class Paging extends Component {
             <li>
               <a onClick={::this.handleLaquoClick} className={'bfd-paging__pagination-li--prev '+ (currentIndex === 1 ? 'bfd-paging__pagination-li--frist' : '')}>上一页</a>
             </li>
-              {liArr}
+            {this.getPages(currentIndex, pageNum)}
             <li>
               <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
             </li>
           </ul>
           {!this.props.hideGo ? (
-          <div className="bfd-paging__go">
-            <label className="bfd-paging__label-font">跳转到：</label>
-            <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
-            <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
-          </div>
+            <div className="bfd-paging__go">
+              <label className="bfd-paging__label-font">跳转到：</label>
+              <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
+              <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
+            </div>
           ) : ''}
         </div>
       </Row>
     )
+  }
+
+  getPages(currentPage, maxPage) {
+    const pages = []
+    const showPage = this.state.showPage
+
+    if(maxPage <= showPage + 2) {
+      for(let i = 1; i <= maxPage; i++) {
+        const html = this.createPageEl(i)
+        pages.push(html)
+      }
+    } else {
+      if(currentPage <= showPage) {
+        for(let i = 1; i <= showPage + 2 && i <= maxPage; i++) {
+          const html = this.createPageEl(i)
+          if(i < maxPage - 1 && i == showPage + 1) {
+            const dotsHtml = <li key={'d' + i}><span>...</span></li> 
+            pages.push(dotsHtml)
+          } else {
+            if(i == showPage + 2) {
+              pages.push(this.createPageEl(maxPage, +new Date()))
+            } else {
+              pages.push(html)
+            }
+          }
+        }
+      } else if(currentPage > showPage && currentPage + showPage <= maxPage - 2) {
+        pages[0] = this.createPageEl(1)
+        if(currentPage == 3) {
+          pages[1] = this.createPageEl(2)
+        } else {
+          pages[1] = <li key={"d1"}><span>...</span></li> 
+        }
+        
+        let i = currentPage
+        for(; i < currentPage + showPage; i++) {
+          const html = this.createPageEl(i)
+          pages.push(html)
+        }
+        pages.push(<li key={'d' + i}><span>...</span></li>)
+        pages.push(this.createPageEl(maxPage))
+      } else {
+        pages[0] = this.createPageEl(1)
+        pages[1] = <li key={"d1"}><span>...</span></li> 
+        let i = currentPage
+        if(maxPage - currentPage < showPage - 1) {
+          i = currentPage - (showPage - 1 - (maxPage - currentPage))
+        }
+        for(; i <= maxPage; i++) {
+          const html = this.createPageEl(i)
+          pages.push(html)
+        }
+      }
+    }
+    return pages
+  }
+
+  createPageEl(num, key) {
+    key = key || num
+    const active = 'bfd-paging__pagination-li--active'
+    const isActive = this.state.currentIndex == num ? active : ''
+    return <li key={key} className={isActive} onClick={this.handleClick.bind(this, num)}><a>{num}</a></li>
   }
 
   handleClick(i) {
@@ -127,7 +144,7 @@ class Paging extends Component {
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
 
     if(number <= 0) {
-      num = 1
+      number = 1
     } else if(number > pageNum) {
       number = pageNum
     }

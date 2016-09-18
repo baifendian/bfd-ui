@@ -24,16 +24,21 @@ class Upload extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
+    const { className, action, fileName, text, multiple, onUplading, onComplete, showFileList, ...other } = this.props
+    const isShowList = typeof showFileList == 'undefined' ? true : showFileList
     return (
       <div className={classnames('bfd-upload', className)} {...other}>
-        <input ref="file" onChange={::this.handleChange} type="file" multiple={this.props.multiple ? true : false} style={{display: 'none'}} />
+        <input ref="file" onChange={::this.handleChange} type="file" multiple={multiple ? true : false} style={{display: 'none'}} />
         <Button onClick={::this.handleClick}>
           {this.props.text || '文件上传'}
         </Button>
-        <div className="bfd-upload__listbox">
-          <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
-        </div>
+        {
+          isShowList ? 
+            <div className="bfd-upload__listbox">
+              <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
+            </div>
+          : ''
+        }        
       </div>
     )
   }
@@ -46,6 +51,14 @@ class Upload extends Component {
   handleChange(event) {
     const el = event.target
     const files = el.files
+    const onUplading = this.props.onUplading
+    const onUpload = this.props.onUpload
+    onUplading && onUplading(0)
+    onUpload ? onUpload(files) : this.upload(files)
+  }
+
+  upload(files) {
+    const onUplading = this.props.onUplading
     const self = this
     const arr = []
     for (let i = 0; i < files.length; i++) {
@@ -59,7 +72,7 @@ class Upload extends Component {
 
       ;(function(self, file, index) {
         const fd = new FormData()
-        fd.append('files', file)
+        fd.append(self.props.fileName || 'files', file)
         xhr({
           type: 'post',
           url: self.props.action,
@@ -73,6 +86,7 @@ class Upload extends Component {
               const list = self.state.list.slice(0)
               const f = list[index]
               f.percent = per
+              onUplading && onUplading(per)
               self.setState({
                 list
               })
@@ -86,7 +100,7 @@ class Upload extends Component {
               list
             })
             if (typeof self.props.onComplete == 'function') {
-              self.props.onComplete(data)
+              self.props.onComplete(data, list)
             }
           },
           error(msg) {
@@ -97,7 +111,7 @@ class Upload extends Component {
               list
             })
             if (typeof self.props.onComplete == 'function') {
-              self.props.onComplete(msg)
+              self.props.onComplete(msg, list)
             }
           },
           complete() {}
@@ -133,11 +147,19 @@ Upload.propTypes = {
   // 上传按钮文本内容，默认为文件上传
   text: PropTypes.string,
 
-  // 可选参数, 是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。
+  // 上传文件名称，默认为files
+  fileName: PropTypes.string,
+
+  // 是否支持多选文件，ie10+ 支持。开启后按住 ctrl 可选择多个文件。
   multiple: PropTypes.bool,
 
+  // 文件上传进行中事件
+  onUplading: PropTypes.func,
   // 上传文件完成时的回调函数
-  onComplete: PropTypes.func
+  onComplete: PropTypes.func,
+
+  // 是否显示文件上传列表
+  showFileList: PropTypes.bool
 }
 
 export default Upload

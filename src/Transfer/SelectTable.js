@@ -83,8 +83,8 @@ class SelectTable extends Component {
         ref={item.id}
         onClick={this.handleClick.bind(this, item)}
         onDoubleClick={this.handleDbClick.bind(this, item)}
-        onKeyDown={this.handleKeyDown}
-        onKeyUp={this.handleKeyUp}
+        onKeyDown={::this.handleKeyDown}
+        onKeyUp={::this.handleKeyUp}
       />)
     })
 

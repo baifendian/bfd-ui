@@ -12,93 +12,16 @@ import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
 import { Checkbox } from '../Checkbox'
+import Rows from './Rows'
 import './main.less'
 import '../table.less'
-class Rows extends Component {
-
-  constructor(props) {
-    super(props)
-  }
-  
-  render() {
-    const rows = this.props.rows
-    const column = this.props.column
-    const currentPage = this.props.currentPage || 1
-    const pageSize = this.props.pageSize || 0
-    return (
-      <tbody>
-      {
-        rows.length > 0 ?
-        rows.map((item, j) => {
-          const isSelect = item.isSelect || false
-          const isDisabled = item.disabled || false
-          const checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
-            : null
-          return (
-            <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
-              {checkboxTd}
-              {
-                column.map((columns, i) => {
-                  for (const col in columns) {
-                    // 序号
-                    if (columns[col] === 'sequence') {
-                      return <td key={String(i) + j} >{((currentPage-1) * pageSize) + (j + 1)}</td>
-                    }
-                    // 操作
-                    if (columns[col] == 'operation') {
-                      return <td key={String( i ) + j}>{columns['render'](item, this)}</td>
-                    }
-                    // 正常非字段编辑列
-                    if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
-                      if (typeof columns['render'] === 'function') {
-                        return <td key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
-                      } else {
-                        return <td key={String(i) + j}>{item[columns[col]]}</td>
-                      }
-                    }
-                  }
-                })
-              }
-            </tr>
-          )
-        }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
-      }
-      </tbody>
-    )
-  }
-
-  handleCheckboxChange(row) {
-    row.isSelect = !row.isSelect
-    this.setState({
-      t: +new Date
-    })
-
-    const selectRow = []
-    this.props.rows.map((item) => {
-      if (item.isSelect) {
-        selectRow.push(item)
-      }
-    })
-
-    this.props.onSelect(row.isSelect, row, selectRow)
-  }
-
-  handleCheckboxClick(event) {
-    event = event ? event : window.event
-    event.stopPropagation()
-  }
-
-  handleRowClick(item) {
-    this.props.onRowClick && this.props.onRowClick(item)
-  }
-}
 
 class DataTable extends Component {
 
   constructor(props) {
     super()
     this.items = []
+    this.selectedRows = []
     this.state = {
       order: '',
       url: props.url || '',
@@ -138,7 +61,7 @@ class DataTable extends Component {
   render() {
     const self = this
     let url = this.props.url
-    const { className, column, ...other } = this.props
+    const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
       // 新增自动分页功能 
       pageSize = parseInt(this.props.howRow)
@@ -166,17 +89,32 @@ class DataTable extends Component {
               {checkboxTh}
               {
                 column.map ((head, i) => {
-                  const style = head.width ? {width: head.width} : {}
+                  const style = {}
+                  let orderClassName = ''
+                  if(head.width) {
+                    style.width = head.width
+                  }
+                  if(head.hide === true) {
+                    style.display = 'none'
+                  }
+                  if(head['order'] === true) {
+                    orderClassName = 'bfd-datatable--sorting'
+                  } else if(head['order'] === 'asc') {
+                    orderClassName = 'bfd-datatable--sorting_asc-default'
+                  } else if(head['order'] === 'desc') {
+                    orderClassName = 'bfd-datatable--sorting_desc-default'
+                  }
+
                   return (
                     <th 
                       key={head['title']}
                       ref={i}
                       style={style}
                       onClick={self.orderClick.bind(self, head, i)}
-                      title={head['order']===true ? head['title'] + '排序' : ''} className={head['order']===true ? 'bfd-datatable--sorting' : ''}>
+                      title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>
                       {head['title']}
                     </th>
-                    )
+                  )
                 })
               }
             </tr>
@@ -187,6 +125,7 @@ class DataTable extends Component {
             onRowClick={::this.handleRowClick}
             onSelect={::this.handleCheckboxChange}
             onCheckboxSelect={this.props.onCheckboxSelect}
+            onCheckboxSelectAll={::this.setCheckboxAll}
             column={this.props.column}
             currentPage={this.state.items.currentPage || currentPage}
             pageSize={pageSize}
@@ -201,8 +140,7 @@ class DataTable extends Component {
                   currentPage={this.state.items.currentPage}                   
                   totalPageNum={this.state.items.totalPageNum} 
                   pageSize={this.props.howRow} 
-                  onPageChange={::this.onPageChange} 
-                  onChange={::this.onChange}>
+                  onPageChange={::this.onPageChange}>
               </Paging>)
               : '' 
             : ''
@@ -210,8 +148,6 @@ class DataTable extends Component {
       </div>
     )
   }
-
-  onChange() {}
 
   onPageChange(page) {
     if (this.props.onPageChange) {
@@ -224,34 +160,74 @@ class DataTable extends Component {
 
   orderClick(column, i) {
     if (column.order) {
-      if (this.refs[i].getAttribute('order') == null) {
-        this.refs[i].className = 'bfd-datatable--sorting_asc'
-        this.refs[i].setAttribute('order', 'asc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=asc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+      const orderEl = this.refs[i]
+      const orderElAttr = this.getOrderAttribute(i)
+      if (orderElAttr == null || !orderElAttr) {
+        if(column.order === true) {
+          orderEl.className = 'bfd-datatable--sorting_asc'
+          orderEl.setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'asc') {
+          orderEl.className = 'bfd-datatable--sorting_asc'
+          orderEl.setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'desc') {
+          orderEl.className = 'bfd-datatable--sorting_desc'
+          orderEl.setAttribute('order', 'desc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=desc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+        }
         return
       }
-      if (this.refs[i].getAttribute('order') == 'asc') {
-        this.refs[i].className = 'bfd-datatable--sorting_desc'
-        this.refs[i].setAttribute('order', 'desc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=desc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+      if (orderElAttr == 'asc') {
+        if(column.order === true) {
+          this.refs[i].className = 'bfd-datatable--sorting_desc'
+          this.refs[i].setAttribute('order', 'desc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=desc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'desc')
+        } else if(column.order === 'asc') {
+          this.refs[i].className = 'bfd-datatable--sorting_asc-default'
+          this.refs[i].setAttribute('order', '')
+          this.setState({
+            order: '&key=' + column['key']
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], '')
+        }
         return
       }
-      if (this.refs[i].getAttribute('order') == 'desc') {
-        this.refs[i].className = 'bfd-datatable--sorting_asc'
-        this.refs[i].setAttribute('order', 'asc')
-        this.setState({
-          order: '&key=' + column['key'] + '&sort=asc'
-        })
-        this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+      if (orderElAttr == 'desc') {
+        if(column.order === true) {
+          this.refs[i].className = 'bfd-datatable--sorting_asc'
+          this.refs[i].setAttribute('order', 'asc')
+          this.setState({
+            order: '&key=' + column['key'] + '&sort=asc'
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], 'asc')
+        } else if(column.order === 'desc') {
+          this.refs[i].className = 'bfd-datatable--sorting_desc-default'
+          this.refs[i].setAttribute('order', '')
+          this.setState({
+            order: '&key=' + column['key']
+          })
+          this.props.onOrder && this.props.onOrder(column['key'], '')
+        }
         return
       }
     }
+  }
+
+  getOrderAttribute(refName) {
+    return this.refs[refName].getAttribute('order')
   }
 
   handleSuccess(data) {
@@ -269,26 +245,45 @@ class DataTable extends Component {
 
   handleCheckboxAllChange() {
     const isAll = !this.state.isSelectAll
-    this.setState({
-      isSelectAll: isAll
-    })
-    const changeRows = []
     const rows = this.state.items.totalList
+    const key = this.getPrimaryKey(this.props.column)
     rows.map((item) => {
       if (item.isSelect !== isAll && !item.disabled) {
         item.isSelect = isAll
-        changeRows.push(item)
+      }
+      this.setCheckboxAll(isAll)
+      let addFlag = true
+
+
+      for(let i = 0, len = this.selectedRows.length; i < len; i++) {
+        const row = this.selectedRows[i]
+        if(key && row[key] == item[key]) {
+          addFlag = false
+          if(!isAll) {
+            this.selectedRows.splice(i, 1)
+          }
+          break
+        }
+      }
+      if(key && addFlag && isAll) {
+        this.selectedRows.push(item)
       }
     })
-
+    
     const selectAllFn = this.props.onCheckboxSelect
-
-    selectAllFn && selectAllFn(isAll ? rows : [])
+    selectAllFn && selectAllFn(isAll ? rows : [], this.selectedRows)
   }
 
-  handleCheckboxChange(checked, row, rows) {
+  setCheckboxAll(isAll) {
+    this.setState({
+      isSelectAll: isAll
+    })
+  }
+
+  handleCheckboxChange(checked, row, rows, selectedRows) {
     const selectFn = this.props.onCheckboxSelect
-    selectFn && selectFn(rows)
+    this.selectedRows = selectedRows
+    selectFn && selectFn(rows, selectedRows)
     if (!checked) {
       this.setState({
         isSelectAll: false
@@ -304,6 +299,16 @@ class DataTable extends Component {
   handleRowClick(row) {
     this.props.onRowClick && this.props.onRowClick(row)
   }
+
+  getPrimaryKey(column) {
+    let key
+    column.map(item => {
+      if(item.primary === true) {
+        key = item.key
+      }
+    })
+    return key
+  }
 }
 
 DataTable.propTypes = {
@@ -311,7 +316,24 @@ DataTable.propTypes = {
   // 要请求数据的服务端地址。
   url: PropTypes.string,
 
-  // 数据表格表头列名称
+  /**
+   * 数据表格表头列名称，目前支持的配置项如下：
+   * ```js
+   * [{
+   *  title: '姓名', // 列头显示的文本
+   *  key: 'name', // 映射数据字段名称
+   *  primary: true, //主键标识，默认为false
+   *  width: '20%', // 列宽度设置
+   *  order: true, // 排序设置,true: 支持升序和降序，asc: 只支持升序，desc: 只支持降序，与onOrder事件并用
+   *  // 列渲染的回调函数，可以自定义返回显示数据，text为默认的列值，item为当前行记录
+   *  render: (text, item) => {
+        return item.country + "/" + item.area
+      }
+   * },
+   * ...
+   * ]
+   * ```
+   */
   column: PropTypes.array.isRequired,
 
   // 每页需要显示的条数
@@ -326,7 +348,7 @@ DataTable.propTypes = {
   // 点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】
   onPageChange: PropTypes.func,
 
-  // 复选框点击事件，返回被选中的行记录
+  // 复选框点击事件，返回被选中的行记录（本页），如果在column中设置主键，此函数第二个参数为已选的行记录（跨页）
   onCheckboxSelect: PropTypes.func,
 
   // 行点击事件，返回被选中的行记录

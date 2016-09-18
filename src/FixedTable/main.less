@@ -1,0 +1,83 @@
+/**
+ * Copyright 2016-present, Baifendian, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+.bfd-datatable--sorting {
+	background:url('icon/sort_both.png') no-repeat center right;
+	cursor: pointer;
+}
+.bfd-datatable--sorting_asc {
+	background: url('icon/sort_asc.png') no-repeat center right;
+	cursor: pointer;
+}
+.bfd-datatable--sorting_desc {
+	background: url('icon/sort_desc.png') no-repeat center right;
+}
+.bfd-datatable--sorting_asc-default {
+	background: url('icon/sort_asc_default.png') no-repeat center right;
+	cursor: pointer;
+}
+.bfd-datatable--sorting_desc-default {
+	background: url('icon/sort_desc_default.png') no-repeat center right;
+}
+.bfd-fixedtable {
+  border-spacing: 0;
+  width:100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  line-height: 17.1429px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  th {
+    border-bottom:1px solid #eee;
+    padding: 10px 25px;
+    height: 0;
+    line-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: transparent;
+    border: none;
+    white-space: nowrap;
+    background: #fff;
+  }
+  th div{
+    font-weight: normal;
+    text-align: left;
+    position: absolute;
+    margin-left: -17px;
+    top: 0;
+    padding-right: 25px;
+    line-height: normal;
+    color: #666;
+  }
+  th:first-child div{
+    border: none;
+  }
+  > tbody {
+    > tr {
+      background-color: #fff;
+      > td {
+        vertical-align: middle;
+        word-wrap: break-word;
+        color: #666;
+        border-top: 1px solid #eff3f8;
+        padding: 8px;
+        line-height: 13.8px;
+      }
+    }
+    tr:nth-child(2n) {
+      background-color: #fafafa;
+    }
+  }
+}
+.bfd-fixedtable--fixed {
+  position: relative;
+  padding-top: 32px;
+}
