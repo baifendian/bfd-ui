@@ -1,0 +1,81 @@
+/**
+ * Copyright 2016-present, Baifendian, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+.bfd-steps {
+	width : 100%;
+	.bfd-icon {
+		font-size: 18px;
+	}
+}
+.bfd-steps__box {
+	z-index: 9999;
+	float: left;
+}
+.bfd-steps__box--circle {
+	position: relative;
+	text-align: center;
+	border: 1px solid;
+	vertical-align: middle;
+}
+.bfd-steps__box--circle_finish{
+	color: #41A1F5;
+	background-color: #FFF;
+	border-color: #41A1F5;
+}
+.bfd-steps__box--circle_process {
+	color: #FFF;
+	background-color: #41A1F5;
+	border-color: #41A1F5;
+	cursor: pointer;
+}
+.bfd-steps__box--circle_wait {
+	color: #999;
+	background-color: #FFF;
+	border-color: #e0e0e0;
+}
+.bfd-steps__box--title {
+	border: 0px;
+	text-align: center;
+	position: relative;
+	font-size: 12px;
+}
+.bfd-steps__box--title_finish{
+	color: #41A1F5;
+}
+.bfd-steps__box--title_process {
+	color: #41A1F5;
+}
+.bfd-steps__box--title_wait {
+	color: #999;
+}
+.bfd-steps__box--line {
+	position: relative;
+	height: 1px;
+}
+.bfd-steps__box--line_finish{
+	background-color: #41A1F5;
+}
+.bfd-steps__box--line_wait {
+	background-color: #e0e0e0;
+}
+.bfd-steps__box--line_hide {
+	height: 0px;
+	display: none;
+}
+.bfd-steps__box:hover {
+	.bfd-steps__box--circle {
+		color: #FFF;
+		background-color: #41A1F5;
+		border-color: #41A1F5;
+		cursor: pointer;
+	}
+	.bfd-steps__box--title {
+		color: #41A1F5;
+	}
+}

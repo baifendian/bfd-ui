@@ -8,9 +8,6 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import Fetch from '../Fetch'
-import Paging from '../Paging'
-import FixTable from './FixTable'
 import classnames from 'classnames'
 import { Checkbox } from '../Checkbox'
 import './main.less'
@@ -187,59 +184,58 @@ class FixedTable extends Component {
 
   render() {
     const self = this
-    let url = this.props.url
     const { className, column, data, height, ...other } = this.props
 
     const checkboxTh = this.props.onCheckboxSelect ? <th><div><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></div></th> : null
     return (
       <div className='bfd-fixedtable--fixed'>
-      <div style={{overflowY: 'auto', height: this.props.height + 'px'}}>
-        <table className={classnames('bfd-fixedtable', className)} {...other} >
-          <thead>
-            <tr>
-              {checkboxTh}
-              {
-                column.map ((head, i) => {
-                  const style = {}
-                  let orderClassName = ''
-                  if(head.width) {
-                    style.width = head.width
-                  }
-                  if(head.hide === true) {
-                    style.display = 'none'
-                  }
-                  if(head['order'] === true) {
-                    orderClassName = 'bfd-datatable--sorting'
-                  } else if(head['order'] === 'asc') {
-                    orderClassName = 'bfd-datatable--sorting_asc-default'
-                  } else if(head['order'] === 'desc') {
-                    orderClassName = 'bfd-datatable--sorting_desc-default'
-                  }
+        <div style={{overflowY: 'auto', height: this.props.height + 'px'}}>
+          <table className={classnames('bfd-fixedtable', className)} {...other} >
+            <thead>
+              <tr>
+                {checkboxTh}
+                {
+                  column.map ((head, i) => {
+                    const style = {}
+                    let orderClassName = ''
+                    if(head.width) {
+                      style.width = head.width
+                    }
+                    if(head.hide === true) {
+                      style.display = 'none'
+                    }
+                    if(head['order'] === true) {
+                      orderClassName = 'bfd-datatable--sorting'
+                    } else if(head['order'] === 'asc') {
+                      orderClassName = 'bfd-datatable--sorting_asc-default'
+                    } else if(head['order'] === 'desc') {
+                      orderClassName = 'bfd-datatable--sorting_desc-default'
+                    }
 
-                  return (
-                    <th 
-                      key={head['title']}
-                      style={style}
-                      onClick={self.orderClick.bind(self, head, i)}>
-                      <div ref={i} style={style} title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>{head['title']}</div>
-                    </th>
-                  )
-                })
-              }
-            </tr>
-          </thead>
+                    return (
+                      <th 
+                        key={head['title']}
+                        style={style}
+                        onClick={self.orderClick.bind(self, head, i)}>
+                        <div ref={i} style={style} title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>{head['title']}</div>
+                      </th>
+                    )
+                  })
+                }
+              </tr>
+            </thead>
 
-          <Rows 
-            rows={this.state.items.totalList} 
-            onRowClick={::this.handleRowClick}
-            onSelect={::this.handleCheckboxChange}
-            onCheckboxSelect={this.props.onCheckboxSelect}
-            onCheckboxSelectAll={::this.setCheckboxAll}
-            column={this.props.column}
-          >
-          </Rows>
-        </table>
-      </div>
+            <Rows 
+              rows={this.state.items.totalList} 
+              onRowClick={::this.handleRowClick}
+              onSelect={::this.handleCheckboxChange}
+              onCheckboxSelect={this.props.onCheckboxSelect}
+              onCheckboxSelectAll={::this.setCheckboxAll}
+              column={this.props.column}
+            >
+            </Rows>
+          </table>
+        </div>
       </div>
     )
   }
