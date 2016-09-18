@@ -43,7 +43,7 @@ class Slider extends Component {
   }
 
   render() {
-    const { className, ...other } = this.props
+    const { className, defaultValue, tickValue, start, end, suffix, onSliding, onSlid, ...other } = this.props
     return (
       <div ref="container" className={classnames('bfd-slider', className)} {...other}>
         <div ref="bar" className="bfd-slider__bar">

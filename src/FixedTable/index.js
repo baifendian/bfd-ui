@@ -188,7 +188,7 @@ class FixedTable extends Component {
 
     const checkboxTh = this.props.onCheckboxSelect ? <th><div><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></div></th> : null
     return (
-      <div className='bfd-fixedtable--fixed'>
+      <div className="bfd-fixedtable--fixed">
         <div style={{overflowY: 'auto', height: this.props.height + 'px'}}>
           <table className={classnames('bfd-fixedtable', className)} {...other} >
             <thead>

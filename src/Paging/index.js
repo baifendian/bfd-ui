@@ -36,7 +36,8 @@ class Paging extends Component {
     // 分页逻辑代码
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
     const currentIndex = this.state.currentIndex
-    
+    const { currentPage, totalPageNum, pageSize, onPageChange, maxSeries, hideGo, ...other } = this.props
+
     return (
       <Row>
         <div className="bfd-paging__layout-div">

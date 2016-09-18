@@ -25,10 +25,7 @@ class Steps extends Component {
   render() {
 
     const rows = []
-    const {
-      children,
-      ...other
-    } = this.props
+    const { children, className, height, current, onStepClick, ...other } = this.props
     delete other.current
     delete other.onStepClick
     const items = findAllByType(children, Step)
@@ -50,7 +47,7 @@ class Steps extends Component {
       <div 
         ref="container"
         style={{height: this.props.height+'px'}} 
-        className={classnames('bfd-steps', this.props.className)} {...other}>
+        className={classnames('bfd-steps', className)} {...other}>
         {rows}
       </div>
     )

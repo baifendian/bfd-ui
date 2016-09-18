@@ -11,6 +11,7 @@ import React, { Component, PropTypes } from 'react'
 import { Row, Col } from '../Layout'
 import SearchBar from './SearchBar'
 import SelectTable from './SelectTable'
+import classnames from 'classnames'
 import './main.less'
 
 const SourceTable = SelectTable
@@ -72,35 +73,36 @@ class Transfer extends Component {
   }
 
   render() {
+    const { className, height, title, sdata, tdata, onChange, onSearch, render, ...other } = this.props
     return (
-      <Row className="bfd-transfer">
+      <Row className={classnames('bfd-transfer', className)} {...other}>
         <Col col="md-4">
           <SearchBar onUserInput={::this.handleUserInput}/>
           <SourceTable 
             onTransfer={::this.handleTransfer} 
             onFoucsItem={::this.handleSourceFouceItem} 
             data={this.state.searchData} 
-            height={this.props.height || 200} 
+            height={height || 200} 
             direct="s2t"
-            render={this.props.render}
+            render={render}
             />
         </Col>
         <Col col="md-2" className="bfd-transfer__bfd-pannel">
           <TransferPanel 
             onTransfer={::this.handleTransfer} 
-            height={this.props.height || 200} />
+            height={height || 200} />
         </Col>
         <Col col="md-4">
           <div style={{height: '34px', lineHeight: '34px'}} >
-            <span>{this.props.title || '已选项'}</span>
+            <span>{title || '已选项'}</span>
           </div>
           <TargetTable 
             onTransfer={::this.handleTransfer} 
             onFoucsItem={::this.handleTargetFouceItem} 
-            data={this.props.tdata} 
-            height={this.props.height || 200} 
+            data={tdata} 
+            height={height || 200} 
             direct="t2s"
-            render={this.props.render}
+            render={render}
             />
         </Col>
       </Row>

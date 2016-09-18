@@ -19,7 +19,7 @@ class SubSplitPanel extends Component {
   }
 
   render() {
-    const { children, className, ...other } = this.props
+    const { children, className, direct, width, height, onSplit, ...other } = this.props
     return (
       <div className={classnames(className)} {...other}>
         {children}

@@ -131,9 +131,10 @@ class Step extends Component {
       width: this.props.width + 'px',
       height: this.props.height + 'px'
     }
+    const { className, title, icon, ...other} = this.props
 
     return (
-      <div style={style} className="bfd-steps__box">
+      <div style={style} className="bfd-steps__box" {...other}>
         <Line {...this.props} />
         <Circle {...this.props} />
         <Title {...this.props} />

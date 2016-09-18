@@ -61,7 +61,7 @@ class DataTable extends Component {
   render() {
     const self = this
     let url = this.props.url
-    const { className, column, ...other } = this.props
+    const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
       // 新增自动分页功能 
       pageSize = parseInt(this.props.howRow)
