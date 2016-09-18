@@ -7,15 +7,25 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
 import Button from '../Button'
+import Spinner from '../Spinner'
 
-const FormSubmit = (props, context) => {
+class FormSubmit extends Component {
 
-  const { children, className, onClick, ...other } = props
-  const form = context.form
-
-  const handleClick = () => {
+  constructor(props, context) {
+    super()
+    const { form } = context
+    form.submit = this
+    this.state = {
+      process: false
+    }
+  }
+  
+  handleClick() {
+    const { onClick } = this.props
+    const { form } = this.context
     onClick && onClick()
     if (form.props.onSubmit) {
       form.props.onSubmit(form.state.data)
@@ -23,15 +33,37 @@ const FormSubmit = (props, context) => {
       form.save()
     }
   }
-  return (
-    <Button 
-      style={{marginLeft: `${form.props.labelWidth}px`}} 
-      onClick={handleClick}
-      {...other}
-    >
-      {children}
-    </Button>
-  )
+
+  /**
+   * @public
+   * @name toggleProcess
+   * @param  {boolean} process 是否切换到处理中模式
+   * @description 控制按钮状态是否为处理中，用于表单提交成功前的等待提醒，
+   * 调用 Form save 方法且表单验证通过后自动调用该接口
+   */
+  toggleProcess(process) {
+    clearTimeout(this.timer)
+    this.timer = setTimeout(() => {
+      this.setState({ process })  
+    }, process ? 150 : 0)
+  }
+
+  render() {
+    const { children, className, onClick, ...other } = this.props
+    const { process } = this.state
+    const { form } = this.context
+    return (
+      <Button 
+        style={{marginLeft: `${form.props.labelWidth}px`}} 
+        classnames={classnames('bfd-form-submit'), className}
+        onClick={::this.handleClick}
+        disabled={process}
+        {...other}
+      >
+        {process ? <Spinner height={20} />  : children}
+      </Button>
+    )
+  }
 }
 
 FormSubmit.contextTypes = {

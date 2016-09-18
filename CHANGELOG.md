@@ -1,3 +1,14 @@
+## 0.10.1
+
+`2016-09-18`
+
+- 新增组件 Spinner、Panel
+- FormSubmit 新增 toggleProcess 接口
+- 修复 Checkbox、Radio click 事件冒泡两次的问题
+- 修复 react 15.x 环境下未知属性错误提醒的问题
+- 预编译 less，不再依赖项目的 webpack less 相关配置
+- NavItem 新增 blank 属性，实现新窗口打开
+
 ## 0.9.1
 
 `2016-09-09`
@@ -15,6 +26,8 @@
 ## 0.8.0
 
 `2016-09-05`
+
+> 自 `0.8.0` 起，去除了 bootstrap 的依赖，如果项目代码用到了 bootstrap 的特性，升级后请单独引入 `bfd-bootstrap` 模块
 
 - Select、MultipleSelect 新增 data 属性
 - Modal 新增 onToggle 属性

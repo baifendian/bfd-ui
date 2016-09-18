@@ -3,7 +3,6 @@ var path = require('path')
 var fs = require('fs')
 var rimraf = require('rimraf')
 var LiveReloadPlugin = require('webpack-livereload-plugin')
-var autoprefixer = require('autoprefixer')
 var beautify = require('code-beautify')
 
 var isProduction = process.argv.slice(2)[0] === '-p'
@@ -57,8 +56,13 @@ var config = {
   markdownLoader: {
     highlight: (code, lang) => beautify(code, lang)
   },
-  postcss: [autoprefixer({
-    browsers: ['last 3 versions']
+  postcss: [require('postcss-for'), require('autoprefixer')({
+    browsers: [
+      '>1%',
+      'last 4 versions',
+      'Firefox ESR',
+      'not ie < 9', // React doesn't support IE8 anyway
+    ]
   })],
   resolve: {
     extensions: ['', '.js'],

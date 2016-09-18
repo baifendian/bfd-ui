@@ -13,14 +13,20 @@ import './index.less'
 
 const Radio = props => {
 
-  const { children, className, ...inputProps } = props
+  const { children, className, onClick, ...inputProps } = props
   
   const classNames = classnames('bfd-radio', {
     'bfd-radio--disabled': inputProps.disabled
   }, className)
 
   return (
-    <label className={classNames}>
+    <label className={classNames} onClick={e => {
+      if (e.target.tagName === 'INPUT') {
+        e.stopPropagation()
+      } else {
+        onClick && onClick(e)
+      }
+    }}>
       <input type="radio" {...inputProps} />
       <span className="bfd-radio__status"></span>
       {children && <span className="bfd-radio__text">{children}</span>}

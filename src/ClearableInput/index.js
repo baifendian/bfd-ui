@@ -75,16 +75,16 @@ class ClearableInput extends Component {
           onChange={::this.handleInput} 
           {...inputProps} 
         />
-        {value && !inputProps.disabled && (
-          <Button 
-            icon="remove" 
-            size="sm"
-            type="minor"
-            transparent
-            className="bfd-clearable-input__clear" 
-            onClick={::this.handleClear} 
-          />
-        )}
+        <Button 
+          icon="remove" 
+          size="sm"
+          type="minor"
+          transparent
+          className={classnames('bfd-clearable-input__clear', {
+            'bfd-clearable-input__clear--hide': !value
+          })}
+          onClick={::this.handleClear} 
+        />
       </div>
     )
   }

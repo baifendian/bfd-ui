@@ -15,6 +15,9 @@
     "name": "Layout",
     "cn": "布局"
   }, {
+    "name": "Panel",
+    "cn": "面板"
+  }, {
     "name": "Checkbox",
     "cn": "复选框"
   }, {
@@ -65,6 +68,9 @@
   }, {
     "name": "Upload",
     "cn": "上传"
+  }, {
+    "name": "Spinner",
+    "cn": "加载中"
   }]
 }, {
   "category": "advance",

@@ -90,12 +90,16 @@ class Form extends Component {
       if (process.env.NODE_ENV !== 'production') {
         warning(this.props.action, 'No `action` provided, check the Form component you save.')
       }
+      this.submit && this.submit.toggleProcess(true)
       xhr({
         type: 'POST',
         url: this.props.action,
         data: data || this.state.data,
         success: data => {
           this.props.onSuccess && this.props.onSuccess(data)
+        },
+        complete: () => {
+          this.submit && this.submit.toggleProcess(false)  
         }
       })
     }
@@ -156,7 +160,8 @@ Form.propTypes = {
   // 成功后的回调，参数为服务器返回后的数据
   onSuccess: PropTypes.func,
 
-  // 表单提交回调，参数为当前表单的数据，自定义提交后的行为。如果不指定，表单提交后自动调用 save
+  // 表单提交回调，参数为当前表单的数据，自定义提交后的行为，不会自动调用
+  // save。不指定此属性，表单提交后自动调用 save
   onSubmit: PropTypes.func,
 
   customProp({ data, onChange }) {

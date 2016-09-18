@@ -71,3 +71,4 @@ class FormBasic extends Component {
 
 @component Form/Form
 @component Form/FormItem
+@component Form/FormSubmit

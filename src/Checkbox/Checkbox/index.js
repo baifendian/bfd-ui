@@ -13,7 +13,7 @@ import './index.less'
 
 const Checkbox = props => {
 
-  const { children, className, block, ...inputProps } = props
+  const { children, className, block, onClick, ...inputProps } = props
 
   const classNames = classnames('bfd-checkbox', {
     'bfd-checkbox--disabled': inputProps.disabled,
@@ -21,7 +21,13 @@ const Checkbox = props => {
   }, className)
   
   return (
-    <label className={classNames}>
+    <label className={classNames} onClick={e => {
+      if (e.target.tagName === 'INPUT') {
+        e.stopPropagation()
+      } else {
+        onClick && onClick(e)
+      }
+    }}>
       <input 
         type="checkbox" 
         className="bfd-checkbox__input"

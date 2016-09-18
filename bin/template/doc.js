@@ -1,7 +1,7 @@
 /**
- * 基本功能
+ * @title 基本功能
  */
-import <%= name %> from 'c/<%= name %>'
+import <%= name %> from 'bfd/<%= name %>'
 
 const <%= name %>Basic = () => {
   return (

@@ -11,6 +11,7 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import xhr from '../xhr'
+import Spinner from '../Spinner'
 import './index.less'
 
 class Fetch extends Component {
@@ -73,11 +74,7 @@ class Fetch extends Component {
     loading() {
       return (
         <div className="bfd-fetch__mask">
-          <div className="bfd-fetch__state bfd-fetch__state-loading">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          <Spinner className="bfd-fetch__state" />
         </div>
       )
     },

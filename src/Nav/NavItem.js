@@ -49,7 +49,7 @@ class NavItem extends Component {
     if (props.index) {
       return href === (location.pathname || '/')
     } else {
-      return href && location.href.indexOf(href) !== -1
+      return href && new RegExp(href + '(?=/|$|\\?|#)').test(location.href)
     }
   }
 
@@ -66,16 +66,23 @@ class NavItem extends Component {
   render() {
   
     const { open, href, active } = this.state
-    const { children, className, index, defaultOpen, icon, title, ...other } = this.props
+    const { 
+      children, className, index, defaultOpen, icon, title, blank, ...other 
+    } = this.props
 
     delete other.href
 
     const NavIcon = icon && <Icon type={icon} className="bfd-nav__item-icon" />
     const Toggle = children && <Icon type="caret-right" className="bfd-nav__item-toggle" />
 
-    const Item = children
-      ? <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a>
-      : <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
+    let Item
+    if (children) {
+      Item = <a href={href} onClick={::this.toggle}>{NavIcon}{title}{Toggle}</a>
+    } else if (blank) {
+      Item = <a href={href} target="_blank">{NavIcon}{title}{Toggle}</a>
+    } else {
+      Item = <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
+    }
 
     const classNames = classnames(
       'bfd-nav__item', 
@@ -119,7 +126,10 @@ NavItem.propTypes = {
   title: PropTypes.string,
 
   // 初始化是否展开（不可控），用于非叶子节点
-  defaultOpen: PropTypes.bool
+  defaultOpen: PropTypes.bool,
+
+  // 是否新窗口打开
+  target: PropTypes.bool
 }
 
 export default NavItem

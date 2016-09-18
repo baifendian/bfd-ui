@@ -16,16 +16,15 @@ var config = {
       test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
       loader: 'file?name=files/[hash].[ext]'
     }, {
-      test: /\\.less$/,
-      loader: 'style!css!less!postcss'
+      test: /\\.css$/,
+      loader: 'style!css'
     }]
   },
   resolve: {
     alias: {
       bfd: 'bfd-ui/lib'
     }
-  },
-  postcss: [autoprefixer({ browsers: ['last 3 versions'] })]
+  }
 }
 module.exports = config
 ```
