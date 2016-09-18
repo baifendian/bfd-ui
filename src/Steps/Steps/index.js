@@ -26,8 +26,6 @@ class Steps extends Component {
 
     const rows = []
     const { children, className, height, current, onStepClick, ...other } = this.props
-    delete other.current
-    delete other.onStepClick
     const items = findAllByType(children, Step)
     items.map((item, index) => {
       rows.push(<Step 
