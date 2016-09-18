@@ -73,7 +73,8 @@ class Transfer extends Component {
   }
 
   render() {
-    const { className, height, title, sdata, tdata, onChange, onSearch, render, ...other } = this.props
+    const { className, height, title, sdata, tdata, onChange, onSearch, ...other } = this.props
+    delete other.render
     return (
       <Row className={classnames('bfd-transfer', className)} {...other}>
         <Col col="md-4">
@@ -84,7 +85,7 @@ class Transfer extends Component {
             data={this.state.searchData} 
             height={height || 200} 
             direct="s2t"
-            render={render}
+            render={this.props.render}
             />
         </Col>
         <Col col="md-2" className="bfd-transfer__bfd-pannel">
@@ -102,7 +103,7 @@ class Transfer extends Component {
             data={tdata} 
             height={height || 200} 
             direct="t2s"
-            render={render}
+            render={this.props.render}
             />
         </Col>
       </Row>
