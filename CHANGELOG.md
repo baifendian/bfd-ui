@@ -1,6 +1,8 @@
-## 0.10.0
+## v0.10.0
 
 `2016-09-18`
+
+> 自 `v0.10.0` 起新发布的版本，less 会编译成 css，即去除了编译 less 相关的依赖，需要的话请单独安装
 
 - 新增组件 Spinner、Panel、FixedTable
 - FormSubmit 新增 toggleProcess 接口
@@ -12,7 +14,7 @@
 - 修复 Paging 页码省略号显示问题，跳转问题
 - Upload 新增 onUploading 上传进行中事件
 
-## 0.9.1
+## v0.9.1
 
 `2016-09-09`
 
@@ -26,11 +28,11 @@
 - 优化 Select 无匹配项时的显示
 - Select、MultipleSelect 新增 dataFilter 属性，处理 url 模式的数据格式
 
-## 0.8.0
+## v0.8.0
 
 `2016-09-05`
 
-> 自 `0.8.0` 起，去除了 bootstrap 的依赖，如果项目代码用到了 bootstrap 的特性，升级后请单独引入 `bfd-bootstrap` 模块
+> 自 `v0.8.0` 起，去除了 bootstrap 的依赖，如果项目代码用到了 bootstrap 的特性，升级后请单独引入 `bfd-bootstrap` 模块
 
 - Select、MultipleSelect 新增 data 属性
 - Modal 新增 onToggle 属性

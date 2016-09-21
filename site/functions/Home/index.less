@@ -27,9 +27,6 @@
 .home__banner-right {
   text-align: center;
   margin-bottom: 26px;
-  opacity: 0;
-  transform: translateX(-100%);
-  animation: fade-left .5s cubic-bezier(.455,.03,.515,.955) .25s forwards;
   h1 {
     font-size: 40px;
     font-family: initial;
@@ -47,31 +44,10 @@
   }
 }
 
-@keyframes fade-left {
-  100% {
-    opacity: 1;
-    transform: translateX(0%);
-  }
-}
-
 .home__banner-install,
 .home__banner-start {
   display: inline-block;
   margin: 10px 30px;
-  transform: scale(0);
-  opacity: 0;
-  animation: scale-in .8s cubic-bezier(0.41, 0.07, 0.21, 1.46) .75s forwards;
-  transition: transform .2s;
-  &:hover {
-    transform: skew(-10deg);
-  }
-}
-
-@keyframes scale-in {
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
 
 .home__banner-install {

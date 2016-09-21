@@ -39,12 +39,12 @@ class Fetch extends Component {
   }
 
   fetch() {
-    this.lazyFetch()
+    const timer = this.lazyFetch()
     setTimeout(() => {
       xhr({
         url: this.props.url,
         complete: () => {
-          clearTimeout(this.loadingTimer)
+          clearTimeout(timer)
         },
         success: ::this.handleSuccess,
         error: ::this.handleError
@@ -53,7 +53,7 @@ class Fetch extends Component {
   }
 
   lazyFetch() {
-    this.loadingTimer = setTimeout(() => {
+    return setTimeout(() => {
       this.setState({xhr: 'loading'})
     }, 150)
   }

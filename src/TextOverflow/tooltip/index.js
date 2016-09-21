@@ -36,7 +36,9 @@ class Tooltip extends Component {
       const triggerRect = this.state.trigger.getBoundingClientRect()
 
       tooltip.style.left = triggerRect.left - tooltipRect.width / 2 + triggerRect.width / 2 + 'px'
-      tooltip.style.top = triggerRect.top - tooltipRect.height - 8 + document.body.scrollTop + 'px'
+      const top = (document.documentElement && document.documentElement.scrollTop)
+        || document.body.scrollTop
+      tooltip.style.top = triggerRect.top - tooltipRect.height - 8 + top + 'px'
     }
   }
 

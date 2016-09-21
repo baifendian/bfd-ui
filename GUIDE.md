@@ -9,7 +9,6 @@ npm install bfd-ui --save
 BFD UI 抛弃传统的资源加载方式，基于 [webpack](https://webpack.github.io/) 打包，资源种类多种多样，会涉及一些 webpack 的配置，如下：
 
 ```js
-var autoprefixer = require('autoprefixer')
 var config = {
   module: {
     loaders: [{
@@ -29,7 +28,7 @@ var config = {
 module.exports = config
 ```
 
-强烈建议基于脚手架开发，省去很多繁琐的环境配置，基础的全局样式，整体前端结构及开发、部署工作流的处理
+强烈建议基于脚手架开发，省去繁琐的环境配置、项目基本结构的设计以及开发和部署流程的制定等工作
 
 ## 受控 / 不受控组件
 
