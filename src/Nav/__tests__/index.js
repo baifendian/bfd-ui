@@ -20,15 +20,4 @@ describe('Nav', () => {
     )
     expect(findDOMNode(instance).querySelector('li').className).toContain('open')
   })
-
-  it('should open if active', () => {
-    const instance = TestUtils.renderIntoDocument(
-      <Nav href="/">
-        <IndexNavItem>
-          <IndexNavItem />
-        </IndexNavItem>
-      </Nav>
-    )
-    expect(findDOMNode(instance).querySelector('li').className).toContain('open')
-  })
 })
