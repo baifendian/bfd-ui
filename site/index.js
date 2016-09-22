@@ -61,7 +61,11 @@ render((
           })
         }} />
       </Route>
-
+      <Route path="*" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./functions/NotFound').default)
+        })
+      }} />
     </Route>
   </Router>
 ), document.getElementById('app'))

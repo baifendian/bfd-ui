@@ -15,7 +15,7 @@ npm install bfd-ui --save
 ## 使用
 
 ```jsx
-import DatePicker from 'bfd-u/lib/DatePicker'
+import DatePicker from 'bfd-ui/lib/DatePicker'
 
 ReactDOM.render(<DatePicker />, mountNode)
 ```
@@ -25,10 +25,10 @@ ReactDOM.render(<DatePicker />, mountNode)
 ### 安装开发环境
 
 ```sh 
-git clone http://git.baifendian.com/front-end/bfd-ui.git
+git clone https://github.com/baifendian/bfd-ui.git
 
 # 脚手架文档与 bfd-ui 集成，所以依赖 generator-bfd 项目里的部分文件，与 bfd-ui clone 在同一目录下
-git clone http://git.baifendian.com/front-end/generator-bfd.git
+git clone https://github.com/baifendian/generator-bfd.git
 
 cd bfd-ui
 
@@ -56,3 +56,13 @@ npm run create MyComponent
 1. 单元测试：组件根目录下创建 `__tests__` 文件夹
 
 1. 代码规范参考 [airbnb react](https://github.com/airbnb/javascript/tree/master/react)
+
+
+### 更新日志
+
+[CHANGELOG](CHANGELOG.md)
+
+
+### 脚手架
+
+[generator-bfd](https://github.com/baifendian/generator-bfd)

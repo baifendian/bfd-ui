@@ -5,7 +5,11 @@ import Center from 'public/Center'
 export default () => {
   return (
     <div>
-      <h1>generator-bfd</h1>
+      <h1>
+        <a href="https://github.com/baifendian/generator-bfd" target="_blank">
+          generator-bfd
+        </a>
+      </h1>
       <p>基于 yeoman 平台的项目前端生成器</p>
       <div style={{maxWidth: '600px'}}>
         <img 
