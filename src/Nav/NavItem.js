@@ -81,7 +81,7 @@ class NavItem extends Component {
     } else if (blank) {
       Item = <a href={href} target="_blank">{NavIcon}{title}{Toggle}</a>
     } else {
-      Item = <Link to={href} query={this.props.query}>{NavIcon}{title}{Toggle}</Link>
+      Item = <Link to={href}>{NavIcon}{title}{Toggle}</Link>
     }
 
     const classNames = classnames(
@@ -108,7 +108,6 @@ class NavItem extends Component {
 }
 
 NavItem.contextTypes = {
-  history: PropTypes.object,
   nav: PropTypes.object
 }
 
