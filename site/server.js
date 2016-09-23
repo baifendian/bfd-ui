@@ -14,9 +14,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, './')))
 
-var isProduction = process.argv.slice(2)[0] === '-production'
-
-if (!isProduction) {
+if (process.env.NODE_ENV !== 'production') {
   var webpack = require('webpack')
   var webpackDevMiddleware = require('webpack-dev-middleware')
   var WebpackConfig = require('./webpack.config')
@@ -145,7 +143,7 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-var port = process.argv.slice(2)[0] || 4001
+var port = process.env.PORT || 4001
 
 app.listen(port, function() {
   console.log('Server listening on http://localhost:' + port + ', Ctrl+C to stop')

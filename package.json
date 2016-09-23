@@ -10,7 +10,7 @@
     "compile": "rimraf lib && babel src -d lib --ignore __tests__ && gulp",
     "start": "node-dev site/server.js",
     "pack": "webpack -p --progress --config ./site/webpack.config.js",
-    "server": "pm2 start site/server.js -- -production",
+    "server": "NODE_ENV=production pm2 start site/server.js",
     "create": "node bin/create.js",
     "banner": "file-banner src --ignore '__tests__|\\.png'",
     "release": "npm run banner && npm run test && npm run compile && npm version patch && npm publish && git push"
