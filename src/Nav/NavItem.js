@@ -128,7 +128,7 @@ NavItem.propTypes = {
   defaultOpen: PropTypes.bool,
 
   // 是否新窗口打开
-  target: PropTypes.bool
+  blank: PropTypes.bool
 }
 
 export default NavItem

@@ -217,6 +217,7 @@ class Calendar extends Component {
                   return (
                     <td key={index}>
                       <button 
+                        type="button"
                         disabled={getComparerResult(date)} 
                         className={this.getDateClassNames(date, _start, _end)} 
                         onClick={this.handleDaySelect.bind(this, date)}

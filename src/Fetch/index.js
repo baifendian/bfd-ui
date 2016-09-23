@@ -113,6 +113,7 @@ Fetch.propTypes = {
   // 默认高度，单位像素
   defaultHeight: PropTypes.number,
 
+  // 请求延迟，单位毫秒。测试使用
   delay: PropTypes.number
 }
 
