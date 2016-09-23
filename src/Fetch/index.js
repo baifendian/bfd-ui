@@ -27,7 +27,6 @@ class Fetch extends Component {
   shouldComponentUpdate(nextProps) {
     if (this.props.url !== nextProps.url) {
       this.fetch()
-      this.root.style.height = this.root.offsetHeight + 'px'
       return false
     }
     return true
@@ -35,7 +34,6 @@ class Fetch extends Component {
   
   componentDidMount() {
     this.props.url && this.fetch()
-    this.root = ReactDOM.findDOMNode(this)
   }
 
   fetch() {

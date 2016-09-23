@@ -203,7 +203,7 @@ class MultipleSelect extends Component {
         {...other}>
         <DropdownToggle>
           <Fetch 
-            style={{minHeight: '30px'}} 
+            defaultHeight={28} 
             url={url} 
             onSuccess={action.handleLoad.bind(this)}
           >
