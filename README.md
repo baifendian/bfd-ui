@@ -6,7 +6,7 @@
 
 企业级前端整体解决方案 [http://ui.baifendian.com](http://ui.baifendian.com)
 
-<img src="screenshot.png" alt="bfd-ui" />
+<img src="screenshot.jpg" alt="bfd-ui" />
 
 ## 安装
 
