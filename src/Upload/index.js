@@ -45,6 +45,7 @@ class Upload extends Component {
 
   handleClick() {
     const fileEl = this.refs.file
+    fileEl.value = ''
     fileEl.click()
   }
 
