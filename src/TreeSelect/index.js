@@ -129,7 +129,7 @@ class TreeSelect extends Component {
     ) : (
       <TagList 
         labels={this.labels} 
-        placeholder={value ? '' : placeholder} 
+        placeholder={value && value.length ? '' : placeholder} 
         onRemove={::this.removeValue} 
       />
     )
