@@ -176,7 +176,9 @@ class FixedTable extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
       this.setState({
-        items: nextProps.data,
+        items: {
+          totalList: nextProps.data
+        },
         isSelectAll: false
       })
     }
