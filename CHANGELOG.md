@@ -1,3 +1,17 @@
+## v1.1.0
+
+`2016-09-29`
+
+- 新增组件 TreeSelect
+- Tree 新增属性 onSelect、checkable、onCheck；修复字体过大时样式问题
+- MultipleSelect 新增属性 placeholder
+- 修复 Form 中使用 DatePicker 选中日期后触发 submit 的问题
+- 修复 Fetch 组件容器高度不随内容变化而变化的问题
+- 修复 FixedTable 数据二次加载问题
+- 修复 Upload 同一文件二次上传问题
+- 修复 DataTable 单字节字符过多不自动换行问题
+
+
 ## v1.0.0
 
 `2016-09-23`
@@ -22,6 +36,7 @@
 - 修复 Paging 页码省略号显示问题，跳转问题
 - Upload 新增 onUploading 上传进行中事件
 
+
 ## v0.9.1
 
 `2016-09-09`
@@ -35,6 +50,7 @@
 - Fetch 新增 defaultHeight 属性，定义初始化高度
 - 优化 Select 无匹配项时的显示
 - Select、MultipleSelect 新增 dataFilter 属性，处理 url 模式的数据格式
+
 
 ## v0.8.0
 
