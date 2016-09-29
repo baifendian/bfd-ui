@@ -10,12 +10,10 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import shouldComponentUpdate from '../shouldComponentUpdate'
-import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import Option from '../Select/Option'
 import Checkbox from '../Checkbox'
-import TextOverflow from '../TextOverflow'
-import Fetch from '../Fetch'
-import Button from '../Button'
+import SelectDropdown from '../SelectDropdown'
+import TagList from '../TagList'
 import action from './action'
 import './index.less'
 
@@ -44,7 +42,7 @@ class MultipleSelect extends Component {
       values,
       searchValue: ''
     })
-    this.refs.input.focus()
+    this.refs.tagList.focus()
     this.props.onChange && this.props.onChange(values)
   }
 
@@ -98,8 +96,8 @@ class MultipleSelect extends Component {
     this.state.values.forEach(key => {
       if (optionsMapper[key] || this.props.tagable) {
         labels.push({
-          key,
-          value: optionsMapper[key] || key
+          value: key,
+          label: optionsMapper[key] || key
         })
       }
     })
@@ -122,14 +120,14 @@ class MultipleSelect extends Component {
   render() {
 
     const { 
-      children, className, defaultValues, onChange, data, url, disabled, tagable, ...other 
+      children, className, defaultValues, onChange, data, url, disabled, tagable,
+      placeholder, ...other 
     } = this.props
     const { searchValue, index, values } = this.state
     
     delete other.values
     delete other.render
 
-    const placeholder = '请选择'
     const valueSet = this.valueSet = new Set(values)
     const optionsMapper = {}
     const options = []
@@ -155,84 +153,58 @@ class MultipleSelect extends Component {
     const wrapperOptions = this.getWrapperOptions(options)
     const isAll = options.filter(option => !valueSet.has(option.props.value)).length === 0
 
-    let inputSize
-    if (labels.length) {
-      inputSize = (searchValue || ' ').replace(/[\u4e00-\u9FA5]/g, '  ').length
-    } else {
-      inputSize = placeholder.length * 2
-    }
-
     this.options = options
     this.isAll = isAll
 
-    const Header = (
-      <ul>
-        {labels.map((item, i) => {
-          return (
-            <li key={i} className="bfd-multiple-select__tag">
-              <TextOverflow>
-                <span className="bfd-multiple-select__tag-name">{item.value}</span>
-              </TextOverflow>
-              <Button 
-                icon="remove" 
-                transparent 
-                size="sm" 
-                onClick={action.handleLabelRemove.bind(this, item.key)}
-              />
-            </li>
-          )
-        })}
-        <li>
-          <input 
-            ref="input"
-            type="text"
-            size={Math.min(inputSize, 45)}
-            value={searchValue} 
-            onChange={action.handleInput.bind(this)} 
-            onKeyDown={action.handleKeyDown.bind(this)} 
-            placeholder={labels.length ? '' : placeholder} />
-        </li>
-      </ul>
+    const Title = (
+      <TagList 
+        ref="tagList"
+        inputable
+        inputValue={searchValue}
+        onInput={action.handleInput.bind(this)}
+        onInputKeyChange={action.handleKeyDown.bind(this)}
+        labels={labels} 
+        placeholder={values && values.length ? '' : placeholder} 
+        onRemove={action.handleLabelRemove.bind(this)} 
+      />
     )
 
     return (
-      <Dropdown 
-        onToggle={action.handleDropdownToggle.bind(this)}
+      <SelectDropdown 
         className={classnames('bfd-multiple-select', className)} 
-        disabled={disabled} 
-        {...other}>
-        <DropdownToggle>
-          <Fetch 
-            defaultHeight={28} 
-            url={url} 
-            onSuccess={action.handleLoad.bind(this)}
-          >
-            {Header}
-          </Fetch>
-        </DropdownToggle>
-        <DropdownMenu>
-          {
-            options.length ? (
-              <ul>
-                {wrapperOptions}
-                <li className={classnames({
-                  'bfd-multiple-select__option--active': index === options.length
-                })}>
-                  <Checkbox 
-                    checked={isAll} 
-                    block 
-                    onChange={action.handleToggleAll.bind(this)}
-                  >
-                    全选
-                  </Checkbox>
-                </li>
-              </ul>
-            ) : <div className="bfd-multiple-select__empty">无匹配选项</div>
-          }
-        </DropdownMenu>
-      </Dropdown>
+        title={Title}
+        url={url}
+        onLoad={action.handleLoad.bind(this)}
+        hasPropValue={!!this.props.values || !!this.props.defaultValues}
+        disabled={disabled}
+        onToggle={action.handleDropdownToggle.bind(this)}
+        {...other}
+      >
+        {
+          options.length ? (
+            <ul>
+              {wrapperOptions}
+              <li className={classnames({
+                'bfd-multiple-select__option--active': index === options.length
+              })}>
+                <Checkbox 
+                  checked={isAll} 
+                  block 
+                  onChange={action.handleToggleAll.bind(this)}
+                >
+                  全选
+                </Checkbox>
+              </li>
+            </ul>
+          ) : <div className="bfd-multiple-select__empty">无匹配选项</div>
+        }
+      </SelectDropdown>
     )
   }
+}
+
+MultipleSelect.defaultProps = {
+  placeholder: '请选择'
 }
 
 MultipleSelect.propTypes = {
@@ -263,6 +235,9 @@ MultipleSelect.propTypes = {
 
   // data / url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
+
+  // 无匹配项时显示的内容，默认｀请选择｀
+  placeholder: PropTypes.string,
   
   customProp({ values, onChange, url, render }) {
     if (values && !onChange) {

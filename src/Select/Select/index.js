@@ -11,11 +11,9 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import warning from 'warning'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
-import { Dropdown, DropdownToggle, DropdownMenu } from '../../Dropdown'
 import TextOverflow from '../../TextOverflow'
-import Fetch from '../../Fetch'
 import ClearableInput from '../../ClearableInput'
-import Icon from '../../Icon'
+import SelectDropdown from '../../SelectDropdown'
 import './index.less'
 
 class Select extends Component {
@@ -126,11 +124,13 @@ class Select extends Component {
   render() {
     
     const { 
-      children, className, value, defaultValue, onChange, data, url, 
+      children, className, defaultValue, onChange, data, url, 
       dataFilter, defaultOption, size, disabled, placeholder, searchable, ...other 
     } = this.props
+    const { value } = this.state
     const { searchValue, index } = this.state
 
+    delete other.value
     delete other.render
 
     let optionsWithProps = this.getOptionsWithProps()
@@ -158,50 +158,39 @@ class Select extends Component {
       [`bfd-select--searchable`]: searchable
     }, className)
 
-    const ToggleView = [
-      <TextOverflow key="title">
-        <div className="bfd-select__title">{this.title || placeholder}</div>
-      </TextOverflow>,
-      <Icon key="caret" type="caret-down" className="bfd-select__caret" />
-    ]
-    const MenuView = (
-      <ul className="bfd-select__options">
-        {optionsWithProps && optionsWithProps.length ? optionsWithProps : (
-          <li className="bfd-select__option">无选项</li>
-        )}
-      </ul>
+    const Title = (
+      <TextOverflow>
+        <div className="bfd-select__title">{this.title || (!value && placeholder)}</div>
+      </TextOverflow>
     )
 
     return (
-      <Dropdown 
+      <SelectDropdown 
         ref="dropdown" 
-        className={classNames} 
-        disabled={disabled} 
+        className={classNames}
+        title={Title}
+        url={url}
+        onLoad={::this.handleLoad}
+        hasPropValue={'value' in this.props || 'defaultValue' in this.props}
+        disabled={disabled}
         onToggle={::this.handleDropToggle}
         {...other}
       >
-        <DropdownToggle>
-          {this.title ? ToggleView : (
-            <Fetch url={url} onSuccess={::this.handleLoad}>{ToggleView}</Fetch>
+        {searchable && (
+          <ClearableInput 
+            ref="clearableInput"
+            value={searchValue}
+            placeholder="请输入关键词搜索" 
+            onChange={::this.handleSearch} 
+            onKeyDown={::this.handleKeyDown}
+          />
+        )}
+        <ul className="bfd-select__options">
+          {optionsWithProps && optionsWithProps.length ? optionsWithProps : (
+            <li className="bfd-select__option">无选项</li>
           )}
-        </DropdownToggle>
-        <DropdownMenu>
-          {searchable && (
-            <ClearableInput 
-              ref="clearableInput"
-              value={searchValue}
-              placeholder="请输入关键词搜索" 
-              onChange={::this.handleSearch} 
-              onKeyDown={::this.handleKeyDown}
-            />
-          )}
-          {this.title ? (
-            <Fetch defaultHeight={30} url={url} onSuccess={::this.handleLoad}>
-              {MenuView}
-            </Fetch>
-          ) : MenuView}
-        </DropdownMenu>
-      </Dropdown>
+        </ul>
+      </SelectDropdown>
     )
   }
 }

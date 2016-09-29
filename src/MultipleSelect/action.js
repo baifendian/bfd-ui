@@ -11,8 +11,7 @@ import warning from 'warning'
 
 export default {
 
-  handleLabelRemove(value, e) {
-    e.stopPropagation()
+  handleLabelRemove(value) {
     this.removeValue(value)
   },
 
@@ -36,15 +35,13 @@ export default {
 
   handleDropdownToggle(open) {
     if (open) {
-      this.refs.input.focus()
+      this.refs.tagList.focus()
     } else {
-      this.refs.input.blur()
+      this.refs.tagList.blur()
     }
   },
 
-  handleInput(e) {
-    e.stopPropagation()
-    const value = e.target.value
+  handleInput(value) {
     this.setState({
       searchValue: value,
       index: value ? 0 : -1

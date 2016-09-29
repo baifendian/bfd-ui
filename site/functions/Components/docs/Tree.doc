@@ -84,7 +84,7 @@ const TreeDynamic = () => {
 }
 
 /**
- * @title 可选中的
+ * @title 可选中的，建议使用 onSelect 代替
  * @desc active 字段控制是否选中
  */
 import Tree from 'bfd/Tree'
@@ -107,6 +107,28 @@ const TreeActiveable = () => {
 
 /**
  * @title 可勾选的
+ * @desc onCheck 处理选中后的回调
+ */
+import Tree from 'bfd/Tree'
+
+const TreeCheckable = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka',
+      checked: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} checkable onCheck={(...args) => console.log(args)} />
+}
+
+/**
+ * @title 可勾选的（SelectTree)，建议使用 Tree 组件本身 checkable 属性代替
  * @desc SelectTree 支持所有 Tree 组件属性，checked 字段控制勾选状态
  */
 import update from 'react-update'

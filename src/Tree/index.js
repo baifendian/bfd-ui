@@ -9,6 +9,7 @@
 
 import Tree from './Tree'
 import SelectTree from './SelectTree'
+import './index.less'
 
 export { Tree, SelectTree }
 

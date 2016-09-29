@@ -58,7 +58,7 @@ class Dropdown extends Component {
    * @description 收起
    */
   close() {
-    this.setState({open: false})
+    this.state.open && this.setState({open: false})
   }
 
   handleToggle() {

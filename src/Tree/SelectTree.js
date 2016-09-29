@@ -9,14 +9,13 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import Tree from '../Tree'
-import Checkbox from '../../Checkbox'
-import './index.less'
+import Tree from './Tree'
+import Checkbox from '../Checkbox'
 
 class SelectTree extends Component {
 
   handleSelect(item, path, checked) {
-    const data = this.refs.tree.updateData('set', ['data', ...path, 'checked'], checked)
+    const data = this.refs.tree.updateNode('checked', checked, path)
     this.props.onSelect && this.props.onSelect(data, item, path, checked)
   }
 

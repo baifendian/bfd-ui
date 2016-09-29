@@ -47,6 +47,7 @@ import { Select, Option } from 'bfd/Select'
 const SelectUrl = () => {
   return (
     <Select 
+      defaultValue={1}
       url="/data/select.json" 
       render={item => <Option value={item.id}>{item.name}</Option>} 
       defaultOption={<Option>请选择</Option>}

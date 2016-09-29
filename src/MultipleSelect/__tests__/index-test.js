@@ -14,7 +14,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const checkboxes = findDOMNode(instance).querySelectorAll('.bfd-checkbox input:checked')
-    const labels = findDOMNode(instance).querySelectorAll('.bfd-multiple-select__tag')
+    const labels = findDOMNode(instance).querySelectorAll('.bfd-tag-list__item')
     expect(checkboxes.length).toBe(2)
     expect(labels.length).toBe(2)
   })
@@ -103,7 +103,7 @@ describe('MultipleSelect', () => {
     TestUtils.Simulate.keyDown(container.querySelector('input'), {
       key: 'Enter'
     })
-    const labels = findDOMNode(instance).querySelectorAll('.bfd-multiple-select__tag')
+    const labels = findDOMNode(instance).querySelectorAll('.bfd-tag-list__item')
     expect(labels.length).toBe(1)
   })
 

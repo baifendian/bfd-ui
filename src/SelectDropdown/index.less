@@ -1,0 +1,71 @@
+/**
+ * Copyright 2016-present, Baifendian, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ */
+
+.bfd-select-dropdown {
+  .bfd-dropdown__toggle {
+    min-height: 30px;
+    background-color: #fff;
+    border: 1px solid #ececec;
+    border-radius: 2px;
+    position: relative;
+    .bfd-fetch {
+      min-height: 28px;
+    }
+  }
+  .bfd-dropdown__menu {
+    max-height: 300px;
+    min-width: auto;
+    overflow: auto;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid #ececec;
+    border-top: 0;
+    .bfd-fetch {
+      min-height: 30px;
+    }
+  }
+  &.bfd-dropdown--open {
+    &:before {
+      content: none;
+    }
+    .bfd-dropdown__toggle {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+      border-color: #42a5f5;
+      border-bottom-color: #ececec;
+    }
+    .bfd-select-dropdown__caret {
+      color: #42a5f5;
+    }
+    .bfd-dropdown__menu {
+      border-color: #42a5f5;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+  .bfd-spinner {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.bfd-select-dropdown--caretable {
+  .bfd-dropdown__toggle {
+    padding-right: 24px;
+  }
+}
+
+.bfd-select-dropdown__caret {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  margin-top: -6px;
+}
