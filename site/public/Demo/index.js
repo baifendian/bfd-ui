@@ -33,11 +33,11 @@ class Demo extends Component {
         <h2 className="demo__title">{title}</h2>
         <div className="demo__content">{children}</div>
         {desc && <div className="demo__desc">{desc}</div>}
-        <div className="demo__toggle">
+        {/**<div className="demo__toggle">
           <Button transparent icon="angle-double-down" onClick={::this.handleToggle}>
             代码
           </Button>
-        </div>
+        </div>*/}
         <div className="demo__code" ref="pre">
           <Pre transparent>{code}</Pre>
         </div>

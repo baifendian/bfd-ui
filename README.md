@@ -1,12 +1,18 @@
 # BFD UI
 
 [![build status](https://img.shields.io/travis/baifendian/bfd-ui.svg)](https://travis-ci.org/baifendian/bfd-ui)
-[![npm package](https://img.shields.io/npm/v/bfd-ui.svg)](https://www.npmjs.org/package/bfd-ui) 
+[![npm version](https://badge.fury.io/js/bfd-ui.svg)](http://badge.fury.io/js/bfd-ui)
 [![NPM downloads](http://img.shields.io/npm/dm/bfd-ui.svg)](https://npmjs.org/package/bfd-ui)
 
 企业级前端整体解决方案 [http://ui.baifendian.com](http://ui.baifendian.com)
 
-<img src="screenshot.jpg" alt="bfd-ui" />
+<img width="440" src="./interaction/checkbox.gif">
+<img width="440" src="./interaction/slider.gif">
+<img width="440" src="./interaction/tree.gif">
+<img width="440" src="./interaction/multipleSelect.gif">
+<img width="440" src="./interaction/form.gif">
+<img width="440" src="./interaction/daterange.gif">
+<img width="440" src="./interaction/tabs.gif">
 
 ## 安装
 
@@ -15,6 +21,8 @@ npm install bfd-ui --save
 ```
 
 ## 使用
+
+以日期组件为例
 
 ```jsx
 import DatePicker from 'bfd-ui/lib/DatePicker'
@@ -26,7 +34,7 @@ ReactDOM.render(<DatePicker />, mountNode)
 
 ### 安装开发环境
 
-```sh 
+```sh
 git clone https://github.com/baifendian/bfd-ui.git
 
 # 脚手架文档与 bfd-ui 集成，所以依赖 generator-bfd 项目里的部分文件，与 bfd-ui clone 在同一目录下

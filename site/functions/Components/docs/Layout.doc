@@ -24,7 +24,7 @@ const LayoutGutter = () => {
         <div style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</div>
       </Col>
       <Col col="md-8">
-        <div style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-4</div>
+        <div style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-8</div>
       </Col>
     </Row>
   )

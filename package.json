@@ -13,7 +13,8 @@
     "server": "NODE_ENV=production pm2 start site/server.js",
     "create": "node bin/create.js",
     "banner": "file-banner src --ignore '__tests__|\\.png'",
-    "release": "npm run banner && npm run test && npm run compile && npm version patch && npm publish && git push"
+    "release": "npm run banner && npm run test && npm run compile && npm version patch && npm publish && git push",
+    "coverage": "coveralls"
   },
   "author": "",
   "license": "ISC",
