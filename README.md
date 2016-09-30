@@ -30,14 +30,27 @@ import DatePicker from 'bfd-ui/lib/DatePicker'
 ReactDOM.render(<DatePicker />, mountNode)
 ```
 
-## 贡献代码
+## 脚手架
+
+`bfd-ui` 基于 `react`、`webpack` 等技术，如果你本地没有相关的环境配置，强烈建议基于脚手架直接上手开发
+[generator-bfd](https://github.com/baifendian/generator-bfd)
+
+
+## 更新日志
+
+[CHANGELOG](CHANGELOG.md)
+
+
+## 参与开发
 
 ### 安装开发环境
 
-```sh
-git clone https://github.com/baifendian/bfd-ui.git
+点击右上角 Fork
 
-# 脚手架文档与 bfd-ui 集成，所以依赖 generator-bfd 项目里的部分文件，与 bfd-ui clone 在同一目录下
+```sh
+git clone https://github.com/yourName/bfd-ui.git
+
+# DEMO 站集成了脚手架项目的说明，所以需要依赖这个项目的一些资源，与 bfd-ui clone 在同一目录下即可
 git clone https://github.com/baifendian/generator-bfd.git
 
 cd bfd-ui
@@ -61,18 +74,11 @@ npm run create MyComponent
 
 ### 开发规范
 
-1. 向下兼容
-
-1. 单元测试：组件根目录下创建 `__tests__` 文件夹
-
-1. 代码规范参考 [airbnb react](https://github.com/airbnb/javascript/tree/master/react)
+- 向下兼容
+- 单元测试：组件根目录下创建 `__tests__` 文件夹
+- 代码规范参考 [airbnb react](https://github.com/airbnb/javascript/tree/master/react)
 
 
-### 更新日志
+### 提交代码
 
-[CHANGELOG](CHANGELOG.md)
-
-
-### 脚手架
-
-[generator-bfd](https://github.com/baifendian/generator-bfd)
+push 后发起 pull request 即可
