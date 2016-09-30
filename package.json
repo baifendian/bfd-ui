@@ -54,7 +54,7 @@
     "eslint-plugin-react": "^4.2.3",
     "express": "^4.13.3",
     "fastclick": "^1.0.6",
-    "file-banner": "0.0.5",
+    "file-banner": "0.0.6",
     "gulp": "^3.9.1",
     "gulp-less": "^3.1.0",
     "gulp-postcss": "^6.2.0",
