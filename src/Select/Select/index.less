@@ -9,22 +9,9 @@
 
 .bfd-select {
   width: 160px;
-  .bfd-dropdown__toggle {
-    background-color: #fff;
-    height: 30px;
-    line-height: 28px;
-    position: relative;
-    border: 1px solid #ececec;
-    border-radius: 2px;
-  }
+  line-height: 28px;
+  height: 30px;
   .bfd-dropdown__menu {
-    min-width: auto;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    box-shadow: none;
-    border: 1px solid #ececec;
-    border-top: 0;
     .bfd-clearable-input {
       width: 100%;
       padding: 5px;
@@ -35,54 +22,20 @@
       margin: 0;
     }
   }
-  &.bfd-dropdown--open {
-    &:before {
-      content: none;
-    }
-    .bfd-dropdown__toggle {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      border-color: #42a5f5;
-      border-bottom-color: #ececec;
-    }
-    .bfd-select__caret {
-      color: #42a5f5;
-    }
-    .bfd-dropdown__menu {
-      border-color: #42a5f5;
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    }
-  }
-  .bfd-spinner {
-    height: 20px;
-  }
 }
 
 .bfd-select__title {
   margin-left: 10px;
-  margin-right: 24px;
-}
-
-.bfd-select__caret {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  margin-top: -6px;
 }
 
 .bfd-select--sm {
-  .bfd-dropdown__toggle {
-    height: 22px;
-    line-height: 20px;
-  }
+  height: 22px;
+  line-height: 20px;
 }
 
 .bfd-select--lg {
-  .bfd-dropdown__toggle {
-    height: 40px;
-    line-height: 38px;
-  }
+  height: 40px;
+  line-height: 38px;
 }
 
 .bfd-select__options {

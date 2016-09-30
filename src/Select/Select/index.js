@@ -174,6 +174,7 @@ class Select extends Component {
         hasPropValue={'value' in this.props || 'defaultValue' in this.props}
         disabled={disabled}
         onToggle={::this.handleDropToggle}
+        caret
         {...other}
       >
         {searchable && (
