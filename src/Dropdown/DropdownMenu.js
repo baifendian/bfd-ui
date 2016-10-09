@@ -7,18 +7,25 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 
-const DropdownMenu = props => {
-  const { children, className, right, ...other } = props
-  return (
-    <div className={classnames('bfd-dropdown__menu', {
-      'bfd-dropdown__menu--right': right
-    }, className)} {...other}>
-      {children}
-    </div>
-  )
+class DropdownMenu extends Component {
+  render() {
+    const { children, className, right, ...other } = this.props
+    this.context.dropdown.menu = this
+    return (
+      <div className={classnames('bfd-dropdown__menu', {
+        'bfd-dropdown__menu--right': right
+      }, className)} {...other}>
+        {children}
+      </div>
+    )
+  }
+}
+
+DropdownMenu.contextTypes = {
+  dropdown: PropTypes.object
 }
 
 DropdownMenu.propTypes = {

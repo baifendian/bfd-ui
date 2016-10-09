@@ -102,17 +102,17 @@ class Tree extends Component {
       }
       if (!!parent.checked !== checked) {
         data = this.updateNode('checked', checked, path)
-        this.updateParent(data, path.slice(0, -2), checked)  
+        this.updateParent(data, path.slice(0, -2), checked)
       }
     }
     return data
   }
 
   render() {
-    
-    const { 
-      className, defaultData, beforeNodeRender, onChange, onActive, getIcon, 
-      getUrl, dataFilter, ...other 
+
+    const {
+      className, defaultData, beforeNodeRender, onChange, onActive, getIcon,
+      getUrl, dataFilter, shouldNodeSelectable, shouldNodeCheckable, ...other
     } = this.props
     const { data } = this.state
 
@@ -120,10 +120,10 @@ class Tree extends Component {
     delete other.render
 
     return (
-      <div 
+      <div
         className={classnames('bfd-tree', {
           'bfd-tree--activeable': onActive
-        }, className)} 
+        }, className)}
         {...other}
       >
         <ul>
@@ -189,13 +189,22 @@ Tree.propTypes = {
 
   // 勾选后的回调，参数为 (checked, data, pathData)
   onCheck: PropTypes.func,
-  
+
   // 过滤 getUrl 方式返回的数据，处理后请将数据返回
   dataFilter: PropTypes.func,
 
-  customProp({ data, onChange }) {
-    if (data && !onChange) {
+  // 节点是否可选中的回调判断，参数(item, path)，返回 false 则节点不可选中
+  shouldNodeSelectable: PropTypes.func,
+
+  // 节点是否可勾选的回调判断，参数(item, path)，返回 false 则节点不可勾选
+  shouldNodeCheckable: PropTypes.func,
+
+  customProp(props) {
+    if (props.data && !props.onChange) {
       return new Error('You provided a `data` prop without an `onChange` handler')
+    }
+    if (props.onCheck && !props.checkable) {
+      return new Error('You provided a `onCheck` prop without a `checkable` prop')
     }
   }
 }

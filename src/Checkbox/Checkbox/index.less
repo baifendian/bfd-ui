@@ -84,16 +84,13 @@
 
 .bfd-checkbox--disabled {
   cursor: default;
-  .bfd-checkbox__status:before {
-    border-color: #eceff1;
+  .bfd-checkbox__status {
+    &:before, &:after {
+      border-color: #eceff1!important;
+    }
   }
   .bfd-checkbox__text {
-    color: #999;
-  }
-  &:hover {
-    .bfd-checkbox__status:before {
-      border-color: #eceff1;
-    }
+    color: #999!important;
   }
 }
 

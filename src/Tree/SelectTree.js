@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import get from 'lodash/get'
 import Tree from './Tree'
 import Checkbox from '../Checkbox'
 
@@ -16,26 +17,27 @@ class SelectTree extends Component {
 
   handleSelect(item, path, checked) {
     const data = this.refs.tree.updateNode('checked', checked, path)
-    this.props.onSelect && this.props.onSelect(data, item, path, checked)
+    this.props.onChange && this.props.onChange(data)
+    this.props.onSelect && this.props.onSelect(data, get(data, path), path, checked)
   }
 
   render() {
     const { className, onSelect, ...other } = this.props
     other.beforeNodeRender = (data, path) => {
       return (
-        <Checkbox 
-          checked={data.checked || false} 
-          onChange={e => this.handleSelect(data, path, e.target.checked)} 
+        <Checkbox
+          checked={data.checked || false}
+          onChange={e => this.handleSelect(data, path, e.target.checked)}
         />
       )
     }
     return (
-      <Tree 
-        ref="tree" 
-        className={classnames('bfd-select-tree', className)} 
-        {...other} 
+      <Tree
+        ref="tree"
+        className={classnames('bfd-select-tree', className)}
+        {...other}
       />
-    ) 
+    )
   }
 }
 

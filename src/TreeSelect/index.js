@@ -96,9 +96,9 @@ class TreeSelect extends Component {
 
   render() {
 
-    const { 
-      className, placeholder, defaultValue, onChange, url, defaultData, onDataChange, 
-      multiple, ...other 
+    const {
+      className, placeholder, defaultValue, onChange, url, defaultData, onDataChange,
+      multiple, shouldNodeSelectable, shouldNodeCheckable, ...other
     } = this.props
     const { value, data } = this.state
 
@@ -114,6 +114,8 @@ class TreeSelect extends Component {
     }
 
     const treeProps = {
+      shouldNodeSelectable,
+      shouldNodeCheckable,
       data: this.parseData(data),
       render: treeRender,
       onChange: data => {
@@ -121,14 +123,14 @@ class TreeSelect extends Component {
         onDataChange && onDataChange(data)
       }
     }
-    
+
     if (multiple) {
       treeProps.checkable = true
       treeProps.onCheck = ::this.handleCheck
     } else {
       treeProps.onSelect = ::this.handleSelect
     }
-    
+
     const Title = !multiple ? (
       <TextOverflow>
         <div className="bfd-tree-select__title">
@@ -136,19 +138,19 @@ class TreeSelect extends Component {
         </div>
       </TextOverflow>
     ) : (
-      <TagList 
-        labels={this.labels} 
-        placeholder={value && value.length ? '' : placeholder} 
-        onRemove={::this.removeValue} 
+      <TagList
+        labels={this.labels}
+        placeholder={value && value.length ? '' : placeholder}
+        onRemove={::this.removeValue}
       />
     )
 
     return (
-      <SelectDropdown 
+      <SelectDropdown
         ref="dropdown"
         className={classnames('bfd-tree-select', {
           'bfd-tree-select--multiple': multiple
-        }, className)} 
+        }, className)}
         title={Title}
         url={url}
         onLoad={::this.handleLoad}
@@ -185,8 +187,8 @@ TreeSelect.propTypes = {
 
   // 树结构 URL 数据源
   url: PropTypes.string,
-  
-  // 树结构数据源改变后的回调  
+
+  // 树结构数据源改变后的回调
   onDataChange: PropTypes.func,
 
   // 无匹配时显示内容，默认｀请选择｀
@@ -197,6 +199,12 @@ TreeSelect.propTypes = {
 
   // 是否多选，开启此属性后才会出现复选框，多选模式 value 要求数组格式
   multiple: PropTypes.bool,
+
+  // 节点是否可选中的回调判断，参数(item, path)，返回 false 则节点不可选中
+  shouldNodeSelectable: PropTypes.func,
+
+  // 节点是否可勾选的回调判断，参数(item, path)，返回 false 则节点不可勾选
+  shouldNodeCheckable: PropTypes.func,
 
   customProp(props) {
     if ('value' in props && !props.onChange) {

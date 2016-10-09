@@ -1,3 +1,11 @@
+## v1.1.1
+
+`2016-10-13`
+
+- Tree、TreeSelect 新增属性 shouldNodeSelectable、shouldNodeCheckable
+- Dropdown 自适应向上或向下展开
+
+
 ## v1.1.0
 
 `2016-09-29`

@@ -18,14 +18,14 @@ class TreeNode extends Component {
 
   componentWillMount() {
     if (this.props.data.active) {
-      this.context.tree.activePath = this.props.path 
+      this.context.tree.activePath = this.props.path
     }
   }
 
   shouldComponentUpdate(nextProps) {
     return this.props.data !== nextProps.data
   }
-  
+
   handleToggle(e) {
     e.stopPropagation()
     this.change('open', !this.props.data.open)
@@ -53,22 +53,25 @@ class TreeNode extends Component {
   }
 
   render() {
-    const { beforeNodeRender, checkable, getIcon, getUrl } = this.context.tree.props
+    const {
+      beforeNodeRender, checkable, getIcon, getUrl, shouldNodeSelectable,
+      shouldNodeCheckable
+    } = this.context.tree.props
     const { data, path } = this.props
     const { name, open, isParent, checked, active, children } = data
     const tree = this.context.tree
     const hasChildren = children && children.length
     const indent = Math.floor(path.length / 2) * 20 + 'px'
-    
+
     let Children
     if (hasChildren) {
       Children = (
         <ul>
         {children.map((item, i) => {
           return (
-            <TreeNode 
+            <TreeNode
               key={i}
-              data={item} 
+              data={item}
               path={this.props.path.concat('children', i)}
             />
           )
@@ -78,10 +81,10 @@ class TreeNode extends Component {
     } else {
       if (isParent && getUrl && open) {
         Children = (
-          <Fetch 
-            style={indent} 
-            url={getUrl(data, tree.getPathData(path))} 
-            onSuccess={this.handleLoad.bind(this)} 
+          <Fetch
+            style={indent}
+            url={getUrl(data, tree.getPathData(path))}
+            onSuccess={this.handleLoad.bind(this)}
           />
         )
       } else {
@@ -91,28 +94,38 @@ class TreeNode extends Component {
 
     const typeIcon = getIcon && getIcon(data)
 
+    const nodeSelectable = shouldNodeSelectable ? shouldNodeSelectable(data, path) : true
+    const nodeCheckable = shouldNodeCheckable ? shouldNodeCheckable(data, path) : true
+
     return (
       <li className={classnames('bfd-tree__node', {'bfd-tree__node--open': open})}>
-        <Button 
+        <Button
           className="bfd-tree__node-toggle"
           style={{
             visibility: hasChildren || isParent ? 'visible' : 'hidden',
             marginLeft: indent
-          }} 
+          }}
           icon="caret-right"
           size="sm"
           transparent
-          onClick={::this.handleToggle} 
+          onClick={::this.handleToggle}
         />
-        {beforeNodeRender && 
+        {beforeNodeRender &&
           <div className="bfd-tree__node-before">{beforeNodeRender(data, path)}</div>}
-        {checkable && <Checkbox checked={checked} onChange={::this.handleCheck} />}
+        {checkable && (
+          <Checkbox
+            checked={checked}
+            disabled={!nodeCheckable}
+            onChange={nodeCheckable ? ::this.handleCheck : () => {}}
+          />
+        )}
         {typeIcon && <Icon type={typeIcon} className="bfd-tree__node-type" />}
-        <div 
+        <div
           className={classnames('bfd-tree__node-content', {
-            'bfd-tree__node-content--active': active
+            'bfd-tree__node-content--active': active,
+            'bfd-tree__node-content--disabled': !nodeSelectable
           })}
-          onClick={::this.handleSelect}
+          onClick={nodeSelectable && ::this.handleSelect}
         >
           {tree.props.render ? tree.props.render(data, path) : name}
         </div>

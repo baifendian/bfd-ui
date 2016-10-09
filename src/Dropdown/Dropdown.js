@@ -8,7 +8,9 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import classnames from 'classnames'
+import classlist from 'classlist'
 
 class Dropdown extends Component {
 
@@ -30,17 +32,44 @@ class Dropdown extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'open' in nextProps && this.setState({open: nextProps.open})  
+    'open' in nextProps && this.setState({open: nextProps.open})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    prevState.open !== this.state.open && this.updateMenuState()
   }
 
   componentDidMount() {
     Dropdown.instances.push(this)
     window.addEventListener('click', this.handleBodyClick)
+    this.$root = ReactDOM.findDOMNode(this)
+    this.$menu = ReactDOM.findDOMNode(this.menu)
+    this.updateMenuState()
   }
 
   componentWillUnmount() {
     Dropdown.instances.splice(Dropdown.instances.indexOf(this), 1)
     window.removeEventListener('click', this.handleBodyClick)
+  }
+
+  updateMenuState() {
+    if (this.state.open) {
+      this.setPosition()
+    } else {
+      classlist(this.$root).remove(this.menuDirectionClassName)
+    }
+  }
+
+  setPosition() {
+    const node = this.$menu
+    const height = parseInt(getComputedStyle(node).height, 10)
+    const top = node.getBoundingClientRect().top
+    if (height + top < window.innerHeight) {
+      this.menuDirectionClassName = 'bfd-dropdown--down'
+    } else {
+      this.menuDirectionClassName = 'bfd-dropdown--up'
+    }
+    classlist(this.$root).add(this.menuDirectionClassName)
   }
 
   /**
@@ -80,7 +109,7 @@ class Dropdown extends Component {
   }
 
   render() {
-    
+
     const { open } = this.state
     const { children, className, onToggle, disabled, ...other } = this.props
 
@@ -92,9 +121,9 @@ class Dropdown extends Component {
     }, className)
 
     return (
-      <div 
+      <div
         className={classnames(classNames)}
-        onClick={e => e.stopPropagation()}  
+        onClick={e => e.stopPropagation()}
         {...other}
       >
         {children}
@@ -114,7 +143,7 @@ Dropdown.propTypes = {
 
   // 切换 open 状态后的回调，参数为切换后的 open 状态
   onToggle: PropTypes.func,
-  
+
   // 是否禁用
   disabled: PropTypes.bool,
 

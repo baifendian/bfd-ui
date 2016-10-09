@@ -76,20 +76,20 @@ const TreeDynamic = () => {
     isParent: true
   }]
   return (
-    <Tree 
-      defaultData={data} 
-      getUrl={item => '/data/tree-children.json?pid=' + item.pid} 
+    <Tree
+      defaultData={data}
+      getUrl={item => '/data/tree-children.json?pid=' + item.pid}
     />
   )
 }
 
 /**
- * @title 可选中的，建议使用 onSelect 代替
+ * @title 可选中的
  * @desc active 字段控制是否选中
  */
 import Tree from 'bfd/Tree'
 
-const TreeActiveable = () => {
+const TreeSelectable = () => {
   const data = [{
     name: '数据工厂',
     open: true,
@@ -102,7 +102,35 @@ const TreeActiveable = () => {
   }, {
     name: '配置中心',
   }]
-  return <Tree defaultData={data} onActive={data => console.log(data)} />
+  return <Tree defaultData={data} onSelect={data => console.log(data)} />
+}
+
+
+/**
+ * @title 是否可选中的控制
+ */
+import Tree from 'bfd/Tree'
+
+const TreeShouldSelectable = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka',
+      active: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return (
+    <Tree
+      defaultData={data}
+      shouldNodeSelectable={item => !item.children}
+      onSelect={data => console.log(data)}
+    />
+  )
 }
 
 /**
@@ -127,6 +155,36 @@ const TreeCheckable = () => {
   return <Tree defaultData={data} checkable onCheck={(...args) => console.log(args)} />
 }
 
+
+/**
+ * @title 是否可勾选的控制
+ */
+import Tree from 'bfd/Tree'
+
+const TreeCheckboxDisabled = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    checked: true,
+    children: [{
+      name: 'kafka',
+      checked: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return (
+    <Tree
+      defaultData={data}
+      checkable
+      shouldNodeCheckable={item => !item.children}
+      onCheck={(...args) => console.log(args)}
+    />
+  )
+}
+
 /**
  * @title 可勾选的（SelectTree)，建议使用 Tree 组件本身 checkable 属性代替
  * @desc SelectTree 支持所有 Tree 组件属性，checked 字段控制勾选状态
@@ -136,7 +194,7 @@ import get from 'lodash/get'
 import { SelectTree } from 'bfd/Tree'
 
 class SelectTreeBasic extends Component {
-  
+
   constructor() {
     super()
     this.update = update.bind(this)
@@ -161,7 +219,7 @@ class SelectTreeBasic extends Component {
     path = [...path, 'children']
     item.children.forEach((item, i) => {
       if (item.checked !== checked) {
-        this.update('set', [...path, i, 'checked'], checked)  
+        this.update('set', [...path, i, 'checked'], checked)
       }
       this.updateChildren(item, [...path, i], checked)
     })
@@ -186,10 +244,10 @@ class SelectTreeBasic extends Component {
 
   render() {
     return (
-      <SelectTree 
-        data={this.state.data} 
-        onChange={data => this.update('set', 'data', data)} 
-        onSelect={this.handleSelect.bind(this)} 
+      <SelectTree
+        data={this.state.data}
+        onChange={data => this.update('set', 'data', data)}
+        onSelect={this.handleSelect.bind(this)}
       />
     )
   }

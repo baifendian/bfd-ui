@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.12.0",
+    "classlist": "^1.0.1",
     "classnames": "^2.2.3",
     "css-loader": "^0.23.0",
     "d3": "^3.5.11",

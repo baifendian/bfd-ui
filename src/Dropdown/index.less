@@ -19,10 +19,8 @@
 
 .bfd-dropdown__menu {
   position: absolute;
-  top: 100%;
   left: 0;
   min-width: 160px;
-  margin-top: 8px;
   padding: 10px;
   border-radius: 2px;
   background-color: #fff;
@@ -43,19 +41,43 @@
     content: '';
     position: absolute;
     left: 50%;
-    top: 100%;
     width: 8px;
     height: 8px;
     background-color: #fff;
     margin-left: -4px;
-    margin-top: 4px;
-    transform: rotate(-45deg);
     border-top: 1px solid #dedede;
     border-right: 1px solid #dedede;
     z-index: 1001;
   }
   .bfd-dropdown__menu {
     display: block;
+    visibility: hidden;
+  }
+}
+
+.bfd-dropdown--down {
+  &:before {
+    top: 100%;
+    margin-top: 4px;
+    transform: rotate(-45deg);
+  }
+  .bfd-dropdown__menu {
+    visibility: visible;
+    top: 100%;
+    margin-top: 8px;
+  }
+}
+
+.bfd-dropdown--up {
+  &:before {
+    bottom: 100%;
+    margin-bottom: 4px;
+    transform: rotate(135deg);
+  }
+  .bfd-dropdown__menu {
+    visibility: visible;
+    bottom: 100%;
+    margin-bottom: 8px;
   }
 }
 

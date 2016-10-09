@@ -26,9 +26,9 @@ const TreeSelectBasic = () => {
     }]
   }]
   return (
-    <TreeSelect 
-      defaultData={data} 
-      onChange={value => console.log(value)} 
+    <TreeSelect
+      defaultData={data}
+      onChange={value => console.log(value)}
     />
   )
 }
@@ -41,9 +41,9 @@ import TreeSelect from 'bfd/TreeSelect'
 
 const TreeSelectURL = () => {
   return (
-    <TreeSelect 
-      defaultValue="1" 
-      url="/data/tree-select.json" 
+    <TreeSelect
+      defaultValue="1"
+      url="/data/tree-select.json"
       onChange={value => console.log(value)}
     />
   )
@@ -57,11 +57,45 @@ import TreeSelect from 'bfd/TreeSelect'
 
 const TreeSelectMultiple = () => {
   return (
-    <TreeSelect 
+    <TreeSelect
       multiple
       defaultValue={['0', '1']}
-      url="/data/tree-select.json" 
-      onChange={value => console.log(value)} 
+      url="/data/tree-select.json"
+      onChange={value => console.log(value)}
+    />
+  )
+}
+
+
+/**
+ * @title 单选时节点是否可选择
+ */
+import TreeSelect from 'bfd/TreeSelect'
+
+const TreeSelectable = () => {
+  return (
+    <TreeSelect
+      url="/data/tree-select.json"
+      shouldNodeSelectable={item => !item.children}
+      onChange={value => console.log(value)}
+    />
+  )
+}
+
+
+/**
+ * @title 多选时节点是否可勾选
+ */
+import TreeSelect from 'bfd/TreeSelect'
+
+const TreeSelectCheckable = () => {
+  return (
+    <TreeSelect
+      multiple
+      defaultValue={['0-0', '1-0']}
+      url="/data/tree-select.json"
+      shouldNodeCheckable={item => !item.children}
+      onChange={value => console.log(value)}
     />
   )
 }

@@ -1,7 +1,6 @@
 /**
  * @title 基本的 Radio
  */
-
 import Radio from 'bfd/Radio'
 
 const RadioBasic = () => {
@@ -11,7 +10,6 @@ const RadioBasic = () => {
 /**
  * @title 基本的 RadioGroup
  */
-
 import Radio, { RadioGroup } from 'bfd/Radio'
 
 const RadioGroupBasic = () => {

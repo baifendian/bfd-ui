@@ -71,7 +71,7 @@ describe('Tree', () => {
     })
   })
 
-  it('should onActive arguments works', () => {
+  it('should onActive works', () => {
     const handleActive = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <Tree defaultData={data} onActive={handleActive} />
@@ -84,5 +84,84 @@ describe('Tree', () => {
         name: 'a0'
       }]
     }])
+  })
+
+  it('should onSelect works', () => {
+    const handleSelect = jest.fn()
+    const instance = TestUtils.renderIntoDocument(
+      <Tree defaultData={data} onSelect={handleSelect} />
+    )
+    TestUtils.Simulate.click(findDOMNode(instance).querySelector('.bfd-tree__node-content'))
+    expect(handleSelect).toBeCalledWith({
+      active: true,
+      name: 'a',
+      children: [{
+        name: 'a0'
+      }]
+    }, [{
+      active: true,
+      name: 'a',
+      children: [{
+        name: 'a0'
+      }]
+    }])
+  })
+
+  it('should onCheck works', () => {
+    const handleCheck = jest.fn()
+    const instance = TestUtils.renderIntoDocument(
+      <Tree defaultData={data} checkable onCheck={handleCheck} />
+    )
+    TestUtils.Simulate.change(findDOMNode(instance).querySelector('.bfd-checkbox input'), {
+      target: {
+        checked: true
+      }
+    })
+    expect(handleCheck).toBeCalledWith(true, {
+      name: 'a',
+      checked: true,
+      children: [{
+        name: 'a0',
+        checked: true
+      }]
+    }, [{
+      name: 'a',
+      checked: true,
+      children: [{
+        name: 'a0',
+        checked: true
+      }]
+    }])
+  })
+
+  it('should shouldNodeSelectable works', () => {
+    const handleSelect = jest.fn()
+    const instance = TestUtils.renderIntoDocument(
+      <Tree
+        defaultData={data}
+        shouldNodeSelectable={item => !item.children}
+        onSelect={handleSelect}
+      />
+    )
+    TestUtils.Simulate.click(findDOMNode(instance).querySelector('.bfd-tree__node-content'))
+    expect(handleSelect).not.toBeCalled()
+  })
+
+  it('should shouldNodeCheckable works', () => {
+    const handleCheck = jest.fn()
+    const instance = TestUtils.renderIntoDocument(
+      <Tree
+        checkable
+        defaultData={data}
+        shouldNodeCheckable={item => !item.children}
+        onCheck={handleCheck}
+      />
+    )
+    TestUtils.Simulate.change(findDOMNode(instance).querySelector('.bfd-checkbox input'), {
+      target: {
+        checked: true
+      }
+    })
+    expect(handleCheck).not.toBeCalled()
   })
 })

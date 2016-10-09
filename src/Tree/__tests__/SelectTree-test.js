@@ -23,7 +23,8 @@ describe('SelectTree', () => {
       name: 'a',
       checked: true
     }], {
-      name: 'a'
+      name: 'a',
+      checked: true
     }, [0], true)
   })
 })
