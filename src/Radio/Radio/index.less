@@ -25,6 +25,17 @@
       }
     }
   }
+  &:focus {
+    outline: none;
+    .bfd-radio__status {
+      &:before {
+        border-color: #42a5f5;
+      }
+    }
+    .bfd-radio__text {
+      color: #42a5f5;
+    }
+  }
   input[type="radio"] {
     display: none;
     &:checked {

@@ -19,17 +19,21 @@ const Checkbox = props => {
     'bfd-checkbox--disabled': inputProps.disabled,
     'bfd-checkbox--block': block
   }, className)
-  
+
   return (
-    <label className={classNames} onClick={e => {
-      if (e.target.tagName === 'INPUT') {
-        e.stopPropagation()
-      } else {
-        onClick && onClick(e)
-      }
-    }}>
-      <input 
-        type="checkbox" 
+    <label
+      tabIndex={inputProps.disabled ? -1 : 0}
+      className={classNames}
+      onClick={e => {
+        if (e.target.tagName === 'INPUT') {
+          e.stopPropagation()
+        } else {
+          onClick && onClick(e)
+        }
+      }}
+    >
+      <input
+        type="checkbox"
         className="bfd-checkbox__input"
         {...inputProps}
       />
@@ -43,7 +47,7 @@ Checkbox.propTypes = {
 
   // 值，如果结合 ChecboxGroup 使用，与其选中的值相对应
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
+
   // 是否选中
   checked: PropTypes.bool,
 
@@ -55,10 +59,10 @@ Checkbox.propTypes = {
 
   // 是否禁用
   disabled: PropTypes.bool,
-  
+
   // 是否块级布局
   block: PropTypes.bool,
-  
+
   customProp({ checked, onChange }) {
     if (checked && !onChange) {
       return new Error('You provided a `checked` prop without an `onChange` handler')

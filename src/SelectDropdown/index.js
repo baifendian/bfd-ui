@@ -21,30 +21,30 @@ class SelectDropdown extends Component {
   }
 
   render() {
-    
-    const { 
-      className, children, title, url, hasPropValue, caret, onLoad, ...other 
+
+    const {
+      className, children, title, url, hasPropValue, caret, onLoad, ...other
     } = this.props
 
     const Toggle = url && hasPropValue ? (
       <Fetch url={url} onSuccess={onLoad}>{title}</Fetch>
     ) : title
-      
+
     return (
-      <Dropdown 
-        ref="dropdown" 
+      <Dropdown
+        ref="dropdown"
         className={classnames('bfd-select-dropdown', {
           'bfd-select-dropdown--caretable': caret
-        }, className)} 
+        }, className)}
         {...other}
       >
-        <DropdownToggle>
+        <DropdownToggle tabIndex="0">
           {Toggle}
           {caret && <Icon type="caret-down" className="bfd-select-dropdown__caret" />}
         </DropdownToggle>
         <DropdownMenu>
           {
-            url && !hasPropValue ? 
+            url && !hasPropValue ?
               <Fetch url={url} onSuccess={onLoad}>{children}</Fetch> :
               children
           }

@@ -4,6 +4,7 @@
 
 - Tree、TreeSelect 新增属性 shouldNodeSelectable、shouldNodeCheckable
 - Dropdown 自适应向上或向下展开
+- 修复 ClearableInput、FormInput 额外占用 tabindex 的问题；修复 Select、Checkbox、Radio 等组件不响应 键盘 tab 切换的问题
 
 
 ## v1.1.0
