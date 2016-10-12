@@ -6,7 +6,7 @@ import TextOverflow from 'bfd/TextOverflow'
 const TextOverflowBasic = () => {
   return (
     <TextOverflow>
-      <p style={{width: '100px'}}>我是很<em>das</em>长的一段文字，鼠标滑过可显示全部</p>
+      <p style={{width: '100px'}}>我是很长的一段文字，鼠标滑过可显示全部</p>
     </TextOverflow>
   )
 }

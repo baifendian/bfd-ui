@@ -68,12 +68,15 @@ class Tree extends Component {
     return pathData
   }
 
-  handleNodeCheck(checked, path) {
+  handleNodeCheck(checked, item, path) {
     let data = this.updateNode('checked', checked, path)
-    let item = get(data, path)
+    if (item.indeterminate) {
+      data = this.updateNode('indeterminate', false, path)
+    }
+    item = get(data, path)
 
     data = this.updateChildren(data, item, path, checked)
-    data = this.updateParent(data, path.slice(0, -2), checked)
+    data = this.updateParent(data, path.slice(0, -2))
     item = get(data, path)
 
     this.props.onCheck && this.props.onCheck(checked, item, this.getPathData(path, data))
@@ -87,6 +90,9 @@ class Tree extends Component {
         const _path = [...path, i]
         if (!!item.checked !== checked) {
           data = this.updateNode('checked', checked, _path)
+          if (item.indeterminate) {
+            data = this.updateNode('indeterminate', false, _path)
+          }
           this.updateChildren(item, _path, checked)
         }
       })
@@ -94,18 +100,24 @@ class Tree extends Component {
     return data
   }
 
-  updateParent(data, path, checked) {
+  updateParent(data, path) {
+    let newData = data
     if (path.length) {
       const parent = get(data, path)
-      if (checked) {
-        checked = parent.children.filter(item => !item.checked).length === 0
+      const checkedLen = parent.children.filter(item => item.checked).length
+      const indeterminateLen = parent.children.filter(item => item.indeterminate).length
+      const allChecked = checkedLen === parent.children.length
+      const isIndeterminate = !!indeterminateLen || (!!checkedLen && !allChecked)
+      if (!!parent.checked !== allChecked) {
+        newData = this.updateNode('checked', allChecked, path)
+
       }
-      if (!!parent.checked !== checked) {
-        data = this.updateNode('checked', checked, path)
-        this.updateParent(data, path.slice(0, -2), checked)
+      if (!!parent.indeterminate !== isIndeterminate) {
+        newData = this.updateNode('indeterminate', isIndeterminate, path)
       }
+      newData !== data && this.updateParent(newData, path.slice(0, -2))
     }
-    return data
+    return newData
   }
 
   render() {
@@ -150,6 +162,7 @@ Tree.propTypes = {
    *   name: '数据工厂', // 节点显示，默认渲染 name 值，可自定义 render 渲染
    *   open: true, // 是否展开
    *   checked: true, // 是否勾选，用于可勾选模式下
+   *   indeterminate: true, // 是否半勾选
    *   active: true, // 是否选中
    *   children: [{
    *     name: 'kafka'

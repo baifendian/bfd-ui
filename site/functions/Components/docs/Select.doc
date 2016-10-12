@@ -31,9 +31,9 @@ const SelectData = () => {
     name: '小米'
   }]
   return (
-    <Select 
-      data={data} 
-      render={item => <Option value={item.id}>{item.name}</Option>} 
+    <Select
+      data={data}
+      render={item => <Option value={item.id}>{item.name}</Option>}
       defaultOption={<Option>请选择</Option>}
     />
   )
@@ -46,10 +46,10 @@ import { Select, Option } from 'bfd/Select'
 
 const SelectUrl = () => {
   return (
-    <Select 
+    <Select
       defaultValue={1}
-      url="/data/select.json" 
-      render={item => <Option value={item.id}>{item.name}</Option>} 
+      url="/data/select.json"
+      render={item => <Option value={item.id}>{item.name}</Option>}
       defaultOption={<Option>请选择</Option>}
     />
   )

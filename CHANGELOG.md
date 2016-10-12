@@ -5,6 +5,9 @@
 - Tree、TreeSelect 新增属性 shouldNodeSelectable、shouldNodeCheckable
 - Dropdown 自适应向上或向下展开
 - 修复 ClearableInput、FormInput 额外占用 tabindex 的问题；修复 Select、Checkbox、Radio 等组件不响应 键盘 tab 切换的问题
+- 修复 TextOverflow 子节点嵌套时不显示的问题
+- Checkbox 新增属性 indeterminate，实现半勾选状态，并同步 Tree、CheckboxGroup
+- Fetch 新增属性 spinnerHeight，控制加载动画的尺寸；修复异步回调时组件不存在的问题
 
 
 ## v1.1.0

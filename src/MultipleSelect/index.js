@@ -38,7 +38,7 @@ class MultipleSelect extends Component {
   shouldComponentUpdate: shouldComponentUpdate
 
   change(values) {
-    this.setState({ 
+    this.setState({
       values,
       searchValue: ''
     })
@@ -79,7 +79,7 @@ class MultipleSelect extends Component {
 
   getCheckbox(value, children) {
     return (
-      <Checkbox 
+      <Checkbox
         block
         value={value}
         checked={this.valueSet.has(value)}
@@ -119,12 +119,12 @@ class MultipleSelect extends Component {
 
   render() {
 
-    const { 
+    const {
       children, className, defaultValues, onChange, data, url, disabled, tagable,
-      placeholder, ...other 
+      placeholder, ...other
     } = this.props
     const { searchValue, index, values } = this.state
-    
+
     delete other.values
     delete other.render
 
@@ -137,7 +137,7 @@ class MultipleSelect extends Component {
       optionsMapper[value || children] = children
       // 搜索过滤
       const { searchValue } = this.state
-      if (searchValue && children.indexOf(searchValue) === -1 
+      if (searchValue && children.indexOf(searchValue) === -1
           && (String(value) ? String(value).indexOf(searchValue) === -1 : true)) {
         return
       }
@@ -157,21 +157,21 @@ class MultipleSelect extends Component {
     this.isAll = isAll
 
     const Title = (
-      <TagList 
+      <TagList
         ref="tagList"
         inputable
         inputValue={searchValue}
         onInput={action.handleInput.bind(this)}
         onInputKeyChange={action.handleKeyDown.bind(this)}
-        labels={labels} 
-        placeholder={values && values.length ? '' : placeholder} 
-        onRemove={action.handleLabelRemove.bind(this)} 
+        labels={labels}
+        placeholder={values && values.length ? '' : placeholder}
+        onRemove={action.handleLabelRemove.bind(this)}
       />
     )
 
     return (
-      <SelectDropdown 
-        className={classnames('bfd-multiple-select', className)} 
+      <SelectDropdown
+        className={classnames('bfd-multiple-select', className)}
         title={Title}
         url={url}
         onLoad={action.handleLoad.bind(this)}
@@ -187,9 +187,9 @@ class MultipleSelect extends Component {
               <li className={classnames({
                 'bfd-multiple-select__option--active': index === options.length
               })}>
-                <Checkbox 
-                  checked={isAll} 
-                  block 
+                <Checkbox
+                  checked={isAll}
+                  block
                   onChange={action.handleToggleAll.bind(this)}
                 >
                   全选
@@ -238,7 +238,7 @@ MultipleSelect.propTypes = {
 
   // 无匹配项时显示的内容，默认｀请选择｀
   placeholder: PropTypes.string,
-  
+
   customProp({ values, onChange, url, render }) {
     if (values && !onChange) {
       return new Error('You provided a `values` prop without an `onChange` handler')

@@ -13,11 +13,12 @@ import './index.less'
 
 const Checkbox = props => {
 
-  const { children, className, block, onClick, ...inputProps } = props
+  const { children, className, block, indeterminate, onClick, ...inputProps } = props
 
   const classNames = classnames('bfd-checkbox', {
     'bfd-checkbox--disabled': inputProps.disabled,
-    'bfd-checkbox--block': block
+    'bfd-checkbox--block': block,
+    'bfd-checkbox--indeterminate': indeterminate
   }, className)
 
   return (
@@ -56,6 +57,9 @@ Checkbox.propTypes = {
 
   // 切换选中后的回调，参数为 event 对象
   onChange: PropTypes.func,
+
+  // 是否半选中状态
+  indeterminate: PropTypes.bool,
 
   // 是否禁用
   disabled: PropTypes.bool,

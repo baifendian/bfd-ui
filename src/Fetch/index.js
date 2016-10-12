@@ -18,30 +18,30 @@ class Fetch extends Component {
   constructor() {
     super()
     this.state = {
-      xhr: 'success',
+      xhr: null,
       msg: null
     }
   }
 
   shouldComponentUpdate(nextProps) {
-    if (this.props.url !== nextProps.url) {
+    if (this.props.url !== nextProps.url && nextProps.url) {
       this.fetch()
       return false
     }
     return true
   }
-  
+
   componentDidMount() {
     this.props.url && this.fetch()
   }
 
   fetch() {
-    const timer = this.lazyFetch()
+    this.timer = this.lazyFetch()
     setTimeout(() => {
       xhr({
         url: this.props.url,
         complete: () => {
-          clearTimeout(timer)
+          clearTimeout(this.timer)
         },
         success: ::this.handleSuccess,
         error: ::this.handleError
@@ -64,6 +64,11 @@ class Fetch extends Component {
     this.setState({xhr: 'error', msg})
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer)
+    this.handleSuccess = this.handleError = () => {}
+  }
+
   stateMap = {
     success() {
       return this.props.children
@@ -71,7 +76,7 @@ class Fetch extends Component {
     loading() {
       return (
         <div className="bfd-fetch__mask">
-          <Spinner className="bfd-fetch__state" />
+          <Spinner height={this.props.spinnerHeight} className="bfd-fetch__state" />
         </div>
       )
     },
@@ -109,6 +114,9 @@ Fetch.propTypes = {
 
   // 默认高度，单位像素
   defaultHeight: PropTypes.number,
+
+  // 加载动画高度，默认 30px，可根据场景更改大小
+  spinnerHeight: PropTypes.number,
 
   // 请求延迟，单位毫秒。测试使用
   delay: PropTypes.number

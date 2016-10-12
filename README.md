@@ -51,7 +51,7 @@ ReactDOM.render(<DatePicker />, mountNode)
 git clone https://github.com/yourName/bfd-ui.git
 
 # DEMO 站集成了脚手架项目的说明，所以需要依赖这个项目的一些资源，与 bfd-ui clone 在同一目录下即可
-git clone https://github.com/baifendian/generator-bfd.git
+git clone https://github.com/baifendian/create-bfd-app.git
 
 cd bfd-ui
 

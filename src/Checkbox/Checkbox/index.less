@@ -103,8 +103,36 @@
   .bfd-checkbox__text {
     color: #999!important;
   }
+  &.bfd-checkbox--indeterminate {
+    .bfd-checkbox__status {
+      &:after {
+        background-color: #eceff1;
+      }
+    }
+  }
 }
 
 .bfd-checkbox--block {
   display: block;
+}
+
+.bfd-checkbox--indeterminate {
+  .bfd-checkbox__status {
+    &:before {
+      border-color: #2196f3;
+    }
+    &:after {
+      display: block;
+      border: 0;
+      width: 10px;
+      height: 10px;
+      margin-top: -5px;
+      left: 3px;
+      transform: none;
+      background-color: #2196f3;
+    }
+  }
+  .bfd-checkbox__text {
+    color: #2196f3;
+  }
 }

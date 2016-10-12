@@ -23,7 +23,7 @@ export default class extends Component {
       <Layout open={open} onToggle={open => this.toggle(open)}>
         <LayoutSidebar>
           <Nav href="/scaffolding" onItemClick={() => this.toggle(false)}>
-            <IndexNavItem icon="cog" title="生成器" />
+            <IndexNavItem icon="cog" title="脚手架" />
             <NavItem icon="retweet" href="workflow" title="工作流" />
             <NavItem icon="file-word-o" href="docs" title="文档" />
             <NavItem icon="code-fork" href="changelog" title="更新日志" />

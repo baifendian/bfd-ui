@@ -10,6 +10,18 @@ const CheckboxBasic = () => {
 }
 
 /**
+ * @title 半选中的 Checkbox
+ * @desc 半选中状态目前仅支持受控方式
+ */
+import Checkbox from 'bfd/Checkbox'
+
+const CheckboxIndeterminate = () => {
+  return (
+    <Checkbox indeterminate>选择</Checkbox>
+  )
+}
+
+/**
  * @title 基本的 CheckboxGroup
  */
 import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'

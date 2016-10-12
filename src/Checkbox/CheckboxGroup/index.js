@@ -53,12 +53,12 @@ class CheckboxGroup extends Component {
   }
 
   render() {
-    
-    const { 
-      children, className, defaultSelects, onChange, values, block, toggleable, ...other 
+
+    const {
+      children, className, defaultSelects, onChange, values, block, toggleable, ...other
     } = this.props
     const { selects } = this.state
-    
+
     const unSelects = []
     delete other.selects
 
@@ -68,10 +68,10 @@ class CheckboxGroup extends Component {
         const checked = selects.indexOf(value) !== -1
         checked || unSelects.push(value)
         return (
-          <Checkbox 
-            key={i} 
-            value={value} 
-            checked={checked} 
+          <Checkbox
+            key={i}
+            value={value}
+            checked={checked}
             onChange={this.handleCheckboxChange.bind(this, value)}
             block={block}
           >
@@ -84,7 +84,7 @@ class CheckboxGroup extends Component {
         if (!Checkbox) return
         const props = Checkbox.props
         const value = props.value
-        
+
         const checked = selects.indexOf(value) !== -1
 
         if (!checked && !props.disabled) {
@@ -94,7 +94,7 @@ class CheckboxGroup extends Component {
         return React.cloneElement(Checkbox, {
           key: i,
           checked,
-          block: props.block || block, 
+          block: props.block || block,
           onChange: this.handleCheckboxChange.bind(this, value)
         })
       })
@@ -105,9 +105,10 @@ class CheckboxGroup extends Component {
     return (
       <div className={classnames('bfd-checkbox-group', className)} {...other}>
         {toggleable && checkboxes && checkboxes.length > 1 && (
-          <Checkbox 
-            block={block} 
-            checked={unSelects.length === 0} 
+          <Checkbox
+            block={block}
+            checked={unSelects.length === 0}
+            indeterminate={unSelects.length > 0 && unSelects.length < checkboxes.length}
             onChange={::this.toggleAll}
           >
             全选
@@ -115,7 +116,7 @@ class CheckboxGroup extends Component {
         )}
         {checkboxes}
       </div>
-    ) 
+    )
   }
 }
 
@@ -129,10 +130,10 @@ CheckboxGroup.propTypes = {
 
   // 更改选择后的回调，参数为选中的值
   onChange: PropTypes.func,
-  
+
   // 针对 value 和 label 相同时快速创建复选框组，无需再调用 Checkbox
   values: PropTypes.array,
-  
+
   // 是否垂直排列
   block: PropTypes.bool,
 

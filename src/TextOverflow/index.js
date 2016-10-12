@@ -24,7 +24,8 @@ const TextOverflow = props => {
   let timer
 
   return React.cloneElement(children, {
-    onMouseEnter: ({ target }) => {
+    onMouseEnter: e => {
+      const target = e.currentTarget
       if (target.offsetWidth < target.scrollWidth) {
         timer = setTimeout(() => {
           tooltip(children.props.children, target)

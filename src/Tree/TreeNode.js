@@ -49,7 +49,7 @@ class TreeNode extends Component {
   }
 
   handleCheck(e) {
-    this.context.tree.handleNodeCheck(e.target.checked, this.props.path)
+    this.context.tree.handleNodeCheck(e.target.checked, this.props.data, this.props.path)
   }
 
   render() {
@@ -58,7 +58,7 @@ class TreeNode extends Component {
       shouldNodeCheckable
     } = this.context.tree.props
     const { data, path } = this.props
-    const { name, open, isParent, checked, active, children } = data
+    const { name, open, isParent, checked, indeterminate, active, children } = data
     const tree = this.context.tree
     const hasChildren = children && children.length
     const indent = Math.floor(path.length / 2) * 20 + 'px'
@@ -67,29 +67,29 @@ class TreeNode extends Component {
     if (hasChildren) {
       Children = (
         <ul>
-        {children.map((item, i) => {
-          return (
+          {children.map((item, i) => (
             <TreeNode
               key={i}
               data={item}
-              path={this.props.path.concat('children', i)}
+              path={[...path, 'children', i]}
             />
-          )
-        })}
+          ))}
         </ul>
       )
-    } else {
-      if (isParent && getUrl && open) {
-        Children = (
-          <Fetch
-            style={indent}
-            url={getUrl(data, tree.getPathData(path))}
-            onSuccess={this.handleLoad.bind(this)}
-          />
-        )
-      } else {
-        Children = null
-      }
+    }
+
+    if (isParent && getUrl && open && !hasChildren) {
+      Children = (
+        <Fetch
+          defaultHeight={30}
+          spinnerHeight={20}
+          style={{marginLeft: indent}}
+          url={getUrl(data, tree.getPathData(path))}
+          onSuccess={::this.handleLoad}
+        >
+          <div className="bfd-tree__node--empty">无数据</div>
+        </Fetch>
+      )
     }
 
     const typeIcon = getIcon && getIcon(data)
@@ -115,6 +115,7 @@ class TreeNode extends Component {
         {checkable && (
           <Checkbox
             checked={checked}
+            indeterminate={indeterminate}
             disabled={!nodeCheckable}
             onChange={nodeCheckable ? ::this.handleCheck : () => {}}
           />
