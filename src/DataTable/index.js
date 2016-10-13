@@ -80,9 +80,7 @@ class DataTable extends Component {
 
     const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></th> : null
     return (
-      <div>
-        {url != '' ? <Fetch url={url} onSuccess={::this.handleSuccess} ></Fetch> : null}
-        
+      <div>        
         <table className={classnames('bfd-datatable', 'bfd-table', className)} {...other} >
           <thead>
             <tr>
@@ -132,7 +130,8 @@ class DataTable extends Component {
           >
           </Rows>
         </table>
-
+        {url != '' ? <Fetch url={url} onSuccess={::this.handleSuccess} ></Fetch> : null}
+        
         {
           this.state.items.totalList.length > 0 
             ? this.props.showPage == 'true' 
