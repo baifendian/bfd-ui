@@ -30,7 +30,7 @@ class App {
             <div className="home__banner-right">
               <h2>百分点 UI 组件库——企业级前端整体解决方案</h2>
               <h1>UI•BAIFENDIAN</h1>
-              <em>当前版本：v1.1.0</em>
+              <em>当前版本：v1.1.1</em>
             </div>
             <Link to="/guide#install" className="home__banner-install">
               <Button>安装</Button>
