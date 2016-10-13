@@ -30,7 +30,7 @@ class SearchInput extends Component {
 
     return (
       <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput style={{width}} defaultValue={this.value} size={size} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
+        <ClearableInput style={{width}} defaultValue={this.value} size={size} onKeyUp={::this.handleKeyUp} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
         <Button size={size} onClick={::this.handleClick} icon="search">{this.props.label || '搜索'}</Button>
       </div>
     )
@@ -44,6 +44,14 @@ class SearchInput extends Component {
   handleClick() {
     if (typeof this.props.onSearch == 'function') {
       this.props.onSearch(this.value)
+    }
+  }
+
+  handleKeyUp(e) {
+    e.preventDefault()    
+    const code = e.keyCode
+    if(code == 13) {
+      this.handleClick()
     }
   }
 }
