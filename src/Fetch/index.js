@@ -18,7 +18,7 @@ class Fetch extends Component {
   constructor() {
     super()
     this.state = {
-      xhr: null,
+      xhr: 'init',
       msg: null
     }
   }
@@ -70,6 +70,9 @@ class Fetch extends Component {
   }
 
   stateMap = {
+    init() {
+      return this.props.url ? null : this.props.children
+    },
     success() {
       return this.props.children
     },

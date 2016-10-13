@@ -47,6 +47,7 @@ describe('TableTree', () => {
       <TableTree defaultData={data} columns={columns} />
     )
     const container = findDOMNode(instance)
+    console.log(container.querySelectorAll('.bfd-table-tree__node-toggle').length)
     TestUtils.Simulate.click(container.querySelectorAll('.bfd-table-tree__node-toggle')[1])
     expect(container.querySelectorAll('.bfd-table-tree__row')[2].className).not.toContain('hidden')
     
