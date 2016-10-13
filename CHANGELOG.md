@@ -8,6 +8,7 @@
 - 修复 TextOverflow 子节点嵌套时不显示的问题
 - Checkbox 新增属性 indeterminate，实现半勾选状态，并同步 Tree、CheckboxGroup
 - Fetch 新增属性 spinnerHeight，控制加载动画的尺寸；修复异步回调时组件不存在的问题
+- SearchInput 支持回车触发查询
 
 
 ## v1.1.0
