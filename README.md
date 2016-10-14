@@ -33,7 +33,7 @@ ReactDOM.render(<DatePicker />, mountNode)
 ## 脚手架
 
 `bfd-ui` 基于 `react`、`webpack` 等技术，如果你本地没有相关的环境配置，强烈建议基于脚手架直接上手开发
-[generator-bfd](https://github.com/baifendian/generator-bfd)
+[create-bfd-app](https://github.com/baifendian/create-bfd-app)
 
 
 ## 更新日志
