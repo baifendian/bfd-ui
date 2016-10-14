@@ -38,6 +38,7 @@ class DataTable extends Component {
 
   componentWillMount() {
     if (this.props.data) {
+      console.log(this.props.data)
       this.setState({
         items: {
           totalList: this.props.data.totalList || [],
@@ -60,7 +61,7 @@ class DataTable extends Component {
 
   render() {
     const self = this
-    let url = this.props.url
+    let url = this.props.url || ""
     const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
       // 新增自动分页功能 
@@ -79,8 +80,9 @@ class DataTable extends Component {
     }
 
     const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></th> : null
-    return (
-      <div>        
+
+    return (    
+      <Fetch defaultHeight={100} url={url} onSuccess={::this.handleSuccess} >  
         <table className={classnames('bfd-datatable', 'bfd-table', className)} {...other} >
           <thead>
             <tr>
@@ -130,7 +132,6 @@ class DataTable extends Component {
           >
           </Rows>
         </table>
-        {url != '' ? <Fetch url={url} onSuccess={::this.handleSuccess} ></Fetch> : null}
         
         {
           this.state.items.totalList.length > 0 
@@ -144,7 +145,7 @@ class DataTable extends Component {
               : '' 
             : ''
         }
-      </div>
+      </Fetch>
     )
   }
 

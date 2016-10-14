@@ -28,7 +28,6 @@ class Slider extends Component {
     const bar = this.refs.bar
     const selectedBar = this.refs.selectedBar
     const slider = this.refs.slider
-
     const style = getComputedStyle(bar)
     const sliderStyle = getComputedStyle(slider)
     const defaultValue = this.props.defaultValue || this.props.start || 0
@@ -190,7 +189,7 @@ class Scale extends Component {
       }
 
       const el = this.refs['t' + index]
-      el.innerHTML = '<div></div>' + parseInt(value)
+      el.innerHTML = '<div></div>' + parseInt(Math.round(value))
       if (index == 0) {
         el.style.left = 4 + 'px'
       } else if (index == this.tickValue) {
