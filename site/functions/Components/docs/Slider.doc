@@ -8,7 +8,7 @@ class SliderDemo extends Component {
 
   render() {
     return (
-      <Slider defaultValue={10} tickValue={10} start={0} end={100} suffix="%" onSliding={::this.handleSliding} onSlid={::this.handleSlid}/>
+      <Slider defaultValue={40} tickValue={5} start={0} end={100} suffix="%" onSliding={::this.handleSliding} onSlid={::this.handleSlid}/>
     )
   }
 
