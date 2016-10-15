@@ -22,11 +22,9 @@
   left: 0;
   min-width: 160px;
   padding: 10px;
-  border-radius: 2px;
   background-color: #fff;
-  border: 1px solid #dedede;
   border-radius: 2px;
-  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  box-shadow: 0 5px 12px 2px rgba(0,0,0,0.25);
   z-index: 1000;
   display: none;
 }
@@ -37,18 +35,6 @@
 }
 
 .bfd-dropdown--open {
-  &:before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    width: 8px;
-    height: 8px;
-    background-color: #fff;
-    margin-left: -4px;
-    border-top: 1px solid #dedede;
-    border-right: 1px solid #dedede;
-    z-index: 1001;
-  }
   .bfd-dropdown__menu {
     display: block;
     visibility: hidden;
@@ -56,28 +42,18 @@
 }
 
 .bfd-dropdown--down {
-  &:before {
-    top: 100%;
-    margin-top: 4px;
-    transform: rotate(-45deg);
-  }
   .bfd-dropdown__menu {
     visibility: visible;
     top: 100%;
-    margin-top: 8px;
+    margin-top: 5px;
   }
 }
 
 .bfd-dropdown--up {
-  &:before {
-    bottom: 100%;
-    margin-bottom: 4px;
-    transform: rotate(135deg);
-  }
   .bfd-dropdown__menu {
     visibility: visible;
     bottom: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
   }
 }
 

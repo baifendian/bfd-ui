@@ -10,8 +10,8 @@ const TabsBasic = () => {
         <Tab>群体特征报告</Tab>
         <Tab>样例用户画像</Tab>
       </TabList>
-      <TabPanel>我是群体特征报告</TabPanel>
-      <TabPanel>我是样例用户画像</TabPanel>
+      <TabPanel>{console.log(1)}我是群体特征报告</TabPanel>
+      <TabPanel>{console.log(2)}我是样例用户画像</TabPanel>
     </Tabs>
   )
 }
@@ -57,10 +57,10 @@ class TabsDynamic extends Component {
   render() {
     const { activeIndex, tabs } = this.state
     return (
-      <Tabs 
-        dynamic 
+      <Tabs
+        dynamic
         activeIndex={activeIndex}
-        handleClose={::this.handleClose} 
+        handleClose={::this.handleClose}
         onChange={activeIndex => this.setState({ activeIndex })}
       >
         <TabList>

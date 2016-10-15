@@ -8,10 +8,27 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import warning from 'warning'
+import classlist from 'classlist'
 
 class TabPanel extends Component {
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.isActive) {
+      const target = classlist(this.$root)
+      target.add('bfd-tabs__panel--fade')
+      setTimeout(() => {
+        target.remove('bfd-tabs__panel--fade')
+      }, 0)
+    }
+  }
+
+  componentDidMount() {
+    this.$root = ReactDOM.findDOMNode(this)
+  }
+
   render() {
     const { children, className, activeKey, ...other } = this.props
     const tabs = this.context.tabs
@@ -29,6 +46,7 @@ class TabPanel extends Component {
     if (isActive) {
       this.children = children
     }
+    this.isActive = isActive
     return (
       <div className={classNames('bfd-tabs__panel', {
         'bfd-tabs__panel--active': isActive
