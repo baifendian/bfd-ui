@@ -39,7 +39,7 @@ class Percentage extends Component {
     const { size } = this.state
 
     if (!size) return
-    
+
     const strokeWidth = size / 20
     const radius = size / 2 - strokeWidth / 2
     const fontSize = size * .25
@@ -55,23 +55,24 @@ class Percentage extends Component {
 
     return (
       <svg width={size} height={size} {...other}>
-        <circle stroke={backColor} {...shareProps} />
-        <circle 
+        <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
+        <circle
           ref="foreCircle"
-          stroke={foreColor} 
+          stroke={foreColor || '#2196f3'}
+          strokeLinecap="round"
           style={{
-            transition: 'stroke-dashoffset 1s ease-out',
+            transition: `stroke-dashoffset ${percent * 10}ms cubic-bezier(0.4, 0.29, 0.58, 1.25)`,
             'strokeDasharray': this.dash,
             'strokeDashoffset': this.dash
           }}
           {...shareProps}
         />
-        <text 
-          textAnchor="middle" 
-          fontSize={fontSize} 
-          fill={textColor} 
-          x={size / 2} 
-          y={size / 2} 
+        <text
+          textAnchor="middle"
+          fontSize={fontSize}
+          fill={textColor || foreColor || '#2196f3'}
+          x={size / 2}
+          y={size / 2}
           dy=".3em"
         >
           {percent + '%'}
@@ -88,12 +89,6 @@ class Percentage extends Component {
       </div>
     )
   }
-}
-
-Percentage.defaultProps = {
-  backColor: '#f5f5f5',
-  foreColor: '#2196f3',
-  textColor: '#2196f3'
 }
 
 Percentage.propTypes = {

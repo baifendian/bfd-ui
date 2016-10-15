@@ -5,7 +5,19 @@
 import Percentage from 'bfd/Percentage'
 
 const PercentageBasic = () => {
-  return <Percentage percent={80} style={{width: '150px'}}></Percentage>
+  return (
+    <Row gutter fluid>
+      <Col>
+        <Percentage percent={45} style={{width: '100px'}}></Percentage>
+      </Col>
+      <Col>
+        <Percentage percent={30} foreColor="#ffa726" style={{width: '100px'}}></Percentage>
+      </Col>
+      <Col>
+        <Percentage percent={60} foreColor="#00bcd4" style={{width: '100px'}}></Percentage>
+      </Col>
+    </Row>
+  )
 }
 
 @component Percentage
