@@ -8,13 +8,13 @@ const PercentageBasic = () => {
   return (
     <Row gutter fluid>
       <Col>
-        <Percentage percent={45} style={{width: '100px'}}></Percentage>
+        <Percentage width={100} percent={45} />
       </Col>
       <Col>
-        <Percentage percent={30} foreColor="#ffa726" style={{width: '100px'}}></Percentage>
+        <Percentage width={100} percent={10} foreColor="#ffa726" />
       </Col>
       <Col>
-        <Percentage percent={60} foreColor="#00bcd4" style={{width: '100px'}}></Percentage>
+        <Percentage width={100} percent={60} foreColor="#00bcd4" />
       </Col>
     </Row>
   )

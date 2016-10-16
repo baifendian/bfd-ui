@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import classnames from 'classnames'
+import warning from 'warning'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import './index.less'
 
@@ -23,22 +24,45 @@ class Percentage extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   componentDidMount() {
-    this.setState({size: findDOMNode(this).clientWidth})
+    const $root = findDOMNode(this)
+    const width = this.props.width || ($root && $root.clientWidth)
+    if (width) {
+      this.setState({size: width})
+    } else {
+      warning(false, 'You should declare `width` prop or the container of `Percentage` should have `width`.')
+    }
   }
 
   componentDidUpdate() {
-    const { percent } = this.props
-    const circle = this.refs.foreCircle
-    circle.clientWidth
-    circle.style.strokeDashoffset = this.dash * (1 - (percent / 100))
+    this.animate()
   }
 
-  renderSvg() {
+  animate() {
+    const { percent } = this.props
+    const { foreCircle, text } = this.refs
+    const dashOffset = this.dash * percent / 100
+    const easing = 800
+    let start = null
+    const step = timestrap => {
+      if (!start) start = timestrap
+      const progress = timestrap - start
+      const scale = progress / easing
+      foreCircle.style.strokeDashoffset = this.dash - dashOffset * scale
+      text.textContent = Math.round(percent * scale) + '%'
+      if (progress < easing) {
+        window.requestAnimationFrame(step)
+      }
+    }
+    window.requestAnimationFrame(step)
+  }
 
-    const { percent, foreColor, backColor, textColor, ...other } = this.props
+  render() {
+    const {
+      className, width, percent, foreColor, backColor, textColor, ...other
+    } = this.props
     const { size } = this.state
 
-    if (!size) return
+    if (!size) return null
 
     const strokeWidth = size / 20
     const radius = size / 2 - strokeWidth / 2
@@ -54,44 +78,38 @@ class Percentage extends Component {
     this.dash = Math.PI * radius * 2
 
     return (
-      <svg width={size} height={size} {...other}>
-        <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
-        <circle
-          ref="foreCircle"
-          stroke={foreColor || '#2196f3'}
-          strokeLinecap="round"
-          style={{
-            transition: `stroke-dashoffset ${percent * 10}ms cubic-bezier(0.4, 0.29, 0.58, 1.25)`,
-            'strokeDasharray': this.dash,
-            'strokeDashoffset': this.dash
-          }}
-          {...shareProps}
-        />
-        <text
-          textAnchor="middle"
-          fontSize={fontSize}
-          fill={textColor || foreColor || '#2196f3'}
-          x={size / 2}
-          y={size / 2}
-          dy=".3em"
-        >
-          {percent + '%'}
-        </text>
-      </svg>
-    )
-  }
-
-  render() {
-    const { className, ...other } = this.props
-    return (
       <div className={classnames('bfd-percentage', className)} {...other}>
-        {this.renderSvg()}
+        <svg width={size} height={size}>
+          <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
+          <circle
+            ref="foreCircle"
+            stroke={foreColor || '#2196f3'}
+            strokeLinecap="round"
+            strokeDasharray={this.dash}
+            style={{strokeDashoffset: this.dash}}
+            {...shareProps}
+          />
+          <text
+            ref="text"
+            textAnchor="middle"
+            fontSize={fontSize}
+            fill={textColor || foreColor || '#2196f3'}
+            x={size / 2}
+            y={size / 2}
+            dy=".3em"
+          >
+            {percent + '%'}
+          </text>
+        </svg>
       </div>
     )
   }
 }
 
 Percentage.propTypes = {
+
+  // 宽度，单位像素，如果不指定，则按父元素内容宽度自适应。也可以通过 css 控制
+  width: PropTypes.number,
 
   // 百分比数值
   percent: PropTypes.number.isRequired,
