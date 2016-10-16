@@ -41,15 +41,15 @@ class Percentage extends Component {
     const { percent } = this.props
     const { foreCircle, text } = this.refs
     const dashOffset = this.dash * percent / 100
-    const easing = 800
+    const duration = 800
     let start = null
     const step = timestrap => {
       if (!start) start = timestrap
       const progress = timestrap - start
-      const scale = progress / easing
+      const scale = Math.pow(progress / duration, 3)
       foreCircle.style.strokeDashoffset = this.dash - dashOffset * scale
       text.textContent = Math.round(percent * scale) + '%'
-      if (progress < easing) {
+      if (progress < duration) {
         window.requestAnimationFrame(step)
       }
     }
