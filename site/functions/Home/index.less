@@ -10,41 +10,52 @@
 }
 
 .home__banner-center {
-  max-width: 500px;
-  margin: 0 auto;
   color: #fff;
   text-align: center;
-  .bfd-btn {
-    width: 200px;
-    height: 60px;
-    font-size: 24px;
-  }
-}
-
-.home__banner-right {
-  text-align: center;
-  margin-bottom: 26px;
   h1 {
-    font-size: 40px;
+
     font-family: initial;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: .3em;
+    margin-bottom: .4em;
+    @media (min-width: 320px) {
+      font-size: 30px;
+    }
+    @media (min-width: 960px) {
+      font-size: 40px;
+    }
   }
   h2 {
     margin: 0;
-    font-size: 24px;
+    @media (min-width: 320px) {
+      font-size: 18px;
+    }
+    @media (min-width: 960px) {
+      font-size: 24px;
+    }
   }
   em {
     font-style: normal;
     color: #99d0fc;
-    font-size: 16px;
+    display: block;
+    margin-bottom: .6em;
+    @media (min-width: 320px) {
+      font-size: 12px;
+    }
+    @media (min-width: 960px) {
+      font-size: 16px;
+    }
   }
-}
-
-.home__banner-install,
-.home__banner-start {
-  display: inline-block;
-  margin: 10px 30px;
+  .bfd-btn {
+    margin: .6em;
+    width: 8em;
+    height: 2.4em;
+    @media (min-width: 320px) {
+      font-size: 18px;
+    }
+    @media (min-width: 960px) {
+      font-size: 24px;
+    }
+  }
 }
 
 .home__banner-install {
@@ -55,10 +66,6 @@
 }
 
 .home__banner-start {
-  margin-left: 0;
-  @media (max-width: 598px) {
-    margin-left: 30px;
-  }
   .bfd-btn {
     background-color: transparent;
     border-color: #fff;
@@ -74,18 +81,17 @@
 }
 
 .home__middle-left {
-  padding-right: 100px;
-  padding-bottom: 10px;
-  @media (max-width: 992px) {
-    padding-right: 0;
-    padding-bottom: 20px;
-  }
+  padding-bottom: 20px;
   h2 {
-    font-size: 36px;
-    line-height: 48px;
     color: #42a5f6;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    margin-top: .5em;
+    margin-bottom: 1em;
+    @media (min-width: 320px) {
+      font-size: 24px;
+    }
+    @media (min-width: 960px) {
+      font-size: 36px;
+    }
   }
   p {
     font-size: 14px;
@@ -140,8 +146,13 @@
     padding-top: 80px;
     padding-bottom: 110px;
     h1 {
-      font-size: 40px;
       color: #666;
+      @media (min-width: 320px) {
+        font-size: 24px;
+      }
+      @media (min-width: 960px) {
+        font-size: 40px;
+      }
     }
     p {
       font-size: 14px;

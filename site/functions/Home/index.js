@@ -12,7 +12,7 @@ export default () => {
   const code = `import DatePicker from 'bfd/DatePicker'
 
 class App {
-  
+
   handleSelect(date) {
     console.log(date)
   }
@@ -27,11 +27,9 @@ class App {
       <div className="home__banner">
         <Center>
           <div className="home__banner-center">
-            <div className="home__banner-right">
-              <h2>百分点 UI 组件库——企业级前端整体解决方案</h2>
-              <h1>UI•BAIFENDIAN</h1>
-              <em>当前版本：v1.1.1</em>
-            </div>
+            <h2>百分点 UI 组件库——企业级前端整体解决方案</h2>
+            <h1>UI•BAIFENDIAN</h1>
+            <em>当前版本：v1.1.1</em>
             <Link to="/guide#install" className="home__banner-install">
               <Button>安装</Button>
             </Link>
@@ -44,7 +42,7 @@ class App {
 
       <div className="home__middle">
         <Center>
-          <Row>
+          <Row gutter>
             <Col col="md-6" className="home__middle-left">
               <h2>企业级前端整体解决方案</h2>
               <p>BFD UI 结合 generator-bfd 脚手架可快速开发集单页面应用、组件化、可视化、大数据交互、权限管理、前后端分离等特性的企业级项目。</p>
