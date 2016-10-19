@@ -51,7 +51,7 @@ class DataTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.data !== nextProps.data) {
+    if (nextProps.data) {
       this.setState({
         items: nextProps.data,
         isSelectAll: false
@@ -64,7 +64,7 @@ class DataTable extends Component {
     let url = this.props.url || ""
     const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
-      // 新增自动分页功能 
+      // 新增自动分页功能
       pageSize = parseInt(this.props.howRow)
 
     // 如果是传入url查询数据就附带参数查询
@@ -81,8 +81,8 @@ class DataTable extends Component {
 
     const checkboxTh = this.props.onCheckboxSelect ? <th><Checkbox checked={this.state.isSelectAll} onChange={::this.handleCheckboxAllChange}></Checkbox></th> : null
 
-    return (    
-      <Fetch defaultHeight={100} url={url} onSuccess={::this.handleSuccess} >  
+    return (
+      <Fetch defaultHeight={100} url={url} onSuccess={::this.handleSuccess} >
         <table className={classnames('bfd-datatable', 'bfd-table', className)} {...other} >
           <thead>
             <tr>
@@ -106,7 +106,7 @@ class DataTable extends Component {
                   }
 
                   return (
-                    <th 
+                    <th
                       key={head['title']}
                       ref={i}
                       style={style}
@@ -120,8 +120,8 @@ class DataTable extends Component {
             </tr>
           </thead>
 
-          <Rows 
-            rows={this.state.items.totalList} 
+          <Rows
+            rows={this.state.items.totalList}
             onRowClick={::this.handleRowClick}
             onSelect={::this.handleCheckboxChange}
             onCheckboxSelect={this.props.onCheckboxSelect}
@@ -132,17 +132,17 @@ class DataTable extends Component {
           >
           </Rows>
         </table>
-        
+
         {
-          this.state.items.totalList.length > 0 
-            ? this.props.showPage == 'true' 
-              ? (<Paging 
-                  currentPage={this.state.items.currentPage}                   
-                  totalPageNum={this.state.items.totalPageNum} 
-                  pageSize={this.props.howRow} 
+          this.state.items.totalList.length > 0
+            ? this.props.showPage == 'true'
+              ? (<Paging
+                  currentPage={this.state.items.currentPage}
+                  totalPageNum={this.state.items.totalPageNum}
+                  pageSize={this.props.howRow}
                   onPageChange={::this.onPageChange}>
               </Paging>)
-              : '' 
+              : ''
             : ''
         }
       </Fetch>
@@ -269,7 +269,7 @@ class DataTable extends Component {
         this.selectedRows.push(item)
       }
     })
-    
+
     const selectAllFn = this.props.onCheckboxSelect
     selectAllFn && selectAllFn(isAll ? rows : [], this.selectedRows)
   }
