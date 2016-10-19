@@ -26,14 +26,14 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if ('activeIndex' in this.props) {
+    if (!isNaN(this.props)) {
       this.setState({activeIndex: nextProps.activeIndex})
     }
   }
 
   render() {
-    const { 
-      children, className, activeIndex, activeKey, onChange, dynamic, handleClose, ...other 
+    const {
+      children, className, activeIndex, activeKey, onChange, dynamic, handleClose, ...other
     } = this.props
     this.tabCount = this.panelCount = 0
     return (
@@ -42,7 +42,7 @@ class Tabs extends Component {
       }, className)} {...other}>
         {children}
       </div>
-    ) 
+    )
   }
 }
 
@@ -66,7 +66,7 @@ Tabs.propTypes = {
 
   // Tab 关闭事件处理，参数(index, key)
   handleClose: PropTypes.func,
-  
+
   customProp(props) {
     if ('activeIndex' in props && 'activeKey' in props) {
       return new Error('`activeIndex` and `activeKey` can\'t exist at the same time')

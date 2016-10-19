@@ -44,6 +44,7 @@ class Dropdown extends Component {
     window.addEventListener('click', this.handleBodyClick)
     this.$root = ReactDOM.findDOMNode(this)
     this.$menu = ReactDOM.findDOMNode(this.menu)
+    this.$toggle = ReactDOM.findDOMNode(this.toggle)
     this.updateMenuState()
   }
 
@@ -61,13 +62,13 @@ class Dropdown extends Component {
   }
 
   setPosition() {
-    const node = this.$menu
-    const height = parseInt(getComputedStyle(node).height, 10)
-    const top = node.getBoundingClientRect().top
-    if (height + top < window.innerHeight) {
-      this.menuDirectionClassName = 'bfd-dropdown--down'
-    } else {
+    const menuHeight = parseInt(getComputedStyle(this.$menu).height, 10)
+    const menuTop = this.$menu.getBoundingClientRect().top
+    const toggleTop = this.$toggle.getBoundingClientRect().top
+    if (menuHeight + menuTop > window.innerHeight && toggleTop - 8 > menuHeight) {
       this.menuDirectionClassName = 'bfd-dropdown--up'
+    } else {
+      this.menuDirectionClassName = 'bfd-dropdown--down'
     }
     classlist(this.$root).add(this.menuDirectionClassName)
   }
