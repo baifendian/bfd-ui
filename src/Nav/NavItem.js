@@ -39,6 +39,7 @@ class NavItem extends Component {
 
   getHref(props) {
     let href = props.href
+    if (props.blank) return href
     if (!props.index && !href) return ''
     const baseURL = this.context.nav.props.href || ''
     href = baseURL + '/' + (href || '')
@@ -62,12 +63,12 @@ class NavItem extends Component {
     this.props.onClick && this.props.onClick(e)
     !this.props.children && this.context.nav.handleItemClick(this.props, e)
   }
-  
+
   render() {
-  
+
     const { open, href, active } = this.state
-    const { 
-      children, className, index, defaultOpen, icon, title, blank, ...other 
+    const {
+      children, className, index, defaultOpen, icon, title, blank, ...other
     } = this.props
 
     delete other.href
@@ -85,7 +86,7 @@ class NavItem extends Component {
     }
 
     const classNames = classnames(
-      'bfd-nav__item', 
+      'bfd-nav__item',
       {
         'bfd-nav__item--open': open,
         'bfd-nav__item--active': active
@@ -95,8 +96,8 @@ class NavItem extends Component {
 
     // 收起状态时不再渲染子节点
     return (
-      <li 
-        onClick={::this.handleClick} 
+      <li
+        onClick={::this.handleClick}
         className={classNames}
         {...other}
       >

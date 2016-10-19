@@ -2,7 +2,12 @@
 
 `2016-10-20`
 
-- Percentage 新增属性 width
+- Percentage 新增属性 width 及样式升级
+- DropdownMenu、DatePicker 样式升级
+- 修复 NavItem blank 模式下 URL 变化的问题
+- 修复 Checkbox、Radio 不支持 onMouseDown 等事件的问题
+- 优化 Modal 性能，关闭状态下不再渲染
+- 优化 Tabs 性能，更新时未激活的 TabPanel 不再渲染；TabPanel 增加淡入效果
 
 
 ## v1.1.1

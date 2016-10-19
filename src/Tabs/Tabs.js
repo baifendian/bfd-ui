@@ -26,16 +26,23 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isNaN(this.props)) {
+    if (!isNaN(nextProps.activeIndex)) {
       this.setState({activeIndex: nextProps.activeIndex})
     }
+  }
+
+  componentWillUpdate() {
+    this.tabCount = this.panelCount = 0
+  }
+
+  componentWillMount() {
+    this.tabCount = this.panelCount = 0
   }
 
   render() {
     const {
       children, className, activeIndex, activeKey, onChange, dynamic, handleClose, ...other
     } = this.props
-    this.tabCount = this.panelCount = 0
     return (
       <div className={classNames('bfd-tabs', {
         'bfd-tabs--dynamic': dynamic
@@ -68,6 +75,9 @@ Tabs.propTypes = {
   handleClose: PropTypes.func,
 
   customProp(props) {
+    if (('activeIndex' in props || 'activeKey' in props) && !props.onChange) {
+      return new Error('You provided `activeIndex` or `activeKey` prop without an `onChange` handler')
+    }
     if ('activeIndex' in props && 'activeKey' in props) {
       return new Error('`activeIndex` and `activeKey` can\'t exist at the same time')
     }

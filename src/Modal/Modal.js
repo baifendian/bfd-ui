@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import classnames from 'classnames'
+import classlist from 'classlist'
 
 const scrollbarWidth = (() => {
   const scrollDiv = document.createElement('div')
@@ -19,7 +20,7 @@ const scrollbarWidth = (() => {
   body.appendChild(scrollDiv)
   const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
   body.removeChild(scrollDiv)
-  
+
   return scrollbarWidth
 })()
 
@@ -39,23 +40,33 @@ class Modal extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'open' in nextProps && this.setState({open: nextProps.open})  
+    'open' in nextProps && this.setState({open: nextProps.open})
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    const body = document.body
-    const bodyClassName = body.className
-    const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(this.state.open === nextState.open && nextState.open === false)
+  }
 
-    if (nextState.open && !this.state.open) {
-      this.scrollbarWidth = body.scrollHeight > window.innerHeight ? scrollbarWidth : 0
-      body.className = bodyClassName + ' bfd-modal--open'
-      body.style.paddingRight = bodyPaddingRight + this.scrollbarWidth + 'px'
-    } else if (!nextState.open && this.state.open) {
+  componentDidMount() {
+    this.updateBodyState(this.state.open, false)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.updateBodyState(this.state.open, prevState.open)
+  }
+
+  updateBodyState(open, prevOpen) {
+    const body = document.body
+    const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
+    const _scrollbarWidth = body.scrollHeight > window.innerHeight ? scrollbarWidth : 0
+    if (open && !prevOpen) {
+      classlist(body).add('bfd-modal--open')
+      body.style.paddingRight = bodyPaddingRight + _scrollbarWidth + 'px'
+    } else if (!open && prevOpen) {
       setTimeout(() => {
-        body.className = bodyClassName.replace(' bfd-modal--open', '')
+        classlist(body).remove('bfd-modal--open')
         if (bodyPaddingRight) {
-          body.style.paddingRight = bodyPaddingRight - this.scrollbarWidth + 'px'
+          body.style.paddingRight = bodyPaddingRight - _scrollbarWidth + 'px'
         } else {
           body.style.paddingRight = ''
         }
@@ -67,7 +78,7 @@ class Modal extends Component {
 
   handleModalClick(e) {
     if (!this.props.lock && e.target.className === 'bfd-modal__modal') {
-      this.close()  
+      this.close()
     }
   }
 
@@ -94,16 +105,16 @@ class Modal extends Component {
   }
 
   render() {
-    
+
     const { children, className, onToggle, lock, onClose, ...other } = this.props
     const { open } = this.state
 
     delete other.open
 
     return (
-      <ReactCSSTransitionGroup 
-        transitionName="bfd-modal--in" 
-        transitionEnterTimeout={200} 
+      <ReactCSSTransitionGroup
+        transitionName="bfd-modal--in"
+        transitionEnterTimeout={200}
         transitionLeaveTimeout={this.closeTimeout}
       >
         {open && (

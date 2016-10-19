@@ -15,7 +15,17 @@ import classlist from 'classlist'
 
 class TabPanel extends Component {
 
-  componentDidUpdate(prevProps, prevState) {
+  componentWillMount() {
+    this.prepareIsActive(this.props)
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const prevIsActive = this.isActive
+    this.prepareIsActive(nextProps)
+    return this.isActive || prevIsActive !== this.isActive
+  }
+
+  componentDidUpdate() {
     if (this.isActive) {
       const target = classlist(this.$root)
       target.add('bfd-tabs__panel--fade')
@@ -29,29 +39,34 @@ class TabPanel extends Component {
     this.$root = ReactDOM.findDOMNode(this)
   }
 
+  prepareIsActive(props) {
+    const { activeKey } = props
+    const { tabs } = this.context
+    if (activeKey) {
+      this.isActive = activeKey === tabs.props.activeKey
+    } else {
+      const index = tabs.panelCount++
+      this.isActive = index === tabs.state.activeIndex
+    }
+  }
+
   render() {
     const { children, className, activeKey, ...other } = this.props
-    const tabs = this.context.tabs
-    const index = tabs.panelCount++
+    const { tabs } = this.context
 
     if (tabs.props.activeKey) {
-      warning(activeKey, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
+      warning(activeKey || activeKey === 0, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
     }
-    let isActive
-    if (activeKey) {
-      isActive = activeKey === tabs.props.activeKey
-    } else {
-      isActive = index === tabs.state.activeIndex
-    }
-    if (isActive) {
+
+    if (this.isActive) {
       this.children = children
     }
-    this.isActive = isActive
+
     return (
       <div className={classNames('bfd-tabs__panel', {
-        'bfd-tabs__panel--active': isActive
+        'bfd-tabs__panel--active': this.isActive
       }, className)} {...other}>
-        {isActive ? children : this.children}
+        {this.isActive ? children : this.children}
       </div>
     )
   }

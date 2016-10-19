@@ -20,10 +20,10 @@ import { MultipleSelect, Option } from 'bfd/MultipleSelect'
 
 const MultipleSelectURL = () => {
   return (
-    <MultipleSelect 
-      defaultValues={[1, 2]} 
-      url="/data/MultipleSelect.json" 
-      render={item => <Option value={item.id}>{item.name}</Option>} 
+    <MultipleSelect
+      defaultValues={[1, 2]}
+      url="/data/MultipleSelect.json"
+      render={item => <Option value={item.id}>{item.name}</Option>}
     />
   )
 }

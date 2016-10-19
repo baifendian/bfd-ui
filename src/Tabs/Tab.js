@@ -32,12 +32,12 @@ class Tab extends Component {
   }
 
   render() {
-    const { 
-      children, className, activeKey, abolishClose, ...other 
+    const {
+      children, className, activeKey, abolishClose, ...other
     } = this.props
     const tabs = this.context.tabs
     const index = tabs.tabCount++
-    
+
     if (tabs.props.activeKey) {
       warning(activeKey, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
     }
@@ -55,12 +55,12 @@ class Tab extends Component {
           <span className="bfd-tabs__tab-content">{children}</span>
           {
             tabs.props.dynamic && !abolishClose && (
-              <Button 
-                transparent 
-                icon="remove" 
+              <Button
+                transparent
+                icon="remove"
                 size="sm"
-                className="bfd-tabs__tab-remove" 
-                onClick={this.handleClose.bind(this, index)} 
+                className="bfd-tabs__tab-remove"
+                onClick={this.handleClose.bind(this, index)}
               />
             )
           }
