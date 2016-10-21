@@ -38,7 +38,6 @@ class DataTable extends Component {
 
   componentWillMount() {
     if (this.props.data) {
-      console.log(this.props.data)
       this.setState({
         items: {
           totalList: this.props.data.totalList || [],
@@ -61,7 +60,7 @@ class DataTable extends Component {
 
   render() {
     const self = this
-    let url = this.props.url || ""
+    let url = this.props.url || ''
     const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
       // 新增自动分页功能
