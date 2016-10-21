@@ -1,0 +1,15 @@
+/**
+ * @title 基本功能
+ */
+import Tooltip from 'bfd/Tooltip'
+import Icon from 'bfd/Icon'
+
+const TooltipBasic = () => {
+  return (
+    <Tooltip title="hello, tooltip">
+      <Icon type="question-circle" />
+    </Tooltip>
+  )
+}
+
+@component Tooltip

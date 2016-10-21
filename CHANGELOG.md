@@ -1,13 +1,15 @@
-## v1.1.2
+## v1.2.0
 
-`2016-10-20`
+`2016-10-21`
 
+- 新增组件 Tooltip
 - Percentage 新增属性 width 及样式升级
 - DropdownMenu、DatePicker 样式升级
 - 修复 NavItem blank 模式下 URL 变化的问题
 - 修复 Checkbox、Radio 不支持 onMouseDown 等事件的问题
 - 优化 Modal 性能，关闭状态下不再渲染
-- 优化 Tabs 性能，更新时未激活的 TabPanel 不再渲染；TabPanel 增加淡入效果
+- 优化 Tabs 性能，重新渲染时隐藏的 TabPanel 不再渲染；TabPanel 增加淡入效果
+- 优化 TextOverflow 交互效果并自适应显示位置
 
 
 ## v1.1.1

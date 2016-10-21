@@ -63,6 +63,9 @@
     "name": "message",
     "cn": "全局提示"
   }, {
+    "name": "Tooltip",
+    "cn": "提示框"
+  }, {
     "name": "Switch",
     "cn": "开关"
   }, {

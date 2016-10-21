@@ -26,7 +26,8 @@ class AutoComplete extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'value' in nextProps && this.setState({value: nextProps.value})  
+    'value' in nextProps && this.setState({value: nextProps.value})
+    'source' in nextProps && this.setState({result: nextProps.source})
   }
 
   handleInput(value) {
@@ -71,7 +72,7 @@ class AutoComplete extends Component {
           else index--
         }
         this.setState({
-          index, 
+          index,
           value: result[index] || this.lastValue
         })
       }
@@ -86,25 +87,25 @@ class AutoComplete extends Component {
     const { open, index, result, value } = this.state
     const { className, source, onFocus, onKeyDown, onChange, ...other } = this.props
     return (
-      <Dropdown 
+      <Dropdown
         className={classnames('bfd-auto-complete', className)}
-        open={open} 
+        open={open}
         onToggle={open => this.setState({ open })}
       >
         <DropdownToggle>
-          <ClearableInput 
+          <ClearableInput
             value={value}
-            onKeyDown={::this.handleKeyDown} 
+            onKeyDown={::this.handleKeyDown}
             onChange={::this.handleInput}
-            {...other} 
+            {...other}
           />
         </DropdownToggle>
         <DropdownMenu>
           <ul className="bfd-auto-complete__result">
           {result.map((item, i) => (
-            <li 
+            <li
               key={i}
-              className={classnames({'bfd-auto-complete__option--active': index === i})} 
+              className={classnames({'bfd-auto-complete__option--active': index === i})}
               onClick={this.handleSelect.bind(this, item)}
             >
               {item}

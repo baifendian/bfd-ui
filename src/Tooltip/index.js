@@ -7,18 +7,17 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import warning from 'warning'
-import tooltip from '../Tooltip/tooltip'
-import './index.less'
+import tooltip from './tooltip'
 
-const TextOverflow = props => {
+const Tooltip = props => {
 
-  const { children } = props
+  const { children, title } = props
 
   if (process.env.NODE_ENV !== 'production') {
-    warning(!children.length, 'Children should be single, check the children of TextOverflow')
+    warning(!children.length, 'Children should be single, check the children of Tooltip.')
   }
 
   let timer
@@ -26,19 +25,22 @@ const TextOverflow = props => {
   return React.cloneElement(children, {
     onMouseEnter: e => {
       const target = e.currentTarget
-      if (target.offsetWidth < target.scrollWidth) {
-        tooltip.clearCloseTimer()
-        timer = setTimeout(() => {
-          tooltip(children.props.children, target)
-        }, 200)
-      }
+      tooltip.clearCloseTimer()
+      timer = setTimeout(() => {
+        tooltip(title, target)
+      }, 200)
     },
     onMouseLeave: () => {
       clearTimeout(timer)
       tooltip.registerCloseTimer(setTimeout(tooltip.close, 200))
-    },
-    className: classnames(children.props.className, 'bfd-text-overflow')
+    }
   })
 }
 
-export default TextOverflow
+Tooltip.propTypes = {
+
+  // 提示框显示内容，可以是文本字符串，也可以是 React 元素
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+}
+
+export default Tooltip
