@@ -10,6 +10,7 @@
 - 优化 Modal 性能，关闭状态下不再渲染
 - 优化 Tabs 性能，重新渲染时隐藏的 TabPanel 不再渲染；TabPanel 增加淡入效果
 - 优化 TextOverflow 交互效果并自适应显示位置
+- 修复 Slider 宽度自适应问题
 
 
 ## v1.1.1

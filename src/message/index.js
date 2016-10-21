@@ -28,9 +28,9 @@ class Message extends Component {
       <ReactCSSTransitionGroup transitionName="bfd-message--in" transitionEnterTimeout={200} transitionLeaveTimeout={150}>
         {show && (
           <div className={classnames('bfd-message', {[`bfd-message--${type}`]: type})}>
-            <Icon 
-              className="bfd-message__symbol" 
-              type={type === 'success' ? 'check': 'warning'} 
+            <Icon
+              className="bfd-message__symbol"
+              type={type === 'success' ? 'check': 'warning'}
             />
             {message}
           </div>
