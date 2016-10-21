@@ -50,7 +50,7 @@ class App extends Component {
           <Col>
             <Link to="/" className="header__logo">
               <svg dangerouslySetInnerHTML={{__html: '<use xlink:href="#logo"></use>'}} />
-              BFD UI <sub>v1.1.1</sub>
+              BFD UI <sub>v1.2.0</sub>
             </Link>
           </Col>
           <Col className="header__nav">
@@ -65,9 +65,9 @@ class App extends Component {
                 {this.renderNav()}
               </DropdownMenu>
             </Dropdown>
-            <a 
-              href="http://github.com/baifendian/bfd-ui" 
-              target="_blank" 
+            <a
+              href="http://github.com/baifendian/bfd-ui"
+              target="_blank"
               className="header__github"
             >
               <Icon type="github" />
