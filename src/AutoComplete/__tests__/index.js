@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import AutoComplete from '../index'
@@ -17,6 +17,31 @@ describe('AutoComplete', () => {
       }
     })
     expect(handleChange).toBeCalledWith('1')
+  })
+
+  it('should update works', () => {
+    class App extends Component {
+      constructor() {
+        super()
+        this.state = {
+          source: []
+        }
+      }
+      componentDidMount() {
+        this.setState({
+          value: 'a',
+          source: ['test']
+        })
+      }
+      render() {
+        const { value, source } = this.state
+        return <AutoComplete value={value} source={source} onChange={jest.fn()} />
+      }
+    }
+    const instance = TestUtils.renderIntoDocument(<App />)
+    const container = findDOMNode(instance)
+    expect(container.querySelector('input').value).toBe('a')
+    expect(container.querySelectorAll('.bfd-auto-complete__result li').length).toBe(1)
   })
 
   it('should search works', () => {
