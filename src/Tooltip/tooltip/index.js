@@ -36,7 +36,7 @@ class Tooltip extends Component {
       const triggerRect = this.state.trigger.getBoundingClientRect()
       const arrowHeight = 10
       const tooltipHeight = tooltipRect.height + arrowHeight
-      const [scrollLeft, scrollTop] = this.getDocumentScroll()
+      const scrollTop = this.getDocumentScrollTop()
 
       const left = triggerRect.left - tooltipRect.width / 2 + triggerRect.width / 2 + 'px'
       let top
@@ -54,10 +54,8 @@ class Tooltip extends Component {
     }
   }
 
-  getDocumentScroll() {
-    const scrollLeft = document.documentElement && document.documentElement.scrollLeft || document.body.scrollLeft
-    const scrollTop = document.documentElement && document.documentElement.scrollTop || document.body.scrollTop
-    return [scrollLeft, scrollTop]
+  getDocumentScrollTop() {
+    return document.documentElement && document.documentElement.scrollTop || document.body.scrollTop
   }
 
   open(trigger, content) {
