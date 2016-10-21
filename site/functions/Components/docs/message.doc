@@ -5,8 +5,9 @@ import message from 'bfd/message'
 import Button from 'bfd/Button'
 
 const MessageSuccess = () => {
+  let i = 0
   return (
-    <Button onClick={() => message.success('操作成功')}>点击成功</Button>
+    <Button onClick={() => message.success('操作成功' + i++)}>点击成功</Button>
   )
 }
 

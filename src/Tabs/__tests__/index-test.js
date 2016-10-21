@@ -28,7 +28,7 @@ describe('Tabs', () => {
 
   it('should activeIndex works', () => {
     const instance = TestUtils.renderIntoDocument(
-      <Tabs activeIndex={1}>
+      <Tabs activeIndex={1} onChange={jest.fn()}>
         <TabList>
           <Tab>a</Tab>
           <Tab>b</Tab>
@@ -42,7 +42,7 @@ describe('Tabs', () => {
 
   it('should activeKey works', () => {
     const instance = TestUtils.renderIntoDocument(
-      <Tabs activeKey="b">
+      <Tabs activeKey="b" onChange={jest.fn()}>
         <TabList>
           <Tab activeKey="a">a</Tab>
           <Tab activeKey="b">b</Tab>

@@ -26,17 +26,12 @@ class TabPanel extends Component {
   }
 
   componentDidUpdate() {
-    if (this.isActive) {
-      const target = classlist(this.$root)
-      target.add('bfd-tabs__panel--fade')
-      setTimeout(() => {
-        target.remove('bfd-tabs__panel--fade')
-      }, 0)
-    }
+    this.animate()
   }
 
   componentDidMount() {
     this.$root = ReactDOM.findDOMNode(this)
+    this.animate()
   }
 
   prepareIsActive(props) {
@@ -47,6 +42,16 @@ class TabPanel extends Component {
     } else {
       const index = tabs.panelCount++
       this.isActive = index === tabs.state.activeIndex
+    }
+  }
+
+  animate() {
+    if (this.isActive) {
+      const target = classlist(this.$root)
+      target.add('bfd-tabs__panel--fade')
+      setTimeout(() => {
+        target.remove('bfd-tabs__panel--fade')
+      }, 10)
     }
   }
 
