@@ -22,7 +22,6 @@ class TreeSelect extends Component {
 
   constructor(props) {
     super()
-    this.update = update.bind(this)
     this.state = {
       value: props.value || props.defaultValue,
       data: props.data || props.defaultData
@@ -46,7 +45,7 @@ class TreeSelect extends Component {
     const { value } = this.state
     const { render, multiple } = this.props
     list && list.forEach((item, i) => {
-      warning(item.value, '`TreeSelect` data item should have a `value` property which type should to be `String`.')
+      warning(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
       const _path = [...path, i]
       const title = !render ? item.name : render(item)
       if (multiple) {
@@ -56,13 +55,13 @@ class TreeSelect extends Component {
           label: title
         })
         if (!!item.checked !== checked) {
-          newData = update.silent(newData, 'set', checked, [..._path, 'checked'])
+          newData = update(newData, 'set', [..._path, 'checked'], checked)
         }
       } else {
         const active = item.value === value
         active && (this.title = title)
         if (!!item.active !== active) {
-          newData = update.silent(newData, 'set', active, [..._path, 'active'])
+          newData = update(newData, 'set', [..._path, 'active'], active)
         }
       }
       newData = this.parseData(item.children, newData, [..._path, 'children'])

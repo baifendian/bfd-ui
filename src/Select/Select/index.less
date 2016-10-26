@@ -8,9 +8,6 @@
  */
 
 .bfd-select {
-  width: 160px;
-  line-height: 28px;
-  height: 30px;
   .bfd-dropdown__menu {
     .bfd-clearable-input {
       width: 100%;
@@ -29,13 +26,21 @@
 }
 
 .bfd-select--sm {
-  height: 22px;
-  line-height: 20px;
+  .bfd-dropdown__toggle {
+    line-height: 20px;
+    > .bfd-fetch {
+      height: 20px;
+    }
+  }
 }
 
 .bfd-select--lg {
-  height: 40px;
-  line-height: 38px;
+  .bfd-dropdown__toggle {
+    line-height: 38px;
+    > .bfd-fetch {
+      height: 38px;
+    }
+  }
 }
 
 .bfd-select__options {

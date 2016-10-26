@@ -26,7 +26,7 @@ class MultipleSelect extends Component {
       data: props.data || [],
       values: props.values || props.defaultValues || [],
       searchValue: '',
-      index: -1
+      index: -2
     }
   }
 
@@ -183,9 +183,8 @@ class MultipleSelect extends Component {
         {
           options.length ? (
             <ul>
-              {wrapperOptions}
               <li className={classnames({
-                'bfd-multiple-select__option--active': index === options.length
+                'bfd-multiple-select__option--active': index === -1
               })}>
                 <Checkbox
                   checked={isAll}
@@ -195,6 +194,7 @@ class MultipleSelect extends Component {
                   全选
                 </Checkbox>
               </li>
+              {wrapperOptions}
             </ul>
           ) : <div className="bfd-multiple-select__empty">无匹配选项</div>
         }

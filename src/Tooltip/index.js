@@ -27,11 +27,11 @@ const Tooltip = props => {
       tooltip.clearCloseTimer()
       timer = setTimeout(() => {
         tooltip(title, target)
-      }, 200)
+      }, 150)
     },
     onMouseLeave: () => {
       clearTimeout(timer)
-      tooltip.registerCloseTimer(setTimeout(tooltip.close, 200))
+      tooltip.registerCloseTimer(setTimeout(tooltip.close, 150))
     }
   })
 }

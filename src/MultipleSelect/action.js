@@ -54,18 +54,18 @@ export default {
     let { index } = this.state
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (key === 'ArrowDown') {
-        if (index === options.length) index = 0
+        if (index === options.length - 1) index = -1
         else index++
       }
       if (key === 'ArrowUp') {
         e.preventDefault()
-        if (index === 0) index = options.length
+        if (index === -1) index = options.length - 1
         else index--
       }
       this.setState({ index })
     }
-    if (key === 'Enter' && index > -1) {
-      if (index < options.length) {
+    if (key === 'Enter' && index > -2) {
+      if (index > -1) {
         const value = options[index].props.value
         if (this.valueSet.has(value)) {
           this.removeValue(value)

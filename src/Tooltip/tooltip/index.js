@@ -77,7 +77,7 @@ class Tooltip extends Component {
   handleMouseLeave() {
     this.registerCloseTimer(setTimeout(() => {
       this.close()
-    }, 200))
+    }, 150))
   }
 
   registerCloseTimer(timer) {

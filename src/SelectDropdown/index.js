@@ -27,7 +27,13 @@ class SelectDropdown extends Component {
     } = this.props
 
     const Toggle = url && hasPropValue ? (
-      <Fetch spinnerHeight={20} url={url} onSuccess={onLoad}>{title}</Fetch>
+      <Fetch
+        spinnerHeight={20}
+        url={url}
+        onSuccess={onLoad}
+      >
+        {title}
+      </Fetch>
     ) : title
 
     return (

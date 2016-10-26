@@ -31,7 +31,7 @@ class CheckboxGroup extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   change(...args) {
-    const selects = this.update(args)
+    const selects = this.update(...args)
     this.props.onChange && this.props.onChange(selects)
   }
 
