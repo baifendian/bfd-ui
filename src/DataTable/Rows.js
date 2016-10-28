@@ -48,7 +48,7 @@ class Rows extends Component {
     const column = this.props.column
     const currentPage = this.props.currentPage || 1
     const pageSize = this.props.pageSize || 0
-    
+
     return (
       <tbody>
       {
@@ -61,11 +61,11 @@ class Rows extends Component {
               delete this.selectedRow[item[this.column.primary]]
             }
           }
-          
+
           const isSelect = item.isSelect || false
           const isDisabled = item.disabled || false
-          const checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
+          const checkboxTd = this.props.onCheckboxSelect
+            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td>
             : null
           return (
             <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
@@ -79,13 +79,13 @@ class Rows extends Component {
                     }
                     // 操作
                     if (columns[col] == 'operation') {
-                      return <td key={String( i ) + j}>{columns['render'](item, this)}</td>
+                      return <td key={String( i ) + j}>{columns['render'](item, this, i)}</td>
                     }
                     // 正常非字段编辑列
                     if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
                       const style = {display: columns.hide == true ? 'none' : ''}
                       if (typeof columns['render'] === 'function') {
-                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item)}</td>
+                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item, i)}</td>
                       } else {
                         return <td style={style} key={String(i) + j}>{item[columns[col]]}</td>
                       }

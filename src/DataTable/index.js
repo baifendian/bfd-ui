@@ -136,6 +136,7 @@ class DataTable extends Component {
           this.state.items.totalList.length > 0
             ? this.props.showPage == 'true'
               ? (<Paging
+                  hideGo={this.props.hideGo}
                   currentPage={this.state.items.currentPage}
                   totalPageNum={this.state.items.totalPageNum}
                   pageSize={this.props.howRow}
@@ -355,6 +356,9 @@ DataTable.propTypes = {
 
   // 列名称点击排序事件，返回列名称和排序状态
   onOrder: PropTypes.func,
+
+  // 隐藏页面跳转功能
+  hideGo: PropTypes.bool,
 
   customProp({ data, url }) {
     if (data && url) {

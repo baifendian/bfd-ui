@@ -22,7 +22,7 @@ class DataTableDemo extends Component {
         title: '姓名',
         order: true,
         width: '100px',
-        render: (text, item) => {
+        render: (text, item, index) => {
           return <a href="javascript:void(0);" onClick={this.handleClick.bind(this, item)}>{text}</a>
         },
         key: 'name'
@@ -34,7 +34,7 @@ class DataTableDemo extends Component {
         title: '国家/地区',
         key: 'country',
         width: '20%',
-        render: (text, item) => {
+        render: (text, item, index) => {
           return item.country + "/" + item.area
         }
       }, {
@@ -58,16 +58,16 @@ class DataTableDemo extends Component {
 
   render() {
     return (
-      <DataTable 
-        url={this.state.url} 
-        onPageChange={::this.onPageChange} 
+      <DataTable
+        url={this.state.url}
+        onPageChange={::this.onPageChange}
         showPage="true"
-        column={this.state.column} 
+        column={this.state.column}
         howRow={10}
         onRowClick={::this.handleRowClick}
         onOrder={::this.handleOrder}
         onCheckboxSelect={::this.handleCheckboxSelect}
-      /> 
+      />
     )
   }
 
