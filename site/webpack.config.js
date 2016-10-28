@@ -69,7 +69,8 @@ var config = {
     alias: {
       'bfd': path.resolve(__dirname, '../src'),
       'public': path.resolve(__dirname, './public'),
-      'scaffolding': path.resolve(__dirname, '../../create-bfd-app')
+      'scaffolding': path.resolve(__dirname, '../../create-bfd-app'),
+      'react-update': path.resolve(__dirname, '../../react-update/src')
     }
   },
   plugins: []

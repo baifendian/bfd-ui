@@ -30,12 +30,12 @@ const TextOverflow = props => {
         tooltip.clearCloseTimer()
         timer = setTimeout(() => {
           tooltip(children.props.children, target)
-        }, 200)
+        }, 150)
       }
     },
     onMouseLeave: () => {
       clearTimeout(timer)
-      tooltip.registerCloseTimer(setTimeout(tooltip.close, 200))
+      tooltip.registerCloseTimer(setTimeout(tooltip.close, 150))
     },
     className: classnames(children.props.className, 'bfd-text-overflow')
   })

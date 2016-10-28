@@ -8,15 +8,19 @@
  */
 
 .bfd-select-dropdown {
+  min-width: 160px;
   .bfd-dropdown__toggle {
+    line-height: 28px;
     background-color: #fff;
     border: 1px solid #ececec;
     border-radius: 2px;
     position: relative;
-    height: 100%;
     &:focus {
       border-color: #42a5f5;
       outline: none;
+    }
+    > .bfd-fetch {
+      height: 28px;
     }
   }
   .bfd-dropdown__menu {
