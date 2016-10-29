@@ -17,9 +17,8 @@ class Tab extends Component {
   handleClick(index, e) {
     e.preventDefault()
     const tabs = this.context.tabs
-    tabs.setState({activeIndex: index})
-    if (this.props.activeKey) {
-      tabs.setState({activeKey: this.props.activeKey})
+    if (!('activeKey' in this.props)) {
+      tabs.setState({activeIndex: index})
     }
     tabs.props.onChange && tabs.props.onChange(index, this.props.activeKey)
   }
@@ -35,14 +34,16 @@ class Tab extends Component {
     const {
       children, className, activeKey, abolishClose, ...other
     } = this.props
-    const tabs = this.context.tabs
+    const { tabs } = this.context
     const index = tabs.tabCount++
 
-    if (tabs.props.activeKey) {
-      warning(activeKey, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
-    }
+    'activeKey' in tabs.props && warning(
+      'activeKey' in this.props,
+      'You set `activeKey` for Tabs but no `activeKey` for Tab'
+    )
+
     let isActive
-    if (activeKey) {
+    if ('activeKey' in this.props) {
       isActive = activeKey === tabs.props.activeKey
     } else {
       isActive = index === tabs.state.activeIndex

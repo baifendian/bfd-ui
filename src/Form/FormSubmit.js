@@ -22,7 +22,7 @@ class FormSubmit extends Component {
       process: false
     }
   }
-  
+
   handleClick() {
     const { onClick } = this.props
     const { form } = this.context
@@ -44,7 +44,7 @@ class FormSubmit extends Component {
   toggleProcess(process) {
     clearTimeout(this.timer)
     this.timer = setTimeout(() => {
-      this.setState({ process })  
+      this.setState({ process })
     }, process ? 150 : 0)
   }
 
@@ -53,9 +53,9 @@ class FormSubmit extends Component {
     const { process } = this.state
     const { form } = this.context
     return (
-      <Button 
-        style={{marginLeft: `${form.props.labelWidth}px`}} 
-        classnames={classnames('bfd-form-submit'), className}
+      <Button
+        style={{marginLeft: `${form.props.labelWidth}px`}}
+        className={classnames('bfd-form-submit'), className}
         onClick={::this.handleClick}
         disabled={process}
         {...other}

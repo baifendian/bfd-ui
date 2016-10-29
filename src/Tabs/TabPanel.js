@@ -35,10 +35,9 @@ class TabPanel extends Component {
   }
 
   prepareIsActive(props) {
-    const { activeKey } = props
     const { tabs } = this.context
-    if (activeKey) {
-      this.isActive = activeKey === tabs.props.activeKey
+    if ('activeKey' in props) {
+      this.isActive = props.activeKey === tabs.props.activeKey
     } else {
       const index = tabs.panelCount++
       this.isActive = index === tabs.state.activeIndex
@@ -59,10 +58,12 @@ class TabPanel extends Component {
     const { children, className, activeKey, ...other } = this.props
     const { tabs } = this.context
 
-    if (tabs.props.activeKey) {
-      warning(activeKey || activeKey === 0, 'You set `activeKey` for Tabs but no `activeKey` for Tab')
-    }
+    'activeKey' in tabs.props && warning(
+      'activeKey' in this.props,
+      'You set `activeKey` for `Tabs` but no `activeKey` for `TabPanel`'
+    )
 
+    // Should not render and unmount when not acitve
     if (this.isActive) {
       this.children = children
     }

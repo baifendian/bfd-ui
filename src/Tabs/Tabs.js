@@ -26,9 +26,7 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isNaN(nextProps.activeIndex)) {
-      this.setState({activeIndex: nextProps.activeIndex})
-    }
+    'activeIndex' in nextProps && this.setState({activeIndex: nextProps.activeIndex})
   }
 
   componentWillUpdate() {

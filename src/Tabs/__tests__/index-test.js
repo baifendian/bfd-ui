@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import TestUtils from 'react-addons-test-utils'
 import { Tabs, TabList, Tab, TabPanel } from '../index'
@@ -98,5 +98,73 @@ describe('Tabs', () => {
     )
     TestUtils.Simulate.click(findDOMNode(instance).querySelector('.bfd-tabs__tab-remove'))
     expect(handleClose).toBeCalled(0, undefined)
+  })
+
+  it('should controled activeIndex works', () => {
+    class App extends Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          activeIndex: 0
+        }
+      }
+      componentDidMount() {
+        this.setState({activeIndex: 1})
+      }
+      render() {
+        const { activeIndex } = this.state
+        return (
+          <Tabs activeIndex={activeIndex} onChange={jest.fn()}>
+            <TabList>
+              <Tab>a</Tab>
+              <Tab>b</Tab>
+            </TabList>
+            <TabPanel>a</TabPanel>
+            <TabPanel>b</TabPanel>
+          </Tabs>
+        )
+      }
+    }
+    const instance = TestUtils.renderIntoDocument(<App />)
+    const tabNodes = findDOMNode(instance).querySelectorAll('.bfd-tabs__tab')
+    const panelNodes = findDOMNode(instance).querySelectorAll('.bfd-tabs__panel')
+    expect(tabNodes[0].className).not.toContain('active')
+    expect(tabNodes[1].className).toContain('active')
+    expect(panelNodes[0].className).not.toContain('active')
+    expect(panelNodes[1].className).toContain('active')
+  })
+
+  it('should controled activeKey works', () => {
+    class App extends Component {
+      constructor(props) {
+        super(props)
+        this.state = {
+          activeKey: 0
+        }
+      }
+      componentDidMount() {
+        this.setState({activeKey: 1})
+      }
+      render() {
+        const { activeKey } = this.state
+        return (
+          <Tabs activeKey={activeKey} onChange={jest.fn()}>
+            <TabList>
+              <Tab activeKey={0}>a</Tab>
+              <Tab activeKey={1}>b</Tab>
+            </TabList>
+            <TabPanel activeKey={0}>a</TabPanel>
+            <TabPanel activeKey={1}>b</TabPanel>
+          </Tabs>
+        )
+      }
+    }
+    const instance = TestUtils.renderIntoDocument(<App />)
+    const tabNodes = findDOMNode(instance).querySelectorAll('.bfd-tabs__tab')
+    const panelNodes = findDOMNode(instance).querySelectorAll('.bfd-tabs__panel')
+    expect(tabNodes[0].className).not.toContain('active')
+    expect(tabNodes[1].className).toContain('active')
+    expect(panelNodes[0].className).not.toContain('active')
+    expect(panelNodes[1].className).toContain('active')
   })
 })
