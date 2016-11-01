@@ -1,4 +1,6 @@
 - MultipleSelect 全选置顶
+- Tooltip、TextOverflow 新增属性 direction，支持自定义方向
+- Tooltip 新增属性 triggerMode，支持自定义触发方式
 
 
 ## v1.2.0
