@@ -7,39 +7,94 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import warning from 'warning'
-import tooltip from './tooltip'
+import Popover from '../Popover'
 
-const Tooltip = props => {
+class Tooltip extends Component {
 
-  const { children, title } = props
-
-  if (process.env.NODE_ENV !== 'production') {
-    warning(!children.length, 'Children should be single, check the children of Tooltip.')
+  constructor(props) {
+    super()
+    if (props.triggerMode === 'click') {
+      this.handleBodyClick = () => {
+        this.popover.close()
+      }
+    }
   }
 
-  let timer
+  componentDidMount() {
+    this.popover = new Popover(this.getPopoverProps())
+    window.addEventListener('click', this.handleBodyClick)
+  }
 
-  return React.cloneElement(children, {
-    onMouseEnter: e => {
-      const target = e.currentTarget
-      tooltip.clearCloseTimer()
-      timer = setTimeout(() => {
-        tooltip(title, target)
-      }, 150)
-    },
-    onMouseLeave: () => {
-      clearTimeout(timer)
-      tooltip.registerCloseTimer(setTimeout(tooltip.close, 150))
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleBodyClick)
+  }
+
+  getPopoverProps() {
+    const { triggerMode, title, direction } = this.props
+    const props = {
+      triggerNode: ReactDOM.findDOMNode(this),
+      content: title,
+      direction
     }
-  })
+    if (triggerMode === 'hover') {
+      let timer
+      props.onMouseEnter = () => {
+        clearTimeout(this.closeTimer)
+      }
+      props.onMouseLeave = () => {
+        this.closeTimer = setTimeout(::this.popover.close, 150)
+      }
+    } else {
+      props.onClick = e => e.stopPropagation()
+    }
+    return props
+  }
+
+  getTriggerProps() {
+    const { triggerMode } = this.props
+    const props = {}
+    if (triggerMode === 'hover') {
+      props.onMouseEnter = () => {
+        clearTimeout(this.closeTimer)
+        this.openTimer = setTimeout(::this.popover.open, 150)
+      }
+      props.onMouseLeave = () => {
+        clearTimeout(this.openTimer)
+        this.closeTimer = setTimeout(::this.popover.close, 150)
+      }
+    } else {
+      props.onClick = e => {
+        e.stopPropagation()
+        this.popover.toggle()
+      }
+    }
+    return props
+  }
+
+  render() {
+    const { children } = this.props
+    warning(!children.length, 'Children should be single, check the children of Tooltip.')
+    return React.cloneElement(children, this.getTriggerProps())
+  }
+}
+
+Tooltip.defaultProps = {
+  triggerMode: 'hover'
 }
 
 Tooltip.propTypes = {
 
   // 提示框显示内容，可以是文本字符串，也可以是 React 元素
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+
+  // 提示框位置方向，可选值：up/down/left/right，默认自适应
+  direction: PropTypes.string,
+
+  // 提示框触发方式，可选值：hover/click，默认 hover
+  triggerMode: PropTypes.string
 }
 
 export default Tooltip
