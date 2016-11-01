@@ -16,11 +16,8 @@ import classlist from 'classlist'
 class Popover extends Component {
 
   constructor(props) {
-    super(props)
-    this.state = {
-      show: false,
-      content: props.content
-    }
+    super()
+    this.state = props
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -53,7 +50,7 @@ class Popover extends Component {
         top = sourceRect.top + sourceRect.height + scrollTop
       }
     } else {
-      top = sourceRect.top + sourceRect.height / 2 -  targetRect.height / 2 + scrollTop
+      top = sourceRect.top + sourceRect.height / 2 - targetRect.height / 2 + scrollTop
       if (direction === 'left') {
         left = sourceRect.left - targetRect.width + scrollLeft
       } else {
@@ -64,8 +61,8 @@ class Popover extends Component {
   }
 
   setPosition() {
-    const { triggerNode } = this.props
-    let { direction } = this.props
+    const { triggerNode } = this.state
+    let { direction } = this.state
 
     const rootNodeRect = this.rootNode.getBoundingClientRect()
     const triggerRect = triggerNode.getBoundingClientRect()
@@ -88,16 +85,15 @@ class Popover extends Component {
   }
 
   getDocumentScroll() {
-    const docEle = document.documentElement
-    const docBody = document.body
+    const { documentElement, body } = document
     return [
-      docEle && docEle.scrollTop || docBody.scrollTop,
-      docEle && docEle.scrollLeft || docBody.scrollLeft
+      documentElement && documentElement.scrollTop || body.scrollTop,
+      documentElement && documentElement.scrollLeft || body.scrollLeft
     ]
   }
 
-  setContent(content) {
-    this.setState({ content })
+  updateState(state) {
+    this.setState(state)
   }
 
   open() {
@@ -151,13 +147,18 @@ export default class {
   }
 
   mount() {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-    this.popover = ReactDOM.render(<Popover {...this.props} />, container)
+    this.containerNode = document.createElement('div')
+    document.body.appendChild(this.containerNode)
+    this.popover = ReactDOM.render(<Popover {...this.props} />, this.containerNode)
   }
 
-  setContent(content) {
-    this.popover.setContent(content)
+  unmount() {
+    this.containerNode && document.body.removeChild(this.containerNode)
+  }
+
+  updateProps(nextProps) {
+    Object.assign(this.props, nextProps)
+    this.popover && this.popover.updateState(nextProps)
   }
 
   open() {

@@ -1,6 +1,8 @@
 - MultipleSelect 全选置顶
 - Tooltip、TextOverflow 新增属性 direction，支持自定义方向
 - Tooltip 新增属性 triggerMode，支持自定义触发方式
+- Editable 切换到编辑状态后自动选中；修复取消编辑后值未重置的问题
+- TreeSelect 新增属性 getIcon、getUrl
 
 
 ## v1.2.0

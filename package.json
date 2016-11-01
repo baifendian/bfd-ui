@@ -34,7 +34,7 @@
     "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-router": "^1.0.2",
-    "react-update": "^0.3.9",
+    "react-update": "^0.4.1",
     "style-loader": "^0.13.0",
     "warning": "^3.0.0"
   },

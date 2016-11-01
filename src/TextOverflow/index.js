@@ -16,15 +16,23 @@ import './index.less'
 
 class TextOverflow extends Component {
 
+  componentWillReceiveProps(nextProps) {
+    const { direction } = nextProps
+    this.popover.updateProps({ direction })
+  }
+
   componentDidMount() {
     this.popover = new Popover(this.getPopoverProps())
   }
 
+  componentWillUnmount() {
+    this.popover.unmount()
+  }
+
   getPopoverProps() {
-    const { children, direction } = this.props
+    const { direction } = this.props
     return {
       triggerNode: ReactDOM.findDOMNode(this),
-      content: children.props.children,
       direction,
       onMouseEnter: () => {
         clearTimeout(this.closeTimer)
@@ -36,20 +44,23 @@ class TextOverflow extends Component {
   }
 
   getTriggerProps() {
-    const { className } = this.props
+    const { children } = this.props
     return {
       onMouseEnter: e => {
         const target = e.currentTarget
         if (target.offsetWidth < target.scrollWidth) {
           clearTimeout(this.closeTimer)
-          this.openTimer = setTimeout(::this.popover.open, 150)
+          this.openTimer = setTimeout(() => {
+            this.popover.updateProps({content: children.props.children})
+            this.popover.open()
+          }, 150)
         }
       },
       onMouseLeave: () => {
         clearTimeout(this.openTimer)
         this.closeTimer = setTimeout(::this.popover.close, 150)
       },
-      className: classnames(className, 'bfd-text-overflow')
+      className: classnames(children.props.className, 'bfd-text-overflow')
     }
   }
 

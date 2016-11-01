@@ -97,7 +97,7 @@ class TreeSelect extends Component {
 
     const {
       className, placeholder, defaultValue, onChange, url, defaultData, onDataChange,
-      multiple, shouldNodeSelectable, shouldNodeCheckable, ...other
+      multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, ...other
     } = this.props
     const { value, data } = this.state
 
@@ -115,6 +115,8 @@ class TreeSelect extends Component {
     const treeProps = {
       shouldNodeSelectable,
       shouldNodeCheckable,
+      getIcon,
+      getUrl,
       data: this.parseData(data),
       render: treeRender,
       onChange: data => {
@@ -204,6 +206,12 @@ TreeSelect.propTypes = {
 
   // 节点是否可勾选的回调判断，参数(item, path)，返回 false 则节点不可勾选
   shouldNodeCheckable: PropTypes.func,
+
+  // 同 Tree getIcon
+  getIcon: PropTypes.func,
+
+  // 同 Tree getUrl
+  getUrl: PropTypes.func,
 
   customProp(props) {
     if ('value' in props && !props.onChange) {

@@ -20,38 +20,38 @@ class TabPanel extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const prevIsActive = this.isActive
+    this.prevActive = this.active
     this.prepareIsActive(nextProps)
-    return this.isActive || prevIsActive !== this.isActive
+    return this.active || this.prevActive !== this.active
   }
 
   componentDidUpdate() {
-    this.animate()
+    if (this.active && !this.prevActive) {
+      this.animate()
+    }
   }
 
   componentDidMount() {
     this.$root = ReactDOM.findDOMNode(this)
-    this.animate()
+    this.active && this.animate()
   }
 
   prepareIsActive(props) {
     const { tabs } = this.context
     if ('activeKey' in props) {
-      this.isActive = props.activeKey === tabs.props.activeKey
+      this.active = props.activeKey === tabs.props.activeKey
     } else {
       const index = tabs.panelCount++
-      this.isActive = index === tabs.state.activeIndex
+      this.active = index === tabs.state.activeIndex
     }
   }
 
   animate() {
-    if (this.isActive) {
-      const target = classlist(this.$root)
-      target.add('bfd-tabs__panel--fade')
-      setTimeout(() => {
-        target.remove('bfd-tabs__panel--fade')
-      }, 10)
-    }
+    const target = classlist(this.$root)
+    target.add('bfd-tabs__panel--fade')
+    setTimeout(() => {
+      target.remove('bfd-tabs__panel--fade')
+    }, 10)
   }
 
   render() {
@@ -64,15 +64,15 @@ class TabPanel extends Component {
     )
 
     // Should not render and unmount when not acitve
-    if (this.isActive) {
+    if (this.active) {
       this.children = children
     }
 
     return (
       <div className={classNames('bfd-tabs__panel', {
-        'bfd-tabs__panel--active': this.isActive
+        'bfd-tabs__panel--active': this.active
       }, className)} {...other}>
-        {this.isActive ? children : this.children}
+        {this.active ? children : this.children}
       </div>
     )
   }

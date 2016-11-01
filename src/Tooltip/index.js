@@ -23,12 +23,21 @@ class Tooltip extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { title, direction } = nextProps
+    this.popover.updateProps({
+      content: title,
+      direction
+    })
+  }
+
   componentDidMount() {
     this.popover = new Popover(this.getPopoverProps())
     window.addEventListener('click', this.handleBodyClick)
   }
 
   componentWillUnmount() {
+    this.popover.unmount()
     window.removeEventListener('click', this.handleBodyClick)
   }
 
@@ -40,7 +49,6 @@ class Tooltip extends Component {
       direction
     }
     if (triggerMode === 'hover') {
-      let timer
       props.onMouseEnter = () => {
         clearTimeout(this.closeTimer)
       }

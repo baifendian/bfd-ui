@@ -29,7 +29,7 @@ class Editable extends Component {
     'value' in nextProps && this.setState({
       value: nextProps.value,
       changedValue: nextProps.value
-    })  
+    })
   }
 
   componentDidMount() {
@@ -42,7 +42,7 @@ class Editable extends Component {
     this.setState({
       editing: true
     }, () => {
-      this.refs.input.focus()
+      this.refs.input.select()
     })
   }
 
@@ -64,7 +64,8 @@ class Editable extends Component {
 
   handleCancel() {
     this.setState({
-      editing: false
+      editing: false,
+      changedValue: this.state.value
     })
     this.props.onCancel && this.props.onCancel()
   }
@@ -77,29 +78,29 @@ class Editable extends Component {
 
   render() {
 
-    const { 
-      className, defaultValue, onChange, onCancel, defaultEditing, ...other 
+    const {
+      className, defaultValue, onChange, onCancel, defaultEditing, ...other
     } = this.props
     const { editing, value, changedValue } = this.state
-    
+
     delete other.value
 
     return (
       <div className={classnames('bfd-editable', className)} {...other}>
       {editing ? (
         <div className="bfd-editable__editing-container">
-          <Input 
-            ref="input" 
-            value={changedValue} 
-            onChange={::this.handleInput} 
+          <Input
+            ref="input"
+            value={changedValue}
+            onChange={::this.handleInput}
             onKeyDown={::this.handleKeyDown}
           />
           <Button icon="check" onClick={::this.handleOk} />
           <Button icon="close" type="minor" onClick={::this.handleCancel} />
         </div>
       ) : (
-        <div 
-          className="bfd-editable__normal-container" 
+        <div
+          className="bfd-editable__normal-container"
           onClick={::this.handleEdit}
         >
           {value}
@@ -114,7 +115,7 @@ Editable.propTypes = {
 
   // 待编辑的值
   value: PropTypes.string,
-  
+
   // 初始化待编辑的值（不可控）
   defaultValue: PropTypes.string,
 

@@ -27,7 +27,7 @@ class App {
       <div className="home__banner">
         <Center>
           <div className="home__banner-center">
-            <h2>百分点 UI 组件库——企业级前端整体解决方案</h2>
+            <h2>BFD UI —— 企业级 React 组件库</h2>
             <h1>UI•BAIFENDIAN</h1>
             <em>当前版本：v1.2.0</em>
             <Link to="/guide#install" className="home__banner-install">
@@ -44,8 +44,8 @@ class App {
         <Center>
           <Row gutter>
             <Col col="md-6" className="home__middle-left">
-              <h2>企业级前端整体解决方案</h2>
-              <p>BFD UI 结合 generator-bfd 脚手架可快速开发集单页面应用、组件化、可视化、大数据交互、权限管理、前后端分离等特性的企业级项目。</p>
+              <h2>企业级前端整体方案</h2>
+              <p>BFD UI 结合 create-bfd-app 脚手架可快速开发集单页面应用、组件化、可视化、大数据交互、权限管理、前后端分离等特性的企业级项目。</p>
             </Col>
             <Col col="md-6">
               <Pre className="home__middle-code">{code}</Pre>

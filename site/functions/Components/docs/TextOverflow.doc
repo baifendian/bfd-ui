@@ -1,5 +1,6 @@
 /**
  * @title 基本功能
+ * @desc 目标元素满足 text-overflow 条件（非行内元素且内容溢出）即可触发
  */
 import TextOverflow from 'bfd/TextOverflow'
 
@@ -10,3 +11,5 @@ const TextOverflowBasic = () => {
     </TextOverflow>
   )
 }
+
+@component TextOverflow

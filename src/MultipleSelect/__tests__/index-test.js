@@ -20,7 +20,7 @@ describe('MultipleSelect', () => {
   })
 
   it('should defaultValues works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <MultipleSelect defaultValues={['1', '2']}>
         <Option value="0">苹果</Option>
@@ -33,7 +33,7 @@ describe('MultipleSelect', () => {
   })
 
   it('should search works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <MultipleSelect defaultValues={[1, 2]}>
         <Option value={0}>苹果</Option>
@@ -63,7 +63,7 @@ describe('MultipleSelect', () => {
   })
 
   it('should onChange works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <MultipleSelect onChange={handleChange}>
         <Option value="0">苹果</Option>
@@ -72,7 +72,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const checkboxes = findDOMNode(instance).querySelectorAll('.bfd-checkbox input')
-    TestUtils.Simulate.change(checkboxes[0], {
+    TestUtils.Simulate.change(checkboxes[1], {
       target: {
         checked: true
       }
@@ -81,7 +81,7 @@ describe('MultipleSelect', () => {
   })
 
   it('should data works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <MultipleSelect data={['a', 'b']} render={item => <Option>{item}</Option>} />
     )
@@ -90,7 +90,7 @@ describe('MultipleSelect', () => {
   })
 
   it('should tagable works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <MultipleSelect tagable />
     )

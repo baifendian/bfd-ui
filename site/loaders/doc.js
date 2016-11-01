@@ -15,11 +15,11 @@ marked.setOptions({
 
 // 智能添加依赖，自动规避重复声明
 const imports = {
-  
+
   list: [],
 
   variables: [],
-  
+
   add(item) {
     let match = item.match(/import (.*?) from(.*)/)
     if (match) {
@@ -100,7 +100,7 @@ module.exports = function (source) {
     } catch(e) {
       dir += '.js'
     }
-    
+
     const sourceCode = fs.readFileSync(dir, 'utf8')
 
     // 组件 props
@@ -170,7 +170,7 @@ module.exports = function (source) {
   source.replace(reg, (match, p1, p2, p3, p4) => {
     [p1, p2, p3, p4].forEach((match, i) => {
       match && callbacks[i](match)
-    })    
+    })
   })
 
   // 提前声明
@@ -209,7 +209,7 @@ ${demo.mainCode}`
     return `<Doc key="${doc.name}" {...${doc}} />`
   })
 
-  return `${imports.getAll().join('\r\n')} 
+  return `${imports.getAll().join('\r\n')}
 
 ${codes.join('\r\n')}
 

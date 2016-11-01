@@ -29,6 +29,7 @@ const TreeSelectBasic = () => {
     <TreeSelect
       defaultData={data}
       onChange={value => console.log(value)}
+      getIcon={data => data.open ? 'folder-open' : 'folder'}
     />
   )
 }
