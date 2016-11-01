@@ -4,15 +4,7 @@
 [![npm package](https://img.shields.io/npm/v/bfd-ui.svg)](https://www.npmjs.org/package/bfd-ui)
 [![NPM downloads](http://img.shields.io/npm/dm/bfd-ui.svg)](https://npmjs.org/package/bfd-ui)
 
-企业级前端整体解决方案 [http://ui.baifendian.com](http://ui.baifendian.com)
-
-<img width="440" src="./interaction/checkbox.gif">
-<img width="440" src="./interaction/slider.gif">
-<img width="440" src="./interaction/tree.gif">
-<img width="440" src="./interaction/multipleSelect.gif">
-<img width="440" src="./interaction/form.gif">
-<img width="440" src="./interaction/daterange.gif">
-<img width="440" src="./interaction/tabs.gif">
+企业级 React 组件库 [http://ui.baifendian.com](http://ui.baifendian.com)
 
 ## 安装
 
