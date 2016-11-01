@@ -7,38 +7,63 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React from 'react'
+import React, { PropTypes, Component } from 'react'
+import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import warning from 'warning'
-import tooltip from '../Tooltip/tooltip'
+import Popover from '../Popover'
 import './index.less'
 
-const TextOverflow = props => {
+class TextOverflow extends Component {
 
-  const { children } = props
-
-  if (process.env.NODE_ENV !== 'production') {
-    warning(!children.length, 'Children should be single, check the children of TextOverflow')
+  componentDidMount() {
+    this.popover = new Popover(this.getPopoverProps())
   }
 
-  let timer
-
-  return React.cloneElement(children, {
-    onMouseEnter: e => {
-      const target = e.currentTarget
-      if (target.offsetWidth < target.scrollWidth) {
-        tooltip.clearCloseTimer()
-        timer = setTimeout(() => {
-          tooltip(children.props.children, target)
-        }, 150)
+  getPopoverProps() {
+    const { children, direction } = this.props
+    return {
+      triggerNode: ReactDOM.findDOMNode(this),
+      content: children.props.children,
+      direction,
+      onMouseEnter: () => {
+        clearTimeout(this.closeTimer)
+      },
+      onMouseLeave: () => {
+        this.closeTimer = setTimeout(::this.popover.close, 150)
       }
-    },
-    onMouseLeave: () => {
-      clearTimeout(timer)
-      tooltip.registerCloseTimer(setTimeout(tooltip.close, 150))
-    },
-    className: classnames(children.props.className, 'bfd-text-overflow')
-  })
+    }
+  }
+
+  getTriggerProps() {
+    const { className } = this.props
+    return {
+      onMouseEnter: e => {
+        const target = e.currentTarget
+        if (target.offsetWidth < target.scrollWidth) {
+          clearTimeout(this.closeTimer)
+          this.openTimer = setTimeout(::this.popover.open, 150)
+        }
+      },
+      onMouseLeave: () => {
+        clearTimeout(this.openTimer)
+        this.closeTimer = setTimeout(::this.popover.close, 150)
+      },
+      className: classnames(className, 'bfd-text-overflow')
+    }
+  }
+
+  render() {
+    const { children } = this.props
+    warning(!children.length, 'Children should be single, check the children of TextOverflow')
+    return React.cloneElement(children, this.getTriggerProps())
+  }
+}
+
+TextOverflow.propTypes = {
+
+  // 提示框位置方向，可选值：up/down/left/right，默认自适应
+  direction: PropTypes.string
 }
 
 export default TextOverflow
