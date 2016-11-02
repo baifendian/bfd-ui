@@ -29,7 +29,7 @@ class Tooltip extends Component {
   }
 
   componentDidUpdate() {
-    const { title, direction } = nextProps
+    const { title, direction } = this.props
     this.popover.render({
       content: title,
       direction
