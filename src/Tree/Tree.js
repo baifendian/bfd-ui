@@ -46,7 +46,9 @@ class Tree extends Component {
 
   handleNodeSelect(path) {
     if (this.activePath) {
-      this.updateNode('active', false, this.activePath)
+      try {
+        this.updateNode('active', false, this.activePath)
+      } catch(e) {}
     }
     const data = this.updateNode('active', true, path)
     const pathData = this.getPathData(path, data)
