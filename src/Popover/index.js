@@ -121,12 +121,15 @@ export default class {
   }
 
   render(props) {
-    Object.assign(this.props, props)
     if (!this.containerNode) {
       this.containerNode = document.createElement('div')
       document.body.appendChild(this.containerNode)
     }
-    ReactDOM.render(<Popover {...this.props} />, this.containerNode)
+    this.render = props => {
+      Object.assign(this.props, props)
+      ReactDOM.render(<Popover {...this.props} />, this.containerNode)
+    }
+    this.render(props)
   }
 
   open() {
