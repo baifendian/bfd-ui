@@ -23,17 +23,17 @@ class Tooltip extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { title, direction } = nextProps
-    this.popover.updateProps({
-      content: title,
-      direction
-    })
-  }
-
   componentDidMount() {
     this.popover = new Popover(this.getPopoverProps())
     window.addEventListener('click', this.handleBodyClick)
+  }
+
+  componentDidUpdate() {
+    const { title, direction } = nextProps
+    this.popover.render({
+      content: title,
+      direction
+    })
   }
 
   componentWillUnmount() {

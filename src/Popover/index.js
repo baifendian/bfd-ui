@@ -15,25 +15,22 @@ import classlist from 'classlist'
 
 class Popover extends Component {
 
-  constructor(props) {
-    super()
-    this.state = props
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.show || nextState.show
+  shouldComponentUpdate(nextProps) {
+    return !!this.props.open || !!nextProps.open
   }
 
   componentDidMount() {
     this.rootNode = ReactDOM.findDOMNode(this)
-    if (this.state.show) {
+    if (this.props.open) {
       this.directionClassName = this.setPosition()
     }
   }
 
   componentDidUpdate() {
-    if (this.state.show) {
+    if (this.props.open) {
       this.directionClassName = this.setPosition()
+    } else {
+      classlist(this.rootNode).remove(this.directionClassName)
     }
   }
 
@@ -41,28 +38,26 @@ class Popover extends Component {
     const sourceRect = sourceNode.getBoundingClientRect()
     const targetRect = targetNode.getBoundingClientRect()
     const [scrollTop, scrollLeft] = this.getDocumentScroll()
-    let left, top
-    if (direction === 'up' || direction === 'down') {
-      left = sourceRect.left + sourceRect.width / 2 - targetRect.width / 2 + scrollLeft
-      if (direction === 'up') {
-        top = sourceRect.top - targetRect.height + scrollTop
-      } else {
-        top = sourceRect.top + sourceRect.height + scrollTop
-      }
-    } else {
-      top = sourceRect.top + sourceRect.height / 2 - targetRect.height / 2 + scrollTop
-      if (direction === 'left') {
-        left = sourceRect.left - targetRect.width + scrollLeft
-      } else {
-        left = sourceRect.left + sourceRect.width + scrollLeft
-      }
+    const relativeDistance = [
+      sourceRect.width / 2 + targetRect.width / 2,
+      sourceRect.height / 2 + targetRect.height / 2
+    ]
+    const center = [
+      sourceRect.left + relativeDistance[0] - targetRect.width + scrollLeft,
+      sourceRect.top + relativeDistance[1] - targetRect.height + scrollTop
+    ]
+    const directionHandles = {
+      up: () => [center[0], center[1] - relativeDistance[1]],
+      down: () => [center[0], center[1] + relativeDistance[1]],
+      left: () => [center[0] - relativeDistance[0], center[1]],
+      right: () => [center[0] + relativeDistance[0], center[1]]
     }
-    return [left, top]
+    return directionHandles[direction]()
   }
 
   setPosition() {
-    const { triggerNode } = this.state
-    let { direction } = this.state
+    const { triggerNode } = this.props
+    let { direction } = this.props
 
     const rootNodeRect = this.rootNode.getBoundingClientRect()
     const triggerRect = triggerNode.getBoundingClientRect()
@@ -92,29 +87,12 @@ class Popover extends Component {
     ]
   }
 
-  updateState(state) {
-    this.setState(state)
-  }
-
-  open() {
-    this.setState({show: true})
-  }
-
-  close() {
-    if (this.state.show) {
-      classlist(this.rootNode).remove(this.directionClassName)
-      this.setState({show: false})
-    }
-  }
-
   render() {
-    const { className, triggerNode, direction, ...other } = this.props
-    const { show, content } = this.state
-    delete other.content
+    const { className, open, triggerNode, content, direction, ...other } = this.props
     return (
       <div
         className={classnames('bfd-popover', {
-          'bfd-popover--show': show
+          'bfd-popover--open': open
         }, className)}
         {...other}
       >
@@ -142,37 +120,30 @@ export default class {
     this.props = props
   }
 
-  isMounted() {
-    return !!this.popover
+  render(props) {
+    Object.assign(this.props, props)
+    if (!this.containerNode) {
+      this.containerNode = document.createElement('div')
+      document.body.appendChild(this.containerNode)
+    }
+    ReactDOM.render(<Popover {...this.props} />, this.containerNode)
   }
 
-  mount() {
-    this.containerNode = document.createElement('div')
-    document.body.appendChild(this.containerNode)
-    this.popover = ReactDOM.render(<Popover {...this.props} />, this.containerNode)
+  open() {
+    this.isOpen = true
+    this.render({open: true})
+  }
+
+  close() {
+    this.isOpen = false
+    this.render({open: false})
+  }
+
+  toggle() {
+    this.isOpen ? this.close() : this.open()
   }
 
   unmount() {
     this.containerNode && document.body.removeChild(this.containerNode)
-  }
-
-  updateProps(nextProps) {
-    Object.assign(this.props, nextProps)
-    this.popover && this.popover.updateState(nextProps)
-  }
-
-  open() {
-    if (!this.isMounted()) this.mount()
-    this.popover.open()
-    this.isOpen = true
-  }
-
-  close() {
-    this.popover && this.popover.close()
-    this.isOpen = false
-  }
-
-  toggle() {
-    this[this.isOpen ? 'close' : 'open']()
   }
 }

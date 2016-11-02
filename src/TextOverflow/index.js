@@ -16,13 +16,13 @@ import './index.less'
 
 class TextOverflow extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    const { direction } = nextProps
-    this.popover.updateProps({ direction })
-  }
-
   componentDidMount() {
     this.popover = new Popover(this.getPopoverProps())
+  }
+
+  componentDidUpdate() {
+    const { direction } = this.props
+    this.popover.render({ direction })
   }
 
   componentWillUnmount() {
@@ -51,7 +51,7 @@ class TextOverflow extends Component {
         if (target.offsetWidth < target.scrollWidth) {
           clearTimeout(this.closeTimer)
           this.openTimer = setTimeout(() => {
-            this.popover.updateProps({content: children.props.children})
+            this.popover.render({content: children.props.children})
             this.popover.open()
           }, 150)
         }
