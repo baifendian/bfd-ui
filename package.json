@@ -1,6 +1,6 @@
 {
   "name": "bfd-ui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,11 @@
     "type": "git",
     "url": "https://github.com/baifendian/bfd-ui.git"
   },
-  "keywords": ["react components", "ui component", "react ui"],
+  "keywords": [
+    "react components",
+    "ui component",
+    "react ui"
+  ],
   "author": "",
   "license": "BSD",
   "bugs": {
