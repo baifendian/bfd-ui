@@ -1,9 +1,14 @@
+## v1.2.1
+
+`2016-11-04`
+
 - MultipleSelect 全选置顶
-- Tooltip、TextOverflow 新增属性 direction，支持自定义方向
-- Tooltip 新增属性 triggerMode，支持自定义触发方式
+- Tooltip、TextOverflow 新增属性 direction，支持自定义方向 [#3](https://github.com/baifendian/bfd-ui/issues/3)
+- Tooltip 新增属性 triggerMode，支持自定义触发方式 [#3](https://github.com/baifendian/bfd-ui/issues/3)
 - Editable 切换到编辑状态后自动选中；修复取消编辑后值未重置的问题
 - TreeSelect 新增属性 getIcon、getUrl
 - 修复 Tree 数据更新后选中节点的问题
+- DataTable 列配置 render 方法增加列索引参数；新增属性 hideGo
 
 
 ## v1.2.0
