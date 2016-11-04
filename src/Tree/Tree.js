@@ -8,25 +8,22 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
 import update from 'react-update'
+import classnames from 'classnames'
 import get from 'lodash/get'
 import shouldComponentUpdate from '../shouldComponentUpdate'
+import nodeCheckProcessor from './nodeCheckProcessor'
+import getPathData from './getPathData'
+import Checkbox from '../Checkbox'
 import TreeNode from './TreeNode'
+import './index.less'
 
 class Tree extends Component {
 
   constructor(props) {
     super(props)
-    this.update = update.bind(this)
     this.state = {
       data: props.data || props.defaultData || []
-    }
-  }
-
-  getChildContext() {
-    return {
-      tree: this
     }
   }
 
@@ -36,122 +33,94 @@ class Tree extends Component {
 
   shouldComponentUpdate = shouldComponentUpdate
 
-  handleChange(data) {
-    this.props.onChange && this.props.onChange(data)
-  }
-
-  updateNode(key, value, path) {
-    return this.update('set', ['data', ...path, key], value)
-  }
-
-  handleNodeSelect(path) {
-    if (this.activePath) {
-      if (get(this.state.data, path)) {
-        this.updateNode('active', false, this.activePath)
-      }
-    }
-    const data = this.updateNode('active', true, path)
-    const pathData = this.getPathData(path, data)
-    this.props.onActive && this.props.onActive(pathData)
-    this.props.onSelect && this.props.onSelect(pathData.slice(-1)[0], pathData)
-    this.activePath = path
-    this.handleChange(data)
-  }
-
-  getPathData(path, data) {
-    data = data || this.state.data
-    const pathData = []
-    path.forEach(key => {
-      data = data[key]
-      if (key !== 'children') {
-        pathData.push(data)
-      }
-    })
-    return pathData
-  }
-
-  handleNodeCheck(checked, item, path) {
-    let data = this.updateNode('checked', checked, path)
-    if (item.indeterminate) {
-      data = this.updateNode('indeterminate', false, path)
-    }
-    item = get(data, path)
-
-    data = this.updateChildren(data, item, path, checked)
-    data = this.updateParent(data, path.slice(0, -2))
-    item = get(data, path)
-
-    this.props.onCheck && this.props.onCheck(checked, item, this.getPathData(path, data))
-    this.handleChange(data)
-  }
-
-  updateChildren(data, item, path, checked) {
-    if (item && item.children) {
-      path = [...path, 'children']
-      item.children.forEach((item, i) => {
-        const _path = [...path, i]
-        if (!!item.checked !== checked) {
-          data = this.updateNode('checked', checked, _path)
-          if (item.indeterminate) {
-            data = this.updateNode('indeterminate', false, _path)
-          }
-          this.updateChildren(item, _path, checked)
-        }
-      })
-    }
-    return data
-  }
-
-  updateParent(data, path) {
-    let newData = data
-    if (path.length) {
-      const parent = get(data, path)
-      const checkedLen = parent.children.filter(item => item.checked).length
-      const indeterminateLen = parent.children.filter(item => item.indeterminate).length
-      const allChecked = checkedLen === parent.children.length
-      const isIndeterminate = !!indeterminateLen || (!!checkedLen && !allChecked)
-      if (!!parent.checked !== allChecked) {
-        newData = this.updateNode('checked', allChecked, path)
-
-      }
-      if (!!parent.indeterminate !== isIndeterminate) {
-        newData = this.updateNode('indeterminate', isIndeterminate, path)
-      }
-      newData !== data && this.updateParent(newData, path.slice(0, -2))
-    }
+  updateDataBySingleProp(key, value, path) {
+    const newData = update(this.state.data, 'set', [...path, key], value)
+    this.updateData(newData)
     return newData
   }
 
-  render() {
+  updateData(newData) {
+    this.setState({data: newData})
+    this.props.onChange && this.props.onChange(newData)
+  }
 
+  handleActive(path) {
+    this.activePath = path
+  }
+
+  handleNodeSelect(path) {
+    let newData = this.state.data
+    if (this.activePath && get(this.state.data, this.activePath)) {
+      newData = update(newData, 'set', [...this.activePath, 'active'], false)
+    }
+    newData = update(newData, 'set', [...path, 'active'], true)
+    const pathData = getPathData(path, newData)
+    this.props.onActive && this.props.onActive(pathData)
+    this.props.onSelect && this.props.onSelect(pathData.slice(-1)[0], pathData)
+    this.updateData(newData)
+  }
+
+  handleNodeCheck(checked, item, path) {
+    nodeCheckProcessor(this.state.data, checked, item, path, (newData, newItem) => {
+      if (this.props.onCheck) {
+        this.props.onCheck(checked, newItem, getPathData(path, newData))
+      }
+      this.updateData(newData)
+    })
+  }
+
+  render() {
     const {
-      className, defaultData, beforeNodeRender, onChange, onActive, getIcon,
-      getUrl, dataFilter, shouldNodeSelectable, shouldNodeCheckable, ...other
+      className, defaultData, onChange, checkable, onCheck, shouldNodeCheckable, getIcon,
+      getUrl, dataFilter, shouldNodeSelectable, onNodeSelect, onNodeChange, ...other
     } = this.props
     const { data } = this.state
-
     delete other.data
     delete other.render
+    delete other.beforeNodeRender
+
+    let { beforeNodeRender } = this.props
+    if (checkable) {
+      beforeNodeRender = (item, path) => {
+        const enabled = shouldNodeCheckable ? shouldNodeCheckable(item, path) : true
+        return (
+          <Checkbox
+            className="bfd-tree__checkbox"
+            checked={item.checked}
+            indeterminate={item.indeterminate}
+            disabled={!enabled}
+            onChange={enabled ?
+              e => this.handleNodeCheck(e.target.checked, item, path) : () => {}
+            }
+          />
+        )
+      }
+    }
 
     return (
-      <div
-        className={classnames('bfd-tree', {
-          'bfd-tree--activeable': onActive
-        }, className)}
-        {...other}
-      >
+      <div className={classnames('bfd-tree', className)} {...other}>
         <ul>
-          {data.map((item, i) => {
-            return <TreeNode key={i} data={item} path={[i]} />
-          })}
+          {data.map((item, i) => (
+            <TreeNode
+              key={i}
+              treeData={data}
+              data={item}
+              path={[i]}
+              contentRender={this.props.render}
+              onActive={::this.handleActive}
+              onSelect={::this.handleNodeSelect}
+              onSinglePropChange={::this.updateDataBySingleProp}
+              beforeRender={beforeNodeRender}
+              shouldSelectable={shouldNodeSelectable}
+              getIcon={getIcon}
+              getUrl={getUrl}
+              dataFilter={dataFilter}
+            />
+          ))}
         </ul>
       </div>
     )
   }
-}
-
-Tree.childContextTypes = {
-  tree: PropTypes.instanceOf(Tree)
 }
 
 Tree.propTypes = {
@@ -166,6 +135,7 @@ Tree.propTypes = {
    *   checked: true, // 是否勾选，用于可勾选模式下
    *   indeterminate: true, // 是否半勾选
    *   active: true, // 是否选中
+   *   isParent: true, // 动态加载标识，当前节点展开后会动态加载数据，配合 getUrl 使用
    *   children: [{
    *     name: 'kafka'
    *   }, {

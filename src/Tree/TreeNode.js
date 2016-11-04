@@ -7,137 +7,120 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import classnames from 'classnames'
 import Button from '../Button'
 import Icon from '../Icon'
-import Checkbox from '../Checkbox'
 import Fetch from '../Fetch'
+import getPathData from './getPathData'
 
 class TreeNode extends Component {
 
   componentWillMount() {
-    if (this.props.data.active) {
-      this.context.tree.activePath = this.props.path
-    }
+    this.prepareActivePath(this.props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.prepareActivePath(nextProps)
   }
 
   shouldComponentUpdate(nextProps) {
     return this.props.data !== nextProps.data
   }
 
+  prepareActivePath(props) {
+    props.data.active && props.onActive(props.path)
+  }
+
+  changeBySingleProp(key, value) {
+    this.props.onSinglePropChange(key, value, this.props.path)
+  }
+
   handleToggle(e) {
     e.stopPropagation()
-    this.change('open', !this.props.data.open)
+    this.changeBySingleProp('open', !this.props.data.open)
   }
 
   handleSelect() {
-    this.context.tree.handleNodeSelect(this.props.path)
-  }
-
-  change(key, value) {
-    const { tree } = this.context
-    tree.handleChange(tree.updateNode(key, value, this.props.path))
+    this.props.onSelect(this.props.path)
   }
 
   handleLoad(data) {
-    const filter = this.context.tree.props.dataFilter
+    const filter = this.props.dataFilter
     if (filter) {
       data = filter(data)
     }
-    this.change('children', data)
-  }
-
-  handleCheck(e) {
-    this.context.tree.handleNodeCheck(e.target.checked, this.props.data, this.props.path)
+    this.changeBySingleProp('children', data)
   }
 
   render() {
+    const { data, path, ...other } = this.props
     const {
-      beforeNodeRender, checkable, getIcon, getUrl, shouldNodeSelectable,
-      shouldNodeCheckable
-    } = this.context.tree.props
-    const { data, path } = this.props
-    const { name, open, isParent, checked, indeterminate, active, children } = data
-    const tree = this.context.tree
-    const hasChildren = children && children.length
-    const indent = Math.floor(path.length / 2) * 20 + 'px'
+      treeData, contentRender, getUrl, getIcon, beforeRender, shouldSelectable
+    } = this.props
+    const hasChildren = data.children && data.children.length
+    const typeIcon = getIcon && getIcon(data)
+    const selectable = shouldSelectable ? shouldSelectable(data, path) : true
 
-    let Children
+    let Children, List
     if (hasChildren) {
-      Children = (
-        <ul>
-          {children.map((item, i) => (
+      List = (
+        <ul className="bfd-tree__node-list">
+          {data.children.map((item, i) => (
             <TreeNode
               key={i}
               data={item}
               path={[...path, 'children', i]}
+              {...other}
             />
           ))}
         </ul>
       )
     }
 
-    if (isParent && getUrl && open && !hasChildren) {
+    if (data.isParent) {
       Children = (
         <Fetch
+          className="bfd-tree__fetch"
           defaultHeight={30}
           spinnerHeight={20}
-          style={{marginLeft: indent}}
-          url={getUrl(data, tree.getPathData(path))}
+          url={data.open && getUrl && getUrl(data, getPathData(path, treeData)) || ''}
           onSuccess={::this.handleLoad}
         >
-          <div className="bfd-tree__node--empty">无数据</div>
+          {List || <div className="bfd-tree__node--empty">无数据</div>}
         </Fetch>
       )
+    } else {
+      Children = List
     }
 
-    const typeIcon = getIcon && getIcon(data)
-
-    const nodeSelectable = shouldNodeSelectable ? shouldNodeSelectable(data, path) : true
-    const nodeCheckable = shouldNodeCheckable ? shouldNodeCheckable(data, path) : true
-
     return (
-      <li className={classnames('bfd-tree__node', {'bfd-tree__node--open': open})}>
+      <li className={classnames('bfd-tree__node', {'bfd-tree__node--open': data.open})}>
         <Button
           className="bfd-tree__node-toggle"
-          style={{
-            visibility: hasChildren || isParent ? 'visible' : 'hidden',
-            marginLeft: indent
-          }}
+          style={{visibility: hasChildren || data.isParent ? 'visible' : 'hidden'}}
           icon="caret-right"
           size="sm"
           transparent
           onClick={::this.handleToggle}
         />
-        {beforeNodeRender &&
-          <div className="bfd-tree__node-before">{beforeNodeRender(data, path)}</div>}
-        {checkable && (
-          <Checkbox
-            checked={checked}
-            indeterminate={indeterminate}
-            disabled={!nodeCheckable}
-            onChange={nodeCheckable ? ::this.handleCheck : () => {}}
-          />
+        {beforeRender && (
+          <div className="bfd-tree__node-before">{beforeRender(data, path)}</div>
         )}
         {typeIcon && <Icon type={typeIcon} className="bfd-tree__node-type" />}
         <div
           className={classnames('bfd-tree__node-content', {
-            'bfd-tree__node-content--active': active,
-            'bfd-tree__node-content--disabled': !nodeSelectable
+            'bfd-tree__node-content--active': data.active,
+            'bfd-tree__node-content--disabled': !selectable
           })}
-          onClick={nodeSelectable && ::this.handleSelect}
+          onClick={selectable && ::this.handleSelect}
         >
-          {tree.props.render ? tree.props.render(data, path) : name}
+          {contentRender ? contentRender(data, path) : data.name}
         </div>
         {Children}
       </li>
     )
   }
-}
-
-TreeNode.contextTypes = {
-  tree: PropTypes.object
 }
 
 export default TreeNode

@@ -16,9 +16,8 @@ import Checkbox from '../Checkbox'
 class SelectTree extends Component {
 
   handleSelect(item, path, checked) {
-    const data = this.refs.tree.updateNode('checked', checked, path)
-    this.props.onChange && this.props.onChange(data)
-    this.props.onSelect && this.props.onSelect(data, get(data, path), path, checked)
+    const newData = this.refs.tree.updateDataBySingleProp('checked', checked, path)
+    this.props.onSelect && this.props.onSelect(newData, get(newData, path), path, checked)
   }
 
   render() {

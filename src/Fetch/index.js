@@ -23,23 +23,22 @@ class Fetch extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    if (this.props.url !== nextProps.url && nextProps.url) {
-      this.fetch()
-      return false
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.url && nextProps.url !== (this.props.url || this.url)) {
+      this.fetch(nextProps.url)
     }
-    return true
   }
 
-  componentDidMount() {
-    this.props.url && this.fetch()
+  componentWillMount() {
+    this.props.url && this.fetch(this.props.url)
   }
 
-  fetch() {
-    this.timer = this.lazyFetch()
+  fetch(url) {
+    this.url = url
+    this.timer = this.lazyShowLoading()
     setTimeout(() => {
       xhr({
-        url: this.props.url,
+        url,
         complete: () => {
           clearTimeout(this.timer)
         },
@@ -49,7 +48,7 @@ class Fetch extends Component {
     }, this.props.delay || 0)
   }
 
-  lazyFetch() {
+  lazyShowLoading() {
     return setTimeout(() => {
       this.setState({xhr: 'loading'})
     }, 150)
@@ -101,7 +100,7 @@ class Fetch extends Component {
     }
     return (
       <div className={classnames('bfd-fetch', className)} {...other}>
-        {(this.stateMap[this.state.xhr] || (() => null)).call(this)}
+        {this.stateMap[this.state.xhr].call(this)}
       </div>
     )
   }
