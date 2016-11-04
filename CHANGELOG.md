@@ -4,7 +4,6 @@
 - Editable 切换到编辑状态后自动选中；修复取消编辑后值未重置的问题
 - TreeSelect 新增属性 getIcon、getUrl
 - 修复 Tree 数据更新后选中节点的问题
-- 优化 Fetch 渲染，加载前和成功后不再产生组件节点
 
 
 ## v1.2.0
