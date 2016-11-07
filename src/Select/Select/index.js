@@ -20,8 +20,6 @@ class Select extends Component {
 
   constructor(props) {
     super()
-    this.optionsWithProps = []
-    this.title = null
     this.state = {
       data: props.data || [],
       index: -1,
@@ -39,7 +37,7 @@ class Select extends Component {
     this.setState(state)
   }
 
-  shouldComponentUpdate: shouldComponentUpdate
+  shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
     if (this.props.dataFilter) {
@@ -55,24 +53,23 @@ class Select extends Component {
     this.props.onChange && this.props.onChange(value)
   }
 
-  handleKeyDown(e) {
+  handleKeyDown(options, e) {
     const key = e.key
-    const { optionsWithProps } = this
     let { index } = this.state
     if (key === 'ArrowDown' || key === 'ArrowUp') {
       if (key === 'ArrowDown') {
-        if (index === optionsWithProps.length - 1) index = 0
+        if (index === options.length - 1) index = 0
         else index++
       }
       if (key === 'ArrowUp') {
         e.preventDefault()
-        if (index === 0) index = optionsWithProps.length - 1
+        if (index === 0) index = options.length - 1
         else index--
       }
       this.setState({ index })
     }
     if (key === 'Enter') {
-      this.handleSelect(optionsWithProps[index].props.value)
+      this.handleSelect(options[index].props.value)
     }
   }
 
@@ -85,33 +82,32 @@ class Select extends Component {
 
   handleDropToggle(open) {
     this.props.searchable && open && setTimeout(() => {
-      this.refs.clearableInput.focus()  
+      this.refs.clearableInput.focus()
     }, 0)
   }
 
-  getOptionsWithProps() {
-    this.title = null
+  getOptionsWithProps(onMatch) {
     const { children, render, defaultOption } = this.props
     let res
     if (children) {
-      res = React.Children.map(children, this.getOptionWithProps.bind(this))
+      res = React.Children.map(children, this.getOptionWithProps.bind(this, onMatch))
     } else {
       res = this.state.data.map((item, i) => {
-        return this.getOptionWithProps(render.call(this, item, i), i)
+        return this.getOptionWithProps(onMatch, render.call(this, item, i), i)
       })
     }
     if (defaultOption) {
-      res.unshift(this.getOptionWithProps(defaultOption, -1))
+      res.unshift(this.getOptionWithProps(onMatch, defaultOption, -1))
     }
     return res
   }
 
-  getOptionWithProps(option, i) {
+  getOptionWithProps(onMatch, option, i) {
     if (!option) return
     const { value, children } = option.props
     let selected = false
     if (this.state.value === value) {
-      this.title = children
+      onMatch && onMatch(children)
       selected = true
     }
     return React.cloneElement(option, {
@@ -121,37 +117,41 @@ class Select extends Component {
     })
   }
 
+  filterBySearchValue(options) {
+    const { searchValue } = this.state
+    if (!searchValue) return options
+    return options.filter(option => {
+      const { value, children } = option.props
+      if (!value && value !== 0) return false
+      return children.indexOf(searchValue) !== -1 || String(value).indexOf(searchValue) !== -1
+    })
+  }
+
+  shouldSearchable(options) {
+    if (!this.props.searchable) return options
+    const { index } = this.state
+    return options.map((option, i) => {
+      return React.cloneElement(option, {
+        active: index === i
+      })
+    })
+  }
+
   render() {
-    
-    const { 
-      children, className, defaultValue, onChange, data, url, 
-      dataFilter, defaultOption, size, disabled, placeholder, searchable, ...other 
+
+    const {
+      children, className, defaultValue, onChange, data, url,
+      dataFilter, defaultOption, size, disabled, placeholder, searchable, ...other
     } = this.props
-    const { value } = this.state
-    const { searchValue, index } = this.state
+    const { value, searchValue } = this.state
 
     delete other.value
     delete other.render
 
-    let optionsWithProps = this.getOptionsWithProps()
-
-    if (searchValue) {
-      optionsWithProps = optionsWithProps.filter(option => {
-        const { value, children } = option.props
-        if (typeof value === 'undefined' || !String(value)) return false
-        return children.indexOf(searchValue) !== -1 || String(value).indexOf(searchValue) !== -1
-      })
-    }
-
-    if (searchable) {
-      optionsWithProps = optionsWithProps.map((option, i) => {
-        return React.cloneElement(option, {
-          active: index === i
-        })
-      })
-    }
-
-    this.optionsWithProps = optionsWithProps
+    let title = null
+    let optionsWithProps = this.getOptionsWithProps(children => title = children)
+    optionsWithProps = this.filterBySearchValue(optionsWithProps)
+    optionsWithProps = this.shouldSearchable(optionsWithProps)
 
     const classNames = classnames('bfd-select', {
       [`bfd-select--${size}`]: size,
@@ -160,13 +160,13 @@ class Select extends Component {
 
     const Title = (
       <TextOverflow>
-        <div className="bfd-select__title">{this.title || (!value && placeholder)}</div>
+        <div className="bfd-select__title">{title || (!value && placeholder)}</div>
       </TextOverflow>
     )
 
     return (
-      <SelectDropdown 
-        ref="dropdown" 
+      <SelectDropdown
+        ref="dropdown"
         className={classNames}
         title={Title}
         url={url}
@@ -178,12 +178,12 @@ class Select extends Component {
         {...other}
       >
         {searchable && (
-          <ClearableInput 
+          <ClearableInput
             ref="clearableInput"
             value={searchValue}
-            placeholder="请输入关键词搜索" 
-            onChange={::this.handleSearch} 
-            onKeyDown={::this.handleKeyDown}
+            placeholder="请输入关键词搜索"
+            onChange={::this.handleSearch}
+            onKeyDown={this.handleKeyDown.bind(this, optionsWithProps)}
           />
         )}
         <ul className="bfd-select__options">
@@ -209,7 +209,7 @@ Select.propTypes = {
 
   // 数据源，结合 render 属性定义 Option 渲染逻辑
   data: PropTypes.array,
-  
+
   // URL 数据源
   url: PropTypes.string,
 
@@ -233,7 +233,7 @@ Select.propTypes = {
 
   // 尺寸，除默认值外可选值 sm、lg
   size: PropTypes.string,
-  
+
   customProp({ value, onChange, url, render }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

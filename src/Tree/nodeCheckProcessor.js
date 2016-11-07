@@ -10,57 +10,62 @@
 import update from 'react-update'
 import get from 'lodash/get'
 
-function syncChildrenCheckedState(data, item, path, checked) {
+function updateItemCheckState(item, data, path, checked, indeterminate) {
+  let newData = data
+  if (!!item.checked !== checked) {
+    newData = update(newData, 'set', [...path, 'checked'], checked)
+  }
+  if (!!item.indeterminate !== indeterminate) {
+    newData = update(newData, 'set', [...path, 'indeterminate'], indeterminate)
+  }
+  return newData
+}
+
+function updateChildrenCheckedState(data, item, path, checked) {
   let newData = data
   if (item && item.children) {
     path = [...path, 'children']
     item.children.forEach((item, i) => {
       const _path = [...path, i]
-      if (!!item.checked !== checked) {
-        newData = update(newData, 'set', [..._path, 'checked'], checked)
-        if (item.indeterminate) {
-          newData = update(newData, 'set', [..._path, 'indeterminate'], false)
-        }
-        newData = syncChildrenCheckedState(newData, item, _path, checked)
-      }
+      newData = updateItemCheckState(item, newData, _path, checked, false)
+      newData = updateChildrenCheckedState(newData, item, _path, checked)
     })
   }
   return newData
 }
 
-function syncParentsCheckedState(data, path) {
-  let newData = data
-  if (path.length) {
-    const parent = get(newData, path)
-    const childrenCheckedLen = parent.children.filter(item => item.checked).length
-    const checked = childrenCheckedLen === parent.children.length
-    const childrenIndeterminateLen = parent.children.filter(item => item.indeterminate).length
-    const indeterminate = !!childrenIndeterminateLen || (!!childrenCheckedLen && !checked)
-    if (!!parent.checked !== checked) {
-      newData = update(newData, 'set', [...path, 'checked'], checked)
-    }
-    if (!!parent.indeterminate !== indeterminate) {
-      newData = update(newData, 'set', [...path, 'indeterminate'], indeterminate)
-    }
-    if (newData !== data) {
-      newData = syncParentsCheckedState(newData, path.slice(0, -2))
-    }
+const updateParentsCheckedState = (() => {
+  const isChecked = item => {
+    const childrenCheckedLen = item.children.filter(item => item.checked).length
+    return childrenCheckedLen === item.children.length
   }
-  return newData
-}
+  const isIndeterminate = item => {
+    return item.children.some(item => item.indeterminate || item.checked)
+  }
+  return function updateParentCheckedState(data, path) {
+    let newData = data
+    if (path.length) {
+      const item = get(newData, path)
+      const checked = isChecked(item)
+      const indeterminate = !checked && isIndeterminate(item)
+      newData = updateItemCheckState(item, newData, path, checked, indeterminate)
+      if (newData !== data) {
+        newData = updateParentCheckedState(newData, path.slice(0, -2))
+      }
+    }
+    return newData
+  }
+})()
 
-function syncRelativeNodesCheckedState(data, item, path, checked) {
-  const newData = syncChildrenCheckedState(data, item, path, checked)
-  return syncParentsCheckedState(newData, path.slice(0, -2))
+function updateRelativeNodesCheckedState(data, item, path, checked) {
+  const newData = updateChildrenCheckedState(data, item, path, checked)
+  return updateParentsCheckedState(newData, path.slice(0, -2))
 }
 
 export default (data, checked, item, path, callback) => {
-  let newData = update(data, 'set', [...path, 'checked'], checked)
-  if (item.indeterminate) {
-    newData = update(newData, 'set', [...path, 'indeterminate'], false)
-  }
+  let newData = updateItemCheckState(item, data, path, checked, false)
   let newItem = get(newData, path)
-  newData = syncRelativeNodesCheckedState(newData, newItem, path, checked)
+  newData = updateRelativeNodesCheckedState(newData, newItem, path, checked)
   newItem = get(newData, path)
   callback(newData, newItem)
 }
