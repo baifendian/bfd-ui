@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import Button from '../Button'
 
 class Tab extends Component {
@@ -37,7 +37,7 @@ class Tab extends Component {
     const { tabs } = this.context
     const index = tabs.tabCount++
 
-    'activeKey' in tabs.props && warning(
+    'activeKey' in tabs.props && invariant(
       'activeKey' in this.props,
       'You set `activeKey` for Tabs but no `activeKey` for Tab'
     )

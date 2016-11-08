@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import warning from 'warning'
+import invariant from 'invariant'
 
 export default {
 
@@ -28,7 +28,7 @@ export default {
   handleLoad(data) {
     if (this.props.dataFilter) {
       data = this.props.dataFilter(data)
-      warning(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
+      invariant(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
     }
     this.setState({ data })
   },

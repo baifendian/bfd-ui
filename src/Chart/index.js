@@ -11,7 +11,7 @@ import './index.less'
 import React, { Component, PropTypes } from 'react'
 import ReactDM from 'react-dom'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import Fetch from '../Fetch'
 
 class Chart extends Component {
@@ -45,7 +45,7 @@ class Chart extends Component {
 
   componentDidMount() {
     this.container = ReactDM.findDOMNode(this)
-    warning(this.container.clientWidth, 'Chart container `width` is `0`')
+    invariant(this.container.clientWidth, 'Chart container `width` is `0`')
     if (this.props.data) {
       this.renderChart(this.props)
     }

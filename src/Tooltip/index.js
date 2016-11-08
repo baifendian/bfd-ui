@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import warning from 'warning'
+import invariant from 'invariant'
 import Popover from '../Popover'
 
 class Tooltip extends Component {
@@ -84,7 +84,7 @@ class Tooltip extends Component {
 
   render() {
     const { children } = this.props
-    warning(!children.length, 'Children should be single, check the children of Tooltip.')
+    invariant(!children.length, 'Children should be single, check the children of Tooltip.')
     return React.cloneElement(children, this.getTriggerProps())
   }
 }

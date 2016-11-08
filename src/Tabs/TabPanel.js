@@ -10,7 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import classlist from 'classlist'
 
 class TabPanel extends Component {
@@ -58,7 +58,7 @@ class TabPanel extends Component {
     const { children, className, activeKey, ...other } = this.props
     const { tabs } = this.context
 
-    'activeKey' in tabs.props && warning(
+    'activeKey' in tabs.props && invariant(
       'activeKey' in this.props,
       'You set `activeKey` for `Tabs` but no `activeKey` for `TabPanel`'
     )

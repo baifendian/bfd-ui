@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import update from 'react-update'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import SelectDropdown from '../SelectDropdown'
@@ -45,7 +45,9 @@ class TreeSelect extends Component {
     const { value } = this.state
     const { render, multiple } = this.props
     list && list.forEach((item, i) => {
-      warning(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
+
+      invariant(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
+      
       const _path = [...path, i]
       const title = !render ? item.name : render(item)
       if (multiple) {

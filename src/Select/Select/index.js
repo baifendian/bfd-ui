@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
 import TextOverflow from '../../TextOverflow'
 import ClearableInput from '../../ClearableInput'
@@ -42,7 +42,7 @@ class Select extends Component {
   handleLoad(data) {
     if (this.props.dataFilter) {
       data = this.props.dataFilter(data)
-      warning(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
+      invariant(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
     }
     this.setState({ data })
   }

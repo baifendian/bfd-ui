@@ -11,7 +11,7 @@ import './index.less'
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import warning from 'warning'
+import invariant from 'invariant'
 import classnames from 'classnames'
 import Icon from '../Icon'
 
@@ -44,7 +44,7 @@ let instance
 
 const showMessage = (type, message, duration) => {
   if (process.env.NODE_ENV !== 'production') {
-    warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of message.' + type)
+    invariant(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of message.' + type)
   }
   if (!instance) {
     const container = document.createElement('div')

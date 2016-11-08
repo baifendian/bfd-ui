@@ -10,7 +10,7 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import Popover from '../Popover'
 import './index.less'
 
@@ -66,7 +66,7 @@ class TextOverflow extends Component {
 
   render() {
     const { children } = this.props
-    warning(!children.length, 'Children should be single, check the children of TextOverflow')
+    invariant(!children.length, 'Children should be single, check the children of TextOverflow')
     return React.cloneElement(children, this.getTriggerProps())
   }
 }
