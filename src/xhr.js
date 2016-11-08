@@ -51,7 +51,7 @@ function xhr(option) {
      */
     option.url = (xhr.baseUrl || '') + option.url
   }
-  
+
   option.type = (option.type || 'get').toUpperCase()
 
   let timer
@@ -103,12 +103,12 @@ function xhr(option) {
          * @name xhr.success
          * @param {*} res 服务器返回的数据
          * @param {object} option 当前请求配置
-         * @description 全局成功回调，在 dataFilter 后执行，此方法会覆盖单独的 success 
+         * @description 全局成功回调，在 dataFilter 后执行，此方法会覆盖单独的 success
          * 方法，如果需要可手动调用
          * ```js
          * import xhr from 'bfd/xhr'
          * import message from 'bfd/message'
-         * 
+         *
          * xhr.success = (res, option) => {
          *   if (typeof res !== 'object') {
          *     message.danger(option.url + ': response data should be JSON')
@@ -150,21 +150,24 @@ function xhr(option) {
 
   request.open(option.type, option.url, true)
 
-  let sendData = option.data
-  if (Object.prototype.toString.call(sendData) === '[object Object]') {
-    sendData = []
-    const data = option.data
-    if (data) {
-      for (const k in data) {
-        if (typeof data[k] === 'object' && data[k]) {
-          data[k] = JSON.stringify(data[k])
-        }
-        sendData.push(`${encodeURIComponent(k)}=${encodeURIComponent(data[k])}`)
-      }
-    }
-    sendData = sendData.join('&')
+  const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
+  const isArray = arr => Array.isArray(arr)
 
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+  let sendData = option.data
+  if (isObject(sendData)) {
+    sendData = Object.assign({}, sendData)
+    sendData = Object.keys(sendData).map(key => {
+      let value = sendData[key]
+      if (isArray(value) || isObject(value)) {
+        value = JSON.stringify(value)
+      }
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    }).join('&')
+
+    request.setRequestHeader(
+      'Content-Type',
+      'application/x-www-form-urlencoded; charset=UTF-8'
+    )
   }
 
   /**
@@ -174,7 +177,7 @@ function xhr(option) {
    * @description 全局请求头设置
    * ```js
    * xhr.header = {
-   *   token: 'YUSDDS12SD'  
+   *   token: 'YUSDDS12SD'
    * }
    * ```
    */
