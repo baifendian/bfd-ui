@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import warning from 'warning'
 import Icon from '../../Icon'
 import formControlValue from '../formControlValue'
 import './index.less'
@@ -37,9 +38,9 @@ class FormItem extends Component {
   }
 
   componentWillMount() {
+    this.context.form.addItem(this)
     this.control = formControlValue(this.context.form, this)
     this.data = this.control.get()
-    this.context.form.addItem(this)
   }
 
   componentWillUnmount() {
@@ -68,11 +69,17 @@ class FormItem extends Component {
   }
 
   render() {
-    
+
     const { error } = this.state
-    const { 
-      children, className, name, multiple, required, help, label, ...other 
+    const {
+      children, className, name, multiple, required, help, label, ...other
     } = this.props
+
+    if (multiple) {
+      warning(Array.isArray(this.context.form.state.data[name]),
+        `The value type of 'FormItem' which you set 'multiple' should be 'Array', check the 'Form data.${name}'.`
+      )
+    }
 
     const labelWidth = this.context.form.props.labelWidth
 
@@ -97,10 +104,10 @@ class FormItem extends Component {
     return (
       <div className={classNames} {...other}>
         {label && (
-          <div 
+          <div
             className={classnames('bfd-form__item-label', {
               'bfd-form__item-label--required': required
-            })} 
+            })}
             style={{width: `${labelWidth}px`}}
           >
             {label}：
@@ -138,7 +145,7 @@ FormItem.propTypes = {
   // 提示信息
   help: PropTypes.string,
 
-  // 是否多条，针对某些字段为数组的场景
+  // 是否多条，用于一个 name 对应多个 FormItem 场景，即 name 属性对应的字段要求数组格式
   multiple: PropTypes.bool
 }
 
