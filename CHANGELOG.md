@@ -1,3 +1,8 @@
+## v1.3.0
+
+`2016-11-11` 😓
+
+- 新增组件 DataTable2
 - 修复 xhr data 共享传递的问题
 - 修复 FormItem multiple 属性不可用的问题 [#4](https://github.com/baifendian/bfd-ui/issues/4)
 
