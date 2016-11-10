@@ -10,7 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import update from 'react-update'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import xhr from '../../xhr'
 
 class Form extends Component {
@@ -87,9 +87,9 @@ class Form extends Component {
    */
   save(data) {
     if (this.validate()) {
-      if (process.env.NODE_ENV !== 'production') {
-        warning(this.props.action, 'No `action` provided, check the Form component you save.')
-      }
+      
+      invariant(this.props.action, 'No `action` provided, check the Form component you save.')
+      
       this.submit && this.submit.toggleProcess(true)
       xhr({
         type: 'POST',

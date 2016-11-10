@@ -10,7 +10,7 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
-import warning from 'warning'
+import invariant from 'invariant'
 import Button from '../Button'
 import './index.less'
 
@@ -65,10 +65,8 @@ let instance
  */
 function confirm(message, callback) {
 
-  if (process.env.NODE_ENV !== 'production') {
-    warning(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
-    warning(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
-  }
+  invariant(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
+  invariant(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
 
   if (!instance) {
     const container = document.createElement('div')

@@ -9,7 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import Icon from '../../Icon'
 import formControlValue from '../formControlValue'
 import './index.less'
@@ -76,7 +76,7 @@ class FormItem extends Component {
     } = this.props
 
     if (multiple) {
-      warning(Array.isArray(this.context.form.state.data[name]),
+      invariant(Array.isArray(this.context.form.state.data[name]),
         `The value type of 'FormItem' which you set 'multiple' should be 'Array', check the 'Form data.${name}'.`
       )
     }

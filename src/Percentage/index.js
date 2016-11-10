@@ -10,7 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import classnames from 'classnames'
-import warning from 'warning'
+import invariant from 'invariant'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import './index.less'
 
@@ -29,7 +29,7 @@ class Percentage extends Component {
     if (width) {
       this.setState({size: width})
     } else {
-      warning(false, 'You should declare `width` prop or the container of `Percentage` should have `width`.')
+      invariant(false, 'You should declare `width` prop or the container of `Percentage` should have `width`.')
     }
   }
 
