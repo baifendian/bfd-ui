@@ -45,6 +45,9 @@
     "name": "DataTable",
     "cn": "数据表格"
   }, {
+    "name": "DataTable2",
+    "cn": "数据表格"
+  }, {
     "name": "FixedTable",
     "cn": "固定表格"
   }, {

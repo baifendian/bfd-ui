@@ -1,0 +1,73 @@
+/**
+ * @title data 数据源，一次性传入，自动分页，自动排序
+ */
+import DataTable from 'bfd/DataTable2'
+
+class DataTableAutoData extends Component {
+
+  constructor(props) {
+    super()
+    this.columns = [{
+      title: '姓名',
+      key: 'name',
+      width: '20%'
+    }, {
+      title: '性别',
+      render: item => item.sex ? '👨' : '👩',
+      width: '15%'
+    }, {
+      title: '年龄',
+      key: 'age',
+      sortable: true,
+      width: '15%'
+    }, {
+      title: '注册日期',
+      key: 'joinDate',
+      sortable: true,
+      width: '30%'
+    }, {
+      title: '操作',
+      render: () => <a href="">删除</a>,
+      width: '20%'
+    }]
+    this.data = [{
+      name: 'John',
+      sex: 1,
+      age: 21,
+      joinDate: '2015-01-01'
+    }, {
+      name: 'David',
+      sex: 1,
+      age: 32,
+      joinDate: '2015-02-01'
+    }, {
+      name: 'Lili',
+      sex: 0,
+      age: 28,
+      joinDate: '2013-01-01'
+    }, {
+      name: 'Sala',
+      sex: 0,
+      age: 23,
+      joinDate: '2015-07-01'
+    }, {
+      name: 'Tomas',
+      sex: 1,
+      age: 11,
+      joinDate: '2017-01-01'
+    }, {
+      name: 'Oabama',
+      sex: 1,
+      age: 51,
+      joinDate: '2017-01-01'
+    }]
+  }
+
+  render() {
+    return (
+      <DataTable columns={this.columns} data={this.data} pageSize={5} />
+    )
+  }
+}
+
+@component DataTable2
