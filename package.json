@@ -75,7 +75,7 @@
     "gulp-postcss": "^6.2.0",
     "gulp-replace": "^0.5.4",
     "html-loader": "^0.4.3",
-    "jest": "^0.1.40",
+    "jest-cli": "^0.10.0",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "lodash": "^4.14.0",
