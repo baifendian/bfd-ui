@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import isPlainObject from 'lodash/isPlainObject'
+import isNumber from 'lodash/isNumber'
 import invariant from 'invariant'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import propsToState from '../shared/propsToState'
@@ -50,9 +51,11 @@ class DataTable extends Component {
       nextSortType = 'desc'
     }
     this.setState({
+      currentPage: 1,
       sortKey: nextSortKey,
       sortType: nextSortType
     })
+    this.props.onPageChange && this.props.onPageChange(1)
     this.props.onSort && this.props.onSort(nextSortKey, nextSortType)
   }
 
@@ -69,10 +72,14 @@ class DataTable extends Component {
         '`DataTable` dataFilter should return plain object.'
       )
     }
-    const { totalCounts, data = [] } = res
+    const { totalCounts } = res
+    let { data } = res
+    if (!data) {
+      data = []
+    }
     invariant(
-      Array.isArray(data),
-      `'DataTable' data should be Array, check the xhr response or dataFilter. eg:
+      isNumber(totalCounts) && Array.isArray(data),
+      `Invalid JSON for 'DataTable', check the xhr response or dataFilter. eg:
       {
         totalCounts: 1200,
         data: [{...}]
@@ -87,8 +94,14 @@ class DataTable extends Component {
   }
 
   getUrl() {
+    if (this.props.getUrl) {
+      const { pageSize } = this.props
+      const { currentPage, sortKey, sortType } = this.state
+      return this.props.getUrl({ currentPage, pageSize, sortKey, sortType })
+    }
     let { url } = this.props
     if (!url) return
+
     const { pagingDisabled, pageSize } = this.props
     const { sortKey, sortType } = this.state
 
@@ -99,7 +112,7 @@ class DataTable extends Component {
     })
     sortKey && Object.assign(query, { sortKey, sortType })
 
-    let queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+    const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
     if (queryString) {
       const connector = url.indexOf('?') === -1 ? '?' : '&'
       url += connector + queryString
@@ -121,9 +134,9 @@ class DataTable extends Component {
           key={i}
           width={item.width}
           className={classnames({'bfd-datatable__th--sortable': sortable})}
-          onClick={() => this.handleSort(item.key)}
+          onClick={() => sortable && this.handleSort(item.key)}
         >
-          {item.title}
+          {title}
           {sortable && <Icon className="bfd-datatable__sort-symbol" type={icon} />}
         </th>
       )
@@ -141,20 +154,24 @@ class DataTable extends Component {
   }
 
   getCurrentPageData() {
-    const { pagingDisabled, pageSize } = this.props
+    const { pagingDisabled, pageSize, url } = this.props
     const { totalCounts, data, sortKey, sortType } = this.state
     let renderData = data || []
-    if (totalCounts || pagingDisabled) return renderData
-
-    // local paging
-    if (sortKey) {
-      renderData = renderData.sort((a, b) => {
-        if (sortType === 'desc') return a[sortKey] < b[sortKey]
-        if (sortType === 'asc') return a[sortKey] > b[sortKey]
-      })
+    if (totalCounts || pagingDisabled) {
+      return renderData
     }
-    const start = this.getStart()
-    return renderData.slice(start, start + pageSize)
+    if (renderData.length) {
+      // local paging
+      if (sortKey && !url) {
+        renderData = renderData.sort((a, b) => {
+          if (sortType === 'desc') return a[sortKey] < b[sortKey]
+          if (sortType === 'asc') return a[sortKey] > b[sortKey]
+        })
+      }
+      const start = this.getStart()
+      return renderData.slice(start, start + pageSize)
+    }
+    return renderData
   }
 
   getStart() {
@@ -171,8 +188,6 @@ class DataTable extends Component {
     delete other.totalCounts
     delete other.data
 
-    const currentPageData = this.getCurrentPageData()
-
     return (
       <Fetch
         className={classnames('bfd-datatable', className)}
@@ -185,7 +200,7 @@ class DataTable extends Component {
           <thead>
             <tr>{this.getTheads()}</tr>
           </thead>
-          <tbody>{currentPageData.map(::this.getRow)}</tbody>
+          <tbody>{this.getCurrentPageData().map(::this.getRow)}</tbody>
         </table>
         {pagingDisabled || (
           <Paging
@@ -232,7 +247,11 @@ DataTable.propTypes = {
   data: PropTypes.array,
 
   /**
-   * url 数据源，JSON 格式：
+   * url 数据源，这里的 url 不包括分页、排序等查询条件，组件内部会自动拼接，例如
+   * 指定 path/query.do，最终组件内部处理后变成 path/query.do?start=0&limit=10
+   * 也可以自定义 URL 规则，参见 `getUrl` 属性
+   *
+   * url 数据源模式 JSON 格式：
    * ```js
    * {
    *   totalCounts: 1200, // 没有则按上次请求返回的总条数分页或者根据 data.length 自动分页
@@ -240,8 +259,17 @@ DataTable.propTypes = {
    * }
    * ```
    * 如果后台格式无法满足，可自定义 dataFilter 过滤
+   * url 数据源模式，分页切换、排序都会动态发请求
    */
   url: PropTypes.string,
+
+  /**
+   * 如果组件内部拼装的 url 不满足需求，可自定义最终的 url
+   * ```js
+   * getUrl={condition => 'your url'}
+   * ```
+   */
+  getUrl: PropTypes.func,
 
   // url 数据源格式过滤器，返回过滤后的数据
   dataFilter: PropTypes.func,

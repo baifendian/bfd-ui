@@ -29,7 +29,7 @@ class App {
           <div className="home__banner-center">
             <h2>BFD UI —— 企业级 React 组件库</h2>
             <h1>UI•BAIFENDIAN</h1>
-            <em>当前版本：v1.2.1</em>
+            <em>当前版本：v1.3.0</em>
             <Link to="/guide#install" className="home__banner-install">
               <Button>安装</Button>
             </Link>
