@@ -1,0 +1,39 @@
+.markdown--docs {
+  h2 {
+    &:before {
+      content: none;
+    }
+  }
+  p, pre, ul, blockquote {
+    margin-top: 0;
+    margin-bottom: .5em;
+  }
+  em {
+    code {
+      color: #999;
+    }
+  }
+  blockquote {
+    border-left-color: #ffa6a6;
+    background-color: #ffebeb;
+    border-radius: 2px;
+    padding: 8px 10px;
+    color: #777;
+    p {
+      margin-bottom: 0;
+    }
+  }
+  h3 {
+    margin-top: 2em;
+    margin-bottom: .5em;
+    &:before {
+      content: none;
+    }
+    strong:first-child {
+      color: #2795ee;
+    }
+  }
+  ul {
+    list-style-type: disc;
+  }
+}

@@ -9,7 +9,13 @@ const path = require('path')
 const marked = require('marked')
 const beautify = require('code-beautify')
 
+const renderer = new marked.Renderer()
+renderer.heading = (text, level) => {
+  const id = text.split(' ')[0].replace(/<\/?.*?>\*?/g, '')
+  return `<h${level} id="${id}">${text}</h${level}>`
+}
 marked.setOptions({
+  renderer,
   highlight: (code, lang) => beautify(code, lang)
 })
 
@@ -59,168 +65,65 @@ module.exports = function (source) {
 
   // 依赖的公共模块
   imports.add(`import React, { Component } from 'react'`)
-  imports.add(`import { Row, Col } from 'bfd/Layout'`)
+  imports.add(`import Markdown from 'public/Markdown'`)
   imports.add(`import Demo from 'public/Demo'`)
-  imports.add(`import Doc from 'public/Doc'`)
 
-  // 获取 DEMO、文档数据
-  const demos = []
-  const docs = []
-  const callbacks = [match => {
-    demos.push({
-      title: match
-    })
-  }, match => {
-    demos[demos.length - 1].desc = match
-  }, match => {
-    const currentDemo = demos[demos.length - 1]
-    currentDemo.code = match.trim()
-    const _imports = match.match(/import .*/g)
-    if (_imports) {
-      _imports.forEach(item => {
-        imports.add(item.trim())
+  function parse(file) {
+    const markdown = fs.readFileSync(file, 'utf8')
+
+    const regex = /@(\w+)\n```(\w+)([^]*?)```\s*\n/g
+    const htmlFragments = []
+    const jsFragments = []
+    const getMarkdownHTMLFragment = (markdown, start, end) => {
+      const markdownFragment = markdown.substring(start, end)
+      const html = marked(markdownFragment).replace(/(`|\$)/g, '\\$1')
+      return `<Markdown className="markdown--docs" html={\`${html}\`} />`
+    }
+
+    let match
+    let lastIndex = 0
+    while (match = regex.exec(markdown)) {
+      const [all, name, lang, code] = match
+      const codeBody = code.replace(/import .*/g, match => {
+        imports.add(match)
+        return ''
       })
-      currentDemo.mainCode = currentDemo.code.replace(/import .*/g, '').trim()
+      const codeHighlight = beautify(code, lang).replace(/(`|\$)/g, '\\$1')
+      jsFragments.push(codeBody)
+      htmlFragments.push(
+        getMarkdownHTMLFragment(markdown, lastIndex, match.index),
+        `<Demo code={\`${codeHighlight}\`}><${name} /></Demo>`
+      )
+      lastIndex = regex.lastIndex
     }
-    currentDemo.name = currentDemo.mainCode.match(/(?:const|class)\s(\w+)/)[1]
-  }, match => {
-    // 文档
-    const doc = {
-      name: match.split('/').slice(-1)[0],
-      props: [],
-      apis: []
+    if (lastIndex < markdown.length) {
+      htmlFragments.push(getMarkdownHTMLFragment(markdown, lastIndex, markdown.length))
     }
-    let dir = path.join(__dirname, '../../src/' + match)
-    try {
-      if (fs.statSync(dir).isDirectory()) {
-        dir += '/index.js'
-      } else {
-        dir += '.js'
+    const ComponentName = file.split('/').slice(-2)[0]
+    return `
+      export function ${ComponentName}() {
+        ${jsFragments.join('\n')}
+        return (
+          <div>${htmlFragments.join('\n')}</div>
+        )
       }
-    } catch(e) {
-      dir += '.js'
-    }
-
-    const sourceCode = fs.readFileSync(dir, 'utf8')
-
-    // 组件 props
-    match = sourceCode.match(/\.propTypes = ({[^]+\n})/)
-    if (match) {
-      match = match[1]
-      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*PropTypes(.*)/g
-      let res
-      while (res = reg.exec(match)) {
-        let desc = res[2] || ''
-        if (desc) {
-          desc = desc.trim().replace(/\*\/$/, '')
-          desc = marked(desc.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
-        }
-        doc.props.push({
-          name: res[3],
-          desc: desc,
-          types: res[4].match(/string|bool|number|object|array|func|element/g),
-          required: !!res[4].match(/isRequired/)
-        })
-      }
-    }
-
-    // API、组件对外的方法
-    const apiReg = /\* @public([^]+?)\*\//g
-    while(match = apiReg.exec(sourceCode)) {
-      match = match[1]
-      const api = {}
-      const handleMap = {
-        name: res => {
-          api.name = res
-        },
-        type: res => {
-          api.type = res
-        },
-        description: res => {
-          api.desc = marked(res.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
-        },
-        param: res => {
-          const param = {}
-          res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([^]*)/)
-          param.type = res[1]
-          param.name = res[2]
-          param.desc = marked(res[3].replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
-          ;(api.params || (api.params = [])).push(param)
-        },
-        'return': res => {
-          res = res.match(/(.*?\})\s*(.*)/)
-          api.return = {
-            type: res[1],
-            desc: res[2].trim()
-          }
-        }
-      }
-      const reg = /([a-z]+)\s+([^]*)/
-      match = match.split(/(\r?\n?) \* @/).slice(1)
-      match.forEach(v => {
-        v = v.match(reg)
-        v && handleMap[v[1]] && handleMap[v[1]](v[2])
-      })
-      doc.apis.push(api)
-    }
-
-    docs.push(doc)
-  }]
-  const reg = /@title\s(.+)|@desc\s(.+)|(\nimport [^]+?\n})|@component\s(.+)/g
-  source.replace(reg, (match, p1, p2, p3, p4) => {
-    [p1, p2, p3, p4].forEach((match, i) => {
-      match && callbacks[i](match)
-    })
-  })
-
-  // 提前声明
-  const codes = demos.map(demo => {
-    const code = demo.code.replace(/`/g, '\\\`').replace(/\$\{/g, '\\\${')
-    return `const code${demo.name} = \`${code}\`
-${demo.mainCode}`
-  })
-
-  // 生成布局代码
-  const leftCol = []
-  const rightCol = []
-  demos.forEach((demo, i) => {
-    const code = (`
-      <Demo title="${demo.title}" code={code${demo.name}} desc="${demo.desc || ''}">
-        <${demo.name} />
-      </Demo>
-    `)
-    i % 2 === 0 ? leftCol.push(code) : rightCol.push(code)
-  })
-
-  let layout
-  if (rightCol.length) {
-    layout = (`
-      <Row gutter>
-        <Col col="md-6">${leftCol.join('\r\n')}</Col>
-        <Col col="md-6">${rightCol.join('\r\n')}</Col>
-      </Row>
-    `)
-  } else {
-    layout = leftCol[0]
+    `
   }
 
-  // 生成文档代码
-  const componentsDocs = docs.map(doc => {
-    return `<Doc key="${doc.name}" {...${doc}} />`
+  const exports = []
+
+  const rootDir = path.join(__dirname, '../../src')
+  fs.readdirSync(rootDir).forEach(dir => {
+    const docFile = rootDir + '/' + dir + '/README.md'
+    if (fs.existsSync(docFile)) {
+      exports.push(parse(docFile))
+    }
   })
 
-  return `${imports.getAll().join('\r\n')}
+  return `
+    ${imports.getAll().join('\n')}
+    import './docs.less'
 
-${codes.join('\r\n')}
-
-const docs = ${JSON.stringify(docs)}
-
-export default () => {
-  return (
-    <div>
-      ${layout}
-      {docs.map(doc => <Doc key={doc.name} {...doc} />)}
-    </div>
-  )
-}`
+    ${exports.join('\n')}
+  `
 }

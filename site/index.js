@@ -26,7 +26,7 @@ render((
         <Route path=":component" getComponent={(location, cb) => {
           const component = location.pathname.split('/').pop()
           require.ensure([], require => {
-            cb(null, require(`./functions/Components/docs/${component}.doc`).default)
+            cb(null, require(`./functions/Components/docs.doc`)[component])
           })
         }} />
       </Route>

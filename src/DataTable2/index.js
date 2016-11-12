@@ -221,54 +221,12 @@ DataTable.defaultProps = {
 
 DataTable.propTypes = {
 
-  /**
-   * 列配置
-   * ```js
-   * [{
-   *   title: '姓名', // 列头显示内容，string/node
-   *   key: 'name', // 数据对应的 key，用于排序、非 render 渲染
-   *   sortable: true, // 是否开启排序功能
-   *   width: '20%', // 列宽，像素／百分比
-   *   render: (item, index, value) => item.authorised ? '已授权' : '未授权'
-   * }]
-   * ```
-   */
   columns: PropTypes.array.isRequired,
 
-  /**
-   * 数据源，如果未指定 totalCounts，则根据 data.length 自动分页
-   * ```js
-   * [{
-   *   name: '王XX',
-   *   authorised: true
-   * }]
-   * ```
-   */
   data: PropTypes.array,
 
-  /**
-   * url 数据源，这里的 url 不包括分页、排序等查询条件，组件内部会自动拼接，例如
-   * 指定 path/query.do，最终组件内部处理后变成 path/query.do?start=0&limit=10
-   * 也可以自定义 URL 规则，参见 `getUrl` 属性
-   *
-   * url 数据源模式 JSON 格式：
-   * ```js
-   * {
-   *   totalCounts: 1200, // 没有则按上次请求返回的总条数分页或者根据 data.length 自动分页
-   *   data: [{...}] // 同 data 属性格式
-   * }
-   * ```
-   * 如果后台格式无法满足，可自定义 dataFilter 过滤
-   * url 数据源模式，分页切换、排序都会动态发请求
-   */
   url: PropTypes.string,
 
-  /**
-   * 如果组件内部拼装的 url 不满足需求，可自定义最终的 url
-   * ```js
-   * getUrl={condition => 'your url'}
-   * ```
-   */
   getUrl: PropTypes.func,
 
   // url 数据源格式过滤器，返回过滤后的数据
