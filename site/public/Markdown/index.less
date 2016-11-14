@@ -13,31 +13,28 @@
       content: counter(h2) "."counter(h3)". ";
     }
   }
-  h1, h2 {
-    &:not(:first-child) {
-      margin-top: 50px;
-    }
-  }
   pre {
     background-color: #fafafa;
+    border-radius: 2px;
   }
   code {
     color: #ff4171;
   }
-  em {
-    opacity: .8;
-  }
   ul {
-    padding-left: 2em;
     list-style-type: circle;
   }
   li {
-    line-height: 20px;
+    // margin: .2em 0;
   }
   blockquote {
-    margin: 20px 0 10px 0;
+    margin: 10px 0;
     padding: 8px 15px;
     border-left: 5px solid #ffc3c3;
     color: #999;
+    background-color: #ffebeb;
+    border-radius: 2px;
+    p {
+      margin: 0;
+    }
   }
 }

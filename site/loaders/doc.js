@@ -16,6 +16,7 @@ renderer.heading = (text, level) => {
 }
 marked.setOptions({
   renderer,
+  sanitize: true,
   highlight: (code, lang) => beautify(code, lang)
 })
 
@@ -77,7 +78,7 @@ module.exports = function (source) {
     const getMarkdownHTMLFragment = (markdown, start, end) => {
       const markdownFragment = markdown.substring(start, end)
       const html = marked(markdownFragment).replace(/(`|\$)/g, '\\$1')
-      return `<Markdown className="markdown--docs" html={\`${html}\`} />`
+      return `<Markdown className="components__markdown" html={\`${html}\`} />`
     }
 
     let match
@@ -101,7 +102,7 @@ module.exports = function (source) {
     }
     const ComponentName = file.split('/').slice(-2)[0]
     return `
-      export function ${ComponentName}() {
+      components['${ComponentName}'] = () => {
         ${jsFragments.join('\n')}
         return (
           <div>${htmlFragments.join('\n')}</div>
@@ -110,20 +111,36 @@ module.exports = function (source) {
     `
   }
 
-  const exports = []
+  const componentsCodes = []
 
   const rootDir = path.join(__dirname, '../../src')
   fs.readdirSync(rootDir).forEach(dir => {
     const docFile = rootDir + '/' + dir + '/README.md'
     if (fs.existsSync(docFile)) {
-      exports.push(parse(docFile))
+      componentsCodes.push(parse(docFile))
+      const content = fs.readFileSync(docFile)
+      if (content === 'undefined') {
+        fs.writeFileSync(fs.readFileSync(path.join(__dirname, `../functions/Components/docs/${dir}.doc`)), 'utf8')
+      }
     }
   })
 
   return `
+    import Layout from './Layout'
     ${imports.getAll().join('\n')}
-    import './docs.less'
+    import './index.less'
 
-    ${exports.join('\n')}
+    const components = {}
+    ${componentsCodes.join('\n')}
+
+    export default props => {
+      const ComponentName = props.params.component
+      const Component = components[ComponentName]
+      return (
+        <Layout componentName={ComponentName}>
+          {Component && <Component />}
+        </Layout>
+      )
+    }
   `
 }

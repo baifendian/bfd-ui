@@ -17,16 +17,12 @@ render((
           cb(null, require('./functions/Guide').default)
         })
       }} />
-      <Route path="components" getComponent={(location, cb) => {
-        require.ensure([], require => {
-          cb(null, require('./functions/Components').default)
-        })
-      }}>
+      <Route path="components">
         <IndexRedirect to="/components/Button" />
         <Route path=":component" getComponent={(location, cb) => {
           const component = location.pathname.split('/').pop()
           require.ensure([], require => {
-            cb(null, require(`./functions/Components/docs.doc`)[component])
+            cb(null, require('./functions/Components/index.doc').default)
           })
         }} />
       </Route>

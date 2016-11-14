@@ -13,7 +13,7 @@ import isPlainObject from 'lodash/isPlainObject'
 import isNumber from 'lodash/isNumber'
 import invariant from 'invariant'
 import shouldComponentUpdate from '../shouldComponentUpdate'
-import propsToState from '../shared/propsToState'
+import propsToState from '../_shared/propsToState'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
@@ -220,42 +220,19 @@ DataTable.defaultProps = {
 }
 
 DataTable.propTypes = {
-
   columns: PropTypes.array.isRequired,
-
   data: PropTypes.array,
-
   url: PropTypes.string,
-
   getUrl: PropTypes.func,
-
-  // url 数据源格式过滤器，返回过滤后的数据
   dataFilter: PropTypes.func,
-
-  // 当前页码，默认1，常用于条件改变后重置分页状态。url 数据源模式下请求参数会增加 start，currentPage 变化后会重新请求
   currentPage: PropTypes.number,
-
-  // 切换分页后的回调，参数为当前页码
   onPageChange: PropTypes.func,
-
-  // 每页显示的条数，默认10。url 数据源模式下请求参数会增加 limit ，pageSize 变化后会重新请求
   pageSize: PropTypes.number,
-
-  // 总条数，用于 data 数据源模式下的分页计算，未指定则根据 data.length 自动分页
   totalCounts: PropTypes.number,
-
-  // 是否禁用分页
-  pagingDisabled: PropTypes.bool,
-
-  // 当前排序字段。url 数据源模式下请求参数会增加 sortKey，sortKey 变化后会重新请求
   sortKey: PropTypes.string,
-
-  // 当前排序类型，可选值：desc, asc, 默认 desc。url 数据源模式下请求参数会增加 sortType，sortType 变化后会重新请求
   sortType: PropTypes.string,
-
-  // 排序后的回调，参数: sortKey, sortType
   onSort: PropTypes.func,
-
+  pagingDisabled: PropTypes.bool,
   customProp(props) {
     if (props.data && props.url) {
       return new Error('You can not use `data` and `url` at the same time.')

@@ -5,7 +5,7 @@ import html from '../../../GUIDE.md'
 
 export default () => {
   return (
-    <Center>
+    <Center style={{margin: '20px 0'}}>
       <Markdown html={html} />
     </Center>
   )

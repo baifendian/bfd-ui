@@ -1,144 +1,124 @@
 [{
-  "category": "base",
-  "cn": "基础组件",
-  "icon": "th-large",
-  "components": [{
-    "name": "Button",
-    "cn": "按钮"
-  }, {
-    "name": "Input",
-    "cn": "输入框"
-  }, {
-    "name": "Icon",
-    "cn": "图标"
-  }, {
-    "name": "Layout",
-    "cn": "布局"
-  }, {
-    "name": "Panel",
-    "cn": "面板"
-  }, {
-    "name": "Checkbox",
-    "cn": "复选框"
-  }, {
-    "name": "Radio",
-    "cn": "单选框"
-  }, {
-    "name": "Select",
-    "cn": "下拉选择"
-  }, {
-    "name": "Form",
-    "cn": "表单"
-  }, {
-    "name": "Tabs",
-    "cn": "选项卡"
-  }, {
-    "name": "ButtonGroup",
-    "cn": "按钮组"
-  }, {
-    "name": "Modal",
-    "cn": "模态框"
-  }, {
-    "name": "DatePicker",
-    "cn": "日期选择"
-  }, {
-    "name": "DataTable",
-    "cn": "数据表格"
-  }, {
-    "name": "DataTable2",
-    "cn": "数据表格"
-  }, {
-    "name": "FixedTable",
-    "cn": "固定表格"
-  }, {
-    "name": "Paging",
-    "cn": "分页"
-  }, {
-    "name": "SearchInput",
-    "cn": "搜索框"
-  }, {
-    "name": "MultipleSelect",
-    "cn": "多选列表"
-  }, {
-    "name": "confirm",
-    "cn": "确认提示"
-  }, {
-    "name": "message",
-    "cn": "全局提示"
-  }, {
-    "name": "Tooltip",
-    "cn": "提示框"
-  }, {
-    "name": "Switch",
-    "cn": "开关"
-  }, {
-    "name": "Percentage",
-    "cn": "环形百分比"
-  }, {
-    "name": "Upload",
-    "cn": "上传"
-  }, {
-    "name": "Spinner",
-    "cn": "加载中"
-  }]
+  "name": "Button",
+  "cn": "按钮"
 }, {
-  "category": "advance",
-  "cn": "交互进阶",
-  "icon": "retweet",
-  "components": [{
-    "name": "AutoComplete",
-    "cn": "自动完成"
-  }, {
-    "name": "Dropdown",
-    "cn": "下拉菜单"
-  }, {
-    "name": "Tree",
-    "cn": "树"
-  }, {
-    "name": "TableTree",
-    "cn": "表格树"
-  }, {
-    "name": "TreeSelect",
-    "cn": "树选择"
-  }, {
-    "name": "ClearableInput",
-    "cn": "清空输入框"
-  }, {
-    "name": "Slider",
-    "cn": "拖动条"
-  },  {
-    "name": "Editable",
-    "cn": "可编辑的"
-  }, {
-    "name": "TextOverflow",
-    "cn": "文字溢出"
-  }]
+  "name": "Input",
+  "cn": "输入框"
 }, {
-  "category": "business",
-  "cn": "业务定制",
-  "icon": "edit",
-  "components": [{
-    "name": "Nav",
-    "cn": "导航"
-  }, {
-    "name": "Fetch",
-    "cn": "AJAX加载管理"
-  }, {
-    "name": "Transfer",
-    "cn": "穿梭框"
-  }, {
-    "name": "SplitPanel",
-    "cn": "分栏"
-  }, {
-    "name": "Steps",
-    "cn": "步骤条"
-  }]
+  "name": "Icon",
+  "cn": "图标"
 }, {
-  "category": "tools",
-  "cn": "工具模块",
-  "icon": "wrench",
-  "components": [{
-    "name": "xhr",
-    "cn": "AJAX请求"
-  }]
+  "name": "Layout",
+  "cn": "布局"
+}, {
+  "name": "Panel",
+  "cn": "面板"
+}, {
+  "name": "Checkbox",
+  "cn": "复选框"
+}, {
+  "name": "Radio",
+  "cn": "单选框"
+}, {
+  "name": "Select",
+  "cn": "下拉选择"
+}, {
+  "name": "Form",
+  "cn": "表单"
+}, {
+  "name": "Tabs",
+  "cn": "选项卡"
+}, {
+  "name": "ButtonGroup",
+  "cn": "按钮组"
+}, {
+  "name": "Modal",
+  "cn": "模态框"
+}, {
+  "name": "DatePicker",
+  "cn": "日期选择"
+}, {
+  "name": "DataTable",
+  "cn": "数据表格"
+}, {
+  "name": "DataTable2",
+  "cn": "数据表格"
+}, {
+  "name": "FixedTable",
+  "cn": "固定表格"
+}, {
+  "name": "Paging",
+  "cn": "分页"
+}, {
+  "name": "SearchInput",
+  "cn": "搜索框"
+}, {
+  "name": "MultipleSelect",
+  "cn": "多选列表"
+}, {
+  "name": "confirm",
+  "cn": "确认提示"
+}, {
+  "name": "message",
+  "cn": "全局提示"
+}, {
+  "name": "Tooltip",
+  "cn": "提示框"
+}, {
+  "name": "Switch",
+  "cn": "开关"
+}, {
+  "name": "Percentage",
+  "cn": "环形百分比"
+}, {
+  "name": "Upload",
+  "cn": "上传"
+}, {
+  "name": "Spinner",
+  "cn": "加载中"
+}, {
+  "name": "AutoComplete",
+  "cn": "自动完成"
+}, {
+  "name": "Dropdown",
+  "cn": "下拉菜单"
+}, {
+  "name": "Tree",
+  "cn": "树"
+}, {
+  "name": "TableTree",
+  "cn": "表格树"
+}, {
+  "name": "TreeSelect",
+  "cn": "树选择"
+}, {
+  "name": "ClearableInput",
+  "cn": "清空输入框"
+}, {
+  "name": "Slider",
+  "cn": "拖动条"
+}, {
+  "name": "Editable",
+  "cn": "可编辑的"
+}, {
+  "name": "TextOverflow",
+  "cn": "文字溢出"
+}, {
+  "name": "Nav",
+  "cn": "导航"
+}, {
+  "name": "Fetch",
+  "cn": "AJAX加载管理"
+}, {
+  "name": "Transfer",
+  "cn": "穿梭框"
+}, {
+  "name": "SplitPanel",
+  "cn": "分栏"
+}, {
+  "name": "Steps",
+  "cn": "步骤条"
+}, {
+  "name": "xhr",
+  "cn": "AJAX请求"
 }]

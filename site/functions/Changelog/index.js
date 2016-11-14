@@ -5,7 +5,7 @@ import html from '../../../CHANGELOG.md'
 
 export default () => {
   return (
-    <Center>
+    <Center style={{margin: '20px 0'}}>
       <Changelog html={html} />
     </Center>
   )
