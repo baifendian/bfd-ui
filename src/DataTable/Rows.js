@@ -68,7 +68,7 @@ class Rows extends Component {
             ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td>
             : null
           return (
-            <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
+            <tr key={j} onClick={this.handleRowClick.bind(this, item, j)}>
               {checkboxTd}
               {
                 column.map((columns, i) => {
@@ -143,8 +143,8 @@ class Rows extends Component {
     this.props.onSelect(row.isSelect, row, selectRow, selectedRow)
   }
 
-  handleRowClick(item) {
-    this.props.onRowClick && this.props.onRowClick(item)
+  handleRowClick(...args) {
+    this.props.onRowClick && this.props.onRowClick(...args)
   }
 }
 

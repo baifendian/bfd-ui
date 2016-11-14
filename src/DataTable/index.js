@@ -296,7 +296,7 @@ class DataTable extends Component {
     }
   }
 
-  handleRowClick(row) {
+  handleRowClick(row, index, e) {
     this.props.onRowClick && this.props.onRowClick(row)
   }
 
@@ -351,7 +351,7 @@ DataTable.propTypes = {
   // 复选框点击事件，返回被选中的行记录（本页），如果在column中设置主键，此函数第二个参数为已选的行记录（跨页）
   onCheckboxSelect: PropTypes.func,
 
-  // 行点击事件，返回被选中的行记录
+  // 行点击事件，function(rowData, index, event)
   onRowClick: PropTypes.func,
 
   // 列名称点击排序事件，返回列名称和排序状态

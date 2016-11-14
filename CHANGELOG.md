@@ -1,3 +1,6 @@
+- DataTable onRowClick 新增 index、event 参数
+
+
 ## v1.3.0
 
 `2016-11-11` 😓
