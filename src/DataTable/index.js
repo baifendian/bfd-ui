@@ -296,8 +296,8 @@ class DataTable extends Component {
     }
   }
 
-  handleRowClick(row, index, e) {
-    this.props.onRowClick && this.props.onRowClick(row)
+  handleRowClick(...args) {
+    this.props.onRowClick && this.props.onRowClick(...args)
   }
 
   getPrimaryKey(column) {
