@@ -80,7 +80,7 @@ class DataTableAutoData extends Component {
 
 ### *columns `Array`
 列配置，具体字段说明：
-- `*title: string|ReactElement` 列头显示内容
+- `*title: number|string|ReactElement` 列头显示内容
 - `key: string` 数据对应的键名，关联 `sortKey`, 未定义 `render` 时按 `dataItem[key]` 值渲染
 - `sortable: boolean` 是否开启排序功能，开启后必须定义 `key` 作为排序字段标识
 - `width: string` 列宽，像素或者百分比
@@ -126,7 +126,9 @@ class DataTableAutoData extends Component {
 ### getUrl `function(condition)`
 `url` 的替代方案，可自定义具体请求的 url，包括分页、排序等操作的请求。`condition` 是条件对象，包括当前页、排序等信息。用法如下：
 ```js
-<DataTable getUrl={({ currentPage, pageSize }) => `path/user/${currentPage}/${pageSize}`} />
+function getUrl({ currentPage, pageSize }) {
+  return `path/user/${currentPage}/${pageSize}`
+}
 ```
 
 ### dataFilter `function(response)`

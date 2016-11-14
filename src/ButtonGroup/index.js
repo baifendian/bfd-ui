@@ -8,8 +8,9 @@
  */
 
 import React, { PropTypes, Component } from 'react'
-import findAllByType from '../findAllByType'
 import classnames from 'classnames'
+import invariant from 'invariant'
+import mapByComponent from '../_shared/mapByComponent'
 import Button from '../Button'
 import './index.less'
 
@@ -34,24 +35,23 @@ class ButtonGroup extends Component {
   }
 
   render() {
-    const { className, children, defaultValue, ...other } = this.props
-    const { value } = this.state
-    delete other.value
-
-    const items = findAllByType(children, Button)
-    const buttons = items.map((item, index) => {
-      if (!item) return
-      return React.cloneElement(item, {
-        key: index,
-        type: item.props.value === value ? '' : 'minor',
-        onClick: () => {
-          this.handleButtonClick(item.props.value)
-        }
-      })
-    })
+    const { className, children, value, defaultValue, ...other } = this.props
     return (
       <div className={classnames('bfd-button-group', className)} {...other}>
-        {buttons}
+        {mapByComponent(children, Button, child => {
+          const { value } = child.props
+          invariant(
+            value || value === 0,
+            `You should provide 'value' prop for 'Button' when you use 'ButtonGroup'.`
+          )
+          return React.cloneElement(child, {
+            key: value,
+            type: value === this.state.value ? '' : 'minor',
+            onClick: () => {
+              this.handleButtonClick(value)
+            }
+          })
+        })}
       </div>
     )
   }

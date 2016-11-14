@@ -11,9 +11,12 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import invariant from 'invariant'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
+import mapByComponent from '../../_shared/mapByComponent'
+import dataFilter from '../../_shared/dataFilter'
 import TextOverflow from '../../TextOverflow'
 import ClearableInput from '../../ClearableInput'
 import SelectDropdown from '../../SelectDropdown'
+import Option from '../Option'
 import './index.less'
 
 class Select extends Component {
@@ -40,10 +43,11 @@ class Select extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
-    if (this.props.dataFilter) {
-      data = this.props.dataFilter(data)
-      invariant(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
-    }
+    data = dataFilter(this, data) || []
+    invariant(
+      Array.isArray(data),
+      `'Select' data should be 'Array', check the response of '${this.props.url}' or the return value of 'dataFilter'.`
+    )
     this.setState({ data })
   }
 
@@ -88,22 +92,31 @@ class Select extends Component {
 
   getOptionsWithProps(onMatch) {
     const { children, render, defaultOption } = this.props
+    const { data } = this.state
     let res
     if (children) {
-      res = React.Children.map(children, this.getOptionWithProps.bind(this, onMatch))
+      res = mapByComponent(children, Option, this.getOptionWithProps.bind(this, onMatch))
     } else {
-      res = this.state.data.map((item, i) => {
-        return this.getOptionWithProps(onMatch, render.call(this, item, i), i)
+      res = data.map((item, i) => {
+        const option = render.call(this, item, i)
+        invariant(
+          option && option.type === Option,
+          `'Select' render should return '<Option />'.`
+        )
+        return this.getOptionWithProps(onMatch, option, i)
       })
     }
     if (defaultOption) {
+      invariant(
+        defaultOption.type === Option,
+        `'Select' defaultOption should be '<Option />'.`
+      )
       res.unshift(this.getOptionWithProps(onMatch, defaultOption, -1))
     }
     return res
   }
 
   getOptionWithProps(onMatch, option, i) {
-    if (!option) return
     const { value, children } = option.props
     let selected = false
     if (this.state.value === value) {
@@ -197,49 +210,24 @@ class Select extends Component {
 }
 
 Select.propTypes = {
-
-  // 选中的值
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  // 初始化时选中的值（不可控）
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  // 切换选择后的回调，参数为选中的值
   onChange: PropTypes.func,
-
-  // 数据源，结合 render 属性定义 Option 渲染逻辑
   data: PropTypes.array,
-
-  // URL 数据源
   url: PropTypes.string,
-
-  // URL 数据源模式数据过滤，参数为服务器返回的数据，返回处理后的数据
   dataFilter: PropTypes.func,
-
-  // data 或 url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
-
-  // data 或 url 方式时默认的 Option，通常针对空值时的选项
   defaultOption: PropTypes.element,
-
-  // 无选项对应时 Select 显示的内容
-  placeholder: PropTypes.string,
-
-  // 是否可搜索，搜索范围为 Option 的 value 和 children
+  placeholder: PropTypes.node,
   searchable: PropTypes.bool,
-
-  // 是否禁用
   disabled: PropTypes.bool,
-
-  // 尺寸，除默认值外可选值 sm、lg
   size: PropTypes.string,
-
-  customProp({ value, onChange, url, render }) {
-    if (value && !onChange) {
+  customProp(props) {
+    if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
-    if (url && !render) {
-      return new Error('You provided a `url` prop without an `render` handler')
+    if ((props.url || props.data) && !props.render) {
+      return new Error('You provided a `url` or `data` prop without an `render` handler')
     }
   }
 }
