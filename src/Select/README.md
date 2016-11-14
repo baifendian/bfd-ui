@@ -1,1 +1,91 @@
-undefined
+/**
+ * @title 基本功能
+ */
+import { Select, Option } from 'bfd/Select'
+
+const SelectBasic = () => {
+  return (
+    <Select>
+      <Option>请选择</Option>
+      <Option value="0">苹果</Option>
+      <Option value="1">三星</Option>
+      <Option value="2">小米</Option>
+    </Select>
+  )
+}
+
+/**
+ * @title data 数据
+ */
+import { Select, Option } from 'bfd/Select'
+
+const SelectData = () => {
+  const data = [{
+    id: 0,
+    name: '苹果'
+  }, {
+    id: 1,
+    name: '三星'
+  }, {
+    id: 2,
+    name: '小米'
+  }]
+  return (
+    <Select
+      data={data}
+      render={item => <Option value={item.id}>{item.name}</Option>}
+      defaultOption={<Option>请选择</Option>}
+    />
+  )
+}
+
+/**
+ * @title url 数据
+ */
+import { Select, Option } from 'bfd/Select'
+
+const SelectUrl = () => {
+  return (
+    <Select
+      defaultValue={1}
+      url="/data/select.json"
+      render={item => <Option value={item.id}>{item.name}</Option>}
+      defaultOption={<Option>请选择</Option>}
+    />
+  )
+}
+
+/**
+ * @title 可搜索的
+ */
+import { Select, Option } from 'bfd/Select'
+
+const SelectSearchable = () => {
+  return (
+    <Select searchable>
+      <Option>请选择</Option>
+      <Option value="0">苹果</Option>
+      <Option value="1">三星</Option>
+      <Option value="2">小米</Option>
+    </Select>
+  )
+}
+
+/**
+ * @title 禁用
+ */
+
+import { Select, Option } from 'bfd/Select'
+const SelectDisabled = () => {
+  return (
+    <Select disabled>
+      <Option>请选择</Option>
+      <Option value="0">苹果</Option>
+      <Option value="1">三星</Option>
+      <Option value="2">小米</Option>
+    </Select>
+  )
+}
+
+@component Select/Select
+@component Select/Option

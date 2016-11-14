@@ -1,1 +1,26 @@
-undefined
+/**
+ * @title 成功信息
+ */
+import message from 'bfd/message'
+import Button from 'bfd/Button'
+
+const MessageSuccess = () => {
+  let i = 0
+  return (
+    <Button onClick={() => message.success('操作成功' + i++)}>点击成功</Button>
+  )
+}
+
+/**
+ * @title 失败信息
+ */
+import message from 'bfd/message'
+import Button from 'bfd/Button'
+
+const MessageDanger = () => {
+  return (
+    <Button onClick={() => message.danger('操作失败')}>点击失败</Button>
+  )
+}
+
+@component message

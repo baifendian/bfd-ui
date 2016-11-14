@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
 import findAllByType from '../findAllByType'
 import classnames from 'classnames'
 import Button from '../Button'
@@ -18,7 +18,7 @@ class ButtonGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.defaultValue || ''
+      value: 'value' in props ? props.value : props.defaultValue
     }
   }
 
@@ -28,17 +28,24 @@ class ButtonGroup extends Component {
     })
   }
 
+  handleButtonClick(value) {
+    this.setState({ value })
+    this.props.onChange && this.props.onChange(value)
+  }
+
   render() {
     const { className, children, defaultValue, ...other } = this.props
+    const { value } = this.state
+    delete other.value
+
     const items = findAllByType(children, Button)
     const buttons = items.map((item, index) => {
       if (!item) return
       return React.cloneElement(item, {
         key: index,
-        type: (item.props.value == this.state.value) ? '' : 'minor',
-        onClick: e => {
-          e.stopPropagation()
-          this.handleClick(item.props.value)
+        type: item.props.value === value ? '' : 'minor',
+        onClick: () => {
+          this.handleButtonClick(item.props.value)
         }
       })
     })
@@ -48,26 +55,15 @@ class ButtonGroup extends Component {
       </div>
     )
   }
-
-  handleClick(value) {
-    this.setState({
-      value
-    })
-    this.props.onChange && this.props.onChange(value)
-  }
 }
 
 ButtonGroup.propTypes = {
-
-  // 默认值
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  // 选中事件，参数返回被选中的值
   onChange: PropTypes.func,
-  
   customProp(props) {
     if ('value' in props && !props.onChange) {
-      return new Error('You provided a `value` prop without an `onClick` handler')
+      return new Error('You provided a `value` prop without an `onChange` handler')
     }
   }
 }

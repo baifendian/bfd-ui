@@ -1,1 +1,35 @@
-undefined
+/**
+ * @title 文件上传
+ */
+import { Component } from 'react'
+import Upload from 'bfd/Upload'
+
+class UploadFile extends Component {
+
+  render() {
+    const props = {
+      method: 'post',
+      action: '/upload.do',
+      onUplading: ::this.handleUploading,
+      onComplete: ::this.handleComplete,
+      multiple: true,
+      showFileList: true
+    }
+    return (
+      <div>
+        <Upload {...props} />
+      </div>
+    )
+  }
+
+  handleUploading(pre) {
+    console.log('uploading...', pre)
+    return
+  }
+
+  handleComplete(data, list) {
+    console.log('complete:', data, 'list:', list)
+  }
+}
+
+@component Upload

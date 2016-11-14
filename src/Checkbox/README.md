@@ -1,1 +1,82 @@
-undefined
+/**
+ * @title 基本的 Checkbox
+ */
+import Checkbox from 'bfd/Checkbox'
+
+const CheckboxBasic = () => {
+  return (
+    <Checkbox onChange={e => console.log(e.target.checked)}>选择</Checkbox>
+  )
+}
+
+/**
+ * @title 半选中的 Checkbox
+ * @desc 半选中状态目前仅支持受控方式
+ */
+import Checkbox from 'bfd/Checkbox'
+
+const CheckboxIndeterminate = () => {
+  return (
+    <Checkbox indeterminate>选择</Checkbox>
+  )
+}
+
+/**
+ * @title 基本的 CheckboxGroup
+ */
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
+
+const CheckboxGroupBasic = () => {
+  return (
+    <CheckboxGroup defaultSelects={['apple']} onChange={selects => console.log(selects)}>
+      <Checkbox value="apple">苹果</Checkbox>
+      <Checkbox value="samsung">三星</Checkbox>
+      <Checkbox value="mi" disabled>小米</Checkbox>
+    </CheckboxGroup>
+  )
+}
+
+/**
+ * @title 快速创建复选框组
+ * @desc 针对 value 和显示值相同时
+ */
+import { CheckboxGroup } from 'bfd/Checkbox'
+
+const CheckboxGroupValues = () => {
+  return (
+    <CheckboxGroup values={['苹果', '三星', '小米']} />
+  )
+}
+
+/**
+ * @title CheckboxGroup 垂直排列
+ */
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
+
+const CheckboxGroupBlock = () => {
+  return (
+    <CheckboxGroup block>
+      <Checkbox value="apple">苹果</Checkbox>
+      <Checkbox value="samsung">三星</Checkbox>
+      <Checkbox value="mi">小米</Checkbox>
+    </CheckboxGroup>
+  )
+}
+
+/**
+ * @title 全选
+ */
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
+
+const CheckboxGroupToggleable = () => {
+  return (
+    <CheckboxGroup toggleable>
+      <Checkbox value="apple">苹果</Checkbox>
+      <Checkbox value="samsung">三星</Checkbox>
+      <Checkbox value="mi">小米</Checkbox>
+    </CheckboxGroup>
+  )
+}
+
+@component Checkbox/Checkbox
+@component Checkbox/CheckboxGroup

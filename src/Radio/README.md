@@ -1,1 +1,26 @@
-undefined
+/**
+ * @title 基本的 Radio
+ */
+import Radio from 'bfd/Radio'
+
+const RadioBasic = () => {
+  return <Radio value="apple">苹果</Radio>
+}
+
+/**
+ * @title 基本的 RadioGroup
+ */
+import Radio, { RadioGroup } from 'bfd/Radio'
+
+const RadioGroupBasic = () => {
+  return (
+    <RadioGroup defaultValue="mi" onChange={value => console.log(value)}>
+      <Radio value="apple">苹果</Radio>
+      <Radio value="mi">小米</Radio>
+      <Radio value="samsung" disabled>三星</Radio>
+    </RadioGroup>
+  )
+}
+
+@component Radio/Radio
+@component Radio/RadioGroup

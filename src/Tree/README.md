@@ -1,1 +1,257 @@
-undefined
+/**
+ * @title 基本功能
+ * @desc open 字段控制打开状态；默认节点渲染 name 字段
+ */
+import Tree from 'bfd/Tree'
+
+const TreeBasic = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka'
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} />
+}
+
+/**
+ * @title 自定义节点渲染
+ */
+import Tree from 'bfd/Tree'
+
+const TreeRender = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka'
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} render={data => <a href="">{data.name}</a>} />
+}
+
+/**
+ * @title 自定义图标
+ */
+import Tree from 'bfd/Tree'
+
+const TreeGetIcon = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka'
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} getIcon={data => data.open ? 'folder-open' : 'folder'} />
+}
+
+/**
+ * @title 按需动态加载数据
+ * @desc 父节点需要指定 isParent 字段来判断是否存在子节点
+ */
+import Tree from 'bfd/Tree'
+
+const TreeDynamic = () => {
+  const data = [{
+    pid: 0,
+    name: '数据工厂',
+    isParent: true
+  }, {
+    pid: 1,
+    name: '配置中心',
+    isParent: true
+  }]
+  return (
+    <Tree
+      defaultData={data}
+      getUrl={item => '/data/tree-children.json?pid=' + item.pid}
+    />
+  )
+}
+
+/**
+ * @title 可选中的
+ * @desc active 字段控制是否选中
+ */
+import Tree from 'bfd/Tree'
+
+const TreeSelectable = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka',
+      active: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} onSelect={data => console.log(data)} />
+}
+
+
+/**
+ * @title 是否可选中的控制
+ */
+import Tree from 'bfd/Tree'
+
+const TreeShouldSelectable = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka',
+      active: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return (
+    <Tree
+      defaultData={data}
+      shouldNodeSelectable={item => !item.children}
+      onSelect={data => console.log(data)}
+    />
+  )
+}
+
+/**
+ * @title 可勾选的
+ * @desc onCheck 处理选中后的回调
+ */
+import Tree from 'bfd/Tree'
+
+const TreeCheckable = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    children: [{
+      name: 'kafka',
+      checked: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return <Tree defaultData={data} checkable onCheck={(...args) => console.log(args)} />
+}
+
+
+/**
+ * @title 是否可勾选的控制
+ */
+import Tree from 'bfd/Tree'
+
+const TreeCheckboxDisabled = () => {
+  const data = [{
+    name: '数据工厂',
+    open: true,
+    checked: true,
+    children: [{
+      name: 'kafka',
+      checked: true
+    }, {
+      name: 'HBase'
+    }]
+  }, {
+    name: '配置中心',
+  }]
+  return (
+    <Tree
+      defaultData={data}
+      checkable
+      shouldNodeCheckable={item => !item.children}
+      onCheck={(...args) => console.log(args)}
+    />
+  )
+}
+
+/**
+ * @title 可勾选的（SelectTree)，建议使用 Tree 组件本身 checkable 属性代替
+ * @desc SelectTree 支持所有 Tree 组件属性，checked 字段控制勾选状态
+ */
+import update from 'react-update'
+import get from 'lodash/get'
+import { SelectTree } from 'bfd/Tree'
+
+class SelectTreeBasic extends Component {
+
+  constructor() {
+    super()
+    this.update = update.bind(this)
+    this.state = {
+      data: [{
+        name: '数据工厂',
+        open: true,
+        children: [{
+          name: 'kafka',
+          checked: true
+        }, {
+          name: 'HBase'
+        }]
+      }, {
+        name: '配置中心',
+      }]
+    }
+  }
+
+  updateChildren(item, path, checked) {
+    if (!item || !item.children) return
+    path = [...path, 'children']
+    item.children.forEach((item, i) => {
+      if (item.checked !== checked) {
+        this.update('set', [...path, i, 'checked'], checked)
+      }
+      this.updateChildren(item, [...path, i], checked)
+    })
+  }
+
+  updateParent(data, path, checked) {
+    if (path.length <= 1) return
+    const parent = get(data, path.slice(1))
+    if (checked) {
+      checked = parent.children.filter(item => !item.checked).length === 0
+    }
+    data = this.update('set', [...path, 'checked'], checked)
+    this.updateParent(data, path.slice(0, -2), checked)
+  }
+
+  handleSelect(data, item, path, checked) {
+    // 所有子级节点是否选中
+    this.updateChildren(item, ['data', ...path], checked)
+    // 所有父级节点是否选中
+    this.updateParent(data, ['data', ...path.slice(0, -2)], checked)
+  }
+
+  render() {
+    return (
+      <SelectTree
+        data={this.state.data}
+        onChange={data => this.update('set', 'data', data)}
+        onSelect={this.handleSelect.bind(this)}
+      />
+    )
+  }
+}
+
+@component Tree/Tree
+@component Tree/SelectTree

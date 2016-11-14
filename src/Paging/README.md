@@ -1,1 +1,31 @@
-undefined
+/**
+ * @title 分页
+ */
+import { Component } from 'react'
+import Paging from 'bfd/Paging'
+
+class PagingDemo extends Component {
+
+  constructor(props) {
+    super()
+  }
+
+  render() {
+
+    return (
+      <Paging 
+        currentPage={1}             
+        totalPageNum={200}
+        pageSize={10}
+        maxSeries={4}
+        onPageChange={::this.onPageChange} >
+      </Paging>
+    )
+  }
+
+  onPageChange(page) {
+    console.log(page)
+  }
+}
+
+@component Paging

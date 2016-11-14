@@ -23,6 +23,13 @@ class ButtonGroupBasic extends Component {
 }
 ```
 
-### <ButtonGroup /> 属性
+## <ButtonGroup /> 属性
 
-###
+### value `string|number`
+当前选中的按钮的值，与 `Button value` 对应
+
+### defaultValue `string|number`
+同 `value`，不可控
+
+### onChange `function(newValue)`
+切换按钮后的回调

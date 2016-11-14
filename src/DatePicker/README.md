@@ -1,1 +1,24 @@
-undefined
+/**
+ * @title 单选日期
+ */
+import DatePicker from 'bfd/DatePicker'
+
+const DatePickerBasic = () => {
+  return (
+    <DatePicker onSelect={date => console.log(date)} />
+  )
+}
+
+/**
+ * @title 日期区间
+ */
+import { DateRange } from 'bfd/DatePicker'
+
+const DateRangeBasic = () => {
+  return (
+    <DateRange onSelect={(start, end) => console.log(start, end)} />
+  )
+}
+
+@component DatePicker/DatePicker
+@component DatePicker/DateRange

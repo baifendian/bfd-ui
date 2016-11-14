@@ -118,10 +118,6 @@ module.exports = function (source) {
     const docFile = rootDir + '/' + dir + '/README.md'
     if (fs.existsSync(docFile)) {
       componentsCodes.push(parse(docFile))
-      const content = fs.readFileSync(docFile)
-      if (content === 'undefined') {
-        fs.writeFileSync(fs.readFileSync(path.join(__dirname, `../functions/Components/docs/${dir}.doc`)), 'utf8')
-      }
     }
   })
 

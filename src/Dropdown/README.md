@@ -1,1 +1,60 @@
-undefined
+/**
+ * @title 基本功能
+ */
+import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
+import Button from 'bfd/Button'
+
+const DropdownBasic = () => {
+  return (
+    <Dropdown>
+      <DropdownToggle>
+        <Button>展开</Button>
+      </DropdownToggle>
+      <DropdownMenu>
+        Nullam quis risus eget urna mollis
+        ornare vel eu leo. Cum sociis natoque
+        penatibus et magnis dis parturient montes
+      </DropdownMenu>
+    </Dropdown>
+  )
+}
+
+/**
+ * @title 右对齐
+ */
+import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
+import Button from 'bfd/Button'
+
+const DropdownRight = () => {
+  return (
+    <Dropdown>
+      <DropdownToggle>
+        <Button>展开</Button>
+      </DropdownToggle>
+      <DropdownMenu right>
+        Nullam quis risus eget urna mollis
+        ornare vel eu leo. Cum sociis natoque
+        penatibus et magnis dis parturient montes
+      </DropdownMenu>
+    </Dropdown>
+  )
+}
+
+/**
+ * @title 不可用的
+ */
+import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
+import Button from 'bfd/Button'
+
+const DropdownDisabled = () => {
+  return (
+    <Dropdown disabled>
+      <DropdownToggle>
+        <Button>展开</Button>
+      </DropdownToggle>
+      <DropdownMenu></DropdownMenu>
+    </Dropdown>
+  )
+}
+
+@component Dropdown/Dropdown

@@ -1,1 +1,85 @@
-undefined
+/**
+ * @title 基本功能
+ * @desc 为了方便，FormInput、FormSelect、FormTextarea 自动绑定最近的 FormItem name 属性对应的数据；FormSubmit 触发表单提交，如果不指定 onSubmit 则自动调用 save
+ */
+import update from 'react-update'
+import { Form, FormItem, FormSubmit, FormInput, FormSelect, Option, FormTextarea } from 'bfd/Form'
+import DatePicker from 'bfd/DatePicker'
+import Checkbox, { CheckboxGroup } from 'bfd/Checkbox'
+import message from 'bfd/message'
+
+class FormBasic extends Component {
+
+  constructor(props) {
+    super()
+    this.update = update.bind(this)
+    this.rules = {
+      name(v) {
+        if (!v) return '请填写用户群'
+        if (v.length > 5) return '用户群名称不能超过5个字符'
+      },
+      date(v) {
+        if (!v) return '日期不能为空'
+      }
+    }
+    this.state = {
+      formData: {
+        brand: 0
+      }
+    }
+  }
+
+  handleDateSelect(date) {
+    this.update('set', 'formData.date', date)
+  }
+
+  handleCitySelect(selects) {
+    this.update('set', 'formData.cities', selects)
+  }
+
+  handleSuccess(res) {
+    console.log(res)
+    message.success('操作成功！')
+  }
+
+  render() {
+    const { formData } = this.state
+    return (
+      <Form
+        action="/api/form"
+        data={formData}
+        onChange={formData => this.update('set', { formData })}
+        rules={this.rules}
+        onSuccess={::this.handleSuccess}
+      >
+        <FormItem label="用户群" required name="name" help="5个字符以内">
+          <FormInput />
+        </FormItem>
+        <FormItem label="品牌偏好" name="brand">
+          <FormSelect>
+            <Option>请选择</Option>
+            <Option value={0}>小米</Option>
+            <Option value={1}>苹果</Option>
+          </FormSelect>
+        </FormItem>
+        <FormItem label="选择日期" name="date" required>
+          <DatePicker date={formData.date} onSelect={::this.handleDateSelect} />
+        </FormItem>
+        <FormItem label="城市" name="cities" required>
+          <CheckboxGroup selects={formData.cities} onChange={::this.handleCitySelect}>
+            <Checkbox value="0">北京</Checkbox>
+            <Checkbox value="1">上海</Checkbox>
+          </CheckboxGroup>
+        </FormItem>
+        <FormItem label="描述" name="desc" help="500个字符以内">
+          <FormTextarea />
+        </FormItem>
+        <FormSubmit>保存</FormSubmit>
+      </Form>
+    )
+  }
+}
+
+@component Form/Form
+@component Form/FormItem
+@component Form/FormSubmit

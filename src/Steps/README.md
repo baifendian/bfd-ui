@@ -1,1 +1,49 @@
-undefined
+/**
+ * @title 左右分栏
+ */
+import { Component } from 'react'
+import { Steps, Step } from 'bfd/Steps'
+
+class StepsDemo extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      current: 0
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Steps onStepClick={::this.handleStepClick} height={70} current={this.state.current} >
+          <Step title="配置推荐栏"/>
+          <Step title="配置推荐策略"/>
+          <Step title="配置算法" />
+          <Step title="配置规则" icon="user"/>
+          <Step title="配置样式" icon="cogs"/>
+        </Steps>
+        <p style={{marginTop:'30px', marginRight:'30px', textAlign: 'right'}}>
+          <button type="button" className="bfd-btn btn-primary" onClick={::this.handleClick}>下一步</button>
+        </p>
+      </div>
+    )
+  }
+
+  handleClick(e) {
+    let value = this.state.current + 1
+    if(value == 5) {
+      value = 0;
+    }
+    this.setState({
+      current: value
+    })
+  }
+
+  handleStepClick(index, title) {
+    console.log("step:", index, title)
+  }
+}
+
+@component Steps/Steps
+@component Steps/Step

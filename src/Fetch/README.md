@@ -1,1 +1,45 @@
-undefined
+/**
+ * @title 基本功能
+ */
+import Fetch from 'bfd/Fetch'
+import { Select, Option } from 'bfd/Select'
+
+class FetchDemo extends Component {
+
+  constructor() {
+    super()
+    this.state = {
+      url: '/data/loading.json',
+      data: []
+    }
+  }
+
+  handleChange(value) {
+    this.setState({url: '/data/loading.json?type=' + value})
+  }
+
+  render() {
+    const { url, data } = this.state
+    return (
+      <div>
+        <Select defaultValue="0" onChange={::this.handleChange}>
+          <Option value="0">昨天</Option>
+          <Option value="1">最近7天</Option>
+          <Option value="2">最近30天</Option>
+        </Select>
+        <Fetch
+          defaultHeight={70}
+          url={url}
+          onSuccess={data => {this.setState({ data })}}
+          delay={1000}
+        >
+          <ol>
+            {data.map(item => <li key={item.event}>{item.event}</li>)}
+          </ol>
+        </Fetch>
+      </div>
+    )
+  }
+}
+
+@component Fetch
