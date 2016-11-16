@@ -121,25 +121,12 @@ class CheckboxGroup extends Component {
 }
 
 CheckboxGroup.propTypes = {
-
-  // 选中的值
   selects: PropTypes.array,
-
-  // 初始选中的值（不可控）
   defaultSelects: PropTypes.array,
-
-  // 更改选择后的回调，参数为选中的值
   onChange: PropTypes.func,
-
-  // 针对 value 和 label 相同时快速创建复选框组，无需再调用 Checkbox
   values: PropTypes.array,
-
-  // 是否垂直排列
   block: PropTypes.bool,
-
-  // 是否开启全选功能
   toggleable: PropTypes.bool,
-
   customProp({ selects, onChange }) {
     if (selects && !onChange) {
       return new Error('You provided a `selects` prop without an `onChange` handler')

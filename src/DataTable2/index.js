@@ -14,6 +14,7 @@ import isNumber from 'lodash/isNumber'
 import invariant from 'invariant'
 import shouldComponentUpdate from '../shouldComponentUpdate'
 import propsToState from '../_shared/propsToState'
+import dataFilter from '../_shared/dataFilter'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
@@ -59,19 +60,12 @@ class DataTable extends Component {
     this.props.onSort && this.props.onSort(nextSortKey, nextSortType)
   }
 
-  handleLoad(res = {}) {
+  handleLoad(res) {
+    res = dataFilter(this, res) || {}
     invariant(
       isPlainObject(res),
-      `'DataTable' url data should be plain object, check the xhr response.`
+      `'DataTable' data should be plain object, check the response of '${this.props.url}' or the return value of 'dataFilter'.`
     )
-    const { dataFilter } = this.props
-    if (dataFilter) {
-      res = dataFilter(res)
-      invariant(
-        isPlainObject(res),
-        '`DataTable` dataFilter should return plain object.'
-      )
-    }
     const { totalCounts } = res
     let { data } = res
     if (!data) {
@@ -230,7 +224,7 @@ DataTable.propTypes = {
   pageSize: PropTypes.number,
   totalCounts: PropTypes.number,
   sortKey: PropTypes.string,
-  sortType: PropTypes.string,
+  sortType: PropTypes.oneOf(['desc', 'asc']),
   onSort: PropTypes.func,
   pagingDisabled: PropTypes.bool,
   customProp(props) {

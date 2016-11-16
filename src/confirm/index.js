@@ -19,10 +19,10 @@ class Confirm extends Component {
   constructor() {
     super()
     this.state = {
-      message: null 
+      message: null
     }
   }
-  
+
   onConfirm() {
     this.callback()
     this.close()
@@ -56,13 +56,6 @@ class Confirm extends Component {
 
 let instance
 
-/**
- * @public
- * @name confirm
- * @param  {string | element} message 显示内容，支持 React 元素
- * @param  {function} callback 确定后的回调
- * @description 确认提示，确定后触发 callback
- */
 function confirm(message, callback) {
 
   invariant(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')

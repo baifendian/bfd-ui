@@ -93,7 +93,7 @@
   "cn": "树选择"
 }, {
   "name": "ClearableInput",
-  "cn": "清空输入框"
+  "cn": "可清空输入框"
 }, {
   "name": "Slider",
   "cn": "拖动条"

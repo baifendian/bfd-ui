@@ -44,8 +44,6 @@ class ClearableInput extends Component {
 
   /**
    * @public
-   * @name this.refs.clearableInput.focus
-   * @description 同 HTMLInputElement.focus()
    */
   focus() {
     this.refs.input.focus()
@@ -53,8 +51,6 @@ class ClearableInput extends Component {
 
   /**
    * @public
-   * @name this.refs.clearableInput.select
-   * @description 同 HTMLInputElement.select()
    */
   select() {
     this.refs.input.select()
@@ -92,28 +88,13 @@ class ClearableInput extends Component {
 }
 
 ClearableInput.propTypes = {
-
-  // 输入框的值
   value: PropTypes.string,
-
-  // 初始化输入框的值
   defaultValue: PropTypes.string,
-
-  // 输入改变、清空后的回调，参数为当前输入框的值
   onChange: PropTypes.func,
-
-  // 清空后的回调
   onClear: PropTypes.func,
-
-  // 输入框大小，除默认外可选值：sm、lg
   size: PropTypes.string,
-
-  // 是否禁用
   disabled: PropTypes.bool,
-
-  // 同 input placeholder
   placeholder: PropTypes.string,
-
   customProp({ value, onChange }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

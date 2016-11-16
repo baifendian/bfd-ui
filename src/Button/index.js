@@ -35,7 +35,7 @@ const Button = props => {
 
 Button.propTypes = {
   type: PropTypes.string,
-  size: PropTypes.string,
+  size: PropTypes.oneOf(['sm', 'lg']),
   icon: PropTypes.string,
   circle: PropTypes.bool,
   transparent: PropTypes.bool

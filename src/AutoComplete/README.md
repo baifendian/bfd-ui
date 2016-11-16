@@ -2,8 +2,6 @@
 
 与 [Input](Input) 不同的是匹配项提示，可以更快的完成输入
 
-## Demo
-
 @AutoCompleteBasic
 ```js
 import AutoComplete from 'bfd/AutoComplete'
@@ -15,7 +13,7 @@ const AutoCompleteBasic = () => {
 }
 ```
 
-## <AutoComplete /> 属性
+## \<AutoComplete /> 属性
 
 ### *source `Array`
 待搜索的数据源，例如

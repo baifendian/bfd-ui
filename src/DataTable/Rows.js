@@ -79,13 +79,13 @@ class Rows extends Component {
                     }
                     // 操作
                     if (columns[col] == 'operation') {
-                      return <td key={String( i ) + j}>{columns['render'](item, this, i)}</td>
+                      return <td key={String( i ) + j}>{columns['render'](item, this, j)}</td>
                     }
                     // 正常非字段编辑列
                     if (columns[col]!=='operation' && columns[col]!=='sequence' && col=='key') {
                       const style = {display: columns.hide == true ? 'none' : ''}
                       if (typeof columns['render'] === 'function') {
-                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item, i)}</td>
+                        return <td style={style} key={String(i) + j}>{columns['render'](item[columns[col]], item, j)}</td>
                       } else {
                         return <td style={style} key={String(i) + j}>{item[columns[col]]}</td>
                       }

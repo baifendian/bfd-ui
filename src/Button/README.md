@@ -1,7 +1,5 @@
 # 按钮 Button
 
-## Demo
-
 按钮类型
 @ButtonType
 ```js
@@ -94,7 +92,7 @@ const ButtonDisabled = () => {
 ```
 
 
-## <Button /> 属性
+## \<Button /> 属性
 
 ### type `string`
 按钮类型，除默认外可选值：次要的 `minor`

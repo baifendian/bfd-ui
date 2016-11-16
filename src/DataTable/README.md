@@ -1,10 +1,10 @@
-/**
- * @title 表格
- */
-import { Component } from 'react'
+# 数据表格 DataTable
+
+@DataTableBasic
+```js
 import DataTable from 'bfd/DataTable'
 
-class DataTableDemo extends Component {
+class DataTableBasic extends Component {
 
   constructor(props) {
     super()
@@ -56,21 +56,6 @@ class DataTableDemo extends Component {
     }
   }
 
-  render() {
-    return (
-      <DataTable
-        url={this.state.url}
-        onPageChange={::this.onPageChange}
-        showPage="true"
-        column={this.state.column}
-        howRow={10}
-        onRowClick={::this.handleRowClick}
-        onOrder={::this.handleOrder}
-        onCheckboxSelect={::this.handleCheckboxSelect}
-      />
-    )
-  }
-
   handleClick(item, event) {
     event = event ? event : window.event;
     event.stopPropagation();
@@ -95,6 +80,24 @@ class DataTableDemo extends Component {
   handleOrder(name, sort) {
     console.log(name, sort)
   }
-}
 
-@component DataTable
+  render() {
+    return (
+      <DataTable
+        url={this.state.url}
+        onPageChange={::this.onPageChange}
+        showPage="true"
+        column={this.state.column}
+        howRow={10}
+        onRowClick={::this.handleRowClick}
+        onOrder={::this.handleOrder}
+        onCheckboxSelect={::this.handleCheckboxSelect}
+      />
+    )
+  }
+}
+```
+
+## \<DataTable /> 属性
+
+

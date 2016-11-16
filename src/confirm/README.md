@@ -1,6 +1,7 @@
-/**
- * @title 基本功能
- */
+# 确认提示 confirm
+
+@ConfirmBasic
+```js
 import confirm from 'bfd/confirm'
 import Button from 'bfd/Button'
 
@@ -13,5 +14,10 @@ const ConfirmBasic = () => {
     }}>删除确认</Button>
   )
 }
+```
 
-@component confirm
+## confirm API
+
+### confirm `function(content, onConfirm)`
+- `content: number|string|ReactElement` 提示框内容
+- `onConfirm: function()` 确定后的回调

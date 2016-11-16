@@ -226,6 +226,12 @@ Select.propTypes = {
     if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
+    if (props.data && props.url) {
+      return new Error('You can not use `data` and `url` at the same time.')
+    }
+    if (!props.data && !props.url) {
+      return new Error('You should provide the `data` or `url` one of them.')
+    }
     if ((props.url || props.data) && !props.render) {
       return new Error('You provided a `url` or `data` prop without an `render` handler')
     }

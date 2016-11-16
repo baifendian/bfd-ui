@@ -1,7 +1,5 @@
 # 按钮组 ButtonGroup
 
-## Demo
-
 @ButtonGroupBasic
 ```js
 import ButtonGroup from 'bfd/ButtonGroup'
@@ -23,7 +21,7 @@ class ButtonGroupBasic extends Component {
 }
 ```
 
-## <ButtonGroup /> 属性
+## \<ButtonGroup /> 属性
 
 ### value `string|number`
 当前选中的按钮的值，与 `Button value` 对应

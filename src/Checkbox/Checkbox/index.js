@@ -51,28 +51,13 @@ const Checkbox = props => {
 }
 
 Checkbox.propTypes = {
-
-  // 值，如果结合 ChecboxGroup 使用，与其选中的值相对应
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  // 是否选中
   checked: PropTypes.bool,
-
-  // 初始是否选中（不可控）
   defaultChecked: PropTypes.bool,
-
-  // 切换选中后的回调，参数为 event 对象
   onChange: PropTypes.func,
-
-  // 是否半选中状态
   indeterminate: PropTypes.bool,
-
-  // 是否禁用
   disabled: PropTypes.bool,
-
-  // 是否块级布局
   block: PropTypes.bool,
-
   customProp({ checked, onChange }) {
     if (checked && !onChange) {
       return new Error('You provided a `checked` prop without an `onChange` handler')

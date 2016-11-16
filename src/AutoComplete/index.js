@@ -119,21 +119,18 @@ class AutoComplete extends Component {
 }
 
 AutoComplete.propTypes = {
-
-  source: PropTypes.array.isRequired,
-
-  value: PropTypes.string,
-
+  source(...args) {
+    console.log(React)
+    return PropTypes.array.isRequired(true, ...args)
+  },
+  value() {
+    console.log(arguments)
+  },
   defaultValue: PropTypes.string,
-
   onChange: PropTypes.func,
-
   size: PropTypes.string,
-
   disabled: PropTypes.bool,
-
-  placeholder: PropTypes.string,
-
+  placeholder: PropTypes.array,
   customProp({ value, onChange }) {
     if (value && !onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

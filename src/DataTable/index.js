@@ -360,9 +360,12 @@ DataTable.propTypes = {
   // 隐藏页面跳转功能
   hideGo: PropTypes.bool,
 
-  customProp({ data, url }) {
-    if (data && url) {
-      return new Error('data属性和url属性不能同时使用！')
+  customProp(props) {
+    if (props.data && props.url) {
+      return new Error('You can not use `data` and `url` at the same time.')
+    }
+    if (!props.data && !props.url) {
+      return new Error('You should provide the `data` or `url` one of them.')
     }
   }
 }
