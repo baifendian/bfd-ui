@@ -145,7 +145,10 @@ class DataTable extends Component {
   }
 
   getRow(item, i) {
-    const { columns } = this.props
+    const { columns, rowRender } = this.props
+    if (rowRender) {
+      return rowRender(item, i, columns)
+    }
     const Tds = columns.map((column, j) => {
       const value = item[column.key]
       return <td key={j}>{column.render ? column.render(item, i, value) : value}</td>
@@ -181,7 +184,7 @@ class DataTable extends Component {
   render() {
     const {
       className, columns, url, dataFilter, onPageChange, pageSize,
-      pagingDisabled, sortKey, sortType, onSort, ...other
+      pagingDisabled, sortKey, sortType, onSort, rowRender, ...other
     } = this.props
     const { currentPage, totalCounts, data } = this.state
     delete other.currentPage
@@ -297,6 +300,9 @@ DataTable.propTypes = {
 
   // 排序后的回调，参数: sortKey, sortType
   onSort: PropTypes.func,
+
+  // 自定义 tbody 行渲染逻辑，参数(dataItem, index, columns)，返回 <tr>
+  rowRender: PropTypes.func,
 
   customProp(props) {
     if (props.data && props.url) {

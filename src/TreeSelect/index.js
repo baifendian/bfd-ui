@@ -38,6 +38,9 @@ class TreeSelect extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
+    if (this.props.dataFilter) {
+      data = this.props.dataFilter(data)
+    }
     this.setState({ data })
   }
 
@@ -47,7 +50,7 @@ class TreeSelect extends Component {
     list && list.forEach((item, i) => {
 
       invariant(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
-      
+
       const _path = [...path, i]
       const title = !render ? item.name : render(item)
       if (multiple) {
@@ -99,7 +102,8 @@ class TreeSelect extends Component {
 
     const {
       className, placeholder, defaultValue, onChange, url, defaultData, onDataChange,
-      multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, ...other
+      multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, dataFilter,
+      ...other
     } = this.props
     const { value, data } = this.state
 
@@ -190,6 +194,9 @@ TreeSelect.propTypes = {
 
   // 树结构 URL 数据源
   url: PropTypes.string,
+
+  // url 数据源过滤器
+  dataFilter: PropTypes.func,
 
   // 树结构数据源改变后的回调
   onDataChange: PropTypes.func,

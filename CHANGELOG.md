@@ -1,4 +1,6 @@
 - DataTable onRowClick 新增 index、event 参数
+- TreeSelect 新增属性 dataFilter
+- 修复 Select 无匹配时样式问题
 
 
 ## v1.3.0

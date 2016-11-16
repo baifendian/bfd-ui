@@ -158,9 +158,18 @@ class Select extends Component {
       [`bfd-select--searchable`]: searchable
     }, className)
 
+    if (!title) {
+      if (!value && !defaultOption) {
+        title = placeholder
+      }
+      if (value) {
+        title = '无匹配选项'
+      }
+    }
+
     const Title = (
       <TextOverflow>
-        <div className="bfd-select__title">{title || (!value && placeholder)}</div>
+        <div className="bfd-select__title">{title}</div>
       </TextOverflow>
     )
 
@@ -194,6 +203,10 @@ class Select extends Component {
       </SelectDropdown>
     )
   }
+}
+
+Select.defaultProps = {
+  placeholder: '请选择'
 }
 
 Select.propTypes = {
