@@ -1,5 +1,6 @@
 - DataTable onRowClick 新增 index、event 参数
 - TreeSelect 新增属性 dataFilter
+- DataTable2 新增属性 rowRender，自定义行渲染
 - 修复 Select 无匹配时样式问题
 
 
