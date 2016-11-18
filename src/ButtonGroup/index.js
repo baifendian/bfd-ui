@@ -18,7 +18,7 @@ class ButtonGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: props.defaultValue || ''
+      value: 'value' in props ? props.value : props.defaultValue
     }
   }
 
@@ -43,7 +43,7 @@ class ButtonGroup extends Component {
       })
     })
     return (
-      <div className={classnames('bfd-button-group', className)} {...other}>
+      <div className={classnames('bfd-btn-group', className)} {...other}>
         {buttons}
       </div>
     )
@@ -59,12 +59,15 @@ class ButtonGroup extends Component {
 
 ButtonGroup.propTypes = {
 
-  // 默认值
+  // 当前值
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 同 value，不可控
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 选中事件，参数返回被选中的值
   onChange: PropTypes.func,
-  
+
   customProp(props) {
     if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onClick` handler')

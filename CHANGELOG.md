@@ -1,7 +1,10 @@
+> ButtonGroup className 修改为 `bfd-btn-group`
+
 - DataTable onRowClick 新增 index、event 参数
 - TreeSelect 新增属性 dataFilter
 - DataTable2 新增属性 rowRender，自定义行渲染
 - 修复 Select 无匹配时样式问题
+- ButtonGroup 新增属性 value，修改为 inline-block 模式
 
 
 ## v1.3.0

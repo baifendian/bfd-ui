@@ -91,6 +91,13 @@ class Fetch extends Component {
     }
   }
 
+  /**
+   * @public
+   */
+  reload() {
+    this.fetch(this.url)
+  }
+
   render() {
     const { className, url, onSuccess, defaultHeight, delay, ...other } = this.props
     if (defaultHeight) {
