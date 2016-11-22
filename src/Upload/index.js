@@ -33,12 +33,12 @@ class Upload extends Component {
           {this.props.text || '文件上传'}
         </Button>
         {
-          isShowList ? 
+          isShowList ?
             <div className="bfd-upload__listbox">
               <FileList data={this.state.list} onRemove={::this.handleRemove}></FileList>
             </div>
           : ''
-        }        
+        }
       </div>
     )
   }
@@ -56,6 +56,7 @@ class Upload extends Component {
     const onUpload = this.props.onUpload
     onUplading && onUplading(0)
     onUpload ? onUpload(files) : this.upload(files)
+    el.value = ''
   }
 
   upload(files) {
@@ -141,7 +142,7 @@ class Upload extends Component {
 }
 
 Upload.propTypes = {
-  
+
   // 上传的地址
   action: PropTypes.string.isRequired,
 

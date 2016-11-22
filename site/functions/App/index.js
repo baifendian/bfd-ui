@@ -50,7 +50,7 @@ class App extends Component {
           <Col>
             <Link to="/" className="header__logo">
               <svg dangerouslySetInnerHTML={{__html: '<use xlink:href="#logo"></use>'}} />
-              BFD UI <sub>v1.3.0</sub>
+              BFD UI <sub>v1.x</sub>
             </Link>
           </Col>
           <Col className="header__nav">

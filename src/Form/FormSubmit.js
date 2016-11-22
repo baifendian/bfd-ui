@@ -25,6 +25,7 @@ class FormSubmit extends Component {
 
   componentWillUnmount() {
     clearTimeout(this.timer)
+    this.toggleProcess = () => {}
   }
 
   handleClick() {

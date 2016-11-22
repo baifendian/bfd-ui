@@ -104,7 +104,7 @@ class TreeSelect extends Component {
   render() {
 
     const {
-      className, placeholder, defaultValue, onChange, url, defaultData, onDataChange,
+      className, placeholder, defaultValue, onChange, defaultData, onDataChange,
       multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, dataFilter,
       ...other
     } = this.props
@@ -162,7 +162,6 @@ class TreeSelect extends Component {
           'bfd-tree-select--multiple': multiple
         }, className)}
         title={Title}
-        url={url}
         onLoad={::this.handleLoad}
         hasPropValue={'value' in this.props || 'defaultValue' in this.props}
         caret={!multiple}
@@ -224,6 +223,12 @@ TreeSelect.propTypes = {
 
   // 同 Tree getUrl
   getUrl: PropTypes.func,
+
+  // 是否禁用
+  disabled: PropTypes.bool,
+
+  // 最小宽度，默认 160，multiple 模式下无效
+  minWidth: PropTypes.number,
 
   customProp(props) {
     if ('value' in props && !props.onChange) {

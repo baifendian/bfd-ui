@@ -56,11 +56,11 @@ class DataTable extends Component {
   }
 
   handleLoad(res = {}) {
+    const { url, dataFilter } = this.props
     invariant(
       isPlainObject(res),
       `The response of ${url} should be be plain object.`
     )
-    const { dataFilter } = this.props
     if (dataFilter) {
       res = dataFilter(res)
       invariant(
@@ -160,8 +160,9 @@ class DataTable extends Component {
       // local paging
       if (sortKey && !url) {
         renderData = renderData.sort((a, b) => {
-          if (sortType === 'desc') return a[sortKey] < b[sortKey]
-          if (sortType === 'asc') return a[sortKey] > b[sortKey]
+          if (a[sortKey] < b[sortKey]) return sortType === 'desc' ? 1 : -1
+          if (a[sortKey] > b[sortKey]) return sortType === 'desc' ? -1 : 1
+          return 0
         })
       }
       const start = this.getStart()
@@ -201,10 +202,11 @@ class DataTable extends Component {
           <tbody>
             {
               currentPageData.length ?
-              currentPageData.map(::this.getRow) :
-              <tr>
-                <td colSpan={columns.length} className="bfd-datatable__empty">无数据</td>
-              </tr>
+              currentPageData.map(::this.getRow) : (
+                <tr>
+                  <td colSpan={columns.length} className="bfd-datatable__empty">无数据</td>
+                </tr>
+              )
             }
           </tbody>
         </table>

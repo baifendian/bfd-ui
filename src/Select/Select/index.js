@@ -140,8 +140,8 @@ class Select extends Component {
   render() {
 
     const {
-      children, className, defaultValue, onChange, data, url,
-      dataFilter, defaultOption, size, disabled, placeholder, searchable, ...other
+      children, className, defaultValue, onChange, data, dataFilter, defaultOption, size,
+      placeholder, searchable, ...other
     } = this.props
     const { value, searchValue } = this.state
 
@@ -178,10 +178,8 @@ class Select extends Component {
         ref="dropdown"
         className={classNames}
         title={Title}
-        url={url}
         onLoad={::this.handleLoad}
         hasPropValue={'value' in this.props || 'defaultValue' in this.props}
-        disabled={disabled}
         onToggle={::this.handleDropToggle}
         caret
         {...other}
@@ -246,6 +244,9 @@ Select.propTypes = {
 
   // 尺寸，除默认值外可选值 sm、lg
   size: PropTypes.string,
+
+  // 最小宽度，默认 160
+  minWidth: PropTypes.number,
 
   customProp({ value, onChange, url, render }) {
     if (value && !onChange) {

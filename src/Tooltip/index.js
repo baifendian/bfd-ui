@@ -42,11 +42,11 @@ class Tooltip extends Component {
   }
 
   getPopoverProps() {
-    const { triggerMode, title, direction } = this.props
+    const { triggerMode, title, ...other } = this.props
     const props = {
       triggerNode: ReactDOM.findDOMNode(this),
       content: title,
-      direction
+      ...other
     }
     if (triggerMode === 'hover') {
       props.onMouseEnter = () => {
