@@ -49,7 +49,10 @@ class TreeSelect extends Component {
     const { render, multiple } = this.props
     list && list.forEach((item, i) => {
 
-      invariant(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
+      invariant(
+        item.value || item.value === 0,
+        '`TreeSelect` data item should have a `value` property which type should be `String`.'
+      )
 
       const _path = [...path, i]
       const title = !render ? item.name : render(item)

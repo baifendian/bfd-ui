@@ -63,11 +63,6 @@ class DataTableAutoData extends Component {
     }]
   }
 
-  rowRender() {
-    console.log(arguments)
-    return <tr><td>dasd</td></tr>
-  }
-
   render() {
     return (
       <DataTable columns={this.columns} data={this.data} pageSize={5} />

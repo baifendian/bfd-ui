@@ -43,7 +43,7 @@ class ButtonGroup extends Component {
       })
     })
     return (
-      <div className={classnames('bfd-btn-group', className)} {...other}>
+      <div className={classnames('bfd-button-group', className)} {...other}>
         {buttons}
       </div>
     )

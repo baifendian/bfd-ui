@@ -10,9 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import isPlainObject from 'lodash/isPlainObject'
-import isNumber from 'lodash/isNumber'
 import invariant from 'invariant'
-import shouldComponentUpdate from '../shouldComponentUpdate'
 import propsToState from '../shared/propsToState'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
@@ -40,8 +38,6 @@ class DataTable extends Component {
     ))
   }
 
-  shouldComponentUpdate = shouldComponentUpdate
-
   handleSort(nextSortKey) {
     const { sortKey, sortType } = this.state
     let nextSortType
@@ -62,7 +58,7 @@ class DataTable extends Component {
   handleLoad(res = {}) {
     invariant(
       isPlainObject(res),
-      `'DataTable' url data should be plain object, check the xhr response.`
+      `The response of ${url} should be be plain object.`
     )
     const { dataFilter } = this.props
     if (dataFilter) {
@@ -78,7 +74,7 @@ class DataTable extends Component {
       data = []
     }
     invariant(
-      isNumber(totalCounts) && Array.isArray(data),
+      Array.isArray(data),
       `Invalid JSON for 'DataTable', check the xhr response or dataFilter. eg:
       {
         totalCounts: 1200,
@@ -94,16 +90,12 @@ class DataTable extends Component {
   }
 
   getUrl() {
+    const { url, pagingDisabled, pageSize } = this.props
+    const { currentPage, sortKey, sortType } = this.state
     if (this.props.getUrl) {
-      const { pageSize } = this.props
-      const { currentPage, sortKey, sortType } = this.state
       return this.props.getUrl({ currentPage, pageSize, sortKey, sortType })
     }
-    let { url } = this.props
     if (!url) return
-
-    const { pagingDisabled, pageSize } = this.props
-    const { sortKey, sortType } = this.state
 
     const query = Object.create(null)
     pagingDisabled || Object.assign(query, {
@@ -113,11 +105,12 @@ class DataTable extends Component {
     sortKey && Object.assign(query, { sortKey, sortType })
 
     const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+    let _url = url
     if (queryString) {
-      const connector = url.indexOf('?') === -1 ? '?' : '&'
-      url += connector + queryString
+      const connector = _url.indexOf('?') === -1 ? '?' : '&'
+      _url += connector + queryString
     }
-    return url
+    return _url
   }
 
   getTheads() {
@@ -191,10 +184,12 @@ class DataTable extends Component {
     delete other.totalCounts
     delete other.data
 
+    const currentPageData = this.getCurrentPageData()
+
     return (
       <Fetch
         className={classnames('bfd-datatable', className)}
-        defaultHeight={100}
+        defaultHeight={70}
         url={this.getUrl()}
         onSuccess={::this.handleLoad}
         {...other}
@@ -203,7 +198,15 @@ class DataTable extends Component {
           <thead>
             <tr>{this.getTheads()}</tr>
           </thead>
-          <tbody>{this.getCurrentPageData().map(::this.getRow)}</tbody>
+          <tbody>
+            {
+              currentPageData.length ?
+              currentPageData.map(::this.getRow) :
+              <tr>
+                <td colSpan={columns.length} className="bfd-datatable__empty">无数据</td>
+              </tr>
+            }
+          </tbody>
         </table>
         {pagingDisabled || (
           <Paging
