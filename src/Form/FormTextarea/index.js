@@ -15,7 +15,11 @@ import './index.less'
 const FormTextarea = (props, context) => {
   const { children, className, onChange, ...other } = props
   const control = formControlValue(context.form, context.formItem)
-  other.value = control.get()
+  let value = control.get()
+  if (!value && value !== 0) {
+    value = ''
+  }
+  other.value = value
   other.onChange = e => {
     control.set(e.target.value)
     onChange && onChange(e)

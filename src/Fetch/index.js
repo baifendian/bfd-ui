@@ -33,7 +33,12 @@ class Fetch extends Component {
     this.props.url && this.fetch(this.props.url)
   }
 
-  fetch(url) {
+  componentWillUnmount() {
+    clearTimeout(this.timer)
+    this.handleSuccess = this.handleError = () => {}
+  }
+
+  fetch(url, callback) {
     this.url = url
     this.timer = this.lazyShowLoading()
     setTimeout(() => {
@@ -42,7 +47,7 @@ class Fetch extends Component {
         complete: () => {
           clearTimeout(this.timer)
         },
-        success: ::this.handleSuccess,
+        success: callback || ::this.handleSuccess,
         error: ::this.handleError
       })
     }, this.props.delay || 0)
@@ -56,16 +61,21 @@ class Fetch extends Component {
 
   handleSuccess(data) {
     this.setState({xhr: 'success'})
-    this.props.onSuccess(data)
+    this.props.onSuccess && this.props.onSuccess(data)
   }
 
   handleError(msg) {
     this.setState({xhr: 'error', msg})
   }
 
-  componentWillUnmount() {
-    clearTimeout(this.timer)
-    this.handleSuccess = this.handleError = () => {}
+  /**
+   * @public
+   * @name reload
+   * @param  {function} [callback] 加载成功后的回调，可覆盖 Fetch onSuccess
+   * @description 强制 Fetch 重新加载
+   */
+  reload(callback) {
+    this.fetch(this.url, callback)
   }
 
   stateMap = {

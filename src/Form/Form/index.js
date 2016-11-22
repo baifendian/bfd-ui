@@ -21,7 +21,7 @@ class Form extends Component {
     // 存储 FormItem 实例，用于访问 FormItem
     this.items = []
     this.state = {
-      data: props.data || props.defaultData
+      data: props.data || props.defaultData || {}
     }
   }
 
@@ -82,24 +82,26 @@ class Form extends Component {
    * @public
    * @name this.refs.form.save
    * @param  {object} [data] 提交的数据，默认提交表单当前的数据
-   * @description 表单提交，提交地址为 action 属性, 默认提交 data 
+   * @description 表单提交，提交地址为 action 属性, 默认提交 data
    * 属性数据，可以自定义传入。发送请求前会进行表单验证, 提交成功会响应 onSuccess
    */
-  save(data) {
+  save(data = this.state.data) {
+    const { action, sendDataFormatter, onSuccess } = this.props
     if (this.validate()) {
-      
-      invariant(this.props.action, 'No `action` provided, check the Form component you save.')
-      
+      invariant(
+        action,
+        'No `action` provided, check the Form component you save.'
+      )
       this.submit && this.submit.toggleProcess(true)
       xhr({
         type: 'POST',
-        url: this.props.action,
-        data: data || this.state.data,
+        url: action,
+        data: sendDataFormatter ? sendDataFormatter(data) : data,
         success: data => {
-          this.props.onSuccess && this.props.onSuccess(data)
+          onSuccess && onSuccess(data)
         },
         complete: () => {
-          this.submit && this.submit.toggleProcess(false)  
+          this.submit && this.submit.toggleProcess(false)
         }
       })
     }
@@ -113,14 +115,14 @@ class Form extends Component {
   render() {
 
     const {
-      children, className, data, defaultData, onChange, onSubmit, onSuccess, 
+      children, className, data, defaultData, onChange, onSubmit, onSuccess,
       rules, labelWidth, ...other
     } = this.props
-    
+
     return (
-      <form 
-        onSubmit={::this.handleSubmit} 
-        className={classnames('bfd-form', className)} 
+      <form
+        onSubmit={::this.handleSubmit}
+        className={classnames('bfd-form', className)}
         {...other}
       >
         {children}
@@ -163,6 +165,9 @@ Form.propTypes = {
   // 表单提交回调，参数为当前表单的数据，自定义提交后的行为，不会自动调用
   // save。不指定此属性，表单提交后自动调用 save
   onSubmit: PropTypes.func,
+
+  // 提交的数据处理器，参数为当前表单数据，返回最终发送的数据
+  sendDataFormatter: PropTypes.func,
 
   customProp({ data, onChange }) {
     if (data && !onChange) {

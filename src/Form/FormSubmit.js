@@ -23,6 +23,11 @@ class FormSubmit extends Component {
     }
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timer)
+    this.toggleProcess = () => {}
+  }
+
   handleClick() {
     const { onClick } = this.props
     const { form } = this.context
@@ -55,7 +60,7 @@ class FormSubmit extends Component {
     return (
       <Button
         style={{marginLeft: `${form.props.labelWidth}px`}}
-        className={classnames('bfd-form-submit'), className}
+        className={classnames('bfd-form-submit', className)}
         onClick={::this.handleClick}
         disabled={process}
         {...other}

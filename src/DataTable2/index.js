@@ -11,7 +11,6 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import isPlainObject from 'lodash/isPlainObject'
 import invariant from 'invariant'
-import shouldComponentUpdate from '../shouldComponentUpdate'
 import propsToState from '../shared/propsToState'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
@@ -39,8 +38,6 @@ class DataTable extends Component {
     ))
   }
 
-  shouldComponentUpdate = shouldComponentUpdate
-
   handleSort(nextSortKey) {
     const { sortKey, sortType } = this.state
     let nextSortType
@@ -50,18 +47,20 @@ class DataTable extends Component {
       nextSortType = 'desc'
     }
     this.setState({
+      currentPage: 1,
       sortKey: nextSortKey,
       sortType: nextSortType
     })
+    this.props.onPageChange && this.props.onPageChange(1)
     this.props.onSort && this.props.onSort(nextSortKey, nextSortType)
   }
 
   handleLoad(res = {}) {
+    const { url, dataFilter } = this.props
     invariant(
       isPlainObject(res),
-      `'DataTable' url data should be plain object, check the xhr response.`
+      `The response of ${url} should be be plain object.`
     )
-    const { dataFilter } = this.props
     if (dataFilter) {
       res = dataFilter(res)
       invariant(
@@ -69,10 +68,14 @@ class DataTable extends Component {
         '`DataTable` dataFilter should return plain object.'
       )
     }
-    const { totalCounts, data = [] } = res
+    const { totalCounts } = res
+    let { data } = res
+    if (!data) {
+      data = []
+    }
     invariant(
       Array.isArray(data),
-      `'DataTable' data should be Array, check the xhr response or dataFilter. eg:
+      `Invalid JSON for 'DataTable', check the xhr response or dataFilter. eg:
       {
         totalCounts: 1200,
         data: [{...}]
@@ -87,10 +90,12 @@ class DataTable extends Component {
   }
 
   getUrl() {
-    let { url } = this.props
+    const { url, pagingDisabled, pageSize } = this.props
+    const { currentPage, sortKey, sortType } = this.state
+    if (this.props.getUrl) {
+      return this.props.getUrl({ currentPage, pageSize, sortKey, sortType })
+    }
     if (!url) return
-    const { pagingDisabled, pageSize } = this.props
-    const { sortKey, sortType } = this.state
 
     const query = Object.create(null)
     pagingDisabled || Object.assign(query, {
@@ -99,12 +104,13 @@ class DataTable extends Component {
     })
     sortKey && Object.assign(query, { sortKey, sortType })
 
-    let queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+    const queryString = Object.keys(query).map(key => key + '=' + query[key]).join('&')
+    let _url = url
     if (queryString) {
-      const connector = url.indexOf('?') === -1 ? '?' : '&'
-      url += connector + queryString
+      const connector = _url.indexOf('?') === -1 ? '?' : '&'
+      _url += connector + queryString
     }
-    return url
+    return _url
   }
 
   getTheads() {
@@ -121,9 +127,9 @@ class DataTable extends Component {
           key={i}
           width={item.width}
           className={classnames({'bfd-datatable__th--sortable': sortable})}
-          onClick={() => this.handleSort(item.key)}
+          onClick={() => sortable && this.handleSort(item.key)}
         >
-          {item.title}
+          {title}
           {sortable && <Icon className="bfd-datatable__sort-symbol" type={icon} />}
         </th>
       )
@@ -132,7 +138,10 @@ class DataTable extends Component {
   }
 
   getRow(item, i) {
-    const { columns } = this.props
+    const { columns, rowRender } = this.props
+    if (rowRender) {
+      return rowRender(item, i, columns)
+    }
     const Tds = columns.map((column, j) => {
       const value = item[column.key]
       return <td key={j}>{column.render ? column.render(item, i, value) : value}</td>
@@ -141,20 +150,25 @@ class DataTable extends Component {
   }
 
   getCurrentPageData() {
-    const { pagingDisabled, pageSize } = this.props
+    const { pagingDisabled, pageSize, url } = this.props
     const { totalCounts, data, sortKey, sortType } = this.state
     let renderData = data || []
-    if (totalCounts || pagingDisabled) return renderData
-
-    // local paging
-    if (sortKey) {
-      renderData = renderData.sort((a, b) => {
-        if (sortType === 'desc') return a[sortKey] < b[sortKey]
-        if (sortType === 'asc') return a[sortKey] > b[sortKey]
-      })
+    if (totalCounts || pagingDisabled) {
+      return renderData
     }
-    const start = this.getStart()
-    return renderData.slice(start, start + pageSize)
+    if (renderData.length) {
+      // local paging
+      if (sortKey && !url) {
+        renderData = renderData.sort((a, b) => {
+          if (a[sortKey] < b[sortKey]) return sortType === 'desc' ? 1 : -1
+          if (a[sortKey] > b[sortKey]) return sortType === 'desc' ? -1 : 1
+          return 0
+        })
+      }
+      const start = this.getStart()
+      return renderData.slice(start, start + pageSize)
+    }
+    return renderData
   }
 
   getStart() {
@@ -164,7 +178,7 @@ class DataTable extends Component {
   render() {
     const {
       className, columns, url, dataFilter, onPageChange, pageSize,
-      pagingDisabled, sortKey, sortType, onSort, ...other
+      pagingDisabled, sortKey, sortType, onSort, rowRender, ...other
     } = this.props
     const { currentPage, totalCounts, data } = this.state
     delete other.currentPage
@@ -176,7 +190,7 @@ class DataTable extends Component {
     return (
       <Fetch
         className={classnames('bfd-datatable', className)}
-        defaultHeight={100}
+        defaultHeight={70}
         url={this.getUrl()}
         onSuccess={::this.handleLoad}
         {...other}
@@ -185,7 +199,16 @@ class DataTable extends Component {
           <thead>
             <tr>{this.getTheads()}</tr>
           </thead>
-          <tbody>{currentPageData.map(::this.getRow)}</tbody>
+          <tbody>
+            {
+              currentPageData.length ?
+              currentPageData.map(::this.getRow) : (
+                <tr>
+                  <td colSpan={columns.length} className="bfd-datatable__empty">无数据</td>
+                </tr>
+              )
+            }
+          </tbody>
         </table>
         {pagingDisabled || (
           <Paging
@@ -232,7 +255,11 @@ DataTable.propTypes = {
   data: PropTypes.array,
 
   /**
-   * url 数据源，JSON 格式：
+   * url 数据源，这里的 url 不包括分页、排序等查询条件，组件内部会自动拼接，例如
+   * 指定 path/query.do，最终组件内部处理后变成 path/query.do?start=0&limit=10
+   * 也可以自定义 URL 规则，参见 `getUrl` 属性
+   *
+   * url 数据源模式 JSON 格式：
    * ```js
    * {
    *   totalCounts: 1200, // 没有则按上次请求返回的总条数分页或者根据 data.length 自动分页
@@ -240,8 +267,17 @@ DataTable.propTypes = {
    * }
    * ```
    * 如果后台格式无法满足，可自定义 dataFilter 过滤
+   * url 数据源模式，分页切换、排序都会动态发请求
    */
   url: PropTypes.string,
+
+  /**
+   * 如果组件内部拼装的 url 不满足需求，可自定义最终的 url
+   * ```js
+   * getUrl={condition => 'your url'}
+   * ```
+   */
+  getUrl: PropTypes.func,
 
   // url 数据源格式过滤器，返回过滤后的数据
   dataFilter: PropTypes.func,
@@ -269,6 +305,9 @@ DataTable.propTypes = {
 
   // 排序后的回调，参数: sortKey, sortType
   onSort: PropTypes.func,
+
+  // 自定义 tbody 行渲染逻辑，参数(dataItem, index, columns)，返回 <tr>
+  rowRender: PropTypes.func,
 
   customProp(props) {
     if (props.data && props.url) {

@@ -23,8 +23,12 @@ class SelectDropdown extends Component {
   render() {
 
     const {
-      className, children, title, url, hasPropValue, caret, onLoad, ...other
+      className, children, title, url, hasPropValue, caret, onLoad, minWidth, ...other
     } = this.props
+
+    if (minWidth) {
+      other.style = Object.assign(other.style || {}, { minWidth })
+    }
 
     const Toggle = url && hasPropValue ? (
       <Fetch
@@ -71,7 +75,9 @@ SelectDropdown.propTypes = {
   title: PropTypes.element.isRequired,
   url: PropTypes.string,
   hasPropValue: PropTypes.bool,
-  caret: PropTypes.bool
+  caret: PropTypes.bool,
+  disabled: PropTypes.bool,
+  minWidth: PropTypes.number
 }
 
 export default SelectDropdown

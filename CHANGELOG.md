@@ -1,3 +1,22 @@
+## v1.3.4
+
+`2016-11-22`
+
+- DataTable onRowClick 新增 index、event 参数
+- TreeSelect 新增属性 dataFilter、disabled
+- DataTable2 新增属性 rowRender，自定义行渲染；无数据显示处理；
+- 修复 Select 无匹配时样式问题
+- ButtonGroup 新增属性 value，修改为 inline-block 模式
+- Fetch 新增 reload 接口，可强制重新加载
+- 修复 TreeSelect value 为0时的问题
+- Select、TreeSelect 新增属性 minWidth
+- 修复 Upload 无法重复上传同一文件的问题 [#6](https://github.com/baifendian/bfd-ui/issues/6)
+- Tooltip、TextOverflow 支持 className、style 等原生属性 [#7](https://github.com/baifendian/bfd-ui/issues/7)
+- 修复 FormTextarea 不兼容 null 的问题
+- Form 可不指定 data/defaultData；新增属性 sendDataFormatter，实现数据发送前的处理
+- 修正了部分组件的样式
+
+
 ## v1.3.0
 
 `2016-11-11` 😓

@@ -38,6 +38,9 @@ class TreeSelect extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
+    if (this.props.dataFilter) {
+      data = this.props.dataFilter(data)
+    }
     this.setState({ data })
   }
 
@@ -46,8 +49,11 @@ class TreeSelect extends Component {
     const { render, multiple } = this.props
     list && list.forEach((item, i) => {
 
-      invariant(item.value, '`TreeSelect` data item should have a `value` property which type should be `String`.')
-      
+      invariant(
+        item.value || item.value === 0,
+        '`TreeSelect` data item should have a `value` property which type should be `String`.'
+      )
+
       const _path = [...path, i]
       const title = !render ? item.name : render(item)
       if (multiple) {
@@ -98,8 +104,9 @@ class TreeSelect extends Component {
   render() {
 
     const {
-      className, placeholder, defaultValue, onChange, url, defaultData, onDataChange,
-      multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, ...other
+      className, placeholder, defaultValue, onChange, defaultData, onDataChange,
+      multiple, shouldNodeSelectable, shouldNodeCheckable, getIcon, getUrl, dataFilter,
+      ...other
     } = this.props
     const { value, data } = this.state
 
@@ -155,7 +162,6 @@ class TreeSelect extends Component {
           'bfd-tree-select--multiple': multiple
         }, className)}
         title={Title}
-        url={url}
         onLoad={::this.handleLoad}
         hasPropValue={'value' in this.props || 'defaultValue' in this.props}
         caret={!multiple}
@@ -191,6 +197,9 @@ TreeSelect.propTypes = {
   // 树结构 URL 数据源
   url: PropTypes.string,
 
+  // url 数据源过滤器
+  dataFilter: PropTypes.func,
+
   // 树结构数据源改变后的回调
   onDataChange: PropTypes.func,
 
@@ -214,6 +223,12 @@ TreeSelect.propTypes = {
 
   // 同 Tree getUrl
   getUrl: PropTypes.func,
+
+  // 是否禁用
+  disabled: PropTypes.bool,
+
+  // 最小宽度，默认 160，multiple 模式下无效
+  minWidth: PropTypes.number,
 
   customProp(props) {
     if ('value' in props && !props.onChange) {

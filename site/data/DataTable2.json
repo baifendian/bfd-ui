@@ -1,0 +1,29 @@
+{
+  "totalCounts": 100,
+  "data": [{
+    "name": "John",
+    "sex": 1,
+    "age": 21,
+    "joinDate": "2015-01-01"
+  }, {
+    "name": "David",
+    "sex": 1,
+    "age": 32,
+    "joinDate": "2015-02-01"
+  }, {
+    "name": "Lili",
+    "sex": 0,
+    "age": 28,
+    "joinDate": "2013-01-01"
+  }, {
+    "name": "Sala",
+    "sex": 0,
+    "age": 23,
+    "joinDate": "2015-07-01"
+  }, {
+    "name": "Tomas",
+    "sex": 1,
+    "age": 11,
+    "joinDate": "2017-01-01"
+  }]
+}

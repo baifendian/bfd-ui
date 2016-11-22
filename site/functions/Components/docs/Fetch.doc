@@ -31,7 +31,7 @@ class FetchDemo extends Component {
           defaultHeight={70}
           url={url}
           onSuccess={data => {this.setState({ data })}}
-          delay={1000}
+          delay={500}
         >
           <ol>
             {data.map(item => <li key={item.event}>{item.event}</li>)}

@@ -30,16 +30,15 @@ class TextOverflow extends Component {
   }
 
   getPopoverProps() {
-    const { direction } = this.props
     return {
       triggerNode: ReactDOM.findDOMNode(this),
-      direction,
       onMouseEnter: () => {
         clearTimeout(this.closeTimer)
       },
       onMouseLeave: () => {
         this.closeTimer = setTimeout(::this.popover.close, 150)
-      }
+      },
+      ...this.props
     }
   }
 
