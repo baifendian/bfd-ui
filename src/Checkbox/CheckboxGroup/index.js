@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import update from 'react-update'
+import controlledPropValidator from '../../_shared/propValidator/controlled'
 import Checkbox from '../Checkbox'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
 import './index.less'
@@ -121,17 +122,12 @@ class CheckboxGroup extends Component {
 }
 
 CheckboxGroup.propTypes = {
-  selects: PropTypes.array,
+  selects: controlledPropValidator(PropTypes.array),
   defaultSelects: PropTypes.array,
   onChange: PropTypes.func,
   values: PropTypes.array,
   block: PropTypes.bool,
-  toggleable: PropTypes.bool,
-  customProp({ selects, onChange }) {
-    if (selects && !onChange) {
-      return new Error('You provided a `selects` prop without an `onChange` handler')
-    }
-  }
+  toggleable: PropTypes.bool
 }
 
 export default CheckboxGroup

@@ -11,10 +11,11 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 
 class Dropdown extends Component {
 
-  // 存储所有的组件实例，当前打开后，其他关闭
+  // Save all instances to close others when one opened.
   static instances = []
 
   constructor(props) {
@@ -75,8 +76,6 @@ class Dropdown extends Component {
 
   /**
    * @public
-   * @name this.refs.dropdown.open
-   * @description 展开
    */
   open() {
     this.setState({open: true})
@@ -84,8 +83,6 @@ class Dropdown extends Component {
 
   /**
    * @public
-   * @name this.refs.dropdown.close
-   * @description 收起
    */
   close() {
     this.state.open && this.setState({open: false})
@@ -138,21 +135,9 @@ Dropdown.childContextTypes = {
 }
 
 Dropdown.propTypes = {
-
-  // 是否展开
-  open: PropTypes.bool,
-
-  // 切换 open 状态后的回调，参数为切换后的 open 状态
+  open: controlledPropValidator(PropTypes.bool, 'onToggle'),
   onToggle: PropTypes.func,
-
-  // 是否禁用
-  disabled: PropTypes.bool,
-
-  customProp({ open, onToggle }) {
-    if (open && !onToggle) {
-      return new Error('You provided a `open` prop without an `onToggle` handler')
-    }
-  }
+  disabled: PropTypes.bool
 }
 
 export default Dropdown

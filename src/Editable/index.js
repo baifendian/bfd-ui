@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import Input from '../Input'
 import Button from '../Button'
 import './index.less'
@@ -112,27 +113,11 @@ class Editable extends Component {
 }
 
 Editable.propTypes = {
-
-  // 待编辑的值
-  value: PropTypes.string,
-
-  // 初始化待编辑的值（不可控）
-  defaultValue: PropTypes.string,
-
-  // 确定后的回调，参数为当前值
+  value: controlledPropValidator(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
-
-  // 取消后的回调
   onCancel: PropTypes.func,
-
-  // 初始化时是否处于编辑状态（不可控）
-  defaultEditing: PropTypes.bool,
-
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
-      return new Error('You provided a `value` prop without an `onChange` handler')
-    }
-  }
+  defaultEditing: PropTypes.bool
 }
 
 export default Editable

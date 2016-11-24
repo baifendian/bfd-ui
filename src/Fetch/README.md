@@ -1,10 +1,11 @@
-/**
- * @title 基本功能
- */
+# 加载 Fetch
+
+@FetchBasic
+```js
 import Fetch from 'bfd/Fetch'
 import { Select, Option } from 'bfd/Select'
 
-class FetchDemo extends Component {
+class FetchBasic extends Component {
 
   constructor() {
     super()
@@ -41,5 +42,22 @@ class FetchDemo extends Component {
     )
   }
 }
+```
 
-@component Fetch
+## \<Fetch /> 属性
+
+### url `string`
+数据源 URL，底层基于 [xhr](xhr) 模块
+
+### onSuccess `function(response)`
+加载成功后的回调
+> 如`response` 值取决于 [xhr.success](xhr#success)，如果定义了的话
+
+### defaultHeight `number`
+默认高度，像素值
+
+### spinnerHeight `number`
+加载动画高度，默认 `30px`
+
+### delay `number`
+请求延迟，单位毫秒。测试使用，模拟网络延迟

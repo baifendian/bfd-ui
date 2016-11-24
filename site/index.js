@@ -57,6 +57,11 @@ render((
           })
         }} />
       </Route>
+      <Route path="test" getComponent={(location, cb) => {
+        require.ensure([], require => {
+          cb(null, require('./functions/Test').default)
+        })
+      }} />
       <Route path="*" getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./functions/NotFound').default)

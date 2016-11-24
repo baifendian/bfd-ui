@@ -1,23 +1,29 @@
-/**
- * @title 基本功能
- */
+# 可编辑的 Editable
+
+@EditableBasic
+```js
 import Editable from 'bfd/Editable'
 
 const EditableBasic = () => {
   return (
-    <Editable defaultValue="我可以修改哦" />
+    <Editable defaultValue="点击修改" />
   )
 }
+```
 
-/**
- * @title 初始化编辑状态
- */
-import Editable from 'bfd/Editable'
+## \<Editable /> 属性
 
-const EditableEditing = () => {
-  return (
-    <Editable defaultValue="我可以修改哦" defaultEditing />
-  )
-}
+### value `string|number`
+待编辑的值
 
-@component Editable
+### defaultValue `string|number`
+同 `value`，不可控
+
+### onChange `function(newValue)`
+确定后的回调
+
+### onCancel `function()`
+取消后的回调
+
+### defaultEditing `boolean`
+是否处于编辑状态，不可控　

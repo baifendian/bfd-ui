@@ -7,46 +7,51 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from 'react'
-import { render } from 'react-dom'
+import React, { PropTypes, Component } from 'react'
+import ReactDOM from 'react-dom'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
-import invariant from 'invariant'
 import Button from '../Button'
 import './index.less'
 
 class Confirm extends Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      message: null
+      open: true
     }
   }
 
-  onConfirm() {
-    this.callback()
-    this.close()
-  }
-
-  open() {
-    this.refs.modal.open()
+  componentWillReceiveProps() {
+    this.setState({open: true})
   }
 
   close() {
-    this.refs.modal.close()
+    this.setState({open: false})
+  }
+
+  handleConfirm() {
+    this.props.onConfirm && this.props.onConfirm()
+    this.close()
+  }
+
+  handleCancel() {
+    this.close()
   }
 
   render() {
+    const { open } = this.state
+    const { content } = this.props
     return (
-      <Modal className="bfd-confirm" ref="modal">
+      <Modal className="bfd-confirm" open={open}>
         <ModalHeader>
           <h4>确认提示</h4>
         </ModalHeader>
         <ModalBody>
-          <div className="bfd-confirm__message">{this.state.message}</div>
+          <div className="bfd-confirm__message">{content}</div>
           <div className="bfd-confirm__operate">
-            <Button onClick={() => this.onConfirm()}>确定</Button>
-            <Button type="minor" onClick={() => this.close()}>取消</Button>
+            <Button onClick={::this.handleConfirm}>确定</Button>
+            <Button type="minor" onClick={::this.handleCancel}>取消</Button>
           </div>
         </ModalBody>
       </Modal>
@@ -54,22 +59,20 @@ class Confirm extends Component {
   }
 }
 
-let instance
-
-function confirm(message, callback) {
-
-  invariant(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
-  invariant(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
-
-  if (!instance) {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-    instance = render(<Confirm />, container)
-  }
-
-  instance.callback = callback
-  instance.setState({ message })
-  instance.open()
+Confirm.propTypes = {
+  content: PropTypes.node.isRequired,
+  onConfirm: PropTypes.func
 }
 
-export default confirm
+let render = function(props) {
+  const container = document.createElement('div')
+  document.body.appendChild(container)
+  render = function(props) {
+    ReactDOM.render(<Confirm {...props} />, container)
+  }
+  render(props)
+}
+
+export default function(content, onConfirm) {
+  render({ content, onConfirm })
+}

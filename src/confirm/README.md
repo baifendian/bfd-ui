@@ -16,8 +16,8 @@ const ConfirmBasic = () => {
 }
 ```
 
-## confirm API
+## confirm
 
-### confirm `function(content, onConfirm)`
-- `content: number|string|ReactElement` 提示框内容
+### confirm `function(message, onConfirm)`
+- `content: string|number|ReactElement` 提示框内容
 - `onConfirm: function()` 确定后的回调

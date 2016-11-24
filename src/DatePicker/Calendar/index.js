@@ -99,7 +99,7 @@ class Calendar extends Component {
     const isStart = timestrap === start
     const isEnd = timestrap === end
     const prefix = 'bfd-calendar__day--'
-    
+
     return classnames('bfd-calendar__day', {
       [`${prefix}today`]: timestrap === new Date().setHours(0, 0, 0, 0),
       [`${prefix}exclude`]: date.notThisMonth,
@@ -156,12 +156,12 @@ class Calendar extends Component {
     }
     return dates
   }
-  
+
   render() {
 
     const { currentYear, currentMonth } = this.state
     const { start, end } = this.props
-    
+
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
 
@@ -173,13 +173,13 @@ class Calendar extends Component {
       <div className="bfd-calendar">
         <div className="bfd-calendar__header">
           <div className="bfd-calendar__header-left">
-            <Button 
+            <Button
               size="sm"
               icon="angle-double-left"
               transparent
               onClick={this.handleToggle.bind(this, -1, 'year')}
             />
-            <Button 
+            <Button
               size="sm"
               icon="angle-left"
               transparent
@@ -190,13 +190,13 @@ class Calendar extends Component {
             {currentYear}年 {currentMonth + 1}月
           </span>
           <div className="bfd-calendar__header-right">
-            <Button 
+            <Button
               size="sm"
               icon="angle-right"
               transparent
               onClick={this.handleToggle.bind(this, 1)}
             />
-            <Button 
+            <Button
               size="sm"
               icon="angle-double-right"
               transparent
@@ -216,10 +216,10 @@ class Calendar extends Component {
                   const date = dates[index]
                   return (
                     <td key={index}>
-                      <button 
+                      <button
                         type="button"
-                        disabled={getComparerResult(date)} 
-                        className={this.getDateClassNames(date, _start, _end)} 
+                        disabled={getComparerResult(date)}
+                        className={this.getDateClassNames(date, _start, _end)}
                         onClick={this.handleDaySelect.bind(this, date)}
                       >
                         {date.day}
@@ -227,7 +227,7 @@ class Calendar extends Component {
                     </td>
                   )
                 })}</tr>
-              ) 
+              )
             })}
           </tbody>
         </table>
@@ -236,14 +236,14 @@ class Calendar extends Component {
   }
 }
 
-const checkDateTime = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+const dateValidator = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 
 Calendar.propTypes = {
-  date: checkDateTime,
-  min: checkDateTime,
-  max: checkDateTime,
-  start: checkDateTime,
-  end: checkDateTime,
+  date: dateValidator,
+  min: dateValidator,
+  max: dateValidator,
+  start: dateValidator,
+  end: dateValidator,
   onSelect: PropTypes.func
 }
 

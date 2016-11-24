@@ -12,7 +12,8 @@ import classnames from 'classnames'
 import isPlainObject from 'lodash/isPlainObject'
 import isNumber from 'lodash/isNumber'
 import invariant from 'invariant'
-import shouldComponentUpdate from '../shouldComponentUpdate'
+import controlledPropValidator from '../_shared/propValidator/controlled'
+import dataSourcePropValidator from '../_shared/propValidator/dataSource'
 import propsToState from '../_shared/propsToState'
 import dataFilter from '../_shared/dataFilter'
 import Icon from '../Icon'
@@ -40,8 +41,6 @@ class DataTable extends Component {
       ['data', 'totalCounts', 'currentPage', 'sortKey', 'sortType']
     ))
   }
-
-  shouldComponentUpdate = shouldComponentUpdate
 
   handleSort(nextSortKey) {
     const { sortKey, sortType } = this.state
@@ -215,34 +214,18 @@ DataTable.defaultProps = {
 
 DataTable.propTypes = {
   columns: PropTypes.array.isRequired,
-  data: PropTypes.array,
+  data: dataSourcePropValidator(PropTypes.array),
   url: PropTypes.string,
   getUrl: PropTypes.func,
   dataFilter: PropTypes.func,
-  currentPage: PropTypes.number,
+  currentPage: controlledPropValidator(PropTypes.number, 'onPageChange'),
   onPageChange: PropTypes.func,
   pageSize: PropTypes.number,
   totalCounts: PropTypes.number,
-  sortKey: PropTypes.string,
+  sortKey: controlledPropValidator(PropTypes.string, 'onSort'),
   sortType: PropTypes.oneOf(['desc', 'asc']),
   onSort: PropTypes.func,
-  pagingDisabled: PropTypes.bool,
-  customProp(props) {
-    if (props.data && props.url) {
-      return new Error('You can not use `data` and `url` at the same time.')
-    }
-    if (!props.data && !props.url) {
-      return new Error('You should provide the `data` or `url` one of them.')
-    }
-    if (props.currentPage && !props.onPageChange) {
-      return new Error(
-        'You provide a `currentPage` prop without an `onPageChange` handler.'
-      )
-    }
-    if (props.sortKey && !props.onSort) {
-      return new Error('You provide a `sortKey` prop without an `onSort` handler.')
-    }
-  }
+  pagingDisabled: PropTypes.bool
 }
 
 export default DataTable

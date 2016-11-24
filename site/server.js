@@ -37,7 +37,7 @@ app.post('/api/form', function(req, res) {
 function clone(obj) {
   var o;
   if (typeof obj == "object") {
-    if (obj === null) {  
+    if (obj === null) {
         o = null;
     } else {
         if (obj instanceof Array) {
@@ -46,17 +46,17 @@ function clone(obj) {
               o.push(clone(obj[i]));
           }
         } else {
-            o = {};  
-            for (var j in obj) {  
+            o = {};
+            for (var j in obj) {
                 o[j] = clone(obj[j]);
             }
         }
     }
   } else {
       o = obj;
-  }  
+  }
   return o;
-}  
+}
 
 function getTableDate(page, size) {
   var data = [
@@ -93,7 +93,6 @@ app.get('/api/table', function(req, res) {
   var data = getTableDate(currentPage, pageSize)
 
   res.json({
-    code: 200,
     totalList: data,
     currentPage: 1,
     totalPageNum: 300

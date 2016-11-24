@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import Input from '../Input'
 import Button from '../Button'
 import './index.less'
@@ -88,18 +89,13 @@ class ClearableInput extends Component {
 }
 
 ClearableInput.propTypes = {
-  value: PropTypes.string,
-  defaultValue: PropTypes.string,
+  value: controlledPropValidator(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   onClear: PropTypes.func,
   size: PropTypes.string,
   disabled: PropTypes.bool,
-  placeholder: PropTypes.string,
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
-      return new Error('You provided a `value` prop without an `onChange` handler')
-    }
-  }
+  placeholder: PropTypes.string
 }
 
 export default ClearableInput

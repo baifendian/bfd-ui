@@ -1,6 +1,7 @@
-/**
- * @title 基本功能
- */
+# 下拉 Dropdown
+
+@DropdownBasic
+```js
 import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
 import Button from 'bfd/Button'
 
@@ -18,43 +19,30 @@ const DropdownBasic = () => {
     </Dropdown>
   )
 }
+```
 
-/**
- * @title 右对齐
- */
-import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
-import Button from 'bfd/Button'
+## \<Dropdown /> 属性
 
-const DropdownRight = () => {
-  return (
-    <Dropdown>
-      <DropdownToggle>
-        <Button>展开</Button>
-      </DropdownToggle>
-      <DropdownMenu right>
-        Nullam quis risus eget urna mollis
-        ornare vel eu leo. Cum sociis natoque
-        penatibus et magnis dis parturient montes
-      </DropdownMenu>
-    </Dropdown>
-  )
-}
+### open `boolean`
+是否展开
 
-/**
- * @title 不可用的
- */
-import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
-import Button from 'bfd/Button'
+### onToggle `function(isOpen)`
+展开或收起后的回调
 
-const DropdownDisabled = () => {
-  return (
-    <Dropdown disabled>
-      <DropdownToggle>
-        <Button>展开</Button>
-      </DropdownToggle>
-      <DropdownMenu></DropdownMenu>
-    </Dropdown>
-  )
-}
+### disabled `boolean`
+是否禁用
 
-@component Dropdown/Dropdown
+
+## \<Dropdown /> 接口
+
+### open `function()`
+展开
+
+### close `function()`
+收起
+
+
+## \<DropdownMenu /> 属性
+
+### right `boolean`
+是否右对齐

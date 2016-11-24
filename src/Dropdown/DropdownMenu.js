@@ -29,7 +29,6 @@ DropdownMenu.contextTypes = {
 }
 
 DropdownMenu.propTypes = {
-  // 是否右对齐
   right: PropTypes.bool
 }
 

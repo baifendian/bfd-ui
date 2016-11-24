@@ -58,14 +58,14 @@ class ButtonGroup extends Component {
 }
 
 ButtonGroup.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  onChange: PropTypes.func,
-  customProp(props) {
+  value(props) {
     if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')
     }
-  }
+    return PropTypes.oneOfType([PropTypes.string, PropTypes.number])(false, ...arguments)
+  },
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func
 }
 
 export default ButtonGroup

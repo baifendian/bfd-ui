@@ -1,4 +1,4 @@
-# 可清空的输入框
+# 可清空的输入框 ClearableInput
 
 @ClearableInputBasic
 ```js
@@ -21,7 +21,7 @@ const ClearableInputBasic = () => {
 清空后的回调
 
 
-## \<ClearableInput /> 对外接口
+## \<ClearableInput /> 接口
 
 ### focus `function()`
 同 `HTMLInputElement.focus()`

@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import format from 'dateformat'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import Calendar from '../Calendar'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../../Dropdown'
 import ClearableInput from '../../ClearableInput'
@@ -40,7 +41,7 @@ class DatePicker extends Component {
   }
 
   render() {
-    
+
     const { className, defaultDate, onSelect, min, max, start, end, ...other } = this.props
     const { date } = this.state
 
@@ -54,28 +55,28 @@ class DatePicker extends Component {
       placeholder = '请选择日期'
     }
     return (
-      <Dropdown 
-        ref="dropdown" 
-        className={classnames('bfd-datepicker', className)} 
+      <Dropdown
+        ref="dropdown"
+        className={classnames('bfd-datepicker', className)}
         {...other}
       >
         <DropdownToggle>
-          <ClearableInput 
-            placeholder={placeholder} 
+          <ClearableInput
+            placeholder={placeholder}
             className="bfd-datepicker__input"
-            value={value} 
-            onChange={::this.handleInput} 
-            readOnly 
+            value={value}
+            onChange={::this.handleInput}
+            readOnly
           />
         </DropdownToggle>
         <DropdownMenu>
-          <Calendar 
-            date={date} 
-            min={min} 
-            max={max} 
-            start={start} 
-            end={end} 
-            onSelect={::this.handleSelect} 
+          <Calendar
+            date={date}
+            min={min}
+            max={max}
+            start={start}
+            end={end}
+            onSelect={::this.handleSelect}
           />
         </DropdownMenu>
       </Dropdown>
@@ -83,34 +84,16 @@ class DatePicker extends Component {
   }
 }
 
+const dateValidator = PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+
 DatePicker.propTypes = {
-
-  // 指定日期
-  date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
-  // 初始化指定的日期（不可控）
-  defaultDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  // 日期选择后的回调，参数为选中的日期时间戳
+  date: controlledPropValidator(dateValidator, 'onSelect'),
+  defaultDate: dateValidator,
   onSelect: PropTypes.func,
-  
-  // 可选日期范围最小值
-  min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
-  // 可选日期范围最大值
-  max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
-  // 区间模式，日期区间开始值
-  start: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
-  // 区间模式，日期区间结束值
-  end: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-
-  customProp({ date, onSelect }) {
-    if (date && !onSelect) {
-      return new Error('You provided a `date` prop without an `onSelect` handler')
-    }
-  }
+  min: dateValidator,
+  max: dateValidator,
+  start: dateValidator,
+  end: dateValidator
 }
 
 export default DatePicker

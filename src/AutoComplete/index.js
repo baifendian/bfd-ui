@@ -7,16 +7,17 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import './index.less'
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import ClearableInput from '../ClearableInput'
+import './index.less'
 
 class AutoComplete extends Component {
 
   constructor(props) {
-    super()
+    super(props)
     this.state = {
       open: false,
       index: -1,
@@ -119,23 +120,13 @@ class AutoComplete extends Component {
 }
 
 AutoComplete.propTypes = {
-  source(...args) {
-    console.log(React)
-    return PropTypes.array.isRequired(true, ...args)
-  },
-  value() {
-    console.log(arguments)
-  },
-  defaultValue: PropTypes.string,
+  source: PropTypes.array.isRequired,
+  value: controlledPropValidator(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   size: PropTypes.string,
   disabled: PropTypes.bool,
-  placeholder: PropTypes.array,
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
-      return new Error('You provided a `value` prop without an `onChange` handler')
-    }
-  }
+  placeholder: PropTypes.string
 }
 
 export default AutoComplete

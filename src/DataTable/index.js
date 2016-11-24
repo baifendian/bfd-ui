@@ -8,6 +8,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import dataSourcePropValidator from '../_shared/propValidator/dataSource'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
 import classnames from 'classnames'
@@ -312,62 +313,16 @@ class DataTable extends Component {
 }
 
 DataTable.propTypes = {
-
-  // 要请求数据的服务端地址。
-  url: PropTypes.string,
-
-  /**
-   * 数据表格表头列名称，目前支持的配置项如下：
-   * ```js
-   * [{
-   *   title: '姓名', // 列头显示的文本
-   *   key: 'name', // 映射数据字段名称
-   *   primary: true, //主键标识，默认为false
-   *   width: '20%', // 列宽度设置
-   *   order: true, // 排序设置,true: 支持升序和降序，asc: 只支持升序，desc: 只支持降序，与onOrder事件并用
-   *   // 列渲染的回调函数，可以自定义返回显示数据，text为当前行当前列值，item为当前行数据, index为当前行序列
-   *   render: (text, item, index) => {
-   *     return item.country + '/' + item.area
-   *   }
-   * },
-   * ...
-   * ]
-   * ```
-   */
   column: PropTypes.array.isRequired,
-
-  // 每页需要显示的条数
+  data: dataSourcePropValidator(PropTypes.object),
+  url: PropTypes.string,
   howRow: PropTypes.number,
-
-  // DataTable显示数据，选填，url和data属性二者之间必须有一个，不必同时出现。data支持一次性查询多条数据传入data属性中，不需要点击一次分页再发送一次ajax请求，此功能根据业务需求使用！
-  data: PropTypes.object,
-
-  // 是否显示分页，true为显示，false为不显示,如果showPage设置为false，就要同时取消howRow每页显示多少条的设置
-  showPage: PropTypes.string,
-
-  // 点击分页时回调函数，此回调方法是点击切换分页时触发，可以在此方法体内发送Ajax请求数据，来替代组件的url属性！注【如果组件加入此属性方法，则不可以再传入url属性】
+  showPage: PropTypes.bool,
   onPageChange: PropTypes.func,
-
-  // 复选框点击事件，返回被选中的行记录（本页），如果在column中设置主键，此函数第二个参数为已选的行记录（跨页）
   onCheckboxSelect: PropTypes.func,
-
-  // 行点击事件，返回被选中的行记录
   onRowClick: PropTypes.func,
-
-  // 列名称点击排序事件，返回列名称和排序状态
   onOrder: PropTypes.func,
-
-  // 隐藏页面跳转功能
-  hideGo: PropTypes.bool,
-
-  customProp(props) {
-    if (props.data && props.url) {
-      return new Error('You can not use `data` and `url` at the same time.')
-    }
-    if (!props.data && !props.url) {
-      return new Error('You should provide the `data` or `url` one of them.')
-    }
-  }
+  hideGo: PropTypes.bool
 }
 
 export default DataTable

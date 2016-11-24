@@ -9,6 +9,7 @@
 
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
+import controlledPropValidator from '../../_shared/propValidator/controlled'
 import './index.less'
 
 const Checkbox = props => {
@@ -52,17 +53,12 @@ const Checkbox = props => {
 
 Checkbox.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  checked: PropTypes.bool,
+  checked: controlledPropValidator(PropTypes.bool),
   defaultChecked: PropTypes.bool,
   onChange: PropTypes.func,
   indeterminate: PropTypes.bool,
   disabled: PropTypes.bool,
-  block: PropTypes.bool,
-  customProp({ checked, onChange }) {
-    if (checked && !onChange) {
-      return new Error('You provided a `checked` prop without an `onChange` handler')
-    }
-  }
+  block: PropTypes.bool
 }
 
 export default Checkbox

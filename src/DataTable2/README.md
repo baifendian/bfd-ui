@@ -6,7 +6,7 @@
 
 @DataTableAutoData
 ```js
-import DataTable from 'bfd/DataTable2'
+import DataTable2 from 'bfd/DataTable2'
 
 class DataTableAutoData extends Component {
 
@@ -35,48 +35,25 @@ class DataTableAutoData extends Component {
       render: () => <a href="">删除</a>,
       width: '20%'
     }]
-    this.data = [{
-      name: 'John',
-      sex: 1,
-      age: 21,
-      joinDate: '2015-01-01'
-    }, {
-      name: 'David',
-      sex: 1,
-      age: 32,
-      joinDate: '2015-02-01'
-    }, {
-      name: 'Lili',
-      sex: 0,
-      age: 28,
-      joinDate: '2013-01-01'
-    }, {
-      name: 'Sala',
-      sex: 0,
-      age: 23,
-      joinDate: '2015-07-01'
-    }, {
-      name: 'Tomas',
-      sex: 1,
-      age: 11,
-      joinDate: '2017-01-01'
-    }, {
-      name: 'Oabama',
-      sex: 1,
-      age: 51,
-      joinDate: '2017-01-01'
-    }]
+    this.data = [
+      {name: 'John', sex: 1, age: 21, joinDate: '2015-01-01'},
+      {name: 'David', sex: 1, age: 32, joinDate: '2015-02-01'},
+      {name: 'Lili', sex: 0, age: 28, joinDate: '2013-01-01'},
+      {name: 'Sala', sex: 0, age: 23, joinDate: '2015-07-01'},
+      {name: 'Tomas', sex: 1, age: 11, joinDate: '2017-01-01'},
+      {name: 'Oabama', sex: 1, age: 51, joinDate: '2017-01-01'}
+    ]
   }
 
   render() {
     return (
-      <DataTable columns={this.columns} data={this.data} pageSize={5} />
+      <DataTable2 columns={this.columns} data={this.data} pageSize={5} />
     )
   }
 }
 ```
 
-## <DataTable /> 属性
+## <DataTable2 /> 属性
 
 ### *columns `Array`
 列配置，具体字段说明：
@@ -99,16 +76,8 @@ class DataTableAutoData extends Component {
 ```
 
 ### data `Array`
-数据源，如果未指定 `totalCounts`，则按 `data.length` 大小自动分页
+数据源，`[{key: value}]`，如果未指定 `totalCounts`，则按 `data.length` 大小自动分页
 > 如果指定 `totalCounts`，即使 `data.length` 超过 `pageSize` 也不会自动分页
-
-格式如下，`key` 与 `columns` 配置有关
-```js
-[{
-  name: 'test',
-  authorised: true
-}]
-```
 
 ### url `string`
 数据源 url，适用于数据源是独立的接口，分页切换、排序都会动态发请求
@@ -118,7 +87,7 @@ class DataTableAutoData extends Component {
 ```js
 [{
   "totalCounts": 100, // 总条数
-  "data": [{}] // 具体的数据，同 data 属性格式
+  "data": [{key: value}] // 具体的数据，同 data 属性格式
 }]
 ```
 如果后台返回的格式无法满足，除定义 [xhr模块全局配置](xhr#success) 外，可自定义 `dataFilter` 过滤

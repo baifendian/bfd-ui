@@ -107,20 +107,10 @@ class Fetch extends Component {
 }
 
 Fetch.propTypes = {
-
-  // 数据源 URL，内部调用 xhr 模块
   url: PropTypes.string,
-
-  // 成功后的回调，参数为返回的数据。error 时会直接显示在对应的容器内
   onSuccess: PropTypes.func,
-
-  // 默认高度，单位像素
   defaultHeight: PropTypes.number,
-
-  // 加载动画高度，默认 30px，可根据场景更改大小
   spinnerHeight: PropTypes.number,
-
-  // 请求延迟，单位毫秒。测试使用
   delay: PropTypes.number
 }
 
