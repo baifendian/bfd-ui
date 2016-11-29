@@ -118,7 +118,7 @@ module.exports = function (source) {
         doc.props.push({
           name: res[3],
           desc: desc,
-          types: res[4].match(/string|bool|number|object|array|func|element/g),
+          types: res[4].match(/string|bool|number|object|array|func|element|oneOf.*/g),
           required: !!res[4].match(/isRequired/)
         })
       }

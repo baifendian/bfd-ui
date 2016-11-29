@@ -20,63 +20,93 @@ class Popover extends Component {
   }
 
   componentDidMount() {
-    this.rootNode = ReactDOM.findDOMNode(this)
+    this.popoverNode = ReactDOM.findDOMNode(this)
     if (this.props.open) {
-      this.directionClassName = this.setPosition()
+      this.positionClassNames = this.setPosition()
     }
   }
 
   componentDidUpdate() {
     if (this.props.open) {
-      this.directionClassName = this.setPosition()
+      this.positionClassNames = this.setPosition()
     } else {
-      classlist(this.rootNode).remove(this.directionClassName)
+      classlist(this.popoverNode).remove(this.positionClassNames)
     }
   }
 
-  getRelativePositionByDirection(sourceNode, targetNode, direction) {
-    const sourceRect = sourceNode.getBoundingClientRect()
-    const targetRect = targetNode.getBoundingClientRect()
+  getPosition(triggerRect, popoverRect, direction, align) {
     const [scrollTop, scrollLeft] = this.getDocumentScroll()
-    const relativeDistance = [
-      sourceRect.width / 2 + targetRect.width / 2,
-      sourceRect.height / 2 + targetRect.height / 2
-    ]
     const center = [
-      sourceRect.left + relativeDistance[0] - targetRect.width + scrollLeft,
-      sourceRect.top + relativeDistance[1] - targetRect.height + scrollTop
+      triggerRect.left + triggerRect.width / 2 + scrollLeft,
+      triggerRect.top + triggerRect.height / 2 + scrollTop
     ]
-    const directionHandles = {
-      up: () => [center[0], center[1] - relativeDistance[1]],
-      down: () => [center[0], center[1] + relativeDistance[1]],
-      left: () => [center[0] - relativeDistance[0], center[1]],
-      right: () => [center[0] + relativeDistance[0], center[1]]
+    const getAlignTick = horizontal => {
+      const types = horizontal ? ['left', 'right'] : ['top', 'bottom']
+      const axis = horizontal ? 0 : 1
+      const size = horizontal ? 'width' : 'height'
+      if (align === types[0]) {
+        return center[axis] - triggerRect[size] / 2
+      } else if (align === types[1]) {
+        return center[axis] - popoverRect[size] + triggerRect[size] / 2
+      } else {
+        return center[axis] - popoverRect[size] / 2
+      }
     }
-    return directionHandles[direction]()
+    const positions = {
+      up() {
+        const top = center[1] - triggerRect.height / 2 - popoverRect.height
+        return [getAlignTick(true), top]
+      },
+      down() {
+        const top = center[1] + triggerRect.height / 2
+        return [getAlignTick(true), top]
+      },
+      left() {
+        const left = center[0] - triggerRect.width / 2 - popoverRect.width
+        return [left, getAlignTick()]
+      },
+      right() {
+        const left = center[0] + triggerRect.width / 2
+        return [left, getAlignTick()]
+      }
+    }
+    return positions[direction]()
+  }
+
+  getPositionClassNames(direction, align) {
+    return classnames({
+      [`bfd-popover--${direction}`]: true,
+      [`bfd-popover--align-${align}`]: !!align
+    })
+  }
+
+  getComputedDirection(triggerRect, popoverRect) {
+    let { direction } = this.props
+    if (triggerRect.top < popoverRect.height) {
+      direction = 'down'
+    } else if (popoverRect.height + triggerRect.top + triggerRect.height > window.innerHeight) {
+      direction = 'up'
+    }
+    return direction
   }
 
   setPosition() {
-    const { triggerNode } = this.props
-    let { direction } = this.props
+    const { triggerNode, align } = this.props
 
-    const rootNodeRect = this.rootNode.getBoundingClientRect()
     const triggerRect = triggerNode.getBoundingClientRect()
+    let popoverRect = this.popoverNode.getBoundingClientRect()
 
-    if (!direction) {
-      if (triggerRect.top > rootNodeRect.height) {
-        direction = 'up'
-      } else {
-        direction = 'down'
-      }
-    }
+    const direction = this.getComputedDirection(triggerRect, popoverRect)
+    const positionClassNames = this.getPositionClassNames(direction, align)
 
-    const [left, top] = this.getRelativePositionByDirection(triggerNode, this.rootNode, direction)
-    this.rootNode.style.left = left + 'px'
-    this.rootNode.style.top = top + 'px'
+    classlist(this.popoverNode).add(positionClassNames)
+    popoverRect = this.popoverNode.getBoundingClientRect()
+    const [left, top] = this.getPosition(triggerRect, popoverRect, direction, align)
 
-    const directionClassName = `bfd-popover--${direction}`
-    classlist(this.rootNode).add(directionClassName)
-    return directionClassName
+    this.popoverNode.style.left = left + 'px'
+    this.popoverNode.style.top = top + 'px'
+
+    return positionClassNames
   }
 
   getDocumentScroll() {
@@ -90,34 +120,39 @@ class Popover extends Component {
   render() {
     const { className, open, triggerNode, content, direction, ...other } = this.props
     return (
-      <div
-        className={classnames('bfd-popover', {
-          'bfd-popover--open': open
-        }, className)}
-        {...other}
-      >
-        <div className="bfd-popover__content">{content}</div>
+      <div className={classnames('bfd-popover', {
+        'bfd-popover--open': open
+      })}>
+        <div className={classnames('bfd-popover__content', className)} {...other}>
+          {content}
+        </div>
       </div>
     )
   }
 }
 
+Popover.defaultProps = {
+  direction: 'up'
+}
+
 Popover.propTypes = {
   triggerNode: (props, propName, componentName) => {
-    if (props[propName] instanceof Element === false) {
+    if (props[propName] && props[propName] instanceof Element === false) {
       return new Error(
         `Invalid prop \`${propName}\` supplied to \`${componentName}\`, expected DOM Element.`
       )
     }
   },
   content: PropTypes.node,
-  direction: PropTypes.oneOf(['up', 'down', 'left', 'right'])
+  open: PropTypes.bool,
+  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
+  align: PropTypes.oneOf(['top', 'right', 'bottom', 'left', 'middle'])
 }
 
 export default class {
 
-  constructor(props) {
-    this.props = props
+  constructor(getProps) {
+    this.getProps = getProps
   }
 
   render(props) {
@@ -126,19 +161,26 @@ export default class {
       document.body.appendChild(this.containerNode)
     }
     this.render = props => {
-      Object.assign(this.props, props)
+      if (!this.props) {
+        this.props = this.getProps()
+      }
+      props && Object.assign(this.props, props)
+      this.isOpen = !!this.props.open
       ReactDOM.render(<Popover {...this.props} />, this.containerNode)
     }
     this.render(props)
   }
 
+  update() {
+    this.props = this.getProps()
+    this.render()
+  }
+
   open() {
-    this.isOpen = true
     this.render({open: true})
   }
 
   close() {
-    this.isOpen = false
     this.render({open: false})
   }
 
@@ -147,6 +189,9 @@ export default class {
   }
 
   unmount() {
-    this.containerNode && document.body.removeChild(this.containerNode)
+    if (this.containerNode) {
+      document.body.removeChild(this.containerNode)
+      this.containerNode = null
+    }
   }
 }

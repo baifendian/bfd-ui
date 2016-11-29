@@ -8,27 +8,16 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
 
 class DropdownToggle extends Component {
   render() {
-    const { children, className, ...other } = this.props
-    const { dropdown } = this.context
-    dropdown.toggle = this
+    const { children, ...other } = this.props
     return (
-      <div 
-        className={classnames('bfd-dropdown__toggle', className)}
-        onClick={() => dropdown.handleToggle()}
-        {...other}
-      >
+      <div {...other}>
         {children}
       </div>
     )
   }
-}
-
-DropdownToggle.contextTypes = {
-  dropdown: PropTypes.object
 }
 
 export default DropdownToggle

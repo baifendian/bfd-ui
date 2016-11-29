@@ -14,9 +14,9 @@ class Demo extends Component {
     }
   }
 
-  componentDidMount() {
-    this.codeHeight = ReactDOM.findDOMNode(this.refs.pre).offsetHeight
-  }
+  // componentDidMount() {
+  //   this.codeHeight = ReactDOM.findDOMNode(this.refs.pre).offsetHeight
+  // }
 
   handleToggle() {
     this.setState({open: !this.state.open})

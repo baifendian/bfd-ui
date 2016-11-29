@@ -109,6 +109,7 @@ class MultipleSelect extends Component {
     return options.map((option, i) => {
       return (
         <li key={i} className={classnames({
+          'bfd-multiple-select__option': true,
           'bfd-multiple-select__option--active': this.state.index === i
         })}>
           {option}
@@ -184,6 +185,7 @@ class MultipleSelect extends Component {
           options.length ? (
             <ul>
               <li className={classnames({
+                'bfd-multiple-select__option': true,
                 'bfd-multiple-select__option--active': index === -1
               })}>
                 <Checkbox

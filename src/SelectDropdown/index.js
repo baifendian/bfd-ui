@@ -46,13 +46,14 @@ class SelectDropdown extends Component {
         className={classnames('bfd-select-dropdown', {
           'bfd-select-dropdown--caretable': caret
         }, className)}
+        aligned
         {...other}
       >
         <DropdownToggle tabIndex="0">
           {Toggle}
           {caret && <Icon type="caret-down" className="bfd-select-dropdown__caret" />}
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu className="bfd-select-dropdown__popover">
           {
             url && !hasPropValue ? (
               <Fetch

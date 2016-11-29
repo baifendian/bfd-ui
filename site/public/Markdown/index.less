@@ -24,23 +24,34 @@
   pre {
     background-color: #fafafa;
   }
-  p, h1, h2, h3, h4, h5 {
+  p, h1, h2, h3, h4, h5, li {
     > code {
       padding: 3px 5px;
       background-color: #f5f5f5;
       border-radius: 2px;
     }
-  } 
+  }
   ul {
     list-style-type: circle;
   }
   li {
     line-height: 20px;
+    margin-bottom: 3px;
   }
   blockquote {
     margin: 20px 0 10px 0;
     padding: 8px 15px;
-    border-left: 5px solid #ffc3c3;
-    color: #999;
+    border-left: 5px solid #f9e33f;
+    background: #fff8c4;
+    border-radius: 2px;
+    lin
+    &:before {
+      content: 'Warning：';
+      font-weight: 700;
+    }
+    p {
+      display: inline;
+      margin: 0;
+    }
   }
 }

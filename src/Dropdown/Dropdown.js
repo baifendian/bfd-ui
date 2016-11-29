@@ -11,66 +11,41 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
+import Popover from '../Popover'
+import DropdownToggle from './DropdownToggle'
+import DropdownMenu from './DropdownMenu'
 
 class Dropdown extends Component {
 
-  // 存储所有的组件实例，当前打开后，其他关闭
-  static instances = []
-
   constructor(props) {
-    super()
-    this.handleBodyClick = this.handleBodyClick.bind(this)
+    super(props)
+    this.handleBodyClick = () => {
+      this.setState({open: false})
+    }
     this.state = {
       open: props.open || false
     }
   }
 
-  getChildContext() {
-    return {
-      dropdown: this
+  componentDidMount() {
+    this.popover = new Popover(::this.getPopoverProps)
+    if (this.state.open) {
+      this.popover.open()
     }
+    window.addEventListener('click', this.handleBodyClick)
   }
 
   componentWillReceiveProps(nextProps) {
     'open' in nextProps && this.setState({open: nextProps.open})
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    prevState.open !== this.state.open && this.updateMenuState()
-  }
-
-  componentDidMount() {
-    Dropdown.instances.push(this)
-    window.addEventListener('click', this.handleBodyClick)
-    this.$root = ReactDOM.findDOMNode(this)
-    this.$menu = ReactDOM.findDOMNode(this.menu)
-    this.$toggle = ReactDOM.findDOMNode(this.toggle)
-    this.updateMenuState()
+  componentDidUpdate() {
+    this.popover.update()
   }
 
   componentWillUnmount() {
-    Dropdown.instances.splice(Dropdown.instances.indexOf(this), 1)
+    this.popover.unmount()
     window.removeEventListener('click', this.handleBodyClick)
-  }
-
-  updateMenuState() {
-    if (this.state.open) {
-      this.setPosition()
-    } else {
-      classlist(this.$root).remove(this.menuDirectionClassName)
-    }
-  }
-
-  setPosition() {
-    const menuHeight = parseInt(getComputedStyle(this.$menu).height, 10)
-    const menuTop = this.$menu.getBoundingClientRect().top
-    const toggleTop = this.$toggle.getBoundingClientRect().top
-    if (menuHeight + menuTop > window.innerHeight && toggleTop - 8 > menuHeight) {
-      this.menuDirectionClassName = 'bfd-dropdown--up'
-    } else {
-      this.menuDirectionClassName = 'bfd-dropdown--down'
-    }
-    classlist(this.$root).add(this.menuDirectionClassName)
   }
 
   /**
@@ -88,53 +63,66 @@ class Dropdown extends Component {
    * @description 收起
    */
   close() {
-    this.state.open && this.setState({open: false})
+    this.setState({open: false})
   }
 
-  handleToggle() {
-    if (this.props.disabled) return
-    this[this.state.open ? 'close' : 'open']()
-    if (Dropdown.instances.length > 1) {
-      Dropdown.instances.forEach(instance => {
-        if (instance !== this) {
-          // 关闭其他组件
-          instance.close()
-        }
+  getPopoverProps() {
+    const {
+      children, className, right, ...other
+    } = this.DropdownMenu.props
+    const triggerNode = ReactDOM.findDOMNode(this.toggle)
+
+    // Will be deprecated
+    if (right) {
+      other.align = 'right'
+    }
+
+    if (this.props.aligned) {
+      other.style = Object.assign(other.style || {}, {
+        width: triggerNode.offsetWidth
       })
     }
-    this.props.onToggle && this.props.onToggle(!this.state.open)
-  }
 
-  handleBodyClick() {
-    this.close()
+    const props = {
+      triggerNode,
+      content: children,
+      className: classnames('bfd-dropdown__popover', className),
+      onClick: e => e.stopPropagation(),
+      open: this.state.open,
+      ...other
+    }
+    return props
   }
 
   render() {
-
+    const { children, className, onToggle, disabled, direction, ...other } = this.props
     const { open } = this.state
-    const { children, className, onToggle, disabled, ...other } = this.props
-
     delete other.open
 
-    const classNames = classnames('bfd-dropdown', {
-      'bfd-dropdown--open': open,
-      'bfd-dropdown--disabled': disabled
-    }, className)
+    React.Children.forEach(children, (child, i) => {
+      if (child.type === DropdownToggle) {
+        this.DropdownToggle = child
+      } else if (child.type === DropdownMenu) {
+        this.DropdownMenu = child
+      }
+    })
 
-    return (
-      <div
-        className={classnames(classNames)}
-        onClick={e => e.stopPropagation()}
-        {...other}
-      >
-        {children}
-      </div>
-    )
+    return React.cloneElement(this.DropdownToggle, {
+      ref: toggle => this.toggle = toggle,
+      className: classnames('bfd-dropdown', {
+        'bfd-dropdown--open': open,
+        'bfd-dropdown--disabled': disabled
+      }, className),
+      onClick: e => {
+        e.stopPropagation()
+        if (disabled) return
+        const _open = !open
+        this.setState({open: _open})
+        onToggle && onToggle(_open)
+      },
+      ...other
+    })
   }
-}
-
-Dropdown.childContextTypes = {
-  dropdown: PropTypes.instanceOf(Dropdown)
 }
 
 Dropdown.propTypes = {
@@ -147,6 +135,9 @@ Dropdown.propTypes = {
 
   // 是否禁用
   disabled: PropTypes.bool,
+
+  // DropdownToggle 与 DropdownMenu 宽度相同
+  aligned: PropTypes.bool,
 
   customProp({ open, onToggle }) {
     if (open && !onToggle) {

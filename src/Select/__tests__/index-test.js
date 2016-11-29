@@ -30,7 +30,7 @@ describe('Select', () => {
   })
 
   it('should onChange works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <Select onChange={handleChange}>
         <Option value="0">苹果</Option>
@@ -40,11 +40,11 @@ describe('Select', () => {
     )
     const options = findDOMNode(instance).querySelectorAll('.bfd-select__option')
     TestUtils.Simulate.click(options[0])
-    expect(handleChange).toBeCalledWith('0')
+    expect(handleChange).toBeCalledWith('0', {value: '0', children: '苹果'})
   })
 
   it('should data works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <Select data={['a', 'b']} render={item => <Option>{item}</Option>} />
     )
@@ -53,7 +53,7 @@ describe('Select', () => {
   })
 
   it('should searchable works', () => {
-    const handleChange = jest.fn()    
+    const handleChange = jest.fn()
     const instance = TestUtils.renderIntoDocument(
       <Select defaultValue="1" searchable>
         <Option value="0">苹果</Option>

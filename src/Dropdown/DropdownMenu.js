@@ -13,23 +13,24 @@ import classnames from 'classnames'
 class DropdownMenu extends Component {
   render() {
     const { children, className, right, ...other } = this.props
-    this.context.dropdown.menu = this
-    return (
-      <div className={classnames('bfd-dropdown__menu', {
-        'bfd-dropdown__menu--right': right
-      }, className)} {...other}>
-        {children}
-      </div>
-    )
+    return null
   }
 }
 
-DropdownMenu.contextTypes = {
-  dropdown: PropTypes.object
+DropdownMenu.defaultProps = {
+  direction: 'down',
+  align: 'left'
 }
 
 DropdownMenu.propTypes = {
-  // 是否右对齐
+
+  // 展开方向，默认 `down`，如果实际空间不足，则可能自适应改变方向
+  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
+
+  // 对齐方式，默认 `left`
+  align: PropTypes.oneOf(['top', 'right', 'bottom', 'left', 'middle']),
+
+  // 是否右对齐，建议用 `align="right"` 代替
   right: PropTypes.bool
 }
 

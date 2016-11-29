@@ -13,7 +13,6 @@
   top: 0;
   z-index: 9999;
   animation: .15s bfd-popover-in;
-  padding: 6px;
   display: none;
   &:after {
     content: '';
@@ -37,9 +36,10 @@
 }
 
 .bfd-popover--up {
+  padding-bottom: 7px;
   &:after {
     left: 50%;
-    bottom: 0px;
+    bottom: 1px;
     margin-left: -7px;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
@@ -48,9 +48,10 @@
 }
 
 .bfd-popover--down {
+  padding-top: 7px;
   &:after {
     left: 50%;
-    top: 0px;
+    top: 1px;
     margin-left: -7px;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
@@ -59,9 +60,10 @@
 }
 
 .bfd-popover--left {
+  padding-right: 7px;
   &:after {
     top: 50%;
-    right: 0px;
+    right: 1px;
     margin-top: -7px;
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent;
@@ -70,14 +72,33 @@
 }
 
 .bfd-popover--right {
+  padding-left: 7px;
   &:after {
     top: 50%;
-    left: 0px;
+    left: 1px;
     margin-top: -7px;
     border-top: 7px solid transparent;
     border-bottom: 7px solid transparent;
     border-right: 6px solid #fff;
   }
+}
+
+.bfd-popover--align-left:after {
+  left: 20px;
+}
+
+.bfd-popover--align-right:after {
+  left: auto;
+  right: 20px;
+}
+
+.bfd-popover--align-top:after {
+  top: 20px;
+}
+
+.bfd-popover--align-bottom:after {
+  top: auto;
+  bottom: 20px;
 }
 
 @keyframes bfd-popover-in {

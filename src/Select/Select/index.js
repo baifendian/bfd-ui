@@ -47,10 +47,10 @@ class Select extends Component {
     this.setState({ data })
   }
 
-  handleSelect(value) {
+  handleSelect(value, item) {
     this.refs.dropdown.close()
     this.setState({ value })
-    this.props.onChange && this.props.onChange(value)
+    this.props.onChange && this.props.onChange(value, item)
   }
 
   handleKeyDown(options, e) {
@@ -69,7 +69,8 @@ class Select extends Component {
       this.setState({ index })
     }
     if (key === 'Enter') {
-      this.handleSelect(options[index].props.value)
+      const props = options[index].props
+      this.handleSelect(props.value, props.data || props)
     }
   }
 
@@ -93,7 +94,7 @@ class Select extends Component {
       res = React.Children.map(children, this.getOptionWithProps.bind(this, onMatch))
     } else {
       res = this.state.data.map((item, i) => {
-        return this.getOptionWithProps(onMatch, render.call(this, item, i), i)
+        return this.getOptionWithProps(onMatch, render.call(this, item, i), i, item)
       })
     }
     if (defaultOption) {
@@ -102,7 +103,7 @@ class Select extends Component {
     return res
   }
 
-  getOptionWithProps(onMatch, option, i) {
+  getOptionWithProps(onMatch, option, i, dataItem) {
     if (!option) return
     const { value, children } = option.props
     let selected = false
@@ -111,9 +112,10 @@ class Select extends Component {
       selected = true
     }
     return React.cloneElement(option, {
+      data: dataItem,
       selected,
       key: i,
-      onClick: this.handleSelect.bind(this, value)
+      onClick: this.handleSelect.bind(this, value, dataItem || option.props)
     })
   }
 
@@ -187,6 +189,7 @@ class Select extends Component {
         {searchable && (
           <ClearableInput
             ref="clearableInput"
+            className="bfd-select__search-input"
             value={searchValue}
             placeholder="请输入关键词搜索"
             onChange={::this.handleSearch}
@@ -215,7 +218,7 @@ Select.propTypes = {
   // 初始化时选中的值（不可控）
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
-  // 切换选择后的回调，参数为选中的值
+  // 切换选择后的回调，function(value, item)，当前数据项或 option.props
   onChange: PropTypes.func,
 
   // 数据源，结合 render 属性定义 Option 渲染逻辑

@@ -16,20 +16,12 @@ import './index.less'
 
 class TextOverflow extends Component {
 
-  componentDidMount() {
-    this.popover = new Popover(this.getPopoverProps())
-  }
-
-  componentDidUpdate() {
-    const { direction } = this.props
-    this.popover.render({ direction })
-  }
-
   componentWillUnmount() {
-    this.popover.unmount()
+    this.popover && this.popover.unmount()
   }
 
   getPopoverProps() {
+    const { className, children, ...other } = this.props
     return {
       triggerNode: ReactDOM.findDOMNode(this),
       onMouseEnter: () => {
@@ -38,42 +30,57 @@ class TextOverflow extends Component {
       onMouseLeave: () => {
         this.closeTimer = setTimeout(::this.popover.close, 150)
       },
-      ...this.props
+      className: classnames('bfd-text-overflow__popover', className),
+      content: children.props.children,
+      ...other
     }
   }
 
   getTriggerProps() {
-    const { children } = this.props
+    const { className, children, direction, align, ...other } = this.props
     return {
+      className: classnames(children.props.className, 'bfd-text-overflow'),
       onMouseEnter: e => {
         const target = e.currentTarget
         if (target.offsetWidth < target.scrollWidth) {
           clearTimeout(this.closeTimer)
           this.openTimer = setTimeout(() => {
-            this.popover.render({content: children.props.children})
+            if (!this.popover) {
+              this.popover = new Popover(::this.getPopoverProps)
+            }
             this.popover.open()
           }, 150)
         }
       },
       onMouseLeave: () => {
         clearTimeout(this.openTimer)
-        this.closeTimer = setTimeout(::this.popover.close, 150)
-      },
-      className: classnames(children.props.className, 'bfd-text-overflow')
+        this.closeTimer = setTimeout(() => {
+          this.popover && this.popover.close()
+        }, 150)
+      }
     }
   }
 
   render() {
     const { children } = this.props
-    invariant(!children.length, 'Children should be single, check the children of TextOverflow')
     return React.cloneElement(children, this.getTriggerProps())
   }
 }
 
+TextOverflow.defaultProps = {
+  direction: 'up',
+  align: 'middle'
+}
+
 TextOverflow.propTypes = {
 
-  // 提示框位置方向，可选值：up/down/left/right，默认自适应
-  direction: PropTypes.string
+  children: PropTypes.element.isRequired,
+
+  // 提示框位置方向，默认 `up`
+  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
+
+  // 提示框对齐方式，默认 `middle`
+  align: PropTypes.oneOf(['top', 'right', 'bottom', 'left', 'middle'])
 }
 
 export default TextOverflow

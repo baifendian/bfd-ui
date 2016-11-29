@@ -9,74 +9,28 @@
 
 .bfd-select-dropdown {
   min-width: 160px;
-  .bfd-dropdown__toggle {
-    line-height: 28px;
-    background-color: #fff;
-    border: 1px solid #ececec;
-    border-radius: 2px;
-    position: relative;
-    &:focus {
-      border-color: #42a5f5;
-      outline: none;
-    }
-    > .bfd-fetch {
-      height: 28px;
-    }
+  line-height: 28px;
+  background-color: #fff;
+  border: 1px solid #ececec;
+  border-radius: 2px;
+  position: relative;
+  &:focus {
+    border-color: #42a5f5;
+    outline: none;
   }
-  .bfd-dropdown__menu {
-    max-height: 300px;
-    min-width: auto;
-    overflow: auto;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-    box-shadow: none;
-    border: 1px solid #ececec;
+  > .bfd-fetch {
+    height: 28px;
   }
   &.bfd-dropdown--open {
-    .bfd-dropdown__toggle {
-      border-color: #42a5f5;
-    }
-    .bfd-select-dropdown__caret {
+    border-color: #42a5f5;
+    &.bfd-select-dropdown__caret {
       color: #42a5f5;
-    }
-    .bfd-dropdown__menu {
-      border-color: #42a5f5;
-    }
-  }
-  &.bfd-dropdown--down {
-    .bfd-dropdown__toggle {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      border-bottom-color: #ececec;
-    }
-    .bfd-dropdown__menu {
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-      border-top: 0;
-    }
-  }
-  &.bfd-dropdown--up {
-    .bfd-dropdown__toggle {
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-      border-top-color: #ececec;
-    }
-    .bfd-select-dropdown__caret {
-      transform: rotate(-180deg);
-    }
-    .bfd-dropdown__menu {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-      border-bottom: 0;
     }
   }
 }
 
 .bfd-select-dropdown--caretable {
-  .bfd-dropdown__toggle {
-    padding-right: 24px;
-  }
+  padding-right: 24px;
 }
 
 .bfd-select-dropdown__caret {
@@ -84,4 +38,15 @@
   right: 10px;
   top: 50%;
   margin-top: -6px;
+}
+
+.bfd-select-dropdown__popover {
+  max-width: none;
+  padding: 0;
+  max-height: 300px;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
 }

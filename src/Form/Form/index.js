@@ -12,6 +12,7 @@ import update from 'react-update'
 import classnames from 'classnames'
 import invariant from 'invariant'
 import xhr from '../../xhr'
+import './index.less'
 
 class Form extends Component {
 

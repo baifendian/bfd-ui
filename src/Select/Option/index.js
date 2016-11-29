@@ -14,9 +14,9 @@ import Icon from '../../Icon'
 import './index.less'
 
 const Option = props => {
-  const { children, className, value, selected, active, ...other } = props
+  const { children, className, data, value, selected, active, ...other } = props
   const classNames = classnames(
-    'bfd-select__option', 
+    'bfd-select__option',
     {
       'bfd-select__option--active': active,
       'bfd-select__option--selected': selected
