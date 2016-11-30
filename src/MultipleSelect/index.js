@@ -167,6 +167,7 @@ class MultipleSelect extends Component {
         labels={labels}
         placeholder={values && values.length ? '' : placeholder}
         onRemove={action.handleLabelRemove.bind(this)}
+        disabled={disabled}
       />
     )
 

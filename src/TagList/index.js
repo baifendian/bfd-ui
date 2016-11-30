@@ -23,14 +23,15 @@ class TagList extends Component {
   }
 
   render() {
-    
-    const { 
-      labels, placeholder, inputValue, onRemove, onInput, onInputKeyChange, inputable
+
+    const {
+      labels, placeholder, inputValue, onRemove, onInput, onInputKeyChange, inputable,
+      disabled
     } = this.props
 
     const inputSize = ((labels.length ? inputValue : placeholder) || ' ')
       .replace(/[\u4e00-\u9FA5]/g, '  ').length
-    
+
     return (
       <ul className="bfd-tag-list">
         {labels.map(item => {
@@ -39,10 +40,10 @@ class TagList extends Component {
               <TextOverflow>
                 <span className="bfd-tag-list__label">{item.label}</span>
               </TextOverflow>
-              <Button 
-                icon="remove" 
-                transparent 
-                size="sm" 
+              <Button
+                icon="remove"
+                transparent
+                size="sm"
                 onClick={e => {
                   e.stopPropagation()
                   onRemove(item.value)
@@ -52,14 +53,15 @@ class TagList extends Component {
           )
         })}
         <li>
-          <input 
+          <input
             type="text"
             ref="input"
             readOnly={!inputable}
+            disabled={disabled}
             value={inputValue}
             size={Math.min(inputSize, 45)}
-            onChange={e => onInput(e.target.value)} 
-            onKeyDown={e => onInputKeyChange(e)} 
+            onChange={e => onInput(e.target.value)}
+            onKeyDown={e => onInputKeyChange(e)}
             placeholder={labels.length ? '' : placeholder} />
         </li>
       </ul>
@@ -72,6 +74,7 @@ TagList.propTypes = {
   placeholder: PropTypes.string,
   onRemove: PropTypes.func,
   inputable: PropTypes.bool,
+  disabled: PropTypes.bool,
   inputValue: PropTypes.string,
   onInput: PropTypes.func,
   onInputKeyChange: PropTypes.func

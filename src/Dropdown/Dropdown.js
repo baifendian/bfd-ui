@@ -17,11 +17,14 @@ import DropdownMenu from './DropdownMenu'
 
 class Dropdown extends Component {
 
+  static instances = []
+
   constructor(props) {
     super(props)
     this.handleBodyClick = () => {
       this.setState({open: false})
     }
+    Dropdown.instances.push(this)
     this.state = {
       open: props.open || false
     }
@@ -41,9 +44,17 @@ class Dropdown extends Component {
 
   componentDidUpdate() {
     this.popover.update()
+    if (this.state.open) {
+      Dropdown.instances.forEach(instance => {
+        if (instance !== this) {
+          instance.close()
+        }
+      })
+    }
   }
 
   componentWillUnmount() {
+    Dropdown.instances.splice(Dropdown.instances.indexOf(this), 1)
     this.popover.unmount()
     window.removeEventListener('click', this.handleBodyClick)
   }
@@ -63,7 +74,7 @@ class Dropdown extends Component {
    * @description 收起
    */
   close() {
-    this.setState({open: false})
+    this.state.open && this.setState({open: false})
   }
 
   getPopoverProps() {
@@ -107,21 +118,25 @@ class Dropdown extends Component {
       }
     })
 
-    return React.cloneElement(this.DropdownToggle, {
-      ref: toggle => this.toggle = toggle,
-      className: classnames('bfd-dropdown', {
+    return (
+      <div className={classnames('bfd-dropdown', {
         'bfd-dropdown--open': open,
         'bfd-dropdown--disabled': disabled
-      }, className),
-      onClick: e => {
-        e.stopPropagation()
-        if (disabled) return
-        const _open = !open
-        this.setState({open: _open})
-        onToggle && onToggle(_open)
-      },
-      ...other
-    })
+      }, className)} {...other}
+      >
+        {React.cloneElement(this.DropdownToggle, {
+          ref: toggle => this.toggle = toggle,
+          onClick: e => {
+            e.stopPropagation()
+            if (disabled) return
+            const _open = !open
+            this.setState({open: _open})
+            onToggle && onToggle(_open)
+          }
+        })}
+      </div>
+    )
+    return
   }
 }
 

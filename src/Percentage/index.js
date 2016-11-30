@@ -25,11 +25,14 @@ class Percentage extends Component {
 
   componentDidMount() {
     const $root = findDOMNode(this)
-    const width = this.props.width || ($root && $root.clientWidth)
+    const width = this.props.width || ($root && $root.offsetWidth)
     if (width) {
       this.setState({size: width})
     } else {
-      invariant(false, 'You should declare `width` prop or the container of `Percentage` should have `width`.')
+      invariant(
+        false,
+        `The container width for \`Percentage\` is undefined, Check the width of \`Percentage\`.`
+      )
     }
   }
 
@@ -56,14 +59,11 @@ class Percentage extends Component {
     window.requestAnimationFrame(step)
   }
 
-  render() {
-    const {
-      className, width, percent, foreColor, backColor, textColor, ...other
-    } = this.props
+  renderSVG() {
     const { size } = this.state
-
     if (!size) return null
 
+    const { percent, foreColor, backColor, textColor } = this.props
     const strokeWidth = size / 20
     const radius = size / 2 - strokeWidth / 2
     const fontSize = size * .25
@@ -74,33 +74,40 @@ class Percentage extends Component {
       cx: size / 2,
       cy: size / 2
     }
-
     this.dash = Math.PI * radius * 2
+    return (
+      <svg width={size} height={size}>
+        <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
+        <circle
+          ref="foreCircle"
+          stroke={foreColor || '#2196f3'}
+          strokeLinecap="round"
+          strokeDasharray={this.dash}
+          style={{strokeDashoffset: this.dash}}
+          {...shareProps}
+        />
+        <text
+          ref="text"
+          textAnchor="middle"
+          fontSize={fontSize}
+          fill={textColor || foreColor || '#2196f3'}
+          x={size / 2}
+          y={size / 2}
+          dy=".3em"
+        >
+          {percent + '%'}
+        </text>
+      </svg>
+    )
+  }
 
+  render() {
+    const {
+      className, width, percent, foreColor, backColor, textColor, ...other
+    } = this.props
     return (
       <div className={classnames('bfd-percentage', className)} {...other}>
-        <svg width={size} height={size}>
-          <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
-          <circle
-            ref="foreCircle"
-            stroke={foreColor || '#2196f3'}
-            strokeLinecap="round"
-            strokeDasharray={this.dash}
-            style={{strokeDashoffset: this.dash}}
-            {...shareProps}
-          />
-          <text
-            ref="text"
-            textAnchor="middle"
-            fontSize={fontSize}
-            fill={textColor || foreColor || '#2196f3'}
-            x={size / 2}
-            y={size / 2}
-            dy=".3em"
-          >
-            {percent + '%'}
-          </text>
-        </svg>
+        {this.renderSVG()}
       </div>
     )
   }

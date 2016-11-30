@@ -8,12 +8,13 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
 
 class DropdownToggle extends Component {
   render() {
-    const { children, ...other } = this.props
+    const { children, className, ...other } = this.props
     return (
-      <div {...other}>
+      <div className={classnames('bfd-dropdown__toggle', className)} {...other}>
         {children}
       </div>
     )

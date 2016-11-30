@@ -9,4 +9,15 @@ const ClearableInputBasic = () => {
   )
 }
 
+/**
+ * @title 禁用
+ */
+import ClearableInput from 'bfd/ClearableInput'
+
+const ClearableInputDisabled = () => {
+  return (
+    <ClearableInput defaultValue="清除" disabled />
+  )
+}
+
 @component ClearableInput

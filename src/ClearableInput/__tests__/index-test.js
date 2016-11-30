@@ -13,7 +13,7 @@ describe('ClearableInput', () => {
     const container = findDOMNode(instance)
     TestUtils.Simulate.change(container.querySelector('input'), {
       target: {
-        value: 'changed'  
+        value: 'changed'
       }
     })
     expect(handleChange).toBeCalledWith('changed')
@@ -25,7 +25,6 @@ describe('ClearableInput', () => {
   it('should clear works', () => {
     const instance = TestUtils.renderIntoDocument(<ClearableInput defaultValue="test" />)
     const container = findDOMNode(instance)
-    
     TestUtils.Simulate.click(container.querySelector('button'))
     expect(container.querySelector('input').value).toBe('')
   })
@@ -37,8 +36,16 @@ describe('ClearableInput', () => {
       <ClearableInput defaultValue="test" onClear={handleClear} />
     )
     const container = findDOMNode(instance)
-    
     TestUtils.Simulate.click(container.querySelector('button'))
     expect(handleClear).toBeCalled()
+  })
+
+  it('should not be cleared when disabled', () => {
+    const instance = TestUtils.renderIntoDocument(
+      <ClearableInput defaultValue="test" disabled />
+    )
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('button'))
+    expect(container.querySelector('input').value).toBe('test')
   })
 })

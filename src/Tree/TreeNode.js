@@ -12,6 +12,7 @@ import classnames from 'classnames'
 import Button from '../Button'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
+import TextOverflow from '../TextOverflow'
 import getPathData from './getPathData'
 
 class TreeNode extends Component {
@@ -115,7 +116,11 @@ class TreeNode extends Component {
           })}
           onClick={selectable && ::this.handleSelect}
         >
-          {contentRender ? contentRender(data, path) : data.name}
+          <TextOverflow>
+            <div>
+            {contentRender ? contentRender(data, path) : data.name}
+            </div>
+          </TextOverflow>
         </div>
         {Children}
       </li>

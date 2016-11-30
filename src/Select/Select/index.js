@@ -11,6 +11,7 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import invariant from 'invariant'
 import shouldComponentUpdate from '../../shouldComponentUpdate'
+import dataFilter from '../../_shared/dataFilter'
 import TextOverflow from '../../TextOverflow'
 import ClearableInput from '../../ClearableInput'
 import SelectDropdown from '../../SelectDropdown'
@@ -40,10 +41,11 @@ class Select extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
-    if (this.props.dataFilter) {
-      data = this.props.dataFilter(data)
-      invariant(!!data, '`dataFilter` should return new data, check the `dataFilter` of `Select`.')
-    }
+    data = dataFilter(this, data) || []
+    invariant(
+      Array.isArray(data),
+      `\`Select\` data should be \`Array\`, check the response of \`${this.props.url}\` or the return value of \`dataFilter\`.`
+    )
     this.setState({ data })
   }
 

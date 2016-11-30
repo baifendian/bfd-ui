@@ -27,10 +27,11 @@ class Popover extends Component {
   }
 
   componentDidUpdate() {
+    if (this.positionClassNames) {
+      classlist(this.popoverNode).remove(...this.positionClassNames.split(' '))
+    }
     if (this.props.open) {
       this.positionClassNames = this.setPosition()
-    } else {
-      classlist(this.popoverNode).remove(this.positionClassNames)
     }
   }
 
@@ -173,15 +174,16 @@ export default class {
 
   update() {
     this.props = this.getProps()
+    if (!this.props.open && !this.isOpen) return
     this.render()
   }
 
   open() {
-    this.render({open: true})
+    this.isOpen || this.render({open: true})
   }
 
   close() {
-    this.render({open: false})
+    this.isOpen && this.render({open: false})
   }
 
   toggle() {

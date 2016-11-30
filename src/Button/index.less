@@ -98,12 +98,13 @@
   background-color: transparent;
   color: inherit;
   opacity: .7;
-  &:hover {
+  transition: opacity .1s ease;
+  &:hover:enabled {
     color: inherit;
     background-color: transparent;
     opacity: .85;
   }
-  &:active {
+  &:active:enabled {
     color: inherit;
     background-color: transparent;
     opacity: 1;

@@ -2,13 +2,14 @@
 
 *2016-11-22*
 
-> `v1.4.0` 起，DropdownMenu 渲染到 body 节点内，Dropdown 及 DropdownToggle DOM 节点也会合并，自定义样式可能因 DOM 结构的改变而失效，请注意修改
+> `v1.4.0` 起，DropdownMenu 渲染到 body 节点内，相关组件 Select、MultipleSelect 展开层 DOM 位置均改变，自定义样式可能因 DOM 结构的改变而失效，请注意修改。
 
 - Select onChange 新增参数 item
-- DropdownMenu 渲染至 body 节点内，相关组件 Select、MultipleSelect 等渲染方式均改变；DropdownToggle 不再产生 DOM 节点
+- DropdownMenu 渲染至 body 节点内，相关组件 Select、MultipleSelect 展开层 DOM 位置均改变
 - Dropdown 新增属性 aligned，实现 DropdownToggle 与 DropdownMenu 宽度相同
 - DropdownMenu 新增属性 direction、align，支持方向控制及对齐方式
 - Tooltip、TextOverflow 新增属性 align，支持对齐方式
+- 修复 Percentage css 宽度无效的问题
 
 
 ## v1.3.4

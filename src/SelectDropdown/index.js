@@ -33,6 +33,7 @@ class SelectDropdown extends Component {
     const Toggle = url && hasPropValue ? (
       <Fetch
         spinnerHeight={20}
+        defaultHeight={28}
         url={url}
         onSuccess={onLoad}
       >

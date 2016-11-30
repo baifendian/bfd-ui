@@ -90,6 +90,7 @@ class AutoComplete extends Component {
       <Dropdown
         className={classnames('bfd-auto-complete', className)}
         open={open}
+        aligned
         onToggle={open => this.setState({ open })}
       >
         <DropdownToggle>
@@ -100,7 +101,7 @@ class AutoComplete extends Component {
             {...other}
           />
         </DropdownToggle>
-        <DropdownMenu>
+        <DropdownMenu className="bfd-auto-complete__popover">
           <ul className="bfd-auto-complete__result">
           {result.map((item, i) => (
             <li
