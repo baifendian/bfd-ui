@@ -87,6 +87,7 @@ module.exports = function (source) {
     // 文档
     const doc = {
       name: match.split('/').slice(-1)[0],
+      defaultProps: {},
       props: [],
       apis: []
     }
@@ -103,8 +104,16 @@ module.exports = function (source) {
 
     const sourceCode = fs.readFileSync(dir, 'utf8')
 
+    // 组件 defaultProps
+    // match = sourceCode.match(/\.defaultProps = ({[^]+?\n\})/)
+    // if (match) {
+    //   console.log(match[1])
+    //   doc.defaultProps = new Function('return ' + match[1])()
+    //   console.log(doc.defaultProps)
+    // }
+
     // 组件 props
-    match = sourceCode.match(/\.propTypes = ({[^]+\n})/)
+    match = sourceCode.match(/\.propTypes = ({[^]+?\n\})/)
     if (match) {
       match = match[1]
       const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*PropTypes(.*)/g
@@ -115,10 +124,16 @@ module.exports = function (source) {
           desc = desc.trim().replace(/\*\/$/, '')
           desc = marked(desc.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
         }
+        let type = res[4].match(/string|bool|number|object|array|func|element|oneOf.*/g)[0]
+        if (type.indexOf('oneOfType') === 0) {
+          type = type.match(/PropTypes\.\w+/g).join(' | ').replace(/PropTypes\./g, '')
+        } else if (type.indexOf('oneOf') === 0) {
+          type = new Function('return ' + type.match(/\[.*?]/)[0] + '.join(" | ")')()
+        }
         doc.props.push({
           name: res[3],
           desc: desc,
-          types: res[4].match(/string|bool|number|object|array|func|element|oneOf.*/g),
+          type: type,
           required: !!res[4].match(/isRequired/)
         })
       }

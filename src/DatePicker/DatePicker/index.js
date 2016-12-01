@@ -41,18 +41,15 @@ class DatePicker extends Component {
 
   render() {
 
-    const { className, defaultDate, onSelect, min, max, start, end, ...other } = this.props
+    const {
+      className, defaultDate, onSelect, min, max, start, end, captionRender, weekDayNames,
+      placeholder, ...other
+    } = this.props
     const { date } = this.state
-
     delete other.date
 
-    let value = ''
-    let placeholder
-    if (date) {
-      value = format(date, 'yyyy-mm-dd')
-    } else {
-      placeholder = '请选择日期'
-    }
+    const calendarProps = { date, min, max, start, end, captionRender, weekDayNames }
+
     return (
       <Dropdown
         ref="dropdown"
@@ -63,24 +60,24 @@ class DatePicker extends Component {
           <ClearableInput
             placeholder={placeholder}
             className="bfd-datepicker__input"
-            value={value}
+            value={date ? format(date, 'yyyy-mm-dd') : null}
             onChange={::this.handleInput}
             readOnly
           />
         </DropdownToggle>
         <DropdownMenu className="bfd-datepicker__popover">
           <Calendar
-            date={date}
-            min={min}
-            max={max}
-            start={start}
-            end={end}
             onSelect={::this.handleSelect}
+            {...calendarProps}
           />
         </DropdownMenu>
       </Dropdown>
     )
   }
+}
+
+DatePicker.defaultProps = {
+  placeholder: '请选择日期'
 }
 
 DatePicker.propTypes = {
@@ -105,6 +102,22 @@ DatePicker.propTypes = {
 
   // 区间模式，日期区间结束值
   end: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // placeholder，默认`请选择日期`
+  placeholder: PropTypes.string,
+
+  /**
+   * 日历标题渲染逻辑，默认
+   * ```js
+   * function captionRender(state) {
+   *   return `${state.currentYear}年 ${state.currentMonth + 1}月`
+   * }
+   * ```
+   */
+  captionRender: PropTypes.func,
+
+  // 一周内各天的名称，默认`['一', '二', '三', '四', '五', '六', '日']`
+  weekDayNames: PropTypes.array,
 
   customProp({ date, onSelect }) {
     if (date && !onSelect) {

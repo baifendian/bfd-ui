@@ -11,7 +11,7 @@ export default () => {
 
   const code = `import DatePicker from 'bfd/DatePicker'
 
-class App {
+class App extends Component {
 
   handleSelect(date) {
     console.log(date)

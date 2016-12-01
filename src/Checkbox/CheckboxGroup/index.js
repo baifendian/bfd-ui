@@ -55,7 +55,8 @@ class CheckboxGroup extends Component {
   render() {
 
     const {
-      children, className, defaultSelects, onChange, values, block, toggleable, ...other
+      children, className, defaultSelects, onChange, values, block, toggleable,
+      toggleAllContent, ...other
     } = this.props
     const { selects } = this.state
 
@@ -111,13 +112,17 @@ class CheckboxGroup extends Component {
             indeterminate={unSelects.length > 0 && unSelects.length < checkboxes.length}
             onChange={::this.toggleAll}
           >
-            全选
+            {toggleAllContent}
           </Checkbox>
         )}
         {checkboxes}
       </div>
     )
   }
+}
+
+CheckboxGroup.defaultProps = {
+  toggleAllContent: '全选'
 }
 
 CheckboxGroup.propTypes = {
@@ -139,6 +144,9 @@ CheckboxGroup.propTypes = {
 
   // 是否开启全选功能
   toggleable: PropTypes.bool,
+
+  // 全选切换复选框显示的文字
+  toggleAllContent: PropTypes.string,
 
   customProp({ selects, onChange }) {
     if (selects && !onChange) {

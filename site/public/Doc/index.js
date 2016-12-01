@@ -24,7 +24,7 @@ const Doc = props => {
                 })}>
                   {prop.name}
                 </td>
-                <td className="doc__prop-type">{prop.types.join(' | ')}</td>
+                <td className="doc__prop-type">{prop.type}</td>
                 <td>
                   <Markdown html={prop.desc} />
                 </td>
@@ -73,7 +73,7 @@ const Doc = props => {
         )
       })}
     </div>
-  ) 
+  )
 }
 
 export default Doc

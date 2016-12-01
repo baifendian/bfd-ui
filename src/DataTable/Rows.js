@@ -49,6 +49,8 @@ class Rows extends Component {
     const currentPage = this.props.currentPage || 1
     const pageSize = this.props.pageSize || 0
 
+    const { noDataContent } = this.props
+
     return (
       <tbody>
       {
@@ -95,7 +97,11 @@ class Rows extends Component {
               }
             </tr>
           )
-        }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
+        }) : (
+          <tr>
+            <td colSpan="9">{noDataContent}</td>
+          </tr>
+        )
       }
       </tbody>
     )

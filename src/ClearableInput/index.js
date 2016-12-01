@@ -105,8 +105,8 @@ ClearableInput.propTypes = {
   // 清空后的回调
   onClear: PropTypes.func,
 
-  // 输入框大小，除默认外可选值：sm、lg
-  size: PropTypes.string,
+  // 输入框尺寸
+  size: PropTypes.oneOf(['sm', 'lg']),
 
   // 是否禁用
   disabled: PropTypes.bool,

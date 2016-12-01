@@ -23,8 +23,8 @@ class DateRange extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'start' in nextProps && this.setState({start: nextProps.start})  
-    'end' in nextProps && this.setState({end: nextProps.end})  
+    'start' in nextProps && this.setState({start: nextProps.start})
+    'end' in nextProps && this.setState({end: nextProps.end})
   }
 
   handleSelect(type, date) {
@@ -40,31 +40,31 @@ class DateRange extends Component {
   }
 
   render() {
-    
+
     const { start, end } = this.state
     const { className, defaultStart, defaultEnd, onSelect, min, max, ...other } = this.props
-    
+
     delete other.start
     delete other.end
 
     return (
       <div className={classnames('bfd-daterange', className)} {...other}>
-        <DatePicker 
-          date={start} 
-          min={min} 
+        <DatePicker
+          date={start}
+          min={min}
           max={end}
-          start={start} 
+          start={start}
           end={end}
-          onSelect={this.handleSelect.bind(this, 'start')} 
+          onSelect={this.handleSelect.bind(this, 'start')}
         />
         <span className="bfd-daterange__seperator">至</span>
-        <DatePicker 
-          date={end} 
-          min={start} 
+        <DatePicker
+          date={end}
+          min={start}
           max={max}
-          start={start} 
+          start={start}
           end={end}
-          onSelect={this.handleSelect.bind(this, 'end')} 
+          onSelect={this.handleSelect.bind(this, 'end')}
         />
       </div>
     )
@@ -75,24 +75,33 @@ DateRange.propTypes = {
 
   // 指定开始日期
   start: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
+
   // 初始化指定的开始日期（不可控）
   defaultStart: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 指定结束日期
   end: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
+
   // 初始化指定的结束日期（不可控）
   defaultEnd: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 日期选择后的回调，参数分别为开始、结束时间
   onSelect: PropTypes.func,
-  
+
   // 可选日期范围最小值
   min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  
+
   // 可选日期范围最大值
   max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
+  // 同 DatePicker
+  placeholder: PropTypes.string,
+
+  // 同 DatePicker
+  captionRender: PropTypes.func,
+
+  // 同 DatePicker
+  weekDayNames: PropTypes.array,
 
   customProp({ start, end, onSelect }) {
     if ((start || end) && !onSelect) {

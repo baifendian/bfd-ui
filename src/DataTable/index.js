@@ -61,7 +61,7 @@ class DataTable extends Component {
   render() {
     const self = this
     let url = this.props.url || ''
-    const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, ...other } = this.props
+    const { className, column, howRow, data, showPage, onPageChange, onCheckboxSelect, onRowClick, onOrder, noDataContent,  ...other } = this.props
     const currentPage = parseInt(this.state.currentPage),
       // 新增自动分页功能
       pageSize = parseInt(this.props.howRow)
@@ -110,7 +110,7 @@ class DataTable extends Component {
                       ref={i}
                       style={style}
                       onClick={self.orderClick.bind(self, head, i)}
-                      title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>
+                      className={orderClassName}>
                       {head['title']}
                     </th>
                   )
@@ -128,6 +128,7 @@ class DataTable extends Component {
             column={this.props.column}
             currentPage={this.state.items.currentPage || currentPage}
             pageSize={pageSize}
+            noDataContent={noDataContent}
           >
           </Rows>
         </table>
@@ -311,6 +312,10 @@ class DataTable extends Component {
   }
 }
 
+DataTable.defaultProps = {
+  noDataContent: '无数据'
+}
+
 DataTable.propTypes = {
 
   // 要请求数据的服务端地址。
@@ -359,6 +364,9 @@ DataTable.propTypes = {
 
   // 隐藏页面跳转功能
   hideGo: PropTypes.bool,
+
+  // 无数据时显示的内容，默认`无数据`
+  noDataContent: PropTypes.string,
 
   customProp({ data, url }) {
     if (data && url) {

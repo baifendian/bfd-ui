@@ -11,7 +11,8 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import isPlainObject from 'lodash/isPlainObject'
 import invariant from 'invariant'
-import propsToState from '../shared/propsToState'
+import propsToState from '../_shared/propsToState'
+import dataFilter from '../_shared/dataFilter'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
 import Paging from '../Paging'
@@ -55,27 +56,18 @@ class DataTable extends Component {
     this.props.onSort && this.props.onSort(nextSortKey, nextSortType)
   }
 
-  handleLoad(res = {}) {
-    const { url, dataFilter } = this.props
+  handleLoad(res) {
+    const { url } = this.props
+    res = dataFilter(this, res)
     invariant(
       isPlainObject(res),
-      `The response of ${url} should be be plain object.`
+      `\`DataTable2\` data should be \`Plain Object\`, check the response of \`${url}\` or the return value of \`dataFilter\`.`
     )
-    if (dataFilter) {
-      res = dataFilter(res)
-      invariant(
-        isPlainObject(res),
-        '`DataTable` dataFilter should return plain object.'
-      )
-    }
     const { totalCounts } = res
-    let { data } = res
-    if (!data) {
-      data = []
-    }
+    const data = res.data || []
     invariant(
       Array.isArray(data),
-      `Invalid JSON for 'DataTable', check the xhr response or dataFilter. eg:
+      `Invalid JSON for \`DataTable2\`, check the response of \`${url}\` or the return value of \`dataFilter\`. eg:
       {
         totalCounts: 1200,
         data: [{...}]
@@ -177,8 +169,8 @@ class DataTable extends Component {
 
   render() {
     const {
-      className, columns, url, dataFilter, onPageChange, pageSize,
-      pagingDisabled, sortKey, sortType, onSort, rowRender, ...other
+      className, columns, url, dataFilter, onPageChange, pageSize, pagingDisabled,
+      sortKey, sortType, onSort, rowRender, noDataContent, ...other
     } = this.props
     const { currentPage, totalCounts, data } = this.state
     delete other.currentPage
@@ -204,7 +196,9 @@ class DataTable extends Component {
               currentPageData.length ?
               currentPageData.map(::this.getRow) : (
                 <tr>
-                  <td colSpan={columns.length} className="bfd-datatable__empty">无数据</td>
+                  <td colSpan={columns.length} className="bfd-datatable__empty">
+                    {noDataContent}
+                  </td>
                 </tr>
               )
             }
@@ -224,7 +218,8 @@ class DataTable extends Component {
 }
 
 DataTable.defaultProps = {
-  pageSize: 10
+  pageSize: 10,
+  noDataContent: '无数据'
 }
 
 DataTable.propTypes = {
@@ -308,6 +303,9 @@ DataTable.propTypes = {
 
   // 自定义 tbody 行渲染逻辑，参数(dataItem, index, columns)，返回 <tr>
   rowRender: PropTypes.func,
+
+  // 无数据时显示的内容，默认`无数据`
+  noDataContent: PropTypes.string,
 
   customProp(props) {
     if (props.data && props.url) {

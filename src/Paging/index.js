@@ -36,26 +36,28 @@ class Paging extends Component {
     // 分页逻辑代码
     const pageNum = Math.ceil(this.props.totalPageNum / this.props.pageSize)
     const currentIndex = this.state.currentIndex
-    const { currentPage, totalPageNum, pageSize, onPageChange, maxSeries, hideGo, ...other } = this.props
+    const {
+      currentPage, totalPageNum, pageSize, onPageChange, maxSeries, hideGo,
+      auxiliaryRender, ...other
+    } = this.props
 
     return (
       <Row>
-        <div className="bfd-paging__layout-div">
-          <span className="bfd-paging__total-name">共有<span className="bfd-paging__total-size">{parseInt(this.props.totalPageNum)}</span>条记录</span>
+        <div className="bfd-paging__layout-div bfd-paging__total-name">
+          {auxiliaryRender(this.props)}
         </div>
         <div className="bfd-paging__layout-right">
           <ul className="bfd-paging__pagination">
             <li>
-              <a onClick={::this.handleLaquoClick} className={'bfd-paging__pagination-li--prev '+ (currentIndex === 1 ? 'bfd-paging__pagination-li--frist' : '')}>上一页</a>
+              <a onClick={::this.handleLaquoClick} className={'bfd-paging__pagination-li--prev '+ (currentIndex === 1 ? 'bfd-paging__pagination-li--frist' : '')}>&lt;</a>
             </li>
             {this.getPages(currentIndex, pageNum)}
             <li>
-              <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>下一页</a>
+              <a onClick={::this.handleRaquoClick} className={'bfd-paging__pagination-li--next '+ (currentIndex === pageNum ? 'bfd-paging__pagination-li--end' : '')}>&gt;</a>
             </li>
           </ul>
           {!this.props.hideGo ? (
             <div className="bfd-paging__go">
-              <label className="bfd-paging__label-font">跳转到：</label>
               <Input onChange={::this.checkNumber} value={this.state.goPageNum} className="bfd-paging__go-number"/>
               <Button onClick={::this.handleGoPage} className="btn btn-primary">GO</Button>
             </div>
@@ -79,7 +81,7 @@ class Paging extends Component {
         for(let i = 1; i <= showPage + 2 && i <= maxPage; i++) {
           const html = this.createPageEl(i)
           if(i < maxPage - 1 && i == showPage + 1) {
-            const dotsHtml = <li key={'d' + i}><span>...</span></li> 
+            const dotsHtml = <li key={'d' + i}><span>...</span></li>
             pages.push(dotsHtml)
           } else {
             if(i == showPage + 2) {
@@ -94,9 +96,9 @@ class Paging extends Component {
         if(currentPage == 3) {
           pages[1] = this.createPageEl(2)
         } else {
-          pages[1] = <li key={"d1"}><span>...</span></li> 
+          pages[1] = <li key={"d1"}><span>...</span></li>
         }
-        
+
         let i = currentPage
         for(; i < currentPage + showPage; i++) {
           const html = this.createPageEl(i)
@@ -106,7 +108,7 @@ class Paging extends Component {
         pages.push(this.createPageEl(maxPage))
       } else {
         pages[0] = this.createPageEl(1)
-        pages[1] = <li key={"d1"}><span>...</span></li> 
+        pages[1] = <li key={"d1"}><span>...</span></li>
         let i = currentPage
         if(maxPage - currentPage < showPage - 1) {
           i = currentPage - (showPage - 1 - (maxPage - currentPage))
@@ -201,6 +203,12 @@ class Paging extends Component {
   }
 }
 
+Paging.defaultProps = {
+  auxiliaryRender(props) {
+    return <div>共有<span style={{color: 'red'}}>{props.totalPageNum}</span>条记录</div>
+  }
+}
+
 Paging.propTypes = {
 
   // 当前页面
@@ -219,8 +227,17 @@ Paging.propTypes = {
   maxSeries: PropTypes.number,
 
   // 隐藏页面跳转功能
-  hideGo: PropTypes.bool
+  hideGo: PropTypes.bool,
 
+  /**
+   * 辅助信息渲染逻辑，默认
+   * ```js
+   * function auxiliaryRender(props) {
+   *   return <div>共有<span style={{color: 'red'}}>{props.totalPageNum}</span>条记录</div>
+   * }
+   * ```
+   */
+  auxiliaryRender: PropTypes.func
 }
 
 export default Paging

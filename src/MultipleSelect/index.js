@@ -122,7 +122,7 @@ class MultipleSelect extends Component {
 
     const {
       children, className, defaultValues, onChange, data, url, disabled, tagable,
-      placeholder, ...other
+      placeholder, noOptionsContent, toggleAllContent, ...other
     } = this.props
     const { searchValue, index, values } = this.state
 
@@ -194,12 +194,12 @@ class MultipleSelect extends Component {
                   block
                   onChange={action.handleToggleAll.bind(this)}
                 >
-                  全选
+                  {toggleAllContent}
                 </Checkbox>
               </li>
               {wrapperOptions}
             </ul>
-          ) : <div className="bfd-multiple-select__empty">无匹配选项</div>
+          ) : <div className="bfd-multiple-select__empty">{noOptionsContent}</div>
         }
       </SelectDropdown>
     )
@@ -207,7 +207,9 @@ class MultipleSelect extends Component {
 }
 
 MultipleSelect.defaultProps = {
-  placeholder: '请选择'
+  placeholder: '请选择',
+  noOptionsContent: '无选项',
+  toggleAllContent: '全选'
 }
 
 MultipleSelect.propTypes = {
@@ -239,8 +241,14 @@ MultipleSelect.propTypes = {
   // data / url 方式时 Option 渲染回调，参数为当前数据和索引，返回一个 Option
   render: PropTypes.func,
 
-  // 无匹配项时显示的内容，默认｀请选择｀
+  // 无 `values` 时显示的内容
   placeholder: PropTypes.string,
+
+  // 无选项时显示的内容
+  noOptionsContent: PropTypes.string,
+
+  // 全选切换复选框显示的文字
+  toggleAllContent: PropTypes.string,
 
   customProp({ values, onChange, url, render }) {
     if (values && !onChange) {

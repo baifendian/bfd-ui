@@ -41,10 +41,11 @@ class Select extends Component {
   shouldComponentUpdate = shouldComponentUpdate
 
   handleLoad(data) {
+    const { url } = this.props
     data = dataFilter(this, data) || []
     invariant(
       Array.isArray(data),
-      `\`Select\` data should be \`Array\`, check the response of \`${this.props.url}\` or the return value of \`dataFilter\`.`
+      `\`Select\` data should be \`Array\`, check the response of \`${url}\` or the return value of \`dataFilter\`.`
     )
     this.setState({ data })
   }
@@ -145,7 +146,7 @@ class Select extends Component {
 
     const {
       children, className, defaultValue, onChange, data, dataFilter, defaultOption, size,
-      placeholder, searchable, ...other
+      placeholder, searchPlaceholder, searchable, noOptionsContent, noMatchingContent, ...other
     } = this.props
     const { value, searchValue } = this.state
 
@@ -167,7 +168,7 @@ class Select extends Component {
         title = placeholder
       }
       if (value) {
-        title = '无匹配选项'
+        title = noMatchingContent
       }
     }
 
@@ -193,14 +194,14 @@ class Select extends Component {
             ref="clearableInput"
             className="bfd-select__search-input"
             value={searchValue}
-            placeholder="请输入关键词搜索"
+            placeholder={searchPlaceholder}
             onChange={::this.handleSearch}
             onKeyDown={this.handleKeyDown.bind(this, optionsWithProps)}
           />
         )}
         <ul className="bfd-select__options">
           {optionsWithProps && optionsWithProps.length ? optionsWithProps : (
-            <li className="bfd-select__option">无选项</li>
+            <li className="bfd-select__option">{noOptionsContent}</li>
           )}
         </ul>
       </SelectDropdown>
@@ -209,7 +210,10 @@ class Select extends Component {
 }
 
 Select.defaultProps = {
-  placeholder: '请选择'
+  placeholder: '请选择',
+  searchPlaceholder: '请输入关键词搜索',
+  noOptionsContent: '无选项',
+  noMatchingContent: '无匹配选项'
 }
 
 Select.propTypes = {
@@ -238,20 +242,29 @@ Select.propTypes = {
   // data 或 url 方式时默认的 Option，通常针对空值时的选项
   defaultOption: PropTypes.element,
 
-  // 无选项对应时 Select 显示的内容
+  // 无 `value` 且无选项匹配时 Select 显示的内容，默认 `请选择`
   placeholder: PropTypes.string,
 
   // 是否可搜索，搜索范围为 Option 的 value 和 children
   searchable: PropTypes.bool,
 
+  // 搜索框 placeholder，默认`请输入关键词搜索`
+  searchPlaceholder: PropTypes.string,
+
   // 是否禁用
   disabled: PropTypes.bool,
 
-  // 尺寸，除默认值外可选值 sm、lg
-  size: PropTypes.string,
+  // 尺寸
+  size: PropTypes.oneOf(['sm', 'lg']),
 
   // 最小宽度，默认 160
   minWidth: PropTypes.number,
+
+  // 无 option 时显示的内容，默认`无选项`
+  noOptionsContent: PropTypes.string,
+
+  // 有 `value` 但无选项匹配时显示的内容，默认`无匹配选项`
+  noMatchingContent: PropTypes.string,
 
   customProp({ value, onChange, url, render }) {
     if (value && !onChange) {
