@@ -5,7 +5,8 @@ import message from '../index'
 
 describe('message', () => {
 
-  xit('should success works', () => {
+  it('should success works', () => {
+    document.body.innerHTML = ''
     message.success('test')
     expect(document.querySelector('.bfd-message--success')).not.toBeNull()
   })

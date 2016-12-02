@@ -20,6 +20,8 @@
 - `DataTable`: noDataContent
 - `DataTable2`: noDataContent
 - `DatePicker/DateRange`: placeholder, captionRender, weekDayNames
+- `Transfer`: searchPlaceholder
+- `Tree`: noChildrenContent
 
 
 全局配置方式，以 Select placeholder 为例：

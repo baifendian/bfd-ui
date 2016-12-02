@@ -20,6 +20,7 @@ describe('AutoComplete', () => {
   })
 
   it('should update works', () => {
+    document.body.innerHTML = ''
     class App extends Component {
       constructor() {
         super()
@@ -41,10 +42,12 @@ describe('AutoComplete', () => {
     const instance = TestUtils.renderIntoDocument(<App />)
     const container = findDOMNode(instance)
     expect(container.querySelector('input').value).toBe('a')
-    expect(container.querySelectorAll('.bfd-auto-complete__result li').length).toBe(1)
+    TestUtils.Simulate.click(container.querySelector('input'))
+    expect(document.querySelectorAll('.bfd-auto-complete__result li').length).toBe(1)
   })
 
   it('should search works', () => {
+    document.body.innerHTML = ''
     const instance = TestUtils.renderIntoDocument(
       <AutoComplete source={['aa', 'bb']} />
     )
@@ -55,10 +58,11 @@ describe('AutoComplete', () => {
       }
     })
     expect(container.className).toContain('open')
-    expect(container.querySelectorAll('ul li').length).toBe(1)
+    expect(document.querySelectorAll('.bfd-auto-complete__result li').length).toBe(1)
   })
 
   it('should tab works', () => {
+    document.body.innerHTML = ''
     const instance = TestUtils.renderIntoDocument(
       <AutoComplete source={['aa', 'bb']} />
     )
@@ -71,6 +75,6 @@ describe('AutoComplete', () => {
     TestUtils.Simulate.keyDown(container.querySelector('input'), {
       key: 'ArrowDown'
     })
-    expect(container.querySelectorAll('ul li')[0].className).toContain('active')
+    expect(document.querySelectorAll('.bfd-auto-complete__result li')[0].className).toContain('active')
   })
 })

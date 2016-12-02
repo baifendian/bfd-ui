@@ -6,6 +6,7 @@ import TreeSelect from '../index'
 describe('TreeSelect', () => {
 
   it('should value works', () => {
+    document.body.innerHTML = ''
     const data = [{
       name: '0',
       value: '0'
@@ -13,7 +14,8 @@ describe('TreeSelect', () => {
     const instance = TestUtils.renderIntoDocument(
       <TreeSelect value="0" defaultData={data} onChange={jest.fn()} />
     )
-    const selected = findDOMNode(instance).querySelector('.bfd-tree__node-content--active')
-    expect(selected.textContent).toBe('0')
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    expect(document.querySelector('.bfd-tree__node-content--active').textContent).toBe('0')
   })
 })

@@ -16,16 +16,16 @@ class SearchBar extends Component {
   constructor() {
     super()
   }
-  
+
   render() {
     return (
       <div>
         <Icon type="search" className="bfd-transfer__search" />
-        <Input 
+        <Input
           className="bfd-transfer__input"
-          placeholder="请输入搜索内容"
+          placeholder={this.props.placeholder}
           ref="filterTextInput"
-          onChange={::this.handleChange} 
+          onChange={::this.handleChange}
         />
       </div>
     )

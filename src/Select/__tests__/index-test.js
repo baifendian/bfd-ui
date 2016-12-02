@@ -5,6 +5,10 @@ import { Select, Option } from '../index'
 
 describe('Select', () => {
 
+  beforeEach(() => {
+    document.body.innerHTML = ''
+  })
+
   it('should value works', () => {
     const instance = TestUtils.renderIntoDocument(
       <Select value="1" onChange={jest.fn()}>
@@ -13,7 +17,10 @@ describe('Select', () => {
         <Option value="2">小米</Option>
       </Select>
     )
-    const selected = findDOMNode(instance).querySelector('.bfd-select__option--selected')
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+
+    const selected = document.querySelector('.bfd-select__option--selected')
     expect(selected.textContent).toBe('三星')
   })
 
@@ -25,7 +32,10 @@ describe('Select', () => {
         <Option value="2">小米</Option>
       </Select>
     )
-    const selected = findDOMNode(instance).querySelector('.bfd-select__option--selected')
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+
+    const selected = document.querySelector('.bfd-select__option--selected')
     expect(selected.textContent).toBe('三星')
   })
 
@@ -38,7 +48,10 @@ describe('Select', () => {
         <Option value="2">小米</Option>
       </Select>
     )
-    const options = findDOMNode(instance).querySelectorAll('.bfd-select__option')
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+
+    const options = document.querySelectorAll('.bfd-select__option')
     TestUtils.Simulate.click(options[0])
     expect(handleChange).toBeCalledWith('0', {value: '0', children: '苹果'})
   })
@@ -48,7 +61,10 @@ describe('Select', () => {
     const instance = TestUtils.renderIntoDocument(
       <Select data={['a', 'b']} render={item => <Option>{item}</Option>} />
     )
-    const options = findDOMNode(instance).querySelectorAll('.bfd-select__option')
+    const container = findDOMNode(instance)
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+
+    const options = document.querySelectorAll('.bfd-select__option')
     expect(options.length).toBe(2)
   })
 
@@ -62,24 +78,27 @@ describe('Select', () => {
       </Select>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.change(container.querySelector('input'), {
+    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    const searchInput = document.querySelector('input')
+
+    TestUtils.Simulate.change(searchInput, {
       target: {
         value: '1'
       }
     })
-    expect(container.querySelectorAll('.bfd-select__option').length).toBe(1)
-    TestUtils.Simulate.change(container.querySelector('input'), {
+    expect(document.querySelectorAll('.bfd-select__option').length).toBe(1)
+    TestUtils.Simulate.change(searchInput, {
       target: {
         value: '三'
       }
     })
-    expect(container.querySelectorAll('.bfd-select__option').length).toBe(1)
-    TestUtils.Simulate.change(container.querySelector('input'), {
+    expect(document.querySelectorAll('.bfd-select__option').length).toBe(1)
+    TestUtils.Simulate.change(searchInput, {
       target: {
         value: 'x'
       }
     })
-    const options = container.querySelectorAll('.bfd-select__option')
+    const options = document.querySelectorAll('.bfd-select__option')
     expect(options.length).toBe(1)
     expect(options[0].textContent).toBe('无选项')
   })

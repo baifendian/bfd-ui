@@ -10,7 +10,6 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
-import invariant from 'invariant'
 import Popover from '../Popover'
 import './index.less'
 

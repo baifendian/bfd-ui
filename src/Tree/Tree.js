@@ -72,7 +72,8 @@ class Tree extends Component {
   render() {
     const {
       className, defaultData, onChange, checkable, onCheck, shouldNodeCheckable, getIcon,
-      getUrl, dataFilter, shouldNodeSelectable, onNodeSelect, onNodeChange, ...other
+      getUrl, dataFilter, noChildrenContent, shouldNodeSelectable, onNodeSelect,
+      onNodeChange, ...other
     } = this.props
     const { data } = this.state
     delete other.data
@@ -115,12 +116,17 @@ class Tree extends Component {
               getIcon={getIcon}
               getUrl={getUrl}
               dataFilter={dataFilter}
+              noDataContent={noChildrenContent}
             />
           ))}
         </ul>
       </div>
     )
   }
+}
+
+Tree.defaultProps = {
+  noChildrenContent: '无数据'
 }
 
 Tree.propTypes = {
@@ -183,6 +189,9 @@ Tree.propTypes = {
 
   // 节点是否可勾选的回调判断，参数(item, path)，返回 false 则节点不可勾选
   shouldNodeCheckable: PropTypes.func,
+
+  // getUrl 方式无数据时显示内容，默认`无数据`
+  noChildrenContent: PropTypes.string,
 
   customProp(props) {
     if (props.data && !props.onChange) {

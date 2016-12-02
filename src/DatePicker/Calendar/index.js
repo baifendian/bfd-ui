@@ -156,10 +156,7 @@ class Calendar extends Component {
   }
 
   render() {
-
-    const { currentYear, currentMonth } = this.state
     const { start, end, captionRender, weekDayNames } = this.props
-
     const dates = this.getDates()
     const getComparerResult = this.disabledComparer()
 

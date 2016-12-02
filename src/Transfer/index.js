@@ -12,6 +12,7 @@ import { Row, Col } from '../Layout'
 import SearchBar from './SearchBar'
 import SelectTable from './SelectTable'
 import classnames from 'classnames'
+import Button from '../Button'
 import './main.less'
 
 const SourceTable = SelectTable
@@ -21,14 +22,23 @@ class TransferPanel extends Component {
   constructor(props) {
     super(props)
   }
-  
+
   render() {
     return (
       <div>
         <div style={{marginTop: this.props.height / 2 + 'px'}}>
-          <a href="javascrip:" onClick={::this.handleS2T}>添加 >></a>
+          <Button
+            size="sm"
+            icon="angle-double-right"
+            onClick={::this.handleS2T}
+          />
           <br/><br/>
-          <a href="javascrip:" onClick={::this.handleT2S}>{'<<'} 移除</a>
+          <Button
+            type="minor"
+            size="sm"
+            icon="angle-double-left"
+            onClick={::this.handleT2S}
+          />
         </div>
       </div>
     )
@@ -47,7 +57,7 @@ class TransferPanel extends Component {
  * Transfer
  */
 class Transfer extends Component {
-  
+
   constructor(props) {
     super(props)
     this.sid = []
@@ -73,35 +83,41 @@ class Transfer extends Component {
   }
 
   render() {
-    const { className, height, title, sdata, tdata, onChange, onSearch, ...other } = this.props
+    const {
+      className, height, title, sdata, tdata, onChange, onSearch, searchPlaceholder,
+      ...other
+    } = this.props
     delete other.render
     return (
       <Row className={classnames('bfd-transfer', className)} {...other}>
         <Col col="md-4">
-          <SearchBar onUserInput={::this.handleUserInput}/>
-          <SourceTable 
-            onTransfer={::this.handleTransfer} 
-            onFoucsItem={::this.handleSourceFouceItem} 
-            data={this.state.searchData} 
-            height={height || 200} 
+          <SearchBar
+            placeholder={searchPlaceholder}
+            onUserInput={::this.handleUserInput}
+          />
+          <SourceTable
+            onTransfer={::this.handleTransfer}
+            onFoucsItem={::this.handleSourceFouceItem}
+            data={this.state.searchData}
+            height={height || 200}
             direct="s2t"
             render={this.props.render}
             />
         </Col>
         <Col col="md-2" className="bfd-transfer__bfd-pannel">
-          <TransferPanel 
-            onTransfer={::this.handleTransfer} 
+          <TransferPanel
+            onTransfer={::this.handleTransfer}
             height={height || 200} />
         </Col>
         <Col col="md-4">
           <div style={{height: '34px', lineHeight: '34px'}} >
-            <span>{title || '已选项'}</span>
+            <span>{title}</span>
           </div>
-          <TargetTable 
-            onTransfer={::this.handleTransfer} 
-            onFoucsItem={::this.handleTargetFouceItem} 
-            data={tdata} 
-            height={height || 200} 
+          <TargetTable
+            onTransfer={::this.handleTransfer}
+            onFoucsItem={::this.handleTargetFouceItem}
+            data={tdata}
+            height={height || 200}
             direct="t2s"
             render={this.props.render}
             />
@@ -130,7 +146,7 @@ class Transfer extends Component {
       searchData: arr
     })
   }
-  
+
   handleSourceFouceItem(sid) {
     if(!sid) {
       return
@@ -193,7 +209,7 @@ class Transfer extends Component {
         target.push(item[0])
         flag = 1
         break
-      }      
+      }
     }
 
     if (flag) {
@@ -203,12 +219,17 @@ class Transfer extends Component {
   }
 }
 
+Transfer.defaultProps = {
+  title: '已选项',
+  searchPlaceholder: '请输入搜索关键词'
+}
+
 Transfer.propTypes = {
 
   // 两个传输框高度，默认200px
   height: PropTypes.number,
 
-  // 右侧传输框上方标题
+  // 右侧传输框上方标题，默认`已选项`
   title: PropTypes.string,
 
   // 源数据，包含id、label属性
@@ -224,7 +245,10 @@ Transfer.propTypes = {
   onSearch: PropTypes.func,
 
   // 每行数据渲染函数
-  render: PropTypes.func
+  render: PropTypes.func,
+
+  // 搜索框 placeholder，默认`请输入搜索关键词`
+  searchPlaceholder: PropTypes.string
 }
 
 export default Transfer

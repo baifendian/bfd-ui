@@ -30,7 +30,7 @@ class Upload extends Component {
       <div className={classnames('bfd-upload', className)} {...other}>
         <input ref="file" onChange={::this.handleChange} type="file" multiple={multiple ? true : false} style={{display: 'none'}} />
         <Button onClick={::this.handleClick}>
-          {this.props.text || '文件上传'}
+          {text}
         </Button>
         {
           isShowList ?
@@ -141,12 +141,16 @@ class Upload extends Component {
   }
 }
 
+Upload.defaultProps = {
+  text: '文件上传'
+}
+
 Upload.propTypes = {
 
   // 上传的地址
   action: PropTypes.string.isRequired,
 
-  // 上传按钮文本内容，默认为文件上传
+  // 上传按钮文本内容，默认为`文件上传`
   text: PropTypes.string,
 
   // 上传文件名称，默认为files

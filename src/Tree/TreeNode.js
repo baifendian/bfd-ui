@@ -55,9 +55,9 @@ class TreeNode extends Component {
   }
 
   render() {
-    const { data, path, ...other } = this.props
     const {
-      treeData, contentRender, getUrl, getIcon, beforeRender, shouldSelectable
+      data, path, treeData, contentRender, getUrl, noDataContent, getIcon, beforeRender,
+      shouldSelectable
     } = this.props
     const hasChildren = data.children && data.children.length
     const typeIcon = getIcon && getIcon(data)
@@ -70,9 +70,9 @@ class TreeNode extends Component {
           {data.children.map((item, i) => (
             <TreeNode
               key={i}
+              {...this.props}
               data={item}
               path={[...path, 'children', i]}
-              {...other}
             />
           ))}
         </ul>
@@ -88,7 +88,7 @@ class TreeNode extends Component {
           url={data.open && getUrl && getUrl(data, getPathData(path, treeData)) || ''}
           onSuccess={::this.handleLoad}
         >
-          {List || <div className="bfd-tree__node--empty">无数据</div>}
+          {List || <div className="bfd-tree__node--empty">{noDataContent}</div>}
         </Fetch>
       )
     } else {

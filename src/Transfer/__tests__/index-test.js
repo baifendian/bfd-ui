@@ -25,24 +25,24 @@ describe('Transfer', () => {
     targetData = targetData
   }
 
-  const instance = TestUtils.renderIntoDocument(<Transfer height={200} 
-          title="已选的用户" 
-          sdata={sourceData} 
+  const instance = TestUtils.renderIntoDocument(<Transfer height={200}
+          title="已选的用户"
+          sdata={sourceData}
           tdata={targetData}
           onChange={handleChange} />)
 
-  it('className is ok', () => {    
+  it('className is ok', () => {
     expect(ReactDOM.findDOMNode(instance).className.split(' ')).toContain('bfd-transfer')
   })
 
-  it('title is ok', () => {    
+  it('title is ok', () => {
     expect(ReactDOM.findDOMNode(instance).children[2].children[0].children[0].innerHTML).toEqual('已选的用户')
   })
-  
+
   it('onClick style is ok', () => {
-    const instance = TestUtils.renderIntoDocument(<Transfer height={200} 
-          title="已选的用户" 
-          sdata={sourceData} 
+    const instance = TestUtils.renderIntoDocument(<Transfer height={200}
+          title="已选的用户"
+          sdata={sourceData}
           tdata={targetData}
           />)
     const snode = ReactDOM.findDOMNode(instance).children[0].children[1].children[0].getElementsByTagName('a')[0]
@@ -61,26 +61,5 @@ describe('Transfer', () => {
     const tlen = targetData.length
     expect(slen).toBe(8)
     expect(tlen).toBe(3)
-  })
-
-  it('panel onClick is ok', () => {
-    const sitem = ReactDOM.findDOMNode(instance).children[0].children[1].children[0].getElementsByTagName('a')[0]
-    const titem = ReactDOM.findDOMNode(instance).children[2].children[1].children[0].getElementsByTagName('a')[0]
-    const addNode = ReactDOM.findDOMNode(instance).children[1].children[0].children[0].getElementsByTagName('a')[0]
-    const delNode = ReactDOM.findDOMNode(instance).children[1].children[0].children[0].getElementsByTagName('a')[1]
-    
-    TestUtils.Simulate.click(sitem)
-    TestUtils.Simulate.click(addNode)
-    const slen = sourceData.length
-    const tlen = targetData.length
-    expect(slen).toBe(7)
-    expect(tlen).toBe(4)
-
-    TestUtils.Simulate.click(titem)
-    TestUtils.Simulate.click(delNode)
-    const slen1 = sourceData.length
-    const tlen1 = targetData.length
-    expect(slen1).toBe(8)
-    expect(tlen1).toBe(3)
   })
 })

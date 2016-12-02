@@ -7,15 +7,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
+import { PropTypes } from 'react'
 
-class DropdownMenu extends Component {
-  render() {
-    const { children, className, right, ...other } = this.props
-    return null
-  }
-}
+const DropdownMenu = () => null
 
 DropdownMenu.defaultProps = {
   direction: 'down',

@@ -9,7 +9,6 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import invariant from 'invariant'
 import Popover from '../Popover'
 
 class Tooltip extends Component {

@@ -10,7 +10,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
-import classlist from 'classlist'
 import Popover from '../Popover'
 import DropdownToggle from './DropdownToggle'
 import DropdownMenu from './DropdownMenu'
@@ -110,7 +109,7 @@ class Dropdown extends Component {
     const { open } = this.state
     delete other.open
 
-    React.Children.forEach(children, (child, i) => {
+    React.Children.forEach(children, child => {
       if (child.type === DropdownToggle) {
         this.DropdownToggle = child
       } else if (child.type === DropdownMenu) {
@@ -136,7 +135,6 @@ class Dropdown extends Component {
         })}
       </div>
     )
-    return
   }
 }
 
