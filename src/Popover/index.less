@@ -12,18 +12,25 @@
   left: 0;
   top: 0;
   z-index: 9999;
-  animation: .1s bfd-popover-in;
-  display: none;
+  opacity: 0;
+  transition: opacity .1s;
   &:after {
     content: '';
     position: absolute;
     width: 0;
     height: 0;
   }
+  .bfd-popover__content {
+    transform: scale(.5);
+    transition: transform .1s;
+  }
 }
 
 .bfd-popover--open {
-  display: block;
+  opacity: 1;
+  .bfd-popover__content {
+    transform: scale(1);
+  }
 }
 
 .bfd-popover__content {
@@ -37,6 +44,9 @@
 
 .bfd-popover--up {
   padding-bottom: 7px;
+  .bfd-popover__content {
+    transform-origin: bottom;
+  }
   &:after {
     left: 50%;
     bottom: 1px;
@@ -49,6 +59,9 @@
 
 .bfd-popover--down {
   padding-top: 7px;
+  .bfd-popover__content {
+    transform-origin: top;
+  }
   &:after {
     left: 50%;
     top: 1px;
@@ -61,6 +74,9 @@
 
 .bfd-popover--left {
   padding-right: 7px;
+  .bfd-popover__content {
+    transform-origin: right;
+  }
   &:after {
     top: 50%;
     right: 1px;
@@ -73,6 +89,9 @@
 
 .bfd-popover--right {
   padding-left: 7px;
+  .bfd-popover__content {
+    transform-origin: left;
+  }
   &:after {
     top: 50%;
     left: 1px;
@@ -99,13 +118,4 @@
 .bfd-popover--align-bottom:after {
   top: auto;
   bottom: 20px;
-}
-
-@keyframes bfd-popover-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }

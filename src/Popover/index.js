@@ -12,6 +12,8 @@ import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
+import ToggleNode from '../_shared/ToggleNode'
+import CoordinateFactory from './CoordinateFactory'
 
 class Popover extends Component {
 
@@ -21,64 +23,28 @@ class Popover extends Component {
 
   componentDidMount() {
     this.popoverNode = ReactDOM.findDOMNode(this)
+    this.toggleNode = new ToggleNode(
+      this.popoverNode, 'bfd-popover--open', ::this.setPosition
+    )
     if (this.props.open) {
-      this.positionClassNames = this.setPosition()
+      this.open()
     }
   }
 
-  componentDidUpdate() {
-    if (this.positionClassNames) {
-      classlist(this.popoverNode).remove(...this.positionClassNames.split(' '))
-    }
+  componentDidUpdate(prevProps) {
     if (this.props.open) {
-      this.positionClassNames = this.setPosition()
+      prevProps.open ? this.setPosition() : this.open()
+    } else {
+      prevProps.open && this.close()
     }
   }
 
-  getPosition(triggerRect, popoverRect, direction, align) {
-    const [scrollTop, scrollLeft] = this.getDocumentScroll()
-    const center = [
-      triggerRect.left + triggerRect.width / 2 + scrollLeft,
-      triggerRect.top + triggerRect.height / 2 + scrollTop
-    ]
-    const getAlignTick = horizontal => {
-      const types = horizontal ? ['left', 'right'] : ['top', 'bottom']
-      const axis = horizontal ? 0 : 1
-      const size = horizontal ? 'width' : 'height'
-      if (align === types[0]) {
-        return center[axis] - triggerRect[size] / 2
-      } else if (align === types[1]) {
-        return center[axis] - popoverRect[size] + triggerRect[size] / 2
-      } else {
-        return center[axis] - popoverRect[size] / 2
-      }
-    }
-    const positions = {
-      up() {
-        const top = center[1] - triggerRect.height / 2 - popoverRect.height
-        return [getAlignTick(true), top]
-      },
-      down() {
-        const top = center[1] + triggerRect.height / 2
-        return [getAlignTick(true), top]
-      },
-      left() {
-        const left = center[0] - triggerRect.width / 2 - popoverRect.width
-        return [left, getAlignTick()]
-      },
-      right() {
-        const left = center[0] + triggerRect.width / 2
-        return [left, getAlignTick()]
-      }
-    }
-    return positions[direction]()
+  open() {
+    this.toggleNode.open()
   }
 
-  getPositionClassNames(direction, align) {
-    return classnames({
-      [`bfd-popover--${direction}`]: true,
-      [`bfd-popover--align-${align}`]: !!align
-    })
+  close() {
+    this.toggleNode.close()
   }
 
   getComputedDirection(triggerRect, popoverRect) {
@@ -91,39 +57,43 @@ class Popover extends Component {
     return direction
   }
 
+  setClassNamesByPosition(triggerRect, popoverRect, direction) {
+    const { align } = this.props
+    this.positionClassNames = classnames({
+      [`bfd-popover--${direction}`]: true,
+      [`bfd-popover--align-${align}`]: !!align
+    })
+    classlist(this.popoverNode).add(this.positionClassNames)
+  }
+
+  setCoordinate(triggerRect, popoverRect, direction) {
+    const { align } = this.props
+    const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
+    this.popoverNode.style.left = left + 'px'
+    this.popoverNode.style.top = top + 'px'
+  }
+
   setPosition() {
     const { triggerNode, align } = this.props
+
+    if (this.positionClassNames) {
+      classlist(this.popoverNode).remove(...this.positionClassNames.split(' '))
+    }
 
     const triggerRect = triggerNode.getBoundingClientRect()
     let popoverRect = this.popoverNode.getBoundingClientRect()
 
     const direction = this.getComputedDirection(triggerRect, popoverRect)
-    const positionClassNames = this.getPositionClassNames(direction, align)
+    this.setClassNamesByPosition(triggerRect, popoverRect, direction)
 
-    classlist(this.popoverNode).add(positionClassNames)
     popoverRect = this.popoverNode.getBoundingClientRect()
-    const [left, top] = this.getPosition(triggerRect, popoverRect, direction, align)
-
-    this.popoverNode.style.left = left + 'px'
-    this.popoverNode.style.top = top + 'px'
-
-    return positionClassNames
-  }
-
-  getDocumentScroll() {
-    const { documentElement, body } = document
-    return [
-      documentElement && documentElement.scrollTop || body.scrollTop,
-      documentElement && documentElement.scrollLeft || body.scrollLeft
-    ]
+    this.setCoordinate(triggerRect, popoverRect, direction)
   }
 
   render() {
     const { className, open, triggerNode, content, direction, ...other } = this.props
     return (
-      <div className={classnames('bfd-popover', {
-        'bfd-popover--open': open
-      })}>
+      <div className="bfd-popover">
         <div className={classnames('bfd-popover__content', className)} {...other}>
           {content}
         </div>
