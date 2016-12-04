@@ -36,6 +36,8 @@ Object.assign(CoordinateFactory, {
 
   align: null,
 
+  center: null,
+
   getAlignPosition(horizontal) {
     const types = horizontal ? ['left', 'right'] : ['top', 'bottom']
     const axis = horizontal ? 0 : 1
