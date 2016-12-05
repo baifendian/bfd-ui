@@ -116,11 +116,7 @@ class TreeNode extends Component {
           })}
           onClick={selectable && ::this.handleSelect}
         >
-          <TextOverflow>
-            <div>
-            {contentRender ? contentRender(data, path) : data.name}
-            </div>
-          </TextOverflow>
+          {contentRender ? contentRender(data, path) : data.name}
         </div>
         {Children}
       </li>
