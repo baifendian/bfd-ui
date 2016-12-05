@@ -24,12 +24,12 @@ const Option = props => {
     className
   )
   return (
-    <TextOverflow>
-      <li className={classNames} {...other}>
-        {children}
-        {selected && <Icon type="check" className="bfd-select__option-icon--selected" />}
-      </li>
-    </TextOverflow>
+    <li className={classNames} {...other}>
+      <TextOverflow>
+        <div>{children}</div>
+      </TextOverflow>
+      {selected && <Icon type="check" className="bfd-select__option-icon--selected" />}
+    </li>
   )
 }
 
