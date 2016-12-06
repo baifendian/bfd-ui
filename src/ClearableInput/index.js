@@ -17,9 +17,10 @@ class ClearableInput extends Component {
 
   constructor(props) {
     super()
-    this.state = {
-      value: props.defaultValue || props.value || ''
-    }
+    let value
+    'value' in props && (value = props.value)
+    'defaultValue' in props && (value = props.defaultValue)
+    this.state = { value }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -75,7 +76,7 @@ class ClearableInput extends Component {
           onChange={::this.handleInput}
           {...inputProps}
         />
-        {value && (
+        {(value || value === 0 || Number.isNaN(value)) && (
           <Button
             tabIndex="-1"
             icon="remove"

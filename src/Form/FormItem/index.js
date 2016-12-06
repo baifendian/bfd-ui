@@ -113,7 +113,7 @@ class FormItem extends Component {
             {label}：
           </div>
         )}
-        <div style={{marginLeft: `${labelWidth}px`}} className="bfd-form__item-content">
+        <div className="bfd-form__item-content">
           {children}
           {Error || Help}
         </div>

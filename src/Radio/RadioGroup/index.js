@@ -7,29 +7,31 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import './index.less'
 
-const RadioGroup = React.createClass({
+class RadioGroup extends Component {
 
-  getInitialState() {
-    return {
-      value: this.props.defaultValue || this.props.value       
-    }
-  },
+  constructor(props) {
+    super()
+    let value
+    'value' in props && (value = props.value)
+    'defaultValue' in props && (value = props.defaultValue)
+    this.state = { value }
+  }
 
   componentWillReceiveProps(nextProps) {
-    'value' in nextProps && this.setState({value: nextProps.value})  
-  },
+    'value' in nextProps && this.setState({value: nextProps.value})
+  }
 
   handleChange(value) {
     this.setState({ value })
     this.props.onChange && this.props.onChange(value)
-  },
-  
+  }
+
   render() {
-    
+
     const { children, className, defaultValue, onChange, ...other } = this.props
     const { value } = this.state
 
@@ -51,9 +53,9 @@ const RadioGroup = React.createClass({
       <div className={classnames('radios bfd-radio-group', className)} {...other}>
        {radiosWithProps}
       </div>
-    ) 
+    )
   }
-})
+}
 
 RadioGroup.propTypes = {
 
@@ -65,7 +67,7 @@ RadioGroup.propTypes = {
 
   // 切换选择后的回调。参数为选中的值
   onChange: PropTypes.func,
-  
+
   customProp(props) {
     if ('value' in props && !props.onChange) {
       return new Error('You provided a `value` prop without an `onChange` handler')

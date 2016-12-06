@@ -12,7 +12,6 @@ import classnames from 'classnames'
 import Button from '../Button'
 import Icon from '../Icon'
 import Fetch from '../Fetch'
-import TextOverflow from '../TextOverflow'
 import getPathData from './getPathData'
 
 class TreeNode extends Component {
