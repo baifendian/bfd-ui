@@ -155,27 +155,28 @@ body {
   @media (max-width: 670px) {
     display: inline-block;
   }
-  .bfd-dropdown__menu {
-    left: initial;
-    right: 0;
+}
+
+.header__nav-toggle-popover {
+  left: initial;
+  right: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  ul {
+    list-style: none;
+    margin: 0;
     padding: 0;
-    border: 0;
-    overflow: hidden;
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      a {
-        display: block;
-        line-height: 30px;
-        padding: 0 14px;
-        transition: all .2s;
-        color: #42a5f6;
-        &:hover,
-        &.active {
-          background-color: #42a5f5;
-          color: #fff;
-        }
+    a {
+      display: block;
+      line-height: 30px;
+      padding: 0 14px;
+      transition: all .2s;
+      color: #42a5f6;
+      &:hover,
+      &.active {
+        background-color: #42a5f5;
+        color: #fff;
       }
     }
   }

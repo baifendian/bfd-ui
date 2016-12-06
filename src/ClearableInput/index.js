@@ -94,10 +94,10 @@ class ClearableInput extends Component {
 ClearableInput.propTypes = {
 
   // 输入框的值
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 初始化输入框的值
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 输入改变、清空后的回调，参数为当前输入框的值
   onChange: PropTypes.func,

@@ -57,8 +57,7 @@ class Popover extends Component {
     return direction
   }
 
-  setClassNamesByPosition(triggerRect, popoverRect, direction) {
-    const { align } = this.props
+  setClassNamesByPosition(direction, align) {
     this.positionClassNames = classnames({
       [`bfd-popover--${direction}`]: true,
       [`bfd-popover--align-${align}`]: !!align
@@ -66,8 +65,7 @@ class Popover extends Component {
     classlist(this.popoverNode).add(this.positionClassNames)
   }
 
-  setCoordinate(triggerRect, popoverRect, direction) {
-    const { align } = this.props
+  setCoordinate(triggerRect, popoverRect, direction, align) {
     const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
     this.popoverNode.style.left = left + 'px'
     this.popoverNode.style.top = top + 'px'
@@ -84,10 +82,10 @@ class Popover extends Component {
     let popoverRect = this.popoverNode.getBoundingClientRect()
 
     const direction = this.getComputedDirection(triggerRect, popoverRect)
-    this.setClassNamesByPosition(triggerRect, popoverRect, direction)
+    this.setClassNamesByPosition(direction, align)
 
     popoverRect = this.popoverNode.getBoundingClientRect()
-    this.setCoordinate(triggerRect, popoverRect, direction)
+    this.setCoordinate(triggerRect, popoverRect, direction, align)
   }
 
   render() {

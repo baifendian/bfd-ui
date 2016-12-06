@@ -34,7 +34,7 @@ class Input extends Component {
   render() {
     const { className, size, ...other } = this.props
     const classNames = classnames(
-      'bfd-input', 
+      'bfd-input',
       {
         [`bfd-input--${size}`]: size
       },
@@ -47,16 +47,16 @@ class Input extends Component {
 Input.propTypes = {
 
   // 输入框的值
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 初始化输入框的值
-  defaultValue: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 
   // 输入改变后的回调，参数为 event 对象
   onChange: PropTypes.func,
 
   // 输入框大小，除默认外可选值：sm、lg
-  size: PropTypes.string,
+  size: PropTypes.oneOf(['sm', 'lg']),
 
   // 是否禁用
   disabled: PropTypes.bool,

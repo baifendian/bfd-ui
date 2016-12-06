@@ -1,3 +1,8 @@
+- 调整了部分组件的动画效果
+- 处理了 Popover 组件内容溢出的问题
+- Input, ClearableInput value 支持 `number` 类型
+
+
 ## v1.4.0
 
 *2016-12-02*

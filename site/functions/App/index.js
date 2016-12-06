@@ -61,7 +61,11 @@ class App extends Component {
               <DropdownToggle>
                 <Button icon="bars" transparent />
               </DropdownToggle>
-              <DropdownMenu onClick={() => this.refs.dropdown.close()}>
+              <DropdownMenu
+                onClick={() => this.refs.dropdown.close()}
+                className="header__nav-toggle-popover"
+                align="middle"
+              >
                 {this.renderNav()}
               </DropdownMenu>
             </Dropdown>
