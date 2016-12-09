@@ -5,9 +5,8 @@ import message from 'bfd/message'
 import Button from 'bfd/Button'
 
 const MessageSuccess = () => {
-  let i = 0
   return (
-    <Button onClick={() => message.success('操作成功' + i++)}>点击成功</Button>
+    <Button onClick={() => message.success('操作成功')}>成功</Button>
   )
 }
 
@@ -19,7 +18,46 @@ import Button from 'bfd/Button'
 
 const MessageDanger = () => {
   return (
-    <Button onClick={() => message.danger('操作失败')}>点击失败</Button>
+    <Button onClick={() => message.danger('操作失败')}>失败</Button>
+  )
+}
+
+/**
+ * @title 自定义关闭时间，单位秒
+ */
+import message from 'bfd/message'
+import Button from 'bfd/Button'
+
+const MessageCustomDuration = () => {
+  return (
+    <Button onClick={() => message.danger('操作失败, 10秒后自动关闭', 10)}>10秒后关闭</Button>
+  )
+}
+
+/**
+ * @title 消息队列
+ */
+import message from 'bfd/message'
+import Button from 'bfd/Button'
+
+const MessageQueue = () => {
+  return (
+    <Button onClick={() => {
+      message.success('操作成功')
+      message.danger('操作失败')
+    }}>消息队列</Button>
+  )
+}
+
+/**
+ * @title 手动关闭
+ */
+import message from 'bfd/message'
+import Button from 'bfd/Button'
+
+const MessageManual = () => {
+  return (
+    <Button onClick={() => message.danger('操作失败, 手动关闭', 0)}>手动关闭</Button>
   )
 }
 

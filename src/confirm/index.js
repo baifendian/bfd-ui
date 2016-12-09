@@ -9,26 +9,22 @@
 
 import React, { Component } from 'react'
 import { render } from 'react-dom'
+import isPlainObject from 'lodash/isPlainObject'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
-import invariant from 'invariant'
 import Button from '../Button'
 import './index.less'
 
 class Confirm extends Component {
 
-  constructor() {
-    super()
-    this.state = {
-      message: null 
-    }
-  }
-  
-  onConfirm() {
-    this.callback()
+  options = {}
+
+  handleConfirm() {
+    this.options.onConfirm && this.options.onConfirm()
     this.close()
   }
 
   open() {
+    this.forceUpdate()
     this.refs.modal.open()
   }
 
@@ -37,16 +33,21 @@ class Confirm extends Component {
   }
 
   render() {
+    const { title, content, operation, okText, cancelText } = this.options
     return (
       <Modal className="bfd-confirm" ref="modal">
         <ModalHeader>
-          <h4>确认提示</h4>
+          <h4>{title}</h4>
         </ModalHeader>
         <ModalBody>
-          <div className="bfd-confirm__message">{this.state.message}</div>
+          <div className="bfd-confirm__message">{content}</div>
           <div className="bfd-confirm__operate">
-            <Button onClick={() => this.onConfirm()}>确定</Button>
-            <Button type="minor" onClick={() => this.close()}>取消</Button>
+            {operation ? operation : (
+              <div>
+                <Button onClick={::this.handleConfirm}>{okText}</Button>
+                <Button type="minor" onClick={::this.close}>{cancelText}</Button>
+              </div>
+            )}
           </div>
         </ModalBody>
       </Modal>
@@ -55,28 +56,73 @@ class Confirm extends Component {
 }
 
 let instance
+const defaultOptions = {
+  title: '确认提示',
+  okText: '确定',
+  cancelText: '取消'
+}
 
 /**
  * @public
  * @name confirm
- * @param  {string | element} message 显示内容，支持 React 元素
- * @param  {function} callback 确定后的回调
- * @description 确认提示，确定后触发 callback
+ * @param  { ReactNode | Object } content 显示内容 | 配置项
+ * @param  { function } [onConfirm] 确定后的回调
+ * @description 确认提示，eg
+ * ```js
+ * confirm('确认删除吗？', () => console.log('确认'))
+ * ```
+ * 更多控制请使用配置项方式：
+ * ```js
+ * confirm({
+ *   content: 'xxx', // 提示内容
+ *   onConfirm: function() {}, // 确定后的回调，非自定义操作下使用
+ *   operation: <Button>xxx</Button>, // 自定义操作逻辑，默认两个按钮：确认、取消
+ *   title: 'xxx', // 提示框标题，默认`确认提示`，可全局配置
+ *   okText: 'xxx', // 确定按钮文字，默认`确定`，可全局配置
+ *   cancelText: 'xxx', // 取消按钮文字，默认`取消`，可全局配置
+ * })
+ * ```
  */
-function confirm(message, callback) {
-
-  invariant(typeof message === 'string' || (message && React.isValidElement(message)), '`message` should be `string` or `ReactElement`, check the first param of confirm')
-  invariant(typeof callback === 'function', '`callback` should be `function`, check the second param of confirm')
-
+function confirm(content, onConfirm) {
   if (!instance) {
     const container = document.createElement('div')
     document.body.appendChild(container)
     instance = render(<Confirm />, container)
   }
-
-  instance.callback = callback
-  instance.setState({ message })
+  let options
+  if (isPlainObject(content) && !React.isValidElement(content)) {
+    options = content
+  } else {
+    options = { content, onConfirm }
+  }
+  instance.options = Object.assign({}, defaultOptions, options)
   instance.open()
+}
+
+/**
+ * @public
+ * @name confirm.close
+ * @description 关闭确认提示
+ */
+confirm.close = () => {
+  instance.close()
+}
+
+/**
+ * @public
+ * @name confirm.config
+ * @param { Object } options
+ * @description confirm 全局配置，配置项
+ * ```js
+ * {
+ *   title: 'xxx', // 提示框标题，默认`确认提示`
+ *   okText: 'xxx', // 确定按钮文字，默认`确定`
+ *   cancelText: 'xxx', // 取消按钮文字，默认`取消`
+ * }
+ * ```
+ */
+confirm.config = options => {
+  Object.assign(defaultOptions, options)
 }
 
 export default confirm

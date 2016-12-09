@@ -8,10 +8,8 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import invariant from 'invariant'
-import classlist from 'classlist'
 
 class TabPanel extends Component {
 

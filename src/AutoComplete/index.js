@@ -12,6 +12,7 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import { Dropdown, DropdownToggle, DropdownMenu } from '../Dropdown'
 import ClearableInput from '../ClearableInput'
+import TextOverflow from '../TextOverflow'
 
 class AutoComplete extends Component {
 
@@ -104,13 +105,14 @@ class AutoComplete extends Component {
         <DropdownMenu className="bfd-auto-complete__popover">
           <ul className="bfd-auto-complete__result">
           {result.map((item, i) => (
-            <li
-              key={i}
-              className={classnames({'bfd-auto-complete__option--active': index === i})}
-              onClick={this.handleSelect.bind(this, item)}
-            >
-              {item}
-            </li>
+            <TextOverflow key={item}>
+              <li
+                className={classnames({'bfd-auto-complete__option--active': index === i})}
+                onClick={this.handleSelect.bind(this, item)}
+              >
+                {item}
+              </li>
+            </TextOverflow>
           ))}
           </ul>
         </DropdownMenu>

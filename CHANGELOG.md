@@ -1,6 +1,14 @@
+## v1.4.1
+
+*2016-12-09*
+
 - 调整了部分组件的动画效果
 - 处理了 Popover 组件内容溢出的问题
 - Input, ClearableInput value 支持 `number` 类型
+- 处理了 AutoComplete 文字溢出的问题
+- messgae: 支持消息队列；支持手动关闭；调整了样式
+- 修复 DataTable column render index 参数错误的问题
+- confirm 支持更多的配置项，新增全局配置 `config`、关闭 `close`
 
 
 ## v1.4.0

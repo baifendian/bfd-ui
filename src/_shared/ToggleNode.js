@@ -19,6 +19,7 @@ class ToggleNode {
     this.reflowTrigger = reflowTrigger || (() => {
       this.node.offsetWidth
     })
+    this.node.style.display = 'none'
   }
 
   open() {
@@ -32,6 +33,7 @@ class ToggleNode {
     const onTransitionEnd = () => {
       this.node.style.display = 'none'
       this.node.removeEventListener(ToggleNode.END_EVENT, onTransitionEnd)
+      this.onClose && this.onClose()
     }
     this.node.addEventListener(ToggleNode.END_EVENT, onTransitionEnd)
   }

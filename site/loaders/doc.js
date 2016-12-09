@@ -155,12 +155,16 @@ module.exports = function (source) {
           api.desc = marked(res.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
         },
         param: res => {
-          const param = {}
+          let param
           res = res.match(/(.*?\})\s*([\w\[\]]+)\s+([^]*)/)
-          param.type = res[1]
-          param.name = res[2]
-          param.desc = marked(res[3].replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
-          ;(api.params || (api.params = [])).push(param)
+          if (res) {
+            param = {
+              type: res[1],
+              name: res[2],
+              desc: marked(res[3].replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
+            }
+          }
+          param && (api.params || (api.params = [])).push(param)
         },
         'return': res => {
           res = res.match(/(.*?\})\s*(.*)/)

@@ -53,7 +53,7 @@ class Slider extends Component {
             </div>
           </div>
           <div ref="selectedBar" className="bfd-slider__bar--selected"></div>
-          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>       
+          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>
         </div>
       </div>
     )
@@ -120,7 +120,7 @@ class Slider extends Component {
     }
     return left
   }
-  
+
   getValue(currWidth) {
     const end = this.props.end
     const start = this.props.start || 0
@@ -144,10 +144,6 @@ class Slider extends Component {
   }
 }
 
-Slider.propTypes = {
-  end: React.PropTypes.number.isRequired
-}
-
 class Scale extends Component {
 
   constructor() {
@@ -159,7 +155,7 @@ class Scale extends Component {
   }
 
   render() {
-    const rows = []    
+    const rows = []
     for (let i = 0; i <= this.tickValue; i++) {
       rows.push(<div key={i} ref={'t'+i} className="bfd-scale__tick"><div></div>{i}</div>)
     }
