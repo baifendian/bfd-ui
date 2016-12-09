@@ -26,7 +26,7 @@ class Tabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    'activeIndex' in nextProps && this.setState({activeIndex: nextProps.activeIndex})
+    'activeIndex' in nextProps && this.setState({activeIndex: nextProps.activeIndex || 0})
   }
 
   componentWillUpdate() {
