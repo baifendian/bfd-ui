@@ -17,6 +17,9 @@
     border: 1px solid #ececec;
     border-radius: 2px;
     position: relative;
+    &:focus {
+      border-color: #42a5f5;
+    }
   }
   &.bfd-dropdown--open {
     .bfd-dropdown__toggle {
@@ -29,7 +32,16 @@
       border-color: #42a5f5;
     }
   }
+  &.bfd-dropdown--disabled {
+    .bfd-dropdown__toggle {
+      &:focus {
+        border-color: #ececec;
+      }
+    }
+  }
 }
+
+
 
 .bfd-select-dropdown--caretable {
   > .bfd-dropdown__toggle {
