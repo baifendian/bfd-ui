@@ -57,7 +57,7 @@ class DateRange extends Component {
           end={end}
           onSelect={this.handleSelect.bind(this, 'start')}
         />
-        <span className="bfd-daterange__seperator">至</span>
+        <span className="bfd-daterange__seperator">~</span>
         <DatePicker
           date={end}
           min={start}

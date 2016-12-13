@@ -51,7 +51,6 @@ class App extends Component {
 }
 ```
 > 强烈建议基于[脚手架](https://github.com/baifendian/create-bfd-app)开发，省去繁琐的环境配置、项目基本结构、模板以及开发和部署相关工作
-```
 
 更多说明参考 [GUIDE](GUIDE.md)
 
