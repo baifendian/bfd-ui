@@ -21,7 +21,7 @@ BFD UI 抛弃传统的资源加载方式，基于 [webpack](https://webpack.gith
   },
   resolve: {
     alias: {
-      bfd: 'bfd-ui/lib'
+      bfd: 'bfd-ui/lib' // 更简短
     }
   }
 }
@@ -42,24 +42,25 @@ class App extends Component {
   }
 }
 ```
-强烈建议基于脚手架开发，省去繁琐的环境配置、项目基本结构的设计以及开发和部署流程的制定等工作
+> 强烈建议基于[脚手架](/scaffolding)开发，省去繁琐的环境配置、项目基本结构、模板以及开发和部署相关工作
 
 
-## 很多组件属性都有 defaultXXX，这是干嘛的？
+## 很多组件属性都有 `defaultXXX`，这是干嘛的？
 
-组件支持不受控（属性名：defaultXXX）的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)
+组件支持不受控（`defaultXXX`）的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)
 
 
 ## 如果多次使用一个组件／模块，相同的属性／API如何进行全局配置？
 
-React.Component 有一个公共属性 defaultProps，每个组件实例接收 props 后都会与 defaultProps merge，所以通用的属性修改对应组件的 defaultProps 即可，还是以 [DatePciker](/components/DatePicker) 为例：
+每个 React 组件最终的属性是与 `defaultProps`（如果有的话）结合的，以 [DatePciker](/components/DatePicker) 为例：
 ```js
 Object.assign(DatePicker.defaultProps, {
   placeholder: 'Please select date'
 })
 ```
+非 React 组件性质的模块 API 也都提供了相应的全局配置方法，例如涉及到 `url` 属性的组件内部调用的是 [xhr](/components/DatePicker) 模块，如果需要对 xhr 全局配置，请参考其文档自行配置
 
-非 React 组件性质的模块 API 也都提供了相应的全局配置方法，具体见相关模块的文档
+> 全局配置后，这些 API 会变成有状态的，即最终结果受配置影响，所以尽量一次性配置并向其它开发者说明
 
 
 ## 都支持哪些浏览器？
