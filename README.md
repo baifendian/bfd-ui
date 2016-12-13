@@ -14,18 +14,46 @@ npm install bfd-ui --save
 
 ## 使用
 
-以日期组件为例
+BFD UI 抛弃传统的资源加载方式，基于 [webpack](https://webpack.github.io/) 打包，资源种类多种多样，会涉及一些 webpack 的配置，如下：
 
-```jsx
-import DatePicker from 'bfd-ui/lib/DatePicker'
+```js
+{
+  module: {
+    loaders: [{
+      test: /\\.(eot|woff|woff2|ttf|svg|png|jpg)(\\?v=[\\d\\.]+)?$/,
+      loader: 'file?name=files/[hash].[ext]'
+    }, {
+      test: /\\.css$/,
+      loader: 'style!css'
+    }]
+  },
+  resolve: {
+    alias: {
+      bfd: 'bfd-ui/lib'
+    }
+  }
+}
+```
+webpack 配置完成后，即可在代码中使用组件，以 [DatePciker](/components/DatePicker) 为例：
+```js
+import React, { Component } from 'react'
+import DatePicker from 'bfd/DatePicker'
 
-ReactDOM.render(<DatePicker />, mountNode)
+class App extends Component {
+
+  handleSelect(date) {
+    console.log(date)
+  }
+
+  render() {
+    return <DatePicker onSelect={this.handleSelect} />
+  }
+}
+```
+> 强烈建议基于[脚手架](https://github.com/baifendian/create-bfd-app)开发，省去繁琐的环境配置、项目基本结构、模板以及开发和部署相关工作
 ```
 
-## 脚手架
-
-`bfd-ui` 基于 `react`、`webpack` 等技术，如果你本地没有相关的环境配置，强烈建议基于脚手架直接上手开发
-[create-bfd-app](https://github.com/baifendian/create-bfd-app)
+更多说明参考 [GUIDE](GUIDE.md)
 
 
 ## 更新日志
