@@ -17,23 +17,20 @@ const Spinner = props => {
 
   if (typeof height !== 'undefined') {
     other.style = Object.assign(style || {}, {
-      width: height + 'px',
-      height: height + 'px'
+      fontSize: height + 'px'
     })
   }
 
   return (
     <div className={classnames('bfd-spinner', className)} {...other}>
-      {Array.from({length: 12}).map((v, i) => (
-        <div key={i} className={`bfd-spinner__child-${i + 1}`} />
-      ))}
+      <div className="bfd-spinner__circle"></div>
     </div>
   )
 }
 
 Spinner.propTypes = {
 
-  // 高度，默认 30 px，宽度与高度相同
+  // 高度，默认 30px，宽度与高度相同
   height: PropTypes.number
 }
 

@@ -26,7 +26,7 @@ class TableTree extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    nextProps.data && this.setState({data: nextProps.data})  
+    nextProps.data && this.setState({data: nextProps.data})
   }
 
   shouldComponentUpdate: shouldComponentUpdate
@@ -45,8 +45,8 @@ class TableTree extends Component {
           key={_path.join('')}
           data={item}
           hidden={hidden}
-          path={_path} 
-          columns={this.props.columns} 
+          path={_path}
+          columns={this.props.columns}
           onChange={::this.handleRowChange}
         />
       )
@@ -65,9 +65,10 @@ class TableTree extends Component {
     this.rows = []
     this.loopLeaf(data, [])
     return (
-      <Fetch 
+      <Fetch
         className={classnames('bfd-table-tree', className)}
-        url={url} 
+        url={url}
+        defaultHeight={100}
         onSuccess={data => this.setState({ data })}
         {...other}
       >
