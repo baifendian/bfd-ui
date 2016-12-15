@@ -34,7 +34,7 @@ BFD UI 抛弃传统的资源加载方式，基于 [webpack](https://webpack.gith
   }
 }
 ```
-webpack 配置完成后，即可在代码中使用组件，以 [DatePciker](/components/DatePicker) 为例：
+webpack 配置完成后，即可在代码中使用组件，以 [DatePciker](http://ui.baifendian.com/components/DatePicker) 为例：
 ```js
 import React, { Component } from 'react'
 import DatePicker from 'bfd/DatePicker'
