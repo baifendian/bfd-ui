@@ -116,7 +116,7 @@ module.exports = function (source) {
     match = sourceCode.match(/\.propTypes = ({[^]+?\n\})/)
     if (match) {
       match = match[1]
-      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*PropTypes(.*)/g
+      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*.*PropTypes(.*)/g
       let res
       while (res = reg.exec(match)) {
         let desc = res[2] || ''

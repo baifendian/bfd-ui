@@ -106,6 +106,9 @@
   }, {
     "name": "Slider",
     "cn": "拖动条"
+  }, {
+    "name": "Slider2",
+    "cn": "拖动条"
   },  {
     "name": "Editable",
     "cn": "可编辑的"

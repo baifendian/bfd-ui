@@ -1,0 +1,41 @@
+/**
+ * @title 基本功能
+ */
+import Slider2 from 'bfd/Slider2'
+
+const Slider2Basic = () => {
+  return (
+    <Slider2 defaultValue={30} onChange={v => console.log(v)}/>
+  )
+}
+
+/**
+ * @title 禁用的
+ */
+import Slider2 from 'bfd/Slider2'
+
+const Slider2Dsiabled = () => {
+  return (
+    <Slider2 defaultValue={30} disabled />
+  )
+}
+
+/**
+ * @title 自定义提示框内容
+ */
+import Slider2 from 'bfd/Slider2'
+
+const Slider2Formatter = () => {
+  return (
+    <Slider2
+      min={128}
+      max={1024}
+      defaultValue={256}
+      onChange={v => console.log(v)}
+      step={32}
+      formatter={v => `分配内存：${v} MB`}
+    />
+  )
+}
+
+@component Slider2

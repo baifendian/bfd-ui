@@ -7,13 +7,15 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@duration: .1s;
+
 .bfd-popover {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 9999;
   opacity: 0;
-  transition: opacity .1s;
+  transition: opacity @duration;
   &:after {
     content: '';
     position: absolute;
@@ -32,7 +34,7 @@
   max-height: 300px;
   overflow: auto;
   transform: scale(.5);
-  transition: transform .1s;
+  transition: transform @duration;
 }
 
 .bfd-popover--open {
