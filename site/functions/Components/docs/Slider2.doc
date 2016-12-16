@@ -5,7 +5,10 @@ import Slider2 from 'bfd/Slider2'
 
 const Slider2Basic = () => {
   return (
-    <Slider2 defaultValue={30} onChange={v => console.log(v)}/>
+    <Slider2
+      defaultValue={30}
+      onChange={v => console.log(v)}
+    />
   )
 }
 

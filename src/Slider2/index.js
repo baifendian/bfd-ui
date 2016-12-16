@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import Popover from '../Popover'
 import controlledPropValidator from '../_shared/propValidator/controlled'
@@ -102,6 +103,16 @@ class Slider2 extends Component {
     this.popover.open()
     this.onSliderChange(e)
     this.props.onChange && this.props.onChange(this.value)
+
+    // If the mouse position outside the slider trigger
+    if (!this.rootNode) {
+      this.rootNode = ReactDOM.findDOMNode(this)
+    }
+    const onMouseLeave = () => {
+      this.handleDragLeave()
+      this.rootNode.removeEventListener('mouseleave', onMouseLeave)
+    }
+    this.rootNode.addEventListener('mouseleave', onMouseLeave)
   }
 
   onSliderChange(e) {
@@ -136,7 +147,7 @@ class Slider2 extends Component {
   render() {
     const {
       className, min, max, step, value, defaultValue, formatter, onDragging, onChange,
-      disabled, ...other} = this.props
+      disabled, ...other } = this.props
     return (
       <div
         className={classnames('bfd-slider2', {
