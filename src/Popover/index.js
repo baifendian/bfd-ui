@@ -7,159 +7,127 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import './index.less'
-import React, { PropTypes, Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import classnames from 'classnames'
-import classlist from 'classlist'
-import ToggleNode from '../_shared/ToggleNode'
-import CoordinateFactory from './CoordinateFactory'
+import Popover from './Popover'
 
-class Popover extends Component {
-
-  shouldComponentUpdate(nextProps) {
-    return !!this.props.open || !!nextProps.open
-  }
-
-  componentDidMount() {
-    this.popoverNode = ReactDOM.findDOMNode(this)
-    this.toggleNode = new ToggleNode(
-      this.popoverNode, 'bfd-popover--open', ::this.setPosition
-    )
-    if (this.props.open) {
-      this.open()
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.open) {
-      prevProps.open ? this.setPosition() : this.open()
-    } else {
-      prevProps.open && this.close()
-    }
-  }
-
-  open() {
-    this.toggleNode.open()
-  }
-
-  close() {
-    this.toggleNode.close()
-  }
-
-  getComputedDirection(triggerRect, popoverRect) {
-    let { direction } = this.props
-    if (triggerRect.top < popoverRect.height) {
-      direction = 'down'
-    } else if (popoverRect.height + triggerRect.top + triggerRect.height > window.innerHeight) {
-      direction = 'up'
-    }
-    return direction
-  }
-
-  setClassNamesByPosition(direction, align) {
-    this.positionClassNames = classnames({
-      [`bfd-popover--${direction}`]: true,
-      [`bfd-popover--align-${align}`]: !!align
-    })
-    classlist(this.popoverNode).add(this.positionClassNames)
-  }
-
-  setCoordinate(triggerRect, popoverRect, direction, align) {
-    const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
-    this.popoverNode.style.left = left + 'px'
-    this.popoverNode.style.top = top + 'px'
-  }
-
-  setPosition() {
-    const { triggerNode, align } = this.props
-
-    if (this.positionClassNames) {
-      classlist(this.popoverNode).remove(...this.positionClassNames.split(' '))
-    }
-
-    const triggerRect = triggerNode.getBoundingClientRect()
-    let popoverRect = this.popoverNode.getBoundingClientRect()
-
-    const direction = this.getComputedDirection(triggerRect, popoverRect)
-    this.setClassNamesByPosition(direction, align)
-
-    popoverRect = this.popoverNode.getBoundingClientRect()
-    this.setCoordinate(triggerRect, popoverRect, direction, align)
-  }
-
-  render() {
-    const { className, open, triggerNode, content, direction, ...other } = this.props
-    return (
-      <div className="bfd-popover">
-        <div className={classnames('bfd-popover__content', className)} {...other}>
-          {content}
-        </div>
-      </div>
-    )
-  }
-}
-
-Popover.defaultProps = {
-  direction: 'up'
-}
-
-Popover.propTypes = {
-  triggerNode: (props, propName, componentName) => {
-    if (props[propName] && props[propName] instanceof Element === false) {
-      return new Error(
-        `Invalid prop \`${propName}\` supplied to \`${componentName}\`, expected DOM Element.`
-      )
-    }
-  },
-  content: PropTypes.node,
-  open: PropTypes.bool,
-  direction: PropTypes.oneOf(['up', 'down', 'left', 'right']),
-  align: PropTypes.oneOf(['top', 'right', 'bottom', 'left', 'middle'])
-}
-
+/**
+ * @public
+ * @name Popover(options)
+ * @description 浮层类，例如：
+ * ```js
+ * const popover = new Popover({
+ *   triggerNode: `DOMNode`, // 触发浮层是否开启
+ *   triggerMode: 'click', // 触发方式，默认 `hover`
+ *   open: true, // 是否打开，如果为 false 则不会创建 DOM 节点
+ *   content: 'xxx', // 显示内容
+ *   onOpen: () => {}, // 打开后的的回调
+ *   onClose: () => {}, // 关闭后的的回调
+ *   shouldOpen: () => {}, // 是否打开条件回调
+ *   shouldClose: () => {}, // 是否关闭条件回调
+ *   ...other // className 等原生 HTML 属性
+ * })
+ * ```
+ * > onOpen、onClose 回调请勿执行 `popover.update`，以免多次渲染。另外，外部控制 open 状态（非 triggerNode 触发）情况下回调无效
+ */
 export default class {
 
-  constructor(getProps) {
-    this.getProps = getProps
+  constructor(options) {
+    this.makeTriggerable(options)
+    this.options = options
   }
 
-  render(props) {
+  makeTriggerable(options) {
+    const { triggerNode, triggerMode = 'hover' } = options
+    if (!triggerNode) return
+    if (triggerMode === 'hover') {
+      triggerNode.onmouseenter = () => {
+        clearTimeout(this.closeTimer)
+        this.openTimer = setTimeout(::this.open, Popover.LAZY_DURATION)
+      }
+      triggerNode.onmouseleave = () => {
+        clearTimeout(this.openTimer)
+        this.closeTimer = setTimeout(::this.close, Popover.LAZY_DURATION)
+      }
+    } else {
+      triggerNode.onclick = e => {
+        e.stopPropagation()
+        this.toggle()
+      }
+    }
+  }
+
+  render(options) {
     if (!this.containerNode) {
       this.containerNode = document.createElement('div')
       document.body.appendChild(this.containerNode)
     }
-    this.render = props => {
-      if (!this.props) {
-        this.props = this.getProps()
-      }
-      props && Object.assign(this.props, props)
-      this.isOpen = !!this.props.open
-      ReactDOM.render(<Popover {...this.props} />, this.containerNode)
+    this.render = options => {
+      options && Object.assign(this.options, options)
+      this.isOpen = !!this.options.open
+      const { onOpen, onClose, shouldOpen, shouldClose, ...other } = this.options
+      ReactDOM.render(<Popover popover={this} {...other} />, this.containerNode)
     }
-    this.render(props)
+    this.render(options)
   }
 
-  update() {
-    this.props = this.getProps()
-    if (!this.props.open && !this.isOpen) return
-    this.render()
+  /**
+   * @public
+   * @name popover.update(options)
+   * @description 更新浮层配置，一般在 componentDidUpdate 内执行。例如：
+   * ```js
+   * const popover = new Popover({
+   *   triggerNode: `DOMNode`
+   * })
+   * popover.update({
+   *   content: 'xxx'
+   * })
+   * ```
+   */
+  update(options) {
+    this.makeTriggerable(options)
+    if (!options.open && !this.isOpen) return
+    this.render(options)
   }
 
+  /**
+   * @public
+   * @name popover.open()
+   * @description 打开浮层
+   */
   open() {
-    this.isOpen || this.render({open: true})
+    const { shouldOpen, onOpen } = this.options
+    if (!this.isOpen && (!shouldOpen || shouldOpen())) {
+      this.render({open: true})
+      onOpen && onOpen()
+    }
   }
 
+  /**
+   * @public
+   * @name popover.close()
+   * @description 关闭浮层
+   */
   close() {
-    this.isOpen && this.render({open: false})
+    const { shouldClose, onClose } = this.options
+    if (this.isOpen && (!shouldClose || shouldClose())) {
+      this.render({open: false})
+      onClose && onClose()
+    }
   }
 
   toggle() {
     this.isOpen ? this.close() : this.open()
   }
 
+  /**
+   * @public
+   * @name popover.unmount()
+   * @description 销毁浮层，triggerNode 所在的组件生命周期结束后手动调用
+   */
   unmount() {
     if (this.containerNode) {
+      ReactDOM.unmountComponentAtNode(this.containerNode)
       document.body.removeChild(this.containerNode)
       this.containerNode = null
     }

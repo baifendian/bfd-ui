@@ -9,77 +9,38 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import classnames from 'classnames'
 import Popover from '../Popover'
 
 class Tooltip extends Component {
 
-  constructor(props) {
-    super()
-    if (props.triggerMode === 'click') {
-      this.handleBodyClick = () => {
-        this.popover.close()
-      }
-    }
-  }
-
   componentDidMount() {
-    this.popover = new Popover(::this.getPopoverProps)
-    this.handleBodyClick && window.addEventListener('click', this.handleBodyClick)
+    this.popover = new Popover({
+      triggerNode: ReactDOM.findDOMNode(this),
+      ...this.getPopoverOptions()
+    })
   }
 
   componentDidUpdate() {
-    this.popover.update()
+    const { title, ...other } = this.props
+    this.popover.update(this.getPopoverOptions())
   }
 
   componentWillUnmount() {
     this.popover.unmount()
-    this.handleBodyClick && window.removeEventListener('click', this.handleBodyClick)
   }
 
-  getPopoverProps() {
-    const { triggerMode, title, ...other } = this.props
-    const props = {
-      triggerNode: ReactDOM.findDOMNode(this),
+  getPopoverOptions() {
+    const { className, title, ...other } = this.props
+    return {
+      className: classnames('bfd-tooltip__popover', className),
       content: title,
       ...other
     }
-    if (triggerMode === 'hover') {
-      props.onMouseEnter = () => {
-        clearTimeout(this.closeTimer)
-      }
-      props.onMouseLeave = () => {
-        this.closeTimer = setTimeout(::this.popover.close, 150)
-      }
-    } else {
-      props.onClick = e => e.stopPropagation()
-    }
-    return props
-  }
-
-  getTriggerProps() {
-    const { triggerMode } = this.props
-    const props = {}
-    if (triggerMode === 'hover') {
-      props.onMouseEnter = () => {
-        clearTimeout(this.closeTimer)
-        this.openTimer = setTimeout(::this.popover.open, 150)
-      }
-      props.onMouseLeave = () => {
-        clearTimeout(this.openTimer)
-        this.closeTimer = setTimeout(::this.popover.close, 150)
-      }
-    } else {
-      props.onClick = e => {
-        e.stopPropagation()
-        this.popover.toggle()
-      }
-    }
-    return props
   }
 
   render() {
-    const { children } = this.props
-    return React.cloneElement(children, this.getTriggerProps())
+    return this.props.children
   }
 }
 

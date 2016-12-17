@@ -15,54 +15,37 @@ import './index.less'
 
 class TextOverflow extends Component {
 
-  componentWillUnmount() {
-    this.popover && this.popover.unmount()
+  componentDidMount() {
+    const triggerNode = ReactDOM.findDOMNode(this)
+    this.popover = new Popover({
+      triggerNode,
+      shouldOpen: () => triggerNode.offsetWidth < triggerNode.scrollWidth,
+      ...this.getPopoverOptions()
+    })
   }
 
-  getPopoverProps() {
+  componentDidUpdate(prevProps, prevState) {
+    this.popover.update(this.getPopoverOptions())
+  }
+
+  componentWillUnmount() {
+    this.popover.unmount()
+  }
+
+  getPopoverOptions() {
     const { className, children, ...other } = this.props
     return {
-      triggerNode: ReactDOM.findDOMNode(this),
-      onMouseEnter: () => {
-        clearTimeout(this.closeTimer)
-      },
-      onMouseLeave: () => {
-        this.closeTimer = setTimeout(::this.popover.close, 150)
-      },
       className: classnames('bfd-text-overflow__popover', className),
       content: children.props.children,
       ...other
     }
   }
 
-  getTriggerProps() {
-    const { className, children, direction, align, ...other } = this.props
-    return {
-      className: classnames(children.props.className, 'bfd-text-overflow'),
-      onMouseEnter: e => {
-        const target = e.currentTarget
-        if (target.offsetWidth < target.scrollWidth) {
-          clearTimeout(this.closeTimer)
-          this.openTimer = setTimeout(() => {
-            if (!this.popover) {
-              this.popover = new Popover(::this.getPopoverProps)
-            }
-            this.popover.open()
-          }, 150)
-        }
-      },
-      onMouseLeave: () => {
-        clearTimeout(this.openTimer)
-        this.closeTimer = setTimeout(() => {
-          this.popover && this.popover.close()
-        }, 150)
-      }
-    }
-  }
-
   render() {
     const { children } = this.props
-    return React.cloneElement(children, this.getTriggerProps())
+    return React.cloneElement(children, {
+      className: classnames(children.props.className, 'bfd-text-overflow')
+    })
   }
 }
 

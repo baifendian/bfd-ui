@@ -16,25 +16,18 @@ import DropdownMenu from './DropdownMenu'
 
 class Dropdown extends Component {
 
-  static instances = []
-
   constructor(props) {
-    super(props)
-    this.handleBodyClick = () => {
-      this.setState({open: false})
-    }
-    Dropdown.instances.push(this)
+    super()
+    this.toggleFromPopover = false
     this.state = {
       open: props.open || false
     }
   }
 
   componentDidMount() {
-    this.popover = new Popover(::this.getPopoverProps)
-    if (this.state.open) {
-      this.popover.open()
+    if (!this.props.disabled) {
+      this.preparePopover()
     }
-    window.addEventListener('click', this.handleBodyClick)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -42,20 +35,58 @@ class Dropdown extends Component {
   }
 
   componentDidUpdate() {
-    this.popover.update()
-    if (this.state.open) {
-      Dropdown.instances.forEach(instance => {
-        if (instance !== this) {
-          instance.close()
-        }
-      })
+    if (!this.props.disabled && !this.toggleFromPopover) {
+      if (this.popover) {
+        this.popover.update(this.getPopoverOptions())
+      } else {
+        this.preparePopover()
+        this.popover.update()
+      }
     }
+    this.toggleFromPopover = false
   }
 
   componentWillUnmount() {
-    Dropdown.instances.splice(Dropdown.instances.indexOf(this), 1)
-    this.popover.unmount()
-    window.removeEventListener('click', this.handleBodyClick)
+    this.popover && this.popover.unmount()
+  }
+
+  preparePopover() {
+    const { onToggle } = this.props
+    this.triggerNode = ReactDOM.findDOMNode(this.toggle)
+    this.popover = new Popover({
+      triggerNode: this.triggerNode,
+      triggerMode: 'click',
+      onOpen: () => {
+        this.toggleFromPopover = true
+        this.open()
+        onToggle && onToggle(true)
+      },
+      onClose: () => {
+        this.toggleFromPopover = true
+        this.close()
+        onToggle && onToggle(false)
+      },
+      ...this.getPopoverOptions()
+    })
+  }
+
+  getPopoverOptions() {
+    const { children, className, right, ...other } = this.DropdownMenu.props
+    // Will be deprecated
+    if (right) {
+      other.align = 'right'
+    }
+    if (this.props.aligned) {
+      other.style = Object.assign(other.style || {}, {
+        width: this.triggerNode.offsetWidth
+      })
+    }
+    return {
+      open: this.state.open,
+      content: children,
+      className: classnames('bfd-dropdown__popover', className),
+      ...other
+    }
   }
 
   /**
@@ -73,35 +104,7 @@ class Dropdown extends Component {
    * @description 收起
    */
   close() {
-    this.state.open && this.setState({open: false})
-  }
-
-  getPopoverProps() {
-    const {
-      children, className, right, ...other
-    } = this.DropdownMenu.props
-    const triggerNode = ReactDOM.findDOMNode(this.toggle)
-
-    // Will be deprecated
-    if (right) {
-      other.align = 'right'
-    }
-
-    if (this.props.aligned) {
-      other.style = Object.assign(other.style || {}, {
-        width: triggerNode.offsetWidth
-      })
-    }
-
-    const props = {
-      triggerNode,
-      content: children,
-      className: classnames('bfd-dropdown__popover', className),
-      onClick: e => e.stopPropagation(),
-      open: this.state.open,
-      ...other
-    }
-    return props
+    this.setState({open: false})
   }
 
   render() {
@@ -124,14 +127,7 @@ class Dropdown extends Component {
       }, className)} {...other}
       >
         {React.cloneElement(this.DropdownToggle, {
-          ref: toggle => this.toggle = toggle,
-          onClick: e => {
-            e.stopPropagation()
-            if (disabled) return
-            const _open = !open
-            this.setState({open: _open})
-            onToggle && onToggle(_open)
-          }
+          ref: toggle => this.toggle = toggle
         })}
       </div>
     )

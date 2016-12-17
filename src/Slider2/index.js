@@ -17,18 +17,10 @@ class Slider2 extends Component {
 
   componentDidMount() {
     this.prepareState()
-    this.popover = new Popover(() => {
-      return {
-        triggerNode: this.sliderNode,
-        onMouseEnter: () => {
-          clearTimeout(this.closeTimer)
-        },
-        onMouseLeave: () => {
-          if (!this.dragging) {
-            this.closeTimer = setTimeout(::this.popover.close, 150)
-          }
-        }
-      }
+    this.popover = new Popover({
+      triggerNode: this.sliderNode,
+      content: this.props.formatter(this.value),
+      shouldClose: () => !this.dragging
     })
   }
 
@@ -73,28 +65,14 @@ class Slider2 extends Component {
     window.removeEventListener('mousemove', this.handleDragging)
     window.removeEventListener('mouseup', this.handleDragEnd)
     if (e.target !== this.sliderNode) {
-      this.handleDragLeave()
+      this.popover.close()
     }
     this.props.onChange && this.props.onChange(this.value)
     this.isDragEnd = true
   }
 
-  handleDragEnter() {
-    clearTimeout(this.closeTimer)
-    this.openTimer = setTimeout(() => {
-      this.popover.open()
-      this.updateTip()
-    }, 150)
-  }
-
-  handleDragLeave() {
-    if (!this.dragging) {
-      clearTimeout(this.openTimer)
-      this.closeTimer = setTimeout(::this.popover.close, 150)
-    }
-  }
-
   handleClick(e) {
+    // Prevent DragEnd mouseup event which trigger click
     if (this.isDragEnd) {
       this.isDragEnd = false
       return
@@ -109,7 +87,7 @@ class Slider2 extends Component {
       this.rootNode = ReactDOM.findDOMNode(this)
     }
     const onMouseLeave = () => {
-      this.handleDragLeave()
+      this.popover.close()
       this.rootNode.removeEventListener('mouseleave', onMouseLeave)
     }
     this.rootNode.addEventListener('mouseleave', onMouseLeave)
@@ -139,7 +117,7 @@ class Slider2 extends Component {
   }
 
   updateTip() {
-    this.popover.render({
+    this.popover.update({
       content: this.props.formatter(this.value)
     })
   }
@@ -162,8 +140,6 @@ class Slider2 extends Component {
             onClick={e => e.stopPropagation()}
             className="bfd-slider2__slider"
             onMouseDown={::this.handleDragStart}
-            onMouseEnter={::this.handleDragEnter}
-            onMouseLeave={::this.handleDragLeave}
             ref={node => this.sliderNode = node}
           />
         </div>
