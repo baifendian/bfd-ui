@@ -12,8 +12,7 @@ class Slider2 extends Component {
     this.handleDragging = ::this.handleDragging
     this.handleDragEnd = ::this.handleDragEnd
 
-    this.shouldPopoverOpen = true
-    this.shouldPopoverClose = true
+    this.shouldPopoverToggle = true
 
     this.isSliderFromDrag = false
     this.isSliderFromClick = false
@@ -41,7 +40,8 @@ class Slider2 extends Component {
         return
       }
       this.isSliderFromDrag = true
-      this.shouldPopoverClose = false
+      this.isSliderFromClick = false
+      this.shouldPopoverToggle = false
       e.preventDefault()
       window.addEventListener('mousemove', this.handleDragging)
       window.addEventListener('mouseup', this.handleDragEnd)
@@ -55,15 +55,21 @@ class Slider2 extends Component {
     }
   }
 
-  handleDragEnd() {
-    this.shouldPopoverClose = true
-    this.isSliderFromDrag = false
+  handleDragEnd(e) {
+    if (e.target === this.sliderNode) {
+      this.isSliderFromDrag = false
+    }
+    this.shouldPopoverToggle = true
     window.removeEventListener('mousemove', this.handleDragging)
     window.removeEventListener('mouseup', this.handleDragEnd)
     this.props.onChange && this.props.onChange(this.state.value)
   }
 
   handleClick(e) {
+    if (this.isSliderFromDrag) {
+      this.isSliderFromDrag = false
+      return
+    }
     if (this.props.disabled) {
       return
     }
@@ -73,15 +79,13 @@ class Slider2 extends Component {
     }
     this.updatePosition()
     this.popover.open()
-    this.shouldPopoverOpen = false
-    this.shouldPopoverClose = false
+    this.shouldPopoverToggle = false
     this.isSliderFromClick = true
   }
 
   handleMouseLeave() {
     if (this.isSliderFromClick) {
-      this.shouldPopoverOpen = true
-      this.shouldPopoverClose = true
+      this.shouldPopoverToggle = true
       this.isSliderFromClick = false
       this.popover.close()
     }
@@ -145,8 +149,8 @@ class Slider2 extends Component {
           <div className="bfd-slider2__range" ref={node => this.rangeNode = node} />
           <Popover
             content={formatter(this.state.value)}
-            shouldOpen={() => this.shouldPopoverOpen}
-            shouldClose={() => this.shouldPopoverClose}
+            shouldOpen={() => this.shouldPopoverToggle}
+            shouldClose={() => this.shouldPopoverToggle}
             ref={popover => this.popover = popover}
           >
             <div
