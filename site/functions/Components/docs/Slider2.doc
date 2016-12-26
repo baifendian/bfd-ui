@@ -35,7 +35,7 @@ const Slider2Formatter = () => {
       max={1024}
       defaultValue={256}
       onChange={v => console.log(v)}
-      step={32}
+      step={128}
       formatter={v => `分配内存：${v} MB`}
     />
   )

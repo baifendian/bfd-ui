@@ -1,11 +1,10 @@
 ## v1.5.0
 
-*2016-12-20*
+*2016-12-26*
 
-- 新增组件 Slider2
-- 修改了文档字体
-- 更新了 README、GUIDE
+- 新增组件 Slider2, SearchInput2
 - 修正了部分组件样式
+- README、GUIDE、文档字体更新
 
 
 ## v1.4.1

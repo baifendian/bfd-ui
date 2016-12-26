@@ -36,6 +36,6 @@ describe('Dropdown', () => {
         <DropdownMenu />
       </Dropdown>
     )
-    expect(findDOMNode(instance).className).toContain('disabled')
+    expect(findDOMNode(instance).querySelector('.bfd-dropdown__toggle').className).toContain('disabled')
   })
 })

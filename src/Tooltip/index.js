@@ -7,41 +7,21 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import Popover from '../Popover'
 
-class Tooltip extends Component {
-
-  componentDidMount() {
-    this.popover = new Popover({
-      triggerNode: ReactDOM.findDOMNode(this),
-      ...this.getPopoverOptions()
-    })
-  }
-
-  componentDidUpdate() {
-    const { title, ...other } = this.props
-    this.popover.update(this.getPopoverOptions())
-  }
-
-  componentWillUnmount() {
-    this.popover.unmount()
-  }
-
-  getPopoverOptions() {
-    const { className, title, ...other } = this.props
-    return {
-      className: classnames('bfd-tooltip__popover', className),
-      content: title,
-      ...other
-    }
-  }
-
-  render() {
-    return this.props.children
-  }
+const Tooltip = props => {
+  const { children, className, title, ...other } = props
+  return (
+    <Popover
+      className={classnames('bfd-tooltip__popover', className)}
+      content={title}
+      {...other}
+    >
+      {children}
+    </Popover>
+  )
 }
 
 Tooltip.defaultProps = {

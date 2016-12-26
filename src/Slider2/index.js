@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import Popover from '../Popover'
 import controlledPropValidator from '../_shared/propValidator/controlled'
@@ -10,42 +9,39 @@ class Slider2 extends Component {
 
   constructor(props) {
     super()
-    this.value = ('value' in props ? props.value : props.defaultValue) || 0
     this.handleDragging = ::this.handleDragging
     this.handleDragEnd = ::this.handleDragEnd
+
+    this.shouldPopoverOpen = true
+    this.shouldPopoverClose = true
+
+    this.isSliderFromDrag = false
+    this.isSliderFromClick = false
+
+    this.state = {
+      value: ('value' in props ? props.value : props.defaultValue) || 0
+    }
   }
 
   componentDidMount() {
-    this.prepareState()
-    this.popover = new Popover({
-      triggerNode: this.sliderNode,
-      content: this.props.formatter(this.value),
-      shouldClose: () => !this.dragging
-    })
+    this.componentDidRender()
   }
 
   componentWillReceiveProps(nextProps) {
-    'value' in nextProps && (this.value = nextProps.value)
+    'value' in nextProps && this.setState({value: nextProps.value})
   }
 
   componentDidUpdate() {
-    this.prepareState()
-  }
-
-  prepareState() {
-    const { min, max, step } = this.props
-    this.pageX = this.layerNode.getBoundingClientRect().left
-    this.width = this.layerNode.offsetWidth
-    this.stepCount = (max - min) / step
-    this.stepIndex = Math.round((this.value - min) / step)
-    this.stepWidth = this.width / this.stepCount
-    this.updatePosition()
+    this.componentDidRender()
   }
 
   handleDragStart(e) {
     if (e.button === 0) {
-      if (this.props.disabled) return
-      this.dragging = true
+      if (this.props.disabled) {
+        return
+      }
+      this.isSliderFromDrag = true
+      this.shouldPopoverClose = false
       e.preventDefault()
       window.addEventListener('mousemove', this.handleDragging)
       window.addEventListener('mouseup', this.handleDragEnd)
@@ -53,61 +49,76 @@ class Slider2 extends Component {
   }
 
   handleDragging(e) {
-    const prevValue = this.value
-    const value = this.onSliderChange(e)
-    if (prevValue !== value) {
+    const value = this.mousePositionDidChange(e)
+    if (typeof value === 'number') {
       this.props.onDragging && this.props.onDragging(value)
     }
   }
 
-  handleDragEnd(e) {
-    this.dragging = false
+  handleDragEnd() {
+    this.shouldPopoverClose = true
+    this.isSliderFromDrag = false
     window.removeEventListener('mousemove', this.handleDragging)
     window.removeEventListener('mouseup', this.handleDragEnd)
-    if (e.target !== this.sliderNode) {
-      this.popover.close()
-    }
-    this.props.onChange && this.props.onChange(this.value)
-    this.isDragEnd = true
+    this.props.onChange && this.props.onChange(this.state.value)
   }
 
   handleClick(e) {
-    // Prevent DragEnd mouseup event which trigger click
-    if (this.isDragEnd) {
-      this.isDragEnd = false
+    if (this.props.disabled) {
       return
     }
-    if (this.props.disabled) return
+    const value = this.mousePositionDidChange(e)
+    if (typeof value === 'number') {
+      this.props.onChange && this.props.onChange(value)
+    }
+    this.updatePosition()
     this.popover.open()
-    this.onSliderChange(e)
-    this.props.onChange && this.props.onChange(this.value)
-
-    // If the mouse position outside the slider trigger
-    if (!this.rootNode) {
-      this.rootNode = ReactDOM.findDOMNode(this)
-    }
-    const onMouseLeave = () => {
-      this.popover.close()
-      this.rootNode.removeEventListener('mouseleave', onMouseLeave)
-    }
-    this.rootNode.addEventListener('mouseleave', onMouseLeave)
+    this.shouldPopoverOpen = false
+    this.shouldPopoverClose = false
+    this.isSliderFromClick = true
   }
 
-  onSliderChange(e) {
+  handleMouseLeave() {
+    if (this.isSliderFromClick) {
+      this.shouldPopoverOpen = true
+      this.shouldPopoverClose = true
+      this.isSliderFromClick = false
+      this.popover.close()
+    }
+  }
+
+  mousePositionDidChange(e) {
     let offsetLeft = e.pageX - this.pageX
     if (offsetLeft > this.width) {
       offsetLeft = this.width
     } else if (offsetLeft < 0) {
       offsetLeft = 0
     }
-    let stepIndex = Math.round(offsetLeft / this.stepWidth)
+    const stepIndex = Math.round(offsetLeft / this.stepWidth)
     if (this.stepIndex !== stepIndex) {
       this.stepIndex = stepIndex
-      this.value = this.props.min + this.stepIndex * this.props.step
-      this.updatePosition()
-      this.updateTip()
+      const value = this.props.min + this.stepIndex * this.props.step
+      this.setState({ value })
+      return value
     }
-    return this.value
+  }
+
+  componentDidRender() {
+    if (!this.isSliderFromDrag && !this.isSliderFromClick) {
+      this.prepareContext()
+    }
+    if (!this.isSliderFromClick) {
+      this.updatePosition()
+    }
+  }
+
+  prepareContext() {
+    const { min, max, step } = this.props
+    this.pageX = this.layerNode.getBoundingClientRect().left
+    this.width = this.layerNode.offsetWidth
+    this.stepCount = (max - min) / step
+    this.stepWidth = this.width / this.stepCount
+    this.stepIndex = Math.round((this.state.value - min) / step)
   }
 
   updatePosition() {
@@ -116,32 +127,35 @@ class Slider2 extends Component {
     this.rangeNode.style.width = offsetLeft
   }
 
-  updateTip() {
-    this.popover.update({
-      content: this.props.formatter(this.value)
-    })
-  }
-
   render() {
     const {
       className, min, max, step, value, defaultValue, formatter, onDragging, onChange,
-      disabled, ...other } = this.props
+      disabled, ...other
+    } = this.props
     return (
       <div
         className={classnames('bfd-slider2', {
           'bfd-slider2--disabled': disabled
         }, className)}
         onClick={::this.handleClick}
+        onMouseLeave={::this.handleMouseLeave}
         {...other}
       >
         <div className="bfd-slider2__layer" ref={node => this.layerNode = node}>
           <div className="bfd-slider2__range" ref={node => this.rangeNode = node} />
-          <div
-            onClick={e => e.stopPropagation()}
-            className="bfd-slider2__slider"
-            onMouseDown={::this.handleDragStart}
-            ref={node => this.sliderNode = node}
-          />
+          <Popover
+            content={formatter(this.state.value)}
+            shouldOpen={() => this.shouldPopoverOpen}
+            shouldClose={() => this.shouldPopoverClose}
+            ref={popover => this.popover = popover}
+          >
+            <div
+              className="bfd-slider2__slider"
+              onMouseDown={::this.handleDragStart}
+              onMouseLeave={::this.handleMouseLeave}
+              ref={node => this.sliderNode = node}
+            />
+          </Popover>
         </div>
       </div>
     )

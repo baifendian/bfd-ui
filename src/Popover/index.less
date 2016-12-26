@@ -9,6 +9,18 @@
 
 @duration: .1s;
 
+.bfd-popover__trigger {
+  cursor: pointer;
+}
+
+.bfd-popover__trigger--disabled,
+.bfd-popover__trigger--disabled * {
+  background-color: #eceff1!important;
+  cursor: not-allowed!important;
+  color: #999!important;
+  user-select: none;
+}
+
 .bfd-popover {
   position: absolute;
   left: 0;

@@ -37,6 +37,10 @@ class ToggleNode {
     }
     this.node.addEventListener(ToggleNode.END_EVENT, onTransitionEnd)
   }
+
+  setNode(node) {
+    this.node = node
+  }
 }
 
 export default ToggleNode

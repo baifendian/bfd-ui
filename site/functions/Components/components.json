@@ -57,6 +57,9 @@
     "name": "SearchInput",
     "cn": "搜索框"
   }, {
+    "name": "SearchInput2",
+    "cn": "搜索框"
+  }, {
     "name": "MultipleSelect",
     "cn": "多选列表"
   }, {

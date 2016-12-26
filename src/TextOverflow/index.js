@@ -14,38 +14,25 @@ import Popover from '../Popover'
 import './index.less'
 
 class TextOverflow extends Component {
-
-  componentDidMount() {
-    const triggerNode = ReactDOM.findDOMNode(this)
-    this.popover = new Popover({
-      triggerNode,
-      shouldOpen: () => triggerNode.offsetWidth < triggerNode.scrollWidth,
-      ...this.getPopoverOptions()
-    })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    this.popover.update(this.getPopoverOptions())
-  }
-
-  componentWillUnmount() {
-    this.popover.unmount()
-  }
-
-  getPopoverOptions() {
-    const { className, children, ...other } = this.props
-    return {
-      className: classnames('bfd-text-overflow__popover', className),
-      content: children.props.children,
-      ...other
-    }
-  }
-
   render() {
-    const { children } = this.props
-    return React.cloneElement(children, {
-      className: classnames(children.props.className, 'bfd-text-overflow')
-    })
+    const { children, className, ...other } = this.props
+    return (
+      <Popover
+        className={classnames('bfd-tooltip__popover', className)}
+        content={children.props.children}
+        shouldOpen={() => {
+          if (!this.rootNode) {
+            this.rootNode = ReactDOM.findDOMNode(this)
+          }
+          return this.rootNode.offsetWidth < this.rootNode.scrollWidth
+        }}
+        {...other}
+      >
+        {React.cloneElement(children, {
+          className: classnames(children.props.className, 'bfd-text-overflow')
+        })}
+      </Popover>
+    )
   }
 }
 

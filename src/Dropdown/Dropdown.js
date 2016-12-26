@@ -8,8 +8,8 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import classnames from 'classnames'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import Popover from '../Popover'
 import DropdownToggle from './DropdownToggle'
 import DropdownMenu from './DropdownMenu'
@@ -18,75 +18,13 @@ class Dropdown extends Component {
 
   constructor(props) {
     super()
-    this.toggleFromPopover = false
     this.state = {
       open: props.open || false
     }
   }
 
-  componentDidMount() {
-    if (!this.props.disabled) {
-      this.preparePopover()
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     'open' in nextProps && this.setState({open: nextProps.open})
-  }
-
-  componentDidUpdate() {
-    if (!this.props.disabled && !this.toggleFromPopover) {
-      if (this.popover) {
-        this.popover.update(this.getPopoverOptions())
-      } else {
-        this.preparePopover()
-        this.popover.update()
-      }
-    }
-    this.toggleFromPopover = false
-  }
-
-  componentWillUnmount() {
-    this.popover && this.popover.unmount()
-  }
-
-  preparePopover() {
-    const { onToggle } = this.props
-    this.triggerNode = ReactDOM.findDOMNode(this.toggle)
-    this.popover = new Popover({
-      triggerNode: this.triggerNode,
-      triggerMode: 'click',
-      onOpen: () => {
-        this.toggleFromPopover = true
-        this.open()
-        onToggle && onToggle(true)
-      },
-      onClose: () => {
-        this.toggleFromPopover = true
-        this.close()
-        onToggle && onToggle(false)
-      },
-      ...this.getPopoverOptions()
-    })
-  }
-
-  getPopoverOptions() {
-    const { children, className, right, ...other } = this.DropdownMenu.props
-    // Will be deprecated
-    if (right) {
-      other.align = 'right'
-    }
-    if (this.props.aligned) {
-      other.style = Object.assign(other.style || {}, {
-        width: this.triggerNode.offsetWidth
-      })
-    }
-    return {
-      open: this.state.open,
-      content: children,
-      className: classnames('bfd-dropdown__popover', className),
-      ...other
-    }
   }
 
   /**
@@ -107,8 +45,13 @@ class Dropdown extends Component {
     this.setState({open: false})
   }
 
+  handleToggle(open) {
+    this.setState({ open })
+    this.props.onToggle && this.props.onToggle(open)
+  }
+
   render() {
-    const { children, className, onToggle, disabled, direction, ...other } = this.props
+    const { children, className, onToggle, disabled, aligned, ...other } = this.props
     const { open } = this.state
     delete other.open
 
@@ -120,15 +63,28 @@ class Dropdown extends Component {
       }
     })
 
+    const { right, ...menuProps } = this.DropdownMenu.props
+    menuProps.className = classnames('bfd-dropdown__popover', menuProps.className)
+    if (right) {
+      menuProps.align = 'right'
+    }
+
     return (
       <div className={classnames('bfd-dropdown', {
-        'bfd-dropdown--open': open,
-        'bfd-dropdown--disabled': disabled
+        'bfd-dropdown--open': open
       }, className)} {...other}
       >
-        {React.cloneElement(this.DropdownToggle, {
-          ref: toggle => this.toggle = toggle
-        })}
+        <Popover
+          triggerMode="click"
+          open={open}
+          onToggle={::this.handleToggle}
+          content={menuProps.children}
+          disabled={disabled}
+          aligned={aligned}
+          {...menuProps}
+        >
+          {this.DropdownToggle}
+        </Popover>
       </div>
     )
   }
@@ -137,7 +93,7 @@ class Dropdown extends Component {
 Dropdown.propTypes = {
 
   // 是否展开
-  open: PropTypes.bool,
+  open: controlledPropValidator(PropTypes.bool, 'onToggle'),
 
   // 切换 open 状态后的回调，参数为切换后的 open 状态
   onToggle: PropTypes.func,
@@ -146,13 +102,7 @@ Dropdown.propTypes = {
   disabled: PropTypes.bool,
 
   // DropdownToggle 与 DropdownMenu 宽度相同
-  aligned: PropTypes.bool,
-
-  customProp({ open, onToggle }) {
-    if (open && !onToggle) {
-      return new Error('You provided a `open` prop without an `onToggle` handler')
-    }
-  }
+  aligned: PropTypes.bool
 }
 
 export default Dropdown

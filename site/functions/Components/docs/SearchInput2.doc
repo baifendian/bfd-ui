@@ -1,0 +1,23 @@
+/**
+ * @title 基本功能
+ */
+import SearchInput2 from 'bfd/SearchInput2'
+
+const SearchInput2Basic = () => {
+  return (
+    <SearchInput2 onSearch={v => console.log(v)} />
+  )
+}
+
+/**
+ * @title 块级显示，自适应父元素宽度
+ */
+import SearchInput2 from 'bfd/SearchInput2'
+
+const SearchInput2Block = () => {
+  return (
+    <SearchInput2 block />
+  )
+}
+
+@component SearchInput2

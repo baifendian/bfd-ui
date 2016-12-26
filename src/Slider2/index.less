@@ -1,7 +1,5 @@
 .bfd-slider2 {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+  padding: 6px 7px;
   cursor: pointer;
 }
 
@@ -19,8 +17,7 @@
 }
 
 .bfd-slider2__layer {
-  height: 4px;
-  margin: 5px 7px;
+  height: 2px;
   border-radius: 2px;
   background-color: #eaeaea;
   position: relative;
@@ -35,6 +32,7 @@
 
 .bfd-slider2__slider {
   -webkit-user-drag: none;
+  cursor: pointer;
   position: absolute;
   left: 0;
   top: 50%;
@@ -43,7 +41,7 @@
   height: 1em;
   margin-left: -.5em;
   margin-top: -.5em;
-  border: 2px solid #42a5f5;
+  border: 1px solid #42a5f5;
   border-radius: 50%;
   background-color: #fff;
   transition: transform .1s, border-color .1s;
