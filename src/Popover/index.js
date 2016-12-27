@@ -46,6 +46,9 @@ class Popover extends Component {
       ReactDOM.unmountComponentAtNode(this.containerNode)
       document.body.removeChild(this.containerNode)
     }
+    if (Popover.lastOpenedPopover === this) {
+      Popover.lastOpenedPopover = null
+    }
   }
 
   getComputedDirection(triggerRect, popoverRect) {
