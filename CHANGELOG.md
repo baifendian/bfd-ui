@@ -1,3 +1,9 @@
+## Preview
+
+- Tooltip: 添加 `white-space: pre-wrap` 特性
+- Dropdown, Tooltip, Select 等“浮层”组件支持任意嵌套
+
+
 ## v1.5.0
 
 *2016-12-26*

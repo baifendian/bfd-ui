@@ -10,6 +10,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import Popover from '../Popover'
+import './index.less'
 
 const Tooltip = props => {
   const { children, className, title, ...other } = props

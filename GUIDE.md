@@ -50,7 +50,7 @@ class App extends Component {
 组件支持不受控（`defaultXXX`）的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)
 
 
-## 组件全局设置
+## 组件全局配置
 
 覆盖或扩展 `defaultProps` 即可，以 [DatePciker](/components/DatePicker) 为例：
 ```js
@@ -58,7 +58,7 @@ Object.assign(DatePicker.defaultProps, {
   placeholder: 'Please select date'
 })
 ```
-非 React 组件性质的模块 API 也都提供了相应的全局配置方法，例如涉及到 `url` 属性的组件内部调用的是 [xhr](/components/DatePicker) 模块，如果需要对 xhr 全局配置，请参考其文档自行配置
+命令式 API 模块 [message]((/components/message)、[confirm]((/components/confirm)、[xhr]((/components/xhr) 也支持全局配置，涉及 url 方式加载数据的组件以及 [Form](/components/Form) 均依赖 xhr。详细配置请参考其各自文档
 
 > 全局配置后，这些 API 会变成有状态的，即最终结果受配置影响，所以尽量一次性配置并向其它开发者说明
 

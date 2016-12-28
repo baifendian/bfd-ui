@@ -1,20 +1,19 @@
 import React, { PropTypes, Component } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
-import classlist from 'classlist'
-import ToggleNode from '../_shared/ToggleNode'
-import CoordinateFactory from './CoordinateFactory'
+import PopoverContent from './PopoverContent'
 import './index.less'
 
 window.addEventListener('click', () => {
-  Popover.lastOpenedPopover && Popover.lastOpenedPopover.close()
+  const openedPopoverInContext = Popover[Popover.OPENED_POPOVER]
+  openedPopoverInContext && openedPopoverInContext.close()
 })
 
 class Popover extends Component {
 
   static LAZY_DURATION = 150
 
-  static lastOpenedPopover = null
+  static OPENED_POPOVER = Symbol()
 
   constructor(props) {
     super()
@@ -37,7 +36,7 @@ class Popover extends Component {
     if (this.state.open) {
       this.renderContent()
     } else {
-      prevState.open && this.toggleContent.close()
+      prevState.open && this.popoverContent.close()
     }
   }
 
@@ -46,53 +45,19 @@ class Popover extends Component {
       ReactDOM.unmountComponentAtNode(this.containerNode)
       document.body.removeChild(this.containerNode)
     }
-    if (Popover.lastOpenedPopover === this) {
-      Popover.lastOpenedPopover = null
+    const { openedPopoverInContext } = this
+    if (openedPopoverInContext === this) {
+      this.openedPopoverInContext = null
     }
   }
 
-  getComputedDirection(triggerRect, popoverRect) {
-    let { direction } = this.props
-    if (triggerRect.top < popoverRect.height) {
-      direction = 'down'
-    } else if (popoverRect.height + triggerRect.top + triggerRect.height > window.innerHeight) {
-      direction = 'up'
-    }
-    return direction
+  // 当前 popover 所在的浮层（或全局）的打开的 popover，实现打开唯一性
+  get openedPopoverInContext() {
+    return (this.context.popoverContent || Popover)[Popover.OPENED_POPOVER]
   }
 
-  setClassNamesByPosition(direction, align) {
-    this.positionClassNames = classnames({
-      [`bfd-popover--${direction}`]: true,
-      [`bfd-popover--align-${align}`]: !!align
-    })
-    classlist(this.contentNode).add(this.positionClassNames)
-  }
-
-  setCoordinate(triggerRect, popoverRect, direction, align) {
-    const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
-    this.contentNode.style.left = left + 'px'
-    this.contentNode.style.top = top + 'px'
-  }
-
-  setPosition() {
-    const { align } = this.props
-
-    // Prevent accumulation
-    if (this.positionClassNames) {
-      classlist(this.contentNode).remove(...this.positionClassNames.split(' '))
-    }
-
-    // Calculate elements size
-    const triggerRect = this.triggerNode.getBoundingClientRect()
-    let popoverRect = this.contentNode.getBoundingClientRect()
-
-    // Calculate direction with arrow and reCalculate contentNode size
-    const direction = this.getComputedDirection(triggerRect, popoverRect)
-    this.setClassNamesByPosition(direction, align)
-    popoverRect = this.contentNode.getBoundingClientRect()
-
-    this.setCoordinate(triggerRect, popoverRect, direction, align)
+  set openedPopoverInContext(popover) {
+    (this.context.popoverContent || Popover)[Popover.OPENED_POPOVER] = popover
   }
 
   /**
@@ -106,10 +71,11 @@ class Popover extends Component {
       this.setState({ open: true })
       onToggle && onToggle(true)
 
-      if (Popover.lastOpenedPopover && Popover.lastOpenedPopover !== this) {
-        Popover.lastOpenedPopover.close()
+      const { openedPopoverInContext } = this
+      if (openedPopoverInContext && openedPopoverInContext !== this) {
+        openedPopoverInContext.close()
       }
-      Popover.lastOpenedPopover = this
+      this.openedPopoverInContext = this
     }
   }
 
@@ -119,11 +85,23 @@ class Popover extends Component {
    * @description 关闭浮层
    */
   close() {
+    if (!this.state.open) return
     const { shouldClose, onToggle } = this.props
     if (!shouldClose || shouldClose()) {
       this.setState({ open: false })
       onToggle && onToggle(false)
+
+      if (this.openedPopoverInContext === this) {
+        this.openedPopoverInContext = null
+      }
+      this.closeChildOpenedPopover()
     }
+  }
+
+  closeChildOpenedPopover() {
+    const childOpenedPopover = this.popoverContent &&
+      this.popoverContent[Popover.OPENED_POPOVER]
+    childOpenedPopover && childOpenedPopover.close()
   }
 
   renderContent() {
@@ -131,13 +109,17 @@ class Popover extends Component {
       this.containerNode = document.createElement('div')
       document.body.appendChild(this.containerNode)
     }
-    this.triggerNode = ReactDOM.findDOMNode(this)
+    const triggerNode = ReactDOM.findDOMNode(this)
 
     this.renderContent = () => {
       const {
-        className, triggerMode, content, direction, align, open, onToggle, shouldOpen,
+        triggerMode, content, open, onToggle, shouldOpen,
         shouldClose, disabled, aligned, ...other
       } = this.props
+      other.onClick = e => {
+        e.stopPropagation()
+        this.closeChildOpenedPopover()
+      }
 
       if (triggerMode === 'hover') {
         other.onMouseEnter = () => {
@@ -146,34 +128,23 @@ class Popover extends Component {
         other.onMouseLeave = () => {
           this.closeTimer = setTimeout(() => this.close(), Popover.LAZY_DURATION)
         }
-      } else {
-        other.onClick = e => e.stopPropagation()
       }
 
       if (aligned) {
         other.style = Object.assign(other.style || {}, {
-          width: this.triggerNode.offsetWidth
+          width: triggerNode.offsetWidth
         })
       }
 
       ReactDOM.render((
-        <div className="bfd-popover" ref={node => {
-          this.contentNode = node
-        }}>
-          <div className={classnames('bfd-popover__content', className)} {...other}>
-            {content}
-          </div>
-        </div>
-      ), this.containerNode, () => {
-        if (!this.toggleContent) {
-          this.toggleContent = new ToggleNode(
-            this.contentNode, 'bfd-popover--open', ::this.setPosition
-          )
-        } else {
-          this.toggleContent.setNode(this.contentNode)
-        }
-        this.toggleContent.open()
-      })
+        <PopoverContent
+          ref={instance => this.popoverContent = instance}
+          triggerNode={triggerNode}
+          {...other}
+        >
+          {content}
+        </PopoverContent>
+      ), this.containerNode)
     }
     this.renderContent()
   }
@@ -187,14 +158,6 @@ class Popover extends Component {
       })
     }
     if (!disabled) {
-      triggerProps.onClick = e => {
-        e.stopPropagation()
-        if (triggerMode === 'click') {
-          this[open ? 'close' : 'open']()
-        }
-        children.props.onClick && children.props.onClick()
-      }
-
       if (triggerMode === 'hover') {
         triggerProps.onMouseEnter = () => {
           clearTimeout(this.closeTimer)
@@ -206,10 +169,20 @@ class Popover extends Component {
           this.closeTimer = setTimeout(::this.close, Popover.LAZY_DURATION)
           children.props.onMouseLeave && children.props.onMouseLeave()
         }
+      } else {
+        triggerProps.onClick = e => {
+          e.stopPropagation()
+          this[open ? 'close' : 'open']()
+          children.props.onClick && children.props.onClick()
+        }
       }
     }
     return React.cloneElement(children, triggerProps)
   }
+}
+
+Popover.contextTypes = {
+  popoverContent: PropTypes.instanceOf(PopoverContent)
 }
 
 Popover.defaultProps = {
