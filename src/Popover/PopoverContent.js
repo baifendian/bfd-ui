@@ -60,6 +60,7 @@ class PopoverContent extends Component {
         return 'middle'
       }
     }
+    return align
   }
 
   setClassNamesByPosition(direction, align) {
