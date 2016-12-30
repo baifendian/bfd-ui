@@ -54,7 +54,7 @@ class App extends Component {
 
 覆盖或扩展 `defaultProps` 即可，以 [DatePciker](/components/DatePicker) 为例：
 ```js
-Object.assign(DatePicker.defaultProps, {
+DatePicker.defaultProps = Object.assign(DatePicker.defaultProps || {}, {
   placeholder: 'Please select date'
 })
 ```

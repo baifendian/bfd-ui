@@ -10,22 +10,21 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import ClearableInput from '../../ClearableInput'
-import formControlValue from '../formControlValue'
 
 const FormInput = (props, context) => {
   const { children, className, onChange, ...other } = props
-  const control = formControlValue(context.form, context.formItem)
-  other.value = control.get()
+  const { form, formItem } = context
+  other.value = form.getItemValue(formItem)
   other.onChange = value => {
-    control.set(value)
+    form.setItemValue(formItem, value)
     onChange && onChange(value)
   }
   return <ClearableInput className={classnames('bfd-form-input', className)} {...other} />
 }
 
 FormInput.contextTypes = {
-  form: PropTypes.object,
-  formItem: PropTypes.object
+  form: PropTypes.object.isRequired,
+  formItem: PropTypes.object.isRequired
 }
 
 export default FormInput

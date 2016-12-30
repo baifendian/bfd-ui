@@ -9,27 +9,26 @@
 
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import formControlValue from '../formControlValue'
 import './index.less'
 
 const FormTextarea = (props, context) => {
   const { children, className, onChange, ...other } = props
-  const control = formControlValue(context.form, context.formItem)
-  let value = control.get()
+  const { form, formItem } = context
+  let value = form.getItemValue(formItem)
   if (!value && value !== 0) {
     value = ''
   }
   other.value = value
   other.onChange = e => {
-    control.set(e.target.value)
+    form.setItemValue(formItem, e.target.value)
     onChange && onChange(e)
   }
   return <textarea className={classnames('bfd-form-textarea', className)} {...other} />
 }
 
 FormTextarea.contextTypes = {
-  form: PropTypes.object,
-  formItem: PropTypes.object
+  form: PropTypes.object.isRequired,
+  formItem: PropTypes.object.isRequired
 }
 
 export default FormTextarea

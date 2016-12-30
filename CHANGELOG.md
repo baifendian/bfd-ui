@@ -1,7 +1,10 @@
-## Preview
+## v1.5.5
 
-- Tooltip: 添加 `white-space: pre-wrap` 特性
+*2016-12-30*
+
+- Tooltip 添加 `white-space: pre-wrap` 特性
 - Dropdown, Tooltip, Select 等“浮层”组件支持任意嵌套
+- Modal 新增属性 size
 
 
 ## v1.5.0

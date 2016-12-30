@@ -73,8 +73,7 @@ class PopoverContent extends Component {
 
   setCoordinate(triggerRect, popoverRect, direction, align) {
     const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
-    this.rootNode.style.left = left + 'px'
-    this.rootNode.style.top = top + 'px'
+    this.rootNode.style.cssText = `left: ${left}px; top: ${top}px;`
   }
 
   setPosition() {

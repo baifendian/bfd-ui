@@ -11,7 +11,6 @@ import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
 import invariant from 'invariant'
 import Icon from '../../Icon'
-import formControlValue from '../formControlValue'
 import './index.less'
 
 class FormItem extends Component {
@@ -30,17 +29,15 @@ class FormItem extends Component {
   }
 
   componentWillReceiveProps() {
-    const data = this.control.get()
-    if (this.data !== data) {
-      this.validate(data)
-      this.data = data
+    const value = this.context.form.getItemValue(this)
+    if (this.value !== value) {
+      this.validate(value)
+      this.value = value
     }
   }
 
   componentWillMount() {
     this.context.form.addItem(this)
-    this.control = formControlValue(this.context.form, this)
-    this.data = this.control.get()
   }
 
   componentWillUnmount() {
@@ -126,7 +123,7 @@ FormItem.contextTypes = {
   form: PropTypes.object
 }
 
-// For formControlValue
+// For FormInput, FormSelect...
 FormItem.childContextTypes = {
   formItem: PropTypes.instanceOf(FormItem)
 }

@@ -79,9 +79,19 @@ body.bfd-modal--open {
 }
 
 .bfd-modal__modal-dialog {
-  @media (min-width: 768px) {
-    width: 600px;
-    margin: 50px auto;
+  margin: 50px auto;
+  width: 600px;
+}
+
+.bfd-modal--sm {
+  .bfd-modal__modal-dialog {
+    width: 300px;
+  }
+}
+
+.bfd-modal--lg {
+  .bfd-modal__modal-dialog {
+    width: 1000px;
   }
 }
 

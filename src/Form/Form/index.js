@@ -18,7 +18,6 @@ class Form extends Component {
 
   constructor(props) {
     super()
-    this.update = update.bind(this)
     // 存储 FormItem 实例，用于访问 FormItem
     this.items = []
     this.state = {
@@ -26,14 +25,43 @@ class Form extends Component {
     }
   }
 
-  componentWillReceiveProps({ data }) {
-    data && this.setState({ data })
-  }
-
   getChildContext() {
     return {
       form: this
     }
+  }
+
+  componentWillReceiveProps({ data }) {
+    data && this.setState({ data })
+  }
+
+  getItemValue(instance, props) {
+    const { name, multiple } = props || instance.props
+    const value = this.state.data[name]
+    if (!multiple) {
+      return value
+    } else {
+      if (value instanceof Array) {
+        return value[this.multipleMap[instance.uuid]]
+      }
+      return null
+    }
+  }
+
+  setItemValue(instance, value) {
+    const { name, multiple } = instance.props
+    const data = this.state.data
+    let nextData
+    if (!multiple) {
+      nextData = update(data, 'set', name, value)
+    } else {
+      if (!data[name]) {
+        data[name] = []
+      }
+      nextData = update(data, 'set', [name, this.multipleMap[instance.uuid]], value)
+    }
+    this.setState({data: nextData})
+    this.props.onChange && this.props.onChange(nextData)
   }
 
   addItem(newItem) {

@@ -106,7 +106,7 @@ class Modal extends Component {
 
   render() {
 
-    const { children, className, onToggle, lock, onClose, ...other } = this.props
+    const { children, className, onToggle, lock, onClose, size, ...other } = this.props
     const { open } = this.state
 
     delete other.open
@@ -118,7 +118,9 @@ class Modal extends Component {
         transitionLeaveTimeout={this.closeTimeout}
       >
         {open && (
-          <div className={classnames('bfd-modal', className)} {...other}>
+          <div className={classnames('bfd-modal', {
+            [`bfd-modal--${size}`]: size
+          }, className)} {...other}>
             <div className="bfd-modal__backdrop"></div>
             <div className="bfd-modal__modal" onClick={::this.handleModalClick}>
               <div className="bfd-modal__modal-dialog">
@@ -150,7 +152,10 @@ Modal.propTypes = {
   lock: PropTypes.bool,
 
   // 关闭后的回调，动画结束后执行。如果 close 方法传入回调，则此属性不会触发
-  onClose: PropTypes.func
+  onClose: PropTypes.func,
+
+  // 尺寸，可选值：`sm`, `lg`, 默认中等尺寸
+  size: PropTypes.oneOf(['sm', 'lg'])
 }
 
 export default Modal

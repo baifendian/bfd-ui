@@ -10,14 +10,13 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import { Select, Option } from '../../Select'
-import formControlValue from '../formControlValue'
 
 const FormSelect = (props, context) => {
   const { children, className, onChange, ...other } = props
-  const control = formControlValue(context.form, context.formItem)
-  other.value = control.get()
+  const { form, formItem } = context
+  other.value = form.getItemValue(formItem)
   other.onChange = value => {
-    control.set(value)
+    form.setItemValue(formItem, value)
     onChange && onChange(value)
   }
   return (
@@ -28,8 +27,8 @@ const FormSelect = (props, context) => {
 }
 
 FormSelect.contextTypes = {
-  form: PropTypes.object,
-  formItem: PropTypes.object
+  form: PropTypes.object.isRequired,
+  formItem: PropTypes.object.isRequired
 }
 
 export { FormSelect, Option }
