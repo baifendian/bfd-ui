@@ -55,16 +55,10 @@ class App extends Component {
 更多说明参考 [GUIDE](GUIDE.md)
 
 
-## 更新日志
 
-[CHANGELOG](CHANGELOG.md)
+## 开发者
 
-
-## 参与开发
-
-### 安装开发环境
-
-点击右上角 Fork
+#### 开发环境安装
 
 ```sh
 git clone https://github.com/yourName/bfd-ui.git
@@ -78,26 +72,39 @@ npm install
 
 npm start
 ```
-
 查看: http://localhost:4001
 
 
-### 编写一个新组件
-
-```sh
-npm run create MyComponent
-```
-
-查看: http://localhost:4001/components/MyComponent
-
-
-### 开发规范
+#### 开发规范
 
 - 向下兼容
 - 单元测试：组件根目录下创建 `__tests__` 文件夹
 - 代码规范参考 [airbnb react](https://github.com/airbnb/javascript/tree/master/react)
 
 
-### 提交代码
+#### 编写一个新组件
+```sh
+npm run create MyComponent
+```
+查看: http://localhost:4001/components/MyComponent
 
-push 后发起 pull request 即可
+
+#### 发布新版本
+
+1. 更新 CHANGELOG.md
+1. `npm test`
+1. `npm run compile`
+1. `npm version ...`
+1. `npm publish`
+
+
+#### 文档站更新
+
+```sh
+npm run pack
+```
+
+
+## 更新日志
+
+[CHANGELOG](CHANGELOG.md)
