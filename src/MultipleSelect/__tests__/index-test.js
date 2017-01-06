@@ -18,7 +18,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const checkboxes = document.querySelectorAll('.bfd-checkbox input:checked')
     const labels = container.querySelectorAll('.bfd-tag-list__item')
@@ -36,7 +36,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const checkboxes = document.querySelectorAll('.bfd-checkbox input:checked')
     expect(checkboxes.length).toBe(2)
@@ -52,7 +52,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     TestUtils.Simulate.change(container.querySelector('input'), {
       target: {
@@ -84,7 +84,7 @@ describe('MultipleSelect', () => {
       </MultipleSelect>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const checkboxes = document.querySelectorAll('.bfd-checkbox input')
     TestUtils.Simulate.change(checkboxes[1], {
@@ -101,7 +101,7 @@ describe('MultipleSelect', () => {
       <MultipleSelect data={['a', 'b']} render={item => <Option>{item}</Option>} />
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const checkboxes = document.querySelectorAll('.bfd-checkbox')
     expect(checkboxes.length).toBe(3)

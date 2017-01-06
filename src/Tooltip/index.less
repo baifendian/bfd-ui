@@ -7,6 +7,32 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@mainColor: #333;
+
 .bfd-tooltip__popover {
   white-space: pre-wrap;
+  > .bfd-popover__content {
+    background-color: @mainColor;
+    color: #fff;
+  }
+  &.bfd-popover--up {
+    &:after {
+      border-top-color: @mainColor;
+    }
+  }
+  &.bfd-popover--down {
+    &:after {
+      border-bottom-color: @mainColor;
+    }
+  }
+  &.bfd-popover--left {
+    &:after {
+      border-left-color: @mainColor;
+    }
+  }
+  &.bfd-popover--right {
+    &:after {
+      border-right-color: @mainColor;
+    }
+  }
 }

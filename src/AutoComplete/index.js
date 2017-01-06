@@ -89,12 +89,11 @@ class AutoComplete extends Component {
     const { className, source, onFocus, onKeyDown, onChange, ...other } = this.props
     return (
       <Dropdown
-        className={classnames('bfd-auto-complete', className)}
         open={open}
         aligned
         onToggle={open => this.setState({ open })}
       >
-        <DropdownToggle>
+        <DropdownToggle className={classnames('bfd-auto-complete', className)}>
           <ClearableInput
             value={value}
             onKeyDown={::this.handleKeyDown}

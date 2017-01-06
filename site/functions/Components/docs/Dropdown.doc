@@ -8,7 +8,7 @@ const DropdownBasic = () => {
   return (
     <Dropdown>
       <DropdownToggle>
-        <Button>展开</Button>
+        <Button>Open</Button>
       </DropdownToggle>
       <DropdownMenu>
         Nullam quis risus eget urna mollis
@@ -29,7 +29,7 @@ const DropdownRight = () => {
   return (
     <Dropdown>
       <DropdownToggle>
-        <Button>展开</Button>
+        <Button>Open</Button>
       </DropdownToggle>
       <DropdownMenu direction="up" align="right">
         Nullam quis risus eget urna mollis
@@ -45,14 +45,12 @@ const DropdownRight = () => {
  */
 import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
 import Button from 'bfd/Button'
-import Tooltip from 'bfd/Tooltip'
-import Icon from 'bfd/Icon'
 
 const DropdownNested = () => {
   return (
     <Dropdown>
       <DropdownToggle>
-        <Button>展开</Button>
+        <Button>Open</Button>
       </DropdownToggle>
       <DropdownMenu>
         Nullam quis risus eget urna mollis
@@ -60,15 +58,12 @@ const DropdownNested = () => {
         penatibus et magnis dis parturient montes
         <Dropdown>
           <DropdownToggle>
-            <Button>More</Button>
+            <a href="javascript:">more...</a>
           </DropdownToggle>
           <DropdownMenu direction="right">
             Nullam quis risus eget urna mollis
             ornare vel eu leo. Cum sociis natoque
             penatibus et magnis dis parturient montes
-            <Tooltip title="Cum sociis natoque penatibus et magnis dis parturient montes">
-              <Icon type="question-circle" />
-            </Tooltip>
           </DropdownMenu>
         </Dropdown>
       </DropdownMenu>
@@ -86,7 +81,7 @@ const DropdownDisabled = () => {
   return (
     <Dropdown disabled>
       <DropdownToggle>
-        <Button>展开</Button>
+        <Button>Open</Button>
       </DropdownToggle>
       <DropdownMenu></DropdownMenu>
     </Dropdown>

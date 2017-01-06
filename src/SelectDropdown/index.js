@@ -17,56 +17,53 @@ import './index.less'
 class SelectDropdown extends Component {
 
   close() {
-    this.refs.dropdown.close()
+    this.dropdown.close()
   }
 
   render() {
 
     const {
-      className, children, title, url, hasPropValue, caret, onLoad, minWidth, ...other
+      className, children, title, url, hasPropValue, caret, onLoad, onToggle, minWidth,
+      disabled, ...other
     } = this.props
 
     if (minWidth) {
       other.style = Object.assign(other.style || {}, { minWidth })
     }
 
-    const Toggle = url && hasPropValue ? (
-      <Fetch
-        spinnerHeight={20}
-        defaultHeight={28}
-        url={url}
-        onSuccess={onLoad}
-      >
-        {title}
-      </Fetch>
-    ) : title
-
     return (
       <Dropdown
-        ref="dropdown"
-        className={classnames('bfd-select-dropdown', {
-          'bfd-select-dropdown--caretable': caret
-        }, className)}
         aligned
-        {...other}
+        onToggle={onToggle}
+        disabled={disabled}
+        ref={dropdown => this.dropdown = dropdown}
       >
-        <DropdownToggle tabIndex="0">
-          {Toggle}
+        <DropdownToggle className={classnames('bfd-select-dropdown', {
+          'bfd-select-dropdown--caretable': caret
+        }, className)} {...other}>
+          {url && hasPropValue ? (
+            <Fetch
+              spinnerHeight={20}
+              defaultHeight={28}
+              url={url}
+              onSuccess={onLoad}
+            >
+              {title}
+            </Fetch>
+          ) : title}
           {caret && <Icon type="caret-down" className="bfd-select-dropdown__caret" />}
         </DropdownToggle>
         <DropdownMenu className="bfd-select-dropdown__popover">
-          {
-            url && !hasPropValue ? (
-              <Fetch
-                url={url}
-                defaultHeight={30}
-                spinnerHeight={20}
-                onSuccess={onLoad}
-              >
-                {children}
-              </Fetch>
-            ) : children
-          }
+          {url && !hasPropValue ? (
+            <Fetch
+              url={url}
+              defaultHeight={30}
+              spinnerHeight={20}
+              onSuccess={onLoad}
+            >
+              {children}
+            </Fetch>
+          ) : children}
         </DropdownMenu>
       </Dropdown>
     )
@@ -79,7 +76,9 @@ SelectDropdown.propTypes = {
   hasPropValue: PropTypes.bool,
   caret: PropTypes.bool,
   disabled: PropTypes.bool,
-  minWidth: PropTypes.number
+  minWidth: PropTypes.number,
+  onLoad: PropTypes.func,
+  onToggle: PropTypes.func
 }
 
 export default SelectDropdown

@@ -57,8 +57,8 @@ class App extends Component {
             {this.renderNav()}
           </Col>
           <Col right>
-            <Dropdown ref="dropdown" className="header__nav-toggle">
-              <DropdownToggle>
+            <Dropdown ref="dropdown">
+              <DropdownToggle className="header__nav-toggle">
                 <Button icon="bars" transparent />
               </DropdownToggle>
               <DropdownMenu

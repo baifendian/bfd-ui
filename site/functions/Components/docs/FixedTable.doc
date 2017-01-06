@@ -69,7 +69,7 @@ class FixedTableDemo extends Component {
 
   render() {
     return (
-      <FixedTable 
+      <FixedTable
         height={200}
         data={this.state.data}
         column={this.state.column}

@@ -1,3 +1,28 @@
+## v1.5.6
+
+*2016-01-06*
+
+- FixedTable 新增属性 noDataContent
+- 部分组件样式调整
+- Dropdown DOM 结构调整
+
+> Dropdown DOM 结构调整，Dropdown 不产生实际 DOM 节点，className 等属性请转移到 DropdownToggle
+
+调整前
+```markup
+<div class="bfd-dropdown">
+  <div class="bfd-dropdown__toggle bfd-popover__trigger">
+    ...
+  </div>
+</div>
+```
+调整后
+```markup
+<div class="bfd-dropdown-toggle bfd-popover__trigger">
+  ...
+</div>
+```
+
 ## v1.5.5
 
 *2016-12-30*

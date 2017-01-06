@@ -12,6 +12,7 @@ import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import Popover from '../Popover'
 import './index.less'
+import '../Tooltip/index.less'
 
 class TextOverflow extends Component {
   render() {

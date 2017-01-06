@@ -8,7 +8,6 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import classnames from 'classnames'
 import controlledPropValidator from '../_shared/propValidator/controlled'
 import Popover from '../Popover'
 import DropdownToggle from './DropdownToggle'
@@ -51,41 +50,35 @@ class Dropdown extends Component {
   }
 
   render() {
-    const { children, className, onToggle, disabled, aligned, ...other } = this.props
+    const { children, disabled, aligned } = this.props
     const { open } = this.state
-    delete other.open
 
+    let toggle, menu
     React.Children.forEach(children, child => {
       if (child.type === DropdownToggle) {
-        this.DropdownToggle = child
+        toggle = child
       } else if (child.type === DropdownMenu) {
-        this.DropdownMenu = child
+        menu = child
       }
     })
 
-    const { right, ...menuProps } = this.DropdownMenu.props
-    menuProps.className = classnames('bfd-dropdown__popover', menuProps.className)
+    const { right, ...menuProps } = menu.props
     if (right) {
       menuProps.align = 'right'
     }
 
     return (
-      <div className={classnames('bfd-dropdown', {
-        'bfd-dropdown--open': open
-      }, className)} {...other}
+      <Popover
+        triggerMode="click"
+        open={open}
+        onToggle={::this.handleToggle}
+        content={menuProps.children}
+        disabled={disabled}
+        aligned={aligned}
+        {...menuProps}
       >
-        <Popover
-          triggerMode="click"
-          open={open}
-          onToggle={::this.handleToggle}
-          content={menuProps.children}
-          disabled={disabled}
-          aligned={aligned}
-          {...menuProps}
-        >
-          {this.DropdownToggle}
-        </Popover>
-      </div>
+        {React.cloneElement(toggle, { open })}
+      </Popover>
     )
   }
 }

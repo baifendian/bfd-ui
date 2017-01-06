@@ -53,13 +53,11 @@ class DatePicker extends Component {
     return (
       <Dropdown
         ref="dropdown"
-        className={classnames('bfd-datepicker', className)}
         {...other}
       >
-        <DropdownToggle>
+        <DropdownToggle className={classnames('bfd-datepicker', className)}>
           <ClearableInput
             placeholder={placeholder}
-            className="bfd-datepicker__input"
             value={date ? format(date, 'yyyy-mm-dd') : null}
             onChange={::this.handleInput}
             readOnly

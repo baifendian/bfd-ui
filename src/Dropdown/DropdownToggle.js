@@ -7,18 +7,18 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from 'react'
+import React from 'react'
 import classnames from 'classnames'
 
-class DropdownToggle extends Component {
-  render() {
-    const { children, className, ...other } = this.props
-    return (
-      <div className={classnames('bfd-dropdown__toggle', className)} {...other}>
-        {children}
-      </div>
-    )
-  }
+const DropdownToggle = props => {
+  const { className, children, open, ...other } = props
+  return (
+    <div className={classnames('bfd-dropdown-toggle', {
+      'bfd-dropdown-toggle--open': open
+    }, className)} {...other}>
+      {children}
+    </div>
+  )
 }
 
 export default DropdownToggle

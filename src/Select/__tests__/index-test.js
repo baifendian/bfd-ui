@@ -18,7 +18,7 @@ describe('Select', () => {
       </Select>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const selected = document.querySelector('.bfd-select__option--selected')
     expect(selected.textContent).toBe('三星')
@@ -33,7 +33,7 @@ describe('Select', () => {
       </Select>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const selected = document.querySelector('.bfd-select__option--selected')
     expect(selected.textContent).toBe('三星')
@@ -49,7 +49,7 @@ describe('Select', () => {
       </Select>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const options = document.querySelectorAll('.bfd-select__option')
     TestUtils.Simulate.click(options[0])
@@ -62,7 +62,7 @@ describe('Select', () => {
       <Select data={['a', 'b']} render={item => <Option>{item}</Option>} />
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
 
     const options = document.querySelectorAll('.bfd-select__option')
     expect(options.length).toBe(2)
@@ -78,7 +78,7 @@ describe('Select', () => {
       </Select>
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
     const searchInput = document.querySelector('input')
 
     TestUtils.Simulate.change(searchInput, {

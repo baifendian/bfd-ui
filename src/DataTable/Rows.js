@@ -99,7 +99,9 @@ class Rows extends Component {
           )
         }) : (
           <tr>
-            <td colSpan="9">{noDataContent}</td>
+            <td colSpan={column.length} className="bfd-datatable__empty">
+              {noDataContent}
+            </td>
           </tr>
         )
       }

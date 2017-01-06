@@ -17,11 +17,11 @@
   padding: 0 20px;
   height: 30px;
   background-color: @color400;
-  border: 1px solid transparent;
+  border: 1px solid @color400;
   border-radius: 2px;
   vertical-align: middle;
   cursor: pointer;
-  transition: background-color .1s ease, color .1s ease, border-color .1s ease;
+  // transition: background-color .1s ease, color .1s ease, border-color .1s ease;
   &:hover {
     background-color: @color500;
   }
@@ -33,7 +33,7 @@
   }
   &[disabled] {
     background-color: #eceff1;
-    border-color: #eceff1;
+    border-color: #eaeaea;
     color: #9e9e9e;
     cursor: not-allowed;
   }
@@ -46,17 +46,14 @@
 }
 
 .bfd-btn--minor {
-  color: @color400;
-  background-color: #fff;
-  border: 1px solid @color400;
+  color: #333;
+  background-color: #f8f8f8;
+  border-color: #c6c6c6;
   &:hover {
-    color: #fff;
-    background-color: @color400;
+    background-color: #f1f1f1;
   }
   &:active {
-    color: #fff;
-    border-color: @color500;
-    background-color: @color500;
+    background-color: #eaeaea;
   }
 }
 

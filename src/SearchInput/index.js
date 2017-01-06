@@ -25,13 +25,16 @@ class SearchInput extends Component {
   }
 
   render() {
-    const { className, label, size, defaultValue, onSearch, onChange, ...other } = this.props
+    const {
+      className, label, size, defaultValue, onSearch, onChange, placeholder,
+      ...other
+    } = this.props
     const width = this.props.width || '300px'
 
     return (
-      <div className={classnames('bfd-search_input', className, size)} {...other}>        
-        <ClearableInput style={{width}} defaultValue={this.value} size={size} onKeyUp={::this.handleKeyUp} onChange={::this.handleChange} inline placeholder={this.props.placeholder || ''}/>
-        <Button size={size} onClick={::this.handleClick} icon="search">{this.props.label || '搜索'}</Button>
+      <div className={classnames('bfd-search_input', className, size)} {...other}>
+        <ClearableInput style={{width}} defaultValue={this.value} size={size} onKeyUp={::this.handleKeyUp} onChange={::this.handleChange} inline placeholder={placeholder}/>
+        <Button size={size} onClick={::this.handleClick} icon="search">{label}</Button>
       </div>
     )
   }
@@ -48,7 +51,7 @@ class SearchInput extends Component {
   }
 
   handleKeyUp(e) {
-    e.preventDefault()    
+    e.preventDefault()
     const code = e.keyCode
     if(code == 13) {
       this.handleClick()
@@ -56,12 +59,16 @@ class SearchInput extends Component {
   }
 }
 
+SearchInput.defaultProps = {
+  label: '搜索'
+}
+
 SearchInput.propTypes = {
 
   // 搜索框提示信息
   placeholder: PropTypes.string,
 
-  // 搜索按钮名称，默认为“搜索”
+  // 搜索按钮名称，默认 `搜索`
   label: PropTypes.string,
 
   // 搜索按钮单击事件，value为搜索框输入值
@@ -70,8 +77,8 @@ SearchInput.propTypes = {
   // 搜索框值改变事件，value为搜索框输入值
   onChange: PropTypes.func,
 
-  // 输入框高度尺寸，参考 Bootstrap input，可选值：lg, sm，默认为lg
-  size: PropTypes.string,
+  // 输入框高度尺寸，默认中等尺寸
+  size: PropTypes.oneOf(['sm', 'lg']),
 
   // 输入框默认值
   defaultValue: PropTypes.string,

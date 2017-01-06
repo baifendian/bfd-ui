@@ -25,7 +25,7 @@ describe('Dropdown', () => {
         <DropdownMenu />
       </Dropdown>
     )
-    TestUtils.Simulate.click(findDOMNode(instance).querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(findDOMNode(instance))
     expect(handleToggle).toBeCalledWith(true)
   })
 
@@ -36,6 +36,6 @@ describe('Dropdown', () => {
         <DropdownMenu />
       </Dropdown>
     )
-    expect(findDOMNode(instance).querySelector('.bfd-dropdown__toggle').className).toContain('disabled')
+    expect(findDOMNode(instance).className).toContain('disabled')
   })
 })

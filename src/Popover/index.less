@@ -7,15 +7,18 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-@duration: .1s;
+@padding: 7px;
+@arrowRelative: 20px + @padding;
 
 .bfd-popover__trigger {
   cursor: pointer;
+  user-select: none;
 }
 
 .bfd-popover__trigger--disabled,
 .bfd-popover__trigger--disabled * {
   background-color: #eceff1!important;
+  border-color: #eaeaea!important;
   cursor: not-allowed!important;
   color: #999!important;
   user-select: none;
@@ -26,8 +29,7 @@
   left: 0;
   top: 0;
   z-index: 9999;
-  opacity: 0;
-  transition: opacity @duration;
+  display: none;
   &:after {
     content: '';
     position: absolute;
@@ -36,100 +38,105 @@
   }
 }
 
-.bfd-popover__content {
-  padding: 10px 12px;
-  background: #fff;
-  border-radius: 2px;
-  max-width: 200px;
-  word-wrap: break-word;
-  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, .25);
-  max-height: 300px;
-  overflow: auto;
-  transform: scale(.5);
-  transition: transform @duration;
+.bfd-popover--open {
+  display: block;
 }
 
-.bfd-popover--open {
-  opacity: 1;
-  .bfd-popover__content {
-    transform: scale(1);
+.bfd-popover--animation {
+  animation: bfd-popover .15s;
+}
+
+@keyframes bfd-popover {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 .bfd-popover--up {
-  padding-bottom: 7px;
-  .bfd-popover__content {
-    transform-origin: bottom;
-  }
+  padding-bottom: @padding;
+  margin-top: -@padding;
   &:after {
     left: 50%;
     bottom: 1px;
-    margin-left: -7px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 6px solid #fff;
+    margin-left: -@padding;
+    border-left: @padding solid transparent;
+    border-right: @padding solid transparent;
+    border-top: @padding - 1px solid #fff;
   }
 }
 
 .bfd-popover--down {
-  padding-top: 7px;
-  .bfd-popover__content {
-    transform-origin: top;
-  }
+  padding-top: @padding;
   &:after {
     left: 50%;
     top: 1px;
-    margin-left: -7px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 6px solid #fff;
+    margin-left: -@padding;
+    border-left: @padding solid transparent;
+    border-right: @padding solid transparent;
+    border-bottom: @padding - 1px solid #fff;
   }
 }
 
 .bfd-popover--left {
-  padding-right: 7px;
-  .bfd-popover__content {
-    transform-origin: right;
-  }
+  padding-right: @padding;
   &:after {
     top: 50%;
     right: 1px;
-    margin-top: -7px;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    border-left: 6px solid #fff;
+    margin-top: -@padding;
+    border-top: @padding solid transparent;
+    border-bottom: @padding solid transparent;
+    border-left: @padding - 1px solid #fff;
   }
 }
 
 .bfd-popover--right {
-  padding-left: 7px;
-  .bfd-popover__content {
-    transform-origin: left;
-  }
+  padding-left: @padding;
   &:after {
     top: 50%;
     left: 1px;
-    margin-top: -7px;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    border-right: 6px solid #fff;
+    margin-top: -@padding;
+    border-top: @padding solid transparent;
+    border-bottom: @padding solid transparent;
+    border-right: @padding - 1px solid #fff;
   }
 }
 
-.bfd-popover--align-left:after {
-  left: 20px;
+.bfd-popover--align-left {
+  &:after {
+    left: @arrowRelative;
+  }
 }
 
-.bfd-popover--align-right:after {
-  left: auto;
-  right: 20px;
+.bfd-popover--align-right {
+  &:after {
+    left: auto;
+    right: @arrowRelative;
+  }
 }
 
-.bfd-popover--align-top:after {
-  top: 20px;
+.bfd-popover--align-top {
+  &:after {
+    top: @arrowRelative;
+  }
 }
 
-.bfd-popover--align-bottom:after {
-  top: auto;
-  bottom: 20px;
+.bfd-popover--align-bottom {
+  &:after {
+    top: auto;
+    bottom: @arrowRelative;
+  }
+}
+
+.bfd-popover__content {
+  padding: 10px 12px;
+  background: #fff;
+  border-radius: 2px;
+  word-wrap: break-word;
+  box-shadow: 0px 2px 10px 0px rgba(0, 0, 0, .25);
+  max-width: 200px;
+  max-height: 300px;
+  overflow: auto;
 }

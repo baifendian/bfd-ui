@@ -116,7 +116,7 @@ module.exports = function (source) {
     match = sourceCode.match(/\.propTypes = ({[^]+?\n\})/)
     if (match) {
       match = match[1]
-      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*.*PropTypes(.*)/g
+      const reg = /(\/\/|\/\*\*)([^]+?)(\w+):\s*.*?PropTypes(.*)/g
       let res
       while (res = reg.exec(match)) {
         let desc = res[2] || ''
@@ -124,7 +124,7 @@ module.exports = function (source) {
           desc = desc.trim().replace(/\*\/$/, '')
           desc = marked(desc.replace(/\r?\n?\s*\*\s?/g, '\r\n').trim())
         }
-        let type = res[4].match(/string|bool|number|object|array|func|element|oneOf.*/g)[0]
+        let type = res[4].match(/string|bool|number|object|array|func|node|element|oneOf.*/g)[0]
         if (type.indexOf('oneOfType') === 0) {
           type = type.match(/PropTypes\.\w+/g).join(' | ').replace(/PropTypes\./g, '')
         } else if (type.indexOf('oneOf') === 0) {

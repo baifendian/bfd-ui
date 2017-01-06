@@ -11,10 +11,16 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
-import ToggleNode from '../_shared/ToggleNode'
 import CoordinateFactory from './CoordinateFactory'
 
 class PopoverContent extends Component {
+
+  constructor(props) {
+    super()
+    this.state = {
+      open: props.open
+    }
+  }
 
   getChildContext() {
     return {
@@ -24,93 +30,53 @@ class PopoverContent extends Component {
 
   componentDidMount() {
     this.rootNode = ReactDOM.findDOMNode(this)
-    this.toggleContent = new ToggleNode(
-      this.rootNode, 'bfd-popover--open', ::this.setPosition
-    )
-    this.toggleContent.open()
+    this.state.open && this.setPosition()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    'open' in nextProps && this.setState({open: nextProps.open})
   }
 
   componentDidUpdate() {
-    this.toggleContent.open()
-  }
-
-  getComputedDirection(triggerRect, popoverRect) {
-    let { direction } = this.props
-    if (direction === 'up' || direction === 'down') {
-      if (triggerRect.top < popoverRect.height) {
-        direction = 'down'
-      } else if (popoverRect.height + triggerRect.top + triggerRect.height > window.innerHeight) {
-        direction = 'up'
-      }
-    }
-    return direction
-  }
-
-  getComputedAlign(direction) {
-    const { align } = this.props
-    if (align === 'middle') {
-      return align
-    }
-    if (direction === 'up' || direction === 'down') {
-      if (align === 'top' || align === 'bottom') {
-        return 'middle'
-      }
-    } else {
-      if (align === 'left' || align === 'right') {
-        return 'middle'
-      }
-    }
-    return align
-  }
-
-  setClassNamesByPosition(direction, align) {
-    this.positionClassNames = classnames({
-      [`bfd-popover--${direction}`]: true,
-      [`bfd-popover--align-${align}`]: !!align
-    })
-    classlist(this.rootNode).add(this.positionClassNames)
-  }
-
-  setCoordinate(triggerRect, popoverRect, direction, align) {
-    const [left, top] = CoordinateFactory(triggerRect, popoverRect, direction, align)
-    this.rootNode.style.cssText = `left: ${left}px; top: ${top}px;`
+    this.state.open && this.setPosition()
   }
 
   setPosition() {
-    const { triggerNode } = this.props
+    const { triggerNode, direction, align } = this.props
 
     // Prevent accumulation
     if (this.positionClassNames) {
       classlist(this.rootNode).remove(...this.positionClassNames.split(' '))
     }
-
-    // Calculate elements size
-    const triggerRect = triggerNode.getBoundingClientRect()
-    let popoverRect = this.rootNode.getBoundingClientRect()
-
-    // Calculate direction with arrow and reCalculate contentNode size
-    const direction = this.getComputedDirection(triggerRect, popoverRect)
-    const align = this.getComputedAlign(direction)
-    this.setClassNamesByPosition(direction, align)
-    popoverRect = this.rootNode.getBoundingClientRect()
-
-    this.setCoordinate(triggerRect, popoverRect, direction, align)
+    const [computedDirection, computedAlign] = CoordinateFactory(
+      triggerNode, this.rootNode, direction, align
+    )
+    this.positionClassNames = classnames({
+      [`bfd-popover--${computedDirection}`]: true,
+      [`bfd-popover--align-${computedAlign}`]: !!computedAlign
+    })
+    classlist(this.rootNode).add(this.positionClassNames)
   }
 
   /**
    * @public
    */
   close() {
-    this.toggleContent.close()
+    this.setState({open: false})
   }
 
   render() {
     const {
-      children, className, popover, triggerNode, direction, align, ...other
+      children, className, triggerNode, triggerMode, direction, align, ...other
     } = this.props
+    const { open } = this.state
+    delete other.open
     return (
-      <div className="bfd-popover">
-        <div className={classnames('bfd-popover__content', className)} {...other}>
+      <div className={classnames('bfd-popover', {
+        'bfd-popover--open': open,
+        'bfd-popover--animation': triggerMode === 'hover'
+      }, className)} {...other}>
+        <div className="bfd-popover__content">
           {children}
         </div>
       </div>

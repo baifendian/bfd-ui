@@ -45,9 +45,7 @@ class Rows extends Component {
   }
 
   render() {
-    const rows = this.props.rows
-    const column = this.props.column
-    
+    const { rows, column, noDataContent } = this.props
     return (
       <tbody>
       {
@@ -60,11 +58,11 @@ class Rows extends Component {
               delete this.selectedRow[item[this.column.primary]]
             }
           }
-          
+
           const isSelect = item.isSelect || false
           const isDisabled = item.disabled || false
-          const checkboxTd = this.props.onCheckboxSelect 
-            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td> 
+          const checkboxTd = this.props.onCheckboxSelect
+            ? <td><Checkbox disabled={isDisabled} checked={isSelect} onClick={::this.handleCheckboxClick} onChange={this.handleCheckboxChange.bind(this, item)}></Checkbox></td>
             : null
           return (
             <tr key={j} onClick={this.handleRowClick.bind(this, item)}>
@@ -94,7 +92,13 @@ class Rows extends Component {
               }
             </tr>
           )
-        }) : <tr><td colSpan="9"><div className="align-center" ref="nothingData" ></div>暂无数据!</td></tr>
+        }) : (
+          <tr>
+            <td colSpan={column.length} className="bfd-fixedtable__empty">
+              {noDataContent}
+            </td>
+          </tr>
+        )
       }
       </tbody>
     )
@@ -215,11 +219,11 @@ class FixedTable extends Component {
                     }
 
                     return (
-                      <th 
+                      <th
                         key={head['title']}
                         style={style}
                         onClick={self.orderClick.bind(self, head, i)}>
-                        <div ref={i} style={style} title={head['order']===true ? head['title'] + '排序' : ''} className={orderClassName}>{head['title']}</div>
+                        <div ref={i} style={style} className={orderClassName}>{head['title']}</div>
                       </th>
                     )
                   })
@@ -227,13 +231,14 @@ class FixedTable extends Component {
               </tr>
             </thead>
 
-            <Rows 
-              rows={this.state.items.totalList} 
+            <Rows
+              rows={this.state.items.totalList}
               onRowClick={::this.handleRowClick}
               onSelect={::this.handleCheckboxChange}
               onCheckboxSelect={this.props.onCheckboxSelect}
               onCheckboxSelectAll={::this.setCheckboxAll}
               column={this.props.column}
+              noDataContent={this.props.noDataContent}
             >
             </Rows>
           </table>
@@ -362,6 +367,10 @@ class FixedTable extends Component {
   }
 }
 
+FixedTable.defaultProps = {
+  noDataContent: '无数据'
+}
+
 FixedTable.propTypes = {
 
   /**
@@ -397,7 +406,10 @@ FixedTable.propTypes = {
   onRowClick: PropTypes.func,
 
   // 列名称点击排序事件，返回列名称和排序状态
-  onOrder: PropTypes.func
+  onOrder: PropTypes.func,
+
+  // 无数据显示内容，默认`无数据`
+  noDataContent: PropTypes.node
 }
 
 export default FixedTable

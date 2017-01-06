@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var multiparty = require('multiparty');
 var compression = require('compression')
 var fs = require('fs')
+var domain = require('domain')
 
 var app = express()
 app.use(compression())
@@ -13,6 +14,16 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(express.static(path.join(__dirname, './')))
+
+// Error handle
+app.use(function(req, res, next) {
+  var reqDomain = domain.create()
+  var i = 0
+  reqDomain.on('error', function(err) {
+    res.send(500, '<pre>' + err.stack + '</pre>')
+  })
+  reqDomain.run(next)
+})
 
 if (process.env.NODE_ENV !== 'production') {
   var webpack = require('webpack')
@@ -37,7 +48,7 @@ app.post('/api/form', function(req, res) {
 function clone(obj) {
   var o;
   if (typeof obj == "object") {
-    if (obj === null) {  
+    if (obj === null) {
         o = null;
     } else {
         if (obj instanceof Array) {
@@ -46,17 +57,17 @@ function clone(obj) {
               o.push(clone(obj[i]));
           }
         } else {
-            o = {};  
-            for (var j in obj) {  
+            o = {};
+            for (var j in obj) {
                 o[j] = clone(obj[j]);
             }
         }
     }
   } else {
       o = obj;
-  }  
+  }
   return o;
-}  
+}
 
 function getTableDate(page, size) {
   var data = [

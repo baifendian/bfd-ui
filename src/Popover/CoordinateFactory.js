@@ -15,17 +15,24 @@ function getDocumentScroll() {
   ]
 }
 
-function CoordinateFactory(triggerRect, popoverRect, direction, align) {
+function CoordinateFactory(triggerNode, popoverNode, direction, align) {
   const [scrollTop, scrollLeft] = getDocumentScroll()
   const CF = CoordinateFactory
-  CF.triggerRect = triggerRect
-  CF.popoverRect = popoverRect
-  CF.align = align
+
+  CF.triggerRect = triggerNode.getBoundingClientRect()
+  CF.popoverRect = popoverNode.getBoundingClientRect()
+  CF.direction = CF.getComputedDirection(direction)
+  CF.align = CF.getComputedAlign(align)
   CF.center = [
-    triggerRect.left + triggerRect.width / 2 + scrollLeft,
-    triggerRect.top + triggerRect.height / 2 + scrollTop
+    CF.triggerRect.left + CF.triggerRect.width / 2 + scrollLeft,
+    CF.triggerRect.top + CF.triggerRect.height / 2 + scrollTop
   ]
-  return CF.coordinateMap[direction].call(CF)
+
+  const [left, top] = CF.coordinateMap[CF.direction].call(CF)
+  popoverNode.style.left = left + 'px'
+  popoverNode.style.top = top + 'px'
+
+  return [CF.direction, CF.align]
 }
 
 Object.assign(CoordinateFactory, {
@@ -37,6 +44,34 @@ Object.assign(CoordinateFactory, {
   align: null,
 
   center: null,
+
+  getComputedDirection(direction) {
+    const { triggerRect, popoverRect } = this
+    if (direction === 'up' || direction === 'down') {
+      if (triggerRect.top < popoverRect.height) {
+        direction = 'down'
+      } else if (popoverRect.height + triggerRect.top + triggerRect.height > window.innerHeight) {
+        direction = 'up'
+      }
+    }
+    return direction
+  },
+
+  getComputedAlign(align) {
+    if (align === 'middle') {
+      return align
+    }
+    if (this.direction === 'up' || this.direction === 'down') {
+      if (align === 'top' || align === 'bottom') {
+        return 'middle'
+      }
+    } else {
+      if (align === 'left' || align === 'right') {
+        return 'middle'
+      }
+    }
+    return align
+  },
 
   getAlignPosition(horizontal) {
     const types = horizontal ? ['left', 'right'] : ['top', 'bottom']

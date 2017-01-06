@@ -45,17 +45,19 @@ class SearchInput2 extends Component {
 
   render() {
 
-    const { className, defaultValue, onChange, onSearch, block, ...inputProps } = this.props
+    const {
+      className, defaultValue, onChange, onSearch, block, size, placeholder, ...other
+    } = this.props
     const { value } = this.state
+    delete other.value
 
-    delete inputProps.value
+    const inputProps = { value, size, placeholder }
 
     return (
       <div className={classnames('bfd-search-input2', {
         'bfd-search-input2--block': block
-      }, className)}>
+      }, className)} {...other}>
         <Input
-          value={value}
           onChange={::this.handleChange}
           onKeyDown={::this.handleKeyDown}
           {...inputProps}

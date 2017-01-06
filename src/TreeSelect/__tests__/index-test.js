@@ -15,7 +15,7 @@ describe('TreeSelect', () => {
       <TreeSelect value="0" defaultData={data} onChange={jest.fn()} />
     )
     const container = findDOMNode(instance)
-    TestUtils.Simulate.click(container.querySelector('.bfd-dropdown__toggle'))
+    TestUtils.Simulate.click(container)
     expect(document.querySelector('.bfd-tree__node-content--active').textContent).toBe('0')
   })
 })

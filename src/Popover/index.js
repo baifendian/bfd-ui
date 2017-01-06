@@ -149,6 +149,8 @@ class Popover extends Component {
         <PopoverContent
           ref={instance => this.popoverContent = instance}
           triggerNode={triggerNode}
+          triggerMode={triggerMode}
+          open
           {...other}
         >
           {content}
