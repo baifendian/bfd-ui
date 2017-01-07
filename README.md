@@ -55,13 +55,13 @@ class App extends Component {
 
 ## 组件全局配置
 
-覆盖或扩展 `defaultProps` 即可，以 [DatePciker](/components/DatePicker) 为例：
+覆盖或扩展 `defaultProps` 即可，以 [DatePciker](http://ui.baifendian.com/components/DatePicker) 为例：
 ```js
 DatePicker.defaultProps = Object.assign(DatePicker.defaultProps || {}, {
   placeholder: 'Please select date'
 })
 ```
-命令式 API 模块 [message]((/components/message)、[confirm]((/components/confirm)、[xhr]((/components/xhr) 也支持全局配置，涉及 url 方式加载数据的组件以及 [Form](/components/Form) 均依赖 xhr。详细配置请参考其各自文档
+命令式 API 模块 [message](http://ui.baifendian.com/components/message)、[confirm](http://ui.baifendian.com/components/confirm)、[xhr](http://ui.baifendian.com/components/xhr) 也支持全局配置，涉及 url 方式加载数据的组件以及 [Form](http://ui.baifendian.com/components/Form) 均依赖 xhr。详细配置请参考其各自文档
 
 > 全局配置后，这些 API 会变成有状态的，即最终结果受配置影响，所以尽量一次性配置并向其它开发者说明
 
