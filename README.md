@@ -52,11 +52,31 @@ class App extends Component {
 ```
 > 强烈建议基于[脚手架](https://github.com/baifendian/create-bfd-app)开发，省去繁琐的环境配置、项目基本结构、模板以及开发和部署相关工作
 
-更多说明参考 [GUIDE](GUIDE.md)
+
+## 组件全局配置
+
+覆盖或扩展 `defaultProps` 即可，以 [DatePciker](/components/DatePicker) 为例：
+```js
+DatePicker.defaultProps = Object.assign(DatePicker.defaultProps || {}, {
+  placeholder: 'Please select date'
+})
+```
+命令式 API 模块 [message]((/components/message)、[confirm]((/components/confirm)、[xhr]((/components/xhr) 也支持全局配置，涉及 url 方式加载数据的组件以及 [Form](/components/Form) 均依赖 xhr。详细配置请参考其各自文档
+
+> 全局配置后，这些 API 会变成有状态的，即最终结果受配置影响，所以尽量一次性配置并向其它开发者说明
 
 
+## 受控属性与不受控属性
 
-## 开发者
+组件支持不受控（`defaultXXX`）的使用方式，关于为什么区分受控 / 不受控请参考 [Controlled / Uncontrolled Components](https://facebook.github.io/react/docs/forms.html#controlled-components)
+
+
+## 浏览器支持
+
+Chrome、Firefox、Safari、IE9+
+
+
+## 开发者说明
 
 #### 开发环境安装
 
@@ -89,22 +109,11 @@ npm run create MyComponent
 查看: http://localhost:4001/components/MyComponent
 
 
-#### 发布新版本
-
-1. 更新 CHANGELOG.md
-1. `npm test`
-1. `npm run compile`
-1. `npm version ...`
-1. `npm publish`
-
-
-#### 文档站更新
-
-```sh
-npm run pack
-```
-
-
 ## 更新日志
 
-[CHANGELOG](CHANGELOG.md)
+[CHANGELOG](http://ui.baifendian.com/changelog)
+
+
+## LICENSE
+
+[BSD License](https://github.com/baifendian/bfd-ui/blob/master/LICENSE)
