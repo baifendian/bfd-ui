@@ -7,6 +7,9 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@duration: .2s;
+@zIndex: 1000;
+
 .bfd-modal--scrollbar-measure {
   position: absolute;
   top: -9999px;
@@ -31,8 +34,8 @@ body.bfd-modal--open {
   bottom: -1px;
   left: 0;
   opacity: 0;
-  transition: all .19s;
-  z-index: 1040;
+  transition: all @duration;
+  z-index: @zIndex;
   background-color: rgba(0, 0, 0, .8);
 }
 
@@ -42,7 +45,7 @@ body.bfd-modal--open {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1050;
+  z-index: @zIndex;
   -webkit-overflow-scrolling: touch;
   outline: 0;
   overflow-x: hidden;
@@ -50,14 +53,19 @@ body.bfd-modal--open {
 }
 
 .bfd-modal__modal-dialog {
-  margin: 50px auto;
+  transition: all @duration;
+}
+
+.bfd-modal__modal-dialog {
+  margin: 100px auto;
   width: 600px;
 }
 
 .bfd-modal__modal-content {
   opacity: 0;
-  transform: translate3d(0, -5px, 0);
-  transition: all .19s;
+  transform: scale(.98) translate3d(0, -10%, 0);
+  transform-origin: top;
+  transition: all @duration;
 }
 
 .bfd-modal--sm {
@@ -101,12 +109,12 @@ body.bfd-modal--open {
   background-color: #fff;
 }
 
-.bfd-modal--open {
+div.bfd-modal--open {
   .bfd-modal__backdrop {
     opacity: .6;
   }
   .bfd-modal__modal-content {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: scale(1) translate3d(0, 0, 0);
   }
 }

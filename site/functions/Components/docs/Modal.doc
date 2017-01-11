@@ -13,21 +13,55 @@ class ModalBasic extends Component {
   render() {
     return (
       <div>
-        <Button onClick={::this.handleOpen}>点击打开</Button>
+        <Button onClick={::this.handleOpen}>Open</Button>
         <Modal ref="modal">
           <ModalHeader>
-            <h4>test</h4>
+            <h4>Heading</h4>
           </ModalHeader>
           <ModalBody>
-            <Button onClick={() => this.refs.modal2.open()}>点击打开</Button>
-              <Modal ref="modal2">
-                <ModalHeader>
-                  <h4>test</h4>
-                </ModalHeader>
-                <ModalBody>
-                  内容2
-                </ModalBody>
-              </Modal>
+            Modal Body
+          </ModalBody>
+        </Modal>
+      </div>
+    )
+  }
+}
+
+/**
+ * @title 嵌套的
+ */
+import { Modal, ModalHeader, ModalBody } from 'bfd/Modal'
+import Button from 'bfd/Button'
+
+class ModalNested extends Component {
+
+  handleOpen() {
+    this.refs.modal.open()
+  }
+
+  render() {
+    return (
+      <div>
+        <Button onClick={::this.handleOpen}>Open</Button>
+        <Modal ref="modal">
+          <ModalHeader>
+            <h4>Heading</h4>
+          </ModalHeader>
+          <ModalBody>
+            <Button
+              type="minor"
+              onClick={() => this.refs.modal2.open()}
+            >
+              Open
+            </Button>
+            <Modal ref="modal2" size="sm">
+              <ModalHeader>
+                <h4>Heading</h4>
+              </ModalHeader>
+              <ModalBody>
+                Modal Body
+              </ModalBody>
+            </Modal>
           </ModalBody>
         </Modal>
       </div>

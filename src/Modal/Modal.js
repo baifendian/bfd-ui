@@ -12,6 +12,8 @@ import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
 import ToggleNode from '../_shared/ToggleNode'
+import EventPool from '../_shared/EventPool'
+import ModalContent from './ModalContent'
 
 const scrollbarWidth = (() => {
   const scrollDiv = document.createElement('div')
@@ -29,14 +31,9 @@ class Modal extends Component {
 
   constructor(props) {
     super(props)
+    this.closeCallbacks = new EventPool()
     this.state = {
       open: props.open || false
-    }
-  }
-
-  getChildContext() {
-    return {
-      modal: this
     }
   }
 
@@ -49,23 +46,36 @@ class Modal extends Component {
   }
 
   componentDidMount() {
-    // this.toggleContent = new ToggleNode()
-    // this.updateBodyState(this.state.open, false)
+    this.updateBodyState(this.state.open, false)
     if (this.state.open) {
       this.renderIntoDocument()
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // this.updateBodyState(this.state.open, prevState.open)
+    this.updateBodyState(this.state.open, prevState.open)
     if (this.state.open) {
       this.renderIntoDocument()
     } else {
       prevState.open && this.toggleModal.close()
+      const { modalContent } = this.context
+      if (modalContent) {
+        modalContent.goForward()
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.containerNode) {
+      ReactDOM.unmountComponentAtNode(this.containerNode)
+      document.body.removeChild(this.containerNode)
     }
   }
 
   updateBodyState(open, prevOpen) {
+    if (this.context.modalContent) {
+      return
+    }
     const body = document.body
     const bodyPaddingRight = parseInt(body.style.paddingRight, 10) || 0
     const _scrollbarWidth = body.scrollHeight > window.innerHeight ? scrollbarWidth : 0
@@ -73,22 +83,14 @@ class Modal extends Component {
       classlist(body).add('bfd-modal--open')
       body.style.paddingRight = bodyPaddingRight + _scrollbarWidth + 'px'
     } else if (!open && prevOpen) {
-      setTimeout(() => {
+      this.closeCallbacks.add(() => {
         classlist(body).remove('bfd-modal--open')
         if (bodyPaddingRight) {
           body.style.paddingRight = bodyPaddingRight - _scrollbarWidth + 'px'
         } else {
           body.style.paddingRight = ''
         }
-      }, this.closeTimeout)
-    }
-  }
-
-  closeTimeout = 150
-
-  handleModalClick(e) {
-    if (!this.props.lock && e.target.className === 'bfd-modal__modal') {
-      this.close()
+      })
     }
   }
 
@@ -111,46 +113,35 @@ class Modal extends Component {
   close(callback = this.props.onClose) {
     this.setState({open: false})
     this.props.onToggle && this.props.onToggle(false)
-    callback && setTimeout(callback, this.closeTimeout)
+    this.closeCallbacks.add(callback)
   }
 
   renderIntoDocument() {
-
     if (!this.containerNode) {
       this.containerNode = document.createElement('div')
       document.body.appendChild(this.containerNode)
     }
-
     const onRendered = () => {
       if (!this.toggleModal) {
-        this.toggleModal = new ToggleNode(this.modalNode, 'bfd-modal--open')
+        const node = ReactDOM.findDOMNode(this.content)
+        this.toggleModal = new ToggleNode(node, 'bfd-modal--open')
+        this.toggleModal.onClose = () => this.closeCallbacks.free()
       }
       this.toggleModal.open()
+      const { modalContent } = this.context
+      if (modalContent) {
+        modalContent.backUp()
+      }
     }
-
     this.renderIntoDocument = () => {
-
-      const {
-        children, className, open, onToggle, lock, onClose, size, ...other
-      } = this.props
-
+      const { open, onToggle, onClose, ...other } = this.props
       ReactDOM.render((
-        <div
-          ref={node => this.modalNode = node}
-          className={classnames('bfd-modal', {
-            [`bfd-modal--${size}`]: size
-          }, className)}
+        <ModalContent
+          ref={content => this.content = content}
+          close={::this.close}
+          modal={this}
           {...other}
-        >
-          <div className="bfd-modal__backdrop"></div>
-          <div className="bfd-modal__modal" onClick={::this.handleModalClick}>
-            <div className="bfd-modal__modal-dialog">
-              <div className="bfd-modal__modal-content">
-                {children}
-              </div>
-            </div>
-          </div>
-        </div>
+        />
       ), this.containerNode, onRendered)
     }
     this.renderIntoDocument()
@@ -161,8 +152,8 @@ class Modal extends Component {
   }
 }
 
-Modal.childContextTypes = {
-  modal: PropTypes.instanceOf(Modal)
+Modal.contextTypes = {
+  modalContent: PropTypes.object
 }
 
 Modal.propTypes = {

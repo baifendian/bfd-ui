@@ -12,27 +12,24 @@ import classnames from 'classnames'
 import Button from '../Button'
 
 const ModalHeader = (props, context) => {
-
   const { children, className, ...other } = props
-  const { modal } = context
-  
   return (
     <div className={classnames('bfd-modal__modal-header', className)} {...other}>
       {children}
-      <Button 
+      <Button
         className="bfd-modal__modal-header-close"
-        icon="remove" 
-        size="sm" 
+        icon="remove"
+        size="sm"
         type="inverse"
-        transparent 
-        onClick={() => modal.close()}
+        transparent
+        onClick={() => context.modalContent.props.close()}
       />
     </div>
   )
 }
 
 ModalHeader.contextTypes = {
-  modal: PropTypes.object
+  modalContent: PropTypes.object
 }
 
 export default ModalHeader
