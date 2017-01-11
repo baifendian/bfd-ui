@@ -1,5 +1,4 @@
 import 'normalize.css'
-import './pace.less'
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
 import classnames from 'classnames'
@@ -9,12 +8,7 @@ import { Nav, NavItem } from 'bfd/Nav'
 import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
 import Button from 'bfd/Button'
 import Icon from 'bfd/Icon'
-import pace from './pace'
-import fastclick from 'fastclick'
 import './index.less'
-
-pace.start()
-fastclick.attach(document.body)
 
 class App extends Component {
 

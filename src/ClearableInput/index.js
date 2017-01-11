@@ -9,6 +9,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import classnames from 'classnames'
+import controlledPropValidator from '../_shared/propValidator/controlled'
 import Input from '../Input'
 import Button from '../Button'
 import './index.less'
@@ -63,16 +64,19 @@ class ClearableInput extends Component {
 
   render() {
 
-    const { className, defaultValue, onChange, onClear, ...inputProps } = this.props
+    const {
+      className, defaultValue, onChange, onClear, disabled, size, placeholder, readOnly,
+      ...other
+    } = this.props
     const { value } = this.state
+    delete other.value
 
-    delete inputProps.value
+    const inputProps = { value, disabled, size, placeholder, readOnly }
 
     return (
-      <div className={classnames('bfd-clearable-input', className)}>
+      <div className={classnames('bfd-clearable-input', className)} {...other}>
         <Input
           ref="input"
-          value={value}
           onChange={::this.handleInput}
           {...inputProps}
         />
@@ -95,7 +99,7 @@ class ClearableInput extends Component {
 ClearableInput.propTypes = {
 
   // 输入框的值
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: controlledPropValidator(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
 
   // 初始化输入框的值
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -113,13 +117,7 @@ ClearableInput.propTypes = {
   disabled: PropTypes.bool,
 
   // 同 input placeholder
-  placeholder: PropTypes.string,
-
-  customProp({ value, onChange }) {
-    if (value && !onChange) {
-      return new Error('You provided a `value` prop without an `onChange` handler')
-    }
-  }
+  placeholder: PropTypes.string
 }
 
 export default ClearableInput

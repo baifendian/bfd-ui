@@ -43,10 +43,11 @@
     "invariant": "^2.2.1",
     "json-loader": "^0.5.4",
     "lodash": "^4.16.2",
+    "nprogress": "^0.2.0",
     "react": "^0.14.7",
     "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.7",
-    "react-router": "^1.0.2",
+    "react-router": "^2.1.0",
     "react-update": "^0.4.2",
     "style-loader": "^0.13.0"
   },

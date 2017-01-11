@@ -38,9 +38,7 @@ class SearchInput2 extends Component {
   }
 
   handleKeyDown(e) {
-    if (this.props.onSearch && e.key === 'Enter') {
-      this.props.onSearch(this.state.value)
-    }
+    e.key === 'Enter' && this.handleSearch()
   }
 
   render() {

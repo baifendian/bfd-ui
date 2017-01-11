@@ -1,12 +1,20 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Router, browserHistory, Route, IndexRoute, IndexRedirect } from 'react-router'
-import { createHistory } from 'history'
+import process from 'nprogress'
 import App from './functions/App'
 
 render((
-  <Router onUpdate={() => window.scrollTo(0, 0)} history={createHistory()}>
-    <Route path="/" component={App}>
+  <Router onUpdate={() => {
+    process.done()
+    window.scrollTo(0, 0)
+  }} history={browserHistory}>
+    <Route
+      path="/"
+      onEnter={() => process.start()}
+      onChange={() => process.start()}
+      component={App}
+    >
       <IndexRoute getComponent={(location, cb) => {
         require.ensure([], require => {
           cb(null, require('./functions/Home').default)
