@@ -8,9 +8,10 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
+import ToggleNode from '../_shared/ToggleNode'
 
 const scrollbarWidth = (() => {
   const scrollDiv = document.createElement('div')
@@ -48,11 +49,20 @@ class Modal extends Component {
   }
 
   componentDidMount() {
-    this.updateBodyState(this.state.open, false)
+    // this.toggleContent = new ToggleNode()
+    // this.updateBodyState(this.state.open, false)
+    if (this.state.open) {
+      this.renderIntoDocument()
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.updateBodyState(this.state.open, prevState.open)
+    // this.updateBodyState(this.state.open, prevState.open)
+    if (this.state.open) {
+      this.renderIntoDocument()
+    } else {
+      prevState.open && this.toggleModal.close()
+    }
   }
 
   updateBodyState(open, prevOpen) {
@@ -104,35 +114,50 @@ class Modal extends Component {
     callback && setTimeout(callback, this.closeTimeout)
   }
 
-  render() {
+  renderIntoDocument() {
 
-    const { children, className, onToggle, lock, onClose, size, ...other } = this.props
-    const { open } = this.state
+    if (!this.containerNode) {
+      this.containerNode = document.createElement('div')
+      document.body.appendChild(this.containerNode)
+    }
 
-    delete other.open
+    const onRendered = () => {
+      if (!this.toggleModal) {
+        this.toggleModal = new ToggleNode(this.modalNode, 'bfd-modal--open')
+      }
+      this.toggleModal.open()
+    }
 
-    return (
-      <ReactCSSTransitionGroup
-        transitionName="bfd-modal--in"
-        transitionEnterTimeout={200}
-        transitionLeaveTimeout={this.closeTimeout}
-      >
-        {open && (
-          <div className={classnames('bfd-modal', {
+    this.renderIntoDocument = () => {
+
+      const {
+        children, className, open, onToggle, lock, onClose, size, ...other
+      } = this.props
+
+      ReactDOM.render((
+        <div
+          ref={node => this.modalNode = node}
+          className={classnames('bfd-modal', {
             [`bfd-modal--${size}`]: size
-          }, className)} {...other}>
-            <div className="bfd-modal__backdrop"></div>
-            <div className="bfd-modal__modal" onClick={::this.handleModalClick}>
-              <div className="bfd-modal__modal-dialog">
-                <div className="bfd-modal__modal-content">
-                  {children}
-                </div>
+          }, className)}
+          {...other}
+        >
+          <div className="bfd-modal__backdrop"></div>
+          <div className="bfd-modal__modal" onClick={::this.handleModalClick}>
+            <div className="bfd-modal__modal-dialog">
+              <div className="bfd-modal__modal-content">
+                {children}
               </div>
             </div>
           </div>
-        )}
-      </ReactCSSTransitionGroup>
-    )
+        </div>
+      ), this.containerNode, onRendered)
+    }
+    this.renderIntoDocument()
+  }
+
+  render() {
+    return null
   }
 }
 
