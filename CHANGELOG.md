@@ -1,7 +1,10 @@
-## Preview
+## v1.5.7
+
+*2017-01-13*
 
 - SearchInput 新增可控属性 value
-- Modal 渲染到 body 节点内，样式及动画性能优化，修复嵌套 Modal 的样式问题
+- Modal 渲染到 body 节点内；样式及动画性能优化；修复嵌套 Modal 的样式问题；lock 模式添加 shake 效果
+- 去除 Tabs 初始化时的动画
 - 因 [pace](http://github.hubspot.com/pace/docs/welcome/) 加载进度不够精确，文档站页面切换进度条升级到 [nprocess](http://ricostacruz.com/nprogress/)，与 react-router 配合使用
 
 
