@@ -8,19 +8,45 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import invariant from 'invariant'
+import classlist from 'classlist'
 
 class TabPanel extends Component {
 
+  static activeClassName = 'bfd-tabs__panel--active'
+
   componentWillMount() {
     this.prepareIsActive(this.props)
+  }
+
+  componentDidMount() {
+    this.rootNode = ReactDOM.findDOMNode(this)
+    if (this.active) {
+      this.rootNode.style.display = 'block'
+      if (!this.context.tabs.isInit) {
+        this.rootNode.offsetWidth
+      }
+      classlist(this.rootNode).add(TabPanel.activeClassName)
+    }
   }
 
   shouldComponentUpdate(nextProps) {
     this.prevActive = this.active
     this.prepareIsActive(nextProps)
     return this.active || this.prevActive !== this.active
+  }
+
+  componentDidUpdate() {
+    if (this.active) {
+      this.rootNode.style.display = 'block'
+      this.rootNode.offsetWidth
+      classlist(this.rootNode).add(TabPanel.activeClassName)
+    } else {
+      this.rootNode.style.display = 'none'
+      classlist(this.rootNode).remove(TabPanel.activeClassName)
+    }
   }
 
   prepareIsActive(props) {
@@ -48,9 +74,7 @@ class TabPanel extends Component {
     }
 
     return (
-      <div className={classNames('bfd-tabs__panel', {
-        'bfd-tabs__panel--active': this.active
-      }, className)} {...other}>
+      <div className={classNames('bfd-tabs__panel', className)} {...other}>
         {this.active ? children : this.children}
       </div>
     )

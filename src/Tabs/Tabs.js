@@ -30,10 +30,12 @@ class Tabs extends Component {
   }
 
   componentWillUpdate() {
+    this.isInit = false
     this.tabCount = this.panelCount = 0
   }
 
   componentWillMount() {
+    this.isInit = true
     this.tabCount = this.panelCount = 0
   }
 
