@@ -50,15 +50,35 @@ body.bfd-modal--open {
   outline: 0;
   overflow-x: hidden;
   overflow-y: auto;
-}
 
-.bfd-modal__modal-dialog {
-  transition: all @duration;
 }
 
 .bfd-modal__modal-dialog {
   margin: 100px auto;
   width: 600px;
+  transition: all @duration;
+}
+
+.bfd-modal__modal-dialog--lock {
+  animation: bfd-modal-shake .8s;
+}
+
+@keyframes bfd-modal-shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 .bfd-modal__modal-content {

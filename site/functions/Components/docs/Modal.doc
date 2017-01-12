@@ -28,6 +28,36 @@ class ModalBasic extends Component {
 }
 
 /**
+ * @title 锁定的
+ * @desc 点击半透明背景不会自动关闭
+ */
+import { Modal, ModalHeader, ModalBody } from 'bfd/Modal'
+import Button from 'bfd/Button'
+
+class ModalLock extends Component {
+
+  handleOpen() {
+    this.refs.modal.open()
+  }
+
+  render() {
+    return (
+      <div>
+        <Button onClick={::this.handleOpen}>Open</Button>
+        <Modal ref="modal" lock>
+          <ModalHeader>
+            <h4>Heading</h4>
+          </ModalHeader>
+          <ModalBody>
+            Modal Body
+          </ModalBody>
+        </Modal>
+      </div>
+    )
+  }
+}
+
+/**
  * @title 嵌套的
  */
 import { Modal, ModalHeader, ModalBody } from 'bfd/Modal'

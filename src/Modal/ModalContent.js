@@ -11,7 +11,6 @@ import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
-import ToggleNode from '../_shared/ToggleNode'
 
 class ModalContent extends Component {
 
@@ -49,8 +48,19 @@ class ModalContent extends Component {
   }
 
   handleModalClick(e) {
-    if (!this.props.lock && e.target.className === 'bfd-modal__modal') {
-      this.props.close()
+    if (e.target.className === 'bfd-modal__modal') {
+      if (!this.props.lock) {
+        this.props.close()
+      } else {
+        const LOCK_CLASSNAME = 'bfd-modal__modal-dialog--lock'
+        const END_EVENT = 'animationend'
+        classlist(this.modalNode).add(LOCK_CLASSNAME)
+        const onAnimationEnd = () => {
+          this.modalNode.removeEventListener(END_EVENT, onAnimationEnd)
+          classlist(this.modalNode).remove(LOCK_CLASSNAME)
+        }
+        this.modalNode.addEventListener(END_EVENT, onAnimationEnd)
+      }
     }
   }
 
