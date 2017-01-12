@@ -5,9 +5,13 @@ import Modal from '../Modal'
 
 describe('Modal', () => {
 
+  beforeEach(() => {
+    document.body.innerHTML = ''
+  })
+
   it('should open works', () => {
     const instance = TestUtils.renderIntoDocument(<Modal open />)
-    expect(findDOMNode(instance).querySelector('.bfd-modal')).not.toBeNull()
+    expect(document.querySelector('.bfd-modal')).not.toBeNull()
   })
 
   it('should onToggle works', () => {

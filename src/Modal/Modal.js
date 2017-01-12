@@ -9,7 +9,6 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
-import classnames from 'classnames'
 import classlist from 'classlist'
 import ToggleNode from '../_shared/ToggleNode'
 import EventPool from '../_shared/EventPool'

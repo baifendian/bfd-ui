@@ -8,7 +8,6 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import classnames from 'classnames'
 import classlist from 'classlist'
 

@@ -31,7 +31,7 @@ describe('SearchInput', () => {
         <SearchInput onSearch={handleClick} size="sm" />
       )
       const container = findDOMNode(instance)
-      expect(container.className.split(' ')).toContain('sm')
+      expect(container.querySelector('input').className).toContain('sm')
     })
 
     it('label is ok', () => {
@@ -67,7 +67,7 @@ describe('SearchInput', () => {
 
       const container = findDOMNode(instance)
       const button = container.querySelectorAll('button')[1]
-      
+
       TestUtils.Simulate.click(button)
       expect(handleClick).toBeCalled()
       expect(handleClick.mock.calls.length).toBe(1)
