@@ -45,7 +45,9 @@ class Popover extends Component {
     if (this.state.open) {
       this.renderContent()
     } else {
-      prevState.open && this.popoverContent.close()
+      if (prevState.open) {
+        ReactDOM.findDOMNode(this.popoverContent).style.display = 'none'
+      }
     }
   }
 
@@ -129,7 +131,6 @@ class Popover extends Component {
         e.stopPropagation()
         this.closeChildOpenedPopover()
       }
-
       if (triggerMode === 'hover') {
         other.onMouseEnter = () => {
           clearTimeout(this.closeTimer)
@@ -138,19 +139,16 @@ class Popover extends Component {
           this.closeTimer = setTimeout(() => this.close(), Popover.LAZY_DURATION)
         }
       }
-
       if (aligned) {
         other.style = Object.assign(other.style || {}, {
           width: triggerNode.offsetWidth
         })
       }
-
       ReactDOM.render((
         <PopoverContent
           ref={instance => this.popoverContent = instance}
           triggerNode={triggerNode}
           triggerMode={triggerMode}
-          open
           {...other}
         >
           {content}

@@ -15,13 +15,6 @@ import CoordinateFactory from './CoordinateFactory'
 
 class PopoverContent extends Component {
 
-  constructor(props) {
-    super()
-    this.state = {
-      open: props.open
-    }
-  }
-
   getChildContext() {
     return {
       popoverContent: this
@@ -29,51 +22,38 @@ class PopoverContent extends Component {
   }
 
   componentDidMount() {
-    this.rootNode = ReactDOM.findDOMNode(this)
-    this.state.open && this.setPosition()
-  }
-
-  componentWillReceiveProps(nextProps) {
-    'open' in nextProps && this.setState({open: nextProps.open})
+    this.setPosition()
   }
 
   componentDidUpdate() {
-    this.state.open && this.setPosition()
+    this.setPosition()
   }
 
   setPosition() {
     const { triggerNode, direction, align } = this.props
+    const rootNode = ReactDOM.findDOMNode(this)
+    rootNode.style.display = 'block'
 
     // Prevent accumulation
     if (this.positionClassNames) {
-      classlist(this.rootNode).remove(...this.positionClassNames.split(' '))
+      classlist(rootNode).remove(...this.positionClassNames.split(' '))
     }
     const [computedDirection, computedAlign] = CoordinateFactory(
-      triggerNode, this.rootNode, direction, align
+      triggerNode, rootNode, direction, align
     )
     this.positionClassNames = classnames({
       [`bfd-popover--${computedDirection}`]: true,
       [`bfd-popover--align-${computedAlign}`]: !!computedAlign
     })
-    classlist(this.rootNode).add(this.positionClassNames)
-  }
-
-  /**
-   * @public
-   */
-  close() {
-    this.setState({open: false})
+    classlist(rootNode).add(this.positionClassNames)
   }
 
   render() {
     const {
       children, className, triggerNode, triggerMode, direction, align, ...other
     } = this.props
-    const { open } = this.state
-    delete other.open
     return (
       <div className={classnames('bfd-popover', {
-        'bfd-popover--open': open,
         'bfd-popover--animation': triggerMode === 'hover'
       }, className)} {...other}>
         <div className="bfd-popover__content">
