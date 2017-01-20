@@ -1,8 +1,12 @@
+@import '~bfd/variables.less';
+
 .home {
   background-color: #fafafa;
 }
 
 .home__banner {
+  height: calc(~'100vh - 60px');
+  min-height: 450px;
   background: url('./img/banner.jpg') no-repeat center;
   background-size: cover;
   padding-top: 120px;
@@ -33,7 +37,7 @@
   }
   em {
     font-style: normal;
-    color: #99d0fc;
+    color: #cce8ff;
     display: block;
     margin-bottom: .6em;
     @media (min-width: 320px) {
@@ -58,8 +62,8 @@
 
 .home__banner-install {
   .bfd-btn {
-    background-color: #cee8f4;
-    color: #36a0e8;
+    background-color: #fff;
+    color: @primary-color;
   }
 }
 
@@ -81,7 +85,7 @@
 .home__middle-left {
   padding-bottom: 20px;
   h2 {
-    color: #42a5f6;
+    color: @primary-color;
     margin-top: .5em;
     margin-bottom: 1em;
     @media (min-width: 320px) {
@@ -123,7 +127,7 @@
       content: '';
       width: 100px;
       height: 2px;
-      background-color: #6cb6f5;
+      background-color: @primary-color;
       display: block;
       margin-top: 5px;
       position: absolute;

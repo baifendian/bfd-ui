@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../../variables.less';
+
 .bfd-radio {
   font-weight: 400;
   padding-left: 16px;
@@ -18,10 +20,10 @@
   display: inline-block;
   vertical-align: middle;
   &:hover {
-    color: #2196f3;
+    color: @primary-color-deep;
     .bfd-radio__status {
       &:before {
-        border-color: #2196f3;
+        border-color: @primary-color-deep;
       }
     }
   }
@@ -29,11 +31,11 @@
     outline: none;
     .bfd-radio__status {
       &:before {
-        border-color: #42a5f5;
+        border-color: @primary-color;
       }
     }
     .bfd-radio__text {
-      color: #42a5f5;
+      color: @primary-color;
     }
   }
   input[type="radio"] {
@@ -41,13 +43,13 @@
     &:checked {
       + .bfd-radio__status {
         &:before {
-          border-color: #2196f3;
+          border-color: @primary-color-deep;
         }
         &:after {
           display: block;
         }
         + .bfd-radio__test {
-          color: #2196f3;
+          color: @primary-color-deep;
         }
       }
     }
@@ -93,7 +95,7 @@
     width: 8px;
     height: 8px;
     display: none;
-    background-color: #2196f3;
+    background-color: @primary-color-deep;
   }
 }
 

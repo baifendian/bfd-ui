@@ -80,7 +80,7 @@ class Percentage extends Component {
         <circle stroke={backColor || '#f5f5f5'} {...shareProps} />
         <circle
           ref="foreCircle"
-          stroke={foreColor || '#2196f3'}
+          stroke={foreColor || '@primary-color-deep'}
           strokeLinecap="round"
           strokeDasharray={this.dash}
           style={{strokeDashoffset: this.dash}}
@@ -90,7 +90,7 @@ class Percentage extends Component {
           ref="text"
           textAnchor="middle"
           fontSize={fontSize}
-          fill={textColor || foreColor || '#2196f3'}
+          fill={textColor || foreColor || '@primary-color-deep'}
           x={size / 2}
           y={size / 2}
           dy=".3em"

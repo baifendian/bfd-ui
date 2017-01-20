@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../../variables.less';
+
 .bfd-form__item {
   margin-bottom: 15px;
 }
@@ -25,7 +27,7 @@
 .bfd-form__item-label--required {
   &:before {
     content: '* ';
-    color: #d9534f;
+    color: @danger-color;
     font-size: 14px;
     font-weight: bold;
     vertical-align: middle;
@@ -46,13 +48,13 @@
 .bfd-form__item--error {
   .bfd-input,
   .bfd-form-textarea {
-    border-color: #cf7f7f;
+    border-color: @danger-color;
   }
   .bfd-select,
   .bfd-multiple-select {
-    border-color: #cf7f7f;
+    border-color: @danger-color;
   }
   .bfd-form__item-tip {
-    color: #cf7f7f;
+    color: @danger-color;
   }
 }

@@ -7,16 +7,17 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-spinner {
   font-size: 26px;
-  display: inline-block;
 }
 
 .bfd-spinner__circle {
   width: 1em;
   height: 1em;
   position: relative;
-  border: .1em solid #42a5f5;
+  border: .1em solid @primary-color;
   border-radius: 50%;
   border-bottom-color: transparent;
   animation: 1s ease-in-out infinite bfd-spinner;

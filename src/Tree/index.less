@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-tree {
   ul {
     margin: 0;
@@ -48,7 +50,7 @@
 }
 
 .bfd-tree__node-type {
-  color: #42a5f5;
+  color: @primary-color;
   margin-right: 4px;
   vertical-align: middle;
 }
@@ -61,7 +63,7 @@
   cursor: pointer;
   vertical-align: middle;
   &:hover {
-    background-color: #e3f2fd;
+    background-color: @primary-color-light;
   }
 }
 

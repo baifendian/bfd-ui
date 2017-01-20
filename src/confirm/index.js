@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { render } from 'react-dom'
 import isPlainObject from 'lodash/isPlainObject'
 import { Modal, ModalHeader, ModalBody } from '../Modal'
@@ -16,15 +16,12 @@ import './index.less'
 
 class Confirm extends Component {
 
-  options = {}
-
   handleConfirm() {
-    this.options.onConfirm && this.options.onConfirm()
+    this.props.onConfirm && this.props.onConfirm()
     this.close()
   }
 
   open() {
-    this.forceUpdate()
     this.refs.modal.open()
   }
 
@@ -33,7 +30,7 @@ class Confirm extends Component {
   }
 
   render() {
-    const { title, content, operation, okText, cancelText } = this.options
+    const { title, content, operation, okText, cancelText } = this.props
     return (
       <Modal className="bfd-confirm" ref="modal">
         <ModalHeader>
@@ -55,11 +52,19 @@ class Confirm extends Component {
   }
 }
 
-let instance
-const defaultOptions = {
+Confirm.defaultProps = {
   title: '确认提示',
   okText: '确定',
   cancelText: '取消'
+}
+
+Confirm.propTypes = {
+  title: PropTypes.node,
+  okText: PropTypes.node,
+  cancelText: PropTypes.node,
+  content: PropTypes.node,
+  operation: PropTypes.element,
+  onConfirm: PropTypes.func
 }
 
 /**
@@ -83,19 +88,22 @@ const defaultOptions = {
  * })
  * ```
  */
+
+let instance, container
+
 function confirm(content, onConfirm) {
-  if (!instance) {
-    const container = document.createElement('div')
-    document.body.appendChild(container)
-    instance = render(<Confirm />, container)
-  }
-  let options
+
+  let props
   if (isPlainObject(content) && !React.isValidElement(content)) {
-    options = content
+    props = content
   } else {
-    options = { content, onConfirm }
+    props = { content, onConfirm }
   }
-  instance.options = Object.assign({}, defaultOptions, options)
+  if (!container) {
+    container = document.createElement('div')
+  }
+  // Model 会单独创建真实 DOM 容器，所以 Confirm 的容器无需挂在到真实 DOM 中
+  instance = render(<Confirm {...props} />, container)
   instance.open()
 }
 
@@ -122,7 +130,7 @@ confirm.close = () => {
  * ```
  */
 confirm.config = options => {
-  Object.assign(defaultOptions, options)
+  Object.assign(Confirm.defaultProps, options)
 }
 
 export default confirm

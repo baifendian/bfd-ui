@@ -7,27 +7,24 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-@color300: #64b5f6;
-@color400: #42a5f5;
-@color500: #2196f3;
-@color600: #1e88e5;
+@import '../variables.less';
 
 .bfd-btn {
   color: #fff;
   padding: 0 20px;
   height: 30px;
-  background-color: @color400;
-  border: 1px solid @color400;
+  background-color: @primary-color;
+  border: 1px solid @primary-color;
   border-radius: 2px;
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
   // transition: background-color .1s ease, color .1s ease, border-color .1s ease;
   &:hover {
-    background-color: @color500;
+    background-color: @primary-color-deep;
   }
   &:active {
-    background-color: @color600;
+    background-color: @primary-color-deeper;
   }
   &:focus {
     outline: none;

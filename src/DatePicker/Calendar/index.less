@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../../variables.less';
+
 .bfd-calendar {
   color: #666;
   padding: 8px;
@@ -87,10 +89,10 @@
 .bfd-calendar__day--active,
 .bfd-calendar__day--start,
 .bfd-calendar__day--end {
-  background-color: #2196f3;
+  background-color: @primary-color-deep;
   color: #fff;
   &:hover {
-    background-color: #2196f3;
+    background-color: @primary-color-deep;
   }
 }
 
@@ -106,9 +108,9 @@
 }
 
 .bfd-calendar__day--inside {
-  background-color: #e3f2fd;
+  background-color: @primary-color-light;
   border-radius: 0;
   &:hover {
-    background-color: #e3f2fd;
+    background-color: @primary-color-light;
   }
 }

@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../../variables.less';
+
 .bfd-select__option {
   cursor: pointer;
   padding: 0 10px;
@@ -19,12 +21,12 @@
 
 .bfd-select__option--selected {
   position: relative;
-  color: #2196f3;
+  color: @primary-color-deep;
 }
 
 .bfd-select__option--active,
 .bfd-select__option--active:hover {
-  background-color: #e3f2fd;
+  background-color: @primary-color-light;
 }
 
 .bfd-select__option-icon--selected {

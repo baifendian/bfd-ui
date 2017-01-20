@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../../variables.less';
+
 .bfd-steps {
 	width : 100%;
 	.bfd-icon {
@@ -22,16 +24,17 @@
 	text-align: center;
 	border: 1px solid;
 	vertical-align: middle;
+  transition: all .15s;
 }
 .bfd-steps__box--circle_finish{
-	color: #41A1F5;
+	color: @primary-color;
 	background-color: #FFF;
-	border-color: #41A1F5;
+	border-color: @primary-color;
 }
 .bfd-steps__box--circle_process {
 	color: #FFF;
-	background-color: #41A1F5;
-	border-color: #41A1F5;
+	background-color: @primary-color;
+	border-color: @primary-color;
 	cursor: pointer;
 }
 .bfd-steps__box--circle_wait {
@@ -46,10 +49,10 @@
 	font-size: 12px;
 }
 .bfd-steps__box--title_finish{
-	color: #41A1F5;
+	color: @primary-color;
 }
 .bfd-steps__box--title_process {
-	color: #41A1F5;
+	color: @primary-color;
 }
 .bfd-steps__box--title_wait {
 	color: #999;
@@ -59,7 +62,7 @@
 	height: 1px;
 }
 .bfd-steps__box--line_finish{
-	background-color: #41A1F5;
+	background-color: @primary-color;
 }
 .bfd-steps__box--line_wait {
 	background-color: #e0e0e0;
@@ -71,11 +74,11 @@
 .bfd-steps__box:hover {
 	.bfd-steps__box--circle {
 		color: #FFF;
-		background-color: #41A1F5;
-		border-color: #41A1F5;
+		background-color: @primary-color;
+		border-color: @primary-color;
 		cursor: pointer;
 	}
 	.bfd-steps__box--title {
-		color: #41A1F5;
+		color: @primary-color;
 	}
 }

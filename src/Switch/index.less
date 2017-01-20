@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-switch {
   cursor: pointer;
   margin: 0;
@@ -17,7 +19,7 @@
     display: none;
     &:checked {
       + .bfd-switch__text {
-        background-color: #4cd964;
+        background-color: @success-color;
         padding-left: 8px;
         padding-right: 20px;
         &:before {

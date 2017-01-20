@@ -2,7 +2,6 @@ import 'normalize.css'
 import React, { Component } from 'react'
 import { Link, IndexLink } from 'react-router'
 import classnames from 'classnames'
-import classlist from 'classlist'
 import { Row, Col } from 'bfd/Layout'
 import { Nav, NavItem } from 'bfd/Nav'
 import { Dropdown, DropdownToggle, DropdownMenu } from 'bfd/Dropdown'
@@ -36,11 +35,9 @@ class App extends Component {
 
   render() {
     const { children } = this.props
-    const isIndex = !this.props.routes[1].path
-    classlist(document.body).toggle('index', isIndex)
     return (
       <div className="wrapper">
-        <Row className={classnames('header', {'header--index': isIndex})} fluid>
+        <Row className="header" fluid>
           <Col>
             <Link to="/" className="header__logo">
               <svg dangerouslySetInnerHTML={{__html: '<use xlink:href="#logo"></use>'}} />

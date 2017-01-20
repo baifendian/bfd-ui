@@ -10,7 +10,6 @@
 import React, { Component, PropTypes } from 'react'
 import Icon from '../../Icon'
 import classnames from 'classnames'
-import './main.less'
 
 class Line extends Component {
   render() {
@@ -81,7 +80,7 @@ class Title extends Component {
 }
 
 class Circle extends Component {
-  
+
   render() {
     const width = this.props.width
     const height = this.props.height
@@ -100,7 +99,7 @@ class Circle extends Component {
       top: y + 'px',
       borderRadius: radius + 'px',
       fontSize: fontSize + 'px',
-      lineHeight: (w / 2) + 'px'
+      lineHeight: (w / 2 - 2) + 'px'
     }
 
     let NavIcon = index + 1

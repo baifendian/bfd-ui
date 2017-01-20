@@ -7,40 +7,42 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-split-panel {
   position: relative;
-	width: 100%;
-	height: 100%;
-	margin: 10px auto;
-	overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 10px auto;
+  overflow: hidden;
 }
 .bfd-split-panel__horline{
-	position: absolute;
-	left: 0;
-	top: 50%;
-	height: 4px;
-	width: 100%;
-	overflow: hidden;
-	background: #2196f3;
-	cursor: n-resize;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 4px;
+  width: 100%;
+  overflow: hidden;
+  background: @primary-color-deep;
+  cursor: n-resize;
 }
 .bfd-split-panel__verline{
-	position: absolute;
-	top: 0;
-	left: 50%;
-	height: 100%;
-	width: 4px;
-	overflow: hidden;
-	background: #2196f3;
-	cursor: w-resize;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: 4px;
+  overflow: hidden;
+  background: @primary-color-deep;
+  cursor: w-resize;
 }
 .bfd-split-panel--top {
-	user-select: none;
-	padding: 2px;
-	overflow: hidden;
+  user-select: none;
+  padding: 2px;
+  overflow: hidden;
 }
 .bfd-split-panel--bottom {
-	user-select: none;
-	padding: 2px;
-	overflow: hidden;
+  user-select: none;
+  padding: 2px;
+  overflow: hidden;
 }

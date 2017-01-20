@@ -6,8 +6,8 @@ import { Row, Col } from 'bfd/Layout'
 const LayoutBasic = () => {
   return (
     <Row>
-      <Col col="md-4" style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</Col>
-      <Col col="md-8" style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-8</Col>
+      <Col col="md-4" style={{padding: '20px', backgroundColor: '#e8e8e8'}}>md-4</Col>
+      <Col col="md-8" style={{padding: '20px', backgroundColor: '#f5f5f5'}}>md-8</Col>
     </Row>
   )
 }
@@ -21,10 +21,10 @@ const LayoutGutter = () => {
   return (
     <Row gutter>
       <Col col="md-4">
-        <div style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</div>
+        <div style={{padding: '20px', backgroundColor: '#e8e8e8'}}>md-4</div>
       </Col>
       <Col col="md-8">
-        <div style={{padding: '20px', backgroundColor: '#e3f2fd'}}>md-8</div>
+        <div style={{padding: '20px', backgroundColor: '#f5f5f5'}}>md-8</div>
       </Col>
     </Row>
   )
@@ -38,8 +38,8 @@ import { Row, Col } from 'bfd/Layout'
 const LayoutRight = () => {
   return (
     <Row>
-      <Col col="md-4" style={{padding: '20px', backgroundColor: '#bbdefb'}}>md-4</Col>
-      <Col right style={{padding: '20px', backgroundColor: '#e3f2fd'}}>right</Col>
+      <Col col="md-4" style={{padding: '20px', backgroundColor: '#e8e8e8'}}>md-4</Col>
+      <Col right style={{padding: '20px', backgroundColor: '#f5f5f5'}}>right</Col>
     </Row>
   )
 }
@@ -53,8 +53,8 @@ import { Row, Col } from 'bfd/Layout'
 const LayoutFluid = () => {
   return (
     <Row fluid>
-      <Col style={{padding: '20px', backgroundColor: '#bbdefb'}}>hello</Col>
-      <Col style={{padding: '20px', backgroundColor: '#e3f2fd'}}>I am fluid layout!</Col>
+      <Col style={{padding: '20px', backgroundColor: '#e8e8e8'}}>hello</Col>
+      <Col style={{padding: '20px', backgroundColor: '#f5f5f5'}}>I am fluid layout!</Col>
     </Row>
   )
 }

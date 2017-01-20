@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-paging__row {
   margin-right: -15px;
   margin-left: -15px;
@@ -86,7 +88,7 @@
       color: #666;
     }
     a:hover{
-      color: #42a5f5;
+      color: @primary-color;
       text-decoration: none;
     }
   }
@@ -127,10 +129,10 @@
     border-bottom: 1px solid #ddd;
   }
   .bfd-paging__pagination-li--active a{
-    background: #2196f3;
+    background: @primary-color-deep;
     color: #fff;
-    border-top: 1px solid #2196f3;
-    border-bottom: 1px solid #2196f3;
+    border-top: 1px solid @primary-color-deep;
+    border-bottom: 1px solid @primary-color-deep;
     cursor: default;
   }
   .bfd-paging__pagination-li--active a:hover{

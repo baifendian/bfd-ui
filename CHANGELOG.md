@@ -1,3 +1,11 @@
+## v1.5.8
+
+*2017-01-20*
+
+- 修改了默认主色系，文档站首页样式升级
+- 抽离了 css 公共值，统一管理
+
+
 ## v1.5.7
 
 *2017-01-13*
@@ -7,7 +15,9 @@
 - 去除 Tabs 初始化时的动画
 - 因 [pace](http://github.hubspot.com/pace/docs/welcome/) 加载进度不够精确，文档站页面切换进度条升级到 [nprocess](http://ricostacruz.com/nprogress/)，与 react-router 配合使用
 
-> Modal 渲染到 body 节点内，节点父子为 `body -> div -> div.bfd-modal`
+>- Modal 渲染到 body 节点内，节点父子关系: `body > div > div.bfd-modal`
+- v1.5.7 起，依赖的 react-router 升级到 2.x，项目中的 react-router 也需要升级到 2.x。 react-router 的兼容问题请参照 [react-router 2.x 升级日志](https://github.com/ReactTraining/react-router/blob/master/upgrade-guides/v2.0.0.md#changes-to-thiscontext)
+
 
 ## v1.5.6
 
@@ -33,6 +43,7 @@
   ...
 </div>
 ```
+
 
 ## v1.5.5
 

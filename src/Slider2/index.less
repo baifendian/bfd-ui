@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-slider2 {
   padding: 6px 7px;
   cursor: pointer;
@@ -36,7 +38,7 @@
   border-radius: 2px;
   width: 0%;
   height: 100%;
-  background-color: #42a5f5;
+  background-color: @primary-color;
 }
 
 .bfd-slider2__slider {
@@ -50,12 +52,12 @@
   height: 1em;
   margin-left: -.5em;
   margin-top: -.5em;
-  border: 1px solid #42a5f5;
+  border: 1px solid @primary-color;
   border-radius: 50%;
   background-color: #fff;
   transition: transform .1s, border-color .1s;
   &:hover {
-    border-color: #2196f3;
+    border-color: @primary-color-deep;
     transform: scale(1.1);
     transform-origin: center center;
   }

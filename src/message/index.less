@@ -7,6 +7,8 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+@import '../variables.less';
+
 .bfd-message {
   position: fixed;
   z-index: 9999;
@@ -49,12 +51,12 @@
 
 .bfd-message--success {
   .bfd-message__symbol {
-    color: #4cd964;
+    color: @success-color;
   }
 }
 
 .bfd-message--danger {
   .bfd-message__symbol {
-    color: #ff7f7f;
+    color: @danger-color;
   }
 }
