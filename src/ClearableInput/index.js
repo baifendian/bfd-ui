@@ -64,13 +64,13 @@ class ClearableInput extends Component {
 
   render() {
     const {
-      style,type,className, defaultValue, onChange, onClear, disabled, size, placeholder, readOnly,
+      className, defaultValue, onChange, onClear, disabled, size, placeholder, readOnly,
       ...other
     } = this.props
     const { value } = this.state
     delete other.value
 
-    const inputProps = {style,type, value, disabled, size, placeholder, readOnly }
+    const inputProps = { value, disabled, size, placeholder, readOnly }
 
     return (
       <div className={classnames('bfd-clearable-input', className)} {...other}>
