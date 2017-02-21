@@ -148,7 +148,7 @@ function xhr(option) {
     }
   }
 
-  request.open(option.type, option.url, true)
+  request.open(option.type, option.url, option.hasOwnProperty('async')?option.async:true)
 
   const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
   const isArray = arr => Array.isArray(arr)
