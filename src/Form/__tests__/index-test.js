@@ -44,4 +44,77 @@ describe('Form', () => {
     })
     expect(handleChange).toBeCalledWith({name: 'test2'})
   })
+
+
+  it('should init works',() => {
+    const rules = {
+      name(v) {
+        if (!v) return 'error'
+      }
+    }
+    const TestParent = React.createFactory(React.createClass({
+      getInitialState() {
+        return { data: {name: 'test'} };
+      },
+      onChange(data){
+        this.setState({data:data})
+      },
+      render() {
+        return (
+          <Form ref="testForm" data={this.state.data} onChange={this.onChange} rules={rules}>
+            <FormItem ref="testFormItem" name="name">
+              <FormInput />
+            </FormItem>
+          </Form>
+        )
+      }
+    }));
+
+    const instance = TestUtils.renderIntoDocument(TestParent())
+    const container = findDOMNode(instance)
+    expect(container.querySelector('input').value).toBe('test')
+    instance.onChange({name:''})
+    expect(findDOMNode(instance).querySelector('input').value).toBe('')
+    expect(instance.refs.testFormItem.state.error).toBe('error')
+    instance.refs.testForm.init()
+    expect(instance.refs.testFormItem.state.error).toBe(null)
+    expect(container.querySelector('input').value).toBe('')
+    instance.onChange({name:''})
+    expect(findDOMNode(instance).querySelector('input').value).toBe('')
+    expect(instance.refs.testFormItem.state.error).toBe('error')
+    instance.onChange({name:'test1111'})
+    expect(findDOMNode(instance).querySelector('input').value).toBe('test1111')
+    expect(instance.refs.testFormItem.state.error).toBe(undefined)
+  })
+
+  it('should validate works',() => {
+    const rules = {
+      name(v) {
+        if (!v) return 'error'
+      }
+    }
+    const TestParent = React.createFactory(React.createClass({
+      getInitialState() {
+        return { data: {name: 'test'} };
+      },
+      onChange(data){
+        this.setState({data:data})
+      },
+      render() {
+        return (
+          <Form ref="testForm" data={this.state.data} onChange={this.onChange} rules={rules}>
+            <FormItem ref="testFormItem" name="name">
+              <FormInput />
+            </FormItem>
+          </Form>
+        )
+      }
+    }));
+
+    const instance = TestUtils.renderIntoDocument(TestParent())
+    instance.onChange({name:''})
+    expect(findDOMNode(instance).querySelector('input').value).toBe('')
+    expect(instance.refs.testFormItem.state.error).toBe('error')
+
+  })
 })

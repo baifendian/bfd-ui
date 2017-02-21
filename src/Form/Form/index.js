@@ -21,7 +21,8 @@ class Form extends Component {
     // 存储 FormItem 实例，用于访问 FormItem
     this.items = []
     this.state = {
-      data: props.data || props.defaultData || {}
+      data: props.data || props.defaultData || {},
+      isReload: true
     }
   }
 
@@ -33,6 +34,20 @@ class Form extends Component {
 
   componentWillReceiveProps({ data }) {
     data && this.setState({ data })
+  }
+
+  /**
+   * 初始化表单数据重新挂载表单内模块
+   * @param data
+   */
+  init(data){
+    this.setState({
+      data: data?data:{},
+      isReload: false
+    })
+    this.setState({
+      isReload: true
+    })
   }
 
   getItemValue(instance, props) {
@@ -154,7 +169,7 @@ class Form extends Component {
         className={classnames('bfd-form', className)}
         {...other}
       >
-        {children}
+        {this.state.isReload?children:null}
       </form>
     )
   }
