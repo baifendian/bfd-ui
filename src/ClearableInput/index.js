@@ -63,7 +63,6 @@ class ClearableInput extends Component {
   }
 
   render() {
-
     const {
       className, type, defaultValue, onChange, onClear, disabled, size, placeholder, readOnly,
       ...other
