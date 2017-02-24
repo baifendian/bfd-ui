@@ -1,7 +1,7 @@
 {
   "name": "bfd-ui",
   "version": "1.5.9",
-  "description": "",
+  "description": "企业级 React 组件库 🚀",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run unit",
