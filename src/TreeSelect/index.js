@@ -180,7 +180,7 @@ TreeSelect.defaultProps = {
 TreeSelect.propTypes = {
 
   // 值，单选为字符串，多选为数组，与数据源 value 字段对应
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.number]),
 
   // 初始化值（不可控）
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),

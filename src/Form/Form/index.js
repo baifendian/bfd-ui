@@ -42,7 +42,7 @@ class Form extends Component {
    */
   init(data){
     this.setState({
-      data: data?data:{},
+      data: data || {},
       isReload: false
     })
     this.setState({
@@ -169,7 +169,7 @@ class Form extends Component {
         className={classnames('bfd-form', className)}
         {...other}
       >
-        {this.state.isReload?children:null}
+        {this.state.isReload && children}
       </form>
     )
   }

@@ -42,10 +42,10 @@ class Slider extends Component {
   }
 
   render() {
-    const { className, defaultValue, tickValue, start, end, suffix, onSliding, onSlid, ...other } = this.props
+    const { className, defaultValue, tickValue, start, end, suffix, onSliding, onSlid, width, ...other } = this.props
     return (
       <div ref="container" className={classnames('bfd-slider', className)} {...other}>
-        <div ref="bar" className="bfd-slider__bar">
+        <div ref="bar" className="bfd-slider__bar" style={width}>
           <div ref="slider" className="bfd-slider__slider" onMouseDown={::this.handleMouseDown}>
             <div ref="tip" className="bfd-slider__tooltips">
               <span ref="msg" className="bfd-slider__tooltips-text">0{this.props.suffix || ''}</span>
