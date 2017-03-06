@@ -121,6 +121,8 @@ class TreeSelect extends Component {
       this.valueSet = new Set(value)
     }
 
+    this.title = null
+
     const treeProps = {
       shouldNodeSelectable,
       shouldNodeCheckable,
@@ -140,7 +142,6 @@ class TreeSelect extends Component {
     } else {
       treeProps.onSelect = ::this.handleSelect
     }
-
     const Title = !multiple ? (
       <TextOverflow>
         <div className="bfd-tree-select__title">

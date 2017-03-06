@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
 import './main.less'
 
@@ -42,10 +42,10 @@ class Slider extends Component {
   }
 
   render() {
-    const { className, defaultValue, tickValue, start, end, suffix, onSliding, onSlid, width, ...other } = this.props
+    const {className, defaultValue, tickValue, start, end, suffix, onSliding, onSlid, width, ...other} = this.props
     return (
       <div ref="container" className={classnames('bfd-slider', className)} {...other}>
-        <div ref="bar" className="bfd-slider__bar" style={width}>
+        <div ref="bar" className="bfd-slider__bar" style={{width}}>
           <div ref="slider" className="bfd-slider__slider" onMouseDown={::this.handleMouseDown}>
             <div ref="tip" className="bfd-slider__tooltips">
               <span ref="msg" className="bfd-slider__tooltips-text">0{this.props.suffix || ''}</span>
@@ -155,13 +155,18 @@ class Scale extends Component {
   }
 
   render() {
+
+    const {width} = this.props
+
     const rows = []
     for (let i = 0; i <= this.tickValue; i++) {
-      rows.push(<div key={i} ref={'t'+i} className="bfd-scale__tick"><div></div>{i}</div>)
+      rows.push(<div key={i} ref={'t' + i} className="bfd-scale__tick">
+        <div></div>
+        {i}</div>)
     }
 
     return (
-      <div ref="container" style={this.props.width} className={classnames('bfd-scale', this.props.className)}>
+      <div ref="container" style={{width}} className={classnames('bfd-scale', this.props.className)}>
         {rows}
       </div>
     )
