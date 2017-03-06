@@ -53,7 +53,7 @@ class Slider extends Component {
             </div>
           </div>
           <div ref="selectedBar" className="bfd-slider__bar--selected"></div>
-          <Scale start={this.props.start || 0} end={this.props.end} tickValue={this.props.tickValue}/>
+          <Scale start={this.props.start || 0} width={width} end={this.props.end} tickValue={this.props.tickValue}/>
         </div>
       </div>
     )
@@ -161,7 +161,7 @@ class Scale extends Component {
     }
 
     return (
-      <div ref="container" className={classnames('bfd-scale', this.props.className)}>
+      <div ref="container" style={this.props.width} className={classnames('bfd-scale', this.props.className)}>
         {rows}
       </div>
     )
