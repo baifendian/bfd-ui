@@ -23,6 +23,10 @@ class SearchInput extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    'value' in nextProps && this.setState({value: nextProps.value})
+  }
+
   handleChange(value) {
     this.setState({ value })
     this.props.onChange && this.props.onChange(value)

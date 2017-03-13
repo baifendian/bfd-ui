@@ -48,4 +48,27 @@ describe('ClearableInput', () => {
     TestUtils.Simulate.click(container.querySelector('button'))
     expect(container.querySelector('input').value).toBe('test')
   })
+
+  it('value is ok',() => {
+    const handleClick = jest.fn()
+    const TestParent = React.createFactory(React.createClass({
+      getInitialState() {
+        return { value:'test' };
+      },
+      onChange(value){
+        this.setState({value:value})
+      },
+      render() {
+        return (
+          <ClearableInput value={this.state.value} onSearch={handleClick}/>
+        )
+      }
+    }));
+
+    const instance = TestUtils.renderIntoDocument(TestParent())
+    const container = findDOMNode(instance)
+    expect(container.querySelector('input').value).toBe('test')
+    instance.onChange('test1111')
+    expect(container.querySelector('input').value).toBe('test1111')
+  })
 })

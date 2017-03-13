@@ -55,6 +55,28 @@ describe('SearchInput', () => {
       const input = container.querySelector('input')
       expect(input.value).toEqual(value)
     })
+    it('value is ok',() => {
+      const handleClick = jest.fn()
+      const TestParent = React.createFactory(React.createClass({
+        getInitialState() {
+          return { value:'test' };
+        },
+        onChange(value){
+          this.setState({value:value})
+        },
+        render() {
+          return (
+            <SearchInput value={this.state.value} onSearch={handleClick}/>
+          )
+        }
+      }));
+
+      const instance = TestUtils.renderIntoDocument(TestParent())
+      const container = findDOMNode(instance)
+      expect(container.querySelector('input').value).toBe('test')
+      instance.onChange('test1111')
+      expect(container.querySelector('input').value).toBe('test1111')
+    })
   })
 
   describe('event test', () => {
