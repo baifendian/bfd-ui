@@ -164,10 +164,7 @@ function xhr(option) {
     }
   }
 
-  let link='?'
-  if(option.url.indexOf('?')){
-    link='&'
-  }
+  const link = option.url.indexOf('?')!=-1?'&':'?'
 
   request.open(option.type, option.url+(sendDataStr && link+sendDataStr), option.hasOwnProperty('async')?option.async:true)
 
