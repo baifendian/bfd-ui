@@ -148,13 +148,30 @@ function xhr(option) {
     }
   }
 
-  request.open(option.type, option.url, option.hasOwnProperty('async')?option.async:true)
+  let sendData = option.data
 
   const isObject = obj => Object.prototype.toString.call(obj) === '[object Object]'
   const isArray = arr => Array.isArray(arr)
 
-  let sendData = option.data
-  if (isObject(sendData)) {
+  let sendDataStr = ''
+
+  if (['get', 'GET'].indexOf(option.type)){
+    for (const key in sendData) {
+      if (sendDataStr != '') {
+        sendDataStr += '&'
+      }
+      sendDataStr += key + '=' + sendData[key]
+    }
+  }
+
+  let link='?'
+  if(option.url.indexOf('?')){
+    link='&'
+  }
+
+  request.open(option.type, option.url+(sendDataStr && link+sendDataStr), option.hasOwnProperty('async')?option.async:true)
+
+  if (!['get', 'GET'].indexOf(option.type) && isObject(sendData)) {
     sendData = Object.assign({}, sendData)
     sendData = Object.keys(sendData).map(key => {
       let value = sendData[key]
