@@ -52,7 +52,7 @@ function xhr(option) {
     option.url = (xhr.baseUrl || '') + option.url
   }
 
-  option.type = (option.type || 'get').toUpperCase()
+  option.type = (option.type || 'post').toUpperCase()
 
   let timer
 
@@ -155,7 +155,7 @@ function xhr(option) {
 
   let sendDataStr = ''
 
-  if (['get', 'GET'].indexOf(option.type)){
+  if (['get', 'GET'].indexOf(option.type) != -1){
     for (const key in sendData) {
       if (sendDataStr != '') {
         sendDataStr += '&'
@@ -168,7 +168,7 @@ function xhr(option) {
 
   request.open(option.type, option.url+(sendDataStr && link+sendDataStr), option.hasOwnProperty('async')?option.async:true)
 
-  if (!['get', 'GET'].indexOf(option.type) && isObject(sendData)) {
+  if (['get', 'GET'].indexOf(option.type) == -1 && isObject(sendData)) {
     sendData = Object.assign({}, sendData)
     sendData = Object.keys(sendData).map(key => {
       let value = sendData[key]
