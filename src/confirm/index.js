@@ -32,7 +32,7 @@ class Confirm extends Component {
   render() {
     const { title, content, operation, okText, cancelText } = this.props
     return (
-      <Modal className="bfd-confirm" ref="modal">
+      <Modal className="bfd-confirm" zIndex="1001" ref="modal">
         <ModalHeader>
           <h4>{title}</h4>
         </ModalHeader>

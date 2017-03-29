@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
 import classlist from 'classlist'
 
@@ -27,7 +27,7 @@ class ModalContent extends Component {
   backUp() {
     this.relativeValue += 20
     this.transform()
-    const { modalContent } = this.props.modal.context
+    const {modalContent} = this.props.modal.context
     if (modalContent) {
       modalContent.backUp()
     }
@@ -36,7 +36,7 @@ class ModalContent extends Component {
   goForward() {
     this.relativeValue -= 20
     this.transform()
-    const { modalContent } = this.props.modal.context
+    const {modalContent} = this.props.modal.context
     if (modalContent) {
       modalContent.goForward()
     }
@@ -64,14 +64,15 @@ class ModalContent extends Component {
   }
 
   render() {
-    const { children, className, lock, size, ...other } = this.props
+    const {children, className, lock, size, zIndex, ...other} = this.props
     return (
       <div className={classnames('bfd-modal', {
         [`bfd-modal--${size}`]: size
       }, className)} {...other}>
-        <div className="bfd-modal__backdrop"></div>
+        <div className="bfd-modal__backdrop" style={{zIndex: zIndex ? zIndex : 1000}}></div>
         <div
           className="bfd-modal__modal"
+          style={{zIndex: zIndex ? zIndex : 1000}}
           onClick={::this.handleModalClick}
         >
           <div className="bfd-modal__modal-dialog" ref={node => this.modalNode = node}>
