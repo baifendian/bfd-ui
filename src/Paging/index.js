@@ -77,7 +77,7 @@ class Paging extends Component {
         pages.push(html)
       }
     } else {
-      if(currentPage <= showPage) {
+      if(currentPage < showPage) {
         for(let i = 1; i <= showPage + 2 && i <= maxPage; i++) {
           const html = this.createPageEl(i)
           if(i < maxPage - 1 && i == showPage + 1) {
@@ -91,16 +91,15 @@ class Paging extends Component {
             }
           }
         }
-      } else if(currentPage > showPage && currentPage + showPage <= maxPage - 2) {
+      } else if(currentPage >= showPage && currentPage + showPage <= maxPage + 1) {
         pages[0] = this.createPageEl(1)
         if(currentPage == 3) {
           pages[1] = this.createPageEl(2)
         } else {
           pages[1] = <li key={"d1"}><span>...</span></li>
         }
-
-        let i = currentPage
-        for(; i < currentPage + showPage; i++) {
+        let i = currentPage + 1 - parseInt(showPage / 2)
+        for(; i < currentPage + parseInt(showPage / 2); i++) {
           const html = this.createPageEl(i)
           pages.push(html)
         }
