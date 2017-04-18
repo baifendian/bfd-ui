@@ -33,10 +33,16 @@ class DataTable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState(propsToState(
+    const newProps = propsToState(
       nextProps,
       ['data', 'totalCounts', 'currentPage', 'sortKey', 'sortType']
-    ))
+    )
+
+    // if ((JSON.stringify(newProps) != JSON.stringify(this.props.data)) && !newProps.hasOwnProperty('currentPage')){
+    //  newProps['currentPage'] = 1
+    // }
+
+    this.setState(newProps)
   }
 
   handleSort(nextSortKey) {

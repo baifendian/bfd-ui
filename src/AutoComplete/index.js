@@ -86,10 +86,11 @@ class AutoComplete extends Component {
 
   render() {
     const { open, index, result, value } = this.state
-    const { className, source, onFocus, onKeyDown, onChange, ...other } = this.props
+    const { className, source, onFocus, onKeyDown, onChange, disabled, ...other } = this.props
     return (
       <Dropdown
         open={open}
+        disabled={!!disabled}
         aligned
         onToggle={open => this.setState({ open })}
       >
@@ -98,6 +99,7 @@ class AutoComplete extends Component {
             value={value}
             onKeyDown={::this.handleKeyDown}
             onChange={::this.handleInput}
+            disabled={!!disabled}
             {...other}
           />
         </DropdownToggle>

@@ -46,7 +46,10 @@ class TagList extends Component {
                 size="sm"
                 onClick={e => {
                   e.stopPropagation()
-                  onRemove(item.value)
+                  // 只有在非disabled情况下才出发删除操作
+                  if (!disabled) {
+                    onRemove(item.value)
+                  }
                 }}
               />
             </li>
