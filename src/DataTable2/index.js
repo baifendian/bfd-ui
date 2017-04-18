@@ -45,6 +45,14 @@ class DataTable extends Component {
     this.setState(newProps)
   }
 
+  /**
+   * 修改table页面为指定的值
+   * @param currentPage
+   */
+  setCurrentPage(currentPage){
+    this.setState({currentPage})
+  }
+
   handleSort(nextSortKey) {
     const { sortKey, sortType } = this.state
     let nextSortType
