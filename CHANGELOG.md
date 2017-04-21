@@ -2,7 +2,7 @@
 
 *2017-03-17*
 
-- xhr 参数中怎么加async用于配置是否异步，同时type为get时支持自动将option.data中的参数拼接到url中（get模式下option.data注意不要使用object类型的值）
+- xhr 参数中增加async参数用于配置是否异步，同时type为get时支持自动将option.data中的参数拼接到url中（get模式下option.data注意不要使用object类型的值）
 - form 增加init方法，用于重置form数据同时不触发rule检查。
 - searchinput 修复修改value字段不能正常的显示值得问题。
 - TreeSelect 修复修改value字段不能正常显示选中值得问题。
