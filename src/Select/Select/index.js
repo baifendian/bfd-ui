@@ -86,7 +86,7 @@ class Select extends Component {
 
   handleDropToggle(open) {
     this.props.searchable && open && setTimeout(() => {
-      this.refs.clearableInput.focus()
+      this.refs.clearableInput && this.refs.clearableInput.focus()
     }, 0)
   }
 
