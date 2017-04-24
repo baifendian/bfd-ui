@@ -86,10 +86,10 @@ class AutoComplete extends Component {
 
   render() {
     const { open, index, result, value } = this.state
-    const { className, source, onFocus, onKeyDown, onChange, disabled, ...other } = this.props
+    const { className, source, onFocus, onKeyDown, onChange, disabled, isOpen, ...other } = this.props
     return (
       <Dropdown
-        open={open}
+        open={!!isOpen || open}
         disabled={!!disabled}
         aligned
         onToggle={open => this.setState({ open })}
@@ -100,6 +100,7 @@ class AutoComplete extends Component {
             onKeyDown={::this.handleKeyDown}
             onChange={::this.handleInput}
             disabled={!!disabled}
+            open={!!isOpen || open}
             {...other}
           />
         </DropdownToggle>
@@ -141,6 +142,9 @@ AutoComplete.propTypes = {
 
   // 是否禁用
   disabled: PropTypes.bool,
+
+  // 是否打开下拉
+  isOpen: PropTypes.bool,
 
   // 同 input placeholder
   placeholder: PropTypes.string,
