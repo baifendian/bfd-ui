@@ -73,7 +73,9 @@ class Slider extends Component {
   handleMouseMove(event) {
     const slider = this.refs.slider
     const selectedBar = this.refs.selectedBar
+    const bar = this.refs.bar
 
+    this.offsetLeft = this.getOffsetLeft(bar) + this.marginLeft
     if (this.isDown) {
       let left = event.pageX - this.offsetLeft - this.sliderWidth / 4
       if (left <= 0) {
@@ -140,7 +142,7 @@ class Slider extends Component {
     const v = Math.abs(end) - Math.abs(start)
     v == 0 ? 1 : v
     const width = this.width
-    return width / v * value
+    return width / v * (value-start)
   }
 }
 
